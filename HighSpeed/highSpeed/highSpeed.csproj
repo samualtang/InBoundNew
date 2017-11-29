@@ -1,0 +1,642 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6AB4972E-AADD-47CB-BFB4-A393E4F16EA5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>highSpeed</RootNamespace>
+    <AssemblyName>highSpeed</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.DSOFramer, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\AxInterop.DSOFramer.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=8.2.0.2, Culture=neutral, PublicKeyToken=5fd520d36328f741, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetPrint">
+      <HintPath>.\DotNetPrint.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.DSOFramer, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>lib\Interop.DSOFramer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>.\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WHC.Pager.WinControlEx">
+      <HintPath>..\..\分页控件\WHC.Pager.WinControlEx.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="baseData\w_cigarette_handle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_handle.Designer.cs">
+      <DependentUpon>w_cigarette_handle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_unhunhetrough.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_unhunhetrough.Designer.cs">
+      <DependentUpon>w_unhunhetrough.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_un_batch_new.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_un_batch_new.Designer.cs">
+      <DependentUpon>w_un_batch_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_un_batch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_un_batch.Designer.cs">
+      <DependentUpon>w_un_batch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\ExcelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\ExcelForm.Designer.cs">
+      <DependentUpon>ExcelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_hunheleftcount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_hunheleftcount.Designer.cs">
+      <DependentUpon>w_cigarette_hunheleftcount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\SumInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\SumInfo.designer.cs">
+      <DependentUpon>SumInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_hunhetrough.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_hunhetrough.Designer.cs">
+      <DependentUpon>w_hunhetrough.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\SortingProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\SortingProcess.designer.cs">
+      <DependentUpon>SortingProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_jianyanreportprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_jianyanreportprint.designer.cs">
+      <DependentUpon>w_jianyanreportprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_hunhereportprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_hunhereportprint.designer.cs">
+      <DependentUpon>w_hunhereportprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_reportprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_reportprint.designer.cs">
+      <DependentUpon>w_reportprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_yxytrough.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_yxytrough.Designer.cs">
+      <DependentUpon>w_yxytrough.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_hunhesort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_hunhesort.Designer.cs">
+      <DependentUpon>w_hunhesort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_leftcount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_leftcount.Designer.cs">
+      <DependentUpon>w_cigarette_leftcount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_batch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_batch.Designer.cs">
+      <DependentUpon>w_batch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_batch_new.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_batch_new.Designer.cs">
+      <DependentUpon>w_batch_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_brandrelative.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_brandrelative.Designer.cs">
+      <DependentUpon>w_brandrelative.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_cigaretteInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_cigaretteInfo.Designer.cs">
+      <DependentUpon>w_cigaretteInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_choose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_cigarette_choose.Designer.cs">
+      <DependentUpon>w_cigarette_choose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_customerInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_customerInfo.Designer.cs">
+      <DependentUpon>w_customerInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_exportline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_exportline.Designer.cs">
+      <DependentUpon>w_exportline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_exportline_handle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_exportline_handle.Designer.cs">
+      <DependentUpon>w_exportline_handle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_package.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_package.Designer.cs">
+      <DependentUpon>w_package.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_package_handle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_package_handle.Designer.cs">
+      <DependentUpon>w_package_handle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_region.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_region.Designer.cs">
+      <DependentUpon>w_region.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_replenish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_replenish.Designer.cs">
+      <DependentUpon>w_replenish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_replenish_handle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_replenish_handle.Designer.cs">
+      <DependentUpon>w_replenish_handle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_sortline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_sortline.Designer.cs">
+      <DependentUpon>w_sortline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_trough.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_trough.Designer.cs">
+      <DependentUpon>w_trough.cs</DependentUpon>
+    </Compile>
+    <Compile Include="baseData\w_trough_handle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_trough_handle.Designer.cs">
+      <DependentUpon>w_trough_handle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\troughmove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\troughmove.Designer.cs">
+      <DependentUpon>troughmove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_senddata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_senddata.Designer.cs">
+      <DependentUpon>w_senddata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_un_schedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_un_schedule.Designer.cs">
+      <DependentUpon>w_un_schedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_un_order_recieve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_un_order_recieve.designer.cs">
+      <DependentUpon>w_un_order_recieve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_tuopanbuhuoplan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_tuopanbuhuoplan.Designer.cs">
+      <DependentUpon>w_tuopanbuhuoplan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export.Designer.cs">
+      <DependentUpon>w_export.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export_exportline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_exportline.Designer.cs">
+      <DependentUpon>w_export_exportline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export_left.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_left.Designer.cs">
+      <DependentUpon>w_export_left.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export_right.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_right.Designer.cs">
+      <DependentUpon>w_export_right.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_orderdata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_orderdata.designer.cs">
+      <DependentUpon>w_orderdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_order_recieve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_order_recieve.designer.cs">
+      <DependentUpon>w_order_recieve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_pokeplan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_pokeplan.Designer.cs">
+      <DependentUpon>w_pokeplan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_schedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_schedule.Designer.cs">
+      <DependentUpon>w_schedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_yxydata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_yxydata.designer.cs">
+      <DependentUpon>w_yxydata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="progressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="progressBar.Designer.cs">
+      <DependentUpon>progressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PubFunc\DataBase.cs" />
+    <Compile Include="PubFunc\DataPublic.cs" />
+    <Compile Include="PubFunc\List.cs" />
+    <Compile Include="PubFunc\PrintDataGridView.cs" />
+    <Compile Include="PubFunc\PublicFun.cs" />
+    <Compile Include="PubFunc\SocketClientConnector.cs" />
+    <Compile Include="PubFunc\SortingFun.cs" />
+    <Compile Include="PubFunc\SortingPub.cs" />
+    <Compile Include="sorting\w_sorting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sorting\w_sorting.Designer.cs">
+      <DependentUpon>w_sorting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="statement\w_binningSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="statement\w_binningSummary.Designer.cs">
+      <DependentUpon>w_binningSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_database_set.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_database_set.Designer.cs">
+      <DependentUpon>w_database_set.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_main.Designer.cs">
+      <DependentUpon>w_main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_user.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_user.Designer.cs">
+      <DependentUpon>w_user.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="baseData\w_cigarette_handle.resx">
+      <DependentUpon>w_cigarette_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_unhunhetrough.resx">
+      <DependentUpon>w_unhunhetrough.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_un_batch_new.resx">
+      <DependentUpon>w_un_batch_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_un_batch.resx">
+      <DependentUpon>w_un_batch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\ExcelForm.resx">
+      <DependentUpon>ExcelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_cigarette_hunheleftcount.resx">
+      <DependentUpon>w_cigarette_hunheleftcount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\SumInfo.resx">
+      <DependentUpon>SumInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_hunhetrough.resx">
+      <DependentUpon>w_hunhetrough.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\SortingProcess.resx">
+      <DependentUpon>SortingProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_jianyanreportprint.resx">
+      <DependentUpon>w_jianyanreportprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_hunhereportprint.resx">
+      <DependentUpon>w_hunhereportprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_reportprint.resx">
+      <DependentUpon>w_reportprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_yxytrough.resx">
+      <DependentUpon>w_yxytrough.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_hunhesort.resx">
+      <DependentUpon>w_hunhesort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_cigarette_leftcount.resx">
+      <DependentUpon>w_cigarette_leftcount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_batch.resx">
+      <DependentUpon>w_batch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_batch_new.resx">
+      <DependentUpon>w_batch_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_brandrelative.resx">
+      <DependentUpon>w_brandrelative.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_cigaretteInfo.resx">
+      <DependentUpon>w_cigaretteInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_cigarette_choose.resx">
+      <DependentUpon>w_cigarette_choose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_customerInfo.resx">
+      <DependentUpon>w_customerInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_exportline.resx">
+      <DependentUpon>w_exportline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_exportline_handle.resx">
+      <DependentUpon>w_exportline_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_package.resx">
+      <DependentUpon>w_package.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_package_handle.resx">
+      <DependentUpon>w_package_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_region.resx">
+      <DependentUpon>w_region.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_replenish.resx">
+      <DependentUpon>w_replenish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_replenish_handle.resx">
+      <DependentUpon>w_replenish_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_sortline.resx">
+      <DependentUpon>w_sortline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_trough.resx">
+      <DependentUpon>w_trough.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_trough_handle.resx">
+      <DependentUpon>w_trough_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\troughmove.resx">
+      <DependentUpon>troughmove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_senddata.resx">
+      <DependentUpon>w_senddata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_un_schedule.resx">
+      <DependentUpon>w_un_schedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_un_order_recieve.resx">
+      <DependentUpon>w_un_order_recieve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_tuopanbuhuoplan.resx">
+      <DependentUpon>w_tuopanbuhuoplan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export.resx">
+      <DependentUpon>w_export.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_exportline.resx">
+      <DependentUpon>w_export_exportline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_left.resx">
+      <DependentUpon>w_export_left.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_right.resx">
+      <DependentUpon>w_export_right.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_orderdata.resx">
+      <DependentUpon>w_orderdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_order_recieve.resx">
+      <DependentUpon>w_order_recieve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_pokeplan.resx">
+      <DependentUpon>w_pokeplan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_schedule.resx">
+      <DependentUpon>w_schedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_yxydata.resx">
+      <DependentUpon>w_yxydata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="progressBar.resx">
+      <DependentUpon>progressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="sorting\w_sorting.resx">
+      <DependentUpon>w_sorting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="statement\w_binningSummary.resx">
+      <DependentUpon>w_binningSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_main.resx">
+      <DependentUpon>w_main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_user.resx">
+      <DependentUpon>w_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\DataSources\highSpeed.baseData.w_cigaretteInfo.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\login2.psd" />
+    <None Include="ty_hospital.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxMSComctlLib">
+      <Guid>{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSComctlLib">
+      <Guid>{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnCancel.bmp" />
+    <None Include="Resources\bg1.JPG" />
+    <None Include="Resources\bg2.JPG" />
+    <None Include="Resources\bg21.JPG" />
+    <Content Include="DotNetPrint.dll" />
+    <Content Include="DotNetPrint.xml" />
+    <Content Include="lib\AxInterop.DSOFramer.dll" />
+    <Content Include="lib\DevComponents.DotNetBar2.dll" />
+    <Content Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="lib\Interop.DSOFramer.dll" />
+    <Content Include="lib\WHC.Pager.WinControlEx.dll" />
+    <Content Include="Resources\btnOk.bmp" />
+    <Content Include="Resources\login2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InBound\InBound.csproj">
+      <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
+      <Name>InBound</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

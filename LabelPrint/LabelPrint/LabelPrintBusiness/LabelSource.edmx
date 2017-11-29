@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="T_WMS_ITEM" EntityType="Model.Store.T_WMS_ITEM" store:Type="Tables" Schema="ZOOMTEL" />
+        </EntityContainer>
+        <EntityType Name="T_WMS_ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="DCNO" Type="nvarchar2" Nullable="false" MaxLength="40" />
+          <Property Name="SHIPPER_ID" Type="number" Nullable="false" />
+          <Property Name="ITEMNO" Type="nvarchar2" Nullable="false" MaxLength="40" />
+          <Property Name="ITEMNAME" Type="nvarchar2" Nullable="false" MaxLength="100" />
+          <Property Name="SHORTNAME" Type="nvarchar2" MaxLength="100" />
+          <Property Name="SPEC" Type="nvarchar2" Nullable="false" MaxLength="80" />
+          <Property Name="ABCCODE" Type="number" Nullable="false" />
+          <Property Name="ITEMPRICE" Type="number" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="SHIPTYPE" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ITEMTYPE_ID" Type="nvarchar2" Nullable="false" MaxLength="40" />
+          <Property Name="PRODUCEAREA" Type="nvarchar2" Nullable="false" MaxLength="50" />
+          <Property Name="MANUFACTURER_ID" Type="number" Nullable="false" />
+          <Property Name="VENDOR_ID" Type="number" Nullable="false" />
+          <Property Name="BASEUOM_ID" Type="number" Nullable="false" />
+          <Property Name="DEFAULTUOM_ID" Type="number" Nullable="false" />
+          <Property Name="STORAGECONDITION" Type="number" Nullable="false" />
+          <Property Name="ISLOTCTRL" Type="number" Nullable="false" />
+          <Property Name="SHELFLIFE" Type="number" Nullable="false" />
+          <Property Name="SHELFLIFETYPE" Type="nvarchar2" Nullable="false" MaxLength="20" />
+          <Property Name="PALLETRATIO" Type="number" Nullable="false" Precision="3" />
+          <Property Name="CREATETIME" Type="date" Nullable="false" />
+          <Property Name="CREATEUSER" Type="nvarchar2" Nullable="false" MaxLength="20" />
+          <Property Name="MODIFYTIME" Type="date" Nullable="false" />
+          <Property Name="MODIFYUSER" Type="nvarchar2" Nullable="false" MaxLength="20" />
+          <Property Name="ROWSTATUS" Type="number" Nullable="false" />
+          <Property Name="CATID" Type="number" Nullable="false" />
+          <Property Name="BIGBOX_BAR" Type="varchar2" MaxLength="10" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="LabelPrintEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
+        </EntityContainer>
+        <EntityType Name="T_WMS_ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="DCNO" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="SHIPPER_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ITEMNO" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="ITEMNAME" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="SHORTNAME" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="SPEC" Type="String" Nullable="false" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="ABCCODE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ITEMPRICE" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="SHIPTYPE" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="ITEMTYPE_ID" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="PRODUCEAREA" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MANUFACTURER_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="VENDOR_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BASEUOM_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="DEFAULTUOM_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="STORAGECONDITION" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ISLOTCTRL" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SHELFLIFE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SHELFLIFETYPE" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="PALLETRATIO" Type="Int16" Nullable="false" />
+          <Property Name="CREATETIME" Type="DateTime" Nullable="false" />
+          <Property Name="CREATEUSER" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="MODIFYTIME" Type="DateTime" Nullable="false" />
+          <Property Name="MODIFYUSER" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="ROWSTATUS" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="CATID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BIGBOX_BAR" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="LabelPrintEntities">
+          <EntitySetMapping Name="T_WMS_ITEM">
+            <EntityTypeMapping TypeName="Model.T_WMS_ITEM">
+              <MappingFragment StoreEntitySet="T_WMS_ITEM">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DCNO" ColumnName="DCNO" />
+                <ScalarProperty Name="SHIPPER_ID" ColumnName="SHIPPER_ID" />
+                <ScalarProperty Name="ITEMNO" ColumnName="ITEMNO" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
+                <ScalarProperty Name="SPEC" ColumnName="SPEC" />
+                <ScalarProperty Name="ABCCODE" ColumnName="ABCCODE" />
+                <ScalarProperty Name="ITEMPRICE" ColumnName="ITEMPRICE" />
+                <ScalarProperty Name="SHIPTYPE" ColumnName="SHIPTYPE" />
+                <ScalarProperty Name="ITEMTYPE_ID" ColumnName="ITEMTYPE_ID" />
+                <ScalarProperty Name="PRODUCEAREA" ColumnName="PRODUCEAREA" />
+                <ScalarProperty Name="MANUFACTURER_ID" ColumnName="MANUFACTURER_ID" />
+                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
+                <ScalarProperty Name="BASEUOM_ID" ColumnName="BASEUOM_ID" />
+                <ScalarProperty Name="DEFAULTUOM_ID" ColumnName="DEFAULTUOM_ID" />
+                <ScalarProperty Name="STORAGECONDITION" ColumnName="STORAGECONDITION" />
+                <ScalarProperty Name="ISLOTCTRL" ColumnName="ISLOTCTRL" />
+                <ScalarProperty Name="SHELFLIFE" ColumnName="SHELFLIFE" />
+                <ScalarProperty Name="SHELFLIFETYPE" ColumnName="SHELFLIFETYPE" />
+                <ScalarProperty Name="PALLETRATIO" ColumnName="PALLETRATIO" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="CREATEUSER" ColumnName="CREATEUSER" />
+                <ScalarProperty Name="MODIFYTIME" ColumnName="MODIFYTIME" />
+                <ScalarProperty Name="MODIFYUSER" ColumnName="MODIFYUSER" />
+                <ScalarProperty Name="ROWSTATUS" ColumnName="ROWSTATUS" />
+                <ScalarProperty Name="CATID" ColumnName="CATID" />
+                <ScalarProperty Name="BIGBOX_BAR" ColumnName="BIGBOX_BAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="LabelSource" ZoomLevel="54">
+        <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="0.75" PointY="0.75" Height="6.1704923502604156" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

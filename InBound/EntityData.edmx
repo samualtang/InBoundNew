@@ -1,0 +1,2313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="INF_DEVICESTATUS" EntityType="Model.Store.INF_DEVICESTATUS" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.Store.INF_EQUIPMENTREQUEST" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.Store.INF_EQUIPMENTSTATUS" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.Store.INF_JOBDOWNLOAD" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.Store.T_PRODUCE_POKE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.Store.T_WMS_ATSCELL_CJ_HIS" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.Store.T_WMS_ATSCELL_IN" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELL_OUT" EntityType="Model.Store.T_WMS_ATSCELL_OUT" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELLINFO" EntityType="Model.Store.T_WMS_ATSCELLINFO" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ATSCELLINFO_DETAIL" EntityType="Model.Store.T_WMS_ATSCELLINFO_DETAIL" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_CONSIGNOR" EntityType="Model.Store.T_WMS_CONSIGNOR" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.Store.T_WMS_DEVICEERRLIST" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.Store.T_WMS_DEVICESTATUS" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_INBOUND" EntityType="Model.Store.T_WMS_INBOUND" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_INBOUND_LINE" EntityType="Model.Store.T_WMS_INBOUND_LINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_INOUTBOUND_TASK" EntityType="Model.Store.T_WMS_INOUTBOUND_TASK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ITEM" EntityType="Model.Store.T_WMS_ITEM" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_LANEWAY" EntityType="Model.Store.T_WMS_LANEWAY" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_LOG" EntityType="Model.Store.T_WMS_LOG" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_OUTBOUND_LINE" EntityType="Model.Store.T_WMS_OUTBOUND_LINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_REF_PALLET_RFID" EntityType="Model.Store.T_WMS_REF_PALLET_RFID" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_STORAGEAREA" EntityType="Model.Store.T_WMS_STORAGEAREA" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.Store.T_WMS_STORAGEAREA_INOUT" store:Type="Tables" Schema="ZOOMTEL" />
+        </EntityContainer>
+        <EntityType Name="INF_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="DEVICEID" />
+          </Key>
+          <Property Name="DEVICEID" Type="varchar2" Nullable="false" MaxLength="32" />
+          <Property Name="ISERROR" Type="char" MaxLength="1" />
+          <Property Name="UPDATEDATE" Type="date" />
+        </EntityType>
+        <EntityType Name="INF_EQUIPMENTREQUEST">
+          <Key>
+            <PropertyRef Name="REQUESTID" />
+          </Key>
+          <Property Name="REQUESTID" Type="varchar2" Nullable="false" MaxLength="32" />
+          <Property Name="EQUIPMENTID" Type="varchar2" MaxLength="32" />
+          <Property Name="REQUESTTYPE" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="32" />
+          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
+          <Property Name="BRANDID" Type="varchar2" MaxLength="20" />
+          <Property Name="REQUESTQTY" Type="number" />
+          <Property Name="ENTERDATE" Type="date" />
+          <Property Name="RESPONDDATE" Type="date" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="INBOUNDNO" Type="number" />
+          <Property Name="TUTYPE" Type="number" />
+        </EntityType>
+        <EntityType Name="INF_EQUIPMENTSTATUS">
+          <Key>
+            <PropertyRef Name="EQUIPMENTID" />
+          </Key>
+          <Property Name="EQUIPMENTID" Type="varchar2" Nullable="false" MaxLength="32" />
+          <Property Name="EQUIPMENTSTATUS" Type="varchar2" MaxLength="32" />
+          <Property Name="UPDATEDATE" Type="date" />
+        </EntityType>
+        <EntityType Name="INF_JOBDOWNLOAD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" Nullable="false" MaxLength="32" />
+          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
+          <Property Name="JOBTYPE" Type="number" />
+          <Property Name="SOURCE" Type="varchar2" MaxLength="32" />
+          <Property Name="TARGET" Type="varchar2" MaxLength="32" />
+          <Property Name="BRANDID" Type="varchar2" MaxLength="10" />
+          <Property Name="PLANQTY" Type="number" />
+          <Property Name="PILETYPE" Type="number" />
+          <Property Name="PRIORITY" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="32" />
+          <Property Name="TUTYPE" Type="number" />
+          <Property Name="CREATEDATE" Type="date" />
+          <Property Name="ENTRYDATE" Type="date" />
+          <Property Name="RESPONDDATE" Type="date" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="EXTATTR1" Type="varchar2" MaxLength="30" />
+          <Property Name="EXTATTR2" Type="varchar2" MaxLength="30" />
+          <Property Name="EXTATTR3" Type="varchar2" MaxLength="30" />
+          <Property Name="INBOUNDNO" Type="number" />
+          <Property Name="WEIGHT" Type="number" />
+          <Property Name="INPUTTYPE" Type="number" />
+          <Property Name="FULLCOUNT" Type="number" />
+          <Property Name="CDTYPE" Type="number" />
+          <Property Name="TASKNO" Type="number" />
+        </EntityType>
+        <EntityType Name="INF_JOBFEEDBACK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" Nullable="false" MaxLength="32" />
+          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
+          <Property Name="FEEDBACKSTATUS" Type="number" />
+          <Property Name="ERRORCODE" Type="varchar2" MaxLength="60" />
+          <Property Name="ENTERDATE" Type="date" />
+          <Property Name="RESPONDDATE" Type="date" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="ISDEAL" Type="varchar2" MaxLength="10" />
+          <Property Name="PLANQTY" Type="number" />
+          <Property Name="ACTQTY" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="TROUGHNUM" Type="varchar2" MaxLength="30" />
+          <Property Name="POKENUM" Type="number" />
+          <Property Name="SORTSTATE" Type="number" />
+          <Property Name="TASKNUM" Type="number" />
+          <Property Name="TASKQTY" Type="number" />
+          <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="MAINBELT" Type="number" />
+          <Property Name="GROUPNO" Type="number" />
+          <Property Name="POKEPLACE" Type="number" />
+          <Property Name="UNIONSTATE" Type="number" />
+          <Property Name="MACHINESTATE" Type="number" />
+          <Property Name="MERAGENUM" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="UNIONEXPORTNUM" Type="varchar2" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_SORTTROUGH">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="LINENUM" Type="varchar2" MaxLength="10" />
+          <Property Name="TROUGHNUM" Type="varchar2" MaxLength="30" />
+          <Property Name="TROUGHDESC" Type="varchar2" MaxLength="30" />
+          <Property Name="ACTCOUNT" Type="number" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="STATE" Type="varchar2" MaxLength="10" />
+          <Property Name="MANTISSA" Type="number" />
+          <Property Name="CIGARETTETYPE" Type="number" />
+          <Property Name="REPLENISHLINE" Type="number" />
+          <Property Name="TRANSPORTATIONLINE" Type="number" />
+          <Property Name="LASTMANTISSA" Type="number" />
+          <Property Name="TROUGHTYPE" Type="number" />
+          <Property Name="GROUPNO" Type="number" />
+          <Property Name="THRESHOLD" Type="number" />
+          <Property Name="BOXCOUNT" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="LINENUM" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
+          <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="REGIONDESC" Type="varchar2" MaxLength="30" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="30" />
+          <Property Name="COMPANYCODE" Type="varchar2" MaxLength="10" />
+          <Property Name="COMPANYNAME" Type="varchar2" MaxLength="20" />
+          <Property Name="BATCHCODE" Type="varchar2" MaxLength="12" />
+          <Property Name="SYNSEQ" Type="number" />
+          <Property Name="CUSTOMERCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="ORDERQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="CUSTOMERNAME" Type="varchar2" MaxLength="200" />
+          <Property Name="ORDERMONEY" Type="number" Precision="8" Scale="2" />
+          <Property Name="TASKQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="CAPACITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="PRIORITY" Type="number" Precision="8" />
+          <Property Name="TASKBOX" Type="varchar2" MaxLength="20" />
+          <Property Name="PACKAGEID" Type="varchar2" MaxLength="10" />
+          <Property Name="PACKAGEDESC" Type="varchar2" MaxLength="20" />
+          <Property Name="SORTSEQ" Type="number" />
+          <Property Name="LABLENUM" Type="varchar2" MaxLength="20" />
+          <Property Name="PLANTIME" Type="date" />
+          <Property Name="SORTTIME" Type="date" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="STATE" Type="varchar2" MaxLength="20" />
+          <Property Name="LABELBATCH" Type="number" Precision="3" />
+          <Property Name="PALLETNUM" Type="number" />
+          <Property Name="MAINBELT" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="ORDERDATE" Type="date" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="CIGARETTECODE" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="QUANTITY" Type="number" Precision="10" Scale="1" />
+          <Property Name="UNIT" Type="varchar2" MaxLength="5" />
+          <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
+          <Property Name="SORTNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_SYS_ROUTEINFO">
+          <Key>
+            <PropertyRef Name="ROUTEID" />
+          </Key>
+          <Property Name="ROUTEID" Type="number" Nullable="false" Precision="6" />
+          <Property Name="ROUTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="ROUTENAME" Type="varchar2" MaxLength="50" />
+          <Property Name="REMARKS" Type="varchar2" MaxLength="100" />
+          <Property Name="ROUTETYPE" Type="number" Precision="1" />
+          <Property Name="DEPTID" Type="varchar2" MaxLength="30" />
+          <Property Name="AREATYPE" Type="number" Precision="1" />
+          <Property Name="DELSTATUS" Type="number" Precision="2" />
+          <Property Name="GISAREA" Type="number" />
+          <Property Name="VEHICLEID" Type="number" />
+          <Property Name="DRIVERID" Type="number" />
+          <Property Name="CASHIERID" Type="number" />
+          <Property Name="WAREHOUSE" Type="number" />
+          <Property Name="CALCID" Type="number" Precision="12" />
+        </EntityType>
+        <EntityType Name="T_SYS_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" Precision="12" />
+          <Property Name="USERCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="USERNAME" Type="varchar2" MaxLength="20" />
+          <Property Name="ICCARDNO" Type="varchar2" MaxLength="8" />
+          <Property Name="DEPTID" Type="number" Precision="6" />
+          <Property Name="SEX" Type="number" Precision="6" />
+          <Property Name="ISMARRIED" Type="number" Precision="6" />
+          <Property Name="BIRTHDATE" Type="varchar2" MaxLength="8" />
+          <Property Name="NATIONALITY" Type="number" Precision="6" />
+          <Property Name="POLITICALSTATUS" Type="number" Precision="6" />
+          <Property Name="IDNUM" Type="varchar2" MaxLength="18" />
+          <Property Name="IDREGISTER" Type="varchar2" MaxLength="80" />
+          <Property Name="NATIVEPLACE" Type="varchar2" MaxLength="80" />
+          <Property Name="SOCIALSECURITYID" Type="varchar2" MaxLength="40" />
+          <Property Name="ADDR" Type="varchar2" MaxLength="80" />
+          <Property Name="TELNUM" Type="varchar2" MaxLength="40" />
+          <Property Name="PHONENUM" Type="varchar2" MaxLength="40" />
+          <Property Name="OFFICENUM" Type="varchar2" MaxLength="40" />
+          <Property Name="QQNUM" Type="varchar2" MaxLength="40" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="80" />
+          <Property Name="SCHOOL" Type="varchar2" MaxLength="80" />
+          <Property Name="MAJOR" Type="varchar2" MaxLength="40" />
+          <Property Name="EDUBACKGROUND" Type="number" Precision="6" />
+          <Property Name="BANKID" Type="varchar2" MaxLength="40" />
+          <Property Name="BANKCARD" Type="varchar2" MaxLength="40" />
+          <Property Name="POSTID" Type="number" Precision="6" />
+          <Property Name="POSE" Type="number" Precision="6" />
+          <Property Name="TECHNICALTITLE" Type="varchar2" MaxLength="40" />
+          <Property Name="FOREIGNLANGUAGE" Type="varchar2" MaxLength="20" />
+          <Property Name="FOREIGNLANGUAGELEVEL" Type="varchar2" MaxLength="20" />
+          <Property Name="COMPUTERLEVEL" Type="varchar2" MaxLength="20" />
+          <Property Name="SPECIALTY" Type="varchar2" MaxLength="200" />
+          <Property Name="JOINWORKDATE" Type="varchar2" MaxLength="8" />
+          <Property Name="JOINUNITDATE" Type="varchar2" MaxLength="10" />
+          <Property Name="BGBEGDATE" Type="varchar2" MaxLength="10" />
+          <Property Name="BGENDDATE" Type="varchar2" MaxLength="10" />
+          <Property Name="DIMISSIONDATE" Type="varchar2" MaxLength="8" />
+          <Property Name="PHOTONAME" Type="varchar2" MaxLength="50" />
+          <Property Name="CREATEID" Type="number" Precision="12" />
+          <Property Name="CREATEDATE" Type="date" />
+          <Property Name="SYSREMARKS" Type="varchar2" MaxLength="400" />
+          <Property Name="GROUPREMARKS" Type="number" Precision="2" />
+          <Property Name="USERTYPE" Type="number" Precision="2" />
+          <Property Name="COMPANYEMAIL" Type="varchar2" MaxLength="80" />
+          <Property Name="USERPSW" Type="varchar2" MaxLength="100" />
+          <Property Name="USERPOSTID" Type="number" Precision="6" />
+          <Property Name="MAJORNAME" Type="varchar2" MaxLength="80" />
+          <Property Name="WORKSTATUS" Type="varchar2" MaxLength="20" />
+          <Property Name="SHORTTELNUM" Type="number" />
+          <Property Name="NATION" Type="varchar2" MaxLength="20" />
+          <Property Name="EDUCATION" Type="varchar2" MaxLength="10" />
+          <Property Name="TITLE" Type="varchar2" MaxLength="40" />
+          <Property Name="SENIORITY" Type="number" Precision="2" />
+          <Property Name="LEAVEDATE" Type="varchar2" MaxLength="20" />
+          <Property Name="SELFSENIORITY" Type="number" Precision="2" />
+          <Property Name="SIGNATUREIMG" Type="varchar2" MaxLength="50" />
+          <Property Name="DELSTATUS" Type="number" Precision="2" />
+          <Property Name="WORKSOURCE" Type="varchar2" MaxLength="20" />
+          <Property Name="ROLEID" Type="number" Precision="6" />
+        </EntityType>
+        <EntityType Name="T_UN_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="TROUGHNUM" Type="varchar2" MaxLength="30" />
+          <Property Name="POKENUM" Type="number" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="TASKNUM" Type="number" />
+          <Property Name="TASKQTY" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="LINENUM" Type="varchar2" MaxLength="10" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="CUSTOMERCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="SECSORTNUM" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="T_UN_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="LINENUM" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
+          <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="REGIONDESC" Type="varchar2" MaxLength="30" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="COMPANYCODE" Type="varchar2" MaxLength="10" />
+          <Property Name="COMPANYNAME" Type="varchar2" MaxLength="20" />
+          <Property Name="BATCHCODE" Type="varchar2" MaxLength="12" />
+          <Property Name="SYNSEQ" Type="number" />
+          <Property Name="CUSTOMERCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="ORDERQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="CUSTOMERNAME" Type="varchar2" MaxLength="200" />
+          <Property Name="ORDERMONEY" Type="number" Precision="8" Scale="2" />
+          <Property Name="TASKQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="PRIORITY" Type="number" Precision="8" />
+          <Property Name="TASKBOX" Type="varchar2" MaxLength="20" />
+          <Property Name="SORTSEQ" Type="number" />
+          <Property Name="LABLENUM" Type="varchar2" MaxLength="20" />
+          <Property Name="PLANTIME" Type="date" />
+          <Property Name="SORTTIME" Type="date" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="STATE" Type="varchar2" MaxLength="20" />
+          <Property Name="LABELBATCH" Type="number" Precision="3" />
+          <Property Name="PALLETNUM" Type="number" />
+          <Property Name="EXISTRCD" Type="number" />
+          <Property Name="ORDERDATE" Type="date" />
+          <Property Name="MAINBELT" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="SECSORTNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_UN_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="CIGARETTECODE" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="QUANTITY" Type="number" Precision="10" Scale="1" />
+          <Property Name="UNIT" Type="varchar2" MaxLength="5" />
+          <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="LANEWAYNO" Type="varchar2" MaxLength="30" />
+          <Property Name="CELLNO" Type="varchar2" MaxLength="30" />
+          <Property Name="CELLNAME" Type="nvarchar2" MaxLength="100" />
+          <Property Name="DISTANCE" Type="number" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="WORKSTATUS" Type="number" />
+          <Property Name="COL" Type="number" />
+          <Property Name="FLOOR" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_CJ_HIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CELLNO" Type="nvarchar2" MaxLength="20" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="CIGARETTECODE" Type="nvarchar2" MaxLength="20" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="INBOUNDTIME" Type="date" />
+          <Property Name="INBOUNDID" Type="number" />
+          <Property Name="QTY" Type="number" />
+          <Property Name="BARCODE" Type="nvarchar2" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_IN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="INTYPE" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="REQUESTQTY" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="SOURCETARGET" Type="varchar2" MaxLength="30" />
+          <Property Name="OUTID" Type="number" />
+          <Property Name="CREATETIME" Type="date" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_OUT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="OUTTYPE" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="REQUESTQTY" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="OUTTARGET" Type="varchar2" MaxLength="30" />
+          <Property Name="RETURNQTY" Type="number" />
+          <Property Name="ACTQTY" Type="number" />
+          <Property Name="REMAK" Type="varchar2" MaxLength="50" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="ACTRETURNQTY" Type="number" />
+          <Property Name="LOCKRETURNQTY" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELLINFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="CELLNO" Type="varchar2" MaxLength="30" />
+          <Property Name="DISMANTLE" Type="number" />
+          <Property Name="PALLETNO" Type="varchar2" MaxLength="50" />
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="INBOUNDID" Type="number" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="CONSIGNOR" Type="varchar2" MaxLength="50" />
+          <Property Name="INBOUNDTIME" Type="date" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELLINFO_DETAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="QTY" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CELLNO" Type="varchar2" MaxLength="50" />
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="REQUESTQTY" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="T_WMS_CONSIGNOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CODE" Type="varchar2" MaxLength="20" />
+          <Property Name="COMAPANY" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CONTACT" Type="nvarchar2" MaxLength="20" />
+          <Property Name="PHONE" Type="varchar2" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICEERRLIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="DECICENO" Type="varchar2" MaxLength="50" />
+          <Property Name="DEVICENAME" Type="nvarchar2" MaxLength="100" />
+          <Property Name="ERRORCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="ERRORMSG" Type="nvarchar2" MaxLength="100" />
+          <Property Name="ERRTIME" Type="date" />
+          <Property Name="ERRORTYPE" Type="number" />
+          <Property Name="GROUPNO" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="DEVICENO" Type="nvarchar2" MaxLength="20" />
+          <Property Name="DEVICENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="TYPE" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_INBOUND">
+          <Key>
+            <PropertyRef Name="INBOUNDID" />
+          </Key>
+          <Property Name="INBOUNDID" Type="number" Nullable="false" />
+          <Property Name="NAVICERT" Type="varchar2" MaxLength="50" />
+          <Property Name="CONTRACTNO" Type="varchar2" MaxLength="50" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="QTY" Type="number" />
+          <Property Name="SUPPLIER" Type="nvarchar2" MaxLength="100" />
+          <Property Name="CONSIGNSOR" Type="nvarchar2" MaxLength="100" />
+          <Property Name="INTYPE" Type="number" />
+          <Property Name="REMARKS" Type="nvarchar2" MaxLength="100" />
+          <Property Name="STATUS" Type="varchar2" MaxLength="20" />
+          <Property Name="BB_UUID" Type="varchar2" MaxLength="60" />
+          <Property Name="STARTTIME" Type="date" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="ENDTIME" Type="date" />
+        </EntityType>
+        <EntityType Name="T_WMS_INBOUND_LINE">
+          <Key>
+            <PropertyRef Name="INBOUNDDETAILID" />
+          </Key>
+          <Property Name="INBOUNDDETAILID" Type="number" Nullable="false" />
+          <Property Name="INBOUNDID" Type="number" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
+          <Property Name="BOXQTY" Type="number" />
+          <Property Name="ITEMQTY" Type="number" />
+          <Property Name="CONSIGNSOR" Type="nvarchar2" MaxLength="100" />
+          <Property Name="STATUS" Type="nvarchar2" MaxLength="20" />
+          <Property Name="ABOXQTY" Type="number" />
+          <Property Name="LOCKQTY" Type="number" />
+          <Property Name="OTHERQTY" Type="number" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="50" />
+          <Property Name="BDPCIGCODE" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_WMS_INOUTBOUND_TASK">
+          <Key>
+            <PropertyRef Name="TASKNO" />
+          </Key>
+          <Property Name="TASKNO" Type="number" Nullable="false" />
+          <Property Name="SOURCEADD" Type="varchar2" MaxLength="20" />
+          <Property Name="TARGETADD" Type="varchar2" MaxLength="20" />
+          <Property Name="TASKTYPE" Type="number" />
+          <Property Name="TASKSTATUS" Type="number" />
+          <Property Name="QTY" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="INBOUNDLINEID" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="DCNO" Type="varchar2" MaxLength="40" />
+          <Property Name="SHIPPER_ID" Type="number" />
+          <Property Name="ITEMNO" Type="varchar2" Nullable="false" MaxLength="20" />
+          <Property Name="ITEMNAME" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="SHORTNAME" Type="varchar2" MaxLength="50" />
+          <Property Name="SPEC" Type="varchar2" MaxLength="80" />
+          <Property Name="ABCCODE" Type="number" />
+          <Property Name="ITEMPRICE" Type="number" Precision="18" Scale="6" />
+          <Property Name="SHIPTYPE" Type="char" MaxLength="1" />
+          <Property Name="ITEMTYPE_ID" Type="nvarchar2" MaxLength="40" />
+          <Property Name="PRODUCEAREA" Type="nvarchar2" MaxLength="50" />
+          <Property Name="MANUFACTURER_ID" Type="number" />
+          <Property Name="VENDOR_ID" Type="number" />
+          <Property Name="BASEUOM_ID" Type="varchar2" MaxLength="30" />
+          <Property Name="DEFAULTUOM_ID" Type="varchar2" MaxLength="30" />
+          <Property Name="STORAGECONDITION" Type="varchar2" MaxLength="30" />
+          <Property Name="ISLOTCTRL" Type="number" />
+          <Property Name="SHELFLIFE" Type="number" />
+          <Property Name="SHELFLIFETYPE" Type="varchar2" MaxLength="1" />
+          <Property Name="PALLETRATIO" Type="number" Precision="3" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="CREATEUSER" Type="varchar2" MaxLength="20" />
+          <Property Name="MODIFYTIME" Type="date" />
+          <Property Name="MODIFYUSER" Type="varchar2" MaxLength="20" />
+          <Property Name="ROWSTATUS" Type="number" />
+          <Property Name="CATID" Type="number" />
+          <Property Name="BIGBOX_BAR" Type="varchar2" MaxLength="30" />
+          <Property Name="PACK_BAR" Type="varchar2" MaxLength="30" />
+          <Property Name="ITEM_KIND" Type="char" MaxLength="1" />
+          <Property Name="KIND" Type="char" MaxLength="1" />
+          <Property Name="H_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="T_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="J_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="W_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="X_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="WEIGHT" Type="number" Precision="20" Scale="2" />
+          <Property Name="FULLCOUNT" Type="number" />
+          <Property Name="CDTYPE" Type="number" />
+          <Property Name="ISCANSCANCODE" Type="number" />
+          <Property Name="DXTYPE" Type="varchar2" MaxLength="20" />
+          <Property Name="JT_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="WZ_SIZE" Type="number" Precision="20" Scale="2" />
+          <Property Name="OUTTYPE" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_LANEWAY">
+          <Key>
+            <PropertyRef Name="LANEWAYNO" />
+          </Key>
+          <Property Name="LANEWAYNO" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="LANEWAYNAME" Type="nvarchar2" MaxLength="20" />
+          <Property Name="STATUS" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="COL1" Type="number" />
+          <Property Name="COL2" Type="number" />
+          <Property Name="COL3" Type="number" />
+          <Property Name="COL4" Type="number" />
+          <Property Name="COL5" Type="number" />
+          <Property Name="COL6" Type="number" />
+          <Property Name="COL7" Type="number" />
+          <Property Name="COL8" Type="number" />
+          <Property Name="COL9" Type="number" />
+          <Property Name="COL10" Type="number" />
+          <Property Name="COL11" Type="number" />
+          <Property Name="COL12" Type="number" />
+          <Property Name="COL13" Type="number" />
+          <Property Name="COL14" Type="number" />
+          <Property Name="COL15" Type="number" />
+          <Property Name="COL16" Type="number" />
+          <Property Name="COL17" Type="number" />
+          <Property Name="COL18" Type="number" />
+          <Property Name="COL19" Type="number" />
+          <Property Name="COL20" Type="number" />
+          <Property Name="COL21" Type="number" />
+          <Property Name="COL22" Type="number" />
+          <Property Name="COL23" Type="number" />
+          <Property Name="COL24" Type="number" />
+          <Property Name="COL25" Type="number" />
+          <Property Name="COL26" Type="number" />
+          <Property Name="COL27" Type="number" />
+          <Property Name="COL28" Type="number" />
+          <Property Name="COL29" Type="number" />
+          <Property Name="COL30" Type="number" />
+          <Property Name="COL31" Type="number" />
+          <Property Name="COL32" Type="number" />
+          <Property Name="COL33" Type="number" />
+          <Property Name="COL34" Type="number" />
+          <Property Name="COL35" Type="number" />
+          <Property Name="COL36" Type="number" />
+          <Property Name="COL37" Type="number" />
+          <Property Name="COL38" Type="number" />
+          <Property Name="COL39" Type="number" />
+          <Property Name="COL40" Type="number" />
+          <Property Name="COL41" Type="number" />
+          <Property Name="COL42" Type="number" />
+          <Property Name="COL43" Type="number" />
+          <Property Name="COL44" Type="number" />
+          <Property Name="COL45" Type="number" />
+          <Property Name="COL46" Type="number" />
+          <Property Name="COL47" Type="number" />
+          <Property Name="COL48" Type="number" />
+          <Property Name="COL49" Type="number" />
+          <Property Name="COL50" Type="number" />
+          <Property Name="COL51" Type="number" />
+          <Property Name="COL52" Type="number" />
+          <Property Name="COL53" Type="number" />
+          <Property Name="COL54" Type="number" />
+          <Property Name="COL55" Type="number" />
+          <Property Name="COL56" Type="number" />
+          <Property Name="COL57" Type="number" />
+          <Property Name="COL58" Type="number" />
+          <Property Name="COL59" Type="number" />
+          <Property Name="COL60" Type="number" />
+          <Property Name="COL61" Type="number" />
+          <Property Name="COL62" Type="number" />
+          <Property Name="COL63" Type="number" />
+          <Property Name="COL64" Type="number" />
+          <Property Name="COL65" Type="number" />
+          <Property Name="COL66" Type="number" />
+          <Property Name="COL67" Type="number" />
+          <Property Name="COL68" Type="number" />
+          <Property Name="COL69" Type="number" />
+          <Property Name="COL70" Type="number" />
+          <Property Name="COL71" Type="number" />
+          <Property Name="COL72" Type="number" />
+          <Property Name="COL73" Type="number" />
+          <Property Name="COL74" Type="number" />
+          <Property Name="COL75" Type="number" />
+          <Property Name="COL76" Type="number" />
+          <Property Name="COL77" Type="number" />
+          <Property Name="COL78" Type="number" />
+          <Property Name="COL79" Type="number" />
+          <Property Name="COL80" Type="number" />
+          <Property Name="COL81" Type="number" />
+          <Property Name="COL82" Type="number" />
+          <Property Name="COL83" Type="number" />
+          <Property Name="COL84" Type="number" />
+          <Property Name="COL85" Type="number" />
+          <Property Name="COL86" Type="number" />
+          <Property Name="COL87" Type="number" />
+          <Property Name="COL88" Type="number" />
+          <Property Name="ORDRENO" Type="varchar2" MaxLength="30" />
+          <Property Name="CUSTOMERCODE" Type="varchar2" MaxLength="30" />
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="TOTALQTY" Type="number" />
+          <Property Name="CTYPE" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_OUTBOUND_LINE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="OUTBOUNDID" Type="number" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
+          <Property Name="BOXQTY" Type="number" />
+          <Property Name="ITEMQTY" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_REF_PALLET_RFID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="RFID" Type="varchar2" MaxLength="50" />
+          <Property Name="PALLECTNO" Type="varchar2" MaxLength="10" />
+          <Property Name="ID" Type="number" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_WMS_STORAGEAREA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="AREANAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="AREACODE" Type="varchar2" MaxLength="20" />
+          <Property Name="REMARKS" Type="nvarchar2" MaxLength="100" />
+          <Property Name="STATUS" Type="number" />
+        </EntityType>
+        <EntityType Name="T_WMS_STORAGEAREA_INOUT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="AREAID" Type="number" />
+          <Property Name="CELLNO" Type="varchar2" MaxLength="30" />
+          <Property Name="QTY" Type="number" />
+          <Property Name="INOUTTYPE" Type="number" />
+          <Property Name="TASKNO" Type="varchar2" MaxLength="50" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CREATETIME" Type="date" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="BOXQTY" Type="number" />
+          <Property Name="CIGARATTETYPE" Type="number" />
+          <Property Name="CREATENAME" Type="nvarchar2" MaxLength="20" />
+          <Property Name="BARCODE" Type="varchar2" MaxLength="30" />
+          <Property Name="GROUPNO" Type="number" />
+        </EntityType>
+        <Function Name="PROC_IN_CELLNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ZOOMTEL">
+          <Parameter Name="P_CODE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_ERRCODE" Type="varchar2" Mode="Out" />
+          <Parameter Name="P_ERRMSG" Type="varchar2" Mode="Out" />
+        </Function>
+        <Function Name="PROC_IN_FIXLANEWAY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ZOOMTEL">
+          <Parameter Name="P_CODE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_LANEWAYNO" Type="varchar2" Mode="In" />
+          <Parameter Name="P_ERRCODE" Type="varchar2" Mode="Out" />
+          <Parameter Name="P_ERRMSG" Type="varchar2" Mode="Out" />
+        </Function>
+        <Function Name="PROC_OUT_CELLNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ZOOMTEL">
+          <Parameter Name="P_CODE" Type="varchar2" Mode="In" />
+          <Parameter Name="P_QTY" Type="number" Mode="In" />
+          <Parameter Name="P_ERRCODE" Type="varchar2" Mode="Out" />
+          <Parameter Name="P_ERRMSG" Type="varchar2" Mode="Out" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_WMS_CONSIGNOR" EntityType="Model.T_WMS_CONSIGNOR" />
+          <EntitySet Name="T_WMS_INBOUND_LINE" EntityType="Model.T_WMS_INBOUND_LINE" />
+          <EntitySet Name="T_WMS_INOUTBOUND_TASK" EntityType="Model.T_WMS_INOUTBOUND_TASK" />
+          <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
+          <EntitySet Name="T_WMS_LANEWAY" EntityType="Model.T_WMS_LANEWAY" />
+          <EntitySet Name="T_WMS_OUTBOUND_LINE" EntityType="Model.T_WMS_OUTBOUND_LINE" />
+          <EntitySet Name="T_WMS_REF_PALLET_RFID" EntityType="Model.T_WMS_REF_PALLET_RFID" />
+          <EntitySet Name="T_WMS_STORAGEAREA" EntityType="Model.T_WMS_STORAGEAREA" />
+          <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.T_SYS_ROUTEINFO" />
+          <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
+          <FunctionImport Name="PROC_OUT_CELLNO">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_QTY" Mode="In" Type="Decimal" />
+            <Parameter Name="P_ERRCODE" Mode="Out" Type="String" />
+            <Parameter Name="P_ERRMSG" Mode="Out" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.INF_JOBFEEDBACK" />
+          <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.T_WMS_ATSCELL" />
+          <EntitySet Name="T_WMS_ATSCELLINFO_DETAIL" EntityType="Model.T_WMS_ATSCELLINFO_DETAIL" />
+          <EntitySet Name="T_WMS_LOG" EntityType="Model.T_WMS_LOG" />
+          <FunctionImport Name="PROC_IN_CELLNO">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_ERRCODE" Mode="Out" Type="String" />
+            <Parameter Name="P_ERRMSG" Mode="Out" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
+          <FunctionImport Name="PROC_IN_FIXLANEWAY">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_LANEWAYNO" Mode="In" Type="String" />
+            <Parameter Name="P_ERRCODE" Mode="Out" Type="String" />
+            <Parameter Name="P_ERRMSG" Mode="Out" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.T_WMS_ATSCELL_CJ_HIS" />
+          <EntitySet Name="T_SYS_USER" EntityType="Model.T_SYS_USER" />
+          <EntitySet Name="T_UN_TASKLINE" EntityType="Model.T_UN_TASKLINE" />
+          <EntitySet Name="T_WMS_ATSCELLINFO" EntityType="Model.T_WMS_ATSCELLINFO" />
+          <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
+          <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.T_PRODUCE_TASK" />
+          <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.T_PRODUCE_TASKLINE" />
+          <EntitySet Name="T_WMS_INBOUND" EntityType="Model.T_WMS_INBOUND" />
+          <EntitySet Name="T_UN_TASK" EntityType="Model.T_UN_TASK" />
+          <EntitySet Name="INF_DEVICESTATUS" EntityType="Model.INF_DEVICESTATUS" />
+          <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.INF_EQUIPMENTSTATUS" />
+          <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
+          <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.INF_EQUIPMENTREQUEST" />
+          <EntitySet Name="T_WMS_ATSCELL_OUT" EntityType="Model.T_WMS_ATSCELL_OUT" />
+          <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.T_WMS_ATSCELL_IN" />
+          <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.INF_JOBDOWNLOAD" />
+          <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
+          <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
+        </EntityContainer>
+        <EntityType Name="T_WMS_CONSIGNOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMAPANY" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CONTACT" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PHONE" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_WMS_INBOUND_LINE">
+          <Key>
+            <PropertyRef Name="INBOUNDDETAILID" />
+          </Key>
+          <Property Type="Decimal" Name="INBOUNDDETAILID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INBOUNDID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="BOXQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ITEMQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="CONSIGNSOR" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="ABOXQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="LOCKQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="OTHERQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BDPCIGCODE" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_WMS_INOUTBOUND_TASK">
+          <Key>
+            <PropertyRef Name="TASKNO" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNO" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="SOURCEADD" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TARGETADD" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TASKTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKSTATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="INBOUNDLINEID" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DCNO" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SHIPPER_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="ITEMNO" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ITEMNAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SHORTNAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SPEC" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ABCCODE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ITEMPRICE" Precision="18" Scale="6" />
+          <Property Type="String" Name="SHIPTYPE" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="ITEMTYPE_ID" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PRODUCEAREA" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="MANUFACTURER_ID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="VENDOR_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="BASEUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DEFAULTUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STORAGECONDITION" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ISLOTCTRL" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SHELFLIFE" Precision="38" Scale="0" />
+          <Property Type="String" Name="SHELFLIFETYPE" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="PALLETRATIO" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="String" Name="CREATEUSER" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="MODIFYTIME" />
+          <Property Type="String" Name="MODIFYUSER" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ROWSTATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CATID" Precision="38" Scale="0" />
+          <Property Type="String" Name="BIGBOX_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PACK_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ITEM_KIND" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="KIND" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="H_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="T_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="J_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="W_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="X_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="WEIGHT" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="FULLCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CDTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ISCANSCANCODE" Precision="38" Scale="0" />
+          <Property Type="String" Name="DXTYPE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="JT_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="WZ_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="OUTTYPE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_LANEWAY">
+          <Key>
+            <PropertyRef Name="LANEWAYNO" />
+          </Key>
+          <Property Type="String" Name="LANEWAYNO" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LANEWAYNAME" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_OUTBOUND_LINE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="OUTBOUNDID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="BOXQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ITEMQTY" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_REF_PALLET_RFID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="RFID" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PALLECTNO" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_STORAGEAREA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="AREANAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AREACODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REMARKS" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_SYS_ROUTEINFO">
+          <Key>
+            <PropertyRef Name="ROUTEID" />
+          </Key>
+          <Property Type="Int32" Name="ROUTEID" Nullable="false" />
+          <Property Type="String" Name="ROUTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ROUTENAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REMARKS" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="ROUTETYPE" />
+          <Property Type="String" Name="DEPTID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="AREATYPE" />
+          <Property Type="Int16" Name="DELSTATUS" />
+          <Property Type="Decimal" Name="GISAREA" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="VEHICLEID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="DRIVERID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CASHIERID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="WAREHOUSE" Precision="38" Scale="0" />
+          <Property Type="Int64" Name="CALCID" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_SORTTROUGH">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TROUGHDESC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ACTCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MANTISSA" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CIGARETTETYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="REPLENISHLINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TRANSPORTATIONLINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="LASTMANTISSA" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TROUGHTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="THRESHOLD" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="BOXCOUNT" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="INF_JOBFEEDBACK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOBID" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="FEEDBACKSTATUS" Precision="38" Scale="0" />
+          <Property Type="String" Name="ERRORCODE" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ENTERDATE" />
+          <Property Type="DateTime" Name="RESPONDDATE" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="String" Name="ISDEAL" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PLANQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ACTQTY" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LANEWAYNO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CELLNO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CELLNAME" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="DISTANCE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="WORKSTATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="FLOOR" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELLINFO_DETAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CELLNO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="REQUESTQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_WMS_LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="COL1" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL2" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL3" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL4" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL5" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL6" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL7" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL8" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL9" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL10" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL11" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL12" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL13" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL14" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL15" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL16" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL17" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL18" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL19" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL20" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL21" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL22" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL23" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL24" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL25" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL26" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL27" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL28" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL29" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL30" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL31" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL32" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL33" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL34" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL35" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL36" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL37" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL38" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL39" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL40" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL41" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL42" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL43" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL44" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL45" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL46" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL47" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL48" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL49" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL50" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL51" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL52" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL53" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL54" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL55" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL56" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL57" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL58" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL59" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL60" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL61" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL62" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL63" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL64" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL65" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL66" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL67" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL68" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL69" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL70" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL71" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL72" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL73" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL74" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL75" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL76" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL77" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL78" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL79" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL80" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL81" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL82" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL83" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL84" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL85" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL86" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL87" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="COL88" Precision="38" Scale="0" />
+          <Property Type="String" Name="ORDRENO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TOTALQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DEVICENO" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DEVICENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_CJ_HIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CELLNO" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="INBOUNDTIME" />
+          <Property Type="Decimal" Name="INBOUNDID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_SYS_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="USERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="USERNAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ICCARDNO" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DEPTID" />
+          <Property Type="Int32" Name="SEX" />
+          <Property Type="Int32" Name="ISMARRIED" />
+          <Property Type="String" Name="BIRTHDATE" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="NATIONALITY" />
+          <Property Type="Int32" Name="POLITICALSTATUS" />
+          <Property Type="String" Name="IDNUM" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="IDREGISTER" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NATIVEPLACE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOCIALSECURITYID" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ADDR" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TELNUM" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PHONENUM" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="OFFICENUM" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="QQNUM" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EMAIL" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SCHOOL" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MAJOR" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="EDUBACKGROUND" />
+          <Property Type="String" Name="BANKID" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BANKCARD" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="POSTID" />
+          <Property Type="Int32" Name="POSE" />
+          <Property Type="String" Name="TECHNICALTITLE" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FOREIGNLANGUAGE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FOREIGNLANGUAGELEVEL" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPUTERLEVEL" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SPECIALTY" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOINWORKDATE" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOINUNITDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BGBEGDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BGENDDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DIMISSIONDATE" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PHOTONAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="CREATEID" />
+          <Property Type="DateTime" Name="CREATEDATE" />
+          <Property Type="String" Name="SYSREMARKS" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="GROUPREMARKS" />
+          <Property Type="Int16" Name="USERTYPE" />
+          <Property Type="String" Name="COMPANYEMAIL" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="USERPSW" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="USERPOSTID" />
+          <Property Type="String" Name="MAJORNAME" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="WORKSTATUS" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SHORTTELNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="NATION" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EDUCATION" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="SENIORITY" />
+          <Property Type="String" Name="LEAVEDATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="SELFSENIORITY" />
+          <Property Type="String" Name="SIGNATUREIMG" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="DELSTATUS" />
+          <Property Type="String" Name="WORKSOURCE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ROLEID" />
+        </EntityType>
+        <EntityType Name="T_UN_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QUANTITY" Precision="10" Scale="1" />
+          <Property Type="String" Name="UNIT" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ALLOWSORT" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELLINFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="CELLNO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="DISMANTLE" Precision="38" Scale="0" />
+          <Property Type="String" Name="PALLETNO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INBOUNDID" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="String" Name="CONSIGNOR" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="INBOUNDTIME" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTSTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKEPLACE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="UNIONSTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MERAGENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="UNIONEXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BILLCODE" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONDESC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BILLCODE" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYCODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYNAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BATCHCODE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SYNSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERQUANTITY" Precision="10" Scale="2" />
+          <Property Type="String" Name="CUSTOMERNAME" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERMONEY" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="TASKQUANTITY" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="CAPACITY" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="PRIORITY" />
+          <Property Type="String" Name="TASKBOX" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PACKAGEID" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PACKAGEDESC" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="LABLENUM" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PLANTIME" />
+          <Property Type="DateTime" Name="SORTTIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="String" Name="STATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="LABELBATCH" />
+          <Property Type="Decimal" Name="PALLETNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="ORDERDATE" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QUANTITY" Precision="10" Scale="1" />
+          <Property Type="String" Name="UNIT" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ALLOWSORT" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_INBOUND">
+          <Key>
+            <PropertyRef Name="INBOUNDID" />
+          </Key>
+          <Property Type="Decimal" Name="INBOUNDID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="NAVICERT" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CONTRACTNO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="SUPPLIER" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CONSIGNSOR" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="INTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="REMARKS" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BB_UUID" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="STARTTIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="DateTime" Name="ENDTIME" />
+        </EntityType>
+        <EntityType Name="T_UN_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONDESC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BILLCODE" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYCODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYNAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BATCHCODE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SYNSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERQUANTITY" Precision="10" Scale="2" />
+          <Property Type="String" Name="CUSTOMERNAME" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERMONEY" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="TASKQUANTITY" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="PRIORITY" />
+          <Property Type="String" Name="TASKBOX" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="LABLENUM" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PLANTIME" />
+          <Property Type="DateTime" Name="SORTTIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="String" Name="STATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="LABELBATCH" />
+          <Property Type="Decimal" Name="PALLETNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="EXISTRCD" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="ORDERDATE" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="INF_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="DEVICEID" />
+          </Key>
+          <Property Type="String" Name="DEVICEID" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISERROR" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="UPDATEDATE" />
+        </EntityType>
+        <EntityType Name="INF_EQUIPMENTSTATUS">
+          <Key>
+            <PropertyRef Name="EQUIPMENTID" />
+          </Key>
+          <Property Type="String" Name="EQUIPMENTID" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EQUIPMENTSTATUS" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="UPDATEDATE" />
+        </EntityType>
+        <EntityType Name="T_UN_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="INF_EQUIPMENTREQUEST">
+          <Key>
+            <PropertyRef Name="REQUESTID" />
+          </Key>
+          <Property Type="String" Name="REQUESTID" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EQUIPMENTID" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="REQUESTTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOBID" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BRANDID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="REQUESTQTY" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="ENTERDATE" />
+          <Property Type="DateTime" Name="RESPONDDATE" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INBOUNDNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TUTYPE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_OUT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="OUTTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="REQUESTQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="String" Name="OUTTARGET" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="RETURNQTY" Precision="38" Scale="0" DefaultValue="0" />
+          <Property Type="Decimal" Name="ACTQTY" Precision="38" Scale="0" DefaultValue="0" />
+          <Property Type="String" Name="REMAK" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="Decimal" Name="ACTRETURNQTY" Precision="38" Scale="0" DefaultValue="0" />
+          <Property Type="Decimal" Name="LOCKRETURNQTY" Precision="38" Scale="0" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ATSCELL_IN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="REQUESTQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="String" Name="SOURCETARGET" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="OUTID" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="CREATETIME" />
+        </EntityType>
+        <EntityType Name="INF_JOBDOWNLOAD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOBID" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="JOBTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="SOURCE" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TARGET" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BRANDID" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PLANQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PILETYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PRIORITY" Precision="38" Scale="0" />
+          <Property Type="String" Name="BARCODE" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TUTYPE" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="CREATEDATE" />
+          <Property Type="DateTime" Name="ENTRYDATE" />
+          <Property Type="DateTime" Name="RESPONDDATE" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="String" Name="EXTATTR1" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EXTATTR2" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EXTATTR3" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="INBOUNDNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="WEIGHT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INPUTTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="FULLCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CDTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNO" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_STORAGEAREA_INOUT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="AREAID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CELLNO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INOUTTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="TASKNO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="BOXQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CIGARATTETYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="CREATENAME" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICEERRLIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DECICENO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DEVICENAME" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ERRORCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ERRORMSG" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ERRTIME" />
+          <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="T_WMS_CONSIGNOR">
+            <EntityTypeMapping TypeName="Model.T_WMS_CONSIGNOR">
+              <MappingFragment StoreEntitySet="T_WMS_CONSIGNOR">
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+                <ScalarProperty Name="COMAPANY" ColumnName="COMAPANY" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_INBOUND_LINE">
+            <EntityTypeMapping TypeName="Model.T_WMS_INBOUND_LINE">
+              <MappingFragment StoreEntitySet="T_WMS_INBOUND_LINE">
+                <ScalarProperty Name="BDPCIGCODE" ColumnName="BDPCIGCODE" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="OTHERQTY" ColumnName="OTHERQTY" />
+                <ScalarProperty Name="LOCKQTY" ColumnName="LOCKQTY" />
+                <ScalarProperty Name="ABOXQTY" ColumnName="ABOXQTY" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="CONSIGNSOR" ColumnName="CONSIGNSOR" />
+                <ScalarProperty Name="ITEMQTY" ColumnName="ITEMQTY" />
+                <ScalarProperty Name="BOXQTY" ColumnName="BOXQTY" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="INBOUNDID" ColumnName="INBOUNDID" />
+                <ScalarProperty Name="INBOUNDDETAILID" ColumnName="INBOUNDDETAILID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_INOUTBOUND_TASK">
+            <EntityTypeMapping TypeName="Model.T_WMS_INOUTBOUND_TASK">
+              <MappingFragment StoreEntitySet="T_WMS_INOUTBOUND_TASK">
+                <ScalarProperty Name="INBOUNDLINEID" ColumnName="INBOUNDLINEID" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+                <ScalarProperty Name="TASKSTATUS" ColumnName="TASKSTATUS" />
+                <ScalarProperty Name="TASKTYPE" ColumnName="TASKTYPE" />
+                <ScalarProperty Name="TARGETADD" ColumnName="TARGETADD" />
+                <ScalarProperty Name="SOURCEADD" ColumnName="SOURCEADD" />
+                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ITEM">
+            <EntityTypeMapping TypeName="Model.T_WMS_ITEM">
+              <MappingFragment StoreEntitySet="T_WMS_ITEM">
+                <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />
+                <ScalarProperty Name="WZ_SIZE" ColumnName="WZ_SIZE" />
+                <ScalarProperty Name="JT_SIZE" ColumnName="JT_SIZE" />
+                <ScalarProperty Name="DXTYPE" ColumnName="DXTYPE" />
+                <ScalarProperty Name="ISCANSCANCODE" ColumnName="ISCANSCANCODE" />
+                <ScalarProperty Name="CDTYPE" ColumnName="CDTYPE" />
+                <ScalarProperty Name="FULLCOUNT" ColumnName="FULLCOUNT" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="X_SIZE" ColumnName="X_SIZE" />
+                <ScalarProperty Name="W_SIZE" ColumnName="W_SIZE" />
+                <ScalarProperty Name="J_SIZE" ColumnName="J_SIZE" />
+                <ScalarProperty Name="T_SIZE" ColumnName="T_SIZE" />
+                <ScalarProperty Name="H_SIZE" ColumnName="H_SIZE" />
+                <ScalarProperty Name="KIND" ColumnName="KIND" />
+                <ScalarProperty Name="ITEM_KIND" ColumnName="ITEM_KIND" />
+                <ScalarProperty Name="PACK_BAR" ColumnName="PACK_BAR" />
+                <ScalarProperty Name="BIGBOX_BAR" ColumnName="BIGBOX_BAR" />
+                <ScalarProperty Name="CATID" ColumnName="CATID" />
+                <ScalarProperty Name="ROWSTATUS" ColumnName="ROWSTATUS" />
+                <ScalarProperty Name="MODIFYUSER" ColumnName="MODIFYUSER" />
+                <ScalarProperty Name="MODIFYTIME" ColumnName="MODIFYTIME" />
+                <ScalarProperty Name="CREATEUSER" ColumnName="CREATEUSER" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="PALLETRATIO" ColumnName="PALLETRATIO" />
+                <ScalarProperty Name="SHELFLIFETYPE" ColumnName="SHELFLIFETYPE" />
+                <ScalarProperty Name="SHELFLIFE" ColumnName="SHELFLIFE" />
+                <ScalarProperty Name="ISLOTCTRL" ColumnName="ISLOTCTRL" />
+                <ScalarProperty Name="STORAGECONDITION" ColumnName="STORAGECONDITION" />
+                <ScalarProperty Name="DEFAULTUOM_ID" ColumnName="DEFAULTUOM_ID" />
+                <ScalarProperty Name="BASEUOM_ID" ColumnName="BASEUOM_ID" />
+                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
+                <ScalarProperty Name="MANUFACTURER_ID" ColumnName="MANUFACTURER_ID" />
+                <ScalarProperty Name="PRODUCEAREA" ColumnName="PRODUCEAREA" />
+                <ScalarProperty Name="ITEMTYPE_ID" ColumnName="ITEMTYPE_ID" />
+                <ScalarProperty Name="SHIPTYPE" ColumnName="SHIPTYPE" />
+                <ScalarProperty Name="ITEMPRICE" ColumnName="ITEMPRICE" />
+                <ScalarProperty Name="ABCCODE" ColumnName="ABCCODE" />
+                <ScalarProperty Name="SPEC" ColumnName="SPEC" />
+                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="ITEMNO" ColumnName="ITEMNO" />
+                <ScalarProperty Name="SHIPPER_ID" ColumnName="SHIPPER_ID" />
+                <ScalarProperty Name="DCNO" ColumnName="DCNO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_LANEWAY">
+            <EntityTypeMapping TypeName="Model.T_WMS_LANEWAY">
+              <MappingFragment StoreEntitySet="T_WMS_LANEWAY">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="LANEWAYNAME" ColumnName="LANEWAYNAME" />
+                <ScalarProperty Name="LANEWAYNO" ColumnName="LANEWAYNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_OUTBOUND_LINE">
+            <EntityTypeMapping TypeName="Model.T_WMS_OUTBOUND_LINE">
+              <MappingFragment StoreEntitySet="T_WMS_OUTBOUND_LINE">
+                <ScalarProperty Name="ITEMQTY" ColumnName="ITEMQTY" />
+                <ScalarProperty Name="BOXQTY" ColumnName="BOXQTY" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="OUTBOUNDID" ColumnName="OUTBOUNDID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_REF_PALLET_RFID">
+            <EntityTypeMapping TypeName="Model.T_WMS_REF_PALLET_RFID">
+              <MappingFragment StoreEntitySet="T_WMS_REF_PALLET_RFID">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PALLECTNO" ColumnName="PALLECTNO" />
+                <ScalarProperty Name="RFID" ColumnName="RFID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_STORAGEAREA">
+            <EntityTypeMapping TypeName="Model.T_WMS_STORAGEAREA">
+              <MappingFragment StoreEntitySet="T_WMS_STORAGEAREA">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="AREACODE" ColumnName="AREACODE" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SYS_ROUTEINFO">
+            <EntityTypeMapping TypeName="Model.T_SYS_ROUTEINFO">
+              <MappingFragment StoreEntitySet="T_SYS_ROUTEINFO">
+                <ScalarProperty Name="CALCID" ColumnName="CALCID" />
+                <ScalarProperty Name="WAREHOUSE" ColumnName="WAREHOUSE" />
+                <ScalarProperty Name="CASHIERID" ColumnName="CASHIERID" />
+                <ScalarProperty Name="DRIVERID" ColumnName="DRIVERID" />
+                <ScalarProperty Name="VEHICLEID" ColumnName="VEHICLEID" />
+                <ScalarProperty Name="GISAREA" ColumnName="GISAREA" />
+                <ScalarProperty Name="DELSTATUS" ColumnName="DELSTATUS" />
+                <ScalarProperty Name="AREATYPE" ColumnName="AREATYPE" />
+                <ScalarProperty Name="DEPTID" ColumnName="DEPTID" />
+                <ScalarProperty Name="ROUTETYPE" ColumnName="ROUTETYPE" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="ROUTENAME" ColumnName="ROUTENAME" />
+                <ScalarProperty Name="ROUTECODE" ColumnName="ROUTECODE" />
+                <ScalarProperty Name="ROUTEID" ColumnName="ROUTEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_SORTTROUGH">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_SORTTROUGH">
+              <MappingFragment StoreEntitySet="T_PRODUCE_SORTTROUGH">
+                <ScalarProperty Name="BOXCOUNT" ColumnName="BOXCOUNT" />
+                <ScalarProperty Name="THRESHOLD" ColumnName="THRESHOLD" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="TROUGHTYPE" ColumnName="TROUGHTYPE" />
+                <ScalarProperty Name="LASTMANTISSA" ColumnName="LASTMANTISSA" />
+                <ScalarProperty Name="TRANSPORTATIONLINE" ColumnName="TRANSPORTATIONLINE" />
+                <ScalarProperty Name="REPLENISHLINE" ColumnName="REPLENISHLINE" />
+                <ScalarProperty Name="CIGARETTETYPE" ColumnName="CIGARETTETYPE" />
+                <ScalarProperty Name="MANTISSA" ColumnName="MANTISSA" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="ACTCOUNT" ColumnName="ACTCOUNT" />
+                <ScalarProperty Name="TROUGHDESC" ColumnName="TROUGHDESC" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_OUT_CELLNO" FunctionName="Model.Store.PROC_OUT_CELLNO" />
+          <EntitySetMapping Name="INF_JOBFEEDBACK">
+            <EntityTypeMapping TypeName="Model.INF_JOBFEEDBACK">
+              <MappingFragment StoreEntitySet="INF_JOBFEEDBACK">
+                <ScalarProperty Name="ACTQTY" ColumnName="ACTQTY" />
+                <ScalarProperty Name="PLANQTY" ColumnName="PLANQTY" />
+                <ScalarProperty Name="ISDEAL" ColumnName="ISDEAL" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="RESPONDDATE" ColumnName="RESPONDDATE" />
+                <ScalarProperty Name="ENTERDATE" ColumnName="ENTERDATE" />
+                <ScalarProperty Name="ERRORCODE" ColumnName="ERRORCODE" />
+                <ScalarProperty Name="FEEDBACKSTATUS" ColumnName="FEEDBACKSTATUS" />
+                <ScalarProperty Name="JOBID" ColumnName="JOBID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ATSCELL">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELL">
+                <ScalarProperty Name="FLOOR" ColumnName="FLOOR" />
+                <ScalarProperty Name="COL" ColumnName="COL" />
+                <ScalarProperty Name="WORKSTATUS" ColumnName="WORKSTATUS" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+                <ScalarProperty Name="CELLNAME" ColumnName="CELLNAME" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+                <ScalarProperty Name="LANEWAYNO" ColumnName="LANEWAYNO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ATSCELLINFO_DETAIL">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELLINFO_DETAIL">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELLINFO_DETAIL">
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_LOG">
+            <EntityTypeMapping TypeName="Model.T_WMS_LOG">
+              <MappingFragment StoreEntitySet="T_WMS_LOG">
+                <ScalarProperty Name="CTYPE" ColumnName="CTYPE" />
+                <ScalarProperty Name="TOTALQTY" ColumnName="TOTALQTY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="ORDRENO" ColumnName="ORDRENO" />
+                <ScalarProperty Name="COL88" ColumnName="COL88" />
+                <ScalarProperty Name="COL87" ColumnName="COL87" />
+                <ScalarProperty Name="COL86" ColumnName="COL86" />
+                <ScalarProperty Name="COL85" ColumnName="COL85" />
+                <ScalarProperty Name="COL84" ColumnName="COL84" />
+                <ScalarProperty Name="COL83" ColumnName="COL83" />
+                <ScalarProperty Name="COL82" ColumnName="COL82" />
+                <ScalarProperty Name="COL81" ColumnName="COL81" />
+                <ScalarProperty Name="COL80" ColumnName="COL80" />
+                <ScalarProperty Name="COL79" ColumnName="COL79" />
+                <ScalarProperty Name="COL78" ColumnName="COL78" />
+                <ScalarProperty Name="COL77" ColumnName="COL77" />
+                <ScalarProperty Name="COL76" ColumnName="COL76" />
+                <ScalarProperty Name="COL75" ColumnName="COL75" />
+                <ScalarProperty Name="COL74" ColumnName="COL74" />
+                <ScalarProperty Name="COL73" ColumnName="COL73" />
+                <ScalarProperty Name="COL72" ColumnName="COL72" />
+                <ScalarProperty Name="COL71" ColumnName="COL71" />
+                <ScalarProperty Name="COL70" ColumnName="COL70" />
+                <ScalarProperty Name="COL69" ColumnName="COL69" />
+                <ScalarProperty Name="COL68" ColumnName="COL68" />
+                <ScalarProperty Name="COL67" ColumnName="COL67" />
+                <ScalarProperty Name="COL66" ColumnName="COL66" />
+                <ScalarProperty Name="COL65" ColumnName="COL65" />
+                <ScalarProperty Name="COL64" ColumnName="COL64" />
+                <ScalarProperty Name="COL63" ColumnName="COL63" />
+                <ScalarProperty Name="COL62" ColumnName="COL62" />
+                <ScalarProperty Name="COL61" ColumnName="COL61" />
+                <ScalarProperty Name="COL60" ColumnName="COL60" />
+                <ScalarProperty Name="COL59" ColumnName="COL59" />
+                <ScalarProperty Name="COL58" ColumnName="COL58" />
+                <ScalarProperty Name="COL57" ColumnName="COL57" />
+                <ScalarProperty Name="COL56" ColumnName="COL56" />
+                <ScalarProperty Name="COL55" ColumnName="COL55" />
+                <ScalarProperty Name="COL54" ColumnName="COL54" />
+                <ScalarProperty Name="COL53" ColumnName="COL53" />
+                <ScalarProperty Name="COL52" ColumnName="COL52" />
+                <ScalarProperty Name="COL51" ColumnName="COL51" />
+                <ScalarProperty Name="COL50" ColumnName="COL50" />
+                <ScalarProperty Name="COL49" ColumnName="COL49" />
+                <ScalarProperty Name="COL48" ColumnName="COL48" />
+                <ScalarProperty Name="COL47" ColumnName="COL47" />
+                <ScalarProperty Name="COL46" ColumnName="COL46" />
+                <ScalarProperty Name="COL45" ColumnName="COL45" />
+                <ScalarProperty Name="COL44" ColumnName="COL44" />
+                <ScalarProperty Name="COL43" ColumnName="COL43" />
+                <ScalarProperty Name="COL42" ColumnName="COL42" />
+                <ScalarProperty Name="COL41" ColumnName="COL41" />
+                <ScalarProperty Name="COL40" ColumnName="COL40" />
+                <ScalarProperty Name="COL39" ColumnName="COL39" />
+                <ScalarProperty Name="COL38" ColumnName="COL38" />
+                <ScalarProperty Name="COL37" ColumnName="COL37" />
+                <ScalarProperty Name="COL36" ColumnName="COL36" />
+                <ScalarProperty Name="COL35" ColumnName="COL35" />
+                <ScalarProperty Name="COL34" ColumnName="COL34" />
+                <ScalarProperty Name="COL33" ColumnName="COL33" />
+                <ScalarProperty Name="COL32" ColumnName="COL32" />
+                <ScalarProperty Name="COL31" ColumnName="COL31" />
+                <ScalarProperty Name="COL30" ColumnName="COL30" />
+                <ScalarProperty Name="COL29" ColumnName="COL29" />
+                <ScalarProperty Name="COL28" ColumnName="COL28" />
+                <ScalarProperty Name="COL27" ColumnName="COL27" />
+                <ScalarProperty Name="COL26" ColumnName="COL26" />
+                <ScalarProperty Name="COL25" ColumnName="COL25" />
+                <ScalarProperty Name="COL24" ColumnName="COL24" />
+                <ScalarProperty Name="COL23" ColumnName="COL23" />
+                <ScalarProperty Name="COL22" ColumnName="COL22" />
+                <ScalarProperty Name="COL21" ColumnName="COL21" />
+                <ScalarProperty Name="COL20" ColumnName="COL20" />
+                <ScalarProperty Name="COL19" ColumnName="COL19" />
+                <ScalarProperty Name="COL18" ColumnName="COL18" />
+                <ScalarProperty Name="COL17" ColumnName="COL17" />
+                <ScalarProperty Name="COL16" ColumnName="COL16" />
+                <ScalarProperty Name="COL15" ColumnName="COL15" />
+                <ScalarProperty Name="COL14" ColumnName="COL14" />
+                <ScalarProperty Name="COL13" ColumnName="COL13" />
+                <ScalarProperty Name="COL12" ColumnName="COL12" />
+                <ScalarProperty Name="COL11" ColumnName="COL11" />
+                <ScalarProperty Name="COL10" ColumnName="COL10" />
+                <ScalarProperty Name="COL9" ColumnName="COL9" />
+                <ScalarProperty Name="COL8" ColumnName="COL8" />
+                <ScalarProperty Name="COL7" ColumnName="COL7" />
+                <ScalarProperty Name="COL6" ColumnName="COL6" />
+                <ScalarProperty Name="COL5" ColumnName="COL5" />
+                <ScalarProperty Name="COL4" ColumnName="COL4" />
+                <ScalarProperty Name="COL3" ColumnName="COL3" />
+                <ScalarProperty Name="COL2" ColumnName="COL2" />
+                <ScalarProperty Name="COL1" ColumnName="COL1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_DEVICESTATUS">
+            <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
+              <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
+                <ScalarProperty Name="DEVICENO" ColumnName="DEVICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_IN_FIXLANEWAY" FunctionName="Model.Store.PROC_IN_FIXLANEWAY" />
+          <EntitySetMapping Name="T_WMS_ATSCELL_CJ_HIS">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_CJ_HIS">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELL_CJ_HIS">
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+                <ScalarProperty Name="INBOUNDID" ColumnName="INBOUNDID" />
+                <ScalarProperty Name="INBOUNDTIME" ColumnName="INBOUNDTIME" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_IN_CELLNO" FunctionName="Model.Store.PROC_IN_CELLNO" />
+          <EntitySetMapping Name="T_SYS_USER">
+            <EntityTypeMapping TypeName="Model.T_SYS_USER">
+              <MappingFragment StoreEntitySet="T_SYS_USER">
+                <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
+                <ScalarProperty Name="WORKSOURCE" ColumnName="WORKSOURCE" />
+                <ScalarProperty Name="DELSTATUS" ColumnName="DELSTATUS" />
+                <ScalarProperty Name="SIGNATUREIMG" ColumnName="SIGNATUREIMG" />
+                <ScalarProperty Name="SELFSENIORITY" ColumnName="SELFSENIORITY" />
+                <ScalarProperty Name="LEAVEDATE" ColumnName="LEAVEDATE" />
+                <ScalarProperty Name="SENIORITY" ColumnName="SENIORITY" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="EDUCATION" ColumnName="EDUCATION" />
+                <ScalarProperty Name="NATION" ColumnName="NATION" />
+                <ScalarProperty Name="SHORTTELNUM" ColumnName="SHORTTELNUM" />
+                <ScalarProperty Name="WORKSTATUS" ColumnName="WORKSTATUS" />
+                <ScalarProperty Name="MAJORNAME" ColumnName="MAJORNAME" />
+                <ScalarProperty Name="USERPOSTID" ColumnName="USERPOSTID" />
+                <ScalarProperty Name="USERPSW" ColumnName="USERPSW" />
+                <ScalarProperty Name="COMPANYEMAIL" ColumnName="COMPANYEMAIL" />
+                <ScalarProperty Name="USERTYPE" ColumnName="USERTYPE" />
+                <ScalarProperty Name="GROUPREMARKS" ColumnName="GROUPREMARKS" />
+                <ScalarProperty Name="SYSREMARKS" ColumnName="SYSREMARKS" />
+                <ScalarProperty Name="CREATEDATE" ColumnName="CREATEDATE" />
+                <ScalarProperty Name="CREATEID" ColumnName="CREATEID" />
+                <ScalarProperty Name="PHOTONAME" ColumnName="PHOTONAME" />
+                <ScalarProperty Name="DIMISSIONDATE" ColumnName="DIMISSIONDATE" />
+                <ScalarProperty Name="BGENDDATE" ColumnName="BGENDDATE" />
+                <ScalarProperty Name="BGBEGDATE" ColumnName="BGBEGDATE" />
+                <ScalarProperty Name="JOINUNITDATE" ColumnName="JOINUNITDATE" />
+                <ScalarProperty Name="JOINWORKDATE" ColumnName="JOINWORKDATE" />
+                <ScalarProperty Name="SPECIALTY" ColumnName="SPECIALTY" />
+                <ScalarProperty Name="COMPUTERLEVEL" ColumnName="COMPUTERLEVEL" />
+                <ScalarProperty Name="FOREIGNLANGUAGELEVEL" ColumnName="FOREIGNLANGUAGELEVEL" />
+                <ScalarProperty Name="FOREIGNLANGUAGE" ColumnName="FOREIGNLANGUAGE" />
+                <ScalarProperty Name="TECHNICALTITLE" ColumnName="TECHNICALTITLE" />
+                <ScalarProperty Name="POSE" ColumnName="POSE" />
+                <ScalarProperty Name="POSTID" ColumnName="POSTID" />
+                <ScalarProperty Name="BANKCARD" ColumnName="BANKCARD" />
+                <ScalarProperty Name="BANKID" ColumnName="BANKID" />
+                <ScalarProperty Name="EDUBACKGROUND" ColumnName="EDUBACKGROUND" />
+                <ScalarProperty Name="MAJOR" ColumnName="MAJOR" />
+                <ScalarProperty Name="SCHOOL" ColumnName="SCHOOL" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="QQNUM" ColumnName="QQNUM" />
+                <ScalarProperty Name="OFFICENUM" ColumnName="OFFICENUM" />
+                <ScalarProperty Name="PHONENUM" ColumnName="PHONENUM" />
+                <ScalarProperty Name="TELNUM" ColumnName="TELNUM" />
+                <ScalarProperty Name="ADDR" ColumnName="ADDR" />
+                <ScalarProperty Name="SOCIALSECURITYID" ColumnName="SOCIALSECURITYID" />
+                <ScalarProperty Name="NATIVEPLACE" ColumnName="NATIVEPLACE" />
+                <ScalarProperty Name="IDREGISTER" ColumnName="IDREGISTER" />
+                <ScalarProperty Name="IDNUM" ColumnName="IDNUM" />
+                <ScalarProperty Name="POLITICALSTATUS" ColumnName="POLITICALSTATUS" />
+                <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
+                <ScalarProperty Name="BIRTHDATE" ColumnName="BIRTHDATE" />
+                <ScalarProperty Name="ISMARRIED" ColumnName="ISMARRIED" />
+                <ScalarProperty Name="SEX" ColumnName="SEX" />
+                <ScalarProperty Name="DEPTID" ColumnName="DEPTID" />
+                <ScalarProperty Name="ICCARDNO" ColumnName="ICCARDNO" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="USERCODE" ColumnName="USERCODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_TASKLINE">
+            <EntityTypeMapping TypeName="Model.T_UN_TASKLINE">
+              <MappingFragment StoreEntitySet="T_UN_TASKLINE">
+                <ScalarProperty Name="ALLOWSORT" ColumnName="ALLOWSORT" />
+                <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ATSCELLINFO">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELLINFO">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELLINFO">
+                <ScalarProperty Name="INBOUNDTIME" ColumnName="INBOUNDTIME" />
+                <ScalarProperty Name="CONSIGNOR" ColumnName="CONSIGNOR" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="INBOUNDID" ColumnName="INBOUNDID" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PALLETNO" ColumnName="PALLETNO" />
+                <ScalarProperty Name="DISMANTLE" ColumnName="DISMANTLE" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_POKE">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
+              <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="UNIONEXPORTNUM" ColumnName="UNIONEXPORTNUM" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="MERAGENUM" ColumnName="MERAGENUM" />
+                <ScalarProperty Name="MACHINESTATE" ColumnName="MACHINESTATE" />
+                <ScalarProperty Name="UNIONSTATE" ColumnName="UNIONSTATE" />
+                <ScalarProperty Name="POKEPLACE" ColumnName="POKEPLACE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
+                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="SORTSTATE" ColumnName="SORTSTATE" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_TASK">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_TASK">
+              <MappingFragment StoreEntitySet="T_PRODUCE_TASK">
+                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="PALLETNUM" ColumnName="PALLETNUM" />
+                <ScalarProperty Name="LABELBATCH" ColumnName="LABELBATCH" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="SORTTIME" ColumnName="SORTTIME" />
+                <ScalarProperty Name="PLANTIME" ColumnName="PLANTIME" />
+                <ScalarProperty Name="LABLENUM" ColumnName="LABLENUM" />
+                <ScalarProperty Name="SORTSEQ" ColumnName="SORTSEQ" />
+                <ScalarProperty Name="PACKAGEDESC" ColumnName="PACKAGEDESC" />
+                <ScalarProperty Name="PACKAGEID" ColumnName="PACKAGEID" />
+                <ScalarProperty Name="TASKBOX" ColumnName="TASKBOX" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="TASKQUANTITY" ColumnName="TASKQUANTITY" />
+                <ScalarProperty Name="ORDERMONEY" ColumnName="ORDERMONEY" />
+                <ScalarProperty Name="CUSTOMERNAME" ColumnName="CUSTOMERNAME" />
+                <ScalarProperty Name="ORDERQUANTITY" ColumnName="ORDERQUANTITY" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="SYNSEQ" ColumnName="SYNSEQ" />
+                <ScalarProperty Name="BATCHCODE" ColumnName="BATCHCODE" />
+                <ScalarProperty Name="COMPANYNAME" ColumnName="COMPANYNAME" />
+                <ScalarProperty Name="COMPANYCODE" ColumnName="COMPANYCODE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="REGIONDESC" ColumnName="REGIONDESC" />
+                <ScalarProperty Name="REGIONCODE" ColumnName="REGIONCODE" />
+                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_TASKLINE">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_TASKLINE">
+              <MappingFragment StoreEntitySet="T_PRODUCE_TASKLINE">
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="ALLOWSORT" ColumnName="ALLOWSORT" />
+                <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_INBOUND">
+            <EntityTypeMapping TypeName="Model.T_WMS_INBOUND">
+              <MappingFragment StoreEntitySet="T_WMS_INBOUND">
+                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
+                <ScalarProperty Name="BB_UUID" ColumnName="BB_UUID" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="INTYPE" ColumnName="INTYPE" />
+                <ScalarProperty Name="CONSIGNSOR" ColumnName="CONSIGNSOR" />
+                <ScalarProperty Name="SUPPLIER" ColumnName="SUPPLIER" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="CONTRACTNO" ColumnName="CONTRACTNO" />
+                <ScalarProperty Name="NAVICERT" ColumnName="NAVICERT" />
+                <ScalarProperty Name="INBOUNDID" ColumnName="INBOUNDID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_TASK">
+            <EntityTypeMapping TypeName="Model.T_UN_TASK">
+              <MappingFragment StoreEntitySet="T_UN_TASK">
+                <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+                <ScalarProperty Name="EXISTRCD" ColumnName="EXISTRCD" />
+                <ScalarProperty Name="PALLETNUM" ColumnName="PALLETNUM" />
+                <ScalarProperty Name="LABELBATCH" ColumnName="LABELBATCH" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="SORTTIME" ColumnName="SORTTIME" />
+                <ScalarProperty Name="PLANTIME" ColumnName="PLANTIME" />
+                <ScalarProperty Name="LABLENUM" ColumnName="LABLENUM" />
+                <ScalarProperty Name="SORTSEQ" ColumnName="SORTSEQ" />
+                <ScalarProperty Name="TASKBOX" ColumnName="TASKBOX" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="TASKQUANTITY" ColumnName="TASKQUANTITY" />
+                <ScalarProperty Name="ORDERMONEY" ColumnName="ORDERMONEY" />
+                <ScalarProperty Name="CUSTOMERNAME" ColumnName="CUSTOMERNAME" />
+                <ScalarProperty Name="ORDERQUANTITY" ColumnName="ORDERQUANTITY" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="SYNSEQ" ColumnName="SYNSEQ" />
+                <ScalarProperty Name="BATCHCODE" ColumnName="BATCHCODE" />
+                <ScalarProperty Name="COMPANYNAME" ColumnName="COMPANYNAME" />
+                <ScalarProperty Name="COMPANYCODE" ColumnName="COMPANYCODE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="REGIONDESC" ColumnName="REGIONDESC" />
+                <ScalarProperty Name="REGIONCODE" ColumnName="REGIONCODE" />
+                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INF_DEVICESTATUS">
+            <EntityTypeMapping TypeName="Model.INF_DEVICESTATUS">
+              <MappingFragment StoreEntitySet="INF_DEVICESTATUS">
+                <ScalarProperty Name="UPDATEDATE" ColumnName="UPDATEDATE" />
+                <ScalarProperty Name="ISERROR" ColumnName="ISERROR" />
+                <ScalarProperty Name="DEVICEID" ColumnName="DEVICEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INF_EQUIPMENTSTATUS">
+            <EntityTypeMapping TypeName="Model.INF_EQUIPMENTSTATUS">
+              <MappingFragment StoreEntitySet="INF_EQUIPMENTSTATUS">
+                <ScalarProperty Name="UPDATEDATE" ColumnName="UPDATEDATE" />
+                <ScalarProperty Name="EQUIPMENTSTATUS" ColumnName="EQUIPMENTSTATUS" />
+                <ScalarProperty Name="EQUIPMENTID" ColumnName="EQUIPMENTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_POKE">
+            <EntityTypeMapping TypeName="Model.T_UN_POKE">
+              <MappingFragment StoreEntitySet="T_UN_POKE">
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INF_EQUIPMENTREQUEST">
+            <EntityTypeMapping TypeName="Model.INF_EQUIPMENTREQUEST">
+              <MappingFragment StoreEntitySet="INF_EQUIPMENTREQUEST">
+                <ScalarProperty Name="TUTYPE" ColumnName="TUTYPE" />
+                <ScalarProperty Name="INBOUNDNO" ColumnName="INBOUNDNO" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="RESPONDDATE" ColumnName="RESPONDDATE" />
+                <ScalarProperty Name="ENTERDATE" ColumnName="ENTERDATE" />
+                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
+                <ScalarProperty Name="BRANDID" ColumnName="BRANDID" />
+                <ScalarProperty Name="JOBID" ColumnName="JOBID" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="REQUESTTYPE" ColumnName="REQUESTTYPE" />
+                <ScalarProperty Name="EQUIPMENTID" ColumnName="EQUIPMENTID" />
+                <ScalarProperty Name="REQUESTID" ColumnName="REQUESTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ATSCELL_OUT">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_OUT">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELL_OUT">
+                <ScalarProperty Name="LOCKRETURNQTY" ColumnName="LOCKRETURNQTY" />
+                <ScalarProperty Name="ACTRETURNQTY" ColumnName="ACTRETURNQTY" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="REMAK" ColumnName="REMAK" />
+                <ScalarProperty Name="ACTQTY" ColumnName="ACTQTY" />
+                <ScalarProperty Name="RETURNQTY" ColumnName="RETURNQTY" />
+                <ScalarProperty Name="OUTTARGET" ColumnName="OUTTARGET" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ATSCELL_IN">
+            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_IN">
+              <MappingFragment StoreEntitySet="T_WMS_ATSCELL_IN">
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="OUTID" ColumnName="OUTID" />
+                <ScalarProperty Name="SOURCETARGET" ColumnName="SOURCETARGET" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="INTYPE" ColumnName="INTYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INF_JOBDOWNLOAD">
+            <EntityTypeMapping TypeName="Model.INF_JOBDOWNLOAD">
+              <MappingFragment StoreEntitySet="INF_JOBDOWNLOAD">
+                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
+                <ScalarProperty Name="CDTYPE" ColumnName="CDTYPE" />
+                <ScalarProperty Name="FULLCOUNT" ColumnName="FULLCOUNT" />
+                <ScalarProperty Name="INPUTTYPE" ColumnName="INPUTTYPE" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="INBOUNDNO" ColumnName="INBOUNDNO" />
+                <ScalarProperty Name="EXTATTR3" ColumnName="EXTATTR3" />
+                <ScalarProperty Name="EXTATTR2" ColumnName="EXTATTR2" />
+                <ScalarProperty Name="EXTATTR1" ColumnName="EXTATTR1" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="RESPONDDATE" ColumnName="RESPONDDATE" />
+                <ScalarProperty Name="ENTRYDATE" ColumnName="ENTRYDATE" />
+                <ScalarProperty Name="CREATEDATE" ColumnName="CREATEDATE" />
+                <ScalarProperty Name="TUTYPE" ColumnName="TUTYPE" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="PILETYPE" ColumnName="PILETYPE" />
+                <ScalarProperty Name="PLANQTY" ColumnName="PLANQTY" />
+                <ScalarProperty Name="BRANDID" ColumnName="BRANDID" />
+                <ScalarProperty Name="TARGET" ColumnName="TARGET" />
+                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+                <ScalarProperty Name="JOBTYPE" ColumnName="JOBTYPE" />
+                <ScalarProperty Name="JOBID" ColumnName="JOBID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_STORAGEAREA_INOUT">
+            <EntityTypeMapping TypeName="Model.T_WMS_STORAGEAREA_INOUT">
+              <MappingFragment StoreEntitySet="T_WMS_STORAGEAREA_INOUT">
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="CREATENAME" ColumnName="CREATENAME" />
+                <ScalarProperty Name="CIGARATTETYPE" ColumnName="CIGARATTETYPE" />
+                <ScalarProperty Name="BOXQTY" ColumnName="BOXQTY" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
+                <ScalarProperty Name="INOUTTYPE" ColumnName="INOUTTYPE" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_DEVICEERRLIST">
+            <EntityTypeMapping TypeName="Model.T_WMS_DEVICEERRLIST">
+              <MappingFragment StoreEntitySet="T_WMS_DEVICEERRLIST">
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="ERRORTYPE" ColumnName="ERRORTYPE" />
+                <ScalarProperty Name="ERRTIME" ColumnName="ERRTIME" />
+                <ScalarProperty Name="ERRORMSG" ColumnName="ERRORMSG" />
+                <ScalarProperty Name="ERRORCODE" ColumnName="ERRORCODE" />
+                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
+                <ScalarProperty Name="DECICENO" ColumnName="DECICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="EntityData" ZoomLevel="62">
+        <EntityTypeShape EntityType="Model.T_WMS_CONSIGNOR" Width="1.5" PointX="6.75" PointY="6.75" Height="1.9202278645833246" />
+        <EntityTypeShape EntityType="Model.T_WMS_INBOUND_LINE" Width="1.5" PointX="8.75" PointY="4.75" Height="2.8441984049479174" />
+        <EntityTypeShape EntityType="Model.T_WMS_INOUTBOUND_TASK" Width="1.5" PointX="8.75" PointY="8.75" Height="2.6594042968750102" />
+        <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="4.75" PointY="9.75" Height="7.8336393229166674" />
+        <EntityTypeShape EntityType="Model.T_WMS_LANEWAY" Width="1.5" PointX="10.75" PointY="0.75" Height="1.5506396484375102" />
+        <EntityTypeShape EntityType="Model.T_WMS_OUTBOUND_LINE" Width="1.5" PointX="10.75" PointY="7.75" Height="2.1050219726562602" />
+        <EntityTypeShape EntityType="Model.T_WMS_REF_PALLET_RFID" Width="1.5" PointX="10.75" PointY="10.75" Height="1.5506396484375102" />
+        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA" Width="2.875" PointX="12.75" PointY="0.75" Height="1.9202278645833246" />
+        <EntityTypeShape EntityType="Model.T_SYS_ROUTEINFO" Width="1.5" PointX="7.375" PointY="12.75" Height="3.5833748372395817" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="11.375" PointY="14.75" Height="4.32255126953126" />
+        <EntityTypeShape EntityType="Model.INF_JOBFEEDBACK" Width="1.5" PointX="15.75" PointY="15.75" Height="2.8441984049479174" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELL" Width="1.5" PointX="3.375" PointY="3.75" Height="2.6594042968750102" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO_DETAIL" Width="1.5" PointX="5.375" PointY="0.75" Height="2.2898160807291674" />
+        <EntityTypeShape EntityType="Model.T_WMS_LOG" Width="1.5" PointX="18.375" PointY="18.75" Height="18.18210937500001" />
+        <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="13.375" PointY="3.75" Height="1.9202278645833246" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_CJ_HIS" Width="1.5" PointX="16.375" PointY="10.75" Height="2.6594042968750102" />
+        <EntityTypeShape EntityType="Model.T_SYS_USER" Width="1.5" PointX="18.375" PointY="4.75" Height="11.899109700520825" />
+        <EntityTypeShape EntityType="Model.T_UN_TASKLINE" Width="1.5" PointX="19.75" PointY="0.75" Height="2.1050219726562602" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO" Width="1.5" PointX="0.75" PointY="12.75" Height="2.4746101888020746" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.75" PointY="3.75" Height="4.45328857421876" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_TASK" Width="1.5" PointX="0.75" PointY="16.75" Height="6.9365445963541674" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_TASKLINE" Width="1.5" PointX="13.75" PointY="19.75" Height="2.3520719401041674" />
+        <EntityTypeShape EntityType="Model.T_WMS_INBOUND" Width="1.5" PointX="20.375" PointY="3.75" Height="3.4981901041666674" />
+        <EntityTypeShape EntityType="Model.T_UN_TASK" Width="1.5" PointX="3.375" PointY="20.75" Height="6.9365445963541674" />
+        <EntityTypeShape EntityType="Model.INF_DEVICESTATUS" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5506396484375102" />
+        <EntityTypeShape EntityType="Model.INF_EQUIPMENTSTATUS" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5506396484375102" />
+        <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="7.375" PointY="17.75" Height="3.5833748372395746" />
+        <EntityTypeShape EntityType="Model.INF_EQUIPMENTREQUEST" Width="1.5" PointX="0.75" PointY="3.75" Height="3.2137866210937602" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_OUT" Width="1.5" PointX="13.375" PointY="9.75" Height="3.5833748372395746" />
+        <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_IN" Width="1.5" PointX="7.375" PointY="0.75" Height="2.8441984049479174" />
+        <EntityTypeShape EntityType="Model.INF_JOBDOWNLOAD" Width="1.5" PointX="20.375" PointY="8.75" Height="5.43131591796876" />
+        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="7.75" Height="3.9529630533854174" />
+        <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="9.375" PointY="20.75" Height="2.4746101888020746" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

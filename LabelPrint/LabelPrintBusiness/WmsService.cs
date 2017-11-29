@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace LabelPrintBusiness
+{
+   public class WmsService
+    {
+        public T_WMS_ITEM GetItemByCode(String code)
+        {
+            using (LabelPrintEntities entity = new LabelPrintEntities())
+            {
+                var query = (from item in entity.T_WMS_ITEM where item.ITEMNO == code select item).FirstOrDefault();
+                return query;
+            }
+        }
+
+        public List<T_WMS_ITEM> GetItemByCode()
+        {
+            using (LabelPrintEntities entity = new LabelPrintEntities())
+            {
+                var query = from item in entity.T_WMS_ITEM select item;
+                return query.ToList();
+            }
+        }
+
+        public List<T_WMS_ITEM> GetItemPageList(String name,String code,int currentPage,int pageSize,out int total)
+        {
+            using (LabelPrintEntities entity = new LabelPrintEntities())
+            {
+                var query = from item in entity.T_WMS_ITEM  where item.ITEMTYPE_ID=="1" select item;
+                if (name != "")
+                {
+                    query = query.Where(item => item.ITEMNAME.Contains(name));
+                }
+                if (code != "")
+                {
+                    query = query.Where(item => item.ITEMNO.Contains(code));
+                }
+              
+                total = query.Count();
+                return query.OrderBy(item => item.ITEMNAME).Skip(currentPage*pageSize).Take(pageSize).ToList();
+            }
+        }
+    }
+}

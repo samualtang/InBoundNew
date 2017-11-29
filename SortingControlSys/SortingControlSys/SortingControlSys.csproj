@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EFE03E77-6BB5-48F4-90C0-3AC820A7AA2B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SortingControlSys</RootNamespace>
+    <AssemblyName>SortingControlSys</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>http://localhost/SortingControlSys/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetPrint, Version=5.3.4844.32568, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DotNetPrint.dll</HintPath>
+    </Reference>
+    <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\opcrcw.comn.dll</HintPath>
+    </Reference>
+    <Reference Include="opcrcw.da, Version=3.0.3.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\opcrcw.da.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.OracleClient">
+      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.OracleClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\ItemCollection.cs" />
+    <Compile Include="orderHandle\w_order_recieve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_order_recieve.Designer.cs">
+      <DependentUpon>w_order_recieve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="progressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="progressBar.designer.cs">
+      <DependentUpon>progressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PubFunc\DataBase.cs" />
+    <Compile Include="PubFunc\DataPublic.cs" />
+    <Compile Include="PubFunc\ObjectExtensions.cs" />
+    <Compile Include="PubFunc\PrintDataGridView.cs" />
+    <Compile Include="PubFunc\ProxyServer.cs" />
+    <Compile Include="PubFunc\PublicFun.cs" />
+    <Compile Include="PubFunc\SortingFun.cs" />
+    <Compile Include="PubFunc\SortingPub.cs" />
+    <Compile Include="PubFunc\WriteLog.cs" />
+    <Compile Include="SortingControl\StatusManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortingControl\StatusManager.Designer.cs">
+      <DependentUpon>StatusManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SortingControl\w_pass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortingControl\w_pass.Designer.cs">
+      <DependentUpon>w_pass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SortingControl\w_reportprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortingControl\w_reportprint.designer.cs">
+      <DependentUpon>w_reportprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SortingControl\w_SortingControlMainTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortingControl\w_SortingControlMainTest.Designer.cs">
+      <DependentUpon>w_SortingControlMainTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SortingControl\socketServer.cs" />
+    <Compile Include="SortingControl\w_SortingControlMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortingControl\w_SortingControlMain.Designer.cs">
+      <DependentUpon>w_SortingControlMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_database_set.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_database_set.designer.cs">
+      <DependentUpon>w_database_set.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_main.designer.cs">
+      <DependentUpon>w_main.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="orderHandle\w_order_recieve.resx">
+      <DependentUpon>w_order_recieve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="progressBar.resx">
+      <DependentUpon>progressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SortingControl\StatusManager.resx">
+      <DependentUpon>StatusManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingControl\w_pass.resx">
+      <DependentUpon>w_pass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingControl\w_reportprint.resx">
+      <DependentUpon>w_reportprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingControl\w_SortingControlMainTest.resx">
+      <DependentUpon>w_SortingControlMainTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingControl\w_SortingControlMain.resx">
+      <DependentUpon>w_SortingControlMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="test.resx">
+      <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_main.resx">
+      <DependentUpon>w_main.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="PubFunc\vssver.scc" />
+    <None Include="Resources\login2.psd" />
+    <None Include="ty_hospital.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+    <Content Include="Lib\opcrcw.comn.dll" />
+    <Content Include="Lib\opcrcw.da.dll" />
+    <Content Include="Resources\bg1.JPG" />
+    <Content Include="Resources\bg2.JPG" />
+    <Content Include="Resources\bg21.JPG" />
+    <Content Include="Resources\btnCancel.bmp" />
+    <Content Include="Resources\btnOk.bmp" />
+    <Content Include="Resources\Icon.ico" />
+    <Content Include="Resources\ic_launcher.png" />
+    <Content Include="Resources\login2.bmp" />
+    <None Include="Resources\rfresh.jpg" />
+    <Content Include="Resources\outstylegray.jpg" />
+    <Content Include="Resources\outstylegreen.jpg" />
+    <Content Include="Resources\stop.jpg" />
+    <Content Include="Resources\复件 login2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InBound\InBound.csproj">
+      <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
+      <Name>InBound</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

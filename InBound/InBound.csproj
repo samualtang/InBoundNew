@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{17D610AF-2478-4E66-B576-0EB21F117081}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InBound</RootNamespace>
+    <AssemblyName>InBound</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\AtsCellInService.cs" />
+    <Compile Include="Business\BaseService.cs" />
+    <Compile Include="Business\InfEquipmentRequestService.cs" />
+    <Compile Include="Business\InOutStrategy.cs" />
+    <Compile Include="Business\ItemService.cs" />
+    <Compile Include="Business\LaneWayService.cs" />
+    <Compile Include="Business\MachineService.cs" />
+    <Compile Include="Business\ProducePokeService.cs" />
+    <Compile Include="Business\ProduceTaskService.cs" />
+    <Compile Include="Business\SortTroughService.cs" />
+    <Compile Include="Business\StroageInOutService.cs" />
+    <Compile Include="Business\RouteInfoService.cs" />
+    <Compile Include="Business\InBoundLineService.cs" />
+    <Compile Include="Business\InoutBoundTaskService.cs" />
+    <Compile Include="Business\InfJobDownLoadService.cs" />
+    <Compile Include="Business\InfFeedBackService.cs" />
+    <Compile Include="Business\AtsCellService.cs" />
+    <Compile Include="Business\InBoundService.cs" />
+    <Compile Include="Business\RefRFIDPalletService.cs" />
+    <Compile Include="Business\AtsCellInfoService.cs" />
+    <Compile Include="Business\AtsCellInfoDetailService.cs" />
+    <Compile Include="Business\TaskService.cs" />
+    <Compile Include="Business\AtsCellOutService.cs" />
+    <Compile Include="Business\UnTaskService.cs" />
+    <Compile Include="Business\WmsService.cs" />
+    <Compile Include="Business\UnPokeService.cs" />
+    <Compile Include="Business\DeviceService.cs" />
+    <Compile Include="Business\Inf_EquipmentStatusService.cs" />
+    <Compile Include="Business\AtsCellCJService.cs" />
+    <Compile Include="Business\SysUserService.cs" />
+    <Compile Include="Business\WmsType.cs" />
+    <Compile Include="Business\WriteLog.cs" />
+    <Compile Include="Business\ErrListService.cs" />
+    <Compile Include="EntityData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityData.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Error.cs" />
+    <Compile Include="Model\OutBound.cs" />
+    <Compile Include="Model\TaskDetail.cs" />
+    <Compile Include="Model\TaskInfo.cs" />
+    <Compile Include="Model\AddressInfo.cs" />
+    <Compile Include="Model\InBoundTask.cs" />
+    <Compile Include="Model\LaneWaynoTaskInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="EntityData.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityData.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Properties\DataSources\Entities.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\System.Data.OracleClient.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

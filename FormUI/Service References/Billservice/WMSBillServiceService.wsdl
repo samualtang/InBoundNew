@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webservice.ztel.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="WMSBillServiceService" targetNamespace="http://webservice.ztel.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://webservice.ztel.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="BillScan" type="tns:BillScan" />
+      <xs:element name="BillScanResponse" type="tns:BillScanResponse" />
+      <xs:complexType name="BillScan">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BillScanResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="BillScanResponse">
+    <wsdl:part name="parameters" element="tns:BillScanResponse" />
+  </wsdl:message>
+  <wsdl:message name="BillScan">
+    <wsdl:part name="parameters" element="tns:BillScan" />
+  </wsdl:message>
+  <wsdl:portType name="WMSBillServiceInterface">
+    <wsdl:operation name="BillScan">
+      <wsdl:input name="BillScan" message="tns:BillScan" />
+      <wsdl:output name="BillScanResponse" message="tns:BillScanResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WMSBillServiceServiceSoapBinding" type="tns:WMSBillServiceInterface">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BillScan">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="BillScan">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="BillScanResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WMSBillServiceService">
+    <wsdl:port name="WMSBillServicePort" binding="tns:WMSBillServiceServiceSoapBinding">
+      <soap:address location="http://localhost:8080/BS56/services/WMSBillService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
