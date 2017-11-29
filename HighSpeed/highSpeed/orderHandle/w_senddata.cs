@@ -13,6 +13,7 @@ using InBound.Business;
 using InBound;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using System.Configuration;
 
 namespace highSpeed.orderHandle
 {
@@ -62,6 +63,7 @@ namespace highSpeed.orderHandle
                      GroupKind = "1",
                      GroupNum = s.GROUPNO.ToString(),
                      GroupDesc = s.GROUPNO + "正常烟",
+                     ConfigKey = "1" + s.GROUPNO.ToString(),
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 List<PokeGroupUIModel> _unpokeList = UnPokeService.GetLinenum().Select(s => new PokeGroupUIModel
@@ -69,6 +71,7 @@ namespace highSpeed.orderHandle
                      GroupKind = "2",
                      GroupNum = s.LINENUM,
                      GroupDesc = s.LINENUM + "(异)",
+                     ConfigKey = "2" + s.LINENUM
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 _unionAllPokeGroupList = _pokeList.Union(_unpokeList).ToList();
@@ -103,23 +106,17 @@ namespace highSpeed.orderHandle
 
         private void btn_send_Click(object sender, EventArgs e)
         {
-            string sPath = System.IO.Directory.GetCurrentDirectory().ToString() + "\\ipportconf.ini";
-            if (!File.Exists(sPath))
-            {
-                MessageBox.Show("缺少配置文件！");
-                return;
-            }
-            PublicFun ini = new PublicFun(@sPath);
-
+            var aa = ConfigurationManager.AppSettings.Count;
+            string[] getVal = new string[] { };
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel f = item as PokeGroupUIModel;
-                string getVal = ini.IniReadValue("IpPortConfig", f.GroupNum);
-                if (!string.IsNullOrWhiteSpace(getVal))
+                getVal = ConfigurationManager.AppSettings[f.ConfigKey].Split(',');
+
+                if (getVal.Count() > 0)
                 {
-                    var vals = getVal.Split(',');
-                    f.IpAddress = vals[1];
-                    f.Port = int.Parse(vals[2]);
+                    f.IpAddress = getVal[0];
+                    f.Port = int.Parse(getVal[1]);
                 }
             }
 
@@ -228,6 +225,7 @@ namespace highSpeed.orderHandle
         public string IpAddress { get; set; }
         public int Port { get; set; }
         public string ZipFile { get; set; }
+        public string ConfigKey { get; set; }
     }
 
 
