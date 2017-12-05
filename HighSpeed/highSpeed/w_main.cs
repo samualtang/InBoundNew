@@ -596,6 +596,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 条码重打ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_reprint frm = new w_reprint();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
        
     }

@@ -276,6 +276,12 @@
     <Compile Include="orderHandle\troughmove.Designer.cs">
       <DependentUpon>troughmove.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_reprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_reprint.Designer.cs">
+      <DependentUpon>w_reprint.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_senddata.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -370,6 +376,7 @@
     <Compile Include="PubFunc\SocketClientConnector.cs" />
     <Compile Include="PubFunc\SortingFun.cs" />
     <Compile Include="PubFunc\SortingPub.cs" />
+    <Compile Include="PubFunc\ToZipFile.cs" />
     <Compile Include="sorting\w_sorting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -498,6 +505,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\troughmove.resx">
       <DependentUpon>troughmove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_reprint.resx">
+      <DependentUpon>w_reprint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_senddata.resx">
       <DependentUpon>w_senddata.cs</DependentUpon>
