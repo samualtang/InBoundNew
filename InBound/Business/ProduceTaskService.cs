@@ -31,5 +31,6 @@ namespace InBound.Business
         public decimal qty { get; set; }
         public int cuscount { get; set; }
         public decimal? synseq { get; set; }
+        public bool IsChecked { get; set; }
     }
 }
