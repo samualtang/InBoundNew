@@ -29,7 +29,7 @@ namespace highSpeed.orderHandle
         {
             string time = this.datePick.Text;
             this.txt_codestr.Text = "";
-            String strsql = "SELECT routecode,SUM(totalqty)as order_qty,count(1) as count_hs FROM t_wms_shiporder " +
+            String strsql = "SELECT rownum,routecode,SUM(totalqty)as order_qty,count(1) as count_hs FROM t_wms_shiporder " +
                             "WHERE  SCHEDULESTATUS='新增' and orderdate=to_date('" + time + "','yyyy-mm-dd') GROUP BY routecode";
             Bind(strsql);
         }
@@ -103,6 +103,7 @@ namespace highSpeed.orderHandle
         private void btn_search_Click(object sender, EventArgs e)
         {
             seek();
+            //btn_recieve.Enabled = true;
         }
 
         private void btn_recieve_Click(object sender, EventArgs e)

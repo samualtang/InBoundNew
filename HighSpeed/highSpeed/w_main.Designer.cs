@@ -44,7 +44,6 @@
             this.任务导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.分拣进度ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异型烟排程ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_dataSend = new System.Windows.Forms.ToolStripMenuItem();
             this.报表统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.今日订单汇总ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异型烟补货计划ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +55,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.条码重打ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_dataSend = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -154,8 +153,7 @@
             this.任务导出ToolStripMenuItem,
             this.分拣进度ToolStripMenuItem,
             this.异型烟排程ToolStripMenuItem,
-            this.tsmi_dataSend,
-            this.条码重打ToolStripMenuItem});
+            this.tsmi_dataSend});
             this.订单处理ToolStripMenuItem.Name = "订单处理ToolStripMenuItem";
             this.订单处理ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.订单处理ToolStripMenuItem.Text = "订单处理";
@@ -163,44 +161,37 @@
             // 订单接收ToolStripMenuItem
             // 
             this.订单接收ToolStripMenuItem.Name = "订单接收ToolStripMenuItem";
-            this.订单接收ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.订单接收ToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.订单接收ToolStripMenuItem.Text = "订单接收";
             this.订单接收ToolStripMenuItem.Click += new System.EventHandler(this.订单接收ToolStripMenuItem_Click);
             // 
             // 任务排程ToolStripMenuItem
             // 
             this.任务排程ToolStripMenuItem.Name = "任务排程ToolStripMenuItem";
-            this.任务排程ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.任务排程ToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.任务排程ToolStripMenuItem.Text = "任务排程";
             this.任务排程ToolStripMenuItem.Click += new System.EventHandler(this.任务排程ToolStripMenuItem_Click);
             // 
             // 任务导出ToolStripMenuItem
             // 
             this.任务导出ToolStripMenuItem.Name = "任务导出ToolStripMenuItem";
-            this.任务导出ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.任务导出ToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.任务导出ToolStripMenuItem.Text = "任务导出";
             this.任务导出ToolStripMenuItem.Click += new System.EventHandler(this.任务导出ToolStripMenuItem_Click);
             // 
             // 分拣进度ToolStripMenuItem
             // 
             this.分拣进度ToolStripMenuItem.Name = "分拣进度ToolStripMenuItem";
-            this.分拣进度ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.分拣进度ToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.分拣进度ToolStripMenuItem.Text = "分拣进度";
             this.分拣进度ToolStripMenuItem.Click += new System.EventHandler(this.分拣进度ToolStripMenuItem_Click);
             // 
             // 异型烟排程ToolStripMenuItem
             // 
             this.异型烟排程ToolStripMenuItem.Name = "异型烟排程ToolStripMenuItem";
-            this.异型烟排程ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.异型烟排程ToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.异型烟排程ToolStripMenuItem.Text = "异型烟排程";
             this.异型烟排程ToolStripMenuItem.Click += new System.EventHandler(this.异型烟排程ToolStripMenuItem_Click);
-            // 
-            // tsmi_dataSend
-            // 
-            this.tsmi_dataSend.Name = "tsmi_dataSend";
-            this.tsmi_dataSend.Size = new System.Drawing.Size(168, 24);
-            this.tsmi_dataSend.Text = "一号工程打码";
-            this.tsmi_dataSend.Click += new System.EventHandler(this.tsmi_dataSend_Click);
             // 
             // 报表统计ToolStripMenuItem
             // 
@@ -290,12 +281,12 @@
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // 条码重打ToolStripMenuItem
+            // tsmi_dataSend
             // 
-            this.条码重打ToolStripMenuItem.Name = "条码重打ToolStripMenuItem";
-            this.条码重打ToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
-            this.条码重打ToolStripMenuItem.Text = "条码重打";
-            this.条码重打ToolStripMenuItem.Click += new System.EventHandler(this.条码重打ToolStripMenuItem_Click);
+            this.tsmi_dataSend.Name = "tsmi_dataSend";
+            this.tsmi_dataSend.Size = new System.Drawing.Size(153, 24);
+            this.tsmi_dataSend.Text = "数据发送";
+            this.tsmi_dataSend.Click += new System.EventHandler(this.tsmi_dataSend_Click);
             // 
             // w_main
             // 
@@ -348,6 +339,5 @@
         private System.Windows.Forms.ToolStripMenuItem 异型烟排程ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 通道转移ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmi_dataSend;
-        private System.Windows.Forms.ToolStripMenuItem 条码重打ToolStripMenuItem;
     }
 }

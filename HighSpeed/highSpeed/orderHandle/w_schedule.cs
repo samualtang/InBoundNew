@@ -30,7 +30,7 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
             this.txt_codestr.Text = "";
-            String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
+            String strsql = "SELECT rownum,regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
             //MessageBox.Show(strsql);
             Bind(strsql);
 
@@ -117,8 +117,8 @@ namespace highSpeed.orderHandle
             if (MsgBoxResult == DialogResult.Yes)
             {
                 this.txt_codestr.Text = "";
-                int count=this.orderdata.Rows.Count;
-                for (int i = 0; i < count;i++ )
+                int count = this.orderdata.Rows.Count;
+                for (int i = 0; i < count; i++)
                 {
                     this.orderdata.Rows[i].Cells[0].Value = "false";
                 }
@@ -155,15 +155,13 @@ namespace highSpeed.orderHandle
 
         private void btn_schedule_Click(object sender, EventArgs e)
         {
-
-
             //P_PRODUCE_updatesortnum
             String codestr = this.txt_codestr.Text.Trim();
             //DateTime time = DateTime.Parse(this.datePick.Value.ToString());
             //String date = string.Format("{0:d}", time);
-            OracleParameter[] sqlpara = new OracleParameter[1] ;
+            OracleParameter[] sqlpara = new OracleParameter[1];
             string hasBatchcode = getBatchcode();
-            string errcode = "", errmsg = "";string indexstr = "";
+            string errcode = "", errmsg = ""; string indexstr = "";
             if (hasBatchcode != "0")
             {
                 if (codestr != "")
@@ -175,6 +173,7 @@ namespace highSpeed.orderHandle
                                                                 MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
                     if (MsgBoxResult == DialogResult.Yes)
                     {
+                        btn_schedule.Enabled = false;
                         Db.Open();
                         String[] code = codestr.Substring(1).Split(',');
                         int len = code.Length;
@@ -193,8 +192,8 @@ namespace highSpeed.orderHandle
                             //sqlpara[0] = new OracleParameter("p_time", date);
                             sqlpara[0] = new OracleParameter("p_code", code[i]);
                             sqlpara[1] = new OracleParameter("p_splitval", splitval);
-                            sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar,30);
-                            sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar,100);
+                            sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                            sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
 
                             sqlpara[2].Direction = ParameterDirection.Output;
                             sqlpara[3].Direction = ParameterDirection.Output;
@@ -216,7 +215,7 @@ namespace highSpeed.orderHandle
                                 label2.Refresh();
                                 indexstr = indexstr + "," + code[i];
                             }
-                            else 
+                            else
                             {
                                 label2.Text = errmsg;
                                 label2.Refresh();
@@ -230,7 +229,7 @@ namespace highSpeed.orderHandle
                         MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.txt_codestr.Text = "";
 
-                        
+
                         if (indexstr != "")
                         {
                             indexstr = indexstr.Substring(1);
@@ -250,6 +249,7 @@ namespace highSpeed.orderHandle
                             this.orderdata.AutoGenerateColumns = false;
                         }
                     }
+                    btn_schedule.Enabled = true;
                     seek();
                 }
                 else
@@ -257,7 +257,8 @@ namespace highSpeed.orderHandle
                     MessageBox.Show("请至少选择一个要排程的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("请添加一个新的批次,再进行排程操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
@@ -277,7 +278,7 @@ namespace highSpeed.orderHandle
             }
         }
 
-        private string getBatchcode() 
+        private string getBatchcode()
         {
             string str = "";
             string sql = "SELECT count(*)  FROM t_produce_batch WHERE state=10 and batchtype=10";
@@ -291,8 +292,8 @@ namespace highSpeed.orderHandle
 
             Thread thread = new Thread(new ThreadStart(Sort));
             thread.Start();
-           
-           
+
+
         }
         void Sort()
         {
@@ -306,17 +307,17 @@ namespace highSpeed.orderHandle
             Db.ExecuteNonQueryWithProc("P_PRODUCE_updatesortnum", sqlpara);
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          String  errcode = sqlpara[0].Value.ToString();
-          String errmsg = sqlpara[1].Value.ToString();
-          if (errcode == "1")
-          {
-              MessageBox.Show("排序成功");
-          }
+            String errcode = sqlpara[0].Value.ToString();
+            String errmsg = sqlpara[1].Value.ToString();
+            if (errcode == "1")
+            {
+                MessageBox.Show("排序成功");
+            }
 
-          else
-          {
-              MessageBox.Show(errmsg);
-          }
+            else
+            {
+                MessageBox.Show(errmsg);
+            }
         }
 
     }

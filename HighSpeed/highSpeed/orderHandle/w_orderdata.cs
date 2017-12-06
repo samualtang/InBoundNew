@@ -82,7 +82,7 @@ namespace highSpeed.orderHandle
             //dgVprint1.SubTitle = "这是子标题，当然也可以不设的";
             //dgVprint1.PageHeaderLeft = "白沙物流";
             //dgVprint1.PageHeaderRight = "分拣日期：" + DateTime.Now.Date.ToShortDateString();
-            dgVprint2.TableHeaderLeft = "白沙物流";
+            dgVprint2.TableHeaderLeft = "长株潭烟草物流配送中心";
             dgVprint2.TableHeaderRight = "分拣日期：" + DateTime.Now.Date.ToShortDateString();
             //dgVprint2.PaperLandscape = true;//用横向打印，默认是纵向哦
             dgVprint2.Print(orderdata);

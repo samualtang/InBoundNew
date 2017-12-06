@@ -13,19 +13,31 @@ using InBound.Business;
 using InBound;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using System.Configuration;
 
 namespace highSpeed.orderHandle
 {
     public partial class w_senddata : Form
     {
         #region _Private
+        Socket socketClient;
         List<PokeGroupUIModel> _unionAllPokeGroupList = new List<PokeGroupUIModel>();
         #endregion
+
 
         public w_senddata()
         {
             InitializeComponent();
+            InitSocket();
+        }
+
+        private void InitSocket()
+        {
+            //IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
+            IPAddress address = IPAddress.Parse("192.168.1.8");
+            IPEndPoint endpoint = new IPEndPoint(address, 50001);
+            //创建服务端负责监听的套接字，参数（使用IPV4协议，使用流式连接，使用Tcp协议传输数据）
+            socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socketClient.Connect(endpoint);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -50,7 +62,6 @@ namespace highSpeed.orderHandle
                      GroupKind = "1",
                      GroupNum = s.GROUPNO.ToString(),
                      GroupDesc = s.GROUPNO + "正常烟",
-                     ConfigKey = "1" + s.GROUPNO.ToString(),
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 List<PokeGroupUIModel> _unpokeList = UnPokeService.GetLinenum().Select(s => new PokeGroupUIModel
@@ -58,7 +69,6 @@ namespace highSpeed.orderHandle
                      GroupKind = "2",
                      GroupNum = s.LINENUM,
                      GroupDesc = s.LINENUM + "(异)",
-                     ConfigKey = "2" + s.LINENUM
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 _unionAllPokeGroupList = _pokeList.Union(_unpokeList).ToList();
@@ -81,7 +91,6 @@ namespace highSpeed.orderHandle
                 foreach (var row in list)
                 {
                     int index = this.gvdata.Rows.Add();
-                    this.gvdata.Rows[index].Cells[0].Value = row.IsChecked;
                     this.gvdata.Rows[index].Cells[1].Value = row.batchcode;
                     this.gvdata.Rows[index].Cells[2].Value = row.qty;
                     this.gvdata.Rows[index].Cells[3].Value = row.cuscount;
@@ -94,23 +103,29 @@ namespace highSpeed.orderHandle
 
         private void btn_send_Click(object sender, EventArgs e)
         {
-            var aa = ConfigurationManager.AppSettings.Count;
-            string[] getVal = new string[] { };
+            string sPath = System.IO.Directory.GetCurrentDirectory().ToString() + "\\ipportconf.ini";
+            if (!File.Exists(sPath))
+            {
+                MessageBox.Show("缺少配置文件！");
+                return;
+            }
+            PublicFun ini = new PublicFun(@sPath);
+
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel f = item as PokeGroupUIModel;
-                getVal = ConfigurationManager.AppSettings[f.ConfigKey].Split(',');
-
-                if (getVal.Count() > 0)
+                string getVal = ini.IniReadValue("IpPortConfig", f.GroupNum);
+                if (!string.IsNullOrWhiteSpace(getVal))
                 {
-                    f.IpAddress = getVal[0];
-                    f.Port = int.Parse(getVal[1]);
+                    var vals = getVal.Split(',');
+                    f.IpAddress = vals[1];
+                    f.Port = int.Parse(vals[2]);
                 }
+            }
 
-                IPAddress address = IPAddress.Parse(f.IpAddress);
-                IPEndPoint endpoint = new IPEndPoint(address, f.Port);
-                Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socketClient.Connect(endpoint);
+            foreach (var item in cblist.CheckedItems)
+            {
+                PokeGroupUIModel f = item as PokeGroupUIModel;
                 int i = SocketClientConnector.SendFile(socketClient, f.ZipFile, 10000, 1);
                 if (i == 0)
                 {
@@ -125,18 +140,6 @@ namespace highSpeed.orderHandle
 
         private void btnExp_Click(object sender, EventArgs e)
         {
-            if (cblist.CheckedItems.Count == 0)
-            {
-                MessageBox.Show("请选择一号工程！");
-                return;
-            }
-
-            //if (gvdata.SelectedRows != null && gvdata.SelectedRows[0].Cells[0].Value == "false")
-            //{
-            //    MessageBox.Show("请选择批次！");
-            //    return;
-            //}
-
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel model = item as PokeGroupUIModel;
@@ -149,7 +152,6 @@ namespace highSpeed.orderHandle
                     FetchUnPokeData(model);
                 }
             }
-            MessageBox.Show("导出成功！");
         }
 
         private void FetchProducePokeData(PokeGroupUIModel model)
@@ -190,8 +192,28 @@ namespace highSpeed.orderHandle
             StreamWriter sw = new StreamWriter(filePath + "\\" + filename + ".Order", false, Encoding.UTF8);
             sw.WriteLine(info.Substring(0, info.Length - 1));
             sw.Close();//写入
-            ToZipFile.GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
+            GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
             model.ZipFile = filePath + "\\" + filename + ".zip";
+        }
+
+
+        private void GetFileToZip(string filepath, string zippath, String entryname)
+        {
+
+            FileStream fs = File.OpenRead(filepath);
+            byte[] buffer = new byte[fs.Length];
+            fs.Read(buffer, 0, buffer.Length);
+            fs.Close();
+
+            FileStream ZipFile = File.Create(zippath);
+            ZipOutputStream ZipStream = new ZipOutputStream(ZipFile);
+            ZipEntry ZipEntry = new ZipEntry(entryname);
+            ZipStream.PutNextEntry(ZipEntry);
+            ZipStream.SetLevel(6);
+
+            ZipStream.Write(buffer, 0, buffer.Length);
+            ZipStream.Finish();
+            ZipStream.Close();
         }
         #endregion
     }
@@ -206,7 +228,6 @@ namespace highSpeed.orderHandle
         public string IpAddress { get; set; }
         public int Port { get; set; }
         public string ZipFile { get; set; }
-        public string ConfigKey { get; set; }
     }
 
 

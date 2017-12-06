@@ -103,7 +103,7 @@
             this.cblist.MultiColumn = true;
             this.cblist.Name = "cblist";
             this.cblist.Size = new System.Drawing.Size(307, 20);
-            this.cblist.TabIndex = 3;
+            this.cblist.TabIndex = 3; 
             // 
             // gvdata
             // 
@@ -123,9 +123,8 @@
             // 
             // Column5
             // 
-            this.Column5.HeaderText = "选择";
+            this.Column5.HeaderText = "";
             this.Column5.Name = "Column5";
-            this.Column5.Width = 50;
             // 
             // Column1
             // 
