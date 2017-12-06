@@ -275,6 +275,7 @@
             this.boxcount.HeaderText = "箱数";
             this.boxcount.Name = "boxcount";
             this.boxcount.ReadOnly = true;
+            this.boxcount.Visible = false;
             this.boxcount.Width = 200;
             // 
             // cuscount

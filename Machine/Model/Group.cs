@@ -1,30 +1,31 @@
-﻿        using System;
-        using System.Collections.Generic;
-        using System.Linq;
-        using System.Text;
-        using OpcRcw.Da;
-        using OpcRcw.Comn;
-        using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpcRcw.Da;
+using OpcRcw.Comn;
+using System.Runtime.InteropServices;
+using SortingControlSys.PubFunc;
 
 namespace SortingControlSys.Model
 {
     public class Group : IOPCDataCallback
-        {
+    {
         IOPCServer pIOPCServer;  //定义opcServer对象
         IOPCAsyncIO2 pIOPCAsyncIO2 = null;                   //读对象       // instance pointer for asynchronous IO.
         IOPCSyncIO pIOPCSyncIO = null;
         IOPCGroupStateMgt pIOPCGroupStateMgt = null;        //管理opcgroup对象
         IConnectionPointContainer pIConnectionPointContainer = null;
         IConnectionPoint pIConnectionPoint = null;
-         public delegate void HandleDelegate(int group , int[] clientid,object[] values);
+        public delegate void HandleDelegate(int group, int[] clientid, object[] values);
 
-       public  HandleDelegate callback;
-        Int32 dwRequestedUpdateRate = 250;
+        public HandleDelegate callback;
+        Int32 dwRequestedUpdateRate = 50;
         Int32 pRevUpdateRate;
         float deadband = 0;
         Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
         int TimeBias = 0;
-        int pSvrGroupHandle = 0;  
+        int pSvrGroupHandle = 0;
         GCHandle hTimeBias, hDeadband;
         Object pobjGroup1 = null;      //groub对象
         Int32 dwCookie = 0;
@@ -33,20 +34,20 @@ namespace SortingControlSys.Model
         public Group(IOPCServer server, int cliengGroup, string groupName, int isActive, int LOCALE_ID)
         {
             pIOPCServer = server;
-        hTimeBias = GCHandle.Alloc(TimeBias, GCHandleType.Pinned);
-        hDeadband = GCHandle.Alloc(deadband, GCHandleType.Pinned);
-        pIOPCServer.AddGroup(groupName,
-                isActive,
-                dwRequestedUpdateRate,
-                cliengGroup,
-                hTimeBias.AddrOfPinnedObject(),
-                hDeadband.AddrOfPinnedObject(),
-                LOCALE_ID,
-                out pSvrGroupHandle,
-                out pRevUpdateRate,
-                ref iidRequiredInterface,
-                out pobjGroup1);
-        InitReqIOInterfaces();
+            hTimeBias = GCHandle.Alloc(TimeBias, GCHandleType.Pinned);
+            hDeadband = GCHandle.Alloc(deadband, GCHandleType.Pinned);
+            pIOPCServer.AddGroup(groupName,
+                    isActive,
+                    dwRequestedUpdateRate,
+                    cliengGroup,
+                    hTimeBias.AddrOfPinnedObject(),
+                    hDeadband.AddrOfPinnedObject(),
+                    LOCALE_ID,
+                    out pSvrGroupHandle,
+                    out pRevUpdateRate,
+                    ref iidRequiredInterface,
+                    out pobjGroup1);
+            InitReqIOInterfaces();
         }
         public void addItem(List<String> itemNameList)
         {
@@ -66,41 +67,41 @@ namespace SortingControlSys.Model
                 IntPtr pResults = IntPtr.Zero;
                 IntPtr pErrors = IntPtr.Zero;
 
-               
-                    // Add items to group
-                    ((IOPCItemMgt)pobjGroup1).AddItems(ItemDeffArray.Length, ItemDeffArray, out pResults, out pErrors);
 
-                    // Unmarshal to get the server handles out fom the m_pItemResult
-                    // after checking the errors
-                    int[] errors = new int[ItemDeffArray.Length];
-                    IntPtr pos = pResults;
+                // Add items to group
+                ((IOPCItemMgt)pobjGroup1).AddItems(ItemDeffArray.Length, ItemDeffArray, out pResults, out pErrors);
 
-                    ItemSvrHandleArray = new int[ItemDeffArray.Length];
-                    Marshal.Copy(pErrors, errors, 0, ItemDeffArray.Length);
-                    OPCITEMRESULT result;
+                // Unmarshal to get the server handles out fom the m_pItemResult
+                // after checking the errors
+                int[] errors = new int[ItemDeffArray.Length];
+                IntPtr pos = pResults;
+
+                ItemSvrHandleArray = new int[ItemDeffArray.Length];
+                Marshal.Copy(pErrors, errors, 0, ItemDeffArray.Length);
+                OPCITEMRESULT result;
 
 
-                    for (int i = 0; i < ItemDeffArray.Length; i++)
+                for (int i = 0; i < ItemDeffArray.Length; i++)
+                {
+                    if (errors[i] == 0)
                     {
-                        if (errors[i] == 0)
+                        if (i != 0)
                         {
-                            if (i != 0)
-                            {
-                                pos = new IntPtr(pos.ToInt32() + Marshal.SizeOf(typeof(OPCITEMRESULT)));
-
-                            }
-                            result = (OPCITEMRESULT)Marshal.PtrToStructure(pos, typeof(OPCITEMRESULT));
-                            ItemSvrHandleArray[i] = result.hServer;
-                            //Marshal.DestroyStructure(pos, typeof(OPCITEMRESULT));
-                        }
-                        else
-                        {
-
+                            pos = new IntPtr(pos.ToInt32() + Marshal.SizeOf(typeof(OPCITEMRESULT)));
 
                         }
+                        result = (OPCITEMRESULT)Marshal.PtrToStructure(pos, typeof(OPCITEMRESULT));
+                        ItemSvrHandleArray[i] = result.hServer;
+                        //Marshal.DestroyStructure(pos, typeof(OPCITEMRESULT));
+                    }
+                    else
+                    {
+
+
                     }
                 }
-            
+            }
+
         }
         private void InitReqIOInterfaces()
         {
@@ -124,7 +125,7 @@ namespace SortingControlSys.Model
             }
             catch (System.Exception error) // catch for group adding
             {
-               
+
             }
         }
 
@@ -171,7 +172,7 @@ namespace SortingControlSys.Model
             {
                 try
                 {   // Async write
-                    pIOPCAsyncIO2.Write(1, new int[]{ItemSvrHandleArray[index]}, new object[]{values}, 1, out nCancelid, out pErrors);
+                    pIOPCAsyncIO2.Write(1, new int[] { ItemSvrHandleArray[index] }, new object[] { values }, 1, out nCancelid, out pErrors);
                     int[] errors = new int[3];
                     Marshal.Copy(pErrors, errors, 0, 3);
                     if (errors[0] != 0)
@@ -196,9 +197,12 @@ namespace SortingControlSys.Model
             }
 
         }
-        public void SyncWrite(object[] values)
+        public WriteLog writeLog = new WriteLog();
+        public void SyncWrite(object[] values, out bool iserror, out string errorInfo)
         {
             int nCancelid;
+            iserror = false;
+            errorInfo = string.Empty;
             IntPtr pErrors = IntPtr.Zero;
             if (pIOPCAsyncIO2 != null)
             {
@@ -209,13 +213,27 @@ namespace SortingControlSys.Model
                     Marshal.Copy(pErrors, errors, 0, 3);
                     if (errors[0] != 0)
                     {
+                        if (values != null && values.Length > 0)
+                        {
+                            string tempv = "";
+                            for (int i = 0; i < values.Length; i++)
+                            {
+                                tempv += i + ":" + values[i] + ";";
+                            }
+                            iserror = true;
+                           // writeLog.Write("写入失败:" + tempv + ",错误编码:" + string.Join(":", errors));
+                        }
                         System.Exception ex = new Exception("Error in reading item");
                         throw ex;
+                    }
+                    else
+                    {
+                        writeLog.Write("写数据成功");
                     }
                 }
                 catch (System.Exception error)
                 {
-                  
+
                 }
                 finally
                 {
@@ -239,7 +257,7 @@ namespace SortingControlSys.Model
                 try
                 {   // Async read
 
-                    pIOPCAsyncIO2.Read(1, new int[]{ItemSvrHandleArray[index]}, 1, out nCancelid, out pErrors);
+                    pIOPCAsyncIO2.Read(1, new int[] { ItemSvrHandleArray[index] }, 1, out nCancelid, out pErrors);
                     int[] errors = new int[1];
                     Marshal.Copy(pErrors, errors, 0, 1);
                     if (errors[0] != 0)
@@ -277,11 +295,55 @@ namespace SortingControlSys.Model
                 int[] errors = new int[1];
                 Marshal.Copy(pErrors, errors, 0, 1);
 
-               
+
             }
             catch (System.Exception error)
             {
-              
+
+            }
+            finally
+            {
+                // Free the unmanaged COM memory
+                if (pErrors != IntPtr.Zero)
+                {
+                    Marshal.FreeCoTaskMem(pErrors);
+                    pErrors = IntPtr.Zero;
+                }
+            }
+        }
+
+        public bool WriteR(object value, int index)
+        {
+            // Access unmanaged COM memory
+            IntPtr pErrors = IntPtr.Zero;
+
+            object[] values = new object[1];
+            values[0] = value;
+
+            try
+            {
+                pIOPCSyncIO.Write(1, new int[] { ItemSvrHandleArray[index] }, values, out pErrors);
+                int[] errors = new int[1];
+                Marshal.Copy(pErrors, errors, 0, 1);
+                //writeLog.Write("错误码:" + errors[0]);
+                if (errors[0] != 0)
+                {
+
+                    writeLog.Write("错误码:" + errors[0]);
+                    return false;
+                }
+                else
+                {
+                     
+                    return true;
+                }
+
+            }
+            catch (System.Exception error)
+            {
+                if(error.Message!=null)
+                writeLog.Write("错误码:" + error.Message);
+                return false;
             }
             finally
             {
@@ -309,7 +371,7 @@ namespace SortingControlSys.Model
                 if (errors[0] == 0)
                 {
                     OPCITEMSTATE pItemState = (OPCITEMSTATE)Marshal.PtrToStructure(pItemValues, typeof(OPCITEMSTATE));
-                 
+
 
                     // Free indirect variant element, other indirect elements are freed by Marshal.DestroyStructure(...)
                     //DUMMY_VARIANT.VariantClear((IntPtr)((int)pItemValues + 0));
@@ -359,12 +421,12 @@ namespace SortingControlSys.Model
                     if (errors[0] != 0)
                     {
                         String pstrError;
-                     
+
                     }
                 }
                 catch (System.Exception error)
                 {
-                   
+
                 }
                 finally
                 {
@@ -386,9 +448,9 @@ namespace SortingControlSys.Model
         {
             if (callback != null)
             {
-                callback(hGroup, phClientItems,pvValues);
+                callback(hGroup, phClientItems, pvValues);
             }
-            
+
         }
 
         public void OnReadComplete(int dwTransid, int hGroup, int hrMasterquality, int hrMastererror, int dwCount, int[] phClientItems, object[] pvValues, short[] pwQualities, OpcRcw.Da.FILETIME[] pftTimeStamps, int[] pErrors)
@@ -407,5 +469,5 @@ namespace SortingControlSys.Model
             [DllImport("oleaut32.dll")]
             public static extern int VariantClear(IntPtr addrofvariant);
         }
-        }
+    }
 }

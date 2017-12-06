@@ -27,10 +27,10 @@ namespace SortingControlSys.SortingControl
     public partial class w_SortingControlMain : Form
     {
 
-       
+
         /* Constants */
         internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
-      
+
         internal const string GROUP_NAME = "grp1";                  // Group name
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
 
@@ -46,47 +46,47 @@ namespace SortingControlSys.SortingControl
             updateListBox("应用程序启动");
             try
             {
-                sortgroupno1 =decimal.Parse( ConfigurationManager.AppSettings["Group1"].ToString());
+                sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
                 sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
-              
-           
+
+
             }
             catch (Exception e)
             {
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
                 this.Close();
             }
-          
-            
+
+
         }
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-             tempList = TaskService.initTask1();
-            
+            tempList = TaskService.initTask1();
+
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
-           
+
         }
         private delegate void HandleDelegate1(string info, Label label);
-        public void updateLabel(string info,Label label)
+        public void updateLabel(string info, Label label)
         {
             String time = DateTime.Now.ToLongTimeString();
             if (label.InvokeRequired)
             {
                 //   this.txtreceive.BeginInvoke(new ShowDelegate(Show), strshow);//这个也可以
 
-                label.Invoke(new HandleDelegate1(updateLabel), new Object[]{info,label});
+                label.Invoke(new HandleDelegate1(updateLabel), new Object[] { info, label });
             }
             else
             {
-                label.Text=info;
+                label.Text = info;
 
             }
         }
         private delegate void HandleDelegate2(Boolean visible, Control control);
-        public void updateControlVisible(Boolean visible,Control control)
+        public void updateControlVisible(Boolean visible, Control control)
         {
             if (control.InvokeRequired)
             {
@@ -118,12 +118,12 @@ namespace SortingControlSys.SortingControl
         public void startFenJian()
         {
 
-          
+
             updateListBox("正在尝试连接服务器......");
-            
+
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5;
+        Group taskgroup, statusGroup1, statusGroup2, statusGroup3, statusGroup4, statusGroup5;
         Group errGroup1, errGroup2, errGroup3, errGroup4;
         public void Connect()
         {
@@ -167,12 +167,12 @@ namespace SortingControlSys.SortingControl
                 //errGroup4.callback += OnDataChange;
 
                 checkConnection();
-               // sendTask();
-               
+                // sendTask();
+
             }
             catch (Exception e)
             {
-                updateListBox("连接服务器失败:"+e.Message);
+                updateListBox("连接服务器失败:" + e.Message);
             }
         }
         public void checkConnection()
@@ -191,8 +191,8 @@ namespace SortingControlSys.SortingControl
         Boolean CheckCanSend(int targetPort)
         {
             writeLog.Write("出口号：" + targetPort);
-            int  value= statusGroup3.Read(targetPort-1).CastTo<int>(-1);
-            writeLog.Write(" value="+value);
+            int value = statusGroup3.Read(targetPort - 1).CastTo<int>(-1);
+            writeLog.Write(" value=" + value);
             if (value == 1)
             {
                 return true;
@@ -202,28 +202,32 @@ namespace SortingControlSys.SortingControl
         }
         List<KeyValuePair<int, int>> tempList = new List<KeyValuePair<int, int>>();
         List<KeyValuePair<int, int>> tempList1 = new List<KeyValuePair<int, int>>();
-        public void removeKey( List<KeyValuePair<int, int>> list,int export)
+        public static Object lockFlg = new Object();
+        public void removeKey(List<KeyValuePair<int, int>> list, int export)
         {
             int i = 0;
             if (list != null)
             {
-                foreach (var item in list)
+                lock (lockFlg)
                 {
-                    i++;
-                    if(item.Key==export)
+                    foreach (var item in list)
                     {
-
-                        if (i != list.Count)
+                        i++;
+                        if (item.Key == export)
                         {
-                            list.Remove(item);
-                        }
+
+                            if (i != list.Count)
+                            {
+                                list.Remove(item);
+                            }
                             break;
+                        }
                     }
                 }
             }
         }
 
-        public int getKey(   List<KeyValuePair<int, int>> list,int export)
+        public int getKey(List<KeyValuePair<int, int>> list, int export)
         {
             int i = -1;
             if (list != null)
@@ -232,7 +236,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (item.Key == export)
                     {
-                        i= item.Value;
+                        i = item.Value;
                         break;
                     }
                 }
@@ -253,23 +257,23 @@ namespace SortingControlSys.SortingControl
 
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
-                        updateListBox(sortgroupno2+"组分拣数据发送完毕");
+                        updateListBox(sortgroupno2 + "组分拣数据发送完毕");
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());//取虚拟出口号
                     //if (CheckCanSend(export))//和电控交互该出口号是否能用
                     //{
 
-                        statusGroup3.SyncWrite(datas);//写任务
-                        string logstr = "";
-                        for (int i = 0; i < datas.Length; i++)
-                        {
-                            logstr += i + ":" + datas[i] + ";";
-                        }
-                        writeLog.Write(logstr);
-                        updateListBox("组:" + sortgroupno2 + "----" + logstr);
-                        removeKey(tempList1, export);
-                        tempList1.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
+                    statusGroup3.SyncWrite(datas);//写任务
+                    string logstr = "";
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        logstr += i + ":" + datas[i] + ";";
+                    }
+                    writeLog.Write(logstr);
+                    updateListBox("组:" + sortgroupno2 + "----" + logstr);
+                    removeKey(tempList1, export);
+                    tempList1.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
                     //}
                     //else
                     //{
@@ -293,26 +297,37 @@ namespace SortingControlSys.SortingControl
                 {
 
                     object[] datas = TaskService.GetSortTask(sortgroupno1);//数据
-                    
+
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
-                        updateListBox(sortgroupno1+"组分拣数据发送完毕");
+                        updateListBox(sortgroupno1 + "组分拣数据发送完毕");
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());//取虚拟出口号
                     //if (CheckCanSend(export))//和电控交互该出口号是否能用
                     //{
-                     
-                        taskgroup.SyncWrite(datas);//写任务
-                        string logstr = "";
-                        for (int i = 0; i < datas.Length; i++)
-                        {
-                            logstr += i + ":" + datas[i] + ";";
-                        }
-                        writeLog.Write(logstr);
-                        updateListBox("组:" + sortgroupno1+"----" + logstr);
-                        removeKey(tempList,export);
-                        tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
+
+                    taskgroup.SyncWrite(datas);//写任务
+
+                    //String p2 = taskgroup.Read(1).ToString();
+                    //String p3 = taskgroup.Read(2).ToString();
+                    //if (p2 == datas[1].ToString())
+                    //{
+
+                    //}
+                    //else
+                    //{
+
+                    //}
+                    string logstr = "";
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        logstr += i + ":" + datas[i] + ";";
+                    }
+                    writeLog.Write(logstr);
+                    updateListBox("组:" + sortgroupno1 + "----" + logstr);
+                    removeKey(tempList, export);
+                    tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
                     //}
                     //else
                     //{
@@ -321,53 +336,32 @@ namespace SortingControlSys.SortingControl
                     //}
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
             }
         }
-        public void WriteErr(int type, int len, String temp,decimal GroupNo)
+        public void WriteErr(int type, int len, String temp, decimal GroupNo)
         {
-            String deviceNo="";
-            if(type==1)
+            String deviceNo = "";
+            if (type == 1)
             {
-                deviceNo="A"+len;
+                deviceNo = "A" + len;
             }
             else
             {
-                 deviceNo="B"+len;
+                deviceNo = "B" + len;
             }
 
             for (int i = 0; i < temp.Length; i++)
             {
                 if (temp.ElementAt(i) == '1')
                 {
-                  String   errMsg = getErrMsg(i);
-                    ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
-
-                }
-            }
-
-         
-        }
-
-        public void WriteErrG( int type,int len, String temp)
-        {
-
-            String deviceNo =Math.Ceiling(((Decimal)len / 10))+ "M"+type;
-            decimal GroupNo=0;
-            if ((len / 10) > 11)
-                GroupNo = sortgroupno2;
-            else
-                GroupNo = sortgroupno1;
-            
-            
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp.ElementAt(i) == '1')
-                {
-                    String errMsg = getErrMsg1(i);
-                    ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+                    if (i < 16)
+                    {
+                        String errMsg = getErrMsg(i);
+                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+                    }
 
                 }
             }
@@ -375,10 +369,10 @@ namespace SortingControlSys.SortingControl
 
         }
 
-        public void WriteErrM( int len, String temp)
+        public void WriteErrG(int type, int len, String temp)
         {
 
-            String deviceNo = Math.Ceiling(((Decimal)len / 10))+"";
+            String deviceNo = Math.Ceiling(((Decimal)len / 10)) + "M" + type;
             decimal GroupNo = 0;
             if ((len / 10) > 11)
                 GroupNo = sortgroupno2;
@@ -390,8 +384,38 @@ namespace SortingControlSys.SortingControl
             {
                 if (temp.ElementAt(i) == '1')
                 {
-                    String errMsg = getErrMsg2(i);
-                    ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+                    if (i < 16)
+                    {
+                        String errMsg = getErrMsg1(i);
+                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+                    }
+
+                }
+            }
+
+
+        }
+
+        public void WriteErrM(int len, String temp)
+        {
+
+            String deviceNo = Math.Ceiling(((Decimal)len / 10)) + "";
+            decimal GroupNo = 0;
+            if ((len / 10) > 11)
+                GroupNo = sortgroupno2;
+            else
+                GroupNo = sortgroupno1;
+
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp.ElementAt(i) == '1')
+                {
+                    if (i < 16)
+                    {
+                        String errMsg = getErrMsg2(i);
+                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+                    }
 
                 }
             }
@@ -401,6 +425,7 @@ namespace SortingControlSys.SortingControl
         String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
         public string getErrMsg(int len)
         {
+           
             return errMsgList[len];
         }
         String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
@@ -413,7 +438,7 @@ namespace SortingControlSys.SortingControl
         {
             return errMsgList2[len];
         }
-        public void OnDataChange(int group,int[] clientId, object[] values)//plc对应db块字节值发生变化
+        public void OnDataChange(int group, int[] clientId, object[] values)//plc对应db块字节值发生变化
         {
             if (group == 1)//发送任务组
             {
@@ -421,16 +446,16 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 27)//监控写入标识位
                     {
-                        if ( values[i]!=null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
                         {
-                            
+
                             if (tempList.Count > 0)
                             {
 
                                 TaskService.UpdateStatus(sortgroupno1, 20, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
                             }
-                          
+
                             sendTask();
                         }
                         break;
@@ -438,14 +463,14 @@ namespace SortingControlSys.SortingControl
                 }
             }
             else if (group == 2)
-            { 
+            {
 
             }
             else if (group == 3)//监控分拣任务完成信号
             {
                 for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
                 {
-                    int tempvalue=int.Parse((values[i].ToString()));
+                    int tempvalue = int.Parse((values[i].ToString()));
                     if (tempvalue >= 1)//分拣完成
                     {
                         statusGroup1.Write(1, clientId[i] - 1);
@@ -453,8 +478,8 @@ namespace SortingControlSys.SortingControl
                         {
                             int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(taskno, sortgroupno1);
-                            TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
+                           // InBoundService.UpdateInOut(taskno, sortgroupno1);
+                            //TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
 
                             if (taskno != 0)
                             {
@@ -497,7 +522,7 @@ namespace SortingControlSys.SortingControl
             }
             else if (group == 5)
             {
-               
+
             }
             else if (group == 6)
             {
@@ -531,7 +556,7 @@ namespace SortingControlSys.SortingControl
                         statusGroup4.Write(0, clientId[i] - 1);
                     }
                 }
-            
+
             }
             else if (group == 7)
             {
@@ -539,11 +564,11 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{
-                        if (int.Parse(values[i].ToString()) != 0)
-                        {
-                            String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
-                            WriteErr(1, clientId[i], temp, sortgroupno1);
-                        }
+                    if (int.Parse(values[i].ToString()) != 0)
+                    {
+                        String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
+                        WriteErr(1, clientId[i], temp, sortgroupno1);
+                    }
                     //}
                 }
             }
@@ -566,7 +591,7 @@ namespace SortingControlSys.SortingControl
                     }
                     else if (clientId[i] % 20 == 6)//M4
                     {
-                        WriteErrG(4, clientId[i], temp);
+                       WriteErrG(4, clientId[i], temp);
                     }
                     else if (clientId[i] % 20 == 8)//机械手
                     {
@@ -593,8 +618,8 @@ namespace SortingControlSys.SortingControl
         }
         public void Disconnect()
         {
-           
-          
+
+
             if (pIOPCServer != null)
             {
                 Marshal.ReleaseComObject(pIOPCServer);
@@ -629,77 +654,80 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)
         {
             //TaskService.GetSortTask(1);
-           
+
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
         }
-        
-       public void writeListBox(string info) {
-           String time = DateTime.Now.ToLongTimeString();
-           this.list_data.Items.Add(time + "    "+info);
-       }
 
-       private delegate void HandleDelegate(string strshow);
+        public void writeListBox(string info)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            this.list_data.Items.Add(time + "    " + info);
+        }
 
-       public void updateListBox(string info)
-       {
-           String time = DateTime.Now.ToLongTimeString();
-           if (this.list_data.InvokeRequired)
-           {
-              
+        private delegate void HandleDelegate(string strshow);
 
-               this.list_data.Invoke(new HandleDelegate(updateListBox), info);
-           }
-           else
-           {
-               this.list_data.Items.Insert(0,time + "    " + info);
+        public void updateListBox(string info)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            if (this.list_data.InvokeRequired)
+            {
 
-           }
-       }
-       int i = 1;
-       public void initdata() {//刷新分拣进度等
-           writeLog.Write("initdata");
 
-           task_data.Rows.Clear();
-           try
-           {
-        
-               List<TaskInfo> list = TaskService.GetCustomer();
-               if (list != null)
-               {
-                 
-                   foreach (var row in list)
-                   {
-                       int index = this.task_data.Rows.Add();
+                this.list_data.Invoke(new HandleDelegate(updateListBox), info);
+            }
+            else
+            {
+                this.list_data.Items.Insert(0, time + "    " + info);
 
-                       this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
-                       this.task_data.Rows[index].Cells[5].Value = row.Rate;
-                   }
-               
-               }
+            }
+        }
+        int i = 1;
+        public void initdata()
+        {//刷新分拣进度等
+            writeLog.Write("initdata");
 
-           }
-           finally
-           {
-               
-           }
+            task_data.Rows.Clear();
+            try
+            {
 
-          
-           
-       }
-       delegate void UpdateDataGridView(string data);
-       public void updateTaskInfo(string taskinfo) 
-       {
-           Console.WriteLine("进入方法updateTaskInfo");
-            if(taskinfo!=null&&taskinfo.Length>0){
+                List<TaskInfo> list = TaskService.GetCustomer();
+                if (list != null)
+                {
+
+                    foreach (var row in list)
+                    {
+                        int index = this.task_data.Rows.Add();
+
+                        this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
+                        this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
+                        this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
+                        this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
+                        this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
+                        this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                    }
+
+                }
+
+            }
+            finally
+            {
+
+            }
+
+
+
+        }
+        delegate void UpdateDataGridView(string data);
+        public void updateTaskInfo(string taskinfo)
+        {
+            Console.WriteLine("进入方法updateTaskInfo");
+            if (taskinfo != null && taskinfo.Length > 0)
+            {
                 string[] info = taskinfo.Split('-');
 
-                int len=task_data.RowCount;
+                int len = task_data.RowCount;
                 int indexj = 0;
                 //取要修改分拣数据的行标
 
@@ -738,82 +766,82 @@ namespace SortingControlSys.SortingControl
                     //修改分拣完成百分比
 
                     double percent = Math.Round(double.Parse(finish + "") / double.Parse(finishqty[1].ToString()) * 100, 2);
-                    this.task_data.Rows[indexj].Cells[5].Value = percent+"%";
+                    this.task_data.Rows[indexj].Cells[5].Value = percent + "%";
 
                     Console.WriteLine(boxc + "/" + boxcount[1]);
                     Console.WriteLine(cusc + "/" + cuscount[1]);
                     Console.WriteLine(finish + "/" + finishqty[1]);
                     Console.WriteLine(percent + "%");
                 }
-                
+
             }
-       }
+        }
 
-       private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
-       {
-           DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-                                                            "操作提示",//对话框的标题 
-                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-           //Console.WriteLine(MsgBoxResult);
-           if (MsgBoxResult == DialogResult.Yes)
-           {
-               System.Environment.Exit(System.Environment.ExitCode);
-               this.Dispose();
-               this.Close();
-           }
-           else
-           {
-               e.Cancel = true;
-           }
-       }
+        private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                             "操作提示",//对话框的标题 
+                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+                System.Environment.Exit(System.Environment.ExitCode);
+                this.Dispose();
+                this.Close();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
 
-     
-       protected override void OnClosing(CancelEventArgs e)
-       {
-           base.OnClosing(e);
 
-           Disconnect();
-           
-           this.Dispose();
-           this.Close();
-           System.Environment.Exit(System.Environment.ExitCode);
-       }
-       private void button11_Click(object sender, EventArgs e)
-       {
-           this.task_data.BeginInvoke(new Action(() => { initdata(); }));
-       }
-     
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
 
-    
+            Disconnect();
 
-       private void button12_Click(object sender, EventArgs e)
-       {
-           
-           updateControlEnable(true, button10);
-           
-       }
+            this.Dispose();
+            this.Close();
+            System.Environment.Exit(System.Environment.ExitCode);
+        }
+        private void button11_Click(object sender, EventArgs e)
+        {
+            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+        }
 
-       private void button6_Click(object sender, EventArgs e)
-       {
-           w_SortingControlMainTest w_SortingControlMain = new w_SortingControlMainTest();
-           
-           //w_SortingControlMain.MdiParent = this;
-           w_SortingControlMain.WindowState = FormWindowState.Maximized;
-           w_SortingControlMain.Show();
-           //this.Close();
-       }
 
-       private void button6_Click_1(object sender, EventArgs e)
-       {
-           w_pass pass = new w_pass();
 
-           
-           pass.Show();
 
-          
-       }
-     
+        private void button12_Click(object sender, EventArgs e)
+        {
+
+            updateControlEnable(true, button10);
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            w_SortingControlMainTest w_SortingControlMain = new w_SortingControlMainTest();
+
+            //w_SortingControlMain.MdiParent = this;
+            w_SortingControlMain.WindowState = FormWindowState.Maximized;
+            w_SortingControlMain.Show();
+            //this.Close();
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            w_pass pass = new w_pass();
+
+
+            pass.Show();
+
+
+        }
+
     }
 }
