@@ -42,6 +42,23 @@ namespace InBound.Business
            }
  
        }
+       public static void RollBackOrder(string billcode,decimal groupNo)
+       {
+           using (Entities dataEntity = new Entities())
+           {
+               var query = (from item in dataEntity.T_WMS_STORAGEAREA_INOUT where item.TASKNO == billcode && item.GROUPNO==groupNo select item).ToList();
+               if (query != null)
+               {
+                   foreach (var item in query)
+                   {
+                       dataEntity.T_WMS_STORAGEAREA_INOUT.DeleteObject(item);
+
+                   }
+                   dataEntity.SaveChanges();
+               }
+           }
+
+       }
        public static List<T_WMS_STORAGEAREA_INOUT> GetDetail(int type, int areaId, int status)
        {
            using (Entities dataEntity = new Entities())
