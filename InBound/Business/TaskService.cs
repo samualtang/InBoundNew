@@ -905,6 +905,7 @@ namespace InBound.Business
 
 
                 var query = (from item in entity.T_PRODUCE_POKE where item.TASKNUM == tasknum && item.TROUGHNUM == troughno select item).FirstOrDefault();
+                //if (query == null) return;
                 query.MACHINESTATE = status;
                 entity.SaveChanges();
 
@@ -3228,8 +3229,8 @@ namespace InBound.Business
                              select item).FirstOrDefault();
                 if (query != null)
                 {
-                    values[3] = query.MERAGENUM;
-                    values[2] = query.TASKNUM;
+                    values[2] = query.MERAGENUM;
+                    values[1] = query.TASKNUM;
                     result.Add(query.TASKNUM + "");
                 }
                 else
@@ -3237,7 +3238,7 @@ namespace InBound.Business
                     values[3] = 0;
                 }
             }
-            values[1] = 1;
+           // values[1] = 1;
             return values;
             //object[] values = new object[2];
             //using (Entities entity = new Entities())

@@ -184,6 +184,9 @@ namespace SortingControlSys.SortingControl
             }
             else
             {
+                taskgroup.Write(2, 26);
+                statusGroup3.Write(2, 26);
+
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
             }
@@ -250,7 +253,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = statusGroup3.Read(26).CastTo<int>(-1);//读任务写入标志
                 writeLog.Write("标志位：" + flag);
-                if (flag == 0)//0：已取走， 1：已写入
+                if (flag == 2)//0：已取走， 1：已写入
                 {
 
                     object[] datas = TaskService.GetSortTask(sortgroupno2);//数据
@@ -293,7 +296,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = taskgroup.Read(26).CastTo<int>(-1);//读任务写入标志
                 writeLog.Write("标志位：" + flag);
-                if (flag == 0)//0：已取走， 1：已写入
+                if (flag == 2)//0：已取走， 1：已写入
                 {
 
                     object[] datas = TaskService.GetSortTask(sortgroupno1);//数据
@@ -446,7 +449,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 27)//监控写入标识位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
 
                             if (tempList.Count > 0)
@@ -504,7 +507,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 27)//监控写入标识位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
 
                             if (tempList1.Count > 0)
