@@ -132,7 +132,7 @@ namespace highSpeed.orderHandle
             StreamWriter sw = new StreamWriter(filePath + "\\" + filename + ".Order", false, Encoding.UTF8);
             sw.WriteLine(info.Substring(0, info.Length - 1));
             sw.Close();//写入
-            ToZipFile.GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
+            //ToZipFile.GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
             model.ZipFile = filePath + "\\" + filename + ".zip";
         }
 
