@@ -29,8 +29,8 @@ namespace highSpeed.orderHandle
         {
             string time = this.datePick.Text;
             this.txt_codestr.Text = "";
-            String strsql = "SELECT rownum,routecode,SUM(totalqty)as order_qty,count(1) as count_hs FROM t_wms_shiporder " +
-                            "WHERE  SCHEDULESTATUS='新增' and orderdate=to_date('" + time + "','yyyy-mm-dd') GROUP BY routecode";
+            String strsql = "with lst as (SELECT routecode,SUM(totalqty)as order_qty,count(1) as count_hs FROM t_wms_shiporder " +
+                            "WHERE  SCHEDULESTATUS='新增' and orderdate=to_date('" + time + "','yyyy-mm-dd') GROUP BY routecode) select rownum,lst.* from lst";
             Bind(strsql);
         }
 

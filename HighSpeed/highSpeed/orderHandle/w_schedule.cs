@@ -30,7 +30,7 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
             this.txt_codestr.Text = "";
-            String strsql = "SELECT rownum,regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
+            String strsql = "with lst as (SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode ) select rownum,lst.* from lst";
             //MessageBox.Show(strsql);
             Bind(strsql);
 
