@@ -546,7 +546,20 @@ namespace SortingControlSys.SortingControl
             else
             {
                 updateListBox("连接服务器成功......");
+                InitPlcData();
                 updateControlEnable(false, button10);
+            }
+        }
+
+
+        public void InitPlcData()
+        {
+            int i=0;
+            foreach (var item in groupList)
+            {
+                item.Write(2, 3);
+                updateListBox("通道号:" + i+";初始值:" +item.Read(3));
+                    i++;
             }
         }
         Boolean CheckCanSend(int targetPort)
@@ -652,58 +665,57 @@ namespace SortingControlSys.SortingControl
                     bool iserror = false;
                     string errorInfo = string.Empty;
                     int j = 0;
-                    while (j < writeCount)
+                    //while (j < writeCount)
+                    //{
+
+                    group.WriteR(datas[1], 1);
+                    group.WriteR(datas[2], 2);
+                  //   group.WriteR(datas[3], 1);
+
+
+                    String p2 = group.Read(1).ToString();
+                    String p3 = group.Read(2).ToString();
+                    String p4 = group.Read(3).ToString();
+                    //int count = 1;
+
+                    if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
                     {
 
-                        group.WriteR(datas[1], 1);
-                        group.WriteR(datas[2], 2);
-                        group.WriteR(datas[3], 3);
+                        group.WriteR(1, 3);
 
+                        // String p5 = group.Read(3).ToString();
 
-                        String p2 = group.Read(1).ToString();
-                        String p3 = group.Read(2).ToString();
-                        String p4 = group.Read(3).ToString();
-                        //int count = 1;
-
-                        if (p2 == datas[1].ToString() && p3 == datas[2].ToString() && p4 == datas[3].ToString())
+                        //while (p5 == "4" && j < writeCount)
+                        //{
+                        // updateListBox("重新写入");
+                        //writeLog.Write("任务号:" + p2 + ";重新写入");
+                        // group.WriteR(3, 3);
+                        // p5 = group.Read(3).ToString();
+                        // j++;
+                        //}
+                        if (!string.IsNullOrWhiteSpace(errorInfo))
                         {
-
-                            group.WriteR(3, 3);
-
-                            String p5 = group.Read(3).ToString();
-
-                            while (p5 == "4" && j < writeCount)
-                            {
-                                updateListBox("重新写入");
-                                writeLog.Write("任务号:" + p2 + ";重新写入");
-                                group.WriteR(3, 3);
-                                p5 = group.Read(3).ToString();
-                                j++;
-                            }
-                            if (!string.IsNullOrWhiteSpace(errorInfo))
-                            {
-                                updateListBox(errorInfo);
-                            }
-                            j = 1000;
-                            string logstr = "通道:" + exportnum + "   ";
-                            for (int i = 0; i < datas.Length; i++)
-                            {
-                                logstr += i + ":" + datas[i] + ";";
-                            }
-                            writeLog.Write(p2 + ":" + p3);
-                            writeLog.Write(logstr);
-                            updateListBox(logstr);
-                            updateListBox(":" + p2 + ":" + p3);
-                            break;
+                            updateListBox(errorInfo);
                         }
-                        else
+                        //  j = 1000;
+                        string logstr = "通道:" + exportnum + "   ";
+                        for (int i = 0; i < datas.Length; i++)
                         {
-                            j++;
-
+                            logstr += i + ":" + datas[i] + ";";
                         }
-
-
+                        writeLog.Write(p2 + ":" + p3);
+                        writeLog.Write(logstr);
+                        updateListBox(logstr);
+                        updateListBox(":" + p2 + ":" + p3);
+                        // break;
+                        //}
                     }
+                    else
+                    {
+                        //j++;
+
+                    } 
+
                     CheckExport(exportnum);
                     tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
 
@@ -759,6 +771,7 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
+                    //第四位 读写标志位
                     if (clientId[i] == 4)
                     {
                         if (int.Parse(values[i].ToString()) == 2)
@@ -786,7 +799,7 @@ namespace SortingControlSys.SortingControl
                         }
                         break;
                     }
-                    else if (clientId[i] == 1)
+                    else if (clientId[i] == 1)//第一位：任务完成标志位
                     {
                         if (decimal.Parse(values[i].ToString()) != 0)
                         {

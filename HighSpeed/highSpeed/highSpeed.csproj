@@ -61,6 +61,7 @@
       <HintPath>.\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.OracleClient" />
@@ -274,6 +275,12 @@
     </Compile>
     <Compile Include="orderHandle\troughmove.Designer.cs">
       <DependentUpon>troughmove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_reprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_reprint.Designer.cs">
+      <DependentUpon>w_reprint.cs</DependentUpon>
     </Compile>
     <Compile Include="orderHandle\w_senddata.cs">
       <SubType>Form</SubType>
@@ -498,6 +505,9 @@
     <EmbeddedResource Include="orderHandle\troughmove.resx">
       <DependentUpon>troughmove.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_reprint.resx">
+      <DependentUpon>w_reprint.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_senddata.resx">
       <DependentUpon>w_senddata.cs</DependentUpon>
     </EmbeddedResource>
@@ -587,15 +597,6 @@
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="MSComctlLib">
-      <Guid>{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>

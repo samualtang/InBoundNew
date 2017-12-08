@@ -228,6 +228,7 @@ namespace highSpeed.orderHandle
         public string IpAddress { get; set; }
         public int Port { get; set; }
         public string ZipFile { get; set; }
+        public string ConfigKey { get; set; }
     }
 
 
