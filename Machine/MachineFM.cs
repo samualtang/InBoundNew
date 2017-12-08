@@ -554,12 +554,12 @@ namespace SortingControlSys.SortingControl
 
         public void InitPlcData()
         {
-            int i=0;
+            int i = 0;
             foreach (var item in groupList)
             {
                 item.Write(2, 3);
-                updateListBox("通道号:" + i+";初始值:" +item.Read(3));
-                    i++;
+                updateListBox("通道号:" + i + ";初始值:" + item.Read(3));
+                i++;
             }
         }
         Boolean CheckCanSend(int targetPort)
@@ -670,7 +670,7 @@ namespace SortingControlSys.SortingControl
 
                     group.WriteR(datas[1], 1);
                     group.WriteR(datas[2], 2);
-                  //   group.WriteR(datas[3], 1);
+                    //   group.WriteR(datas[3], 1);
 
 
                     String p2 = group.Read(1).ToString();
@@ -714,7 +714,7 @@ namespace SortingControlSys.SortingControl
                     {
                         //j++;
 
-                    } 
+                    }
 
                     CheckExport(exportnum);
                     tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
@@ -746,11 +746,9 @@ namespace SortingControlSys.SortingControl
         public void WriteErr(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "" + len;
-
-
-            for (int i = 0; i < temp.Length; i++)
+            for (int i = 1; i <= temp.Length; i++)
             {
-                if (temp.ElementAt(i) == '1')
+                if (temp.ElementAt(i-1) == '1')
                 {
                     String errMsg = getErrMsg(temp.Length - i);
                     ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
@@ -760,7 +758,7 @@ namespace SortingControlSys.SortingControl
 
 
         }
-        String[] errMsgList = { "", "", "", "", "", "", "", "", "机械手急停", "机械手报警", "外部急停报警", "吸盘监控异常", "烟条初始位校验异常", "子站故障", "", "", };
+        String[] errMsgList = { "机械手急停", "机械手报警", "外部急停报警", "吸盘监控异常", "烟条初始位校验异常", "子站故障", "", "", "", "", "", "", "", "", "", "", };
         public string getErrMsg(int len)
         {
             return errMsgList[len];
