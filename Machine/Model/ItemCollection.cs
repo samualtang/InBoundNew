@@ -70,7 +70,7 @@ namespace SortingControlSys.Model
             List<string> list = new List<string>();
 
             list.Add("S7:[FJConnection]DB1,DWORD50");
-            list.Add("S7:[FJConnection]DB1,                                                                                                         ");
+            list.Add("S7:[FJConnection]DB1,W54");
             list.Add("S7:[FJConnection]DB1,W58");
             list.Add("S7:[FJConnection]DB1,W48");
             return list;
