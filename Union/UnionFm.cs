@@ -288,7 +288,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 13)
                     {
-                        if (int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
                         {
                             
                             if (tempList.Count > 0)
@@ -314,23 +314,23 @@ namespace SortingControlSys.SortingControl
                     int tempvalue=int.Parse((values[i].ToString()));
                     if (tempvalue >= 1)
                     {
-                        statusGroup1.Write(1, clientId[i]-1);
-                        if (getKey(clientId[i])!=-1)
-                        {
-                            int taskno = getKey(clientId[i]);
-                            writeLog.Write("出口号：" + clientId[i] + ";任务号:" + taskno);
+                       
+                       // if (getKey(clientId[i])!=-1)
+                       // {
+                          //  int taskno = getKey(clientId[i]);
+                            writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
 
                             TaskService.UpdateUnionStatus( 30, tempvalue);
-                           
-                            if (taskno != 0)
+
+                            if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + taskno + "已完成");
+                                updateListBox("任务:" + tempvalue + "已完成");
                             }
-                            
+                            statusGroup2.Write(0, clientId[i] - 1);
                             removeKey(clientId[i]);
                             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
                            
-                        }
+                        //}
                         
                     }
                 }
@@ -341,7 +341,7 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{
-                    if (int.Parse(values[i].ToString()) != 0)
+                    if (values[i]!=null && int.Parse(values[i].ToString()) != 0)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         WriteErr(1, clientId[i], temp, 0);
@@ -355,7 +355,7 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{
-                    if (int.Parse(values[i].ToString()) != 0)
+                    if (values[i] != null && int.Parse(values[i].ToString()) != 0)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         WriteErr(2, clientId[i], temp, 0);

@@ -3235,7 +3235,7 @@ namespace InBound.Business
                 }
                 else
                 {
-                    values[3] = 0;
+                    values[1] = 0;
                 }
             }
            // values[1] = 1;
