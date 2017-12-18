@@ -186,7 +186,6 @@ namespace SortingControlSys.SortingControl
             {
                 taskgroup.Write(2, 26);
                 statusGroup3.Write(2, 26);
-
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
             }
@@ -389,7 +388,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (i < 16)
                     {
-                        String errMsg = getErrMsg1(i);
+                        String errMsg = getErrMainbeltList(i);
                         ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
                     }
 
@@ -414,9 +413,9 @@ namespace SortingControlSys.SortingControl
             {
                 if (temp.ElementAt(i) == '1')
                 {
-                    if (i < 16)
+                    if (i < 8)
                     {
-                        String errMsg = getErrMsg2(i);
+                        String errMsg = getErrMachinesMsg(i);
                         ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
                     }
 
@@ -425,21 +424,24 @@ namespace SortingControlSys.SortingControl
 
 
         }
-        String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
+        //String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
+        String[] errMsgList = { "机电总故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号", "", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后" };
         public string getErrMsg(int len)
         {
-           
+
             return errMsgList[len];
         }
-        String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
-        public string getErrMsg1(int len)
+        //String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
+        String[] errMsgMainbeltList = { "电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中", "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮" };
+        public string getErrMainbeltList(int len)
         {
-            return errMsgList1[len];
+            return errMsgMainbeltList[len];
         }
-        String[] errMsgList2 = { "机械手正常/1", "机械手故障", "", "", "", "", "烟柜烟条未准备好", "机械手抓烟超时", "", "", "", "", "", "", "", "" };
-        public string getErrMsg2(int len)
+        //String[] errMsgList2 = { "机械手正常/1", "机械手故障", "", "", "", "", "烟柜烟条未准备好", "机械手抓烟超时", "", "", "", "", "", "", "", "" };
+        String[] errMachinesMsgList = { "机械手正常/1", "机械手故障", "机械手急停", "机械手手体报警", "机械手掉烟", "机械手空开", "烟柜烟条未准备好", "机械手抓烟超时" };
+        public string getErrMachinesMsg(int len)
         {
-            return errMsgList2[len];
+            return errMachinesMsgList[len];
         }
         public void OnDataChange(int group, int[] clientId, object[] values)//plc对应db块字节值发生变化
         {
@@ -481,8 +483,8 @@ namespace SortingControlSys.SortingControl
                         {
                             int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                           // InBoundService.UpdateInOut(taskno, sortgroupno1);
-                            //TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
+                            InBoundService.UpdateInOut(taskno, sortgroupno1);
+                            TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
 
                             if (taskno != 0)
                             {
@@ -566,7 +568,7 @@ namespace SortingControlSys.SortingControl
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     //if (clientId[i] == 1)
-                    //{
+                    //{ 
                     if (int.Parse(values[i].ToString()) != 0)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
@@ -580,23 +582,23 @@ namespace SortingControlSys.SortingControl
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
-                    if (clientId[i] % 20 == 0)//M1
+                    if (clientId[i] % 10 == 1)//M1  这里应该是机电
                     {
                         WriteErrG(1, clientId[i], temp);
                     }
-                    else if (clientId[i] % 20 == 2)//M2
+                    else if (clientId[i] % 10 == 2)//M2 皮带1
                     {
                         WriteErrG(2, clientId[i], temp);
                     }
-                    else if (clientId[i] % 20 == 4)////M3
+                    else if (clientId[i] % 10 == 3)////M3   皮带2
                     {
                         WriteErrG(3, clientId[i], temp);
                     }
-                    else if (clientId[i] % 20 == 6)//M4
+                    else if (clientId[i] % 10 == 4)//M4   皮带3
                     {
-                       WriteErrG(4, clientId[i], temp);
+                        WriteErrG(4, clientId[i], temp);
                     }
-                    else if (clientId[i] % 20 == 8)//机械手
+                    else if (clientId[i] % 10 == 5)//机械手
                     {
                         WriteErrM(clientId[i], temp);
                     }
