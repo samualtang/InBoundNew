@@ -683,15 +683,15 @@ namespace SortingControlSys.SortingControl
 
                         group.WriteR(1, 3);
 
-                        // String p5 = group.Read(3).ToString();
+                        //String p5 = group.Read(3).ToString();
 
-                        //while (p5 == "4" && j < writeCount)
+                        //while (p5 != "1" && j < writeCount)
                         //{
-                        // updateListBox("重新写入");
-                        //writeLog.Write("任务号:" + p2 + ";重新写入");
-                        // group.WriteR(3, 3);
-                        // p5 = group.Read(3).ToString();
-                        // j++;
+                        //    updateListBox("重新写入");
+                        //    writeLog.Write("任务号:" + p2 + ";重新写入");
+                        //    group.WriteR(1, 3);
+                        //    p5 = group.Read(3).ToString();
+                        //    j++;
                         //}
                         if (!string.IsNullOrWhiteSpace(errorInfo))
                         {
@@ -748,7 +748,7 @@ namespace SortingControlSys.SortingControl
             String deviceNo = "" + len;
             for (int i = 1; i <= temp.Length; i++)
             {
-                if (temp.ElementAt(i-1) == '1')
+                if (temp.ElementAt(i - 1) == '1')
                 {
                     String errMsg = getErrMsg(temp.Length - i);
                     ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
