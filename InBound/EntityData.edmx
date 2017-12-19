@@ -6,8 +6,6 @@
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="INF_DEVICESTATUS" EntityType="Model.Store.INF_DEVICESTATUS" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.Store.INF_EQUIPMENTREQUEST" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.Store.INF_EQUIPMENTSTATUS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.Store.INF_JOBDOWNLOAD" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
@@ -22,7 +20,6 @@
           <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.Store.T_WMS_ATSCELL_CJ_HIS" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.Store.T_WMS_ATSCELL_IN" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_OUT" EntityType="Model.Store.T_WMS_ATSCELL_OUT" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELLINFO" EntityType="Model.Store.T_WMS_ATSCELLINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELLINFO_DETAIL" EntityType="Model.Store.T_WMS_ATSCELLINFO_DETAIL" store:Type="Tables" Schema="ZOOMTEL" />
@@ -40,31 +37,6 @@
           <EntitySet Name="T_WMS_STORAGEAREA" EntityType="Model.Store.T_WMS_STORAGEAREA" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.Store.T_WMS_STORAGEAREA_INOUT" store:Type="Tables" Schema="ZOOMTEL" />
         </EntityContainer>
-        <EntityType Name="INF_DEVICESTATUS">
-          <Key>
-            <PropertyRef Name="DEVICEID" />
-          </Key>
-          <Property Name="DEVICEID" Type="varchar2" Nullable="false" MaxLength="32" />
-          <Property Name="ISERROR" Type="char" MaxLength="1" />
-          <Property Name="UPDATEDATE" Type="date" />
-        </EntityType>
-        <EntityType Name="INF_EQUIPMENTREQUEST">
-          <Key>
-            <PropertyRef Name="REQUESTID" />
-          </Key>
-          <Property Name="REQUESTID" Type="varchar2" Nullable="false" MaxLength="32" />
-          <Property Name="EQUIPMENTID" Type="varchar2" MaxLength="32" />
-          <Property Name="REQUESTTYPE" Type="number" />
-          <Property Name="BARCODE" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
-          <Property Name="BRANDID" Type="varchar2" MaxLength="20" />
-          <Property Name="REQUESTQTY" Type="number" />
-          <Property Name="ENTERDATE" Type="date" />
-          <Property Name="RESPONDDATE" Type="date" />
-          <Property Name="STATUS" Type="number" />
-          <Property Name="INBOUNDNO" Type="number" />
-          <Property Name="TUTYPE" Type="number" />
-        </EntityType>
         <EntityType Name="INF_EQUIPMENTSTATUS">
           <Key>
             <PropertyRef Name="EQUIPMENTID" />
@@ -139,6 +111,7 @@
           <Property Name="SORTNUM" Type="number" />
           <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
           <Property Name="UNIONEXPORTNUM" Type="varchar2" MaxLength="10" />
+          <Property Name="UNIONTASKNUM" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_SORTTROUGH">
           <Key>
@@ -295,6 +268,7 @@
           <Property Name="DELSTATUS" Type="number" Precision="2" />
           <Property Name="WORKSOURCE" Type="varchar2" MaxLength="20" />
           <Property Name="ROLEID" Type="number" Precision="6" />
+          <Property Name="WECHATUSERID" Type="varchar2" MaxLength="50" />
         </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
@@ -390,21 +364,6 @@
           <Property Name="INBOUNDID" Type="number" />
           <Property Name="QTY" Type="number" />
           <Property Name="BARCODE" Type="nvarchar2" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="T_WMS_ATSCELL_IN">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="number" Nullable="false" />
-          <Property Name="INTYPE" Type="number" />
-          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="50" />
-          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
-          <Property Name="REQUESTQTY" Type="number" />
-          <Property Name="BARCODE" Type="varchar2" MaxLength="20" />
-          <Property Name="STATUS" Type="number" />
-          <Property Name="SOURCETARGET" Type="varchar2" MaxLength="30" />
-          <Property Name="OUTID" Type="number" />
-          <Property Name="CREATETIME" Type="date" />
         </EntityType>
         <EntityType Name="T_WMS_ATSCELL_OUT">
           <Key>
@@ -519,7 +478,6 @@
           <Property Name="LOCKQTY" Type="number" />
           <Property Name="OTHERQTY" Type="number" />
           <Property Name="BARCODE" Type="varchar2" MaxLength="50" />
-          <Property Name="BDPCIGCODE" Type="varchar2" MaxLength="50" />
         </EntityType>
         <EntityType Name="T_WMS_INOUTBOUND_TASK">
           <Key>
@@ -798,7 +756,6 @@
           <EntitySet Name="T_SYS_USER" EntityType="Model.T_SYS_USER" />
           <EntitySet Name="T_UN_TASKLINE" EntityType="Model.T_UN_TASKLINE" />
           <EntitySet Name="T_WMS_ATSCELLINFO" EntityType="Model.T_WMS_ATSCELLINFO" />
-          <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.T_PRODUCE_TASK" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.T_PRODUCE_TASKLINE" />
           <EntitySet Name="T_WMS_INBOUND" EntityType="Model.T_WMS_INBOUND" />
@@ -812,6 +769,7 @@
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.INF_JOBDOWNLOAD" />
           <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
           <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
+          <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1209,6 +1167,7 @@
           <Property Type="Int16" Name="DELSTATUS" />
           <Property Type="String" Name="WORKSOURCE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="ROLEID" />
+          <Property Type="String" Name="WECHATUSERID" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_UN_TASKLINE">
           <Key>
@@ -1235,29 +1194,6 @@
           <Property Type="DateTime" Name="CREATETIME" />
           <Property Type="String" Name="CONSIGNOR" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="INBOUNDTIME" />
-        </EntityType>
-        <EntityType Name="T_PRODUCE_POKE">
-          <Key>
-            <PropertyRef Name="POKEID" />
-          </Key>
-          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="SORTSTATE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
-          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="POKEPLACE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="UNIONSTATE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MACHINESTATE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MERAGENUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
-          <Property Type="String" Name="UNIONEXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="BILLCODE" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -1513,6 +1449,30 @@
           <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
         </EntityType>
+        <EntityType Name="T_PRODUCE_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTSTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
+          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKEPLACE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="UNIONSTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MERAGENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UNIONEXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="UNIONTASKNUM" Precision="38" Scale="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1533,7 +1493,6 @@
           <EntitySetMapping Name="T_WMS_INBOUND_LINE">
             <EntityTypeMapping TypeName="Model.T_WMS_INBOUND_LINE">
               <MappingFragment StoreEntitySet="T_WMS_INBOUND_LINE">
-                <ScalarProperty Name="BDPCIGCODE" ColumnName="BDPCIGCODE" />
                 <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
                 <ScalarProperty Name="OTHERQTY" ColumnName="OTHERQTY" />
                 <ScalarProperty Name="LOCKQTY" ColumnName="LOCKQTY" />
@@ -1874,6 +1833,7 @@
           <EntitySetMapping Name="T_SYS_USER">
             <EntityTypeMapping TypeName="Model.T_SYS_USER">
               <MappingFragment StoreEntitySet="T_SYS_USER">
+                <ScalarProperty Name="WECHATUSERID" ColumnName="WECHATUSERID" />
                 <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
                 <ScalarProperty Name="WORKSOURCE" ColumnName="WORKSOURCE" />
                 <ScalarProperty Name="DELSTATUS" ColumnName="DELSTATUS" />
@@ -1960,30 +1920,6 @@
                 <ScalarProperty Name="PALLETNO" ColumnName="PALLETNO" />
                 <ScalarProperty Name="DISMANTLE" ColumnName="DISMANTLE" />
                 <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_PRODUCE_POKE">
-            <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
-              <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
-                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
-                <ScalarProperty Name="UNIONEXPORTNUM" ColumnName="UNIONEXPORTNUM" />
-                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
-                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
-                <ScalarProperty Name="MERAGENUM" ColumnName="MERAGENUM" />
-                <ScalarProperty Name="MACHINESTATE" ColumnName="MACHINESTATE" />
-                <ScalarProperty Name="UNIONSTATE" ColumnName="UNIONSTATE" />
-                <ScalarProperty Name="POKEPLACE" ColumnName="POKEPLACE" />
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
-                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
-                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
-                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
-                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
-                <ScalarProperty Name="SORTSTATE" ColumnName="SORTSTATE" />
-                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
-                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
-                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2095,15 +2031,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INF_DEVICESTATUS">
-            <EntityTypeMapping TypeName="Model.INF_DEVICESTATUS">
-              <MappingFragment StoreEntitySet="INF_DEVICESTATUS">
-                <ScalarProperty Name="UPDATEDATE" ColumnName="UPDATEDATE" />
-                <ScalarProperty Name="ISERROR" ColumnName="ISERROR" />
-                <ScalarProperty Name="DEVICEID" ColumnName="DEVICEID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INF_EQUIPMENTSTATUS">
             <EntityTypeMapping TypeName="Model.INF_EQUIPMENTSTATUS">
               <MappingFragment StoreEntitySet="INF_EQUIPMENTSTATUS">
@@ -2133,24 +2060,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INF_EQUIPMENTREQUEST">
-            <EntityTypeMapping TypeName="Model.INF_EQUIPMENTREQUEST">
-              <MappingFragment StoreEntitySet="INF_EQUIPMENTREQUEST">
-                <ScalarProperty Name="TUTYPE" ColumnName="TUTYPE" />
-                <ScalarProperty Name="INBOUNDNO" ColumnName="INBOUNDNO" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="RESPONDDATE" ColumnName="RESPONDDATE" />
-                <ScalarProperty Name="ENTERDATE" ColumnName="ENTERDATE" />
-                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
-                <ScalarProperty Name="BRANDID" ColumnName="BRANDID" />
-                <ScalarProperty Name="JOBID" ColumnName="JOBID" />
-                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
-                <ScalarProperty Name="REQUESTTYPE" ColumnName="REQUESTTYPE" />
-                <ScalarProperty Name="EQUIPMENTID" ColumnName="EQUIPMENTID" />
-                <ScalarProperty Name="REQUESTID" ColumnName="REQUESTID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_WMS_ATSCELL_OUT">
             <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_OUT">
               <MappingFragment StoreEntitySet="T_WMS_ATSCELL_OUT">
@@ -2167,22 +2076,6 @@
                 <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
                 <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
                 <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_ATSCELL_IN">
-            <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_IN">
-              <MappingFragment StoreEntitySet="T_WMS_ATSCELL_IN">
-                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
-                <ScalarProperty Name="OUTID" ColumnName="OUTID" />
-                <ScalarProperty Name="SOURCETARGET" ColumnName="SOURCETARGET" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
-                <ScalarProperty Name="REQUESTQTY" ColumnName="REQUESTQTY" />
-                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="INTYPE" ColumnName="INTYPE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2253,6 +2146,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_POKE">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
+              <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
+                <ScalarProperty Name="UNIONTASKNUM" ColumnName="UNIONTASKNUM" />
+                <ScalarProperty Name="UNIONEXPORTNUM" ColumnName="UNIONEXPORTNUM" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="MERAGENUM" ColumnName="MERAGENUM" />
+                <ScalarProperty Name="MACHINESTATE" ColumnName="MACHINESTATE" />
+                <ScalarProperty Name="UNIONSTATE" ColumnName="UNIONSTATE" />
+                <ScalarProperty Name="POKEPLACE" ColumnName="POKEPLACE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
+                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="SORTSTATE" ColumnName="SORTSTATE" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2293,7 +2211,6 @@
         <EntityTypeShape EntityType="Model.T_SYS_USER" Width="1.5" PointX="18.375" PointY="4.75" Height="11.899109700520825" />
         <EntityTypeShape EntityType="Model.T_UN_TASKLINE" Width="1.5" PointX="19.75" PointY="0.75" Height="2.1050219726562602" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO" Width="1.5" PointX="0.75" PointY="12.75" Height="2.4746101888020746" />
-        <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.75" PointY="3.75" Height="4.45328857421876" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_TASK" Width="1.5" PointX="0.75" PointY="16.75" Height="6.9365445963541674" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_TASKLINE" Width="1.5" PointX="13.75" PointY="19.75" Height="2.3520719401041674" />
         <EntityTypeShape EntityType="Model.T_WMS_INBOUND" Width="1.5" PointX="20.375" PointY="3.75" Height="3.4981901041666674" />
@@ -2307,6 +2224,7 @@
         <EntityTypeShape EntityType="Model.INF_JOBDOWNLOAD" Width="1.5" PointX="20.375" PointY="8.75" Height="5.43131591796876" />
         <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="7.75" Height="3.9529630533854174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="9.375" PointY="20.75" Height="2.4746101888020746" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.375" PointY="3.75" Height="4.5073453776041674" />
       </Diagram>
     </Diagrams>
   </Designer>

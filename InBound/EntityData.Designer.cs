@@ -372,22 +372,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
-        {
-            get
-            {
-                if ((_T_PRODUCE_POKE == null))
-                {
-                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
-                }
-                return _T_PRODUCE_POKE;
-            }
-        }
-        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_PRODUCE_TASK> T_PRODUCE_TASK
         {
             get
@@ -592,6 +576,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_DEVICEERRLIST> _T_WMS_DEVICEERRLIST;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
+        {
+            get
+            {
+                if ((_T_PRODUCE_POKE == null))
+                {
+                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
+                }
+                return _T_PRODUCE_POKE;
+            }
+        }
+        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
 
         #endregion
 
@@ -750,14 +750,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
-        {
-            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
-        }
-    
-        /// <summary>
         /// 用于向 T_PRODUCE_TASK EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_PRODUCE_TASK(T_PRODUCE_TASK t_PRODUCE_TASK)
@@ -859,6 +851,14 @@ namespace InBound
         public void AddToT_WMS_DEVICEERRLIST(T_WMS_DEVICEERRLIST t_WMS_DEVICEERRLIST)
         {
             base.AddObject("T_WMS_DEVICEERRLIST", t_WMS_DEVICEERRLIST);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
+        {
+            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
         }
 
         #endregion
@@ -2788,6 +2788,30 @@ namespace InBound
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String BILLCODE
+        {
+            get
+            {
+                return _BILLCODE;
+            }
+            set
+            {
+                OnBILLCODEChanging(value);
+                ReportPropertyChanging("BILLCODE");
+                _BILLCODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BILLCODE");
+                OnBILLCODEChanged();
+            }
+        }
+        private global::System.String _BILLCODE;
+        partial void OnBILLCODEChanging(global::System.String value);
+        partial void OnBILLCODEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String UNIONEXPORTNUM
         {
             get
@@ -2812,24 +2836,24 @@ namespace InBound
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String BILLCODE
+        public Nullable<global::System.Decimal> UNIONTASKNUM
         {
             get
             {
-                return _BILLCODE;
+                return _UNIONTASKNUM;
             }
             set
             {
-                OnBILLCODEChanging(value);
-                ReportPropertyChanging("BILLCODE");
-                _BILLCODE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("BILLCODE");
-                OnBILLCODEChanged();
+                OnUNIONTASKNUMChanging(value);
+                ReportPropertyChanging("UNIONTASKNUM");
+                _UNIONTASKNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UNIONTASKNUM");
+                OnUNIONTASKNUMChanged();
             }
         }
-        private global::System.String _BILLCODE;
-        partial void OnBILLCODEChanging(global::System.String value);
-        partial void OnBILLCODEChanged();
+        private Nullable<global::System.Decimal> _UNIONTASKNUM;
+        partial void OnUNIONTASKNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnUNIONTASKNUMChanged();
 
         #endregion
 
@@ -6122,6 +6146,30 @@ namespace InBound
         private Nullable<global::System.Int32> _ROLEID;
         partial void OnROLEIDChanging(Nullable<global::System.Int32> value);
         partial void OnROLEIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String WECHATUSERID
+        {
+            get
+            {
+                return _WECHATUSERID;
+            }
+            set
+            {
+                OnWECHATUSERIDChanging(value);
+                ReportPropertyChanging("WECHATUSERID");
+                _WECHATUSERID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("WECHATUSERID");
+                OnWECHATUSERIDChanged();
+            }
+        }
+        private global::System.String _WECHATUSERID;
+        partial void OnWECHATUSERIDChanging(global::System.String value);
+        partial void OnWECHATUSERIDChanged();
 
         #endregion
 
