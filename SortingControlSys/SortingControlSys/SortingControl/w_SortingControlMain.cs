@@ -481,14 +481,14 @@ namespace SortingControlSys.SortingControl
                         statusGroup1.Write(1, clientId[i] - 1);
                         if (getKey(tempList, clientId[i]) != -1)
                         {
-                            int taskno = getKey(tempList, clientId[i]);
+                           // int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(taskno, sortgroupno1);
+                            InBoundService.UpdateInOut(tempvalue, sortgroupno1);
                             TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
 
-                            if (taskno != 0)
+                            if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + taskno + "已完成");
+                                updateListBox("任务:" + tempvalue + "已完成");
                             }
 
                             removeKey(tempList, clientId[i]);
@@ -539,15 +539,15 @@ namespace SortingControlSys.SortingControl
                         statusGroup4.Write(1, clientId[i] - 1);
                         if (getKey(tempList1, clientId[i]) != -1)
                         {
-                            int taskno = getKey(tempList1, clientId[i]);
+                           // int taskno = getKey(tempList1, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(taskno, sortgroupno2);
+                            InBoundService.UpdateInOut(tempvalue, sortgroupno2);
                             TaskService.UpdateStatus(sortgroupno2, 30, tempvalue);//将第一组分拣任务改为完成完成
 
 
-                            if (taskno != 0)
+                            if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + taskno + "已完成");
+                                updateListBox("任务:" + tempvalue + "已完成");
                             }
 
                             removeKey(tempList1, clientId[i]);
