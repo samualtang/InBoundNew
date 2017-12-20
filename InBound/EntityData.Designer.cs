@@ -84,22 +84,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_INBOUND_LINE> T_WMS_INBOUND_LINE
-        {
-            get
-            {
-                if ((_T_WMS_INBOUND_LINE == null))
-                {
-                    _T_WMS_INBOUND_LINE = base.CreateObjectSet<T_WMS_INBOUND_LINE>("T_WMS_INBOUND_LINE");
-                }
-                return _T_WMS_INBOUND_LINE;
-            }
-        }
-        private ObjectSet<T_WMS_INBOUND_LINE> _T_WMS_INBOUND_LINE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_INOUTBOUND_TASK> T_WMS_INOUTBOUND_TASK
         {
             get
@@ -436,22 +420,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<INF_DEVICESTATUS> INF_DEVICESTATUS
-        {
-            get
-            {
-                if ((_INF_DEVICESTATUS == null))
-                {
-                    _INF_DEVICESTATUS = base.CreateObjectSet<INF_DEVICESTATUS>("INF_DEVICESTATUS");
-                }
-                return _INF_DEVICESTATUS;
-            }
-        }
-        private ObjectSet<INF_DEVICESTATUS> _INF_DEVICESTATUS;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<INF_EQUIPMENTSTATUS> INF_EQUIPMENTSTATUS
         {
             get
@@ -484,22 +452,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<INF_EQUIPMENTREQUEST> INF_EQUIPMENTREQUEST
-        {
-            get
-            {
-                if ((_INF_EQUIPMENTREQUEST == null))
-                {
-                    _INF_EQUIPMENTREQUEST = base.CreateObjectSet<INF_EQUIPMENTREQUEST>("INF_EQUIPMENTREQUEST");
-                }
-                return _INF_EQUIPMENTREQUEST;
-            }
-        }
-        private ObjectSet<INF_EQUIPMENTREQUEST> _INF_EQUIPMENTREQUEST;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_ATSCELL_OUT> T_WMS_ATSCELL_OUT
         {
             get
@@ -512,22 +464,6 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_ATSCELL_OUT> _T_WMS_ATSCELL_OUT;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        public ObjectSet<T_WMS_ATSCELL_IN> T_WMS_ATSCELL_IN
-        {
-            get
-            {
-                if ((_T_WMS_ATSCELL_IN == null))
-                {
-                    _T_WMS_ATSCELL_IN = base.CreateObjectSet<T_WMS_ATSCELL_IN>("T_WMS_ATSCELL_IN");
-                }
-                return _T_WMS_ATSCELL_IN;
-            }
-        }
-        private ObjectSet<T_WMS_ATSCELL_IN> _T_WMS_ATSCELL_IN;
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -592,6 +528,70 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<INF_DEVICESTATUS> INF_DEVICESTATUS
+        {
+            get
+            {
+                if ((_INF_DEVICESTATUS == null))
+                {
+                    _INF_DEVICESTATUS = base.CreateObjectSet<INF_DEVICESTATUS>("INF_DEVICESTATUS");
+                }
+                return _INF_DEVICESTATUS;
+            }
+        }
+        private ObjectSet<INF_DEVICESTATUS> _INF_DEVICESTATUS;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<INF_EQUIPMENTREQUEST> INF_EQUIPMENTREQUEST
+        {
+            get
+            {
+                if ((_INF_EQUIPMENTREQUEST == null))
+                {
+                    _INF_EQUIPMENTREQUEST = base.CreateObjectSet<INF_EQUIPMENTREQUEST>("INF_EQUIPMENTREQUEST");
+                }
+                return _INF_EQUIPMENTREQUEST;
+            }
+        }
+        private ObjectSet<INF_EQUIPMENTREQUEST> _INF_EQUIPMENTREQUEST;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_ATSCELL_IN> T_WMS_ATSCELL_IN
+        {
+            get
+            {
+                if ((_T_WMS_ATSCELL_IN == null))
+                {
+                    _T_WMS_ATSCELL_IN = base.CreateObjectSet<T_WMS_ATSCELL_IN>("T_WMS_ATSCELL_IN");
+                }
+                return _T_WMS_ATSCELL_IN;
+            }
+        }
+        private ObjectSet<T_WMS_ATSCELL_IN> _T_WMS_ATSCELL_IN;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_INBOUND_LINE> T_WMS_INBOUND_LINE
+        {
+            get
+            {
+                if ((_T_WMS_INBOUND_LINE == null))
+                {
+                    _T_WMS_INBOUND_LINE = base.CreateObjectSet<T_WMS_INBOUND_LINE>("T_WMS_INBOUND_LINE");
+                }
+                return _T_WMS_INBOUND_LINE;
+            }
+        }
+        private ObjectSet<T_WMS_INBOUND_LINE> _T_WMS_INBOUND_LINE;
 
         #endregion
 
@@ -603,14 +603,6 @@ namespace InBound
         public void AddToT_WMS_CONSIGNOR(T_WMS_CONSIGNOR t_WMS_CONSIGNOR)
         {
             base.AddObject("T_WMS_CONSIGNOR", t_WMS_CONSIGNOR);
-        }
-    
-        /// <summary>
-        /// 用于向 T_WMS_INBOUND_LINE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_INBOUND_LINE(T_WMS_INBOUND_LINE t_WMS_INBOUND_LINE)
-        {
-            base.AddObject("T_WMS_INBOUND_LINE", t_WMS_INBOUND_LINE);
         }
     
         /// <summary>
@@ -782,14 +774,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 INF_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToINF_DEVICESTATUS(INF_DEVICESTATUS iNF_DEVICESTATUS)
-        {
-            base.AddObject("INF_DEVICESTATUS", iNF_DEVICESTATUS);
-        }
-    
-        /// <summary>
         /// 用于向 INF_EQUIPMENTSTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToINF_EQUIPMENTSTATUS(INF_EQUIPMENTSTATUS iNF_EQUIPMENTSTATUS)
@@ -806,27 +790,11 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 INF_EQUIPMENTREQUEST EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToINF_EQUIPMENTREQUEST(INF_EQUIPMENTREQUEST iNF_EQUIPMENTREQUEST)
-        {
-            base.AddObject("INF_EQUIPMENTREQUEST", iNF_EQUIPMENTREQUEST);
-        }
-    
-        /// <summary>
         /// 用于向 T_WMS_ATSCELL_OUT EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_WMS_ATSCELL_OUT(T_WMS_ATSCELL_OUT t_WMS_ATSCELL_OUT)
         {
             base.AddObject("T_WMS_ATSCELL_OUT", t_WMS_ATSCELL_OUT);
-        }
-    
-        /// <summary>
-        /// 用于向 T_WMS_ATSCELL_IN EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_ATSCELL_IN(T_WMS_ATSCELL_IN t_WMS_ATSCELL_IN)
-        {
-            base.AddObject("T_WMS_ATSCELL_IN", t_WMS_ATSCELL_IN);
         }
     
         /// <summary>
@@ -859,6 +827,38 @@ namespace InBound
         public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
         {
             base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
+        }
+    
+        /// <summary>
+        /// 用于向 INF_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToINF_DEVICESTATUS(INF_DEVICESTATUS iNF_DEVICESTATUS)
+        {
+            base.AddObject("INF_DEVICESTATUS", iNF_DEVICESTATUS);
+        }
+    
+        /// <summary>
+        /// 用于向 INF_EQUIPMENTREQUEST EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToINF_EQUIPMENTREQUEST(INF_EQUIPMENTREQUEST iNF_EQUIPMENTREQUEST)
+        {
+            base.AddObject("INF_EQUIPMENTREQUEST", iNF_EQUIPMENTREQUEST);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_ATSCELL_IN EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_ATSCELL_IN(T_WMS_ATSCELL_IN t_WMS_ATSCELL_IN)
+        {
+            base.AddObject("T_WMS_ATSCELL_IN", t_WMS_ATSCELL_IN);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_INBOUND_LINE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_INBOUND_LINE(T_WMS_INBOUND_LINE t_WMS_INBOUND_LINE)
+        {
+            base.AddObject("T_WMS_INBOUND_LINE", t_WMS_INBOUND_LINE);
         }
 
         #endregion
