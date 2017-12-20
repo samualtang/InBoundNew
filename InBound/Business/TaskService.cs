@@ -904,10 +904,15 @@ namespace InBound.Business
             {
 
 
-                var query = (from item in entity.T_PRODUCE_POKE where item.TASKNUM == tasknum && item.TROUGHNUM == troughno select item).FirstOrDefault();
-                //if (query == null) return;
-                query.MACHINESTATE = status;
-                entity.SaveChanges();
+                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.TROUGHNUM == troughno select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        item.MACHINESTATE = status;
+                    }
+                    entity.SaveChanges();
+                }
 
             }
         }
@@ -3230,8 +3235,8 @@ namespace InBound.Business
                 if (query != null)
                 {
                     values[2] = query.MERAGENUM;
-                    values[1] = query.TASKNUM;
-                    result.Add(query.TASKNUM + "");
+                    values[1] = query.UNIONTASKNUM;
+                    result.Add(query.UNIONTASKNUM + "");
                 }
                 else
                 {
