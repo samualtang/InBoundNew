@@ -320,7 +320,7 @@ namespace SortingControlSys.SortingControl
                           //  int taskno = getKey(clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
 
-                            TaskService.UpdateUnionStatus( 30, tempvalue);
+                            TaskService.UpdateUnionStatus( 20, tempvalue);
 
                             if (tempvalue != 0)
                             {
