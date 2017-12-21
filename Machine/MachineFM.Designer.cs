@@ -43,16 +43,18 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.list_data = new System.Windows.Forms.ListBox();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.list_data = new System.Windows.Forms.ListBox();
+            this.cmbMachines = new System.Windows.Forms.ComboBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -78,6 +80,8 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel3.Controls.Add(this.btnClear);
+            this.panel3.Controls.Add(this.cmbMachines);
             this.panel3.Controls.Add(this.button6);
             this.panel3.Controls.Add(this.button12);
             this.panel3.Controls.Add(this.button11);
@@ -209,43 +213,6 @@
             this.task_data.Size = new System.Drawing.Size(1038, 376);
             this.task_data.TabIndex = 30;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 400);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1038, 19);
-            this.panel2.TabIndex = 37;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(825, 3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(0, 12);
-            this.label5.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "提示信息";
-            // 
-            // list_data
-            // 
-            this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.list_data.FormattingEnabled = true;
-            this.list_data.ItemHeight = 12;
-            this.list_data.Location = new System.Drawing.Point(0, 288);
-            this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(1038, 112);
-            this.list_data.TabIndex = 39;
-            // 
             // regioncode
             // 
             this.regioncode.HeaderText = "线路编号";
@@ -285,6 +252,63 @@
             this.percent.HeaderText = "完成百分比";
             this.percent.Name = "percent";
             this.percent.ReadOnly = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 400);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1038, 19);
+            this.panel2.TabIndex = 37;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(825, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 12);
+            this.label5.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "提示信息";
+            // 
+            // list_data
+            // 
+            this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.list_data.FormattingEnabled = true;
+            this.list_data.ItemHeight = 12;
+            this.list_data.Location = new System.Drawing.Point(0, 288);
+            this.list_data.Name = "list_data";
+            this.list_data.Size = new System.Drawing.Size(1038, 112);
+            this.list_data.TabIndex = 39;
+            // 
+            // cmbMachines
+            // 
+            this.cmbMachines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbMachines.FormattingEnabled = true;
+            this.cmbMachines.Location = new System.Drawing.Point(863, 14);
+            this.cmbMachines.Name = "cmbMachines";
+            this.cmbMachines.Size = new System.Drawing.Size(87, 20);
+            this.cmbMachines.TabIndex = 10;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(954, 12);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "停  止";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // MachineFM
             // 
@@ -335,5 +359,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ComboBox cmbMachines;
     }
 }

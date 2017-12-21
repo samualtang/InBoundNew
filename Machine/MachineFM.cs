@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using SortingControlSys.Model;
 using InBound.Model;
 using InBound.Business;
+using Machine;
 
 
 namespace SortingControlSys.SortingControl
@@ -43,10 +44,15 @@ namespace SortingControlSys.SortingControl
         decimal groupNo = 1;
         public WriteLog writeLog = new WriteLog();
         Dictionary<string, string> dicList = new Dictionary<string, string>();
-
+        Alarms alarms = new Alarms();
         public MachineFM()
         {
             InitializeComponent();
+            alarms.DowntimeHandler = OnDowntime;
+            alarms.AlarmsHandler += (obj) =>
+            {
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
+            };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
             try
@@ -62,6 +68,7 @@ namespace SortingControlSys.SortingControl
 
 
         }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -260,276 +267,8 @@ namespace SortingControlSys.SortingControl
                 taskGroup2.callback += OnDataChange;
                 taskGroup1.callback += OnDataChange;
                 taskErrGroup.callback += OnDataChange;
-
-                //taskGroup23 = new Group(pIOPCServer, 23, "Group23", 1, LOCALE_ID);
-                //taskGroup23.addItem(ItemCollection.GetTaskStatusItem23());
-                //taskGroup23.callback += OnDataChange;
-                //taskGroup24 = new Group(pIOPCServer, 24, "Group24", 1, LOCALE_ID);
-                //taskGroup24.addItem(ItemCollection.GetTaskStatusItem24());
-                //taskGroup24.callback += OnDataChange;
-                //taskGroup25 = new Group(pIOPCServer, 25, "Group25", 1, LOCALE_ID);
-                //taskGroup25.addItem(ItemCollection.GetTaskStatusItem25());
-                //taskGroup25.callback += OnDataChange;
-                //taskGroup26 = new Group(pIOPCServer, 26, "Group26", 1, LOCALE_ID);
-                //taskGroup26.addItem(ItemCollection.GetTaskStatusItem26());
-                //taskGroup26.callback += OnDataChange;
-                //taskGroup27 = new Group(pIOPCServer, 27, "Group27", 1, LOCALE_ID);
-                //taskGroup27.addItem(ItemCollection.GetTaskStatusItem27());
-                //taskGroup27.callback += OnDataChange;
-                //taskGroup28 = new Group(pIOPCServer, 28, "Group28", 1, LOCALE_ID);
-                //taskGroup28.addItem(ItemCollection.GetTaskStatusItem28());
-                //taskGroup28.callback += OnDataChange;
-                //taskGroup29 = new Group(pIOPCServer, 29, "Group29", 1, LOCALE_ID);
-                //taskGroup29.addItem(ItemCollection.GetTaskStatusItem29());
-                //taskGroup29.callback += OnDataChange;
-                //taskGroup30 = new Group(pIOPCServer, 30, "Group30", 1, LOCALE_ID);
-                //taskGroup30.addItem(ItemCollection.GetTaskStatusItem30());
-                //taskGroup30.callback += OnDataChange;
-                //taskGroup31 = new Group(pIOPCServer, 31, "Group31", 1, LOCALE_ID);
-                //taskGroup31.addItem(ItemCollection.GetTaskStatusItem31());
-                //taskGroup31.callback += OnDataChange;
-                //taskGroup32 = new Group(pIOPCServer, 32, "Group32", 1, LOCALE_ID);
-                //taskGroup32.addItem(ItemCollection.GetTaskStatusItem32());
-                //taskGroup32.callback += OnDataChange;
-                //taskGroup33 = new Group(pIOPCServer, 33, "Group33", 1, LOCALE_ID);
-                //taskGroup33.addItem(ItemCollection.GetTaskStatusItem33());
-                //taskGroup33.callback += OnDataChange;
-                //taskGroup34 = new Group(pIOPCServer, 34, "Group34", 1, LOCALE_ID);
-                //taskGroup34.addItem(ItemCollection.GetTaskStatusItem34());
-                //taskGroup34.callback += OnDataChange;
-                //taskGroup35 = new Group(pIOPCServer, 35, "Group35", 1, LOCALE_ID);
-                //taskGroup35.addItem(ItemCollection.GetTaskStatusItem35());
-                //taskGroup35.callback += OnDataChange;
-                //taskGroup36 = new Group(pIOPCServer, 36, "Group36", 1, LOCALE_ID);
-                //taskGroup36.addItem(ItemCollection.GetTaskStatusItem36());
-                //taskGroup36.callback += OnDataChange;
-                //taskGroup37 = new Group(pIOPCServer, 37, "Group37", 1, LOCALE_ID);
-                //taskGroup37.addItem(ItemCollection.GetTaskStatusItem37());
-                //taskGroup37.callback += OnDataChange;
-                //taskGroup38 = new Group(pIOPCServer, 38, "Group38", 1, LOCALE_ID);
-                //taskGroup38.addItem(ItemCollection.GetTaskStatusItem38());
-                //taskGroup38.callback += OnDataChange;
-                //taskGroup39= new Group(pIOPCServer, 39, "Group39", 1, LOCALE_ID);
-                //taskGroup39.addItem(ItemCollection.GetTaskStatusItem39());
-                //taskGroup39.callback += OnDataChange;
-                //taskGroup40 = new Group(pIOPCServer, 40, "Group40", 1, LOCALE_ID);
-                //taskGroup40.addItem(ItemCollection.GetTaskStatusItem40());
-                //taskGroup40.callback += OnDataChange;
-                //taskGroup41 = new Group(pIOPCServer, 41, "Group41", 1, LOCALE_ID);
-                //taskGroup41.addItem(ItemCollection.GetTaskStatusItem41());
-                //taskGroup41.callback += OnDataChange;
-                //taskGroup42 = new Group(pIOPCServer, 42, "Group42", 1, LOCALE_ID);
-                //taskGroup42.addItem(ItemCollection.GetTaskStatusItem42());
-                //taskGroup42.callback += OnDataChange;
-                //taskGroup43 = new Group(pIOPCServer, 43, "Group43", 1, LOCALE_ID);
-                //taskGroup43.addItem(ItemCollection.GetTaskStatusItem43());
-                //taskGroup43.callback += OnDataChange;
-                //taskGroup44 = new Group(pIOPCServer, 44, "Group44", 1, LOCALE_ID);
-                //taskGroup44.addItem(ItemCollection.GetTaskStatusItem44());
-                //taskGroup44.callback += OnDataChange;
-                //taskGroup45 = new Group(pIOPCServer, 45, "Group45", 1, LOCALE_ID);
-                //taskGroup45.addItem(ItemCollection.GetTaskStatusItem45());
-                //taskGroup45.callback += OnDataChange;
-                //taskGroup46 = new Group(pIOPCServer, 46, "Group46", 1, LOCALE_ID);
-                //taskGroup46.addItem(ItemCollection.GetTaskStatusItem46());
-                //taskGroup46.callback += OnDataChange;
-                //taskGroup47 = new Group(pIOPCServer, 47, "Group47", 1, LOCALE_ID);
-                //taskGroup47.addItem(ItemCollection.GetTaskStatusItem47());
-                //taskGroup47.callback += OnDataChange;
-                //taskGroup48 = new Group(pIOPCServer, 48, "Group48", 1, LOCALE_ID);
-                //taskGroup48.addItem(ItemCollection.GetTaskStatusItem48());
-                //taskGroup48.callback += OnDataChange;
-                //taskGroup49 = new Group(pIOPCServer, 49, "Group49", 1, LOCALE_ID);
-                //taskGroup49.addItem(ItemCollection.GetTaskStatusItem49());
-                //taskGroup49.callback += OnDataChange;
-                //taskGroup50 = new Group(pIOPCServer, 50, "Group50", 1, LOCALE_ID);
-                //taskGroup50.addItem(ItemCollection.GetTaskStatusItem50());
-                //taskGroup50.callback += OnDataChange;
-                //taskGroup51 = new Group(pIOPCServer, 51, "Group51", 1, LOCALE_ID);
-                //taskGroup51.addItem(ItemCollection.GetTaskStatusItem51());
-                //taskGroup51.callback += OnDataChange;
-                //taskGroup52 = new Group(pIOPCServer, 52, "Group52", 1, LOCALE_ID);
-                //taskGroup52.addItem(ItemCollection.GetTaskStatusItem52());
-                //taskGroup52.callback += OnDataChange;
-                //taskGroup53 = new Group(pIOPCServer, 53, "Group53", 1, LOCALE_ID);
-                //taskGroup53.addItem(ItemCollection.GetTaskStatusItem53());
-                //taskGroup53.callback += OnDataChange;
-                //taskGroup54 = new Group(pIOPCServer, 54, "Group54", 1, LOCALE_ID);
-                //taskGroup54.addItem(ItemCollection.GetTaskStatusItem54());
-                //taskGroup54.callback += OnDataChange;
-                //taskGroup55 = new Group(pIOPCServer, 55, "Group55", 1, LOCALE_ID);
-                //taskGroup55.addItem(ItemCollection.GetTaskStatusItem55());
-                //taskGroup55.callback += OnDataChange;
-                //taskGroup56 = new Group(pIOPCServer, 56, "Group56", 1, LOCALE_ID);
-                //taskGroup56.addItem(ItemCollection.GetTaskStatusItem56());
-                //taskGroup56.callback += OnDataChange;
-                //taskGroup57 = new Group(pIOPCServer, 57, "Group57", 1, LOCALE_ID);
-                //taskGroup57.addItem(ItemCollection.GetTaskStatusItem57());
-                //taskGroup57.callback += OnDataChange;
-                //taskGroup58 = new Group(pIOPCServer, 58, "Group58", 1, LOCALE_ID);
-                //taskGroup58.addItem(ItemCollection.GetTaskStatusItem58());
-                //taskGroup58.callback += OnDataChange;
-                //taskGroup59 = new Group(pIOPCServer, 59, "Group59", 1, LOCALE_ID);
-                //taskGroup59.addItem(ItemCollection.GetTaskStatusItem59());
-                //taskGroup59.callback += OnDataChange;
-                //taskGroup60 = new Group(pIOPCServer,60, "Group60", 1, LOCALE_ID);
-                //taskGroup60.addItem(ItemCollection.GetTaskStatusItem60());
-                //taskGroup60.callback += OnDataChange;
-                //taskGroup61 = new Group(pIOPCServer, 61, "Group61", 1, LOCALE_ID);
-                //taskGroup61.addItem(ItemCollection.GetTaskStatusItem61());
-                //taskGroup61.callback += OnDataChange;
-                //taskGroup62 = new Group(pIOPCServer, 62, "Group62", 1, LOCALE_ID);
-                //taskGroup62.addItem(ItemCollection.GetTaskStatusItem62());
-                //taskGroup62.callback += OnDataChange;
-                //taskGroup63 = new Group(pIOPCServer, 63, "Group63", 1, LOCALE_ID);
-                //taskGroup63.addItem(ItemCollection.GetTaskStatusItem63());
-                //taskGroup63.callback += OnDataChange;
-                //taskGroup64 = new Group(pIOPCServer, 64, "Group64", 1, LOCALE_ID);
-                //taskGroup64.addItem(ItemCollection.GetTaskStatusItem64());
-                //taskGroup64.callback += OnDataChange;
-                //taskGroup65 = new Group(pIOPCServer, 65, "Group65", 1, LOCALE_ID);
-                //taskGroup65.addItem(ItemCollection.GetTaskStatusItem65());
-                //taskGroup65.callback += OnDataChange;
-                //taskGroup66 = new Group(pIOPCServer, 66, "Group66", 1, LOCALE_ID);
-                //taskGroup66.addItem(ItemCollection.GetTaskStatusItem66());
-                //taskGroup66.callback += OnDataChange;
-                //taskGroup67 = new Group(pIOPCServer, 67, "Group67", 1, LOCALE_ID);
-                //taskGroup67.addItem(ItemCollection.GetTaskStatusItem67());
-                //taskGroup67.callback += OnDataChange;
-                //taskGroup68 = new Group(pIOPCServer,68, "Group68", 1, LOCALE_ID);
-                //taskGroup68.addItem(ItemCollection.GetTaskStatusItem68());
-                //taskGroup68.callback += OnDataChange;
-                //taskGroup69 = new Group(pIOPCServer,69, "Group69", 1, LOCALE_ID);
-                //taskGroup69.addItem(ItemCollection.GetTaskStatusItem69());
-                //taskGroup69.callback += OnDataChange;
-                //taskGroup70 = new Group(pIOPCServer, 70, "Group70", 1, LOCALE_ID);
-                //taskGroup70.addItem(ItemCollection.GetTaskStatusItem70());
-                //taskGroup70.callback += OnDataChange;
-                //taskGroup71 = new Group(pIOPCServer, 71, "Group71", 1, LOCALE_ID);
-                //taskGroup71.addItem(ItemCollection.GetTaskStatusItem71());
-                //taskGroup71.callback += OnDataChange;
-                //taskGroup72 = new Group(pIOPCServer,72, "Group72", 1, LOCALE_ID);
-                //taskGroup72.addItem(ItemCollection.GetTaskStatusItem72());
-                //taskGroup72.callback += OnDataChange;
-                //taskGroup73 = new Group(pIOPCServer,73, "Group73", 1, LOCALE_ID);
-                //taskGroup73.addItem(ItemCollection.GetTaskStatusItem73());
-                //taskGroup73.callback += OnDataChange;
-                //taskGroup74 = new Group(pIOPCServer, 74, "Group74", 1, LOCALE_ID);
-                //taskGroup74.addItem(ItemCollection.GetTaskStatusItem74());
-                //taskGroup74.callback += OnDataChange;
-                //taskGroup75 = new Group(pIOPCServer, 75, "Group75", 1, LOCALE_ID);
-                //taskGroup75.addItem(ItemCollection.GetTaskStatusItem75());
-                //taskGroup75.callback += OnDataChange;
-                //taskGroup76 = new Group(pIOPCServer, 76, "Group76", 1, LOCALE_ID);
-                //taskGroup76.addItem(ItemCollection.GetTaskStatusItem76());
-                //taskGroup76.callback += OnDataChange;
-                //taskGroup77 = new Group(pIOPCServer, 77, "Group77", 1, LOCALE_ID);
-                //taskGroup77.addItem(ItemCollection.GetTaskStatusItem77());
-                //taskGroup77.callback += OnDataChange;
-                //taskGroup78 = new Group(pIOPCServer,78, "Group78", 1, LOCALE_ID);
-                //taskGroup78.addItem(ItemCollection.GetTaskStatusItem78());
-                //taskGroup78.callback += OnDataChange;
-                //taskGroup79 = new Group(pIOPCServer, 79, "Group79", 1, LOCALE_ID);
-                //taskGroup79.addItem(ItemCollection.GetTaskStatusItem79());
-                //taskGroup79.callback += OnDataChange;
-                //taskGroup80 = new Group(pIOPCServer, 80, "Group80", 1, LOCALE_ID);
-                //taskGroup80.addItem(ItemCollection.GetTaskStatusItem80());
-                //taskGroup80.callback += OnDataChange;
-                //taskGroup81 = new Group(pIOPCServer, 81, "Group81", 1, LOCALE_ID);
-                //taskGroup81.addItem(ItemCollection.GetTaskStatusItem81());
-                //taskGroup81.callback += OnDataChange;
-                //taskGroup82 = new Group(pIOPCServer, 82, "Group82", 1, LOCALE_ID);
-                //taskGroup82.addItem(ItemCollection.GetTaskStatusItem82());
-                //taskGroup82.callback += OnDataChange;
-                //taskGroup83 = new Group(pIOPCServer, 83, "Group83", 1, LOCALE_ID);
-                //taskGroup83.addItem(ItemCollection.GetTaskStatusItem83());
-                //taskGroup83.callback += OnDataChange;
-                //taskGroup84 = new Group(pIOPCServer, 84, "Group84", 1, LOCALE_ID);
-                //taskGroup84.addItem(ItemCollection.GetTaskStatusItem84());
-                //taskGroup84.callback += OnDataChange;
-                //taskGroup85 = new Group(pIOPCServer, 85, "Group85", 1, LOCALE_ID);
-                //taskGroup85.addItem(ItemCollection.GetTaskStatusItem85());
-                //taskGroup85.callback += OnDataChange;
-                //taskGroup86 = new Group(pIOPCServer, 86, "Group86", 1, LOCALE_ID);
-                //taskGroup86.addItem(ItemCollection.GetTaskStatusItem86());
-                //taskGroup86.callback += OnDataChange;
-                //taskGroup87 = new Group(pIOPCServer, 87, "Group87", 1, LOCALE_ID);
-                //taskGroup87.addItem(ItemCollection.GetTaskStatusItem87());
-                //taskGroup87.callback += OnDataChange;
-                //taskGroup88 = new Group(pIOPCServer, 88, "Group88", 1, LOCALE_ID);
-                //taskGroup88.addItem(ItemCollection.GetTaskStatusItem88());
-                //taskGroup88.callback += OnDataChange;
-
-                //groupList.Add(taskGroup23);
-                //groupList.Add(taskGroup24);
-                //groupList.Add(taskGroup25);
-                //groupList.Add(taskGroup26);
-                //groupList.Add(taskGroup27);
-                //groupList.Add(taskGroup28);
-                //groupList.Add(taskGroup29);
-                //groupList.Add(taskGroup30);
-                //groupList.Add(taskGroup31);
-                //groupList.Add(taskGroup32);
-                //groupList.Add(taskGroup33);
-                //groupList.Add(taskGroup34);
-                //groupList.Add(taskGroup35);
-                //groupList.Add(taskGroup36);
-                //groupList.Add(taskGroup37);
-                //groupList.Add(taskGroup38);
-                //groupList.Add(taskGroup39);
-                //groupList.Add(taskGroup40);
-                //groupList.Add(taskGroup41);
-                //groupList.Add(taskGroup42);
-                //groupList.Add(taskGroup43);
-                //groupList.Add(taskGroup44);
-                //groupList.Add(taskGroup45);
-                //groupList.Add(taskGroup46);
-                //groupList.Add(taskGroup47);
-                //groupList.Add(taskGroup48);
-                //groupList.Add(taskGroup49);
-                //groupList.Add(taskGroup50);
-                //groupList.Add(taskGroup51);
-                //groupList.Add(taskGroup52);
-                //groupList.Add(taskGroup53);
-                //groupList.Add(taskGroup54);
-                //groupList.Add(taskGroup55);
-                //groupList.Add(taskGroup56);
-                //groupList.Add(taskGroup57);
-                //groupList.Add(taskGroup58);
-                //groupList.Add(taskGroup59);
-                //groupList.Add(taskGroup60);
-                //groupList.Add(taskGroup61);
-                //groupList.Add(taskGroup62);
-                //groupList.Add(taskGroup63);
-                //groupList.Add(taskGroup64);
-                //groupList.Add(taskGroup65);
-                //groupList.Add(taskGroup66);
-                //groupList.Add(taskGroup67);
-                //groupList.Add(taskGroup68);
-                //groupList.Add(taskGroup69);
-                //groupList.Add(taskGroup70);
-                //groupList.Add(taskGroup71);
-                //groupList.Add(taskGroup72);
-                //groupList.Add(taskGroup73);
-                //groupList.Add(taskGroup74);
-                //groupList.Add(taskGroup75);
-                //groupList.Add(taskGroup76);
-                //groupList.Add(taskGroup77);
-                //groupList.Add(taskGroup78);
-                //groupList.Add(taskGroup79);
-                //groupList.Add(taskGroup70);
-                //groupList.Add(taskGroup81);
-                //groupList.Add(taskGroup82);
-                //groupList.Add(taskGroup83);
-                //groupList.Add(taskGroup84);
-                //groupList.Add(taskGroup85);
-                //groupList.Add(taskGroup86);
-                //groupList.Add(taskGroup87);
-                //groupList.Add(taskGroup88);
-
                 checkConnection();
                 // sendTask();
-
             }
             catch (Exception e)
             {
@@ -742,27 +481,8 @@ namespace SortingControlSys.SortingControl
                 }
             }
             //  return true;
-        }
-        public void WriteErr(int type, int len, String temp, decimal GroupNo)
-        {
-            String deviceNo = "" + len;
-            for (int i = 1; i <= temp.Length; i++)
-            {
-                if (temp.ElementAt(i - 1) == '1')
-                {
-                    String errMsg = getErrMsg(temp.Length - i);
-                    ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
-                    updateListBox(string.Format("故障名称：{0}", errMsg));
-                }
-            }
+        } 
 
-
-        }
-        String[] errMsgList = { "机械手急停", "机械手报警", "外部急停报警", "吸盘监控异常", "烟条初始位校验异常", "子站故障", "", "", "", "", "", "", "", "", "", "", };
-        public string getErrMsg(int len)
-        {
-            return errMsgList[len];
-        }
         public void OnDataChange(int Group, int[] clientId, object[] values)
         {
             if (Group != 23)
@@ -822,128 +542,29 @@ namespace SortingControlSys.SortingControl
                     if (int.Parse(values[i].ToString()) != 0)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
-                        WriteErr(1, clientId[i], temp, groupNo);
+                        //WriteErr(1, clientId[i], temp, groupNo);
+                        alarms.WriteErr(1, clientId[i], temp, groupNo);
                     }
                     //}
                 }
             }
-            //else if (Group == 2)
-            //{
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        if (clientId[i] == 0)
-            //        {
-            //            if (int.Parse(values[i].ToString()) == 0)
-            //            {
-
-            //                if (tempList.Count > 0)
-            //                {
-            //                    List<String> temp = getKey("2");
-            //                    if (temp != null)
-            //                    {
-            //                        foreach (var item in temp)
-            //                        {
-            //                            updateListBox(item + " 已接收");
-            //                        }
-            //                    }
-            //                    TaskService.UpdateMachine(temp);
-            //                }
-
-            //                sendTask("2", taskGroup2);
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
-            //else if (Group == 3)
-            //{
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        if (clientId[i] == 0)
-            //        {
-            //            if (int.Parse(values[i].ToString()) == 0)
-            //            {
-
-            //                if (tempList.Count > 0)
-            //                {
-            //                    List<String> temp = getKey("3");
-            //                    if (temp != null)
-            //                    {
-            //                        foreach (var item in temp)
-            //                        {
-            //                            updateListBox(item + " 已接收");
-            //                        }
-            //                    }
-            //                    TaskService.UpdateMachine(temp);
-            //                }
-
-            //                sendTask("3", taskGroup3);
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
-            //else if (Group == 4)
-            //{
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        if (clientId[i] == 0)
-            //        {
-            //            if (int.Parse(values[i].ToString()) == 0)
-            //            {
-
-            //                if (tempList.Count > 0)
-            //                {
-            //                    List<String> temp = getKey("4");
-            //                    if (temp != null)
-            //                    {
-            //                        foreach (var item in temp)
-            //                        {
-            //                            updateListBox(item + " 已接收");
-            //                        }
-            //                    }
-            //                    TaskService.UpdateMachine(temp);
-            //                }
-
-            //                sendTask("4", taskGroup4);
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
-            //else if (Group == 5)
-            //{
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        if (clientId[i] == 0)
-            //        {
-            //            if (int.Parse(values[i].ToString()) == 0)
-            //            {
-
-            //                if (tempList.Count > 0)
-            //                {
-            //                    List<String> temp = getKey("5");
-            //                    if (temp != null)
-            //                    {
-            //                        foreach (var item in temp)
-            //                        {
-            //                            updateListBox(item + " 已接收");
-            //                        }
-            //                    }
-            //                    TaskService.UpdateMachine(temp);
-            //                }
-
-            //                sendTask("5", taskGroup5);
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
-            //else if (Group == 6)
-            //{ 
-
-            //}
         }
+
+        private void OnDowntime(AlarmsInfo obj, List<AlarmsInfo> list)
+        {
+            if (this.cmbMachines.InvokeRequired)
+            {
+                this.cmbMachines.Invoke(new Action<AlarmsInfo, List<AlarmsInfo>>(OnDowntime), obj, list);
+            }
+            else
+            {
+                cmbMachines.DataSource = null;
+                cmbMachines.DataSource = list;
+                cmbMachines.DisplayMember = "DeviceNo";
+                cmbMachines.ValueMember = "DeviceNo";
+            }
+        }
+
         public void Disconnect()
         {
 
@@ -1172,6 +793,27 @@ namespace SortingControlSys.SortingControl
 
 
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            AlarmsInfo mode = cmbMachines.SelectedItem as AlarmsInfo;
+            if (mode == null)
+            {
+                MessageBox.Show("请选择设备号");
+            }
+            try
+            {
+                Group no = groupList[mode.DeviceNo - 1];
+                no.Write(3, 3);
+                MessageBox.Show("操作完成！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
 
     }
 }

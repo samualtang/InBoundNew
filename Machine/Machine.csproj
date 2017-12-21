@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alarms.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\ItemCollection.cs" />
     <Compile Include="ObjectExtensions.cs" />

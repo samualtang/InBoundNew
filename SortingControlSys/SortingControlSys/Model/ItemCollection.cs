@@ -167,8 +167,17 @@ namespace SortingControlSys.Model
             return list;
         }
 
-
-
+        /// <summary>
+        /// 清除任务地址
+        /// </summary>
+        /// <returns></returns>
+        public static List<String> GetClearTaskItem()
+        {
+            List<string> list = new List<string>(); 
+            list.Add("S7:[FJConnectionGroup1]M40.2");
+            list.Add("S7:[FJConnectionGroup1]M40.3");
+            return list;
+        }
 
     }
 }

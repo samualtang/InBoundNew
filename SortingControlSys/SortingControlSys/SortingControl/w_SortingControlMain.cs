@@ -40,6 +40,8 @@ namespace SortingControlSys.SortingControl
         Decimal sortgroupno1 = 1;//定义组次
         Decimal sortgroupno2 = 2;
         public WriteLog writeLog = new WriteLog();
+        //ClearCmd clearACmd, clearBCmd;
+        private bool AlineStopFlag, BlineStopFlag = false;
         public w_SortingControlMain()
         {
             InitializeComponent();
@@ -125,6 +127,7 @@ namespace SortingControlSys.SortingControl
         }
         Group taskgroup, statusGroup1, statusGroup2, statusGroup3, statusGroup4, statusGroup5;
         Group errGroup1, errGroup2, errGroup3, errGroup4;
+        Group ClearCacheGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -144,6 +147,7 @@ namespace SortingControlSys.SortingControl
                 errGroup2 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);
                 errGroup3 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);
                 errGroup4 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);
+                ClearCacheGroup = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);
                 taskgroup.addItem(ItemCollection.GetTaskItem());
                 taskgroup.callback += OnDataChange;
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
@@ -163,6 +167,8 @@ namespace SortingControlSys.SortingControl
                 errGroup2.callback += OnDataChange;
                 errGroup3.addItem(ItemCollection.GetTaskStatusSECItem3());
                 errGroup3.callback += OnDataChange;
+                ClearCacheGroup.addItem(ItemCollection.GetClearTaskItem());
+                // ClearCacheGroup.callback += OnDataChange;
                 //errGroup4.addItem(ItemCollection.GetTaskStatusSECItem4());
                 //errGroup4.callback += OnDataChange;
 
@@ -481,7 +487,7 @@ namespace SortingControlSys.SortingControl
                         statusGroup1.Write(1, clientId[i] - 1);
                         if (getKey(tempList, clientId[i]) != -1)
                         {
-                           // int taskno = getKey(tempList, clientId[i]);
+                            // int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno1);
                             TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
@@ -539,7 +545,7 @@ namespace SortingControlSys.SortingControl
                         statusGroup4.Write(1, clientId[i] - 1);
                         if (getKey(tempList1, clientId[i]) != -1)
                         {
-                           // int taskno = getKey(tempList1, clientId[i]);
+                            // int taskno = getKey(tempList1, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno2);
                             TaskService.UpdateStatus(sortgroupno2, 30, tempvalue);//将第一组分拣任务改为完成完成
@@ -825,7 +831,6 @@ namespace SortingControlSys.SortingControl
         {
 
             updateControlEnable(true, button10);
-
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -848,5 +853,40 @@ namespace SortingControlSys.SortingControl
 
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            AlineStopFlag = ChangeFalg(!AlineStopFlag, 0, "A线", btnClear) == true ? true : false;
+        }
+
+        private void btnClearB_Click(object sender, EventArgs e)
+        {
+            BlineStopFlag = ChangeFalg(!BlineStopFlag, 1, "B线", btnClearB) == true ? true : false;
+        }
+
+        /// <summary>
+        /// 状态切换
+        /// </summary>
+        /// <param name="isStop">状态</param>
+        /// <param name="index">分拣线</param>
+        /// <param name="lineName">分拣线名称</param>
+        /// <param name="btn">对应按钮</param>
+        /// <returns></returns>
+        private bool ChangeFalg(bool isStop, int index, string lineName, Button btn)
+        {
+
+            if (isStop)
+            {
+                ClearCacheGroup.Write(1, index);
+                isStop = true;
+                btn.Text = string.Format("{0}恢复", lineName);
+            }
+            else
+            {
+                ClearCacheGroup.Write(0, index);
+                isStop = false;
+                btn.Text = string.Format("{0}停止", lineName);
+            }
+            return isStop;
+        }
     }
 }
