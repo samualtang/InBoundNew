@@ -276,6 +276,12 @@
     <Compile Include="orderHandle\troughmove.Designer.cs">
       <DependentUpon>troughmove.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_enableStandby.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_enableStandby.Designer.cs">
+      <DependentUpon>w_enableStandby.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_reprint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -504,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\troughmove.resx">
       <DependentUpon>troughmove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_enableStandby.resx">
+      <DependentUpon>w_enableStandby.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_reprint.resx">
       <DependentUpon>w_reprint.cs</DependentUpon>

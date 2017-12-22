@@ -280,7 +280,7 @@ namespace highSpeed.baseData
 
 
             List<string> troughnums = (cbthroughnum.DataSource as DataTable).Columns.Count > 1 ?
-                (cbthroughnum.DataSource as DataTable).Select("groupno=1").Select(s => s[0].ToString()).ToList() :
+                (cbthroughnum.DataSource as DataTable).Select("groupno=2").Select(s => s[0].ToString()).ToList() :
                 new List<string>();
             //if (troughnum == "2058" || troughnum == "2059" || troughnum == "2060" || troughnum == "2061")
             if (troughnums.Contains(troughnum))

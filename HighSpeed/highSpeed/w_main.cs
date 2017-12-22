@@ -596,6 +596,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void tsmi_enablestandby_Click(object sender, EventArgs e)
+        {
+            w_enableStandby frm = new w_enableStandby();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
        
     }
