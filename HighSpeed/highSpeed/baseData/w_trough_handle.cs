@@ -16,10 +16,10 @@ namespace highSpeed.baseData
         DataSet ds = new DataSet();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
-        String handle_sign = "",id="";
-        string type = "",troughtype="";
-        public List<string> List=new List<string>();
-        public win_trough_handle(String sign,String amend_id,string type,string troughtype)
+        String handle_sign = "", id = "";
+        string type = "", troughtype = "";
+        public List<string> List = new List<string>();
+        public win_trough_handle(String sign, String amend_id, string type, string troughtype)
         {
             InitializeComponent();
             this.type = type;
@@ -28,14 +28,14 @@ namespace highSpeed.baseData
             init(handle_sign, amend_id);
             if (handle_sign == "0") this.Text = "分拣通道--新增";
             else
-            { 
+            {
                 this.Text = "分拣通道--修改";
-             
+
                 txt_troughdesc.Enabled = false;
                 box_replenishline.Enabled = false;
                 box_transportationline.Enabled = false;
-               
-                if (type == "20"  || type=="30")
+
+                if (type == "20" || type == "30")
                 {
                     cbthroughnum.Enabled = false;
                 }
@@ -48,7 +48,7 @@ namespace highSpeed.baseData
             id = amend_id;
         }
 
-        public void init(String sign, String amend_id) 
+        public void init(String sign, String amend_id)
         {
             Db.Open();
             String sql = "select distinct machineseq from t_produce_sorttrough where cigarettetype='" + type + "'order by machineseq";
@@ -58,7 +58,22 @@ namespace highSpeed.baseData
             }
             else if (type.Equals("40"))
             {
-                sql = "select 1096 machineseq from dual union select 2096 machineseq from dual";
+                //sql = "select 1096 machineseq from dual union select 2096 machineseq from dual";
+                sql = @" select 1058 machineseq,1 groupNo from dual
+                            union 
+                            select 1059 machineseq,1 groupNo from dual
+                            union 
+                            select 1060 machineseq,1 groupNo from dual
+                            union 
+                            select 1061 machineseq,1 groupNo from dual
+                            union
+                            select 2058 machineseq,2 groupNo from dual
+                            union 
+                            select 2059 machineseq,2 groupNo from dual
+                            union 
+                            select 2060 machineseq,2 groupNo from dual
+                            union 
+                            select 2061 machineseq,2 groupNo from dual";
             }
             DataTable dt = Db.Query(sql);
             this.cbthroughnum.DataSource = dt;
@@ -98,10 +113,10 @@ namespace highSpeed.baseData
                 label7.Visible = false;
                 label8.Visible = false;
                 label9.Visible = false;
-               // label2.Visible = false;
+                // label2.Visible = false;
                 label3.Visible = false;
             }
-    
+
 
             //初始化补货通道下拉框
 
@@ -188,13 +203,13 @@ namespace highSpeed.baseData
             this.box_actcount.ValueMember = "troughvalue";
             this.box_actcount.SelectedIndex = 0;
 
-       
-            
+
+
             //修改状态
 
-            if(sign=="1")
+            if (sign == "1")
             {
-                sql = "select linenum,troughnum,troughdesc,machineseq,cigarettecode,cigarettename,cigarettetype,replenishline,transportationline,actcount,machineseq from t_produce_sorttrough where id=" + amend_id+ " and cigarettetype="+type+ " and troughtype="+troughtype;
+                sql = "select linenum,troughnum,troughdesc,machineseq,cigarettecode,cigarettename,cigarettetype,replenishline,transportationline,actcount,machineseq from t_produce_sorttrough where id=" + amend_id + " and cigarettetype=" + type + " and troughtype=" + troughtype;
                 DataRow row = Db.Query(sql).Rows[0];
                 cbthroughnum.SelectedValue = row[3].ToString();
                 this.txt_troughdesc.Text = row[2].ToString();
@@ -204,18 +219,19 @@ namespace highSpeed.baseData
 
                 String linenum = row[0].ToString();
                 String radioval = row[3].ToString();
-                String cigarettetype=row[6].ToString();
+                String cigarettetype = row[6].ToString();
 
-                bool flag=int.Parse(radioval)<=3;
-               
+                bool flag = int.Parse(radioval) <= 3;
+
                 box_replenishline.SelectedValue = row[7].ToString();
                 box_transportationline.SelectedValue = row[8].ToString();
                 box_actcount.SelectedValue = row[9].ToString();
 
-                if (flag) {
-                   // this.box_machinenum.Visible = true;
-                  //  box_machinenum.SelectedValue = row[10].ToString();
-                } 
+                if (flag)
+                {
+                    // this.box_machinenum.Visible = true;
+                    //  box_machinenum.SelectedValue = row[10].ToString();
+                }
             }
 
             Db.Close();
@@ -229,13 +245,14 @@ namespace highSpeed.baseData
 
         private void btn_choose_Click(object sender, EventArgs e)
         {
-            win_cigarette_choose choose = new win_cigarette_choose(this,List);
+            win_cigarette_choose choose = new win_cigarette_choose(this, List);
             choose.WindowState = FormWindowState.Normal;
             choose.ShowDialog();
-            if(choose.DialogResult==DialogResult.OK)
+            if (choose.DialogResult == DialogResult.OK)
             {
                 List = choose.returnObj;
-                if (this.List.Count == 2) {
+                if (this.List.Count == 2)
+                {
                     this.txt_itemno.Text = List[0];
                     this.txt_itemname.Text = List[1];
                     this.txt_iteminfo.Text = List[1] + "（" + List[0] + "）";
@@ -260,20 +277,26 @@ namespace highSpeed.baseData
             String itemname = this.txt_itemname.Text;
             String radioval = troughnum;
             String groupno = "1";
-            if (troughnum == "2096")
+
+
+            List<string> troughnums = (cbthroughnum.DataSource as DataTable).Columns.Count > 1 ?
+                (cbthroughnum.DataSource as DataTable).Select("groupno=1").Select(s => s[0].ToString()).ToList() :
+                new List<string>();
+            //if (troughnum == "2058" || troughnum == "2059" || troughnum == "2060" || troughnum == "2061")
+            if (troughnums.Contains(troughnum))
             {
                 groupno = "2";
 
             }
             else if (troughnum == "1096")
             {
- 
+
             }
             //String cigarettetype = this.box_cigarettetype.SelectedValue.ToString();
             String actcount = this.box_actcount.SelectedValue == null ? "" : this.box_actcount.SelectedValue.ToString();
             String replenishline = this.box_replenishline.SelectedValue == null ? "" : this.box_replenishline.SelectedValue.ToString();
             String transportationline = this.box_transportationline.SelectedValue == null ? "" : this.box_transportationline.SelectedValue.ToString();
-           // String machineseq = this.box_machinenum.SelectedValue.ToString();
+            // String machineseq = this.box_machinenum.SelectedValue.ToString();
             if (type == "10")
             {
                 actcount = "1";
@@ -285,8 +308,8 @@ namespace highSpeed.baseData
                 actcount = "1";
                 replenishline = "1";
             }
-           // if (this.radio_fix.Checked) radioval = machineseq;
-            
+            // if (this.radio_fix.Checked) radioval = machineseq;
+
             //if (troughnum=="")
             //{
             //    MessageBox.Show("请填写通道编号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -305,36 +328,37 @@ namespace highSpeed.baseData
             try
             {
                 Db.Open();
-                if (handle_sign == "0")
+                if (handle_sign == "0")//增加
                 {
 
                     String sql = "insert into t_produce_sorttrough(id,troughnum,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,troughtype,groupno)" +
-                                 "values(s_produce_sorttrough.nextval,'" + troughnum + "'," + radioval + ",'" + itemno + "','" + itemname + "','10',0," + type + ",10,"+groupno+")";
+                                 "values(s_produce_sorttrough.nextval,'" + troughnum + "'," + radioval + ",'" + itemno + "','" + itemname + "','10',0," + type + ",10," + groupno + ")";
                     //MessageBox.Show(sql);
-                    if (troughnum == "2096" || troughnum == "1096" )
+                    //if (troughnum == "2058" || troughnum == "2059" || troughnum == "2060" || troughnum == "2061"|| troughnum == "1058" || troughnum == "1059" || troughnum == "1060" || troughnum == "1061")
+                    if ((cbthroughnum.DataSource as DataTable).Select("1=1").Select(s => s[0].ToString()).ToList().Contains(troughnum))
                     {
-                       sql = "insert into t_produce_sorttrough(id,troughnum,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,troughtype,groupno)" +
-                                 "values(s_produce_sorttrough.nextval,s_produce_sorttrough.nextval," + radioval + ",'" + itemno + "','" + itemname + "','10',0," + type + ",10,"+groupno+")";
-                   
+                        sql = "insert into t_produce_sorttrough(id,troughnum,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,troughtype,groupno)" +
+                                  "values(s_produce_sorttrough.nextval,s_produce_sorttrough.nextval," + radioval + ",'" + itemno + "','" + itemname + "','10',0," + type + ",10," + groupno + ")";
+
 
                     }
-                    if (type == "10" )
+                    if (type == "10")
                     {
-                         sql = "insert into t_produce_sorttrough(id,linenum,troughnum,troughdesc,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,replenishline,transportationline,actcount)" +
-                                                       "values(s_produce_sorttrough.nextval,'" + linenum + "',highspeed.s_produce_sorttrough.nextval,'" + troughdesc + "'," + radioval + ",'" + itemno + "','" + itemname + "','0',0," + type + "," + replenishline + "," + transportationline + "," + actcount + ")";
+                        sql = "insert into t_produce_sorttrough(id,linenum,troughnum,troughdesc,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,replenishline,transportationline,actcount)" +
+                                                      "values(s_produce_sorttrough.nextval,'" + linenum + "',highspeed.s_produce_sorttrough.nextval,'" + troughdesc + "'," + radioval + ",'" + itemno + "','" + itemname + "','0',0," + type + "," + replenishline + "," + transportationline + "," + actcount + ")";
                     }
                     else if (type == "30")
                     {
                         sql = "insert into t_produce_sorttrough(id,linenum,troughnum,troughdesc,machineseq,cigarettecode,cigarettename,state,mantissa,cigarettetype,replenishline,transportationline,actcount)" +
-                                                      "values(s_produce_sorttrough.nextval,'" + linenum + "',highspeed.s_produce_sorttrough.nextval,'" + troughdesc + "',"+radioval+",'" + itemno + "','" + itemname + "','0',0," + type + "," + replenishline + "," + transportationline + "," + actcount + ")";
-                    }   
+                                                      "values(s_produce_sorttrough.nextval,'" + linenum + "',highspeed.s_produce_sorttrough.nextval,'" + troughdesc + "'," + radioval + ",'" + itemno + "','" + itemname + "','0',0," + type + "," + replenishline + "," + transportationline + "," + actcount + ")";
+                    }
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道创建成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    String sql = "update t_produce_sorttrough set  troughnum="+radioval+", machineseq=" + radioval +
-                                 ",cigarettecode='" + itemno + "',cigarettename='" + itemname + "' where id=" + id+" and cigarettetype="+type +" and troughtype="+troughtype;
+                    String sql = "update t_produce_sorttrough set  troughnum=" + radioval + ", machineseq=" + radioval +
+                                 ",cigarettecode='" + itemno + "',cigarettename='" + itemname + "' where id=" + id + " and cigarettetype=" + type + " and troughtype=" + troughtype;
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -360,7 +384,7 @@ namespace highSpeed.baseData
             }
         }
 
-     
+
 
         //private void radio_fix_CheckedChanged(object sender, EventArgs e)
         //{
