@@ -385,6 +385,7 @@
     <Compile Include="PubFunc\SocketClientConnector.cs" />
     <Compile Include="PubFunc\SortingFun.cs" />
     <Compile Include="PubFunc\SortingPub.cs" />
+    <Compile Include="PubFunc\ToZipFile.cs" />
     <Compile Include="sorting\w_sorting.cs">
       <SubType>Form</SubType>
     </Compile>
