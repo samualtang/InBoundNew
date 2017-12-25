@@ -65,6 +65,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -376,7 +377,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubFunc\DataBase.cs" />
     <Compile Include="PubFunc\DataPublic.cs" />
+    <Compile Include="PubFunc\DeepCope.cs" />
     <Compile Include="PubFunc\List.cs" />
+    <Compile Include="PubFunc\LoadDataHandler.cs" />
     <Compile Include="PubFunc\PrintDataGridView.cs" />
     <Compile Include="PubFunc\PublicFun.cs" />
     <Compile Include="PubFunc\SocketClientConnector.cs" />
