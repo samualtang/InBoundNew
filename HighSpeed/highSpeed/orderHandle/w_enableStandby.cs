@@ -14,7 +14,7 @@ namespace highSpeed.orderHandle
 {
     public partial class w_enableStandby : Form
     {
-        LoadDataHandler loadData; 
+        LoadDataHandler loadData;
 
         public w_enableStandby()
         {
@@ -73,7 +73,38 @@ namespace highSpeed.orderHandle
 
         private void btnEnableStandby_Click(object sender, EventArgs e)
         {
+            T_PRODUCE_SORTTROUGH selectedSourceItem, selectedStandbyItem;
+            selectedSourceItem = cbsource.SelectedItem as T_PRODUCE_SORTTROUGH;
+            selectedStandbyItem = cbStandby.SelectedItem as T_PRODUCE_SORTTROUGH;
 
+
+            if (selectedSourceItem == null)
+            {
+                MessageBox.Show("请选择源通道！");
+                return;
+            }
+            if (selectedStandbyItem == null)
+            {
+                MessageBox.Show("请选择备用通道！");
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(selectedStandbyItem.CIGARETTECODE))
+            {
+                MessageBox.Show(string.Format("该通道已经设置了{0}品牌！", selectedStandbyItem.CIGARETTENAME));
+                return;
+            }
+
+
+            try
+            {
+                //获取该通道已经分拣完成的任务
+                ProducePokeService.FetchTaskByTroughNo(selectedSourceItem.TROUGHNUM, selectedStandbyItem.TROUGHNUM);
+                MessageBox.Show("更换成功！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

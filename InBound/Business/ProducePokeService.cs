@@ -8,7 +8,7 @@ namespace InBound.Business
     public class ProducePokeService : BaseService
     {
         public static List<T_PRODUCE_POKE> GetGroupNo()
-        { 
+        {
 
             List<T_PRODUCE_POKE> list = new List<T_PRODUCE_POKE>();
             using (Entities entity = new Entities())
@@ -16,7 +16,7 @@ namespace InBound.Business
                 var query =
                 from item in entity.T_PRODUCE_POKE
                 group item by new { item.GROUPNO } into lst
-                select new { GROUPNO = lst.Key.GROUPNO }; 
+                select new { GROUPNO = lst.Key.GROUPNO };
 
                 foreach (var item in query)
                 {
@@ -24,9 +24,9 @@ namespace InBound.Business
                     {
                         GROUPNO = item.GROUPNO,
                     });
-                } 
+                }
             }
-             return list;
+            return list;
         }
 
         public static List<T_PRODUCE_POKE> GetGroupNoByRegionCode(string regionCode)
@@ -47,9 +47,9 @@ namespace InBound.Business
                     {
                         GROUPNO = item.GROUPNO,
                     });
-                } 
+                }
             }
-             return list;
+            return list;
         }
 
         public static List<T_PRODUCE_POKE> FetchProducePokeList(decimal groupno)
@@ -74,6 +74,53 @@ namespace InBound.Business
                             //&& task.SYNSEQ == 1 
                             select poke;
                 return query.ToList();
+            }
+        }
+
+        public static void FetchTaskByTroughNo(string troughNo, string standbyNo)
+        {
+            using (Entities entity = new Entities())
+            {
+
+                var query = (from poke in entity.T_PRODUCE_POKE
+                             where poke.TROUGHNUM == troughNo
+                             select poke).ToList();
+                //更换通道编码
+                query.ForEach(f =>
+                {
+                    f.TROUGHNUM = standbyNo;
+                    //f.MACHINESTATE = 20;
+                });
+
+                //获取该通道所有未完成的合单任务号
+                var allTask = query.Where(w => w.MACHINESTATE != 20).Select(s => s.UNIONTASKNUM).Distinct().ToList();
+
+                foreach (var item in allTask)
+                {
+                    var taskquy = 0M;
+                    var CompletNot = query.Where(w => w.UNIONTASKNUM == item && w.MACHINESTATE != 20).ToList();
+                    taskquy = CompletNot.Sum(s => s.SORTNUM.Value);
+                    decimal nextPlace = 0;
+                    // decimal nextLocal = 0;//下一个位置=前位置+当前数量
+                    decimal lastPlace = 0;
+                    decimal lastSortnum = 0;
+                    CompletNot.ForEach(f =>
+                    {
+                        f.MERAGENUM = taskquy;
+                        f.MACHINESTATE = 20;
+                        f.POKEPLACE = nextPlace == 0 ? 1 : lastSortnum + lastPlace;
+                        lastPlace = f.POKEPLACE.Value;
+                        lastSortnum = f.SORTNUM.Value;
+                        nextPlace = f.POKEPLACE.Value;
+                    });
+                    query.Where(w => w.UNIONTASKNUM == item).OrderBy(o => o.SORTNUM).ToList().ForEach(f =>
+                    {
+                        f.MERAGENUM = taskquy;
+                        f.MACHINESTATE = 10;
+                    });
+
+                }
+                entity.SaveChanges();
             }
         }
     }
