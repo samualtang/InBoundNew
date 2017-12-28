@@ -71,7 +71,24 @@ namespace Machine
             }
         }
 
-        public void Write(AlarmsFileModel obj)
+
+        public string ReadLastInfo()
+        {
+            if (!File.Exists(Path.Combine(fileLogPath + dataFile)))
+                return "";
+
+            FileStream fs = new FileStream(Path.Combine(fileLogPath + dataFile), FileMode.Open, FileAccess.Read);
+            StreamReader sr = new StreamReader(fs);//解决写入文件乱码   
+
+            string line = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            line = sr.ReadToEnd();
+            sb.Append(line);
+            sr.Close();
+            fs.Close();
+            return sb.ToString();
+        }
+        public void Write(string content,AlarmsFileModel obj=null)
         {
             if (!Directory.Exists(fileLogPath))
             {
@@ -89,7 +106,7 @@ namespace Machine
                 StreamWriter strwriter = new StreamWriter(fs);
                 try
                 {
-                    strwriter.WriteLine(obj.ToString());
+                    strwriter.WriteLine(content);
                     strwriter.Flush();
                 }
                 catch (Exception ee)
@@ -105,7 +122,7 @@ namespace Machine
                     fs = null;
                 }
             }
-            ReadFileToList();
+            //ReadFileToList();
         }
 
 

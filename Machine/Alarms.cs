@@ -19,7 +19,7 @@ namespace Machine
         public Alarms()
         {
             fileOper = new RecodeAlarmsToFile();
-            fileOper.ReadFileToList();
+           // fileOper.ReadFileToList();
         }
         /// <summary>
         /// 宕机处理
@@ -50,9 +50,24 @@ namespace Machine
         public void WriteErrToDB(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "" + len;
+            string lastInfo = fileOper.ReadLastInfo();
+            var last = lastInfo.ToArray();
+
             for (int i = 1; i <= temp.Length; i++)
             {
-                if (temp.ElementAt(i - 1) == '1')
+                char getBit;
+                //和上一次值发生改变
+                if (last.Count() == i)
+                {
+                    getBit = last[i - 1];
+                }
+                else
+                {
+                    getBit = temp.ElementAt(i - 1);
+                }
+
+                if (temp.ElementAt(i - 1) != getBit)
+                //if (temp.ElementAt(i - 1) == '1')
                 {
                     String errMsg = getErrMsg(temp.Length - i);
                     ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
@@ -61,6 +76,7 @@ namespace Machine
                     Downtime(info, errMsg, temp);
                 }
             }
+            fileOper.Write(temp);
         }
 
         private bool CheckIsChanged(string devicveNo, string temp)
