@@ -77,6 +77,17 @@ namespace SortingControlSys.SortingControl
             // TaskService.UpdateInOut(347,0,22,10,20);
             //TaskService.GetUnionTask();
 
+            RecodeAlarmsToFile file = new RecodeAlarmsToFile();
+            file.ReadFileToList();
+            file.Write(new AlarmsFileModel
+            {
+                AlarmsBit = 1,
+                AlarmsValue = 1,
+                DeviceName = "1",
+                DeviceNo = "1",
+                InfoTime = DateTime.Now
+            });
+
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<String, List<String>>>();
@@ -150,7 +161,7 @@ namespace SortingControlSys.SortingControl
         {
             Type svrComponenttyp;
             Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            svrComponenttyp = Type.GetTypeFromProgID("KEPware.KEPServerEx.V4");
             try
             {
                 // Connect to the local server.
@@ -481,7 +492,7 @@ namespace SortingControlSys.SortingControl
                 }
             }
             //  return true;
-        } 
+        }
 
         public void OnDataChange(int Group, int[] clientId, object[] values)
         {
@@ -543,7 +554,8 @@ namespace SortingControlSys.SortingControl
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         //WriteErr(1, clientId[i], temp, groupNo);
-                        alarms.WriteErr(1, clientId[i], temp, groupNo);
+                        alarms.fileOper.Write(new AlarmsFileModel { DeviceNo = clientId[i].ToString() });
+                        alarms.WriteErrToDB(1, clientId[i], temp, groupNo);
                     }
                     //}
                 }

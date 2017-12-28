@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using InBound.Business;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Machine
 {
@@ -11,6 +13,14 @@ namespace Machine
     /// </summary>
     public class Alarms
     {
+
+        public RecodeAlarmsToFile fileOper;
+
+        public Alarms()
+        {
+            fileOper = new RecodeAlarmsToFile();
+            fileOper.ReadFileToList();
+        }
         /// <summary>
         /// 宕机处理
         /// </summary>
@@ -27,6 +37,9 @@ namespace Machine
         /// </summary>
         String[] errMsgList = { "机械手急停", "机械手报警", "外部急停报警", "吸盘监控异常", "烟条初始位校验异常", "子站故障", "线体PLC异常", "机器人宕机", "", "", "", "", "", "", "", "", };
 
+
+
+
         /// <summary>
         /// 写日志
         /// </summary>
@@ -34,7 +47,7 @@ namespace Machine
         /// <param name="len"></param>
         /// <param name="temp"></param>
         /// <param name="GroupNo"></param>
-        public void WriteErr(int type, int len, String temp, decimal GroupNo)
+        public void WriteErrToDB(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "" + len;
             for (int i = 1; i <= temp.Length; i++)
@@ -48,6 +61,17 @@ namespace Machine
                     Downtime(info, errMsg, temp);
                 }
             }
+        }
+
+        private bool CheckIsChanged(string devicveNo, string temp)
+        {
+            bool result = false;
+            var count = fileOper.InfoList.Where(w => w.AlarmsBit == 1 && w.AlarmsValue == 1).Count();
+            if (count > 1)
+            {
+                result = true;
+            }
+            return result;
         }
 
         /// <summary>

@@ -72,6 +72,7 @@
     <Compile Include="MachineFM.Designer.cs">
       <DependentUpon>MachineFM.cs</DependentUpon>
     </Compile>
+    <Compile Include="RecodeAlarmsToFile.cs" />
     <Compile Include="WriteLog.cs" />
     <Compile Include="w_main.cs">
       <SubType>Form</SubType>
