@@ -110,6 +110,7 @@
     <Compile Include="PubFunc\SortingFun.cs" />
     <Compile Include="PubFunc\SortingPub.cs" />
     <Compile Include="PubFunc\WriteLog.cs" />
+    <Compile Include="SortingControl\DeviceState.cs" />
     <Compile Include="SortingControl\StatusManager.cs">
       <SubType>Form</SubType>
     </Compile>

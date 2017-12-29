@@ -42,6 +42,7 @@ namespace SortingControlSys.SortingControl
         public WriteLog writeLog = new WriteLog();
         //ClearCmd clearACmd, clearBCmd;
         private bool AlineStopFlag, BlineStopFlag = false;
+        DeviceStateManager stateManager = new DeviceStateManager();
         public w_SortingControlMain()
         {
             InitializeComponent();
@@ -63,7 +64,13 @@ namespace SortingControlSys.SortingControl
         }
         protected override void OnLoad(EventArgs e)
         {
+            //stateManager.WriteErrWithCheck(
             base.OnLoad(e);
+
+            stateManager.OnGetErr += (i) =>
+            {
+                return getErrMsg(i);
+            };
             tempList = TaskService.initTask1();
 
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
@@ -360,19 +367,20 @@ namespace SortingControlSys.SortingControl
             {
                 deviceNo = "B" + len;
             }
+            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
 
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp.ElementAt(i) == '1')
-                {
-                    if (i < 16)
-                    {
-                        String errMsg = getErrMsg(i);
-                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
-                    }
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    if (temp.ElementAt(i) == '1')
+            //    {
+            //        if (i < 16)
+            //        {
+            //            String errMsg = getErrMsg(i);
+            //            ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
 
         }
