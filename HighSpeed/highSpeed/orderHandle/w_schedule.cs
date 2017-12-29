@@ -134,7 +134,7 @@ namespace highSpeed.orderHandle
                     bool obj = (bool)this.orderdata.CurrentRow.Cells[0].EditedFormattedValue;
                     //MessageBox.Show(obj);
 
-                    String czcode = this.orderdata.CurrentRow.Cells[1].Value + "";
+                    String czcode = this.orderdata.CurrentRow.Cells[2].Value + "";
                     //MessageBox.Show(obj.ToString());
                     String czcodestr = this.txt_codestr.Text;
                     if (obj)

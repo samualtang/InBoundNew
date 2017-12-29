@@ -72,12 +72,12 @@ namespace Machine
         }
 
 
-        public string ReadLastInfo()
+        public string ReadLastInfo(string deviceNo = null)
         {
-            if (!File.Exists(Path.Combine(fileLogPath + dataFile)))
+            if (!File.Exists(Path.Combine(fileLogPath + deviceNo + dataFile)))
                 return "";
 
-            FileStream fs = new FileStream(Path.Combine(fileLogPath + dataFile), FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(Path.Combine(fileLogPath + deviceNo + dataFile), FileMode.Open, FileAccess.Read);
             StreamReader sr = new StreamReader(fs);//解决写入文件乱码   
 
             string line = string.Empty;
@@ -88,7 +88,36 @@ namespace Machine
             fs.Close();
             return sb.ToString();
         }
-        public void Write(string content,AlarmsFileModel obj=null)
+
+        public void Write(string content, string deviceNo)
+        {
+            if (!Directory.Exists(fileLogPath))
+            {
+                Directory.CreateDirectory(fileLogPath);//.CreateDirectory(path);
+            }
+
+            FileStream fs = new FileStream(fileLogPath + deviceNo + dataFile, FileMode.Create);
+            StreamWriter strwriter = new StreamWriter(fs);
+
+            try
+            {
+                strwriter.WriteLine(content);
+                strwriter.Flush();
+            }
+            catch (Exception ee)
+            {
+                //Console.WriteLine("写入信息失败:" + ee.ToString());
+                throw ee;
+            }
+            finally
+            {
+                strwriter.Close();
+                strwriter = null;
+                fs.Close();
+                fs = null;
+            }
+        }
+        public void Write(string content, string deviceNo, AlarmsFileModel obj)
         {
             if (!Directory.Exists(fileLogPath))
             {
@@ -102,7 +131,7 @@ namespace Machine
             }
             else
             {
-                FileStream fs = new FileStream(fileLogPath + dataFile, FileMode.Append);
+                FileStream fs = new FileStream(fileLogPath + deviceNo + dataFile, FileMode.Create);
                 StreamWriter strwriter = new StreamWriter(fs);
                 try
                 {
