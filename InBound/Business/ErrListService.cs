@@ -9,7 +9,7 @@ namespace InBound.Business
     {
 
 
-      public static void Add(String deviceno,decimal groupno,int type,string errMsg)
+      public static void Add(String deviceno,decimal groupno,int type,string errMsg,string errorcode="")
       {
 
           using (Entities dataEntity = new Entities())
@@ -22,6 +22,7 @@ namespace InBound.Business
               entity.ERRTIME = DateTime.Now;
               entity.ERRORMSG = errMsg;
               entity.ERRORTYPE = type;
+              entity.ERRORCODE = errorcode;
               dataEntity.T_WMS_DEVICEERRLIST.AddObject(entity);
               dataEntity.SaveChanges();
           }
