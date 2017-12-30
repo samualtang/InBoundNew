@@ -236,7 +236,7 @@ namespace highSpeed.orderHandle
             {
                 bool obj = (bool)this.orderdata.CurrentRow.Cells[0].EditedFormattedValue;
              
-                String czcode = this.orderdata.CurrentRow.Cells[1].Value + "";
+                String czcode = this.orderdata.CurrentRow.Cells[2].Value + "";//modify by tjl
                 String czcodestr = this.txt_codestr.Text;
                 if (obj)
                 {
