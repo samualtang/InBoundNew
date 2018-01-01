@@ -81,6 +81,7 @@
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\WriteLog.cs" />
     <Compile Include="Business\ErrListService.cs" />
+    <Compile Include="UnionBit.cs" />
     <Compile Include="EntityData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +95,7 @@
     <Compile Include="Model\InBoundTask.cs" />
     <Compile Include="Model\LaneWaynoTaskInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlOper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="EntityData.edmx">

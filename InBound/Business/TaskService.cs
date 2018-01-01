@@ -518,7 +518,8 @@ namespace InBound.Business
                                       qty = item.POKENUM ?? 0,
                                       SortTroughNum = item.TROUGHNUM,  //烟柜通道                                      
                                       ExportNum = item.EXPORTNUM,//分拣出口号
-                                      GroupNO = item.GROUPNO ?? 0     //组号
+                                      GroupNO = item.GROUPNO ?? 0,     //组号
+                                      pokePlace = item.POKEPLACE.Value   //放烟位置
                                   }
                              ).ToList();
 
@@ -2223,7 +2224,7 @@ namespace InBound.Business
                         values[4 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = int.Parse(item.qty + "");
                         //如果机械手吸烟需要多个订单一起吸，则需要计算放烟位置，目前先不考虑这么复杂，一次吸一个订单
                         //values[4 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = getPlace(item.CIGARETTDECODE, item.SortTroughNum, item.tNum);
-                        values[5 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = 1;
+                        values[5 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = item.pokePlace;
                         totalCount += int.Parse(item.qty + "");
                         i++;
                     }
@@ -3243,7 +3244,7 @@ namespace InBound.Business
                     values[1] = 0;
                 }
             }
-           // values[1] = 1;
+            // values[1] = 1;
             return values;
             //object[] values = new object[2];
             //using (Entities entity = new Entities())

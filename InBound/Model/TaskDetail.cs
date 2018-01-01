@@ -36,5 +36,6 @@ namespace InBound.Model
        }
        public decimal tNum { get; set; }
        public decimal qty { get; set; }
+       public decimal pokePlace { get; set; }
     }
 }

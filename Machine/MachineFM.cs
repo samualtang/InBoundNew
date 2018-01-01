@@ -77,7 +77,7 @@ namespace SortingControlSys.SortingControl
             // TaskService.UpdateInOut(347,0,22,10,20);
             //TaskService.GetUnionTask();
 
-            alarms.WriteErrWithCheck(10, 9, "111010101010", 2);
+           //alarms.WriteErrWithCheck(10, 9, "111010101010", 2);
 
 
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));

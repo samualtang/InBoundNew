@@ -59,12 +59,11 @@ namespace SortingControlSys.SortingControl
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
                 this.Close();
             }
-
+            //stateManager.WriteErrWithCheck("1", 3, "111011000");
 
         }
         protected override void OnLoad(EventArgs e)
-        {
-            //stateManager.WriteErrWithCheck(
+        { 
             base.OnLoad(e);
 
             stateManager.OnGetErr += (i) =>
@@ -395,7 +394,7 @@ namespace SortingControlSys.SortingControl
             else
                 GroupNo = sortgroupno1;
 
-
+            //stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
             for (int i = 0; i < temp.Length; i++)
             {
                 if (temp.ElementAt(i) == '1')
@@ -422,7 +421,7 @@ namespace SortingControlSys.SortingControl
             else
                 GroupNo = sortgroupno1;
 
-
+            //stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
             for (int i = 0; i < temp.Length; i++)
             {
                 if (temp.ElementAt(i) == '1')
