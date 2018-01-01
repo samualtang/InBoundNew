@@ -624,7 +624,7 @@ namespace InBound.Business
                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == 10 && item.GROUPNO == groupno orderby item.SORTNUM select item).FirstOrDefault();
                 if (query != null)
                 {
-                    UpdateInOut(query.TASKNUM ?? 0, groupno);
+                    UpdateInOut(query.SORTNUM ?? 0, groupno);
                     TaskService.UpdateStatus(groupno, 30, query.SORTNUM ?? 0);
                 }
             }

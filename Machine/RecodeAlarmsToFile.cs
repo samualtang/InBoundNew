@@ -5,202 +5,174 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Machine
-{
-    public class RecodeAlarmsToFile
+{ 
+
+    public class AlarmsInfoXml
     {
-        List<AlarmsFileModel> _infos = new List<AlarmsFileModel>();
+
         private string fileLogPath;
         private string dataFile;
 
-        public List<AlarmsFileModel> InfoList
-        {
-            get
-            {
-                return _infos;
-            }
-        }
-        public RecodeAlarmsToFile()
+
+        public AlarmsInfoXml()
         {
             this.fileLogPath = Application.StartupPath + "\\alarms\\";
-            this.dataFile = "data.txt";
+            this.dataFile = "data.xml";
         }
-
-        public void ReadFileToList()
-        {
-            try
-            {
-                if (!File.Exists(Path.Combine(fileLogPath, dataFile)))
-                {
-                    return;
-                }
-
-                var file = Path.Combine(fileLogPath, dataFile);
-                string content = File.ReadAllText(file).Trim();
-                if (string.IsNullOrWhiteSpace(content))
-                {
-                    return;
-                }
-                var rows = content.Split(';');
-                int i = 1;
-                foreach (var item in rows)
-                {
-                    if (string.IsNullOrWhiteSpace(item))
-                    {
-                        return;
-                    }
-                    string[] ss = item.Split(',');
-
-                    AlarmsFileModel obj = new AlarmsFileModel
-                    {
-                        DeviceNo = ss[0].Split(':')[1],
-                        DeviceName = ss[1].Split(':')[1],
-                        AlarmsBit = int.Parse(ss[2].Split(':')[1]),
-                        AlarmsValue = int.Parse(ss[3].Split(':')[1]),
-                        InfoTime = DateTime.Parse(ss[4].Trim().Substring(9, ss[4].Trim().Length - 9)),
-                        RowLine = i
-                    };
-                    i++;
-                    _infos.Add(obj);
-                }
-            }
-            catch (FileLoadException e)
-            {
-                throw e;
-            }
-        }
-
 
         public string ReadLastInfo(string deviceNo = null)
         {
-            if (!File.Exists(Path.Combine(fileLogPath + deviceNo + dataFile)))
+            if (!File.Exists(Path.Combine(fileLogPath + dataFile)))
                 return "";
-
-            FileStream fs = new FileStream(Path.Combine(fileLogPath + deviceNo + dataFile), FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs);//解决写入文件乱码   
-
-            string line = string.Empty;
-            StringBuilder sb = new StringBuilder();
-            line = sr.ReadToEnd();
-            sb.Append(line);
-            sr.Close();
-            fs.Close();
-            return sb.ToString();
-        }
-
-        public void Write(string content, string deviceNo)
-        {
-            if (!Directory.Exists(fileLogPath))
+            var list = XmlOper.XmlDeserializeFromFile<List<AlarmsFileModel>>(Path.Combine(fileLogPath + dataFile), Encoding.UTF8);
+            var model = list.Where(w => w.DeviceNo == deviceNo).FirstOrDefault();
+            if (model == null)
             {
-                Directory.CreateDirectory(fileLogPath);//.CreateDirectory(path);
-            }
-
-            FileStream fs = new FileStream(fileLogPath + deviceNo + dataFile, FileMode.Create);
-            StreamWriter strwriter = new StreamWriter(fs);
-
-            try
-            {
-                strwriter.WriteLine(content);
-                strwriter.Flush();
-            }
-            catch (Exception ee)
-            {
-                //Console.WriteLine("写入信息失败:" + ee.ToString());
-                throw ee;
-            }
-            finally
-            {
-                strwriter.Close();
-                strwriter = null;
-                fs.Close();
-                fs = null;
-            }
-        }
-        public void Write(string content, string deviceNo, AlarmsFileModel obj)
-        {
-            if (!Directory.Exists(fileLogPath))
-            {
-                Directory.CreateDirectory(fileLogPath);//.CreateDirectory(path);
-            }
-            AlarmsFileModel mode = _infos.Where(w => w.DeviceNo == obj.DeviceNo).FirstOrDefault();
-            if (mode != null)
-            {
-                //修改
-                EditFile(mode.RowLine, obj.ToString(), fileLogPath + dataFile);
+                return "";
             }
             else
             {
-                FileStream fs = new FileStream(fileLogPath + deviceNo + dataFile, FileMode.Create);
-                StreamWriter strwriter = new StreamWriter(fs);
-                try
-                {
-                    strwriter.WriteLine(content);
-                    strwriter.Flush();
-                }
-                catch (Exception ee)
-                {
-                    //Console.WriteLine("写入信息失败:" + ee.ToString());
-                    throw ee;
-                }
-                finally
-                {
-                    strwriter.Close();
-                    strwriter = null;
-                    fs.Close();
-                    fs = null;
-                }
+                return model.AlarmsValue.ToString();
             }
-            //ReadFileToList();
         }
 
-
-
-        public static void EditFile(int curLine, string newLineValue, string patch)
+        public void write(AlarmsFileModel obj)
         {
-            FileStream fs = new FileStream(patch, FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs);//解决写入文件乱码  
+            var list = XmlOper.XmlDeserializeFromFile<List<AlarmsFileModel>>(Path.Combine(fileLogPath + dataFile), Encoding.UTF8);
 
-
-            string line = string.Empty;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; line != null; i++)
+            if (list.Count == 0)
             {
-                sb.Append(line);
-                if (i != curLine)
-                    line = sr.ReadLine();
-                else
-                {
-                    sr.ReadLine();
-                    line = newLineValue + "\n";
-                }
+                list.Add(obj);
+                XmlOper.XmlSerializeToFile(list, fileLogPath, dataFile, Encoding.UTF8);
+                return;
             }
-            sr.Close();
-            fs.Close();
-            FileStream fs1 = new FileStream(patch, FileMode.Open, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs1);
-            sw.Write(sb.ToString());
-            sw.Close();
-            fs.Close();
+
+            var model = list.Where(w => w.DeviceNo == obj.DeviceNo).FirstOrDefault();
+            if (model != null)
+            {
+                model.AlarmsValue = obj.AlarmsValue;
+            }
+            else
+            {
+                list.Add(obj);
+            }
+            XmlOper.XmlSerializeToFile(list, fileLogPath, dataFile, Encoding.UTF8);
         }
     }
 
-    public class ResoleStringToModel
+
+    public class XmlOper
     {
-        public static T Resole<T>(string content)
+        private static void XmlSerializeInternal(Stream stream, object o, Encoding encoding)
         {
-            //Type type = typeof(T);
-            var getPropertyVal = content.Split(',').ToList();
+            if (o == null)
+                throw new ArgumentNullException("o");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
 
-            T result = Activator.CreateInstance<T>();
-            PropertyInfo[] t = result.GetType().GetProperties();
+            XmlSerializer serializer = new XmlSerializer(o.GetType());
 
-            foreach (var item in t)
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.NewLineChars = "\r\n";
+            settings.Encoding = encoding;
+            settings.IndentChars = "    ";
+
+            using (XmlWriter writer = XmlWriter.Create(stream, settings))
             {
-                item.SetValue(item.Name, getPropertyVal.Where(w => item.Name.Contains(w)).First().Split(':')[1], null);
+                serializer.Serialize(writer, o);
+                writer.Close();
             }
-            return result;
         }
+
+        /// <summary>
+        /// 将一个对象序列化为XML字符串
+        /// </summary>
+        /// <param name="o">要序列化的对象</param>
+        /// <param name="encoding">编码方式</param>
+        /// <returns>序列化产生的XML字符串</returns>
+        public static string XmlSerialize(object o, Encoding encoding)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                XmlSerializeInternal(stream, o, encoding);
+
+                stream.Position = 0;
+                using (StreamReader reader = new StreamReader(stream, encoding))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将一个对象按XML序列化的方式写入到一个文件
+        /// </summary>
+        /// <param name="o">要序列化的对象</param>
+        /// <param name="path">保存文件路径</param>
+        /// <param name="encoding">编码方式</param>
+        public static void XmlSerializeToFile(object o, string path, string fileName, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentNullException("path");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);//.CreateDirectory(path);
+            }
+
+            using (FileStream file = new FileStream(Path.Combine(path + fileName), FileMode.Create, FileAccess.Write))
+            {
+                XmlSerializeInternal(file, o, encoding);
+            }
+        }
+
+        /// <summary>
+        /// 从XML字符串中反序列化对象
+        /// </summary>
+        /// <typeparam name="T">结果对象类型</typeparam>
+        /// <param name="s">包含对象的XML字符串</param>
+        /// <param name="encoding">编码方式</param>
+        /// <returns>反序列化得到的对象</returns>
+        public static T XmlDeserialize<T>(string s, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(s))
+                throw new ArgumentNullException("s");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+
+            XmlSerializer mySerializer = new XmlSerializer(typeof(T));
+            using (MemoryStream ms = new MemoryStream(encoding.GetBytes(s)))
+            {
+                using (StreamReader sr = new StreamReader(ms, encoding))
+                {
+                    return (T)mySerializer.Deserialize(sr);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 读入一个文件，并按XML的方式反序列化对象。
+        /// </summary>
+        /// <typeparam name="T">结果对象类型</typeparam>
+        /// <param name="path">文件路径</param>
+        /// <param name="encoding">编码方式</param>
+        /// <returns>反序列化得到的对象</returns>
+        public static T XmlDeserializeFromFile<T>(string path, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentNullException("path");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+
+            string xml = File.ReadAllText(path, encoding);
+            return XmlDeserialize<T>(xml, encoding);
+        }
+
+
     }
 
 
@@ -216,7 +188,7 @@ namespace Machine
 
         public int AlarmsBit { get; set; }
 
-        public int AlarmsValue { get; set; }
+        public string AlarmsValue { get; set; }
 
         public DateTime InfoTime { get; set; }
 
