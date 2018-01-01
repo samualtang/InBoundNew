@@ -14,11 +14,12 @@ namespace Machine
     public class Alarms
     {
 
-        public RecodeAlarmsToFile fileOper;
-
+        //public RecodeAlarmsToFile fileOper;
+        public AlarmsInfoXml xml;
         public Alarms()
         {
-            fileOper = new RecodeAlarmsToFile();
+            //fileOper = new RecodeAlarmsToFile();
+            xml = new AlarmsInfoXml();
             // fileOper.ReadFileToList();
         }
         /// <summary>
@@ -50,9 +51,6 @@ namespace Machine
         public void WriteErrToDB(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "" + len;
-            string lastInfo = fileOper.ReadLastInfo();
-            var last = lastInfo.ToArray();
-            string old = string.Empty;
             for (int i = 1; i <= temp.Length; i++)
             {
                 if (temp.ElementAt(i - 1) == '1')
@@ -63,7 +61,7 @@ namespace Machine
                     AlarmsHandler(info);
                     Downtime(info, errMsg, temp);
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace Machine
         public void WriteErrWithCheck(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "" + len;
-            string lastInfo = fileOper.ReadLastInfo(deviceNo).Trim();
+            string lastInfo = xml.ReadLastInfo(deviceNo);// fileOper.ReadLastInfo(deviceNo).Trim();
             string compStrs;
             string rese = string.Empty;
             //高低位反转
@@ -92,19 +90,11 @@ namespace Machine
                 AlarmsHandler(info);
                 Downtime(info, errMsg, temp);
             }
-            fileOper.Write(compStrs, deviceNo);
+            //fileOper.Write(compStrs, deviceNo);
+            xml.write(new AlarmsFileModel { DeviceNo = deviceNo, AlarmsValue = temp });
         }
 
-        private bool CheckIsChanged(string devicveNo, string temp)
-        {
-            bool result = false;
-            var count = fileOper.InfoList.Where(w => w.AlarmsBit == 1 && w.AlarmsValue == 1).Count();
-            if (count > 1)
-            {
-                result = true;
-            }
-            return result;
-        }
+
 
         /// <summary>
         /// 处理宕机异常

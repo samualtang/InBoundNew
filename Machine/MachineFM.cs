@@ -46,7 +46,7 @@ namespace SortingControlSys.SortingControl
         Dictionary<string, string> dicList = new Dictionary<string, string>();
         Alarms alarms = new Alarms();
         public MachineFM()
-        { 
+        {
             InitializeComponent();
             alarms.DowntimeHandler = OnDowntime;
             alarms.AlarmsHandler += (obj) =>
@@ -77,7 +77,8 @@ namespace SortingControlSys.SortingControl
             // TaskService.UpdateInOut(347,0,22,10,20);
             //TaskService.GetUnionTask();
 
-            //alarms.WriteErrWithCheck(10, 22, "0", 2);
+            alarms.WriteErrWithCheck(10, 9, "111010101010", 2);
+
 
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
