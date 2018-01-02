@@ -22,6 +22,12 @@ namespace SortingControlSys.SortingControl
 
         public Func<int, string> OnGetErr;
 
+
+        /// <summary>
+        /// 警告处理
+        /// </summary>
+        public Action<DeviceStateInfoModel> AlarmsHandler;
+
         /// <summary>
         /// 写报警记录，包括异常清除写入
         /// </summary>
@@ -42,7 +48,10 @@ namespace SortingControlSys.SortingControl
                 String errMsg = item.val == "0" ? string.Format("消除{0}", OnGetErr(item.bit)) : OnGetErr(item.bit);
                 ErrListService.Add(deviceNo, GroupNo, 10, errMsg, item.val);
                 DeviceStateInfoModel info = new DeviceStateInfoModel { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
-
+                if (AlarmsHandler!=null)
+                {
+                    AlarmsHandler(info);
+                }
             }
             fileOper.write(new DeviceStateInfoModel
             {
@@ -78,6 +87,10 @@ namespace SortingControlSys.SortingControl
             if (!File.Exists(Path.Combine(fileLogPath + dataFile)))
                 return "";
             var list = XmlOper.XmlDeserializeFromFile<List<DeviceStateInfoModel>>(Path.Combine(fileLogPath + dataFile), Encoding.UTF8);
+            if (list == null)
+            {
+                return "";
+            }
             var model = list.Where(w => w.DeviceNo == deviceNo).FirstOrDefault();
             if (model == null)
             {
@@ -95,6 +108,8 @@ namespace SortingControlSys.SortingControl
             if (File.Exists(Path.Combine(fileLogPath + dataFile)))
             {
                 list = XmlOper.XmlDeserializeFromFile<List<DeviceStateInfoModel>>(Path.Combine(fileLogPath + dataFile), Encoding.UTF8);
+                if(list==null)
+                    list = new List<DeviceStateInfoModel>();
             }
 
             if (list.Count == 0)

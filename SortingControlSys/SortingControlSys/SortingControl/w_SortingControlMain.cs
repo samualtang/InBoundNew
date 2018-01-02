@@ -63,9 +63,12 @@ namespace SortingControlSys.SortingControl
 
         }
         protected override void OnLoad(EventArgs e)
-        { 
+        {
             base.OnLoad(e);
-
+            stateManager.AlarmsHandler += (obj) =>
+            {
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
+            };
             stateManager.OnGetErr += (i) =>
             {
                 return getErrMsg(i);
@@ -357,6 +360,8 @@ namespace SortingControlSys.SortingControl
         }
         public void WriteErr(int type, int len, String temp, decimal GroupNo)
         {
+            if (string.IsNullOrEmpty(temp))
+                return;
             String deviceNo = "";
             if (type == 1)
             {
@@ -386,7 +391,8 @@ namespace SortingControlSys.SortingControl
 
         public void WriteErrG(int type, int len, String temp)
         {
-
+            if (string.IsNullOrEmpty(temp))
+                return;
             String deviceNo = Math.Ceiling(((Decimal)len / 10)) + "M" + type;
             decimal GroupNo = 0;
             if ((len / 10) > 11)
@@ -394,26 +400,27 @@ namespace SortingControlSys.SortingControl
             else
                 GroupNo = sortgroupno1;
 
-            //stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp.ElementAt(i) == '1')
-                {
-                    if (i < 16)
-                    {
-                        String errMsg = getErrMainbeltList(i);
-                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
-                    }
+            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    if (temp.ElementAt(i) == '1')
+            //    {
+            //        if (i < 16)
+            //        {
+            //            String errMsg = getErrMainbeltList(i);
+            //            ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
 
         }
 
         public void WriteErrM(int len, String temp)
         {
-
+            if (string.IsNullOrEmpty(temp))
+                return;
             String deviceNo = Math.Ceiling(((Decimal)len / 10)) + "";
             decimal GroupNo = 0;
             if ((len / 10) > 11)
@@ -582,7 +589,7 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{ 
-                    if (int.Parse(values[i].ToString()) != 0)
+                    if (values[i] != null)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         WriteErr(1, clientId[i], temp, sortgroupno1);
@@ -623,7 +630,7 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{
-                    if (int.Parse(values[i].ToString()) != 0)
+                    if (values[i] != null)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         WriteErr(1, clientId[i], temp, sortgroupno2);

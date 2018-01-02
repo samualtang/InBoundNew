@@ -52,6 +52,7 @@ namespace InBound
             }
         }
 
+        public static Object lockFlag = new Object();
         /// <summary>
         /// 将一个对象按XML序列化的方式写入到一个文件
         /// </summary>
@@ -66,10 +67,12 @@ namespace InBound
             {
                 Directory.CreateDirectory(path);//.CreateDirectory(path);
             }
-
-            using (FileStream file = new FileStream(Path.Combine(path + fileName), FileMode.Create, FileAccess.Write))
+            lock (lockFlag)
             {
-                XmlSerializeInternal(file, o, encoding);
+                using (FileStream file = new FileStream(Path.Combine(path + fileName), FileMode.Create, FileAccess.Write))
+                {
+                    XmlSerializeInternal(file, o, encoding);
+                }
             }
         }
 
@@ -110,8 +113,13 @@ namespace InBound
                 throw new ArgumentNullException("path");
             if (encoding == null)
                 throw new ArgumentNullException("encoding");
-
-            string xml = File.ReadAllText(path, encoding);
+            string xml="";
+            lock (lockFlag)
+            {
+                 xml = File.ReadAllText(path, encoding);
+            }
+            if (xml == null || xml == "")
+                return default(T);
             return XmlDeserialize<T>(xml, encoding);
         }
 

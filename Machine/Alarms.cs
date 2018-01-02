@@ -86,7 +86,7 @@ namespace Machine
             foreach (OperationChar item in lstWhere)
             {
                 String errMsg = item.val == "0" ? string.Format("消除{0}", getErrMsg(item.bit)) : getErrMsg(item.bit);
-                ErrListService.Add(deviceNo, GroupNo, 10, errMsg, item.val);
+                ErrListService.Add(deviceNo, GroupNo, 20, errMsg, item.val);
                 AlarmsInfo info = new AlarmsInfo { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
                 AlarmsHandler(info);
                 Downtime(info, errMsg, temp);
