@@ -92,34 +92,55 @@ namespace InBound.Business
                     //f.MACHINESTATE = 20;
                 });
 
-                //获取该通道所有未完成的合单任务号
-                var allTask = query.Where(w => w.MACHINESTATE != 20).Select(s => s.UNIONTASKNUM).Distinct().ToList();
-
-                foreach (var item in allTask)
+                //获取最近完成的该通道任务
+                var task = query.Where(w => w.SORTSTATE == 20 && w.TROUGHNUM==troughNo).OrderByDescending(w=>w.SORTNUM).FirstOrDefault();
+                if (task != null)
                 {
-                    var taskquy = 0M;
-                    var CompletNot = query.Where(w => w.UNIONTASKNUM == item && w.MACHINESTATE != 20).ToList();
-                    taskquy = CompletNot.Sum(s => s.POKENUM.Value);
-                    decimal nextPlace = 0;
-                    // decimal nextLocal = 0;//下一个位置=前位置+当前数量
-                    decimal lastPlace = 0;
-                    decimal lastSortnum = 0;
-                    CompletNot.ForEach(f =>
-                    {
-                        f.MERAGENUM = taskquy;
-                        f.MACHINESTATE = 20;
-                        f.POKEPLACE = nextPlace == 0 ? 1 : lastSortnum + lastPlace;
-                        lastPlace = f.POKEPLACE.Value;
-                        lastSortnum = f.POKENUM.Value;
-                        nextPlace = f.POKEPLACE.Value;
-                    });
-                    query.Where(w => w.UNIONTASKNUM == item).OrderBy(o => o.SORTNUM).ToList().ForEach(f =>
-                    {
-                        f.MERAGENUM = taskquy;
-                        f.MACHINESTATE = 10;
-                    });
+                 var queryList=(from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM==task.UNIONTASKNUM select item).ToList();
 
+                    if(queryList!=null)
+                    {
+                        var unfinished = queryList.Where(w => w.SORTSTATE != 20).Sum(w=>w.POKENUM);
+                        if (unfinished != null && unfinished != 0)
+                        {
+                            decimal place = 1;
+                         foreach(var item in queryList)
+                         {
+                             if (item.SORTSTATE != 20)
+                             {
+                                 item.POKEPLACE = place;
+                                 place += (item.POKENUM??0);
+                             }
+                             item.MERAGENUM = unfinished;
+                         }
+                        }
+                    }
                 }
+                //foreach (var item in allTask)
+                //{
+                //    var taskquy = 0M;
+                //    var CompletNot = query.Where(w => w.UNIONTASKNUM == item && w.MACHINESTATE != 20).ToList();
+                //    taskquy = CompletNot.Sum(s => s.POKENUM.Value);
+                //    decimal nextPlace = 0;
+                //    // decimal nextLocal = 0;//下一个位置=前位置+当前数量
+                //    decimal lastPlace = 0;
+                //    decimal lastSortnum = 0;
+                //    CompletNot.ForEach(f =>
+                //    {
+                //        f.MERAGENUM = taskquy;
+                //        f.MACHINESTATE = 20;
+                //        f.POKEPLACE = nextPlace == 0 ? 1 : lastSortnum + lastPlace;
+                //        lastPlace = f.POKEPLACE.Value;
+                //        lastSortnum = f.POKENUM.Value;
+                //        nextPlace = f.POKEPLACE.Value;
+                //    });
+                //    query.Where(w => w.UNIONTASKNUM == item).OrderBy(o => o.SORTNUM).ToList().ForEach(f =>
+                //    {
+                //        f.MERAGENUM = taskquy;
+                //        f.MACHINESTATE = 10;
+                //    });
+
+                //}
                 entity.SaveChanges();
             }
         }
