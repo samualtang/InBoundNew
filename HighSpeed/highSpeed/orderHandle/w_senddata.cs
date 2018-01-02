@@ -28,7 +28,7 @@ namespace highSpeed.orderHandle
         public w_senddata()
         {
             InitializeComponent();
-            InitSocket();
+            //InitSocket();
         }
 
         private void InitSocket()
@@ -63,6 +63,7 @@ namespace highSpeed.orderHandle
                      GroupKind = "1",
                      GroupNum = s.GROUPNO.ToString(),
                      GroupDesc = s.GROUPNO + "正常烟",
+                     ConfigKey = "1" + s.GROUPNO.ToString(),
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 List<PokeGroupUIModel> _unpokeList = UnPokeService.GetLinenum().Select(s => new PokeGroupUIModel
@@ -70,6 +71,7 @@ namespace highSpeed.orderHandle
                      GroupKind = "2",
                      GroupNum = s.LINENUM,
                      GroupDesc = s.LINENUM + "(异)",
+                     ConfigKey = "2" + s.LINENUM.ToString(),
                  }).OrderBy(o => o.GroupNum).ToList();
 
                 _unionAllPokeGroupList = _pokeList.Union(_unpokeList).ToList();
@@ -103,7 +105,7 @@ namespace highSpeed.orderHandle
         #region controlEvent
 
         private void btn_send_Click(object sender, EventArgs e)
-        { 
+        {
             string[] getVal = new string[] { };
             foreach (var item in cblist.CheckedItems)
             {
