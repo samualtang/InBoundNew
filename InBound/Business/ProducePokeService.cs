@@ -99,7 +99,7 @@ namespace InBound.Business
                 {
                     var taskquy = 0M;
                     var CompletNot = query.Where(w => w.UNIONTASKNUM == item && w.MACHINESTATE != 20).ToList();
-                    taskquy = CompletNot.Sum(s => s.SORTNUM.Value);
+                    taskquy = CompletNot.Sum(s => s.POKENUM.Value);
                     decimal nextPlace = 0;
                     // decimal nextLocal = 0;//下一个位置=前位置+当前数量
                     decimal lastPlace = 0;
@@ -110,7 +110,7 @@ namespace InBound.Business
                         f.MACHINESTATE = 20;
                         f.POKEPLACE = nextPlace == 0 ? 1 : lastSortnum + lastPlace;
                         lastPlace = f.POKEPLACE.Value;
-                        lastSortnum = f.SORTNUM.Value;
+                        lastSortnum = f.POKENUM.Value;
                         nextPlace = f.POKEPLACE.Value;
                     });
                     query.Where(w => w.UNIONTASKNUM == item).OrderBy(o => o.SORTNUM).ToList().ForEach(f =>

@@ -13,6 +13,7 @@ using InBound.Business;
 using InBound;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using System.Configuration;
 
 namespace highSpeed.orderHandle
 {
@@ -102,30 +103,23 @@ namespace highSpeed.orderHandle
         #region controlEvent
 
         private void btn_send_Click(object sender, EventArgs e)
-        {
-            string sPath = System.IO.Directory.GetCurrentDirectory().ToString() + "\\ipportconf.ini";
-            if (!File.Exists(sPath))
-            {
-                MessageBox.Show("缺少配置文件！");
-                return;
-            }
-            PublicFun ini = new PublicFun(@sPath);
-
+        { 
+            string[] getVal = new string[] { };
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel f = item as PokeGroupUIModel;
-                string getVal = ini.IniReadValue("IpPortConfig", f.GroupNum);
-                if (!string.IsNullOrWhiteSpace(getVal))
+                getVal = ConfigurationManager.AppSettings[f.ConfigKey].Split(',');
+
+                if (getVal.Count() > 0)
                 {
-                    var vals = getVal.Split(',');
-                    f.IpAddress = vals[1];
-                    f.Port = int.Parse(vals[2]);
+                    f.IpAddress = getVal[0];
+                    f.Port = int.Parse(getVal[1]);
                 }
-            }
 
-            foreach (var item in cblist.CheckedItems)
-            {
-                PokeGroupUIModel f = item as PokeGroupUIModel;
+                IPAddress address = IPAddress.Parse(f.IpAddress);
+                IPEndPoint endpoint = new IPEndPoint(address, f.Port);
+                Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socketClient.Connect(endpoint);
                 int i = SocketClientConnector.SendFile(socketClient, f.ZipFile, 10000, 1);
                 if (i == 0)
                 {
