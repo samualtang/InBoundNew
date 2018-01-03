@@ -445,14 +445,14 @@ namespace SortingControlSys.SortingControl
 
         }
         //String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
-        String[] errMsgList = { "机电总故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号", "", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后" };
+        String[] errMsgList = { "", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后", "机电总故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
         public string getErrMsg(int len)
         {
 
             return errMsgList[len];
         }
         //String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
-        String[] errMsgMainbeltList = { "电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中", "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮" };
+        String[] errMsgMainbeltList = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮","电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
         public string getErrMainbeltList(int len)
         {
             return errMsgMainbeltList[len];
@@ -602,6 +602,10 @@ namespace SortingControlSys.SortingControl
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
+                    if (temp.Length > 16)
+                    {
+                        temp = temp.Substring(temp.Length - 16);
+                    }
                     if (clientId[i] % 10 == 1)//M1  这里应该是机电
                     {
                         WriteErrG(1, clientId[i], temp);

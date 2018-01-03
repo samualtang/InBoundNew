@@ -516,7 +516,7 @@ namespace InBound.Business
                                       MainBelt = item.MAINBELT ?? 0,
                                       tNum = item.SORTNUM ?? 0,
                                       qty = item.POKENUM ?? 0,
-                                      SortTroughNum = item.TROUGHNUM,  //烟柜通道                                      
+                                        Machineseq = item.MACHINESEQ??0,  //烟柜通道                                      
                                       ExportNum = item.EXPORTNUM,//分拣出口号
                                       GroupNO = item.GROUPNO ?? 0,     //组号
                                       pokePlace = item.POKEPLACE.Value   //放烟位置
@@ -903,9 +903,9 @@ namespace InBound.Business
 
             using (Entities entity = new Entities())
             {
+                decimal machineseq = decimal.Parse(troughno);
 
-
-                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.TROUGHNUM == troughno select item).ToList();
+                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.MACHINESEQ == machineseq select item).ToList();
                 if (query != null && query.Count > 0)
                 {
                     foreach (var item in query)
@@ -2216,7 +2216,7 @@ namespace InBound.Business
                             values[3] = 0;
                             values[26] = 1;
                         }
-
+                        item.SortTroughNum = item.Machineseq + "";
                         double tempNum = double.Parse(item.SortTroughNum);
                         double ws = Math.Ceiling((tempNum) / 11) - 1;
                         tempNum = tempNum - (ws * 11);
@@ -3226,11 +3226,11 @@ namespace InBound.Business
         public static object[] GetTroughValue(String troughno, List<String> result)
         {
             object[] values = new object[4];
-
+            decimal machineseq = decimal.Parse(troughno);
             using (Entities entity = new Entities())
             {
                 var query = (from item in entity.T_PRODUCE_POKE
-                             where item.TROUGHNUM == troughno && item.MACHINESTATE == 10
+                             where item.MACHINESEQ == machineseq && item.MACHINESTATE == 10
                              orderby item.SORTNUM
                              select item).FirstOrDefault();
                 if (query != null)

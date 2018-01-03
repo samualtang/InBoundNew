@@ -19,6 +19,7 @@ namespace InBound.Model
        decimal _GroupNO;
        decimal _qty;
        public decimal MANTISSA { get; set; }
+       public decimal Machineseq { get; set; }
        public decimal GroupNO { get; set; }
        public decimal THRESHOLD { get; set; }
        public String CIGARETTDENAME { get; set; }

@@ -296,7 +296,7 @@ namespace SortingControlSys.SortingControl
 
         public void InitPlcData()
         {
-            int i = 0;
+            int i = 1;
             foreach (var item in groupList)
             {
                 item.Write(2, 3);
@@ -411,13 +411,13 @@ namespace SortingControlSys.SortingControl
                     //{
 
                     group.WriteR(datas[1], 1);
-                    group.WriteR(datas[2], 2);
+                   group.WriteR(datas[2], 2);
                     //   group.WriteR(datas[3], 1);
 
 
                     String p2 = group.Read(1).ToString();
                     String p3 = group.Read(2).ToString();
-                    String p4 = group.Read(3).ToString();
+                    //String p4 = group.Read(3).ToString();
                     //int count = 1;
 
                     if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
