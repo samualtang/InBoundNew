@@ -371,7 +371,7 @@ namespace SortingControlSys.SortingControl
             {
                 deviceNo = "B" + len;
             }
-            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
+            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,1);
 
             //for (int i = 0; i < temp.Length; i++)
             //{
@@ -400,7 +400,7 @@ namespace SortingControlSys.SortingControl
             else
                 GroupNo = sortgroupno1;
 
-            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
+            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,2);
             //for (int i = 0; i < temp.Length; i++)
             //{
             //    if (temp.ElementAt(i) == '1')
@@ -428,28 +428,42 @@ namespace SortingControlSys.SortingControl
             else
                 GroupNo = sortgroupno1;
 
-            //stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp.ElementAt(i) == '1')
-                {
-                    if (i < 8)
-                    {
-                        String errMsg = getErrMachinesMsg(i);
-                        ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
-                    }
+            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,3);
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    if (temp.ElementAt(i) == '1')
+            //    {
+            //        if (i < 8)
+            //        {
+            //            String errMsg = getErrMachinesMsg(i);
+            //            ErrListService.Add(deviceNo, GroupNo, 10, errMsg);
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
 
         }
         //String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
         String[] errMsgList = { "", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后", "机电总故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
-        public string getErrMsg(int len)
+        public string getErrMsg(int len,int type)
         {
-
-            return errMsgList[len];
+            if (type == 1)
+            {
+                return errMsgMainbeltList[len];
+            }
+            else if (type == 2)
+            {
+                return errMsgList[len];
+            }
+            else if (type == 3)
+            {
+                return errMachinesMsgList[len];
+            }
+            else
+            {
+                return "";
+            }
         }
         //String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
         String[] errMsgMainbeltList = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮","电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };

@@ -20,7 +20,7 @@ namespace SortingControlSys.SortingControl
         }
 
 
-        public Func<int, string> OnGetErr;
+        public Func<int,int, string> OnGetErr;
 
 
         /// <summary>
@@ -35,28 +35,54 @@ namespace SortingControlSys.SortingControl
         /// <param name="len"></param>
         /// <param name="temp"></param>
         /// <param name="GroupNo"></param>
-        public void WriteErrWithCheck(string len, int GroupNo, String temp)
+        /// <param name="type">1皮带 2 烟柜 3 机械手</param>
+        public void WriteErrWithCheck(string len, int GroupNo, String temp,int type)
         {
             String deviceNo = "" + len;
             string lastInfo = fileOper.ReadLastInfo(deviceNo).Trim();
             string compStrs;
+            if (temp == null || temp == "")
+                return;
+            
             List<OperationChar> lst = UnionBit.Union(lastInfo, temp, out compStrs);
             List<OperationChar> lstWhere = lst.Where(w => w.op != Oper.None).ToList();
-
+            bool isneedWrite = false;
             foreach (OperationChar item in lstWhere)
             {
-                String errMsg = item.val == "0" ? string.Format("消除{0}", OnGetErr(item.bit)) : OnGetErr(item.bit);
+                isneedWrite = false;
+                if (type == 1)
+                {
+                    if (item.bit == 5  || (item.bit>=9 && item.bit<=14))//5 9 10 11 12 13 14
+                    {
+                        isneedWrite = true;
+                    }
+                }
+                    else  if (type==2)
+                    
+                {
+                    if ((item.bit >= 9 && item.bit <= 14))//9 10 11 12 13 14
+                    { isneedWrite = true; }
+                    }
+                    else if(type==3)// 6 7
+                    {
+                        if ((item.bit >= 6 && item.bit <= 7))
+                        { isneedWrite = true; }
+                    }
+                if(isneedWrite)
+                {
+                String errMsg = item.val == "0" ? string.Format("消除{0}", OnGetErr(item.bit, type)) : OnGetErr(item.bit, type);
                 ErrListService.Add(deviceNo, GroupNo, 10, errMsg, item.val);
                 DeviceStateInfoModel info = new DeviceStateInfoModel { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
                 if (AlarmsHandler!=null)
                 {
                     AlarmsHandler(info);
                 }
+                }
             }
             fileOper.write(new DeviceStateInfoModel
             {
                 DeviceNo = deviceNo,
-                AlarmsValue = temp
+                AlarmsValue = compStrs
             });
         }
     }

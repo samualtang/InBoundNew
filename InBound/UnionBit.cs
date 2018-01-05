@@ -10,6 +10,17 @@ namespace InBound
         public static List<OperationChar> Union(string oldVal, string newVal, out string compStrs)
         {
             List<OperationChar> list = new List<OperationChar>();
+            if (oldVal.Length > newVal.Length)
+            {
+                newVal = oldVal.Substring(0, oldVal.Length - newVal.Length) + newVal;
+            }
+            else
+            {
+                for (int i = 0; i < newVal.Length - oldVal.Length; i++)
+                {
+                    oldVal = "0" + oldVal;
+                }
+            }
             list = Compent(oldVal, newVal);
             var compStr = string.Empty;
             list.ForEach(f => compStr += f.val);
@@ -32,133 +43,149 @@ namespace InBound
 
             List<OperationChar> list = new List<OperationChar>();
             OperationChar obj;
-
-            if (string.IsNullOrWhiteSpace(oldVal))
+            for (int i = 0; i < newVal.Length; i++)
             {
-                for (int i = 0; i < newVal.Length; i++)
+                obj = new OperationChar();
+                obj.bit = i;
+                if (oldVal[i].ToString() != newVal[i].ToString())
                 {
-                    obj = new OperationChar
-                    {
-                        bit = i,
-                        op = newVal[i].ToString() == "0" ? Oper.None : Oper.Add,
-                        val = newVal[i].ToString()
-                    };
-                    list.Add(obj);
+                    obj.val = newVal[i].ToString(); ;
+                    obj.op = Oper.Update;
                 }
-                return list;
-            }
-
-            int spilt = oldVal.Length - newVal.Length;
-            if (spilt > 0)
-            {
-                for (int i = 0; i < newVal.Length; i++)
+                else
                 {
-                    obj = new OperationChar();
-                    obj.bit = i;
-                    if (oldVal[i].ToString() != newVal[i].ToString())
-                    {
-                        obj.val = newVal[i].ToString(); ;
-                        obj.op = Oper.Update;
-                    }
-                    else
-                    {
-                        obj.val = newVal[i].ToString(); ;
-                        obj.op = Oper.None;
-                    }
-                    list.Add(obj);
+                    obj.val = newVal[i].ToString(); ;
+                    obj.op = Oper.None;
                 }
-                var skip = oldVal.Skip(newVal.Length).ToList();
-                for (int i = 0; i < skip.Count; i++)
-                {
-                    if (skip[i].ToString() == "1")
-                    {
-                        obj = new OperationChar
-                        {
-                            val = "0",
-                            bit = newVal.Length + i,
-                            op = Oper.Update
-                        };
-                        list.Add(obj);
-                    }
-                    else
-                    {
-                        obj = new OperationChar
-                        {
-                            val = oldVal[newVal.Length + i].ToString(),
-                            bit = newVal.Length + i,
-                            op = Oper.None
-                        };
-                        list.Add(obj);
-                    }
-                }
-            }
-            else if (spilt < 0)
-            {
-                for (int i = 0; i < oldVal.Length; i++)
-                {
-                    obj = new OperationChar();
-                    obj.bit = i;
-                    if (oldVal[i].ToString() != newVal[i].ToString())
-                    {
-
-                        //comp += newVal[i].ToString();
-                        obj.val = newVal[i].ToString();
-                        obj.op = Oper.Update;
-                    }
-                    else
-                    {
-                        obj.val = newVal[i].ToString(); ;
-                        obj.op = Oper.None;
-                    }
-                    list.Add(obj);
-                }
-                var skip = newVal.Skip(oldVal.Length).ToList();
-                for (int i = 0; i < skip.Count; i++)
-                {
-                    if (skip[i].ToString() == "1")
-                    {
-                        obj = new OperationChar
-                        {
-                            val = "1",
-                            bit = oldVal.Length + i,
-                            op = Oper.Add
-                        };
-                        list.Add(obj);
-                    }
-                    else
-                    {
-                        obj = new OperationChar
-                        {
-                            val = newVal[oldVal.Length + i].ToString(),
-                            bit = newVal.Length + i,
-                            op = Oper.None
-                        };
-                        list.Add(obj);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < oldVal.Length; i++)
-                {
-                    obj = new OperationChar();
-                    obj.bit = i;
-                    if (oldVal[i].ToString() != newVal[i].ToString())
-                    {
-
-                        //comp += newVal[i].ToString();
-                        obj.val = newVal[i].ToString(); ;
-                        obj.op = Oper.Update;
-                    }
-                    else
-                    {
-                        obj.val = newVal[i].ToString(); ;
-                        obj.op = Oper.None;
-                    }
-                    list.Add(obj);
-                }
+                list.Add(obj);
             }
             return list;
+            //if (string.IsNullOrWhiteSpace(oldVal))
+            //{
+            //    for (int i = 0; i < newVal.Length; i++)
+            //    {
+            //        obj = new OperationChar
+            //        {
+            //            bit = i,
+            //            op = newVal[i].ToString() == "0" ? Oper.None : Oper.Add,
+            //            val = newVal[i].ToString()
+            //        };
+            //        list.Add(obj);
+            //    }
+            //    return list;
+            //}
+
+            //int spilt = oldVal.Length - newVal.Length;
+            //if (spilt > 0)
+            //{
+            //    for (int i = 0; i < newVal.Length; i++)
+            //    {
+            //        obj = new OperationChar();
+            //        obj.bit = i;
+            //        if (oldVal[i].ToString() != newVal[i].ToString())
+            //        {
+            //            obj.val = newVal[i].ToString(); ;
+            //            obj.op = Oper.Update;
+            //        }
+            //        else
+            //        {
+            //            obj.val = newVal[i].ToString(); ;
+            //            obj.op = Oper.None;
+            //        }
+            //        list.Add(obj);
+            //    }
+            //    var skip = oldVal.Skip(newVal.Length).ToList();
+            //    for (int i = 0; i < skip.Count; i++)
+            //    {
+            //        if (skip[i].ToString() == "1")
+            //        {
+            //            obj = new OperationChar
+            //            {
+            //                val = "0",
+            //                bit = newVal.Length + i,
+            //                op = Oper.Update
+            //            };
+            //            list.Add(obj);
+            //        }
+            //        else
+            //        {
+            //            obj = new OperationChar
+            //            {
+            //                val = oldVal[newVal.Length + i].ToString(),
+            //                bit = newVal.Length + i,
+            //                op = Oper.None
+            //            };
+            //            list.Add(obj);
+            //        }
+            //    }
+            //}
+            //else if (spilt < 0)
+            //{
+            //    for (int i = 0; i < oldVal.Length; i++)
+            //    {
+            //        obj = new OperationChar();
+            //        obj.bit = i;
+            //        if (oldVal[i].ToString() != newVal[i].ToString())
+            //        {
+
+            //            //comp += newVal[i].ToString();
+            //            obj.val = newVal[i].ToString();
+            //            obj.op = Oper.Update;
+            //        }
+            //        else
+            //        {
+            //            obj.val = newVal[i].ToString(); ;
+            //            obj.op = Oper.None;
+            //        }
+            //        list.Add(obj);
+            //    }
+            //    var skip = newVal.Skip(oldVal.Length).ToList();
+            //    for (int i = 0; i < skip.Count; i++)
+            //    {
+            //        if (skip[i].ToString() == "1")
+            //        {
+            //            obj = new OperationChar
+            //            {
+            //                val = "1",
+            //                bit = oldVal.Length + i,
+            //                op = Oper.Add
+            //            };
+            //            list.Add(obj);
+            //        }
+            //        else
+            //        {
+            //            obj = new OperationChar
+            //            {
+            //                val = newVal[oldVal.Length + i].ToString(),
+            //                bit = newVal.Length + i,
+            //                op = Oper.None
+            //            };
+            //            list.Add(obj);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < oldVal.Length; i++)
+            //    {
+            //        obj = new OperationChar();
+            //        obj.bit = i;
+            //        if (oldVal[i].ToString() != newVal[i].ToString())
+            //        {
+
+            //            //comp += newVal[i].ToString();
+            //            obj.val = newVal[i].ToString(); ;
+            //            obj.op = Oper.Update;
+            //        }
+            //        else
+            //        {
+            //            obj.val = newVal[i].ToString(); ;
+            //            obj.op = Oper.None;
+            //        }
+            //        list.Add(obj);
+            //    }
+            //}
+            //return list;
         }
 
     }
