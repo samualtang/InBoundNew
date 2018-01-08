@@ -171,25 +171,26 @@ namespace InBound.Business
             {
                 var query = (from item in entity.T_PRODUCE_TASK//总任务数
                              group item by new { item.REGIONCODE } into g
-                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = 0, FinishQTY = 0, QTY = 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
-                var query2 = (from item in entity.T_PRODUCE_TASKLINE
-                              join item2 in entity.T_PRODUCE_TASK//总量
-                              on item.TASKNUM equals item2.TASKNUM
-                              group item by new { item2.REGIONCODE } into g
-                              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, QTY = g.Sum(t => t.QUANTITY) ?? 0 }).ToList();
+                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = 0, FinishQTY = 0, QTY = g.Sum(t => t.TASKQUANTITY) ?? 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
+                //var query2 = (from item in entity.T_PRODUCE_TASKLINE
+                //              join item2 in entity.T_PRODUCE_TASK//总量
+                //              on item.TASKNUM equals item2.TASKNUM
+                //              group item by new { item2.REGIONCODE } into g
+                //              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, QTY = g.Sum(t => t.QUANTITY) ?? 0 }).ToList();
                 var query3 = (from item in entity.T_PRODUCE_TASK//完成任务数
                               where item.STATE == "30"
                               group item by new { item.REGIONCODE } into g
-                              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
-                var query4 = (from item in entity.T_PRODUCE_TASKLINE//完成量
-                              join item2 in entity.T_PRODUCE_TASK
-                              on item.TASKNUM equals item2.TASKNUM
-                              where item2.STATE == "30"
-                              group item by new { item2.REGIONCODE } into g
-                              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishQTY = g.Sum(t => t.QUANTITY) ?? 0 }).ToList();
-                UnionList(query, query2, 1);
+                              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE),
+                                  FinishQTY = g.Sum(t => t.TASKQUANTITY) ?? 0  }).ToList();
+                //var query4 = (from item in entity.T_PRODUCE_TASKLINE//完成量
+                //              join item2 in entity.T_PRODUCE_TASK
+                //              on item.TASKNUM equals item2.TASKNUM
+                //              where item2.STATE == "30"
+                //              group item by new { item2.REGIONCODE } into g
+                //              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishQTY = g.Sum(t => t.QUANTITY) ?? 0 }).ToList();
+                //UnionList(query, query2, 1);
                 UnionList(query, query3, 2);
-                UnionList(query, query4, 3);
+                //UnionList(query, query4, 3);
                 CaldList(query);
                 return query;
             }
@@ -383,6 +384,7 @@ namespace InBound.Business
                         {
 
                             entity.FinishCount = item.FinishCount;
+                            entity.FinishQTY = item.FinishQTY;
                         }
                         else
                         {
