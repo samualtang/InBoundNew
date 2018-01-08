@@ -69,9 +69,9 @@ namespace SortingControlSys.SortingControl
             {
                 updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
             };
-            stateManager.OnGetErr += (i) =>
+            stateManager.OnGetErr += (i,t) =>
             {
-                return getErrMsg(i);
+                return getErrMsg(i,t);
             };
             tempList = TaskService.initTask1();
 
@@ -371,7 +371,10 @@ namespace SortingControlSys.SortingControl
             {
                 deviceNo = "B" + len;
             }
-            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,1);
+            lock (lockFlag)
+            {
+                stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp, 1);
+            }
 
             //for (int i = 0; i < temp.Length; i++)
             //{
@@ -388,7 +391,7 @@ namespace SortingControlSys.SortingControl
 
 
         }
-
+        public static Object lockFlag = new Object();
         public void WriteErrG(int type, int len, String temp)
         {
             if (string.IsNullOrEmpty(temp))
@@ -399,8 +402,10 @@ namespace SortingControlSys.SortingControl
                 GroupNo = sortgroupno2;
             else
                 GroupNo = sortgroupno1;
-
-            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,2);
+            lock (lockFlag)
+            {
+                stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp, 2);
+            }
             //for (int i = 0; i < temp.Length; i++)
             //{
             //    if (temp.ElementAt(i) == '1')
@@ -427,8 +432,10 @@ namespace SortingControlSys.SortingControl
                 GroupNo = sortgroupno2;
             else
                 GroupNo = sortgroupno1;
-
-            stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp,3);
+            lock (lockFlag)
+            {
+                stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp, 3);
+            }
             //for (int i = 0; i < temp.Length; i++)
             //{
             //    if (temp.ElementAt(i) == '1')
@@ -445,16 +452,17 @@ namespace SortingControlSys.SortingControl
 
         }
         //String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
-        String[] errMsgList = { "", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后", "机电总故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
+        String[] errMsgList = {  "单台电机故障", "空开故障", "运行故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号","", "", "", "气缸降按钮", "气缸升按钮", "编码器故障", "手动选中", "烟条滞后"};
         public string getErrMsg(int len,int type)
         {
             if (type == 1)
             {
-                return errMsgMainbeltList[len];
+                return errMsgList[len];
             }
             else if (type == 2)
             {
-                return errMsgList[len];
+               //errMsgMainbeltList= (String[])errMsgMainbeltList.Reverse();
+                return errMsgMainbeltList[len];
             }
             else if (type == 3)
             {
@@ -466,13 +474,13 @@ namespace SortingControlSys.SortingControl
             }
         }
         //String[] errMsgList1 = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常", "空开故障", "接触器/变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
-        String[] errMsgMainbeltList = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮","电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中" };
+        String[] errMsgMainbeltList = { "", "", "", "", "", "", "后气缸升降按钮", "前气缸升降按钮", "电机正常/1", "空开故障", "接触器变频器故障", "上翻超时", "下翻超时", "后气缸超时", "前气缸超时", "皮带手动选中"};
         public string getErrMainbeltList(int len)
         {
             return errMsgMainbeltList[len];
         }
         //String[] errMsgList2 = { "机械手正常/1", "机械手故障", "", "", "", "", "烟柜烟条未准备好", "机械手抓烟超时", "", "", "", "", "", "", "", "" };
-        String[] errMachinesMsgList = { "机械手正常/1", "机械手故障", "机械手急停", "机械手手体报警", "机械手掉烟", "机械手空开", "烟柜烟条未准备好", "机械手抓烟超时" };
+        String[] errMachinesMsgList = { "", "", "", "", "", "", "", "",  "机械手正常/1", "机械手故障", "机械手急停", "机械手手体报警", "机械手掉烟", "机械手空开", "烟柜烟条未准备好", "机械手抓烟超时" };
         public string getErrMachinesMsg(int len)
         {
             return errMachinesMsgList[len];
@@ -651,7 +659,7 @@ namespace SortingControlSys.SortingControl
                     if (values[i] != null)
                     {
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
-                        WriteErr(1, clientId[i], temp, sortgroupno2);
+                        WriteErr(2, clientId[i], temp, sortgroupno2);
                     }
                     //}
                 }

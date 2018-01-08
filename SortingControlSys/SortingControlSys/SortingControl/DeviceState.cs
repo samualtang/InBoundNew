@@ -52,7 +52,7 @@ namespace SortingControlSys.SortingControl
                 isneedWrite = false;
                 if (type == 1)
                 {
-                    if (item.bit == 5  || (item.bit>=9 && item.bit<=14))//5 9 10 11 12 13 14
+                    if (item.bit == 13 || item.bit == 15 || (item.bit >= 1 && item.bit <= 6))//5 9 10 11 12 13 14
                     {
                         isneedWrite = true;
                     }
@@ -60,12 +60,12 @@ namespace SortingControlSys.SortingControl
                     else  if (type==2)
                     
                 {
-                    if ((item.bit >= 9 && item.bit <= 14))//9 10 11 12 13 14
+                    if ((item.bit >= 9&& item.bit <= 14))//9 10 11 12 13 14
                     { isneedWrite = true; }
                     }
                     else if(type==3)// 6 7
                     {
-                        if ((item.bit >= 6 && item.bit <= 7))
+                        if ((item.bit >= 14 && item.bit <= 15))
                         { isneedWrite = true; }
                     }
                 if(isneedWrite)
@@ -82,7 +82,7 @@ namespace SortingControlSys.SortingControl
             fileOper.write(new DeviceStateInfoModel
             {
                 DeviceNo = deviceNo,
-                AlarmsValue = compStrs
+                AlarmsValue = temp
             });
         }
     }

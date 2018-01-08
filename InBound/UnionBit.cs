@@ -10,13 +10,19 @@ namespace InBound
         public static List<OperationChar> Union(string oldVal, string newVal, out string compStrs)
         {
             List<OperationChar> list = new List<OperationChar>();
+            
             if (oldVal.Length > newVal.Length)
             {
-                newVal = oldVal.Substring(0, oldVal.Length - newVal.Length) + newVal;
+                int oLen = oldVal.Length - newVal.Length;
+                for (int i = 0; i < oLen; i++)
+                {
+                    newVal = "0" + newVal;
+                }
             }
             else
             {
-                for (int i = 0; i < newVal.Length - oldVal.Length; i++)
+                int oLen = newVal.Length-oldVal.Length;
+                for (int i = 0; i <  oLen; i++)
                 {
                     oldVal = "0" + oldVal;
                 }
@@ -46,7 +52,7 @@ namespace InBound
             for (int i = 0; i < newVal.Length; i++)
             {
                 obj = new OperationChar();
-                obj.bit = i;
+                obj.bit = newVal.Length-i-1;
                 if (oldVal[i].ToString() != newVal[i].ToString())
                 {
                     obj.val = newVal[i].ToString(); ;

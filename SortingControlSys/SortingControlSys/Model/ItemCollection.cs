@@ -87,7 +87,7 @@ namespace SortingControlSys.Model
         public static List<string> GetTaskStatusSECItem3()//B01-B27
         {
             List<string> list = new List<string>();
-            for (int i = 31; i <= 57; i++)
+            for (int i = 41; i <= 67; i++)
             {
                 list.Add("S7:[FJConnectionGroup1]DB4,W" + i * 2);
             }
