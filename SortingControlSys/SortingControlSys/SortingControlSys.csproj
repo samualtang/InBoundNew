@@ -254,6 +254,8 @@
     <Content Include="Resources\outstylegray.jpg" />
     <Content Include="Resources\outstylegreen.jpg" />
     <Content Include="Resources\stop.jpg" />
+    <Content Include="Resources\stopone.jpg" />
+    <Content Include="Resources\stoptwo.jpg" />
     <Content Include="Resources\复件 login2.bmp" />
   </ItemGroup>
   <ItemGroup>

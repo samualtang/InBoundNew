@@ -97,28 +97,28 @@
             // 
             // btnClearB
             // 
-            this.btnClearB.Location = new System.Drawing.Point(669, 2);
+            this.btnClearB.BackgroundImage = global::SortingControlSys.Properties.Resources.stoptwo;
+            this.btnClearB.Location = new System.Drawing.Point(404, -1);
             this.btnClearB.Name = "btnClearB";
-            this.btnClearB.Size = new System.Drawing.Size(115, 35);
+            this.btnClearB.Size = new System.Drawing.Size(99, 44);
             this.btnClearB.TabIndex = 12;
-            this.btnClearB.Text = "B线停止";
             this.btnClearB.UseVisualStyleBackColor = true;
             this.btnClearB.Click += new System.EventHandler(this.btnClearB_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(548, 2);
+            this.btnClear.BackgroundImage = global::SortingControlSys.Properties.Resources.stopone;
+            this.btnClear.Location = new System.Drawing.Point(299, -1);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(115, 35);
+            this.btnClear.Size = new System.Drawing.Size(99, 43);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "A线停止";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // cbUnfull
             // 
             this.cbUnfull.AutoSize = true;
-            this.cbUnfull.Location = new System.Drawing.Point(410, 12);
+            this.cbUnfull.Location = new System.Drawing.Point(637, 14);
             this.cbUnfull.Name = "cbUnfull";
             this.cbUnfull.Size = new System.Drawing.Size(120, 16);
             this.cbUnfull.TabIndex = 10;
@@ -127,7 +127,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(300, 4);
+            this.button6.Location = new System.Drawing.Point(509, 5);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(101, 33);
             this.button6.TabIndex = 9;
@@ -328,9 +328,9 @@
             this.listError.Dock = System.Windows.Forms.DockStyle.Right;
             this.listError.FormattingEnabled = true;
             this.listError.ItemHeight = 12;
-            this.listError.Location = new System.Drawing.Point(578, 48);
+            this.listError.Location = new System.Drawing.Point(214, 48);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(460, 243);
+            this.listError.Size = new System.Drawing.Size(824, 243);
             this.listError.TabIndex = 40;
             // 
             // w_SortingControlMain
