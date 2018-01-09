@@ -79,17 +79,20 @@ namespace Machine
             string compStrs;
             string rese = string.Empty;
             //高低位反转
-            temp.Reverse().ToList().ForEach(s => { rese += s; });
-            List<OperationChar> lst = UnionBit.Union(lastInfo, rese, out compStrs);
+            //temp.Reverse().ToList().ForEach(s => { rese += s; });
+            List<OperationChar> lst = UnionBit.Union(lastInfo, temp, out compStrs);
             List<OperationChar> lstWhere = lst.Where(w => w.op != Oper.None).ToList();
 
             foreach (OperationChar item in lstWhere)
             {
-                String errMsg = item.val == "0" ? string.Format("消除{0}", getErrMsg(item.bit)) : getErrMsg(item.bit);
-                ErrListService.Add(deviceNo, GroupNo, 20, errMsg, item.val);
-                AlarmsInfo info = new AlarmsInfo { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
-                AlarmsHandler(info);
-                Downtime(info, errMsg, temp);
+                if (item.bit >= 0 && item.bit <= 7)
+                {
+                    String errMsg = item.val == "0" ? string.Format("消除{0}", getErrMsg(item.bit)) : getErrMsg(item.bit);
+                    ErrListService.Add(deviceNo, GroupNo, 20, errMsg, item.val);
+                    AlarmsInfo info = new AlarmsInfo { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
+                    AlarmsHandler(info);
+                    Downtime(info, errMsg, temp);
+                }
             }
             //fileOper.Write(compStrs, deviceNo);
             xml.write(new AlarmsFileModel { DeviceNo = deviceNo, AlarmsValue = temp });
