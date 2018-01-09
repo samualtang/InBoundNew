@@ -259,7 +259,7 @@ namespace highSpeed.orderHandle
             for (int i = 0; i < this.orderdata.RowCount;i++ )
             {
                 orderdata.Rows[i].Cells[0].Value = "true";
-                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[1].Value + "";
+                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[2].Value + "";
             }
             this.txt_codestr.Text = czcodestr;
         }
