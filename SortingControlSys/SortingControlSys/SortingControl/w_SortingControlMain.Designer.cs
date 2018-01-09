@@ -47,6 +47,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
+            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnClearB = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -54,12 +60,6 @@
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -163,6 +163,7 @@
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
+            this.task_data.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -243,6 +244,7 @@
             // 
             // listError
             // 
+            this.listError.BackColor = System.Drawing.SystemColors.Window;
             this.listError.Dock = System.Windows.Forms.DockStyle.Right;
             this.listError.FormattingEnabled = true;
             this.listError.ItemHeight = 12;
@@ -250,6 +252,47 @@
             this.listError.Name = "listError";
             this.listError.Size = new System.Drawing.Size(440, 243);
             this.listError.TabIndex = 40;
+            // 
+            // regioncode
+            // 
+            this.regioncode.HeaderText = "线路编号";
+            this.regioncode.Name = "regioncode";
+            this.regioncode.ReadOnly = true;
+            // 
+            // regiondesc
+            // 
+            this.regiondesc.HeaderText = "线路名称";
+            this.regiondesc.Name = "regiondesc";
+            this.regiondesc.ReadOnly = true;
+            this.regiondesc.Width = 200;
+            // 
+            // boxcount
+            // 
+            this.boxcount.HeaderText = "箱数";
+            this.boxcount.Name = "boxcount";
+            this.boxcount.ReadOnly = true;
+            this.boxcount.Visible = false;
+            this.boxcount.Width = 200;
+            // 
+            // cuscount
+            // 
+            this.cuscount.HeaderText = "客户数";
+            this.cuscount.Name = "cuscount";
+            this.cuscount.ReadOnly = true;
+            this.cuscount.Width = 200;
+            // 
+            // finishqty
+            // 
+            this.finishqty.HeaderText = "完成量";
+            this.finishqty.Name = "finishqty";
+            this.finishqty.ReadOnly = true;
+            this.finishqty.Width = 200;
+            // 
+            // percent
+            // 
+            this.percent.HeaderText = "完成百分比";
+            this.percent.Name = "percent";
+            this.percent.ReadOnly = true;
             // 
             // btnClearB
             // 
@@ -319,47 +362,6 @@
             this.button1.Size = new System.Drawing.Size(99, 43);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // regioncode
-            // 
-            this.regioncode.HeaderText = "线路编号";
-            this.regioncode.Name = "regioncode";
-            this.regioncode.ReadOnly = true;
-            // 
-            // regiondesc
-            // 
-            this.regiondesc.HeaderText = "线路名称";
-            this.regiondesc.Name = "regiondesc";
-            this.regiondesc.ReadOnly = true;
-            this.regiondesc.Width = 200;
-            // 
-            // boxcount
-            // 
-            this.boxcount.HeaderText = "箱数";
-            this.boxcount.Name = "boxcount";
-            this.boxcount.ReadOnly = true;
-            this.boxcount.Visible = false;
-            this.boxcount.Width = 200;
-            // 
-            // cuscount
-            // 
-            this.cuscount.HeaderText = "客户数";
-            this.cuscount.Name = "cuscount";
-            this.cuscount.ReadOnly = true;
-            this.cuscount.Width = 200;
-            // 
-            // finishqty
-            // 
-            this.finishqty.HeaderText = "完成量";
-            this.finishqty.Name = "finishqty";
-            this.finishqty.ReadOnly = true;
-            this.finishqty.Width = 200;
-            // 
-            // percent
-            // 
-            this.percent.HeaderText = "完成百分比";
-            this.percent.Name = "percent";
-            this.percent.ReadOnly = true;
             // 
             // w_SortingControlMain
             // 
