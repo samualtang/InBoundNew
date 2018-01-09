@@ -542,13 +542,13 @@ namespace SortingControlSys.SortingControl
                 {
                     //if (clientId[i] == 1)
                     //{
-                    if (int.Parse(values[i].ToString()) != 0)
-                    {
+                    //if (int.Parse(values[i].ToString()) != 0)
+                    //{
                         String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
                         //WriteErr(1, clientId[i], temp, groupNo);
                         //alarms.fileOper.Write(temp, new AlarmsFileModel { DeviceNo = clientId[i].ToString() });
                         alarms.WriteErrWithCheck(1, clientId[i], temp, groupNo);
-                    }
+                    //}
                     //}
                 }
             }
