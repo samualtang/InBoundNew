@@ -28,38 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(w_SortingControlMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(w_SortingControlMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClearB = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.cbUnfull = new System.Windows.Forms.CheckBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.list_data = new System.Windows.Forms.ListBox();
-            this.listError = new System.Windows.Forms.ListBox();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnClearB = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.list_data = new System.Windows.Forms.ListBox();
+            this.listError = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -98,6 +98,26 @@
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
             // 
+            // btnClearB
+            // 
+            this.btnClearB.BackgroundImage = global::SortingControlSys.Properties.Resources.stoptwo;
+            this.btnClearB.Location = new System.Drawing.Point(404, -1);
+            this.btnClearB.Name = "btnClearB";
+            this.btnClearB.Size = new System.Drawing.Size(99, 44);
+            this.btnClearB.TabIndex = 12;
+            this.btnClearB.UseVisualStyleBackColor = true;
+            this.btnClearB.Click += new System.EventHandler(this.btnClearB_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackgroundImage = global::SortingControlSys.Properties.Resources.stopone;
+            this.btnClear.Location = new System.Drawing.Point(299, -1);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(99, 43);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // cbUnfull
             // 
             this.cbUnfull.AutoSize = true;
@@ -107,6 +127,46 @@
             this.cbUnfull.TabIndex = 10;
             this.cbUnfull.Text = "自动补货散盘优先";
             this.cbUnfull.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::SortingControlSys.Properties.Resources.edit;
+            this.button6.Location = new System.Drawing.Point(509, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(101, 42);
+            this.button6.TabIndex = 9;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button12
+            // 
+            this.button12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button12.BackgroundImage")));
+            this.button12.Location = new System.Drawing.Point(97, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(99, 43);
+            this.button12.TabIndex = 8;
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button11
+            // 
+            this.button11.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button11.BackgroundImage")));
+            this.button11.Location = new System.Drawing.Point(194, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 43);
+            this.button11.TabIndex = 7;
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 43);
+            this.button10.TabIndex = 0;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button5
             // 
@@ -160,6 +220,15 @@
             this.button2.Text = "关闭";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 43);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
@@ -204,6 +273,47 @@
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.task_data.Size = new System.Drawing.Size(1038, 371);
             this.task_data.TabIndex = 30;
+            // 
+            // regioncode
+            // 
+            this.regioncode.HeaderText = "线路编号";
+            this.regioncode.Name = "regioncode";
+            this.regioncode.ReadOnly = true;
+            // 
+            // regiondesc
+            // 
+            this.regiondesc.HeaderText = "线路名称";
+            this.regiondesc.Name = "regiondesc";
+            this.regiondesc.ReadOnly = true;
+            this.regiondesc.Width = 200;
+            // 
+            // boxcount
+            // 
+            this.boxcount.HeaderText = "箱数";
+            this.boxcount.Name = "boxcount";
+            this.boxcount.ReadOnly = true;
+            this.boxcount.Visible = false;
+            this.boxcount.Width = 200;
+            // 
+            // cuscount
+            // 
+            this.cuscount.HeaderText = "客户数";
+            this.cuscount.Name = "cuscount";
+            this.cuscount.ReadOnly = true;
+            this.cuscount.Width = 200;
+            // 
+            // finishqty
+            // 
+            this.finishqty.HeaderText = "完成量";
+            this.finishqty.Name = "finishqty";
+            this.finishqty.ReadOnly = true;
+            this.finishqty.Width = 200;
+            // 
+            // percent
+            // 
+            this.percent.HeaderText = "完成百分比";
+            this.percent.Name = "percent";
+            this.percent.ReadOnly = true;
             // 
             // panel2
             // 
@@ -252,116 +362,6 @@
             this.listError.Name = "listError";
             this.listError.Size = new System.Drawing.Size(440, 243);
             this.listError.TabIndex = 40;
-            // 
-            // regioncode
-            // 
-            this.regioncode.HeaderText = "线路编号";
-            this.regioncode.Name = "regioncode";
-            this.regioncode.ReadOnly = true;
-            // 
-            // regiondesc
-            // 
-            this.regiondesc.HeaderText = "线路名称";
-            this.regiondesc.Name = "regiondesc";
-            this.regiondesc.ReadOnly = true;
-            this.regiondesc.Width = 200;
-            // 
-            // boxcount
-            // 
-            this.boxcount.HeaderText = "箱数";
-            this.boxcount.Name = "boxcount";
-            this.boxcount.ReadOnly = true;
-            this.boxcount.Visible = false;
-            this.boxcount.Width = 200;
-            // 
-            // cuscount
-            // 
-            this.cuscount.HeaderText = "客户数";
-            this.cuscount.Name = "cuscount";
-            this.cuscount.ReadOnly = true;
-            this.cuscount.Width = 200;
-            // 
-            // finishqty
-            // 
-            this.finishqty.HeaderText = "完成量";
-            this.finishqty.Name = "finishqty";
-            this.finishqty.ReadOnly = true;
-            this.finishqty.Width = 200;
-            // 
-            // percent
-            // 
-            this.percent.HeaderText = "完成百分比";
-            this.percent.Name = "percent";
-            this.percent.ReadOnly = true;
-            // 
-            // btnClearB
-            // 
-            this.btnClearB.BackgroundImage = global::SortingControlSys.Properties.Resources.stoptwo;
-            this.btnClearB.Location = new System.Drawing.Point(404, -1);
-            this.btnClearB.Name = "btnClearB";
-            this.btnClearB.Size = new System.Drawing.Size(99, 44);
-            this.btnClearB.TabIndex = 12;
-            this.btnClearB.UseVisualStyleBackColor = true;
-            this.btnClearB.Click += new System.EventHandler(this.btnClearB_Click);
-            // 
-            // btnClear
-            // 
-            this.btnClear.BackgroundImage = global::SortingControlSys.Properties.Resources.stopone;
-            this.btnClear.Location = new System.Drawing.Point(299, -1);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(99, 43);
-            this.btnClear.TabIndex = 11;
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // button6
-            // 
-            this.button6.BackgroundImage = global::SortingControlSys.Properties.Resources.edit;
-            this.button6.Location = new System.Drawing.Point(509, 0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 42);
-            this.button6.TabIndex = 9;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button12
-            // 
-            this.button12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button12.BackgroundImage")));
-            this.button12.Location = new System.Drawing.Point(97, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(99, 43);
-            this.button12.TabIndex = 8;
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button11.BackgroundImage")));
-            this.button11.Location = new System.Drawing.Point(194, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 43);
-            this.button11.TabIndex = 7;
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button10
-            // 
-            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
-            this.button10.Location = new System.Drawing.Point(0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 43);
-            this.button10.TabIndex = 0;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 43);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // w_SortingControlMain
             // 
