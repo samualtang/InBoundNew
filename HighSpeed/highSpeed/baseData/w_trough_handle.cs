@@ -148,8 +148,7 @@ namespace highSpeed.baseData
             String itemname = this.txt_itemname.Text;
             String radioval = troughnum;
             String groupno = "1";
-
-            if (troughnum == "")
+                        if (troughnum == "")
             {
                 MessageBox.Show("请选择通道编号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -166,10 +165,11 @@ namespace highSpeed.baseData
                     groupno = "2";
                 }
             }
-            
-            String actcount = this.box_actcount.SelectedValue == null ? "" : this.box_actcount.SelectedValue.ToString();
-            String replenishline = this.box_replenishline.SelectedValue == null ? "" : this.box_replenishline.SelectedValue.ToString();
-            String transportationline = this.box_transportationline.SelectedValue == null ? "" : this.box_transportationline.SelectedValue.ToString();
+            MessageBox.Show("设备编号：" + troughnum + ",通道描述：" + troughdesc + ",品牌号" + itemno + ",品牌名称：" + itemname + ",组号为：" + groupno + ",handle_sign为" + handle_sign, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //String actcount = this.box_actcount.SelectedValue == null ? "" : this.box_actcount.SelectedValue.ToString();
+            //String replenishline = this.box_replenishline.SelectedValue == null ? "" : this.box_replenishline.SelectedValue.ToString();
+            //String transportationline = this.box_transportationline.SelectedValue == null ? "" : this.box_transportationline.SelectedValue.ToString();
             // String machineseq = this.box_machinenum.SelectedValue.ToString();
             String sql ="";
             try
@@ -214,9 +214,9 @@ namespace highSpeed.baseData
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch (SqlException se)
+            catch (Exception se)
             {
-                MessageBox.Show(se.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("出现异常："+se.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
