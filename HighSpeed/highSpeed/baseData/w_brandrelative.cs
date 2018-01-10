@@ -63,7 +63,7 @@ namespace highSpeed.baseData
                 sign = "1";
             }
             String strsql = "SELECT rownum,itemno,itemname,bigbox_bar " +
-                            "from t_wms_item";
+                            "from t_wms_item where 1=1 " +tmp;
             //MessageBox.Show(strsql);
             Bind(strsql);
         }

@@ -200,6 +200,13 @@ namespace highSpeed.baseData
 
         private void win_trough_Load(object sender, EventArgs e)
         {
+            
+            
+            
+            
+            
+            
+            
             troughdata.ClearSelection();
         }
 
