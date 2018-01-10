@@ -86,7 +86,7 @@ namespace highSpeed.baseData
             this.btn_jy.Enabled = false;
         }
 
-        private void seek()
+        private void seek()//显示通道信息
         {
            // string linenum = this.box_sortline.SelectedValue+"";
             string types = this.box_condition.SelectedValue+"";
@@ -134,7 +134,7 @@ namespace highSpeed.baseData
             {
                 tmp += "and cigarettetype=" + ctype;
             }
-            String strsql = "SELECT tmp.* FROM(select  rownum as num, troughnum,id," +
+            String strsql = "SELECT tmp.* FROM(select  rownum as num, troughnum,id,machineseq," +
                             "cigarettecode,cigarettename,state,troughtype as type,cigarettetype as ctype,decode(cigarettetype,'10','混合','20','标准','30','异型','异型混合')as cigarettetype,decode(state,'10','正常','0','禁用')as status, " +
                             "decode(troughtype,10,'分拣',20,'重力式货架',30,'皮带机',40,'分拣出口')as troughtype from t_produce_sorttrough t where  1=1" + tmp +
                             " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
@@ -324,6 +324,7 @@ namespace highSpeed.baseData
                 amend_id = this.troughdata.SelectedRows[0].Cells["id"].Value.ToString();
                 sign = "1";
                 String cigarettetype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
+                
                 String type1 = this.troughdata.CurrentRow.Cells["type"].Value + "";
                 
                 win_trough_handle trough_handle = new win_trough_handle(sign, amend_id, cigarettetype,type1);
