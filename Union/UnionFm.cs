@@ -19,7 +19,7 @@ using SortingControlSys.Model;
 using InBound.Model;
 using InBound.Business;
 using Union;
-
+using InBound;
 namespace SortingControlSys.SortingControl
 {
     public partial class UnionFm : Form
@@ -35,6 +35,7 @@ namespace SortingControlSys.SortingControl
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = new WriteLog();
+        DeviceStateManager stateManager = new DeviceStateManager();
         public UnionFm()
         {
             InitializeComponent();
@@ -50,7 +51,14 @@ namespace SortingControlSys.SortingControl
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
                 this.Close();
             }
-          
+            stateManager.AlarmsHandler += (obj) =>
+            {
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
+            };
+            stateManager.OnGetErr += (i) =>
+            {
+                return getErrMsg(i);
+            };
             
         }
         protected override void OnLoad(EventArgs e)
@@ -251,6 +259,7 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write(ex.Message);
             }
         }
+        public static Object lockFlag = new Object();
         public void WriteErr(int type, int len, String temp, decimal GroupNo)
         {
             String deviceNo = "";
@@ -262,16 +271,19 @@ namespace SortingControlSys.SortingControl
             {
                 deviceNo = "E" + len;
             }
-
-            for (int i = 0; i < temp.Length; i++)
+            lock (lockFlag)
             {
-                if (temp.ElementAt(i) == '1')
-                {
-                    String errMsg = getErrMsg(i);
-                    ErrListService.Add(deviceNo, GroupNo, 20, errMsg);
-
-                }
+                stateManager.WriteErrWithCheck(deviceNo, Convert.ToInt32(GroupNo), temp.Length > 16 ? temp.Substring(0, 15) : temp, 2);
             }
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    if (temp.ElementAt(i) == '1')
+            //    {
+            //        String errMsg = getErrMsg(i);
+            //        ErrListService.Add(deviceNo, GroupNo, 20, errMsg);
+
+            //    }
+            //}
 
 
         }
