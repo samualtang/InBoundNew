@@ -150,7 +150,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.96615in</Height>
+              <Height>0.57245in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -180,19 +180,6 @@
                           <TextRuns>
                             <TextRun>
                               <Value>中　国　烟　草</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>20pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>20pt</FontSize>
@@ -323,7 +310,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.47342in</Height>
+              <Height>1.26082in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -337,7 +324,7 @@
                               <Value>=Fields!BIGBOX_BAR.Value</Value>
                               <Style>
                                 <FontFamily>Code 128</FontFamily>
-                                <FontSize>24pt</FontSize>
+                                <FontSize>28pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -363,7 +350,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.05676in</Height>
+              <Height>0.66306in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -424,8 +411,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BARSource</DataSetName>
-        <Height>7.5cm</Height>
-        <Width>10.5cm</Width>
+        <Height>7.49999cm</Height>
+        <Width>10.49998cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -436,7 +423,7 @@
     <Height>75mm</Height>
     <Style />
   </Body>
-  <Width>105mm</Width>
+  <Width>104.99979mm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
