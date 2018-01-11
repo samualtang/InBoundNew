@@ -499,7 +499,7 @@ namespace SortingControlSys.SortingControl
                             if (tempList.Count > 0)
                             {
 
-                                TaskService.UpdateStatus(sortgroupno1, 20, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                                TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
                             }
 
@@ -526,7 +526,7 @@ namespace SortingControlSys.SortingControl
                             // int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno1);
-                            TaskService.UpdateStatus(sortgroupno1, 30, tempvalue);//将第一组分拣任务改为完成完成
+                            TaskService.UpdateStatus(sortgroupno1, 20, tempvalue);//将第一组分拣任务改为完成完成
 
                             if (tempvalue != 0)
                             {
