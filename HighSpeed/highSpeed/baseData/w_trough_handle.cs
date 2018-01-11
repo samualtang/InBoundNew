@@ -190,8 +190,13 @@ namespace highSpeed.baseData
                                                               "state,mantissa,cigarettetype,troughtype,replenishline,groupno)" +
                                       "values(s_produce_sorttrough.nextval," + groupno + ",s_produce_sorttrough.nextval," + radioval + ",'" + itemno + "','" + itemname + "'," +
                                       "'10',0," + type + ",10,3," + groupno + ")";//异形烟对应第三个件烟补货口，六个异形烟柜对应第四个件烟补货口
-
-                        int len = Db.ExecuteNonQuery(sql);
+                        String errorMsg = "";
+                        int len = Db.ExecuteNonQuery(sql,out errorMsg);
+                        if (errorMsg != "")
+                        {
+                            MessageBox.Show(errorMsg);
+                            return;
+                        }
                         if (len != 0) MessageBox.Show("异形烟混合通道-" + itemname + "创建成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else//如果该品牌在异形烟混合道中存在，预计主要是原来有，后面被禁用了，采用update的方式

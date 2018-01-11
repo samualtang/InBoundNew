@@ -357,7 +357,24 @@ namespace highSpeed.PubFunc
                 return 0;
             }
         }
+        public int ExecuteNonQuery(string sql,out string errorMsg)
+        {
+            int intRet = 0;
+            try
+            {
+                innerCommand.CommandText = sql;
+                intRet = innerCommand.ExecuteNonQuery();
+                errorMsg = "";
+                return intRet;
+            }
+            catch (Exception err)
+            {
 
+                SaveErrLog(" [" + sql + "] " + err.ToString());//保存错误日志
+                errorMsg = " [" + sql + "] " + err.ToString();
+                return 0;
+            }
+        }
         public int ExecuteNonQuery_Back(string sql)
         {//这个函数是后台用
             int intRet = 0;
