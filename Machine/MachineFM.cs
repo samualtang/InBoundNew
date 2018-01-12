@@ -49,6 +49,7 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             alarms.DowntimeHandler = OnDowntime;
+            initCB();
             alarms.AlarmsHandler += (obj) =>
             {
                 updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
@@ -554,19 +555,26 @@ namespace SortingControlSys.SortingControl
             }
         }
 
+        public void initCB()
+        {
+            for (int i = 1; i <= 22; i++)
+            {
+                cmbMachines.Items.Add(i);
+            }
+        }
         private void OnDowntime(AlarmsInfo obj, List<AlarmsInfo> list)
         {
-            if (this.cmbMachines.InvokeRequired)
-            {
-                this.cmbMachines.Invoke(new Action<AlarmsInfo, List<AlarmsInfo>>(OnDowntime), obj, list);
-            }
-            else
-            {
-                cmbMachines.DataSource = null;
-                cmbMachines.DataSource = list;
-                cmbMachines.DisplayMember = "DeviceNo";
-                cmbMachines.ValueMember = "DeviceNo";
-            }
+            //if (this.cmbMachines.InvokeRequired)
+            //{
+            //    this.cmbMachines.Invoke(new Action<AlarmsInfo, List<AlarmsInfo>>(OnDowntime), obj, list);
+            //}
+            //else
+            //{
+            //    cmbMachines.DataSource = null;
+            //    cmbMachines.DataSource = list;
+            //    cmbMachines.DisplayMember = "DeviceNo";
+            //    cmbMachines.ValueMember = "DeviceNo";
+            //}
         }
 
         public void Disconnect()
@@ -800,14 +808,14 @@ namespace SortingControlSys.SortingControl
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            AlarmsInfo mode = cmbMachines.SelectedItem as AlarmsInfo;
-            if (mode == null)
+            //AlarmsInfo mode = cmbMachines.SelectedItem as AlarmsInfo;
+            if (cmbMachines.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择设备号");
             }
             try
             {
-                Group no = groupList[mode.DeviceNo - 1];
+                Group no = groupList[cmbMachines.SelectedIndex];
                 no.Write(3, 3);
                 MessageBox.Show("操作完成！");
             }

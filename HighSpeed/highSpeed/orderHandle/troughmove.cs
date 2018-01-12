@@ -26,7 +26,7 @@ namespace highSpeed.orderHandle
         }
         public string getSql(String troughtype, String troughno)
         {
-            String sql = "select cigarettename from t_produce_sorttrough where troughtype='" + troughtype + "' and troughnum=" + troughno + " and cigarettetype=20";
+            String sql = "select cigarettename from t_produce_sorttrough where troughtype='" + troughtype + "' and machineseq=" + troughno + " and cigarettetype=20";
             return sql;        
         }
         public string GetResult(String sql)
@@ -101,15 +101,17 @@ namespace highSpeed.orderHandle
 
              //   String idSource = GetResult(sql);
              //   String idTarget = GetResult(sql2);
-
-                String updateSql = "update t_produce_sorttrough set troughnum='TEMP" + (cbTarget.SelectedIndex + 1) + "',machineseq=" + (cbTarget.SelectedIndex + 1+100000) + " where troughtype='" + type + "' and cigarettetype=20 and troughnum=" +( cbsource.SelectedIndex + 1);
-                String updateSql1 = "update t_produce_sorttrough set  troughnum='" + (cbsource.SelectedIndex + 1) + "',machineseq=" + (cbsource.SelectedIndex + 1) + " where troughtype='" + type + "' and cigarettetype=20 and troughnum='" +( cbTarget.SelectedIndex + 1)+"'";
+                 Db.Open();
+                 String sourcetroughnum = Db.ExecuteScalar("select troughnum from t_produce_sorttrough where machineseq=" + (cbsource.SelectedIndex + 1) + " and cigarettetype=20 and troughtype=" + type).ToString();
+                String targettroughnum = Db.ExecuteScalar("select troughnum from t_produce_sorttrough where machineseq=" + (cbTarget.SelectedIndex + 1) + " and cigarettetype=20 and troughtype=" + type).ToString();
+                String updateSql = "update t_produce_sorttrough set troughnum='TEMP" + targettroughnum + "',machineseq=" + (cbTarget.SelectedIndex + 1 + 100000) + " where troughtype='" + type + "' and cigarettetype=20 and troughnum=" + sourcetroughnum;
+                String updateSql1 = "update t_produce_sorttrough set  troughnum='" + sourcetroughnum + "',machineseq=" + (cbsource.SelectedIndex + 1) + " where troughtype='" + type + "' and cigarettetype=20 and troughnum='" + targettroughnum + "'";
                 String updateSql5 = "update t_produce_sorttrough set  troughnum=replace(troughnum,'TEMP',''),machineseq=machineseq-100000 where machineseq>100000";
-                String updateSql2 = "update t_wms_storagearea_inout set cellno='" +"TEMP"  + (cbTarget.SelectedIndex + 1) + "' where areaid='" + ctype + "' and cellno='"+(cbsource.SelectedIndex+1)+"'";
-                String updateSql3 = "update t_wms_storagearea_inout set cellno='" + ( cbsource.SelectedIndex + 1) + "' where areaid='" + ctype + "' and cellno='" + (cbTarget.SelectedIndex + 1) + "'";
+                String updateSql2 = "update t_wms_storagearea_inout set cellno='" + "TEMP" + targettroughnum + "' where areaid='" + ctype + "' and cellno='" + sourcetroughnum + "'";
+                String updateSql3 = "update t_wms_storagearea_inout set cellno='" + sourcetroughnum + "' where areaid='" + ctype + "' and cellno='" + targettroughnum + "'";
                 String updateSql4 = "update t_wms_storagearea_inout set cellno=replace(cellno,'TEMP','')";
 
-                Db.Open();
+               
                 Db.ExecuteNonQuery(updateSql);
                 Db.ExecuteNonQuery(updateSql1);
                 Db.ExecuteNonQuery(updateSql5);
