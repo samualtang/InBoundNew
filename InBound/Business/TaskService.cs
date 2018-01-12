@@ -919,6 +919,26 @@ namespace InBound.Business
 
             }
         }
+
+        public static void UpdateMachine(decimal tasknum, string troughno)
+        {
+
+            using (Entities entity = new Entities())
+            {
+                decimal machineseq = decimal.Parse(troughno);
+
+                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.MACHINESEQ == machineseq && item.MACHINESTATE==15 select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        item.MACHINESTATE = 20;
+                    }
+                    entity.SaveChanges();
+                }
+
+            }
+        }
         public static void UpdateMachine(List<String> list)
         {
 

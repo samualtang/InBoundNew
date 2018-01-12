@@ -527,7 +527,7 @@ namespace SortingControlSys.SortingControl
                         {
                             writeLog.Write((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
                             updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
-                            TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "", 20);
+                            TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
                             //object[] datas = new object[4];
 
                             //groupList[Group - 1].SyncWrite(0,1);
