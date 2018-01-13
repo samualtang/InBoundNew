@@ -457,7 +457,7 @@ namespace SortingControlSys.SortingControl
                     }
                     else
                     {
-                        updateListBox("写入失败;写入p2:"+datas[1]+";p3:"+datas[2] +" 读取内容:p2="+p2+"; p3="+p3);
+                        updateListBox("写入p2:"+datas[1]+";p3:"+datas[2] +" 读取内容:p2="+p2+"; p3="+p3);
 
                     }
 
