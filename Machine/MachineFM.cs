@@ -450,17 +450,18 @@ namespace SortingControlSys.SortingControl
                         writeLog.Write(logstr);
                         updateListBox(logstr);
                         updateListBox(":" + p2 + ":" + p3);
+                        CheckExport(exportnum);
+                        tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
                         // break;
                         //}
                     }
                     else
                     {
-                        //j++;
+                        updateListBox("写入失败;写入p2:"+datas[1]+";p3:"+datas[2] +" 读取内容:p2="+p2+"; p3="+p3);
 
                     }
 
-                    CheckExport(exportnum);
-                    tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
+                  
 
                 }
             }
