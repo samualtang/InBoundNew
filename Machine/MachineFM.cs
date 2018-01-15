@@ -504,7 +504,7 @@ namespace SortingControlSys.SortingControl
 
                             if (tempList.Count > 0)
                             {
-                                List<String> temp = getKey(Group + "");
+                                List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
                                 if (temp != null)
                                 {
                                     foreach (var item in temp)
@@ -589,27 +589,14 @@ namespace SortingControlSys.SortingControl
                 Marshal.ReleaseComObject(pIOPCServer);
                 pIOPCServer = null;
             }
-
-            if (taskGroup1 != null)
+            if (groupList != null && groupList.Count > 0)
             {
-                taskGroup1.Release();
+                foreach (var item in groupList)
+                {
+                    item.Release();
+                }
             }
-            if (taskGroup2 != null)
-            {
-                taskGroup2.Release();
-            }
-            if (taskGroup3 != null)
-            {
-                taskGroup3.Release();
-            }
-            if (taskGroup4 != null)
-            {
-                taskGroup4.Release();
-            }
-            if (taskGroup5 != null)
-            {
-                taskGroup5.Release();
-            }
+           
         }
         private void button10_Click(object sender, EventArgs e)
         {

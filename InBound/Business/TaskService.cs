@@ -3245,6 +3245,29 @@ namespace InBound.Business
 
         }
         //
+
+        public static List<KeyValuePair<String, List<String>>> InitTask(int groupno1 ,int groupno2)
+        {
+            List<KeyValuePair<String, List<String>>> tempList = new List<KeyValuePair<String, List<String>>>();
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE
+                             where (item.GROUPNO == groupno1 || item.GROUPNO == groupno2) && item.MACHINESTATE == 12
+                             orderby item.MACHINESEQ
+                             select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach(var item in query)
+                    {
+                        
+                            tempList.Add(new KeyValuePair<String, List<String>>(item.MACHINESEQ + "", new List<String>() { item.SORTNUM + "" }));
+                      
+                    }
+                   tempList= tempList.Distinct().ToList();
+                }
+            }
+            return tempList;
+        }
         public static object[] GetTroughValue(String troughno, List<String> result)
         {
             object[] values = new object[4];
