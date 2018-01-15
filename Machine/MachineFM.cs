@@ -49,6 +49,7 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             alarms.DowntimeHandler = OnDowntime;
+            initCB();
             alarms.AlarmsHandler += (obj) =>
             {
                 updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
@@ -407,60 +408,63 @@ namespace SortingControlSys.SortingControl
                     bool iserror = false;
                     string errorInfo = string.Empty;
                     int j = 0;
-                    //while (j < writeCount)
-                    //{
-
-                    group.WriteR(datas[1], 1);
-                   group.WriteR(datas[2], 2);
-                    //   group.WriteR(datas[3], 1);
-
-
-                    String p2 = group.Read(1).ToString();
-                    String p3 = group.Read(2).ToString();
-                    //String p4 = group.Read(3).ToString();
-                    //int count = 1;
-
-                    if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
+                    while (j < writeCount)//基于程序的健壮性 以及保护机制 防止数据丢失
                     {
 
-                        group.WriteR(1, 3);
+                        group.WriteR(datas[1], 1);
+                        group.WriteR(datas[2], 2);
+                        //   group.WriteR(datas[3], 1);
 
-                        //String p5 = group.Read(3).ToString();
 
-                        //while (p5 != "1" && j < writeCount)
-                        //{
-                        //    updateListBox("重新写入");
-                        //    writeLog.Write("任务号:" + p2 + ";重新写入");
-                        //    group.WriteR(1, 3);
-                        //    p5 = group.Read(3).ToString();
-                        //    j++;
-                        //}
-                        if (!string.IsNullOrWhiteSpace(errorInfo))
+                        String p2 = group.Read(1).ToString();
+                        String p3 = group.Read(2).ToString();
+                        //String p4 = group.Read(3).ToString();
+                        //int count = 1;
+
+                        if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
                         {
-                            updateListBox(errorInfo);
+
+                            group.WriteR(1, 3);
+
+                            //String p5 = group.Read(3).ToString();
+
+                            //while (p5 != "1" && j < writeCount)
+                            //{
+                            //    updateListBox("重新写入");
+                            //    writeLog.Write("任务号:" + p2 + ";重新写入");
+                            //    group.WriteR(1, 3);
+                            //    p5 = group.Read(3).ToString();
+                            //    j++;
+                            //}
+                            if (!string.IsNullOrWhiteSpace(errorInfo))
+                            {
+                                updateListBox(errorInfo);
+                            }
+                            //  j = 1000;
+                            string logstr = "通道:" + exportnum + "   ";
+                            for (int i = 0; i < datas.Length; i++)
+                            {
+                                logstr += i + ":" + datas[i] + ";";
+                            }
+                            writeLog.Write(p2 + ":" + p3);
+                            writeLog.Write(logstr);
+                            updateListBox(logstr);
+                            updateListBox(":" + p2 + ":" + p3);
+                            CheckExport(exportnum);
+                            tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
+                            break;
+
                         }
-                        //  j = 1000;
-                        string logstr = "通道:" + exportnum + "   ";
-                        for (int i = 0; i < datas.Length; i++)
+                        else
                         {
-                            logstr += i + ":" + datas[i] + ";";
+                            j++;
+                            updateListBox("写入p2:" + datas[1] + ";p3:" + datas[2] + " 读取内容:p2=" + p2 + "; p3=" + p3);
+
                         }
-                        writeLog.Write(p2 + ":" + p3);
-                        writeLog.Write(logstr);
-                        updateListBox(logstr);
-                        updateListBox(":" + p2 + ":" + p3);
-                        // break;
-                        //}
-                    }
-                    else
-                    {
-                        //j++;
+
+
 
                     }
-
-                    CheckExport(exportnum);
-                    tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
-
                 }
             }
             catch (Exception ex)
@@ -526,7 +530,7 @@ namespace SortingControlSys.SortingControl
                         {
                             writeLog.Write((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
                             updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
-                            TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "", 20);
+                            TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
                             //object[] datas = new object[4];
 
                             //groupList[Group - 1].SyncWrite(0,1);
@@ -554,19 +558,26 @@ namespace SortingControlSys.SortingControl
             }
         }
 
+        public void initCB()
+        {
+            for (int i = 1; i <= 22; i++)
+            {
+                cmbMachines.Items.Add(i);
+            }
+        }
         private void OnDowntime(AlarmsInfo obj, List<AlarmsInfo> list)
         {
-            if (this.cmbMachines.InvokeRequired)
-            {
-                this.cmbMachines.Invoke(new Action<AlarmsInfo, List<AlarmsInfo>>(OnDowntime), obj, list);
-            }
-            else
-            {
-                cmbMachines.DataSource = null;
-                cmbMachines.DataSource = list;
-                cmbMachines.DisplayMember = "DeviceNo";
-                cmbMachines.ValueMember = "DeviceNo";
-            }
+            //if (this.cmbMachines.InvokeRequired)
+            //{
+            //    this.cmbMachines.Invoke(new Action<AlarmsInfo, List<AlarmsInfo>>(OnDowntime), obj, list);
+            //}
+            //else
+            //{
+            //    cmbMachines.DataSource = null;
+            //    cmbMachines.DataSource = list;
+            //    cmbMachines.DisplayMember = "DeviceNo";
+            //    cmbMachines.ValueMember = "DeviceNo";
+            //}
         }
 
         public void Disconnect()
@@ -800,14 +811,14 @@ namespace SortingControlSys.SortingControl
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            AlarmsInfo mode = cmbMachines.SelectedItem as AlarmsInfo;
-            if (mode == null)
+            //AlarmsInfo mode = cmbMachines.SelectedItem as AlarmsInfo;
+            if (cmbMachines.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择设备号");
             }
             try
             {
-                Group no = groupList[mode.DeviceNo - 1];
+                Group no = groupList[cmbMachines.SelectedIndex];
                 no.Write(3, 3);
                 MessageBox.Show("操作完成！");
             }

@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MachineFM));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.cmbMachines = new System.Windows.Forms.ComboBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -53,8 +55,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
-            this.cmbMachines = new System.Windows.Forms.ComboBox();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -80,6 +81,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.btnClear);
             this.panel3.Controls.Add(this.cmbMachines);
             this.panel3.Controls.Add(this.button6);
@@ -91,6 +93,26 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(954, 12);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "停  止";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // cmbMachines
+            // 
+            this.cmbMachines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbMachines.FormattingEnabled = true;
+            this.cmbMachines.Location = new System.Drawing.Point(863, 14);
+            this.cmbMachines.Name = "cmbMachines";
+            this.cmbMachines.Size = new System.Drawing.Size(87, 20);
+            this.cmbMachines.TabIndex = 10;
             // 
             // button6
             // 
@@ -290,25 +312,15 @@
             this.list_data.Size = new System.Drawing.Size(1038, 112);
             this.list_data.TabIndex = 39;
             // 
-            // cmbMachines
+            // label3
             // 
-            this.cmbMachines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbMachines.FormattingEnabled = true;
-            this.cmbMachines.Location = new System.Drawing.Point(863, 14);
-            this.cmbMachines.Name = "cmbMachines";
-            this.cmbMachines.Size = new System.Drawing.Size(87, 20);
-            this.cmbMachines.TabIndex = 10;
-            // 
-            // btnClear
-            // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(954, 12);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "停  止";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(750, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(107, 12);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "请选择暂停机械手:";
             // 
             // MachineFM
             // 
@@ -326,6 +338,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -361,5 +374,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.ComboBox cmbMachines;
+        private System.Windows.Forms.Label label3;
     }
 }
