@@ -27,7 +27,7 @@ namespace highSpeed.baseData
             this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
             this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
             //this.pager1.GetChildAtPoint(7).Visible = false;
-            pager1.PageSize = 200;
+            pager1.PageSize = 600;
             seek();
 
 
@@ -139,7 +139,7 @@ namespace highSpeed.baseData
                             "decode(troughtype,10,'分拣',20,'重力式货架',30,'皮带机',40,'分拣出口')as troughtype from t_produce_sorttrough t where  1=1" + tmp +
                             " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
             //MessageBox.Show(strsql);
-            int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where 1=1 and cigarettetype='20'" + tmp).ToString());
+            int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where 1=1 " + tmp).ToString());
             Bind(strsql);
             pager1.RecordCount = total;
             this.pager1.InitPageInfo();

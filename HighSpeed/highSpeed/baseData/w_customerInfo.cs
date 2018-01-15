@@ -48,7 +48,7 @@ namespace highSpeed.baseData
         }
         private void seek()
         {
-            String strsql = "SELECT remarks,code,NAME,contactaddress,customerlevel,contact,contactphone FROM t_wms_customer";
+            String strsql = "SELECT id as remarks,code,NAME,contactaddress,customerlevel,contact,contactphone FROM t_wms_customer";
             String types = this.typesCombox.Text;
             String keywd = this.keywd.Text.Trim();
             
