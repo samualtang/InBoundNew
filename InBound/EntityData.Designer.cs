@@ -196,22 +196,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PRODUCE_SORTTROUGH> T_PRODUCE_SORTTROUGH
-        {
-            get
-            {
-                if ((_T_PRODUCE_SORTTROUGH == null))
-                {
-                    _T_PRODUCE_SORTTROUGH = base.CreateObjectSet<T_PRODUCE_SORTTROUGH>("T_PRODUCE_SORTTROUGH");
-                }
-                return _T_PRODUCE_SORTTROUGH;
-            }
-        }
-        private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<INF_JOBFEEDBACK> INF_JOBFEEDBACK
         {
             get
@@ -592,6 +576,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_INBOUND_LINE> _T_WMS_INBOUND_LINE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_SORTTROUGH> T_PRODUCE_SORTTROUGH
+        {
+            get
+            {
+                if ((_T_PRODUCE_SORTTROUGH == null))
+                {
+                    _T_PRODUCE_SORTTROUGH = base.CreateObjectSet<T_PRODUCE_SORTTROUGH>("T_PRODUCE_SORTTROUGH");
+                }
+                return _T_PRODUCE_SORTTROUGH;
+            }
+        }
+        private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
 
         #endregion
 
@@ -659,14 +659,6 @@ namespace InBound
         public void AddToT_SYS_ROUTEINFO(T_SYS_ROUTEINFO t_SYS_ROUTEINFO)
         {
             base.AddObject("T_SYS_ROUTEINFO", t_SYS_ROUTEINFO);
-        }
-    
-        /// <summary>
-        /// 用于向 T_PRODUCE_SORTTROUGH EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
-        {
-            base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
         }
     
         /// <summary>
@@ -859,6 +851,14 @@ namespace InBound
         public void AddToT_WMS_INBOUND_LINE(T_WMS_INBOUND_LINE t_WMS_INBOUND_LINE)
         {
             base.AddObject("T_WMS_INBOUND_LINE", t_WMS_INBOUND_LINE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_SORTTROUGH EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
+        {
+            base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
         }
 
         #endregion
@@ -3319,6 +3319,78 @@ namespace InBound
         private Nullable<global::System.Decimal> _BOXCOUNT;
         partial void OnBOXCOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnBOXCOUNTChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MAINTISSALESS
+        {
+            get
+            {
+                return _MAINTISSALESS;
+            }
+            set
+            {
+                OnMAINTISSALESSChanging(value);
+                ReportPropertyChanging("MAINTISSALESS");
+                _MAINTISSALESS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MAINTISSALESS");
+                OnMAINTISSALESSChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MAINTISSALESS;
+        partial void OnMAINTISSALESSChanging(Nullable<global::System.Decimal> value);
+        partial void OnMAINTISSALESSChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CLEARUP
+        {
+            get
+            {
+                return _CLEARUP;
+            }
+            set
+            {
+                OnCLEARUPChanging(value);
+                ReportPropertyChanging("CLEARUP");
+                _CLEARUP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CLEARUP");
+                OnCLEARUPChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CLEARUP;
+        partial void OnCLEARUPChanging(Nullable<global::System.Decimal> value);
+        partial void OnCLEARUPChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CLEARTHRESHOLD
+        {
+            get
+            {
+                return _CLEARTHRESHOLD;
+            }
+            set
+            {
+                OnCLEARTHRESHOLDChanging(value);
+                ReportPropertyChanging("CLEARTHRESHOLD");
+                _CLEARTHRESHOLD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CLEARTHRESHOLD");
+                OnCLEARTHRESHOLDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CLEARTHRESHOLD;
+        partial void OnCLEARTHRESHOLDChanging(Nullable<global::System.Decimal> value);
+        partial void OnCLEARTHRESHOLDChanged();
 
         #endregion
 

@@ -60,8 +60,24 @@ namespace InBound.Business
                     {
                         var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 3 && item.CELLNO == task.TROUGHNUM select item).Sum(x => x.QTY).GetValueOrDefault();//获取通道调拨数量
 
-
-                        if (query + task.MANTISSA < task.THRESHOLD)//烟柜需要补货
+                        decimal THRESHOLD = 0;
+                        if (task.CLEARUP == 10)
+                        {
+                            THRESHOLD = task.CLEARTHRESHOLD ?? 0;
+                        }
+                        else
+                        {
+                            THRESHOLD = task.THRESHOLD??0;
+                        }
+                        if (task.MAINTISSALESS == 10)
+                        {
+                            decimal leftOrderQty = ProducePokeService.GetTroughUnFinished(task.TROUGHNUM);
+                            if (query + task.MANTISSA > leftOrderQty)
+                            {
+                                continue;
+                            }
+                        }
+                        if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货
                         {
                             //decimal groupno = 1;
                             //if (task.GROUPNO <= 2)
@@ -93,8 +109,13 @@ namespace InBound.Business
                             }
 
                             int tempCount = 0;
-                            while (query + tempCount + task.MANTISSA < task.THRESHOLD)//循环补烟柜
+                            while (query + tempCount + task.MANTISSA < THRESHOLD)//循环补烟柜
                             {
+
+                                if (task.CLEARUP == 10)
+                                {
+                                    task.CLEARUP = 0;
+                                }
                                 totalCount = 0;
                                 if (querySourcetemp != null && querySourcetemp.Count > 0)//从库存大的先出
                                 {

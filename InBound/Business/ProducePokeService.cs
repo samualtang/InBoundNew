@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using InBound.Model;
 
 namespace InBound.Business
 {
@@ -28,7 +29,26 @@ namespace InBound.Business
             }
             return list;
         }
+        public static decimal GetTroughUnFinished(string throughno)
+        {
+            decimal total = 0;
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE
+                            where item.TROUGHNUM == throughno
+                                && item.SORTSTATE != 20
+                                group item by new {item.TROUGHNUM} into g
 
+                             select new TaskInfo(){ FinishQTY = g.Sum(t => t.POKENUM??0) }).FirstOrDefault();
+                                if (query != null)
+                               {
+                                   total = query.FinishQTY;
+                               }
+
+                               return total;
+            }
+ 
+        }
         public static List<T_PRODUCE_POKE> GetGroupNoByRegionCode(string regionCode)
         {
             List<T_PRODUCE_POKE> list = new List<T_PRODUCE_POKE>();

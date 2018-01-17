@@ -163,6 +163,9 @@
           <Property Name="GROUPNO" Type="number" />
           <Property Name="THRESHOLD" Type="number" />
           <Property Name="BOXCOUNT" Type="number" />
+          <Property Name="MAINTISSALESS" Type="number" />
+          <Property Name="CLEARUP" Type="number" />
+          <Property Name="CLEARTHRESHOLD" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -772,7 +775,6 @@
           <EntitySet Name="T_WMS_REF_PALLET_RFID" EntityType="Model.T_WMS_REF_PALLET_RFID" />
           <EntitySet Name="T_WMS_STORAGEAREA" EntityType="Model.T_WMS_STORAGEAREA" />
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.T_SYS_ROUTEINFO" />
-          <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
           <FunctionImport Name="PROC_OUT_CELLNO">
             <Parameter Name="P_CODE" Mode="In" Type="String" />
             <Parameter Name="P_QTY" Mode="In" Type="Decimal" />
@@ -814,6 +816,7 @@
           <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.INF_EQUIPMENTREQUEST" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.T_WMS_ATSCELL_IN" />
           <EntitySet Name="T_WMS_INBOUND_LINE" EntityType="Model.T_WMS_INBOUND_LINE" />
+          <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -943,29 +946,6 @@
           <Property Type="Decimal" Name="CASHIERID" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="WAREHOUSE" Precision="38" Scale="0" />
           <Property Type="Int64" Name="CALCID" />
-        </EntityType>
-        <EntityType Name="T_PRODUCE_SORTTROUGH">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TROUGHDESC" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ACTCOUNT" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
-          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="STATE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="MANTISSA" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="CIGARETTETYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="REPLENISHLINE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TRANSPORTATIONLINE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="LASTMANTISSA" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TROUGHTYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="THRESHOLD" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="BOXCOUNT" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="INF_JOBFEEDBACK">
           <Key>
@@ -1517,6 +1497,32 @@
           <Property Type="String" Name="BARCODE" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="BDPCIGCODE" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="T_PRODUCE_SORTTROUGH">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TROUGHDESC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ACTCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MANTISSA" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CIGARETTETYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="REPLENISHLINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TRANSPORTATIONLINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="LASTMANTISSA" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TROUGHTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="THRESHOLD" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="BOXCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAINTISSALESS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CLEARUP" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CLEARTHRESHOLD" Precision="38" Scale="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1657,30 +1663,6 @@
                 <ScalarProperty Name="ROUTENAME" ColumnName="ROUTENAME" />
                 <ScalarProperty Name="ROUTECODE" ColumnName="ROUTECODE" />
                 <ScalarProperty Name="ROUTEID" ColumnName="ROUTEID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_PRODUCE_SORTTROUGH">
-            <EntityTypeMapping TypeName="Model.T_PRODUCE_SORTTROUGH">
-              <MappingFragment StoreEntitySet="T_PRODUCE_SORTTROUGH">
-                <ScalarProperty Name="BOXCOUNT" ColumnName="BOXCOUNT" />
-                <ScalarProperty Name="THRESHOLD" ColumnName="THRESHOLD" />
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="TROUGHTYPE" ColumnName="TROUGHTYPE" />
-                <ScalarProperty Name="LASTMANTISSA" ColumnName="LASTMANTISSA" />
-                <ScalarProperty Name="TRANSPORTATIONLINE" ColumnName="TRANSPORTATIONLINE" />
-                <ScalarProperty Name="REPLENISHLINE" ColumnName="REPLENISHLINE" />
-                <ScalarProperty Name="CIGARETTETYPE" ColumnName="CIGARETTETYPE" />
-                <ScalarProperty Name="MANTISSA" ColumnName="MANTISSA" />
-                <ScalarProperty Name="STATE" ColumnName="STATE" />
-                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
-                <ScalarProperty Name="ACTCOUNT" ColumnName="ACTCOUNT" />
-                <ScalarProperty Name="TROUGHDESC" ColumnName="TROUGHDESC" />
-                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
-                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2259,6 +2241,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_SORTTROUGH">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_SORTTROUGH">
+              <MappingFragment StoreEntitySet="T_PRODUCE_SORTTROUGH">
+                <ScalarProperty Name="CLEARTHRESHOLD" ColumnName="CLEARTHRESHOLD" />
+                <ScalarProperty Name="CLEARUP" ColumnName="CLEARUP" />
+                <ScalarProperty Name="MAINTISSALESS" ColumnName="MAINTISSALESS" />
+                <ScalarProperty Name="BOXCOUNT" ColumnName="BOXCOUNT" />
+                <ScalarProperty Name="THRESHOLD" ColumnName="THRESHOLD" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="TROUGHTYPE" ColumnName="TROUGHTYPE" />
+                <ScalarProperty Name="LASTMANTISSA" ColumnName="LASTMANTISSA" />
+                <ScalarProperty Name="TRANSPORTATIONLINE" ColumnName="TRANSPORTATIONLINE" />
+                <ScalarProperty Name="REPLENISHLINE" ColumnName="REPLENISHLINE" />
+                <ScalarProperty Name="CIGARETTETYPE" ColumnName="CIGARETTETYPE" />
+                <ScalarProperty Name="MANTISSA" ColumnName="MANTISSA" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="ACTCOUNT" ColumnName="ACTCOUNT" />
+                <ScalarProperty Name="TROUGHDESC" ColumnName="TROUGHDESC" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2288,7 +2297,6 @@
         <EntityTypeShape EntityType="Model.T_WMS_REF_PALLET_RFID" Width="1.5" PointX="10.75" PointY="10.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA" Width="2.875" PointX="12.75" PointY="0.75" Height="1.9202278645833246" />
         <EntityTypeShape EntityType="Model.T_SYS_ROUTEINFO" Width="1.5" PointX="7.375" PointY="12.75" Height="3.5833748372395817" />
-        <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="11.375" PointY="14.75" Height="4.32255126953126" />
         <EntityTypeShape EntityType="Model.INF_JOBFEEDBACK" Width="1.5" PointX="15.75" PointY="15.75" Height="2.8441984049479174" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL" Width="1.5" PointX="3.375" PointY="3.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO_DETAIL" Width="1.5" PointX="5.375" PointY="0.75" Height="2.2898160807291674" />
@@ -2313,6 +2321,7 @@
         <EntityTypeShape EntityType="Model.INF_EQUIPMENTREQUEST" Width="1.5" PointX="7.75" PointY="0.75" Height="3.2137866210937602" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_IN" Width="1.5" PointX="20.75" PointY="15.75" Height="2.8441984049479174" />
         <EntityTypeShape EntityType="Model.T_WMS_INBOUND_LINE" Width="1.5" PointX="20.375" PointY="19.75" Height="3.3985807291666674" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="4.87693359375001" />
       </Diagram>
     </Diagrams>
   </Designer>
