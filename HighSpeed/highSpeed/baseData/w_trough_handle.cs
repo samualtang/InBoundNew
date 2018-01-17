@@ -165,7 +165,7 @@ namespace highSpeed.baseData
                     groupno = "2";
                 }
             }
-            MessageBox.Show("设备编号：" + troughnum + ",通道描述：" + troughdesc + ",品牌号" + itemno + ",品牌名称：" + itemname + ",组号为：" + groupno + ",handle_sign为" + handle_sign, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // MessageBox.Show("设备编号：" + troughnum + ",通道描述：" + troughdesc + ",品牌号" + itemno + ",品牌名称：" + itemname + ",组号为：" + groupno + ",handle_sign为" + handle_sign, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //String actcount = this.box_actcount.SelectedValue == null ? "" : this.box_actcount.SelectedValue.ToString();
             //String replenishline = this.box_replenishline.SelectedValue == null ? "" : this.box_replenishline.SelectedValue.ToString();
@@ -192,11 +192,11 @@ namespace highSpeed.baseData
                                       "'10',0," + type + ",10,3," + groupno + ")";//异形烟对应第三个件烟补货口，六个异形烟柜对应第四个件烟补货口
                         String errorMsg = "";
                         int len = Db.ExecuteNonQuery(sql,out errorMsg);
-                        if (errorMsg != "")
-                        {
-                            MessageBox.Show(errorMsg);
-                            return;
-                        }
+                        //if (errorMsg != "")
+                        //{
+                        //    MessageBox.Show(errorMsg);
+                        //    return;
+                        //}
                         if (len != 0) MessageBox.Show("异形烟混合通道-" + itemname + "创建成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else//如果该品牌在异形烟混合道中存在，预计主要是原来有，后面被禁用了，采用update的方式

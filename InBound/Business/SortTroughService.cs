@@ -32,6 +32,19 @@ namespace InBound.Business
                return query.FirstOrDefault();
            }
        }
+
+       public static void updateTroughClearUp(decimal type, decimal cigarettetype, String troughnum)
+       {
+           using (Entities dataentity = new Entities())
+           {
+               var query = (from item in dataentity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == type && item.CIGARETTETYPE == cigarettetype && item.STATE == "10"  && item.TROUGHNUM==troughnum select item).FirstOrDefault();
+               if (query != null)
+               {
+                   query.CLEARUP = 0;
+                   dataentity.SaveChanges();
+               }
+           }
+       }
        public static List<T_PRODUCE_SORTTROUGH> GetTrough(int troughtype, int cigarettetype, int begin, int end)
        {
            using (Entities dataentity = new Entities())
