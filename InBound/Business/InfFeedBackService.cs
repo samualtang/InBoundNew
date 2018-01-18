@@ -291,7 +291,7 @@ namespace InBound.Business
                                               INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
                                               task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
                                               task1.ID = task1.JOBID;
-                                              task1.BRANDID = "999999";// detail.BARCODE;
+                                              task1.BRANDID = "111111";// detail.BARCODE;
                                               task1.SOURCE = item.SOURCE;
                                               task1.PLANQTY = 1;
                                               task1.INPUTTYPE = 10;
