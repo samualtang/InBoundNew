@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using InBound;
 using InBound.Business;
 using LabelPrint.MvcGuestBook.Common;
+using System.IO;
 
 
 namespace RdlcPro
@@ -28,15 +29,21 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmm}", DateTime.Now);
+                code = "1111";// item.BIGBOX_BAR;// +string.Format("{0:yyyyMMdd}", DateTime.Now);
+            
             }
-            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128A).Save(code + ".jpg");
+            FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128C).Save("code.jpg");
 
             System.Drawing.Printing.PageSettings ps = reportViewer1.GetPageSettings();// new System.Drawing.Printing.PageSettings();
             ps.Landscape=false;
           
             Microsoft.Reporting.WinForms.ReportParameter params1;
-            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///"+Application.StartupPath+"\\"+code+".jpg");
+            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///"+Application.StartupPath+"\\code.jpg");
             reportViewer1.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { params1 });
             reportViewer1.SetPageSettings(ps);
         }

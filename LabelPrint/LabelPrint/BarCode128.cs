@@ -18,7 +18,7 @@ namespace LabelPrint
         public class BarCode128
         {
             private DataTable m_Code128 = new DataTable();
-            private uint m_Height = 220;
+            private uint m_Height = 120;
             /// <summary>
             /// 高度
             /// </summary>
@@ -28,7 +28,7 @@ namespace LabelPrint
             /// 是否显示可见号码  如果为NULL不显示号码
             /// </summary>
             public Font ValueFont { get { return m_ValueFont; } set { m_ValueFont = value; } }
-            private byte m_Magnify = 1;
+            private byte m_Magnify = 0;
             /// <summary>
             /// 放大倍数
             /// </summary>
@@ -287,7 +287,7 @@ namespace LabelPrint
                 int _Width = 0;
                 for (int i = 0; i != _Value.Length; i++)
                 {
-                    _Width += (int)(Int32.Parse(_Value[i].ToString()) * (m_Magnify + 0.8));
+                    _Width += (int)(Int32.Parse(_Value[i].ToString()) * (m_Magnify + 1));
                 }
                 Bitmap _CodeImage = new Bitmap(_Width, (int)m_Height);
                 Graphics _Garphics = Graphics.FromImage(_CodeImage);
