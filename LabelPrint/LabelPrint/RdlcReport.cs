@@ -28,7 +28,7 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"00";
+                code = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmm}", DateTime.Now);
             }
             barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128A).Save(code + ".jpg");
 

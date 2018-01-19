@@ -287,7 +287,7 @@ namespace LabelPrint
                 int _Width = 0;
                 for (int i = 0; i != _Value.Length; i++)
                 {
-                    _Width += Int32.Parse(_Value[i].ToString()) * (m_Magnify + 1);
+                    _Width += (int)(Int32.Parse(_Value[i].ToString()) * (m_Magnify + 0.8));
                 }
                 Bitmap _CodeImage = new Bitmap(_Width, (int)m_Height);
                 Graphics _Garphics = Graphics.FromImage(_CodeImage);
