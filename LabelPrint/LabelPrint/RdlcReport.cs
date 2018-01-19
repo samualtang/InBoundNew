@@ -29,7 +29,7 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = "1111";// item.BIGBOX_BAR;// +string.Format("{0:yyyyMMdd}", DateTime.Now);
+                code = item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
             
             }
             FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
