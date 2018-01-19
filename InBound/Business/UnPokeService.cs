@@ -405,6 +405,7 @@ namespace InBound.Business
             if (Encoding.ASCII.GetBytes(str).Length < 30)
             {
                 int i = 30 - Encoding.ASCII.GetBytes(str).Length;
+               // Encoding.ASCII.GetBytes(str) 转成数字
                 for (int j = 0; j < i; j++)
                 {
                     str += "0";
