@@ -340,6 +340,7 @@
                             <TextRun>
                               <Value>=Fields!ITEMNAME.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>12pt</FontSize>
                               </Style>
                             </TextRun>
