@@ -64,6 +64,7 @@ namespace InBound.Business
                         if (task.CLEARUP == 10)
                         {
                             THRESHOLD = task.CLEARTHRESHOLD ?? 0;
+                            query = query - ProducePokeService.GetTroughFirstUnFinished(task.TROUGHNUM);
                         }
                         else
                         {

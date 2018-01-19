@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarCode128.cs" />
     <Compile Include="QueryForm.cs">
       <SubType>Form</SubType>
     </Compile>
