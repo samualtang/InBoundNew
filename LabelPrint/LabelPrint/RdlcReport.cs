@@ -28,7 +28,7 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now) ;
+                code = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"00";
             }
             barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128A).Save(code + ".jpg");
 
@@ -63,7 +63,8 @@ namespace RdlcPro
             T_WMS_ITEM   item=service.GetItemByCode(code);
             if (item != null)
             {
-                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
+                //item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
+                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmm}", DateTime.Now) + "00";
             }
             for(int i=0;i<num;i++)
             {

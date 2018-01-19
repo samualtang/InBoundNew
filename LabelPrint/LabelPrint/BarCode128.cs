@@ -18,7 +18,7 @@ namespace LabelPrint
         public class BarCode128
         {
             private DataTable m_Code128 = new DataTable();
-            private uint m_Height = 160;
+            private uint m_Height = 220;
             /// <summary>
             /// 高度
             /// </summary>
@@ -28,7 +28,7 @@ namespace LabelPrint
             /// 是否显示可见号码  如果为NULL不显示号码
             /// </summary>
             public Font ValueFont { get { return m_ValueFont; } set { m_ValueFont = value; } }
-            private byte m_Magnify = 0;
+            private byte m_Magnify = 1;
             /// <summary>
             /// 放大倍数
             /// </summary>

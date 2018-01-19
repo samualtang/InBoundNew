@@ -142,18 +142,18 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.203in</Width>
+              <Width>0.103in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.20762in</Width>
+              <Width>1.21244in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.92623in</Width>
+              <Width>3.02623in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.57245in</Height>
+              <Height>0.45434in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -242,7 +242,7 @@
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingTop>8pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
@@ -251,7 +251,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.45642in</Height>
+              <Height>0.38622in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -293,18 +293,19 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>检验合格</Value>
+                                  <Value>内部流通</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>15pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox16</rd:DefaultName>
-                          <Top>0.22225cm</Top>
                           <Left>0.37959cm</Left>
                           <Height>0.65292cm</Height>
                           <Width>2.5cm</Width>
@@ -314,7 +315,7 @@
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingTop>4pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -337,15 +338,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value xml:space="preserve"> </Value>
+                              <Value>=Fields!ITEMNAME.Value</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>170320151510109A0241</Value>
-                              <Style>
-                                <FontSize>14pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -362,7 +357,7 @@
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>4pt</PaddingTop>
+                        <PaddingTop>3pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
@@ -371,7 +366,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.9758in</Height>
+              <Height>1.53413in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -415,14 +410,13 @@
                       </Style>
                     </Image>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.66306in</Height>
+              <Height>0.30473in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -517,8 +511,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BARSource</DataSetName>
-        <Height>6.77604cm</Height>
-        <Width>11.0156cm</Width>
+        <Height>6.80573cm</Height>
+        <Width>11.02783cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -526,7 +520,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>80.9999mm</Height>
+    <Height>75mm</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -535,14 +529,14 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>129.9998mm</Width>
+  <Width>110.27834mm</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <PageHeight>7.5cm</PageHeight>
+    <PageWidth>10.5cm</PageWidth>
+    <LeftMargin>0.2cm</LeftMargin>
+    <RightMargin>0.2cm</RightMargin>
+    <TopMargin>0.2cm</TopMargin>
+    <BottomMargin>0.2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
