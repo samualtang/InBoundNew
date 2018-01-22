@@ -226,6 +226,10 @@ namespace InBound.Business
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
                                           inboundLine.ABOXQTY += item.PLANQTY;
+                                          if (inboundLine.ABOXQTY + inboundLine.OTHERQTY == inboundLine.BOXQTY)
+                                          {
+                                              inboundLine.STATUS = "30";
+                                          }
                                       }
                                       if (item.JOBTYPE == 42)//抽检入库、盘点入库、补货入库、调拨返库、其它
                                       {
