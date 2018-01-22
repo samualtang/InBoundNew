@@ -537,7 +537,7 @@ namespace SortingControlSys.SortingControl
                                 // removeKey(Group + "");
                             }
 
-                            sendTask(Group + "", groupList[Group - 1]);
+                            sendTask(((groupNo - 1) * 22 +Group) + "", groupList[Group - 1]);
                         }
                         break;
                     }
