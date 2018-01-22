@@ -49,6 +49,30 @@ namespace InBound.Business
             }
  
         }
+        public static decimal GetTroughFirstUnFinished(string throughno)
+        {
+            decimal total = 0;
+            using (Entities entity = new Entities())
+            {
+
+               T_PRODUCE_SORTTROUGH info= SortTroughService.GetFJTroughInfo(10, throughno, 20);
+                var query = (from item in entity.T_PRODUCE_POKE
+                            // where item.TROUGHNUM == throughno
+                                 where item.SORTSTATE != 20  && item.GROUPNO==info.GROUPNO orderby item.SORTNUM
+                              select item ).FirstOrDefault();
+                if (query != null)
+                {
+                    var query2 = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == query.SORTNUM && item.TROUGHNUM == throughno select item).FirstOrDefault();
+                    if (query2 != null)
+                    {
+                        total = query2.POKENUM ?? 0;
+                    }
+                }
+
+                return total;
+            }
+
+        }
         public static List<T_PRODUCE_POKE> GetGroupNoByRegionCode(string regionCode)
         {
             List<T_PRODUCE_POKE> list = new List<T_PRODUCE_POKE>();

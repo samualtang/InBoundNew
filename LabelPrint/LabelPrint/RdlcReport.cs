@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using InBound;
 using InBound.Business;
+using LabelPrint.MvcGuestBook.Common;
+using System.IO;
 
 
 namespace RdlcPro
@@ -21,8 +23,28 @@ namespace RdlcPro
             this.code = code;
             this.num = num;
             InitializeComponent();
+            reportViewer1.LocalReport.EnableExternalImages = true;
+            BarCode128 barCode = new BarCode128();
+            WmsService service = new WmsService();
+            T_WMS_ITEM item = service.GetItemByCode(code);
+            if (item != null)
+            {
+                code = item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+            
+            }
+            FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128C).Save("code.jpg");
+
             System.Drawing.Printing.PageSettings ps = reportViewer1.GetPageSettings();// new System.Drawing.Printing.PageSettings();
             ps.Landscape=false;
+          
+            Microsoft.Reporting.WinForms.ReportParameter params1;
+            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///"+Application.StartupPath+"\\code.jpg");
+            reportViewer1.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { params1 });
             reportViewer1.SetPageSettings(ps);
         }
         public RdlcReport(String code, int num,int model)
@@ -31,8 +53,14 @@ namespace RdlcPro
             this.code = code;
             this.num = num;
             InitializeComponent();
+            reportViewer1.LocalReport.EnableExternalImages = true;
+            BarCode128 barCode = new BarCode128();
+            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128A).Save(code + ".jpg");
+
             System.Drawing.Printing.PageSettings ps = reportViewer1.GetPageSettings();// new System.Drawing.Printing.PageSettings();
             ps.Landscape = false;
+            Microsoft.Reporting.WinForms.ReportParameter params1;
+            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///" + Application.StartupPath + "\\" + code + ".jpg");
             reportViewer1.SetPageSettings(ps);
         }
         List<T_WMS_ITEM> GetList(String code,int num)
@@ -42,7 +70,8 @@ namespace RdlcPro
             T_WMS_ITEM   item=service.GetItemByCode(code);
             if (item != null)
             {
-                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
+                //item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
+                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmm}", DateTime.Now) + "00";
             }
             for(int i=0;i<num;i++)
             {
