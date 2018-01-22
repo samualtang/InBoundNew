@@ -51,7 +51,7 @@ namespace SortingControlSys.SortingControl
             {
                 sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
                 sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
-
+                ItemCollection.OpcPresortServer = ConfigurationManager.AppSettings["OpcPresortServer"].ToString();
 
             }
             catch (Exception e)

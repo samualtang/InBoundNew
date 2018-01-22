@@ -56,6 +56,7 @@ namespace SortingControlSys.SortingControl
             };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            ItemCollection.OpcMachineServer = ConfigurationManager.AppSettings["OpcMachineServer"].ToString();
             try
             {
                 // initdata();

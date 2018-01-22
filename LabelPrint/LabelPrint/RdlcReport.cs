@@ -24,6 +24,7 @@ namespace RdlcPro
             this.num = num;
             InitializeComponent();
             reportViewer1.LocalReport.EnableExternalImages = true;
+           
             BarCode128 barCode = new BarCode128();
             WmsService service = new WmsService();
             T_WMS_ITEM item = service.GetItemByCode(code);
@@ -59,6 +60,7 @@ namespace RdlcPro
 
             System.Drawing.Printing.PageSettings ps = reportViewer1.GetPageSettings();// new System.Drawing.Printing.PageSettings();
             ps.Landscape = false;
+            
             Microsoft.Reporting.WinForms.ReportParameter params1;
             params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///" + Application.StartupPath + "\\" + code + ".jpg");
             reportViewer1.SetPageSettings(ps);
@@ -97,7 +99,7 @@ namespace RdlcPro
             if (model == 1)
             {
                 this.reportViewer1.LocalReport.DataSources.Add(new Microsoft.Reporting.WinForms.ReportDataSource("BARSource", GetList()));
-                this.reportViewer1.RefreshReport();
+               this.reportViewer1.RefreshReport();
             }
             else
             {

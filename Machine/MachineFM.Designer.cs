@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MachineFM));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.cmbMachines = new System.Windows.Forms.ComboBox();
             this.button6 = new System.Windows.Forms.Button();
@@ -55,7 +56,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.listError = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -93,6 +94,16 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(750, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(107, 12);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "请选择暂停机械手:";
             // 
             // btnClear
             // 
@@ -312,21 +323,22 @@
             this.list_data.Size = new System.Drawing.Size(1038, 112);
             this.list_data.TabIndex = 39;
             // 
-            // label3
+            // listError
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(750, 17);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(107, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "请选择暂停机械手:";
+            this.listError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.listError.FormattingEnabled = true;
+            this.listError.ItemHeight = 12;
+            this.listError.Location = new System.Drawing.Point(741, 43);
+            this.listError.Name = "listError";
+            this.listError.Size = new System.Drawing.Size(297, 245);
+            this.listError.TabIndex = 40;
             // 
             // MachineFM
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
             this.ControlBox = false;
+            this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.task_data);
@@ -375,5 +387,6 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.ComboBox cmbMachines;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox listError;
     }
 }

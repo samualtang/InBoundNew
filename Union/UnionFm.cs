@@ -44,7 +44,7 @@ namespace SortingControlSys.SortingControl
             try
             {
               // initdata();
-           
+                ItemCollection.OpcUnionServer = ConfigurationManager.AppSettings["OpcUnionServer"].ToString();
             }
             catch (Exception e)
             {
