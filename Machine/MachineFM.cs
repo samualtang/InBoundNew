@@ -52,7 +52,7 @@ namespace SortingControlSys.SortingControl
             initCB();
             alarms.AlarmsHandler += (obj) =>
             {
-                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo),listError);
             };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
@@ -85,6 +85,22 @@ namespace SortingControlSys.SortingControl
             if (tempList == null)
                 tempList = new List<KeyValuePair<String, List<String>>>();
 
+        }
+        private delegate void HandleDelegateError(string strshow, ListBox list);
+        public void updateListBox(string info, ListBox list)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            if (list.InvokeRequired)
+            {
+
+
+                list.Invoke(new HandleDelegateError(updateListBox), info, list);
+            }
+            else
+            {
+                list.Items.Insert(0, time + "    " + info);
+
+            }
         }
         private delegate void HandleDelegate1(string info, Label label);
         public void updateLabel(string info, Label label)
