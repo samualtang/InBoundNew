@@ -15,7 +15,7 @@ namespace highSpeed.baseData
         String itemno, itenName;
         String machineseq, troughtype;
         DataBase Db = new DataBase();
-        public w_cigarette_handle(String itemno, String itemname, String ws, String fz, String pcount, String troughtype,String machineseq)
+        public w_cigarette_handle(String itemno, String itemname, String ws, String fz, String pcount, String troughtype,String machineseq,String clearUp,String maintissaless)
         {
             this.itemno = itemno;
             this.itenName = itemname;
@@ -28,11 +28,29 @@ namespace highSpeed.baseData
             this.tbyz.Text = pcount;
             this.machineseq = machineseq;
             this.troughtype = troughtype;
+            if (clearUp == "10")
+            {
+                cbClearUp.Checked = true;
+            }
+            if (maintissaless == "10")
+            {
+                cbless.Checked = true;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String sql = @"update t_produce_sorttrough set MANTISSA=" + tbws.Text + ",THRESHOLD=" + tbhjws.Text + ",BOXCOUNT=" +tbyz.Text+
+            string isclearUp = "0";
+            string isless = "0";
+            if (cbClearUp.Checked)
+            {
+                isclearUp = "10";
+            }
+            if (cbless.Checked)
+            {
+                isless = "10";
+            }
+            String sql = @"update t_produce_sorttrough set MANTISSA=" + tbws.Text + ",THRESHOLD=" + tbhjws.Text + ",BOXCOUNT=" +tbyz.Text+",clearup="+isclearUp+",maintissaless="+isless+
                  " where machineseq="+this.machineseq+" and troughtype="+this.troughtype +" and cigarettetype=20";
             Db.Open();
             Db.ExecuteNonQuery(sql);

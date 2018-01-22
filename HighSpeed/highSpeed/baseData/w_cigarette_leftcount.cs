@@ -82,7 +82,7 @@ namespace highSpeed.baseData
             {
                 wherecause = "and troughtype=20";
             }
-            String strsql = "SELECT tmp.* from(select rownum as num,t.* from (select cigarettename,cigarettecode,mantissa,machineseq,THRESHOLD,BOXCOUNT from t_produce_sorttrough where state=10 " + wherecause
+            String strsql = "SELECT tmp.* from(select rownum as num,t.* from (select cigarettename,cigarettecode,mantissa,machineseq,THRESHOLD,BOXCOUNT,clearup,maintissaless from t_produce_sorttrough where state=10 " + wherecause
                             + "  order by to_number(machineseq))t)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by tmp.num";
             //MessageBox.Show(strsql);
             int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where state=0 and cigarettetype=20"  ).ToString());
@@ -194,7 +194,7 @@ namespace highSpeed.baseData
                 try
                 {
                     Db.Open();
-                    String sql = "update highspeed.t_produce_sorttrough set mantissa='" + count + "' where id=" + id + "";
+                    String sql = "update t_produce_sorttrough set mantissa='" + count + "' where id=" + id + "";
                     //String batchcodesql = "select count(*) from highspeed.t_produce_brandcoderelative where cigarettecode='" + itemno + "'";
                     //DataTable dt = Db.Query(batchcodesql);
                     //String count = dt.Rows[0][0].ToString();
@@ -256,7 +256,9 @@ namespace highSpeed.baseData
                     this.codedata.SelectedRows[0].Cells[5].Value.ToString(),
                     this.codedata.SelectedRows[0].Cells[6].Value.ToString(), 
                     troughtype,
-                    this.codedata.SelectedRows[0].Cells[4].Value.ToString()
+                    this.codedata.SelectedRows[0].Cells[4].Value.ToString(),
+                     this.codedata.SelectedRows[0].Cells[7].Value.ToString(),
+                      this.codedata.SelectedRows[0].Cells[8].Value.ToString()
                     );
                 repleish_handle.WindowState = FormWindowState.Normal;
                 repleish_handle.StartPosition = FormStartPosition.CenterScreen;
@@ -264,6 +266,34 @@ namespace highSpeed.baseData
                 seek();
             }
 
+        }
+
+        private void codedata_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 7)
+            {
+                if (ds.Tables[0].Rows[e.RowIndex][7].ToString() == "10")
+                {
+
+                    e.Value = "启用";
+                }
+                else
+                {
+                    e.Value = "未启用";
+                }
+            }
+            else if (e.ColumnIndex == 8)
+            {
+                if (ds.Tables[0].Rows[e.RowIndex][8].ToString() == "10")
+                {
+
+                    e.Value = "启用";
+                }
+                else
+                {
+                    e.Value = "未启用";
+                }
+            }
         }
 
         

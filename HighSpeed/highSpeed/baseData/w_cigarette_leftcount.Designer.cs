@@ -49,6 +49,8 @@
             this.mantissa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.阀值 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.托盘出库件数 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.启用上层烟柜清空 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.启用烟柜量最少 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codedata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -64,16 +66,16 @@
             this.panel1.Controls.Add(this.打印);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1512, 58);
+            this.panel1.Size = new System.Drawing.Size(904, 39);
             this.panel1.TabIndex = 0;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(463, 12);
+            this.button3.Location = new System.Drawing.Point(309, 8);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(88, 34);
+            this.button3.Size = new System.Drawing.Size(59, 23);
             this.button3.TabIndex = 5;
             this.button3.Text = "修改";
             this.button3.UseVisualStyleBackColor = true;
@@ -81,9 +83,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(341, 12);
+            this.button1.Location = new System.Drawing.Point(227, 8);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 34);
+            this.button1.Size = new System.Drawing.Size(69, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "查询";
             this.button1.UseVisualStyleBackColor = true;
@@ -95,26 +98,27 @@
             this.comboBox1.Items.AddRange(new object[] {
             "分拣标准通道",
             "重力式货架"});
-            this.comboBox1.Location = new System.Drawing.Point(136, 20);
+            this.comboBox1.Location = new System.Drawing.Point(91, 13);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(155, 26);
+            this.comboBox1.Size = new System.Drawing.Size(105, 20);
             this.comboBox1.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 28);
+            this.label1.Location = new System.Drawing.Point(9, 19);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 18);
+            this.label1.Size = new System.Drawing.Size(71, 12);
             this.label1.TabIndex = 2;
             this.label1.Text = "请选择类型:";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(702, 12);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(468, 8);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 34);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "导出";
             this.button2.UseVisualStyleBackColor = true;
@@ -122,10 +126,9 @@
             // 
             // 打印
             // 
-            this.打印.Location = new System.Drawing.Point(565, 12);
-            this.打印.Margin = new System.Windows.Forms.Padding(4);
+            this.打印.Location = new System.Drawing.Point(377, 8);
             this.打印.Name = "打印";
-            this.打印.Size = new System.Drawing.Size(112, 34);
+            this.打印.Size = new System.Drawing.Size(75, 23);
             this.打印.TabIndex = 0;
             this.打印.Text = "打印";
             this.打印.UseVisualStyleBackColor = true;
@@ -143,44 +146,43 @@
             this.machineseq,
             this.mantissa,
             this.阀值,
-            this.托盘出库件数});
-            this.codedata.Location = new System.Drawing.Point(0, 58);
-            this.codedata.Margin = new System.Windows.Forms.Padding(4);
+            this.托盘出库件数,
+            this.启用上层烟柜清空,
+            this.启用烟柜量最少});
+            this.codedata.Location = new System.Drawing.Point(0, 39);
             this.codedata.Name = "codedata";
             this.codedata.RowHeadersWidth = 30;
             this.codedata.RowTemplate.Height = 23;
-            this.codedata.Size = new System.Drawing.Size(1512, 915);
+            this.codedata.Size = new System.Drawing.Size(1008, 610);
             this.codedata.TabIndex = 1;
+            this.codedata.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.codedata_CellFormatting);
             this.codedata.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.codedata_CellValueChanged);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.progressBar1);
-            this.panel2.Location = new System.Drawing.Point(234, 160);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
+            this.panel2.Location = new System.Drawing.Point(156, 107);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(616, 136);
+            this.panel2.Size = new System.Drawing.Size(411, 91);
             this.panel2.TabIndex = 2;
             this.panel2.Visible = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 34);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(17, 23);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(143, 18);
+            this.label2.Size = new System.Drawing.Size(95, 12);
             this.label2.TabIndex = 1;
             this.label2.Text = "正在读取数据...";
             this.label2.Visible = false;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(28, 74);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
+            this.progressBar1.Location = new System.Drawing.Point(19, 49);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(570, 34);
+            this.progressBar1.Size = new System.Drawing.Size(380, 23);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
@@ -188,11 +190,10 @@
             // 
             this.pager1.CurrentPageIndex = 1;
             this.pager1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pager1.Location = new System.Drawing.Point(0, 968);
-            this.pager1.Margin = new System.Windows.Forms.Padding(4);
+            this.pager1.Location = new System.Drawing.Point(0, 645);
             this.pager1.Name = "pager1";
             this.pager1.RecordCount = 0;
-            this.pager1.Size = new System.Drawing.Size(1512, 68);
+            this.pager1.Size = new System.Drawing.Size(1008, 45);
             this.pager1.TabIndex = 3;
             // 
             // dgVprint1
@@ -324,7 +325,7 @@
             this.num.HeaderText = "序号";
             this.num.Name = "num";
             this.num.ReadOnly = true;
-            this.num.Width = 69;
+            this.num.Width = 54;
             // 
             // cigarettecode
             // 
@@ -333,7 +334,7 @@
             this.cigarettecode.HeaderText = "品牌代码";
             this.cigarettecode.Name = "cigarettecode";
             this.cigarettecode.ReadOnly = true;
-            this.cigarettecode.Width = 105;
+            this.cigarettecode.Width = 78;
             // 
             // cigarettename
             // 
@@ -342,7 +343,7 @@
             this.cigarettename.HeaderText = "品牌名称";
             this.cigarettename.Name = "cigarettename";
             this.cigarettename.ReadOnly = true;
-            this.cigarettename.Width = 105;
+            this.cigarettename.Width = 78;
             // 
             // machineseq
             // 
@@ -350,7 +351,8 @@
             this.machineseq.DataPropertyName = "machineseq";
             this.machineseq.HeaderText = "烟道号";
             this.machineseq.Name = "machineseq";
-            this.machineseq.Width = 87;
+            this.machineseq.ReadOnly = true;
+            this.machineseq.Width = 66;
             // 
             // mantissa
             // 
@@ -358,7 +360,8 @@
             this.mantissa.DataPropertyName = "mantissa";
             this.mantissa.HeaderText = "尾数";
             this.mantissa.Name = "mantissa";
-            this.mantissa.Width = 69;
+            this.mantissa.ReadOnly = true;
+            this.mantissa.Width = 54;
             // 
             // 阀值
             // 
@@ -366,7 +369,8 @@
             this.阀值.DataPropertyName = "THRESHOLD";
             this.阀值.HeaderText = "阀值";
             this.阀值.Name = "阀值";
-            this.阀值.Width = 69;
+            this.阀值.ReadOnly = true;
+            this.阀值.Width = 54;
             // 
             // 托盘出库件数
             // 
@@ -374,18 +378,32 @@
             this.托盘出库件数.DataPropertyName = "BOXCOUNT";
             this.托盘出库件数.HeaderText = "托盘出库件数";
             this.托盘出库件数.Name = "托盘出库件数";
-            this.托盘出库件数.Width = 96;
+            this.托盘出库件数.ReadOnly = true;
+            this.托盘出库件数.Width = 72;
+            // 
+            // 启用上层烟柜清空
+            // 
+            this.启用上层烟柜清空.DataPropertyName = "clearup";
+            this.启用上层烟柜清空.HeaderText = "启用上层烟柜清空";
+            this.启用上层烟柜清空.Name = "启用上层烟柜清空";
+            this.启用上层烟柜清空.Width = 83;
+            // 
+            // 启用烟柜量最少
+            // 
+            this.启用烟柜量最少.DataPropertyName = "maintissaless";
+            this.启用烟柜量最少.HeaderText = "启用烟柜量最少";
+            this.启用烟柜量最少.Name = "启用烟柜量最少";
+            this.启用烟柜量最少.Width = 83;
             // 
             // w_cigarette_leftcount
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1512, 1023);
+            this.ClientSize = new System.Drawing.Size(904, 494);
             this.Controls.Add(this.pager1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.codedata);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "w_cigarette_leftcount";
             this.Text = "品牌尾数维护";
             this.Load += new System.EventHandler(this.win_brandrelative_Load);
@@ -420,5 +438,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mantissa;
         private System.Windows.Forms.DataGridViewTextBoxColumn 阀值;
         private System.Windows.Forms.DataGridViewTextBoxColumn 托盘出库件数;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 启用上层烟柜清空;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 启用烟柜量最少;
     }
 }
