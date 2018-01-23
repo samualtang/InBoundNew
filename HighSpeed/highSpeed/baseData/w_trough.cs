@@ -223,6 +223,7 @@ namespace highSpeed.baseData
             {
                 String id = this.troughdata.SelectedRows[0].Cells["id"].Value.ToString();
                 String desc = this.troughdata.SelectedRows[0].Cells[9].Value.ToString();
+                String cigarettecode = this.troughdata.SelectedRows[0].Cells["cigarettecode"].Value.ToString();
                 String ctype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
                 String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
                 DialogResult MsgBoxResult = MessageBox.Show("确定启用"+desc+"【"+id+"】通道吗？",//对话框的显示内容 
@@ -232,6 +233,15 @@ namespace highSpeed.baseData
                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
                 if (MsgBoxResult == DialogResult.Yes)
                 {
+                    if (type == "10" || type == "20")
+                    {
+                        if (cigarettecode == null || cigarettecode == "")
+                        {
+                            MessageBox.Show("请选择品牌在启用通道.");
+                            return;
+
+                        }
+                    }
                     String updatesql = "update t_produce_sorttrough set state='10' where id=" + id + " and cigarettetype=" + ctype + " and troughtype=" + type;
                     try
                     {
