@@ -367,7 +367,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.42538in</Height>
+              <Height>0.7483in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -417,7 +417,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.30914in</Height>
+              <Height>0.41331in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -506,8 +506,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BARSource</DataSetName>
-        <Height>6.62325cm</Height>
-        <Width>9.45891cm</Width>
+        <Height>5.16804cm</Height>
+        <Width>9.45888cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -515,7 +515,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>66.2325mm</Height>
+    <Height>57.50128mm</Height>
     <Style>
       <Border>
         <Style>None</Style>
