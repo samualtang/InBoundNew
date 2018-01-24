@@ -43,16 +43,17 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.list_data = new System.Windows.Forms.ListBox();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.list_data = new System.Windows.Forms.ListBox();
+            this.listError = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -208,43 +209,6 @@
             this.task_data.Size = new System.Drawing.Size(1038, 376);
             this.task_data.TabIndex = 30;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 400);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1038, 19);
-            this.panel2.TabIndex = 37;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(825, 3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(0, 12);
-            this.label5.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "提示信息";
-            // 
-            // list_data
-            // 
-            this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.list_data.FormattingEnabled = true;
-            this.list_data.ItemHeight = 12;
-            this.list_data.Location = new System.Drawing.Point(0, 288);
-            this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(1038, 112);
-            this.list_data.TabIndex = 39;
-            // 
             // regioncode
             // 
             this.regioncode.HeaderText = "线路编号";
@@ -285,11 +249,59 @@
             this.percent.Name = "percent";
             this.percent.ReadOnly = true;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 400);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1038, 19);
+            this.panel2.TabIndex = 37;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(825, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 12);
+            this.label5.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "提示信息";
+            // 
+            // list_data
+            // 
+            this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.list_data.FormattingEnabled = true;
+            this.list_data.ItemHeight = 12;
+            this.list_data.Location = new System.Drawing.Point(0, 288);
+            this.list_data.Name = "list_data";
+            this.list_data.Size = new System.Drawing.Size(1038, 112);
+            this.list_data.TabIndex = 39;
+            // 
+            // listError
+            // 
+            this.listError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.listError.FormattingEnabled = true;
+            this.listError.ItemHeight = 12;
+            this.listError.Location = new System.Drawing.Point(692, 43);
+            this.listError.Name = "listError";
+            this.listError.Size = new System.Drawing.Size(346, 245);
+            this.listError.TabIndex = 40;
+            // 
             // UnionFm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
             this.ControlBox = false;
+            this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.task_data);
@@ -334,5 +346,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.ListBox listError;
     }
 }

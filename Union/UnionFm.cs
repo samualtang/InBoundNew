@@ -53,13 +53,29 @@ namespace SortingControlSys.SortingControl
             }
             stateManager.AlarmsHandler += (obj) =>
             {
-                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo));
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo), listError);
             };
             stateManager.OnGetErr += (i) =>
             {
                 return getErrMsg(i);
             };
             
+        }
+        private delegate void HandleDelegateError(string strshow, ListBox list);
+        public void updateListBox(string info, ListBox list)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            if (list.InvokeRequired)
+            {
+
+
+                list.Invoke(new HandleDelegateError(updateListBox), info, list);
+            }
+            else
+            {
+                list.Items.Insert(0, time + "    " + info);
+
+            }
         }
         protected override void OnLoad(EventArgs e)
         {

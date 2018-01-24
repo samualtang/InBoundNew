@@ -73,7 +73,7 @@ namespace RdlcPro
             if (item != null)
             {
                 //item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
-                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmm}", DateTime.Now) + "00";
+                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now) ;
             }
             for(int i=0;i<num;i++)
             {
