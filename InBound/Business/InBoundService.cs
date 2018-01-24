@@ -171,6 +171,7 @@ namespace InBound.Business
                                 outTask1.BARCODE = load.BRANDID + "";
                                 outTask1.INOUTTYPE = 10;//出
                                 outTask1.QTY = -1;
+                                outTask1.GROUPNO = querySource.GROUPNO;
                                 outTask1.STATUS = 10;
                                 outTask1.CREATETIME = DateTime.Now;
 
@@ -185,6 +186,7 @@ namespace InBound.Business
                                 outTask2.CIGARETTENAME = task.CIGARETTENAME.Trim();
                                 outTask2.INOUTTYPE = 20;//入
                                 outTask2.QTY = 50;
+                                outTask2.GROUPNO = task.GROUPNO;
                                 outTask2.CREATETIME = DateTime.Now;
                                 outTask2.STATUS = 10;
 
@@ -275,6 +277,7 @@ namespace InBound.Business
                                         outTask4.INOUTTYPE = 20;//入库
                                         outTask4.QTY = load2.PLANQTY;
                                         outTask4.STATUS = 10;
+                                        outTask4.GROUPNO = item.GROUPNO;
                                         outTask4.CREATETIME = DateTime.Now;
                                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                         tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
@@ -391,6 +394,7 @@ namespace InBound.Business
                                             outTask4.INOUTTYPE = 20;//入库
                                             outTask4.QTY = load2.PLANQTY;
                                             outTask4.STATUS = 10;
+                                            outTask4.GROUPNO = item.GROUPNO;
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                             tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
