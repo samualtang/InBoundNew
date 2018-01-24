@@ -155,6 +155,7 @@ namespace InBound.Business
                             outTask2.CIGARETTENAME = task.CIGARETTENAME;
                             outTask2.INOUTTYPE = 20;//入
                             outTask2.QTY = leftBox * itemDetail.JT_SIZE;
+                            outTask2.GROUPNO = task.GROUPNO;
                             outTask2.CREATETIME = DateTime.Now;
                             outTask2.STATUS = 10;
                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
@@ -256,6 +257,7 @@ namespace InBound.Business
                                 outTask2.INOUTTYPE = 20;//入
                                 outTask2.QTY = task.BOXCOUNT * itemDetail.JT_SIZE;
                                 outTask2.CREATETIME = DateTime.Now;
+                                outTask2.GROUPNO = task.GROUPNO;
                                 outTask2.STATUS = 10;
                                 entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
 
