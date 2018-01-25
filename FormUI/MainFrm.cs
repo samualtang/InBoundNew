@@ -59,6 +59,8 @@ namespace MainUI
       
             listView1.Items.Add("库存统计", 0);
             listView1.Items.Add("储位明细", 1);
+            listView1.Items.Add("出入库查询", 2);
+            listView1.Items.Add("异常查询",3);
         }
 
         private void CreateFoList()
@@ -391,6 +393,20 @@ namespace MainUI
             manualpm.StartPosition = FormStartPosition.CenterScreen;
             manualpm.Show();
             
+        }
+
+        private void 出入库查询ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FormUI.QueryForm qfm = new FormUI.QueryForm();
+            qfm.StartPosition = FormStartPosition.CenterScreen;
+            qfm.Show();
+        }
+
+        private void 异常查询ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FormUI.ErrorForm errorFm = new FormUI.ErrorForm();
+            errorFm.StartPosition = FormStartPosition.CenterScreen;
+            errorFm.Show();
         }
 
         
