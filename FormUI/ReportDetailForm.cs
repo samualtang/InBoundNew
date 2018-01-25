@@ -10,9 +10,9 @@ using InBound.Business;
 
 namespace FormUI
 {
-    public partial class ReportForm : Form
+    public partial class ReportDetailForm : Form
     {
-        public ReportForm()
+        public ReportDetailForm()
         {
             InitializeComponent();
         }
@@ -27,18 +27,18 @@ namespace FormUI
         {
             dataGridView1.AutoGenerateColumns = false;
 
-            dataGridView1.DataSource = AtsCellInfoDetailService.GetReport(tbName.Text.Trim(),tbCode.Text.Trim());
+            dataGridView1.DataSource = AtsCellInfoDetailService.GetReportDetail(tbName.Text.Trim(),tbCode.Text.Trim());
 
         }
         private void QueryForm_Load(object sender, EventArgs e)
         {
-            search();
+            searchQuery();
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            search();
+            searchQuery();
         }
 
         private void BtnQuery_Click(object sender, EventArgs e)

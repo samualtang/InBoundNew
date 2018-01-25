@@ -31,8 +31,9 @@ namespace MainUI
            
             listView1.Items.Add("入库单入库", 0);
             listView1.Items.Add("托盘入库", 0);
+            listView1.Items.Add("人工入库", 0);
             listView1.Items.Add("成品入库", 0);
-            listView1.Items.Add("抽检返库", 0);
+            listView1.Items.Add("移库入库", 0);
             listView1.Items.Add("返库", 0);
            // listView1.Items.Add("空托盘入库", 0);
            // listView1.Items.Add("指定货位入库", 0);
@@ -42,18 +43,22 @@ namespace MainUI
         {
             listView1.Items.Clear();
 
-            listView1.Items.Add("抽检出库", 0);
-            listView1.Items.Add("人工拆垛", 0);
+        
             listView1.Items.Add("出库", 1);
             listView1.Items.Add("自动补货出库", 1);
          
+        }
+        private void CreateManual()
+        {
+            listView1.Items.Clear();
+            listView1.Items.Add("人工拆垛", 0);
         }
         private void CreateTList()
         {
             listView1.Items.Clear();
       
             listView1.Items.Add("库存统计", 0);
-          
+            listView1.Items.Add("储位明细", 1);
         }
 
         private void CreateFoList()
@@ -135,6 +140,9 @@ namespace MainUI
                 case "btnFenjian":
                     CreateFenJianList();
                     break;
+                case "btnChaiduo":
+                    CreateManual();
+                    break;
             }
            listView1.BringToFront();  // Without this, the buttons will hide the items.
         }
@@ -155,6 +163,11 @@ namespace MainUI
                         pm.StartPosition = FormStartPosition.CenterScreen;
                         pm.Show();
                         break;
+                    case "人工入库":
+                        FormUI.OtherPalletFM manualpm = new FormUI.OtherPalletFM();
+                        manualpm.StartPosition = FormStartPosition.CenterScreen;
+                        manualpm.Show();
+                        break;
                     case "成品入库":
                         FormUI.InBoundFM fm = new FormUI.InBoundFM();
                         fm.StartPosition = FormStartPosition.CenterScreen;
@@ -166,11 +179,11 @@ namespace MainUI
                         fm1.StartPosition = FormStartPosition.CenterScreen;
                         fm1.Show();
                         break;
-                    case "抽检返库":
+                    case "移库入库":
 
-                        FormUI.InBoundReturnFM rfm = new FormUI.InBoundReturnFM();
-                        rfm.StartPosition = FormStartPosition.CenterScreen;
-                        rfm.Show();
+                         FormUI.InBoundFM movefm = new FormUI.InBoundFM();
+                         movefm.StartPosition = FormStartPosition.CenterScreen;
+                         movefm.Show();
                         break;
                     case "指定货位入库":
                         FormUI.FixPositionInBoundFM fm2 = new FormUI.FixPositionInBoundFM();
@@ -189,6 +202,11 @@ namespace MainUI
                         rptFm.StartPosition = FormStartPosition.CenterScreen;
                         rptFm.Show();
                         break;
+                    case "储位明细":
+                        FormUI.ReportDetailForm rptDetailFm = new FormUI.ReportDetailForm();
+                        rptDetailFm.StartPosition = FormStartPosition.CenterScreen;
+                        rptDetailFm.Show();
+            break;
                     case "巷道管理":
                         FormUI.LaneWayFM LaneFm = new FormUI.LaneWayFM();
                         LaneFm.StartPosition = FormStartPosition.CenterScreen;
@@ -273,11 +291,11 @@ namespace MainUI
 
         }
 
-        private void 抽检返库ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 移库入库ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormUI.InBoundReturnFM rfm = new FormUI.InBoundReturnFM();
-            rfm.StartPosition = FormStartPosition.CenterScreen;
-            rfm.Show();
+            FormUI.InBoundFM fm = new FormUI.InBoundFM();
+            fm.StartPosition = FormStartPosition.CenterScreen;
+            fm.Show();
 
         }
 
@@ -343,6 +361,39 @@ namespace MainUI
             ybFm.StartPosition = FormStartPosition.CenterScreen;
             ybFm.Show();
         }
+
+        
+
+        private void 人工拆垛ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            FormUI.ManualForm manualfm = new FormUI.ManualForm();
+            manualfm.StartPosition = FormStartPosition.CenterScreen;
+            manualfm.Show();
+        }
+
+        private void 自动补货出库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.AutoOutBoundFM autoOutFm = new FormUI.AutoOutBoundFM();
+            autoOutFm.StartPosition = FormStartPosition.CenterScreen;
+            autoOutFm.Show();
+        }
+
+        private void 储位明细ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.ReportDetailForm rptFm = new FormUI.ReportDetailForm();
+            rptFm.StartPosition = FormStartPosition.CenterScreen;
+            rptFm.Show();
+        }
+
+        private void 人工入库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.OtherPalletFM manualpm = new FormUI.OtherPalletFM();
+            manualpm.StartPosition = FormStartPosition.CenterScreen;
+            manualpm.Show();
+            
+        }
+
+        
 
         
 
