@@ -208,7 +208,7 @@ namespace MainUI
                         FormUI.ReportDetailForm rptDetailFm = new FormUI.ReportDetailForm();
                         rptDetailFm.StartPosition = FormStartPosition.CenterScreen;
                         rptDetailFm.Show();
-            break;
+                        break;
                     case "œÔµ¿π‹¿Ì":
                         FormUI.LaneWayFM LaneFm = new FormUI.LaneWayFM();
                         LaneFm.StartPosition = FormStartPosition.CenterScreen;
@@ -411,9 +411,6 @@ namespace MainUI
 
         
 
-        
-
-        
        
     }
 }
