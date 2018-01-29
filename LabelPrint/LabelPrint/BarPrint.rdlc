@@ -153,7 +153,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.52267in</Height>
+              <Height>0.5435in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -251,7 +251,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.35039in</Height>
+              <Height>0.28789in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -411,6 +411,7 @@
                       </Style>
                     </Image>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -506,7 +507,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BARSource</DataSetName>
-        <Height>5.16804cm</Height>
+        <Height>5.06224cm</Height>
         <Width>9.45888cm</Width>
         <Style>
           <Border>

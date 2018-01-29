@@ -35,34 +35,36 @@
             this.入库单入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.托盘入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.成品入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.抽检返库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.移库入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.抽检出库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.人工拆垛ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.出库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.自动补货出库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.库存统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.巷道管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设备管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.可疑储位ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.出入库查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.异常查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.分拣管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.分拣预补ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.人工拆垛ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.人工拆垛ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.listView1 = new System.Windows.Forms.ListView();
             this.btnReport = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChaiduo = new System.Windows.Forms.Button();
             this.btnFenjian = new System.Windows.Forms.Button();
-            this.btnQuery = new System.Windows.Forms.Button();
             this.btnStorage = new System.Windows.Forms.Button();
             this.btnOutBound = new System.Windows.Forms.Button();
             this.btnInBound = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.imageListZip = new System.Windows.Forms.ImageList(this.components);
-            this.出库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.储位明细ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.人工入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.出入库查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.异常查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -75,8 +77,8 @@
             this.编辑ToolStripMenuItem,
             this.视图ToolStripMenuItem,
             this.工具ToolStripMenuItem,
-            this.帮助ToolStripMenuItem,
-            this.分拣管理ToolStripMenuItem});
+            this.分拣管理ToolStripMenuItem,
+            this.人工拆垛ToolStripMenuItem1});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1312, 25);
@@ -89,8 +91,9 @@
             this.入库单入库ToolStripMenuItem,
             this.托盘入库ToolStripMenuItem,
             this.成品入库ToolStripMenuItem,
-            this.抽检返库ToolStripMenuItem,
-            this.入库ToolStripMenuItem});
+            this.移库入库ToolStripMenuItem,
+            this.入库ToolStripMenuItem,
+            this.人工入库ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.文件ToolStripMenuItem.Text = "入库管理";
@@ -116,41 +119,48 @@
             this.成品入库ToolStripMenuItem.Text = "成品入库";
             this.成品入库ToolStripMenuItem.Click += new System.EventHandler(this.成品入库ToolStripMenuItem_Click);
             // 
-            // 抽检返库ToolStripMenuItem
+            // 移库入库ToolStripMenuItem
             // 
-            this.抽检返库ToolStripMenuItem.Name = "抽检返库ToolStripMenuItem";
-            this.抽检返库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.抽检返库ToolStripMenuItem.Text = "抽检返库";
-            this.抽检返库ToolStripMenuItem.Click += new System.EventHandler(this.抽检返库ToolStripMenuItem_Click);
+            this.移库入库ToolStripMenuItem.Name = "移库入库ToolStripMenuItem";
+            this.移库入库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.移库入库ToolStripMenuItem.Text = "移库入库";
+            this.移库入库ToolStripMenuItem.Click += new System.EventHandler(this.移库入库ToolStripMenuItem_Click);
+            // 
+            // 入库ToolStripMenuItem
+            // 
+            this.入库ToolStripMenuItem.Name = "入库ToolStripMenuItem";
+            this.入库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.入库ToolStripMenuItem.Text = "入库";
             // 
             // 编辑ToolStripMenuItem
             // 
             this.编辑ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.抽检出库ToolStripMenuItem,
-            this.人工拆垛ToolStripMenuItem,
-            this.出库ToolStripMenuItem});
+            this.出库ToolStripMenuItem,
+            this.自动补货出库ToolStripMenuItem});
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.编辑ToolStripMenuItem.Text = "出库管理";
             // 
-            // 抽检出库ToolStripMenuItem
+            // 出库ToolStripMenuItem
             // 
-            this.抽检出库ToolStripMenuItem.Name = "抽检出库ToolStripMenuItem";
-            this.抽检出库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.抽检出库ToolStripMenuItem.Text = "抽检出库";
-            this.抽检出库ToolStripMenuItem.Click += new System.EventHandler(this.抽检出库ToolStripMenuItem_Click);
+            this.出库ToolStripMenuItem.Name = "出库ToolStripMenuItem";
+            this.出库ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.出库ToolStripMenuItem.Text = "出库";
             // 
-            // 人工拆垛ToolStripMenuItem
+            // 自动补货出库ToolStripMenuItem
             // 
-            this.人工拆垛ToolStripMenuItem.Name = "人工拆垛ToolStripMenuItem";
-            this.人工拆垛ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.人工拆垛ToolStripMenuItem.Text = "人工拆垛";
-            this.人工拆垛ToolStripMenuItem.Click += new System.EventHandler(this.人工拆垛ToolStripMenuItem_Click);
+            this.自动补货出库ToolStripMenuItem.Name = "自动补货出库ToolStripMenuItem";
+            this.自动补货出库ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.自动补货出库ToolStripMenuItem.Text = "自动补货出库";
+            this.自动补货出库ToolStripMenuItem.Click += new System.EventHandler(this.自动补货出库ToolStripMenuItem_Click);
             // 
             // 视图ToolStripMenuItem
             // 
             this.视图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.库存统计ToolStripMenuItem});
+            this.库存统计ToolStripMenuItem,
+            this.储位明细ToolStripMenuItem,
+            this.出入库查询ToolStripMenuItem,
+            this.异常查询ToolStripMenuItem});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.视图ToolStripMenuItem.Text = "统计报表";
@@ -193,29 +203,6 @@
             this.可疑储位ToolStripMenuItem.Text = "可疑储位";
             this.可疑储位ToolStripMenuItem.Click += new System.EventHandler(this.可疑储位ToolStripMenuItem_Click);
             // 
-            // 帮助ToolStripMenuItem
-            // 
-            this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.出入库查询ToolStripMenuItem,
-            this.异常查询ToolStripMenuItem});
-            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
-            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.帮助ToolStripMenuItem.Text = "查询功能";
-            // 
-            // 出入库查询ToolStripMenuItem
-            // 
-            this.出入库查询ToolStripMenuItem.Name = "出入库查询ToolStripMenuItem";
-            this.出入库查询ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.出入库查询ToolStripMenuItem.Text = "出入库查询";
-            this.出入库查询ToolStripMenuItem.Click += new System.EventHandler(this.出入库查询ToolStripMenuItem_Click);
-            // 
-            // 异常查询ToolStripMenuItem
-            // 
-            this.异常查询ToolStripMenuItem.Name = "异常查询ToolStripMenuItem";
-            this.异常查询ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.异常查询ToolStripMenuItem.Text = "异常查询";
-            this.异常查询ToolStripMenuItem.Click += new System.EventHandler(this.异常查询ToolStripMenuItem_Click);
-            // 
             // 分拣管理ToolStripMenuItem
             // 
             this.分拣管理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -230,6 +217,21 @@
             this.分拣预补ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.分拣预补ToolStripMenuItem.Text = "分拣预补";
             this.分拣预补ToolStripMenuItem.Click += new System.EventHandler(this.分拣预补ToolStripMenuItem_Click);
+            // 
+            // 人工拆垛ToolStripMenuItem1
+            // 
+            this.人工拆垛ToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.人工拆垛ToolStripMenuItem2});
+            this.人工拆垛ToolStripMenuItem1.Name = "人工拆垛ToolStripMenuItem1";
+            this.人工拆垛ToolStripMenuItem1.Size = new System.Drawing.Size(68, 21);
+            this.人工拆垛ToolStripMenuItem1.Text = "人工拆垛";
+            // 
+            // 人工拆垛ToolStripMenuItem2
+            // 
+            this.人工拆垛ToolStripMenuItem2.Name = "人工拆垛ToolStripMenuItem2";
+            this.人工拆垛ToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+            this.人工拆垛ToolStripMenuItem2.Text = "人工拆垛";
+            this.人工拆垛ToolStripMenuItem2.Click += new System.EventHandler(this.人工拆垛ToolStripMenuItem2_Click);
             // 
             // listView1
             // 
@@ -264,8 +266,8 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.btnChaiduo);
             this.panel1.Controls.Add(this.btnFenjian);
-            this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Controls.Add(this.btnStorage);
             this.panel1.Controls.Add(this.listView1);
             this.panel1.Controls.Add(this.btnReport);
@@ -277,29 +279,29 @@
             this.panel1.Size = new System.Drawing.Size(85, 476);
             this.panel1.TabIndex = 0;
             // 
+            // btnChaiduo
+            // 
+            this.btnChaiduo.BackColor = System.Drawing.SystemColors.Control;
+            this.btnChaiduo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnChaiduo.Location = new System.Drawing.Point(0, 151);
+            this.btnChaiduo.Name = "btnChaiduo";
+            this.btnChaiduo.Size = new System.Drawing.Size(81, 30);
+            this.btnChaiduo.TabIndex = 10;
+            this.btnChaiduo.Text = "人工拆垛";
+            this.btnChaiduo.UseVisualStyleBackColor = false;
+            this.btnChaiduo.Click += new System.EventHandler(this.ButtonClick);
+            // 
             // btnFenjian
             // 
             this.btnFenjian.BackColor = System.Drawing.SystemColors.Control;
             this.btnFenjian.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnFenjian.Location = new System.Drawing.Point(0, 151);
+            this.btnFenjian.Location = new System.Drawing.Point(0, 121);
             this.btnFenjian.Name = "btnFenjian";
             this.btnFenjian.Size = new System.Drawing.Size(81, 30);
             this.btnFenjian.TabIndex = 9;
             this.btnFenjian.Text = "分拣管理";
             this.btnFenjian.UseVisualStyleBackColor = false;
             this.btnFenjian.Click += new System.EventHandler(this.ButtonClick);
-            // 
-            // btnQuery
-            // 
-            this.btnQuery.BackColor = System.Drawing.SystemColors.Control;
-            this.btnQuery.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnQuery.Location = new System.Drawing.Point(0, 121);
-            this.btnQuery.Name = "btnQuery";
-            this.btnQuery.Size = new System.Drawing.Size(81, 30);
-            this.btnQuery.TabIndex = 8;
-            this.btnQuery.Text = "查询功能";
-            this.btnQuery.UseVisualStyleBackColor = false;
-            this.btnQuery.Click += new System.EventHandler(this.ButtonClick);
             // 
             // btnStorage
             // 
@@ -368,17 +370,33 @@
             this.imageListZip.Images.SetKeyName(5, "bat02_04.gif");
             this.imageListZip.Images.SetKeyName(6, "bg04.jpg");
             // 
-            // 出库ToolStripMenuItem
+            // 储位明细ToolStripMenuItem
             // 
-            this.出库ToolStripMenuItem.Name = "出库ToolStripMenuItem";
-            this.出库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.出库ToolStripMenuItem.Text = "出库";
+            this.储位明细ToolStripMenuItem.Name = "储位明细ToolStripMenuItem";
+            this.储位明细ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.储位明细ToolStripMenuItem.Text = "储位明细";
+            this.储位明细ToolStripMenuItem.Click += new System.EventHandler(this.储位明细ToolStripMenuItem_Click);
             // 
-            // 入库ToolStripMenuItem
+            // 人工入库ToolStripMenuItem
             // 
-            this.入库ToolStripMenuItem.Name = "入库ToolStripMenuItem";
-            this.入库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.入库ToolStripMenuItem.Text = "入库";
+            this.人工入库ToolStripMenuItem.Name = "人工入库ToolStripMenuItem";
+            this.人工入库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.人工入库ToolStripMenuItem.Text = "人工入库";
+            this.人工入库ToolStripMenuItem.Click += new System.EventHandler(this.人工入库ToolStripMenuItem_Click);
+            // 
+            // 出入库查询ToolStripMenuItem
+            // 
+            this.出入库查询ToolStripMenuItem.Name = "出入库查询ToolStripMenuItem";
+            this.出入库查询ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.出入库查询ToolStripMenuItem.Text = "出入库查询";
+            this.出入库查询ToolStripMenuItem.Click += new System.EventHandler(this.出入库查询ToolStripMenuItem_Click_1);
+            // 
+            // 异常查询ToolStripMenuItem
+            // 
+            this.异常查询ToolStripMenuItem.Name = "异常查询ToolStripMenuItem";
+            this.异常查询ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.异常查询ToolStripMenuItem.Text = "异常查询";
+            this.异常查询ToolStripMenuItem.Click += new System.EventHandler(this.异常查询ToolStripMenuItem_Click_1);
             // 
             // MainFrm
             // 
@@ -409,7 +427,6 @@
         private System.Windows.Forms.ToolStripMenuItem 编辑ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 视图ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.Panel panel1;
@@ -420,23 +437,26 @@
         private System.Windows.Forms.ImageList imageListZip;
         private System.Windows.Forms.Button btnStorage;
         private System.Windows.Forms.Button btnFenjian;
-        private System.Windows.Forms.Button btnQuery;
         private System.Windows.Forms.ToolStripMenuItem 分拣管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 入库单入库ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 托盘入库ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 成品入库ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 抽检返库ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 抽检出库ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 人工拆垛ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 移库入库ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 库存统计ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 巷道管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设备管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 可疑储位ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 出入库查询ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 异常查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 分拣预补ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 入库ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 出库ToolStripMenuItem;
+        private System.Windows.Forms.Button btnChaiduo;
+        private System.Windows.Forms.ToolStripMenuItem 人工拆垛ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 人工拆垛ToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem 自动补货出库ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 储位明细ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 人工入库ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 出入库查询ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 异常查询ToolStripMenuItem;
 
 
 
