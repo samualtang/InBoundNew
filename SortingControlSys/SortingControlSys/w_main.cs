@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using SortingControlSys.PubFunc;
 using SortingControlSys.SortingControl;
+using System.Configuration;
 
 namespace SortingControlSys
 {
@@ -28,6 +29,8 @@ namespace SortingControlSys
                 w_SortingControlMain = null;
                 return;
             }
+         decimal   sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+         this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2;
             w_SortingControlMain.MdiParent = this;
             //w_SortingControlMain.WindowState = FormWindowState.Maximized;
             w_SortingControlMain.FormBorderStyle = FormBorderStyle.None;
