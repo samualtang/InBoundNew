@@ -10,6 +10,7 @@ using System.Data.OracleClient;
 using SortingControlSys.PubFunc;
 using InBound;
 using InBound.Business;
+using System.Configuration;
 
 namespace SortingControlSys.SortingControl
 {
@@ -85,6 +86,9 @@ namespace SortingControlSys.SortingControl
                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+
+          decimal  sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
+          decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
              if (MsgBoxResult == DialogResult.Yes)
             {
                 if (textBox1.Text.Equals(""))
@@ -96,23 +100,37 @@ namespace SortingControlSys.SortingControl
                 {
                     String from = textBox1.Text;
                     String to = textBox2.Text;
-                    decimal taskState = 10;
+                    int taskState = 10;
                     if (textBox2.Text == "")
                     {
                         to = from;
                     }
                      if (radioButton2.Checked)
                     {
-                        taskState = 20;
+                        taskState =15;
 
                     }
                      else if (radioButton3.Checked)
                      {
                    
-                         taskState = 30;
+                         taskState = 20;
                      }
-                     TaskService.updateTask1(decimal.Parse(from), decimal.Parse(to), taskState);
-
+                     TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
+                    decimal dFrom=decimal.Parse(from);
+                    decimal tFrom=decimal.Parse(to);
+                    for (decimal i = dFrom; i <= tFrom; i++)
+                    {
+                        if (cbLineA.Checked)
+                        {
+                            InBoundService.UpdateInOut(i, sortgroupno1);
+                            TaskService.UpdateStatus(sortgroupno1, taskState, i);
+                        }
+                        if (cbLineB.Checked)
+                        {
+                            InBoundService.UpdateInOut(i, sortgroupno2);
+                            TaskService.UpdateStatus(sortgroupno2, taskState, i);
+                        }
+                    }
                      button1_Click(null, null);
                  
                 }
