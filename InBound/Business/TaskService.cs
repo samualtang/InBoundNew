@@ -23,7 +23,7 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_PRODUCE_TASK orderby item.TASKNUM select item;
+                var query = from item in dataentity.T_PRODUCE_TASK orderby item.SORTNUM select item;
                 return query.ToList();
             }
         }
@@ -31,21 +31,13 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_PRODUCE_TASK where item.TASKNUM == tasknum select item;
+                var query = from item in dataentity.T_PRODUCE_TASK where item.SORTNUM == tasknum select item;
                 return query.ToList();
             }
         }
-        public static void updateTask1(decimal fromtasknum, decimal totasknum, decimal state)
+        public static void updateTask(decimal fromtasknum, decimal totasknum, decimal state)
         {
-            //using (Entities dataentity = new Entities())
-            //{
-            //    var query =( from item in dataentity.T_PRODUCE_TASK where item.TASKNUM >= fromtasknum && item.TASKNUM<=totasknum select item).ToList();
-            //   if(query!=null  && query.Count>0)
-            //    {
-            //        query.ForEach(x=>x.GROUP1STATE=state);
-            //        dataentity.SaveChanges();
-            //    }
-            //  }
+            
         }
         public static void updateTask2(decimal fromtasknum, decimal totasknum, decimal state)
         {
