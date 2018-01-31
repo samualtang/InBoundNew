@@ -501,14 +501,14 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskItem3()
        {
            List<string> list = new List<string>();
-<<<<<<< HEAD
+
            for (int i = 0; i <= 6000; i++)
            {
                list.Add("S7:[FJConnection]DB401,W"+i);
            }
-=======
-           list.Add("S7:[UnnormalConnection]DB401,W0");
->>>>>>> 3f98be1ec1e200563a08d6fde41bed55dcea4a36
+
+           
+
            return list;
        }
     }
