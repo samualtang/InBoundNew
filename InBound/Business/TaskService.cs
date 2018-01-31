@@ -1125,7 +1125,7 @@ namespace InBound.Business
                     {
                         item.SORTSTATE = stage;
                     }
-                    entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=30)");
+                    entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=20)");
                     entity.SaveChanges();
                 }
             }
