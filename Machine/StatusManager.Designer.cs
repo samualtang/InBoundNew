@@ -40,8 +40,6 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.cbLineA = new System.Windows.Forms.CheckBox();
-            this.cbLineB = new System.Windows.Forms.CheckBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.卷烟代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +47,8 @@
             this.物理通道号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbTroughNum = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.SuspendLayout();
             // 
@@ -170,26 +170,6 @@
             this.task_data.Size = new System.Drawing.Size(1054, 601);
             this.task_data.TabIndex = 12;
             // 
-            // cbLineA
-            // 
-            this.cbLineA.AutoSize = true;
-            this.cbLineA.Location = new System.Drawing.Point(751, 34);
-            this.cbLineA.Name = "cbLineA";
-            this.cbLineA.Size = new System.Drawing.Size(42, 16);
-            this.cbLineA.TabIndex = 13;
-            this.cbLineA.Text = "A线";
-            this.cbLineA.UseVisualStyleBackColor = true;
-            // 
-            // cbLineB
-            // 
-            this.cbLineB.AutoSize = true;
-            this.cbLineB.Location = new System.Drawing.Point(815, 33);
-            this.cbLineB.Name = "cbLineB";
-            this.cbLineB.Size = new System.Drawing.Size(42, 16);
-            this.cbLineB.TabIndex = 14;
-            this.cbLineB.Text = "B线";
-            this.cbLineB.UseVisualStyleBackColor = true;
-            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "SortNum";
@@ -230,13 +210,30 @@
             this.Column4.HeaderText = "状态位";
             this.Column4.Name = "Column4";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(718, 36);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 12);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "请选择通道号:";
+            // 
+            // cbTroughNum
+            // 
+            this.cbTroughNum.FormattingEnabled = true;
+            this.cbTroughNum.Location = new System.Drawing.Point(807, 34);
+            this.cbTroughNum.Name = "cbTroughNum";
+            this.cbTroughNum.Size = new System.Drawing.Size(121, 20);
+            this.cbTroughNum.TabIndex = 14;
+            // 
             // StatusManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1096, 692);
-            this.Controls.Add(this.cbLineB);
-            this.Controls.Add(this.cbLineA);
+            this.Controls.Add(this.cbTroughNum);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.task_data);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox3);
@@ -271,8 +268,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView task_data;
-        private System.Windows.Forms.CheckBox cbLineA;
-        private System.Windows.Forms.CheckBox cbLineB;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn 卷烟代码;
@@ -280,5 +275,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 物理通道号;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbTroughNum;
     }
 }

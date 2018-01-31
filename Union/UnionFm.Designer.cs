@@ -97,6 +97,7 @@
             this.button6.TabIndex = 9;
             this.button6.Text = "修改状态";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
             // button12
             // 

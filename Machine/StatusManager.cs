@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.OracleClient;
 using SortingControlSys.PubFunc;
 using InBound;
 using InBound.Business;
@@ -17,13 +16,13 @@ namespace SortingControlSys.SortingControl
 {
     public partial class StatusManager : Form
     {
-        decimal sortgroupno1;
-        decimal sortgroupno2;
+        decimal groupNo = 0;
         public StatusManager()
         {
             InitializeComponent();
-             sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
-             sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+            groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            initTroughnum();
+            cbTroughNum.SelectedIndex = 0;
             button1_Click(null, null);
         }
 
@@ -33,6 +32,13 @@ namespace SortingControlSys.SortingControl
             Bind();
 
         }
+        public void initTroughnum()
+        {
+            for (int i = 1; i < 23; i++)
+            {
+                cbTroughNum.Items.Add(i);
+            }
+        }
 
         private void Bind()
         {
@@ -40,12 +46,11 @@ namespace SortingControlSys.SortingControl
             List<TaskDetail> list;
             if (!textBox3.Text.Equals(""))
             {
-             
-                list = TaskService.getFJData(decimal.Parse(textBox3.Text), sortgroupno1, sortgroupno2);
+                list = TaskService.getMachineTask((groupNo-1)*22+cbTroughNum.SelectedIndex+1,decimal.Parse(textBox3.Text));
             }
             else
             {
-                list = TaskService.getFJDataAll(sortgroupno1, sortgroupno2);
+                list = TaskService.getAllMachineTask((groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
             }
             task_data.Rows.Clear();
             try
@@ -54,16 +59,15 @@ namespace SortingControlSys.SortingControl
                 foreach (var item in list)
                 {
                     
-                    status =item.SortState+"";
+                    status =item.MachineState+"";
 
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;
+                    this.task_data.Rows[index].Cells[0].Value = item.UnionTasknum;
                     this.task_data.Rows[index].Cells[1].Value = item.Billcode;
                     this.task_data.Rows[index].Cells[2].Value = item.CIGARETTDECODE;
                     this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDENAME;
                     this.task_data.Rows[index].Cells[4].Value = item.Machineseq;
                     this.task_data.Rows[index].Cells[5].Value = item.tNum;
-                   
                     if (status == "10")
                     {
                         status = "新增";
@@ -97,7 +101,8 @@ namespace SortingControlSys.SortingControl
                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
 
-        
+          //decimal  sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
+          //decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
              if (MsgBoxResult == DialogResult.Yes)
             {
                 if (textBox1.Text.Equals(""))
@@ -109,7 +114,7 @@ namespace SortingControlSys.SortingControl
                 {
                     String from = textBox1.Text;
                     String to = textBox2.Text;
-                    int taskState = 10;
+                    decimal taskState = 10;
                     if (textBox2.Text == "")
                     {
                         to = from;
@@ -124,27 +129,15 @@ namespace SortingControlSys.SortingControl
                    
                          taskState = 20;
                      }
-                     TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
+                    
                     decimal dFrom=decimal.Parse(from);
                     decimal tFrom=decimal.Parse(to);
                     for (decimal i = dFrom; i <= tFrom; i++)
                     {
-                        if (cbLineA.Checked)
-                        {
-                            if (taskState == 20)
-                            {
-                                InBoundService.UpdateInOut(i, sortgroupno1);
-                            }
-                            TaskService.UpdateStatus(sortgroupno1, taskState, i);
-                        }
-                        if (cbLineB.Checked)
-                        {
-                            if (taskState == 20)
-                            {
-                                InBoundService.UpdateInOut(i, sortgroupno2);
-                            }
-                            TaskService.UpdateStatus(sortgroupno2, taskState, i);
-                        }
+                        
+                            
+                            TaskService.UpdateMachine(  i,(groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1,taskState);
+                       
                     }
                      button1_Click(null, null);
                  

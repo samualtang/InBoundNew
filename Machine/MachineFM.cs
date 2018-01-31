@@ -317,8 +317,8 @@ namespace SortingControlSys.SortingControl
             int i = 1;
             foreach (var item in groupList)
             {
-                item.Write(3, 3);
-                Thread.Sleep(10);
+                //item.Write(3, 3);
+                //Thread.Sleep(10);
                 item.Write(2, 3);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(3));
                 i++;
@@ -807,10 +807,10 @@ namespace SortingControlSys.SortingControl
 
         private void button6_Click_1(object sender, EventArgs e)
         {
-            //w_pass pass = new w_pass();
+            w_pass pass = new w_pass();
 
 
-            //pass.Show();
+            pass.Show();
 
 
         }
