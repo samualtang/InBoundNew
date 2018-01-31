@@ -356,8 +356,15 @@ namespace InBound.Business
                     foreach (var num in troughNum)
                     {
                         List<T_UN_POKE> tempList = list.FindAll(x => x.TROUGHNUM == num);
-                        decimal totalQty = tempList.Sum(x => x.TASKQTY) ?? 0;
+                       // decimal totalQty = tempList.Sum(x => x.TASKQTY) ?? 0;
                         T_UN_POKE poke = tempList[0];
+                        
+                        var query = (from itemlist in entity.T_WMS_STORAGEAREA_INOUT where itemlist.TASKNO == poke.BILLCODE && itemlist.AREAID==3 && itemlist.CELLNO==num select itemlist).FirstOrDefault();
+                        if (query != null)
+                            break;
+                        decimal totalQty = (from itemlist1 in entity.T_UN_POKE
+                                      where itemlist1.BILLCODE == poke.BILLCODE && itemlist1.TROUGHNUM == num
+                                      select itemlist1).Sum(x => x.TASKQTY??0);
                         T_WMS_STORAGEAREA_INOUT outTask2 = new T_WMS_STORAGEAREA_INOUT();
                         outTask2.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
                         outTask2.AREAID = 3;//烟柜
