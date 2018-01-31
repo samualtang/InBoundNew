@@ -491,7 +491,10 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskItem3()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[FJConnection]DB401,W0");
+           for (int i = 0; i <= 6000; i++)
+           {
+               list.Add("S7:[FJConnection]DB401,W"+i);
+           }
            return list;
        }
     }

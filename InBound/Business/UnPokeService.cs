@@ -56,7 +56,7 @@ namespace InBound.Business
 
         public static object[] getCode()
         {
-            object[] values = new object[201];
+            object[] values = new object[200];
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -71,7 +71,7 @@ namespace InBound.Business
                     int j = 0;
                     foreach (var code in query)
                     {
-                        if (j < 201)
+                        if (j < 200)
                         {
                             values[j] = code;
                             j++;
@@ -379,12 +379,12 @@ namespace InBound.Business
         }
         public static object[] getName()
         {
-            object[] values = new object[1];
+            object[] values = new object[6000];
 
             using (Entities data = new Entities())
             {
 
-                var query = (from item in data.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 10 && item.CIGARETTETYPE != 20 select item.CIGARETTENAME).Distinct().ToList();
+                var query = (from item in data.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 10 && item.CIGARETTETYPE != 20 && item.CIGARETTENAME!=null select item.CIGARETTENAME).Distinct().ToList();
 
                 if (query != null)
                 {
@@ -394,15 +394,20 @@ namespace InBound.Business
                     {
                         if (j < 200)
                         {
-                            cname += initStr(code);
-                            j++;
+                          
+                            byte[] b=initStr(code);
+                            for (int i = 0; i < code.Length; i++)
+                            {
+                                values[j] = b[i];
+                                j++;
+                            }
                         }
                     }
                 }
                 return values;
             }
         }
-        public static string initStr(string str)
+        public static byte[] initStr(string str)
         {
             if (Encoding.ASCII.GetBytes(str).Length < 30)
             {
@@ -412,11 +417,11 @@ namespace InBound.Business
                 {
                     str += "0";
                 }
-                return str;
+                return Encoding.ASCII.GetBytes(str);
             }
             else
             {
-                return str;
+                return Encoding.ASCII.GetBytes(str);
             }
         }
         public static void UpdateTask(List<T_UN_POKE> task, int status)
