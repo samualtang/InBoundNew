@@ -26,6 +26,12 @@ namespace InBound.Model
        public String CIGARETTDECODE { get; set; }
        public decimal SORTMACHINE { get; set; }
        public decimal MainBelt { get; set; }
+       public decimal SortState { get; set; }
+       public decimal UnionState { get; set; }
+       public decimal MachineState { get; set; }
+       public decimal UnionTasknum { get; set; }
+       public decimal SortNum { get; set; }
+       public String Billcode { get; set; }
        public String ExportNum { get; set; }
        public String TaskNum { get; set; }
        public Decimal DTaskNum { get; set; }
