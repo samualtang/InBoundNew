@@ -502,9 +502,9 @@ namespace SortingControlSys.Model
        {
            List<string> list = new List<string>();
 
-           for (int i = 0; i <= 6000; i++)
+           for (int i = 0; i < 6000; i++)
            {
-               list.Add("S7:[FJConnection]DB401,W"+i);
+               list.Add("S7:[UnnormalConnection]DB401,byte" + i);
            }
 
            

@@ -397,17 +397,21 @@ namespace InBound.Business
                 {
                     String cname = "";
                     int j = 0;
+                    int m = 0;
                     foreach (var code in query)
                     {
                         if (j < 200)
                         {
                           
                             byte[] b=initStr(code);
+                            string s = Encoding.UTF8.GetString(b);
                             for (int i = 0; i < code.Length; i++)
                             {
-                                values[j] = b[i];
-                                j++;
+                                
+                                values[m] = b[i];
+                                m++;
                             }
+                            j++;
                         }
                     }
                 }
@@ -418,17 +422,17 @@ namespace InBound.Business
         {
             if (Encoding.ASCII.GetBytes(str).Length < 30)
             {
-                int i = 30 - Encoding.ASCII.GetBytes(str).Length;
+                int i = 30 - Encoding.UTF8.GetBytes(str).Length;
                // Encoding.ASCII.GetBytes(str) 转成数字
                 for (int j = 0; j < i; j++)
                 {
                     str += "0";
                 }
-                return Encoding.ASCII.GetBytes(str);
+                return Encoding.UTF8.GetBytes(str);
             }
             else
             {
-                return Encoding.ASCII.GetBytes(str);
+                return Encoding.UTF8.GetBytes(str);
             }
         }
         public static void UpdateTask(List<T_UN_POKE> task, int status)
