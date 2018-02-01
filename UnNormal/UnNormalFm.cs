@@ -108,7 +108,7 @@ namespace SortingControlSys.SortingControl
             
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3;
+        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,errgroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -122,9 +122,12 @@ namespace SortingControlSys.SortingControl
                 statusGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);
-
+                errgroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
                 taskgroup.addItem(ItemCollection.GetTaskItem());
                 taskgroup.callback += OnDataChange;
+                errgroup.addItem(ItemCollection.GetTaskError());
+                errgroup.callback += OnDataChange;
+
                 statusGroup1.addItem(ItemCollection.GetTaskItem1());
                 statusGroup1.callback += OnDataChange;
                 statusGroup2.addItem(ItemCollection.GetTaskItem2());
@@ -302,9 +305,17 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
-            else if (group == 3)
+            else if (group == 5)
             {
-                
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                    
+                         // clientId[i]//序号
+                         // values[i]//值
+                    
+                       
+                    
+                }
             }
 
             }
@@ -340,6 +351,7 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)
         {
             // UnPokeService.getTask(25);
+          
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
