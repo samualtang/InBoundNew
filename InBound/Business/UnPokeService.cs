@@ -407,9 +407,16 @@ namespace InBound.Business
                             string s = Encoding.UTF8.GetString(b);
                             for (int i = 0; i < code.Length; i++)
                             {
-                                
-                                values[m] = b[i];
-                                m++;
+                                if (i < 30)
+                                {
+                                    values[m] = b[i];
+
+                                    m++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                             j++;
                         }
@@ -420,7 +427,7 @@ namespace InBound.Business
         }
         public static byte[] initStr(string str)
         {
-            if (Encoding.ASCII.GetBytes(str).Length < 30)
+            if (Encoding.UTF8.GetBytes(str).Length < 30)
             {
                 int i = 30 - Encoding.UTF8.GetBytes(str).Length;
                // Encoding.ASCII.GetBytes(str) 转成数字
