@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using InBound.Model;
 
 namespace InBound.Business
 {
@@ -359,7 +360,7 @@ namespace InBound.Business
                        // decimal totalQty = tempList.Sum(x => x.TASKQTY) ?? 0;
                         T_UN_POKE poke = tempList[0];
                         
-                        var query = (from itemlist in entity.T_WMS_STORAGEAREA_INOUT where itemlist.TASKNO == poke.BILLCODE && itemlist.AREAID==3 && itemlist.CELLNO==num select itemlist).FirstOrDefault();
+                        var query = (from itemlist in entity.T_WMS_STORAGEAREA_INOUT where itemlist.TASKNO == poke.BILLCODE && itemlist.AREAID==3 && itemlist.CELLNO==num  && itemlist.QTY<0 select itemlist).FirstOrDefault();
                         if (query != null)
                             break;
                         decimal totalQty = (from itemlist1 in entity.T_UN_POKE
@@ -460,6 +461,67 @@ namespace InBound.Business
             }
         }
 
+        public static List<T_UN_POKE> GetListByBillCode(String billcode)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_UN_POKE where items.BILLCODE == billcode select items).ToList();
+
+                return query;
+            }
+        }
+        public static void UpdateTask(String billcode,decimal status)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_UN_POKE where items.BILLCODE == billcode select items).ToList();
+              
+                foreach (var item in query)
+                    {
+                        item.STATUS = status;
+                    }
+                var query2 = (from item in data.T_UN_TASK where item.BILLCODE == billcode select item).FirstOrDefault();
+                if (status == 15)
+                {
+                    query2.STATE = "30";
+                }
+                else
+                {
+                    query2.STATE = "20";
+                }
+               
+               // data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=15)");
+                data.SaveChanges();
+            }
+        }
+
+        public static List<TaskDetail> getData(decimal sortnum)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query = from item in dataentity.T_UN_TASK
+                            where item.SORTNUM == sortnum
+                            orderby item.SORTNUM
+                            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM,item.STATE } into g
+                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE, CIGARETTDECODE = g.Key.STATE };
+                if (query != null)
+                    return query.OrderBy(x => x.SortNum).ToList();
+                else return null;
+            }
+        }
+        public static List<TaskDetail> getDataAll()
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query = from item in dataentity.T_UN_TASK
+                            orderby item.SORTNUM
+                            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM, item.STATE } into g
+                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE,   CIGARETTDECODE = g.Key.STATE };
+                if (query != null)
+                    return query.OrderBy(x => x.SortNum).ToList();
+                else return null;
+            }
+        }
         public static List<T_UN_POKE> GetLinenum()
         {
             List<T_UN_POKE> list = new List<T_UN_POKE>();

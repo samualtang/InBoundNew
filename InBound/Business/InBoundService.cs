@@ -666,7 +666,7 @@ namespace InBound.Business
                     var taskList = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortNo && item.GROUPNO == groupno select item).ToList();
                     foreach (var task in taskList)
                     {
-                        var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.TASKNO == task.BILLCODE && item.GROUPNO == groupno select item).FirstOrDefault();
+                        var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.TASKNO == task.BILLCODE &&item.QTY<0 && item.GROUPNO == groupno select item).FirstOrDefault();
                         if (query != null)
                             break;
                         T_WMS_STORAGEAREA_INOUT outTask = new T_WMS_STORAGEAREA_INOUT();

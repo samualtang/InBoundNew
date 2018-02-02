@@ -38,11 +38,11 @@ namespace SortingControlSys.SortingControl
             if (!textBox3.Text.Equals(""))
             {
              
-                list = TaskService.getUnionData(decimal.Parse(textBox3.Text));
+                list = UnPokeService.getData(decimal.Parse(textBox3.Text));
             }
             else
             {
-                list = TaskService.getUnionDataAll();
+                list = UnPokeService.getDataAll();
             }
             task_data.Rows.Clear();
             try
@@ -51,27 +51,29 @@ namespace SortingControlSys.SortingControl
                 foreach (var item in list)
                 {
                     
-                    status =item.UnionState+"";
+                    status =item.CIGARETTDECODE+"";//CIGARETTDECODE 存了状态值  
 
                     int index = this.task_data.Rows.Add();
                     this.task_data.Rows[index].Cells[0].Value = item.SortNum;
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;
+                    this.task_data.Rows[index].Cells[1].Value = item.SecSortNum;
                  
-                    this.task_data.Rows[index].Cells[2].Value = item.tNum;
+                    this.task_data.Rows[index].Cells[2].Value = item.Billcode;
+                    this.task_data.Rows[index].Cells[3].Value = item.tNum;
                    
-                    if (status == "10")
+                   
+                    if (status == "20")
                     {
                         status = "新增";
                     }
-                    else if (status == "15")
-                    {
-                        status = "已发送";
-                    }
+                    //else if (status == "30")
+                    //{
+                    //    status = "";
+                    //}
                     else
                     {
                         status="完成";
                     }
-                    this.task_data.Rows[index].Cells[3].Value = status;
+                    this.task_data.Rows[index].Cells[4].Value = status;
 
                 }
            
@@ -95,20 +97,16 @@ namespace SortingControlSys.SortingControl
         
              if (MsgBoxResult == DialogResult.Yes)
             {
-                if (textBox1.Text.Equals(""))
-                {
-                    MessageBox.Show("请输入任务号");
-                    return;
-                }
-                else
-                {
-                    String from = textBox1.Text;
-                    String to = textBox2.Text;
-                    int taskState = 10;
-                    if (textBox2.Text == "")
-                    {
-                        to = from;
-                    }
+                       
+            if (task_data.SelectedRows == null || task_data.SelectedRows.Count<=0)
+             {
+                 MessageBox.Show("请选择一行更新");
+               return;
+            }
+            else
+            {
+                  decimal taskState = 10;
+                   
                      if (radioButton2.Checked)
                     {
                         taskState =15;
@@ -117,21 +115,20 @@ namespace SortingControlSys.SortingControl
                      else if (radioButton3.Checked)
                      {
                    
-                         taskState = 20;
+                         taskState = 15;
                      }
-                     TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
-                    int dFrom=int.Parse(from);
-                    int tFrom=int.Parse(to);
-                    for (int i = dFrom; i <= tFrom; i++)
-                    {
-                        
-                            //InBoundService.UpdateInOut(i, sortgroupno1);
-                            TaskService.UpdateUnionStatus( taskState, i);
-                       
-                    }
+                if(taskState!=10)
+                {
+                    UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(task_data.SelectedRows[0].Cells[2].Value.ToString()));
+                }
+
+               UnPokeService.UpdateTask( task_data.SelectedRows[0].Cells[2].Value.ToString(),taskState);
+            }
+          
+
                      button1_Click(null, null);
                  
-                }
+           
              
 
             }

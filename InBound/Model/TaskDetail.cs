@@ -31,6 +31,7 @@ namespace InBound.Model
        public decimal MachineState { get; set; }
        public decimal UnionTasknum { get; set; }
        public decimal SortNum { get; set; }
+       public decimal SecSortNum { get; set; }
        public String Billcode { get; set; }
        public String ExportNum { get; set; }
        public String TaskNum { get; set; }
