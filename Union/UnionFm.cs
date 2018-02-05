@@ -20,6 +20,7 @@ using InBound.Model;
 using InBound.Business;
 using Union;
 using InBound;
+using Machine;
 namespace SortingControlSys.SortingControl
 {
     public partial class UnionFm : Form
@@ -36,11 +37,18 @@ namespace SortingControlSys.SortingControl
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = new WriteLog();
         DeviceStateManager stateManager = new DeviceStateManager();
+        Alarms alarms = new Alarms();
         public UnionFm()
         {
             InitializeComponent();
             updateListBox("应用程序启动");
            // TaskService.GetUnionTask();
+
+           
+            alarms.AlarmsHandler += (obj) =>
+            {
+                updateListBox(string.Format("{0}号设备发生故障，故障名称：{1}", obj.DeviceNo, obj.ErrInfo), listError);
+            };
             try
             {
               // initdata();
@@ -134,7 +142,7 @@ namespace SortingControlSys.SortingControl
             //TaskService.GetUnionTask();
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5;
+        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5,errorGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -149,6 +157,9 @@ namespace SortingControlSys.SortingControl
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
+                errorGroup = new Group(pIOPCServer, 6, "group5", 1, LOCALE_ID);
+                errorGroup.addItem(ItemCollection.GetTaskErrStatusItem());
+                errorGroup.callback += OnDataChange;
                 taskgroup.addItem(ItemCollection.GetTaskStatusItem10());
                 taskgroup.callback += OnDataChange;
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem11());
@@ -391,7 +402,19 @@ namespace SortingControlSys.SortingControl
                     //}
                 }
             }
+            else if (group == 6)
+            {
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                  
+                    String temp = Convert.ToString(int.Parse(values[i].ToString()), 2);
+                    
+                    alarms.WriteErrWithCheck(1, clientId[i], temp, 1);
+                 
+                }
+            }
         }
+     
         public void Disconnect()
         {
            

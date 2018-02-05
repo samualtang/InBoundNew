@@ -38,7 +38,7 @@ namespace SortingControlSys.SortingControl
         IOPCServer pIOPCServer;  //定义opcServer对象
 
 
-
+        String serverIp = "";
         int writeCount = 2;
 
         decimal groupNo = 1;
@@ -56,6 +56,7 @@ namespace SortingControlSys.SortingControl
             };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            serverIp = ConfigurationManager.AppSettings["ServerIP"].ToString();
             ItemCollection.OpcMachineServer = ConfigurationManager.AppSettings["OpcMachineServer"].ToString();
             try
             {
@@ -171,7 +172,8 @@ namespace SortingControlSys.SortingControl
         {
             Type svrComponenttyp;
             Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            //svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME,serverIp,true);
+           svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
             try
             {
                 // Connect to the local server.
