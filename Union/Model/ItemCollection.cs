@@ -64,7 +64,15 @@ namespace SortingControlSys.Model
            return list;
        }
 
-
+       public static List<string> GetTaskErrStatusItem()//合流机械手信息采集
+       {
+           List<string> list = new List<string>();
+           for (int i = 0; i < 32; i++)
+           {
+               list.Add("UnionMachineConnection" + "DB4,W" + i * 2);
+           }
+           return list;
+       }
        public static List<string> GetTaskStatusItem10()
        {
            List<string> list = new List<string>();
