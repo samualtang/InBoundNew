@@ -491,11 +491,11 @@ namespace SortingControlSys.Model
        {
            List<string> list = new List<string>();
            double place0=0d, place1=0d;
-           for (var i = 0; i < 1000; i++)
+           for (var i = 0; i < 1500; i++)
            {
                place0 = Math.Floor((double)(i / 8));
                place1 = i % 8;
-               list.Add("S7:[UnnormalConnection]DB200,x" + place0 + "." + place1);//根据协议设置DB块
+               list.Add("S7:[UnnormalConnection]DB101,x" + place0 + "." + place1);//根据协议设置DB块
               
            }
 

@@ -303,7 +303,7 @@ namespace SortingControlSys.SortingControl
 
 
         }
-        String[] errMsgList = { "", "", "", "", "", "编码器故障", "手动选中", "反转", "单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号" };
+        String[] errMsgList = {"", "", "", "", "", "编码器故障", "手动选中", "反转","单台电机故障", "空开故障", "接触器/变频器故障", "急停（SF9）", "立烟", "气缸升超时", "气缸降超时", "运行信号"  };
         public string getErrMsg(int len)
         {
             return errMsgList[len];

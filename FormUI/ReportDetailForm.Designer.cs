@@ -40,6 +40,7 @@
             this.品牌编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.储位号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.创建时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -64,7 +65,8 @@
             this.品牌名称,
             this.品牌编码,
             this.储位号,
-            this.数量});
+            this.数量,
+            this.创建时间});
             this.dataGridView1.Location = new System.Drawing.Point(4, 18);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
@@ -152,6 +154,12 @@
             this.数量.HeaderText = "总数量";
             this.数量.Name = "数量";
             // 
+            // 创建时间
+            // 
+            this.创建时间.DataPropertyName = "Createtime";
+            this.创建时间.HeaderText = "创建时间";
+            this.创建时间.Name = "创建时间";
+            // 
             // ReportDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -185,5 +193,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 品牌编码;
         private System.Windows.Forms.DataGridViewTextBoxColumn 储位号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 创建时间;
     }
 }

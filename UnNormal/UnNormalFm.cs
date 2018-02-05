@@ -275,12 +275,12 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    if (clientId[i] == 225)
+                    if (clientId[i] == 226)
                     {
                         if (int.Parse(values[i].ToString()) == 0)
                         {
                                                        
-                            UnPokeService.UpdateTask(list, 20);
+                            UnPokeService.UpdateTask(list, 15);
                             UnPokeService.UpdateStroageInout(list);
                             sendTask();
                         }
@@ -292,12 +292,12 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    if (clientId[i] == 225)
+                    if (clientId[i] == 226)
                     {
                         if (int.Parse(values[i].ToString()) == 0)
                         {
 
-                            UnPokeService.UpdateTask(list1, 20);
+                            UnPokeService.UpdateTask(list1, 15);
                             UnPokeService.UpdateStroageInout(list1);
                             sendTask1();
                         }

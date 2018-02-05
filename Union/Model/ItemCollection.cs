@@ -47,19 +47,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskStatusItem3()//C01-C27
        {
            List<string> list = new List<string>();
-           for (int i = 1; i <= 27; i++)
+           for (int i = 0; i < 27; i++)
            {
-               list.Add(OpcUnionServer+"DB4,W" + i * 2);
+               list.Add(OpcUnionServer+"DB27,W" + i * 2);
            }
            return list;
        }
 
-       public static List<string> GetTaskStatusItem4()//E01-E27
+       public static List<string> GetTaskStatusItem4()//E01-E41
        {
            List<string> list = new List<string>();
-           for (int i = 31; i <= 72; i++)
+           for (int i = 30; i < 72; i++)
            {
-               list.Add(OpcUnionServer+"DB4,W" + i * 2);
+               list.Add(OpcUnionServer+"DB27,W" + i * 2);
            }
            return list;
        }

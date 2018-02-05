@@ -58,7 +58,15 @@ namespace SortingControlSys.SortingControl
               
                 if(isneedWrite)
                 {
-                String errMsg = item.val == "0" ? string.Format("消除{0}", OnGetErr(item.bit)) : OnGetErr(item.bit);
+                    String errMsg="";
+                    if (item.bit == 11)
+                    {
+                        errMsg = item.val == "1 " ? string.Format("消除{0}", OnGetErr(item.bit)) : OnGetErr(item.bit);
+                    }
+                    else
+                    {
+                        errMsg = item.val == "0" ? string.Format("消除{0}", OnGetErr(item.bit)) : OnGetErr(item.bit);
+                    }
                 ErrListService.Add(deviceNo, GroupNo, 30, errMsg, item.val);
                 DeviceStateInfoModel info = new DeviceStateInfoModel { DeviceNo = len, DeviceName = deviceNo, ErrInfo = errMsg };
                 if (AlarmsHandler!=null)

@@ -91,7 +91,7 @@ namespace InBound.Business
                             where item2.STATUS == 30
                             group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
                             select new OutBound() { CIGARETTECODE = g.Key.CIGARETTECODE, CIGARETTENAME = g.Key.CIGARETTENAME, QTY = g.Sum(item => item.QTY)??0 };
-                return query.ToList();
+                return query.OrderBy(x => x.CIGARETTECODE).ToList();
             }
         }
         public static List<OutBound> GetReportDetail(String cigarettename, String code)
@@ -104,8 +104,8 @@ namespace InBound.Business
                             item2.CELLNO
                             where item2.STATUS == 30 && item.CIGARETTENAME.Contains(cigarettename) && item.CIGARETTECODE.Contains(code)
                            // group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
-                            select new OutBound() { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY??0, CELLNO=item2.CELLNO };
-                return query.ToList();
+                            select new OutBound() { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY??0, CELLNO=item2.CELLNO, CREATETIME=item2.CREATETIME };
+                return query.OrderBy(x=>x.CIGARETTECODE).ToList();
             }
         }
         public static List<OutBound> GetReport(String cigarettename,String code)
