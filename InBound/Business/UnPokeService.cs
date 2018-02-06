@@ -375,7 +375,7 @@ namespace InBound.Business
                         T_WMS_ITEM item = ItemService.GetItemByCode(poke.CIGARETTECODE);
                         outTask2.BARCODE = item.BIGBOX_BAR;
                         outTask2.CIGARETTENAME = item.ITEMNAME;
-                        outTask2.INOUTTYPE = 20;//入
+                        outTask2.INOUTTYPE = 10;//出
                         outTask2.QTY = -totalQty;
                         outTask2.CREATETIME = DateTime.Now;
                         outTask2.STATUS = 10;
