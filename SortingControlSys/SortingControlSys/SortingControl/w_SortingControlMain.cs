@@ -910,12 +910,18 @@ namespace SortingControlSys.SortingControl
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            AlineStopFlag = ChangeFalg(!AlineStopFlag, 0, "A线", btnClear) == true ? true : false;
+            if (pIOPCServer != null)
+            {
+                AlineStopFlag = ChangeFalg(!AlineStopFlag, 0, "A线", btnClear) == true ? true : false;
+            }
         }
 
         private void btnClearB_Click(object sender, EventArgs e)
         {
-            BlineStopFlag = ChangeFalg(!BlineStopFlag, 1, "B线", btnClearB) == true ? true : false;
+            if (pIOPCServer != null)
+            {
+                BlineStopFlag = ChangeFalg(!BlineStopFlag, 1, "B线", btnClearB) == true ? true : false;
+            }
         }
 
         /// <summary>
@@ -933,13 +939,13 @@ namespace SortingControlSys.SortingControl
             {
                 ClearCacheGroup.Write(1, index);
                 isStop = true;
-                btn.Text = string.Format("{0}恢复", lineName);
+               // btn.Text = string.Format("{0}恢复", lineName);
             }
             else
             {
                 ClearCacheGroup.Write(0, index);
                 isStop = false;
-                btn.Text = string.Format("{0}停止", lineName);
+              //  btn.Text = string.Format("{0}停止", lineName);
             }
             return isStop;
         }

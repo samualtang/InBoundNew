@@ -89,7 +89,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.SORTNUM == sortnum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE=item2.CIGARETTECODE, CIGARETTDENAME=item2.CIGARETTENAME, Machineseq=item.MACHINESEQ??0,  SortNum =item.SORTNUM??0 , tNum=item.POKENUM??0, Billcode=item.BILLCODE, UnionState=item.SORTSTATE??0   };
+                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
