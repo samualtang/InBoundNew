@@ -269,6 +269,7 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write(ex.Message);
             }
         }
+        public static Object lockFlag = new Object();
         public void OnDataChange(int group,int[] clientId, object[] values)
         {
             if (group == 1)
@@ -312,16 +313,19 @@ namespace SortingControlSys.SortingControl
                     
                          // clientId[i]//序号
                          // values[i]//值
-                    
-                       
+
+                    lock (lockFlag)
+                    {
+                        stateManager.WriteErrWithCheck(values[i].ToString(),clientId[i].ToString(),lineNum);
+                    }
                     
                 }
             }
 
             }
 
-          
-        
+
+        public DeviceStateManager stateManager = new DeviceStateManager();
         public void Disconnect()
         {
            
