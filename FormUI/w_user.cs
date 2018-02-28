@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Data.OracleClient;
 using System.IO;
 using InBound.Business;
+using FormUI.TooL;
 
 namespace FormUI
 {
@@ -74,7 +75,7 @@ namespace FormUI
         #region btn_OK
         private void button1_Click(object sender, EventArgs e)
         {
-            AtsCellOutService.getOutCellNo("1430204", 30);
+           
             try
             {
                 string ls_pass;
@@ -88,6 +89,7 @@ namespace FormUI
 
                 if (SysUserService.Login(txtUserName.Text, ls_pass))
                 {
+                    Constant.userName = txtUserName.Text.Trim();
                     DialogResult = DialogResult.OK;
                 }
                 else

@@ -15,11 +15,21 @@
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.Store.T_SYS_MENUROLERELATIVE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_UN_TASKLINE">
+            <DefiningQuery>SELECT 
+      "T_UN_TASKLINE"."TASKNUM" AS "TASKNUM", 
+      "T_UN_TASKLINE"."CIGARETTECODE" AS "CIGARETTECODE", 
+      "T_UN_TASKLINE"."CIGARETTENAME" AS "CIGARETTENAME", 
+      "T_UN_TASKLINE"."QUANTITY" AS "QUANTITY", 
+      "T_UN_TASKLINE"."UNIT" AS "UNIT", 
+      "T_UN_TASKLINE"."ALLOWSORT" AS "ALLOWSORT"
+      FROM "ZOOMTEL"."T_UN_TASKLINE" "T_UN_TASKLINE"</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.Store.T_WMS_ATSCELL_CJ_HIS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.Store.T_WMS_ATSCELL_IN" store:Type="Tables" Schema="ZOOMTEL" />
@@ -139,7 +149,6 @@
           <Property Name="SORTNUM" Type="number" />
           <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
           <Property Name="UNIONEXPORTNUM" Type="varchar2" MaxLength="10" />
-          <Property Name="UNIONTASKNUM" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_SORTTROUGH">
           <Key>
@@ -163,9 +172,6 @@
           <Property Name="GROUPNO" Type="number" />
           <Property Name="THRESHOLD" Type="number" />
           <Property Name="BOXCOUNT" Type="number" />
-          <Property Name="MAINTISSALESS" Type="number" />
-          <Property Name="CLEARUP" Type="number" />
-          <Property Name="CLEARTHRESHOLD" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -202,7 +208,6 @@
           <Property Name="MAINBELT" Type="number" />
           <Property Name="PACKAGEMACHINE" Type="number" />
           <Property Name="SORTNUM" Type="number" />
-          <Property Name="ORDERDATE" Type="date" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASKLINE">
           <Key>
@@ -216,6 +221,17 @@
           <Property Name="UNIT" Type="varchar2" MaxLength="5" />
           <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
           <Property Name="SORTNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_SYS_MENUROLERELATIVE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" Precision="6" />
+          <Property Name="MENUID" Type="number" Precision="6" />
+          <Property Name="SYSROLEID" Type="number" Precision="6" />
+          <Property Name="REMARKS" Type="varchar2" MaxLength="200" />
+          <Property Name="SEQ" Type="number" />
+          <Property Name="ISSTARTUP" Type="varchar2" MaxLength="2" />
         </EntityType>
         <EntityType Name="T_SYS_ROUTEINFO">
           <Key>
@@ -299,7 +315,6 @@
           <Property Name="DELSTATUS" Type="number" Precision="2" />
           <Property Name="WORKSOURCE" Type="varchar2" MaxLength="20" />
           <Property Name="ROLEID" Type="number" Precision="6" />
-          <Property Name="WECHATUSERID" Type="varchar2" MaxLength="50" />
         </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
@@ -329,7 +344,7 @@
           <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
           <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
           <Property Name="REGIONDESC" Type="varchar2" MaxLength="30" />
-          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="3000" />
           <Property Name="COMPANYCODE" Type="varchar2" MaxLength="10" />
           <Property Name="COMPANYNAME" Type="varchar2" MaxLength="20" />
           <Property Name="BATCHCODE" Type="varchar2" MaxLength="12" />
@@ -356,6 +371,9 @@
           <Property Name="SORTNUM" Type="number" />
           <Property Name="SECSORTNUM" Type="number" />
         </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“ZOOMTEL.T_UN_TASKLINE”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
         <EntityType Name="T_UN_TASKLINE">
           <Key>
             <PropertyRef Name="TASKNUM" />
@@ -817,6 +835,7 @@
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.T_WMS_ATSCELL_IN" />
           <EntitySet Name="T_WMS_INBOUND_LINE" EntityType="Model.T_WMS_INBOUND_LINE" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
+          <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.T_SYS_MENUROLERELATIVE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1523,6 +1542,17 @@
           <Property Type="Decimal" Name="CLEARUP" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CLEARTHRESHOLD" Precision="38" Scale="0" />
         </EntityType>
+        <EntityType Name="T_SYS_MENUROLERELATIVE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="MENUID" />
+          <Property Type="Int32" Name="SYSROLEID" />
+          <Property Type="String" Name="REMARKS" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="ISSTARTUP" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1841,7 +1871,6 @@
           <EntitySetMapping Name="T_SYS_USER">
             <EntityTypeMapping TypeName="Model.T_SYS_USER">
               <MappingFragment StoreEntitySet="T_SYS_USER">
-                <ScalarProperty Name="WECHATUSERID" ColumnName="WECHATUSERID" />
                 <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
                 <ScalarProperty Name="WORKSOURCE" ColumnName="WORKSOURCE" />
                 <ScalarProperty Name="DELSTATUS" ColumnName="DELSTATUS" />
@@ -1934,7 +1963,6 @@
           <EntitySetMapping Name="T_PRODUCE_TASK">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_TASK">
               <MappingFragment StoreEntitySet="T_PRODUCE_TASK">
-                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
                 <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
                 <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
                 <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
@@ -2157,7 +2185,6 @@
           <EntitySetMapping Name="T_PRODUCE_POKE">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
               <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
-                <ScalarProperty Name="UNIONTASKNUM" ColumnName="UNIONTASKNUM" />
                 <ScalarProperty Name="UNIONEXPORTNUM" ColumnName="UNIONEXPORTNUM" />
                 <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
                 <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
@@ -2244,9 +2271,6 @@
           <EntitySetMapping Name="T_PRODUCE_SORTTROUGH">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_SORTTROUGH">
               <MappingFragment StoreEntitySet="T_PRODUCE_SORTTROUGH">
-                <ScalarProperty Name="CLEARTHRESHOLD" ColumnName="CLEARTHRESHOLD" />
-                <ScalarProperty Name="CLEARUP" ColumnName="CLEARUP" />
-                <ScalarProperty Name="MAINTISSALESS" ColumnName="MAINTISSALESS" />
                 <ScalarProperty Name="BOXCOUNT" ColumnName="BOXCOUNT" />
                 <ScalarProperty Name="THRESHOLD" ColumnName="THRESHOLD" />
                 <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
@@ -2264,6 +2288,18 @@
                 <ScalarProperty Name="TROUGHDESC" ColumnName="TROUGHDESC" />
                 <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
                 <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SYS_MENUROLERELATIVE">
+            <EntityTypeMapping TypeName="Model.T_SYS_MENUROLERELATIVE">
+              <MappingFragment StoreEntitySet="T_SYS_MENUROLERELATIVE">
+                <ScalarProperty Name="ISSTARTUP" ColumnName="ISSTARTUP" />
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
+                <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+                <ScalarProperty Name="SYSROLEID" ColumnName="SYSROLEID" />
+                <ScalarProperty Name="MENUID" ColumnName="MENUID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2322,6 +2358,7 @@
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_IN" Width="1.5" PointX="20.75" PointY="15.75" Height="2.8441984049479174" />
         <EntityTypeShape EntityType="Model.T_WMS_INBOUND_LINE" Width="1.5" PointX="20.375" PointY="19.75" Height="3.3985807291666674" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="4.87693359375001" />
+        <EntityTypeShape EntityType="Model.T_SYS_MENUROLERELATIVE" Width="1.5" PointX="9.375" PointY="4.75" Height="2.1050219726562602" />
       </Diagram>
     </Diagrams>
   </Designer>

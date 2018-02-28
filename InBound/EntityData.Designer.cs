@@ -592,6 +592,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_SYS_MENUROLERELATIVE> T_SYS_MENUROLERELATIVE
+        {
+            get
+            {
+                if ((_T_SYS_MENUROLERELATIVE == null))
+                {
+                    _T_SYS_MENUROLERELATIVE = base.CreateObjectSet<T_SYS_MENUROLERELATIVE>("T_SYS_MENUROLERELATIVE");
+                }
+                return _T_SYS_MENUROLERELATIVE;
+            }
+        }
+        private ObjectSet<T_SYS_MENUROLERELATIVE> _T_SYS_MENUROLERELATIVE;
 
         #endregion
 
@@ -859,6 +875,14 @@ namespace InBound
         public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
         {
             base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
+        }
+    
+        /// <summary>
+        /// 用于向 T_SYS_MENUROLERELATIVE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_SYS_MENUROLERELATIVE(T_SYS_MENUROLERELATIVE t_SYS_MENUROLERELATIVE)
+        {
+            base.AddObject("T_SYS_MENUROLERELATIVE", t_SYS_MENUROLERELATIVE);
         }
 
         #endregion
@@ -4400,6 +4424,183 @@ namespace InBound
         private Nullable<global::System.Decimal> _SORTNUM;
         partial void OnSORTNUMChanging(Nullable<global::System.Decimal> value);
         partial void OnSORTNUMChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_SYS_MENUROLERELATIVE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_SYS_MENUROLERELATIVE : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_SYS_MENUROLERELATIVE 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_SYS_MENUROLERELATIVE CreateT_SYS_MENUROLERELATIVE(global::System.Int32 id)
+        {
+            T_SYS_MENUROLERELATIVE t_SYS_MENUROLERELATIVE = new T_SYS_MENUROLERELATIVE();
+            t_SYS_MENUROLERELATIVE.ID = id;
+            return t_SYS_MENUROLERELATIVE;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MENUID
+        {
+            get
+            {
+                return _MENUID;
+            }
+            set
+            {
+                OnMENUIDChanging(value);
+                ReportPropertyChanging("MENUID");
+                _MENUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MENUID");
+                OnMENUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MENUID;
+        partial void OnMENUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnMENUIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SYSROLEID
+        {
+            get
+            {
+                return _SYSROLEID;
+            }
+            set
+            {
+                OnSYSROLEIDChanging(value);
+                ReportPropertyChanging("SYSROLEID");
+                _SYSROLEID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SYSROLEID");
+                OnSYSROLEIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SYSROLEID;
+        partial void OnSYSROLEIDChanging(Nullable<global::System.Int32> value);
+        partial void OnSYSROLEIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String REMARKS
+        {
+            get
+            {
+                return _REMARKS;
+            }
+            set
+            {
+                OnREMARKSChanging(value);
+                ReportPropertyChanging("REMARKS");
+                _REMARKS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("REMARKS");
+                OnREMARKSChanged();
+            }
+        }
+        private global::System.String _REMARKS;
+        partial void OnREMARKSChanging(global::System.String value);
+        partial void OnREMARKSChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SEQ
+        {
+            get
+            {
+                return _SEQ;
+            }
+            set
+            {
+                OnSEQChanging(value);
+                ReportPropertyChanging("SEQ");
+                _SEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SEQ");
+                OnSEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SEQ;
+        partial void OnSEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnSEQChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISSTARTUP
+        {
+            get
+            {
+                return _ISSTARTUP;
+            }
+            set
+            {
+                OnISSTARTUPChanging(value);
+                ReportPropertyChanging("ISSTARTUP");
+                _ISSTARTUP = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISSTARTUP");
+                OnISSTARTUPChanged();
+            }
+        }
+        private global::System.String _ISSTARTUP;
+        partial void OnISSTARTUPChanging(global::System.String value);
+        partial void OnISSTARTUPChanged();
 
         #endregion
 

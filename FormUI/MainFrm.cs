@@ -5,16 +5,21 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using FormUI.TooL;
 
 namespace MainUI
 {
     public partial class MainFrm : Form
     {
         String sourceAdd=System.Configuration.ConfigurationManager.AppSettings["SourceAdd"];
+        List<int?> menuInfo = null;
         public MainFrm()
         {
             InitializeComponent();
+            menuInfo = InBound.Business.SysUserService.getUserMenu(Constant.userName);
+
         }
+
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
@@ -25,16 +30,129 @@ namespace MainUI
             listView1.LargeImageList = imageListZip;
         }
 
+        public void initMenu()
+        {
+            if (!menuInfo.Contains(1000))
+            {
+                btnInBound.Visible = false;
+            }
+            if (!menuInfo.Contains(2000))
+            {
+                btnOutBound.Visible = false;
+            }
+            if (!menuInfo.Contains(3000))
+            {
+                btnReport.Visible = false;
+            }
+            if (!menuInfo.Contains(4000))
+            {
+                btnStorage.Visible = false;
+            }
+            if (!menuInfo.Contains(5000))
+            {
+                btnFenjian.Visible = false;
+            }
+            if (!menuInfo.Contains(6000))
+            {
+                btnChaiduo.Visible = false;
+            }
+            if (!menuInfo.Contains(1001))
+            {
+                入库单入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(1002))
+            {
+                托盘入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(1003))
+            {
+                成品入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(1004))
+            {
+                移库入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(1005))
+            {
+               入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(1006))
+            {
+                人工入库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(2001))
+            {
+               出库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(2002))
+            {
+                自动补货出库ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(3001))
+            {
+                库存统计ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(3002))
+            {
+                储位明细ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(3003))
+            {
+                出入库查询ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(3004))
+            {
+                异常查询ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(4001))
+            {
+                巷道管理ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(4002))
+            {
+                设备管理ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(4003))
+            {
+                可疑储位ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(5001))
+            {
+                分拣预补ToolStripMenuItem.Visible = false;
+            }
+            if (!menuInfo.Contains(6001))
+            {
+                人工拆垛ToolStripMenuItem1.Visible = false;
+            }
+        }
         private void CreateFList()
         {
             listView1.Items.Clear();
-           
-            listView1.Items.Add("入库单入库", 0);
-            listView1.Items.Add("托盘入库", 0);
-            listView1.Items.Add("人工入库", 0);
-            listView1.Items.Add("成品入库", 0);
-            listView1.Items.Add("移库入库", 0);
-            listView1.Items.Add("返库", 0);
+
+            if (menuInfo.Contains(1001))
+            {
+                listView1.Items.Add("入库单入库", 0);
+            }
+            if (menuInfo.Contains(1002))
+            {
+                listView1.Items.Add("托盘入库", 0);
+            }
+            if (menuInfo.Contains(1003))
+            {
+                listView1.Items.Add("人工入库", 0);
+            }
+            if (menuInfo.Contains(1004))
+            {
+                listView1.Items.Add("成品入库", 0);
+            }
+            if (menuInfo.Contains(1005))
+            {
+                listView1.Items.Add("移库入库", 0);
+            }
+            if (menuInfo.Contains(1006))
+            {
+                listView1.Items.Add("返库", 0);
+            }
            // listView1.Items.Add("空托盘入库", 0);
            // listView1.Items.Add("指定货位入库", 0);
             
@@ -43,34 +161,64 @@ namespace MainUI
         {
             listView1.Items.Clear();
 
-        
-            listView1.Items.Add("出库", 1);
-            listView1.Items.Add("自动补货出库", 1);
+            if (menuInfo.Contains(2001))
+            {
+                listView1.Items.Add("出库", 1);
+            }
+            if (menuInfo.Contains(2002))
+            {
+                listView1.Items.Add("自动补货出库", 1);
+            }
          
         }
         private void CreateManual()
         {
             listView1.Items.Clear();
-            listView1.Items.Add("人工拆垛", 0);
+            if (menuInfo.Contains(6001))
+            {
+                listView1.Items.Add("人工拆垛", 0);
+            }
         }
         private void CreateTList()
         {
             listView1.Items.Clear();
-      
-            listView1.Items.Add("库存统计", 0);
-            listView1.Items.Add("储位明细", 1);
-            listView1.Items.Add("出入库查询", 2);
-            listView1.Items.Add("异常查询",3);
+            if (menuInfo.Contains(3001))
+            {
+                listView1.Items.Add("库存统计", 0);
+            }
+            if (menuInfo.Contains(3002))
+            {
+                listView1.Items.Add("储位明细", 1);
+            }
+            if (menuInfo.Contains(3003))
+            {
+                listView1.Items.Add("出入库查询", 2);
+            }
+            if (menuInfo.Contains(3004))
+            {
+                listView1.Items.Add("异常查询", 3);
+            }
         }
 
         private void CreateFoList()
         {
             listView1.Items.Clear();
-        
-            listView1.Items.Add("巷道管理", 0);
-            listView1.Items.Add("设备管理", 1);
-            listView1.Items.Add("可疑储位", 0);
-            listView1.Items.Add("储位管理", 0);
+            if (menuInfo.Contains(4001))
+            {
+                listView1.Items.Add("巷道管理", 0);
+            }
+            if (menuInfo.Contains(4002))
+            {
+                listView1.Items.Add("设备管理", 1);
+            }
+            if (menuInfo.Contains(4003))
+            {
+                listView1.Items.Add("可疑储位", 0);
+            }
+            if (menuInfo.Contains(4004))
+            {
+                listView1.Items.Add("储位管理", 0);
+            }
         }
 
 
@@ -85,8 +233,10 @@ namespace MainUI
         private void CreateFenJianList()
         {
             listView1.Items.Clear();
-          
-            listView1.Items.Add("分拣预补", 0);
+            if (menuInfo.Contains(5001))
+            {
+                listView1.Items.Add("分拣预补", 0);
+            }
 
         }
         void ButtonClick(object sender, System.EventArgs e)
