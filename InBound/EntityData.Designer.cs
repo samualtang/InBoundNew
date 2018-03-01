@@ -292,22 +292,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_SYS_USER> T_SYS_USER
-        {
-            get
-            {
-                if ((_T_SYS_USER == null))
-                {
-                    _T_SYS_USER = base.CreateObjectSet<T_SYS_USER>("T_SYS_USER");
-                }
-                return _T_SYS_USER;
-            }
-        }
-        private ObjectSet<T_SYS_USER> _T_SYS_USER;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_UN_TASKLINE> T_UN_TASKLINE
         {
             get
@@ -336,22 +320,6 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_ATSCELLINFO> _T_WMS_ATSCELLINFO;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        public ObjectSet<T_PRODUCE_TASK> T_PRODUCE_TASK
-        {
-            get
-            {
-                if ((_T_PRODUCE_TASK == null))
-                {
-                    _T_PRODUCE_TASK = base.CreateObjectSet<T_PRODUCE_TASK>("T_PRODUCE_TASK");
-                }
-                return _T_PRODUCE_TASK;
-            }
-        }
-        private ObjectSet<T_PRODUCE_TASK> _T_PRODUCE_TASK;
     
         /// <summary>
         /// 没有元数据文档可用。
@@ -500,22 +468,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
-        {
-            get
-            {
-                if ((_T_PRODUCE_POKE == null))
-                {
-                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
-                }
-                return _T_PRODUCE_POKE;
-            }
-        }
-        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<INF_DEVICESTATUS> INF_DEVICESTATUS
         {
             get
@@ -580,22 +532,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PRODUCE_SORTTROUGH> T_PRODUCE_SORTTROUGH
-        {
-            get
-            {
-                if ((_T_PRODUCE_SORTTROUGH == null))
-                {
-                    _T_PRODUCE_SORTTROUGH = base.CreateObjectSet<T_PRODUCE_SORTTROUGH>("T_PRODUCE_SORTTROUGH");
-                }
-                return _T_PRODUCE_SORTTROUGH;
-            }
-        }
-        private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_SYS_MENUROLERELATIVE> T_SYS_MENUROLERELATIVE
         {
             get
@@ -608,6 +544,70 @@ namespace InBound
             }
         }
         private ObjectSet<T_SYS_MENUROLERELATIVE> _T_SYS_MENUROLERELATIVE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_SYS_USER> T_SYS_USER
+        {
+            get
+            {
+                if ((_T_SYS_USER == null))
+                {
+                    _T_SYS_USER = base.CreateObjectSet<T_SYS_USER>("T_SYS_USER");
+                }
+                return _T_SYS_USER;
+            }
+        }
+        private ObjectSet<T_SYS_USER> _T_SYS_USER;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_TASK> T_PRODUCE_TASK
+        {
+            get
+            {
+                if ((_T_PRODUCE_TASK == null))
+                {
+                    _T_PRODUCE_TASK = base.CreateObjectSet<T_PRODUCE_TASK>("T_PRODUCE_TASK");
+                }
+                return _T_PRODUCE_TASK;
+            }
+        }
+        private ObjectSet<T_PRODUCE_TASK> _T_PRODUCE_TASK;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
+        {
+            get
+            {
+                if ((_T_PRODUCE_POKE == null))
+                {
+                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
+                }
+                return _T_PRODUCE_POKE;
+            }
+        }
+        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_SORTTROUGH> T_PRODUCE_SORTTROUGH
+        {
+            get
+            {
+                if ((_T_PRODUCE_SORTTROUGH == null))
+                {
+                    _T_PRODUCE_SORTTROUGH = base.CreateObjectSet<T_PRODUCE_SORTTROUGH>("T_PRODUCE_SORTTROUGH");
+                }
+                return _T_PRODUCE_SORTTROUGH;
+            }
+        }
+        private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
 
         #endregion
 
@@ -726,14 +726,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_SYS_USER EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_SYS_USER(T_SYS_USER t_SYS_USER)
-        {
-            base.AddObject("T_SYS_USER", t_SYS_USER);
-        }
-    
-        /// <summary>
         /// 用于向 T_UN_TASKLINE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_UN_TASKLINE(T_UN_TASKLINE t_UN_TASKLINE)
@@ -747,14 +739,6 @@ namespace InBound
         public void AddToT_WMS_ATSCELLINFO(T_WMS_ATSCELLINFO t_WMS_ATSCELLINFO)
         {
             base.AddObject("T_WMS_ATSCELLINFO", t_WMS_ATSCELLINFO);
-        }
-    
-        /// <summary>
-        /// 用于向 T_PRODUCE_TASK EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_TASK(T_PRODUCE_TASK t_PRODUCE_TASK)
-        {
-            base.AddObject("T_PRODUCE_TASK", t_PRODUCE_TASK);
         }
     
         /// <summary>
@@ -830,14 +814,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
-        {
-            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
-        }
-    
-        /// <summary>
         /// 用于向 INF_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToINF_DEVICESTATUS(INF_DEVICESTATUS iNF_DEVICESTATUS)
@@ -870,19 +846,43 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_PRODUCE_SORTTROUGH EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
-        {
-            base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
-        }
-    
-        /// <summary>
         /// 用于向 T_SYS_MENUROLERELATIVE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_SYS_MENUROLERELATIVE(T_SYS_MENUROLERELATIVE t_SYS_MENUROLERELATIVE)
         {
             base.AddObject("T_SYS_MENUROLERELATIVE", t_SYS_MENUROLERELATIVE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_SYS_USER EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_SYS_USER(T_SYS_USER t_SYS_USER)
+        {
+            base.AddObject("T_SYS_USER", t_SYS_USER);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_TASK EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_TASK(T_PRODUCE_TASK t_PRODUCE_TASK)
+        {
+            base.AddObject("T_PRODUCE_TASK", t_PRODUCE_TASK);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
+        {
+            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_SORTTROUGH EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
+        {
+            base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
         }
 
         #endregion

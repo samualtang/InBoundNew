@@ -17,7 +17,10 @@ namespace MainUI
         {
             InitializeComponent();
             menuInfo = InBound.Business.SysUserService.getUserMenu(Constant.userName);
-
+            //menuInfo.Add(1000);
+            //menuInfo.Add(1001);
+            //menuInfo.Add(1003);
+            initMenu();
         }
 
 
@@ -35,26 +38,32 @@ namespace MainUI
             if (!menuInfo.Contains(1000))
             {
                 btnInBound.Visible = false;
+                入库管理ToolStripMenuItem.Visible = false;
             }
             if (!menuInfo.Contains(2000))
             {
                 btnOutBound.Visible = false;
+                出库管理ToolStripMenuItem.Visible = false;
             }
             if (!menuInfo.Contains(3000))
             {
                 btnReport.Visible = false;
+                统计报表ToolStripMenuItem.Visible = false;
             }
             if (!menuInfo.Contains(4000))
             {
                 btnStorage.Visible = false;
+                仓库管理ToolStripMenuItem.Visible = false;
             }
             if (!menuInfo.Contains(5000))
             {
                 btnFenjian.Visible = false;
+                分拣管理ToolStripMenuItem.Visible = false;
             }
             if (!menuInfo.Contains(6000))
             {
                 btnChaiduo.Visible = false;
+                人工拆垛ToolStripMenuItem1.Visible = false;
             }
             if (!menuInfo.Contains(1001))
             {
