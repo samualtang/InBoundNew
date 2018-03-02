@@ -13,7 +13,7 @@ namespace InBound.Business
         {
             using (Entities entity = new Entities())
             {
-                var query = from item in entity.T_WMS_INBOUND where item.CREATETIME >= start && item.CREATETIME <= end && item.STATUS == "10" && item.INTYPE == 10 select item;
+                var query = from item in entity.T_WMS_INBOUND where item.CREATETIME >= start && item.CREATETIME < end && item.STATUS == "10" && (item.INTYPE == 10 || item.INTYPE==30 || item.INTYPE==40) select item;
                 return query.ToList();
             }
         }

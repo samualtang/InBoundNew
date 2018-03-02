@@ -31,7 +31,7 @@ namespace FormUI
         {
             if (dateTimePicker1.Value.Date <= dateTimePicker2.Value.Date)
             {
-                List<InBound.T_WMS_INBOUND> itemlist = InBoundService.GetItem(dateTimePicker1.Value.Date, dateTimePicker2.Value.Date);
+                List<InBound.T_WMS_INBOUND> itemlist = InBoundService.GetItem(dateTimePicker1.Value.Date, dateTimePicker2.Value.Date.AddDays(1));
                 dataGridView1.AutoGenerateColumns = false;
                 dataGridView1.DataSource = itemlist;
                 if (itemlist != null && itemlist.Count > 0)
