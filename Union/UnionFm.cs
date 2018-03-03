@@ -157,7 +157,7 @@ namespace SortingControlSys.SortingControl
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
-                errorGroup = new Group(pIOPCServer, 6, "group5", 1, LOCALE_ID);
+                errorGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
                 errorGroup.addItem(ItemCollection.GetTaskErrStatusItem());
                 errorGroup.callback += OnDataChange;
                 taskgroup.addItem(ItemCollection.GetTaskStatusItem10());
