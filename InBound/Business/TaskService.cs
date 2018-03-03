@@ -3371,7 +3371,7 @@ namespace InBound.Business
         }
         public static object[] GetTroughValue(String troughno, List<String> result)
         {
-            object[] values = new object[4];
+            object[] values = new object[5];
             decimal machineseq = decimal.Parse(troughno);
             using (Entities entity = new Entities())
             {

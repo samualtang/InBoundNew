@@ -407,7 +407,7 @@ namespace SortingControlSys.SortingControl
 
             try
             {
-                int flag = group.Read(3).CastTo<int>(-1);
+                int flag = group.Read(4).CastTo<int>(-1);
                 writeLog.Write("exportnum:" + exportnum + ";标志位：" + flag);
                 updateListBox("exportnum:" + exportnum + ";标志位：" + flag);
                 if (flag == 2)
@@ -445,7 +445,7 @@ namespace SortingControlSys.SortingControl
                         if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
                         {
 
-                            group.WriteR(1, 3);
+                            group.WriteR(1, 4);
 
                             //String p5 = group.Read(3).ToString();
 
@@ -518,25 +518,26 @@ namespace SortingControlSys.SortingControl
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     //第四位 读写标志位
-                    if (clientId[i] == 4)
+                    if (clientId[i] == 5)
                     {
                         if (int.Parse(values[i].ToString()) == 2)
                         {
 
                             if (tempList.Count > 0)
                             {
-                                List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
-                                if (temp != null)
-                                {
-                                    foreach (var item in temp)
-                                    {
+                                //List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
+                                //if (temp != null)
+                                //{
+                                    //foreach (var item in temp)
+                                    //{
+                                        String item = groupList[Group-1].Read(4).ToString();
                                         updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                         writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
 
                                         TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
                                         removeKey(((groupNo - 1) * 22 + Group) + "");
-                                    }
-                                }
+                                    //}
+                                //}
 
                                 // removeKey(Group + "");
                             }

@@ -25,6 +25,7 @@ namespace SortingControlSys.Model
             list.Add(OpcMachineServer+"DB1,DWORD2");
             list.Add(OpcMachineServer+"DB1,DWORD6");
             list.Add(OpcMachineServer+"DB1,W10");
+            list.Add(OpcMachineServer + "DB1,DWORD12");
             list.Add(OpcMachineServer+"DB1,W0");
 
             return list;
@@ -33,110 +34,121 @@ namespace SortingControlSys.Model
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD14");
             list.Add(OpcMachineServer+"DB1,DWORD18");
-            list.Add(OpcMachineServer+"DB1,W22");
-            list.Add(OpcMachineServer+"DB1,W12");
+            list.Add(OpcMachineServer+"DB1,DWORD22");
+            list.Add(OpcMachineServer+"DB1,W26");
+            list.Add(OpcMachineServer + "DB1,DWORD28");
+            list.Add(OpcMachineServer+"DB1,W16");
             return list;
         }
         public static List<string> GetTaskStatusItem3()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD26");
-            list.Add(OpcMachineServer+"DB1,DWORD30");
-            list.Add(OpcMachineServer+"DB1,W34");
-            list.Add(OpcMachineServer+"DB1,W24");
+            list.Add(OpcMachineServer+"DB1,DWORD34");
+            list.Add(OpcMachineServer+"DB1,DWORD38");
+            list.Add(OpcMachineServer+"DB1,W42");
+            list.Add(OpcMachineServer + "DB1,DWORD44");
+            list.Add(OpcMachineServer+"DB1,W32");
             return list;
         }
         public static List<string> GetTaskStatusItem4()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD38");
-            list.Add(OpcMachineServer+"DB1,DWORD42");
-            list.Add(OpcMachineServer+"DB1,W46");
-            list.Add(OpcMachineServer+"DB1,W36");
+            list.Add(OpcMachineServer+"DB1,DWORD50");
+            list.Add(OpcMachineServer+"DB1,DWORD54");
+            list.Add(OpcMachineServer+"DB1,W58");
+            list.Add(OpcMachineServer + "DB1,DWORD60");
+            list.Add(OpcMachineServer+"DB1,W48");
             return list;
         }
         public static List<string> GetTaskStatusItem5()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD50");
-            list.Add(OpcMachineServer+"DB1,DWORD54");
-            list.Add(OpcMachineServer+"DB1,W58");
-            list.Add(OpcMachineServer+"DB1,W48");
+            list.Add(OpcMachineServer+"DB1,DWORD66");
+            list.Add(OpcMachineServer+"DB1,DWORD70");
+            list.Add(OpcMachineServer+"DB1,W74");
+            list.Add(OpcMachineServer + "DB1,DWORD76");
+            list.Add(OpcMachineServer+"DB1,W64");
             return list;
         }
         public static List<string> GetTaskStatusItem6()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD62");
-            list.Add(OpcMachineServer+"DB1,DWORD66");
-            list.Add(OpcMachineServer+"DB1,W70");
-            list.Add(OpcMachineServer+"DB1,W60");
+            list.Add(OpcMachineServer+"DB1,DWORD82");
+            list.Add(OpcMachineServer+"DB1,DWORD86");
+            list.Add(OpcMachineServer+"DB1,W90");
+            list.Add(OpcMachineServer + "DB1,DWORD92");
+            list.Add(OpcMachineServer+"DB1,W80");
             return list;
         }
         public static List<string> GetTaskStatusItem7()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD74");
-            list.Add(OpcMachineServer+"DB1,DWORD78");
-            list.Add(OpcMachineServer+"DB1,W82");
-            list.Add(OpcMachineServer+"DB1,W72");
+            list.Add(OpcMachineServer+"DB1,DWORD98");
+            list.Add(OpcMachineServer+"DB1,DWORD102");
+            list.Add(OpcMachineServer+"DB1,W106");
+            list.Add(OpcMachineServer + "DB1,DWORD108");
+            list.Add(OpcMachineServer+"DB1,W96");
             return list;
         }
         public static List<string> GetTaskStatusItem8()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD86");
-            list.Add(OpcMachineServer+"DB1,DWORD90");
-            list.Add(OpcMachineServer+"DB1,W94");
-            list.Add(OpcMachineServer+"DB1,W84");
+            list.Add(OpcMachineServer+"DB1,DWORD114");
+            list.Add(OpcMachineServer+"DB1,DWORD118");
+            list.Add(OpcMachineServer+"DB1,W122");
+            list.Add(OpcMachineServer + "DB1,DWORD124");
+            list.Add(OpcMachineServer+"DB1,W112");
             return list;
         }
         public static List<string> GetTaskStatusItem9()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD98");
-            list.Add(OpcMachineServer+"DB1,DWORD102");
-            list.Add(OpcMachineServer+"DB1,W106");
-            list.Add(OpcMachineServer+"DB1,W96");
+            list.Add(OpcMachineServer+"DB1,DWORD130");
+            list.Add(OpcMachineServer+"DB1,DWORD134");
+            list.Add(OpcMachineServer+"DB1,W138");
+            list.Add(OpcMachineServer + "DB1,DWORD140");
+            list.Add(OpcMachineServer+"DB1,W128");
             return list;
         }
         public static List<string> GetTaskStatusItem10()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD110");
-            list.Add(OpcMachineServer+"DB1,DWORD114");
-            list.Add(OpcMachineServer+"DB1,W118");
-            list.Add(OpcMachineServer+"DB1,W108");
+            list.Add(OpcMachineServer+"DB1,DWORD146");
+            list.Add(OpcMachineServer+"DB1,DWORD150");
+            list.Add(OpcMachineServer+"DB1,W154");
+            list.Add(OpcMachineServer + "DB1,DWORD156");
+            list.Add(OpcMachineServer+"DB1,W144");
             return list;
         }
         public static List<string> GetTaskStatusItem11()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD122");
-            list.Add(OpcMachineServer+"DB1,DWORD126");
-            list.Add(OpcMachineServer+"DB1,W130");
-            list.Add(OpcMachineServer+"DB1,W120");
+            list.Add(OpcMachineServer+"DB1,DWORD162");
+            list.Add(OpcMachineServer+"DB1,DWORD166");
+            list.Add(OpcMachineServer+"DB1,W170");
+            list.Add(OpcMachineServer + "DB1,DWORD172");
+            list.Add(OpcMachineServer+"DB1,W160");
             return list;
         }
         public static List<string> GetTaskStatusItem12()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD134");
-            list.Add(OpcMachineServer+"DB1,DWORD138");
-            list.Add(OpcMachineServer+"DB1,W142");
-            list.Add(OpcMachineServer+"DB1,W132");
+            list.Add(OpcMachineServer+"DB1,DWORD178");
+            list.Add(OpcMachineServer+"DB1,DWORD182");
+            list.Add(OpcMachineServer+"DB1,W186");
+            list.Add(OpcMachineServer + "DB1,DWORD188");
+            list.Add(OpcMachineServer+"DB1,W176");
             //list.Add("S7:[FJConnectionGroup1]DB250,DWORD2");
             //list.Add("S7:[FJConnectionGroup1]DB250,DWORD6");
             //list.Add("S7:[FJConnectionGroup1]DB250,W10");
@@ -148,100 +160,110 @@ namespace SortingControlSys.Model
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD146");
-            list.Add(OpcMachineServer+"DB1,DWORD150");
-            list.Add(OpcMachineServer+"DB1,W154");
-            list.Add(OpcMachineServer+"DB1,W144");
+            list.Add(OpcMachineServer+"DB1,DWORD194");
+            list.Add(OpcMachineServer+"DB1,DWORD198");
+            list.Add(OpcMachineServer+"DB1,W202");
+            list.Add(OpcMachineServer + "DB1,DWORD204");
+            list.Add(OpcMachineServer+"DB1,W192");
             return list;
         }
         public static List<string> GetTaskStatusItem14()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD158");
-            list.Add(OpcMachineServer+"DB1,DWORD162");
-            list.Add(OpcMachineServer+"DB1,W166");
-            list.Add(OpcMachineServer+"DB1,W156");
+            list.Add(OpcMachineServer+"DB1,DWORD210");
+            list.Add(OpcMachineServer+"DB1,DWORD214");
+            list.Add(OpcMachineServer+"DB1,W218");
+            list.Add(OpcMachineServer + "DB1,DWORD220");
+            list.Add(OpcMachineServer+"DB1,W208");
             return list;
         }
         public static List<string> GetTaskStatusItem15()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD170");
-            list.Add(OpcMachineServer+"DB1,DWORD174");
-            list.Add(OpcMachineServer+"DB1,W178");
-            list.Add(OpcMachineServer+"DB1,W168");
+            list.Add(OpcMachineServer+"DB1,DWORD226");
+            list.Add(OpcMachineServer+"DB1,DWORD230");
+            list.Add(OpcMachineServer+"DB1,W234");
+            list.Add(OpcMachineServer + "DB1,DWORD236");
+            list.Add(OpcMachineServer+"DB1,W224");
             return list;
         }
         public static List<string> GetTaskStatusItem16()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD182");
-            list.Add(OpcMachineServer+"DB1,DWORD186");
-            list.Add(OpcMachineServer+"DB1,W190");
-            list.Add(OpcMachineServer+"DB1,W180");
+            list.Add(OpcMachineServer+"DB1,DWORD242");
+            list.Add(OpcMachineServer+"DB1,DWORD246");
+            list.Add(OpcMachineServer+"DB1,W250");
+            list.Add(OpcMachineServer + "DB1,DWORD252");
+            list.Add(OpcMachineServer+"DB1,W240");
             return list;
         }
         public static List<string> GetTaskStatusItem17()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD194");
-            list.Add(OpcMachineServer+"DB1,DWORD198");
-            list.Add(OpcMachineServer+"DB1,W202");
-            list.Add(OpcMachineServer+"DB1,W192");
+            list.Add(OpcMachineServer+"DB1,DWORD258");
+            list.Add(OpcMachineServer+"DB1,DWORD262");
+            list.Add(OpcMachineServer+"DB1,W266");
+            list.Add(OpcMachineServer + "DB1,DWORD268");
+            list.Add(OpcMachineServer+"DB1,W1256");
             return list;
         }
         public static List<string> GetTaskStatusItem18()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD206");
-            list.Add(OpcMachineServer+"DB1,DWORD210");
-            list.Add(OpcMachineServer+"DB1,W214");
-            list.Add(OpcMachineServer+"DB1,W204");
+            list.Add(OpcMachineServer+"DB1,DWORD274");
+            list.Add(OpcMachineServer+"DB1,DWORD278");
+            list.Add(OpcMachineServer+"DB1,W282");
+            list.Add(OpcMachineServer + "DB1,DWORD284");
+            list.Add(OpcMachineServer+"DB1,W272");
             return list;
         }
         public static List<string> GetTaskStatusItem19()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD218");
-            list.Add(OpcMachineServer+"DB1,DWORD222");
-            list.Add(OpcMachineServer+"DB1,W226");
-            list.Add(OpcMachineServer+"DB1,W216");
+            list.Add(OpcMachineServer+"DB1,DWORD290");
+            list.Add(OpcMachineServer+"DB1,DWORD294");
+            list.Add(OpcMachineServer+"DB1,W298");
+            list.Add(OpcMachineServer + "DB1,DWORD300");
+            list.Add(OpcMachineServer+"DB1,W288");
             return list;
         }
         public static List<string> GetTaskStatusItem20()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD230");
-            list.Add(OpcMachineServer+"DB1,DWORD234");
-            list.Add(OpcMachineServer+"DB1,W238");
-            list.Add(OpcMachineServer+"DB1,W228");
+            list.Add(OpcMachineServer+"DB1,DWORD306");
+            list.Add(OpcMachineServer+"DB1,DWORD310");
+            list.Add(OpcMachineServer+"DB1,W314");
+            list.Add(OpcMachineServer + "DB1,DWORD316");
+            list.Add(OpcMachineServer+"DB1,W304");
             return list;
         }
         public static List<string> GetTaskStatusItem21()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD242");
-            list.Add(OpcMachineServer+"DB1,DWORD246");
-            list.Add(OpcMachineServer+"DB1,W250");
-            list.Add(OpcMachineServer+"DB1,W240");
+            list.Add(OpcMachineServer+"DB1,DWORD322");
+            list.Add(OpcMachineServer+"DB1,DWORD326");
+            list.Add(OpcMachineServer+"DB1,W330");
+            list.Add(OpcMachineServer + "DB1,DWORD332");
+            list.Add(OpcMachineServer+"DB1,W320");
             return list;
         }
         public static List<string> GetTaskStatusItem22()
         {
             List<string> list = new List<string>();
 
-            list.Add(OpcMachineServer+"DB1,DWORD254");
-            list.Add(OpcMachineServer+"DB1,DWORD258");
-            list.Add(OpcMachineServer+"DB1,W262");
-            list.Add(OpcMachineServer+"DB1,W252");
+            list.Add(OpcMachineServer+"DB1,DWORD338");
+            list.Add(OpcMachineServer+"DB1,DWORD342");
+            list.Add(OpcMachineServer+"DB1,W346");
+            list.Add(OpcMachineServer + "DB1,DWORD348");
+            list.Add(OpcMachineServer+"DB1,W336");
             return list;
         }
         public static List<string> GetTaskStatusItem23()

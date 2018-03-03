@@ -215,6 +215,7 @@ namespace FormUI
             this.BeginInvoke(new SearchHanlder(search));
             searchTask();
             initText();
+            MessageBox.Show("任务已下达");
         }
         delegate void SearchHanlder();
 
