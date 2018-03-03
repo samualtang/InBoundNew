@@ -530,7 +530,7 @@ namespace SortingControlSys.SortingControl
                                 //{
                                     //foreach (var item in temp)
                                     //{
-                                        String item = groupList[Group-1].Read(4).ToString();
+                                        String item = groupList[Group-1].Read(4).ToString();//任务号
                                         updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                         writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
 
