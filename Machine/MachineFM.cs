@@ -321,7 +321,8 @@ namespace SortingControlSys.SortingControl
             {
                 //item.Write(3, 3);
                 //Thread.Sleep(10);
-                item.Write(2, 3);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
+                item.Write(0, 3);
+                item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(3));
                 i++;
             }
@@ -523,28 +524,32 @@ namespace SortingControlSys.SortingControl
                         if (int.Parse(values[i].ToString()) == 2)
                         {
 
-                            if (tempList.Count > 0)
-                            {
+                            //if (tempList.Count > 0)
+                            //{
                                 //List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
                                 //if (temp != null)
                                 //{
                                     //foreach (var item in temp)
                                     //{
-                                        String item = groupList[Group-1].Read(4).ToString();//任务号
-                                        updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
-                                        writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
+                            if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
+                                {
+                                    String item =  groupList[Group - 1].Read(3).ToString();//任务号
 
-                                        TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
-                                        removeKey(((groupNo - 1) * 22 + Group) + "");
+                                    updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
+                                    writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
+
+                                    TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
+                                    removeKey(((groupNo - 1) * 22 + Group) + "");
+                                }
                                     //}
                                 //}
 
                                 // removeKey(Group + "");
-                            }
+                            //}
 
                             sendTask(((groupNo - 1) * 22 +Group) + "", groupList[Group - 1]);
                         }
-                        break;
+                      //  break;
                     }
                     else if (clientId[i] == 1)//第一位：任务完成标志位
                     {
