@@ -517,7 +517,7 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    //第四位 读写标志位
+                    //第五位 读写标志位
                     if (clientId[i] == 5)
                     {
                         if (int.Parse(values[i].ToString()) == 2)
@@ -553,11 +553,7 @@ namespace SortingControlSys.SortingControl
                             writeLog.Write((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
                             updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
                             TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
-                            //object[] datas = new object[4];
-
-                            //groupList[Group - 1].SyncWrite(0,1);
-                            //groupList[Group - 1].SyncWrite(0, 2);
-                            //groupList[Group - 1].SyncWrite(0, 3);
+                         
                         }
                     }
                 }
