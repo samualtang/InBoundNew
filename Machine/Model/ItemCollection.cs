@@ -208,7 +208,7 @@ namespace SortingControlSys.Model
             list.Add(OpcMachineServer+"DB1,DWORD262");
             list.Add(OpcMachineServer+"DB1,W266");
             list.Add(OpcMachineServer + "DB1,DWORD268");
-            list.Add(OpcMachineServer+"DB1,W1256");
+            list.Add(OpcMachineServer+"DB1,W256");
             return list;
         }
         public static List<string> GetTaskStatusItem18()

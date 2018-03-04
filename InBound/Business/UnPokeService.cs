@@ -38,15 +38,15 @@ namespace InBound.Business
                     int j = 0;
                     foreach (var item in list)
                     {
-                        values[j * 9] = item.POKEID;
-                        values[j * 9 + 1] = item.TROUGHNUM;
-                        values[j * 9 + 2] = 0;
-                        values[j * 9 + 3] = item.SORTNUM;
-                        values[j * 9 + 4] = item.PACKAGEMACHINE;
-                        values[j * 9 + 5] = item.CIGARETTECODE;
-                        values[j * 9 + 6] = 0;
-                        values[j * 9 + 7] = 0;
-                        values[j * 9 + 8] = 0;
+                        values[j * 9] = item.POKEID;//流水号
+                        values[j * 9 + 1] = item.TROUGHNUM;//烟道地址
+                        values[j * 9 + 2] = 0;//位数标志
+                        values[j * 9 + 3] = item.SORTNUM;//任务号
+                        values[j * 9 + 4] = 0;//包装号
+                        values[j * 9 + 5] = 0;//备用
+                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
+                        values[j * 9 + 7] = 0;//备用
+                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
                     }
                     values[values.Length - 1] = 1;
