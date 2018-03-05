@@ -214,17 +214,17 @@ namespace SortingControlSys.SortingControl
 
             try
             {
-                int flag = taskgroup.Read(225).CastTo<int>(-1);
+                int flag = statusGroup1.Read(225).CastTo<int>(-1);
                 writeLog.Write("标志位：" + flag);
                 if (flag == 0)
                 {
-                    object[] datas = UnPokeService.getTask(25, "2", out list);
-                    if ((int)datas[0] == 0)
+                    object[] datas = UnPokeService.getTask(25, "2", out list1);
+                    if (int.Parse(datas[0].ToString())== 0)
                     {
-                        updateListBox("分拣数据发送完毕");
+                        updateListBox("二线分拣数据发送完毕");
                         return;
                     }
-                    taskgroup.SyncWrite(datas);
+                    statusGroup1.SyncWrite(datas);
                     string logstr = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
@@ -249,9 +249,9 @@ namespace SortingControlSys.SortingControl
                 if (flag == 0)
                 {
                     object[] datas = UnPokeService.getTask(25,"1",out list);
-                     if(int.Parse(datas[0].ToString()) == 0)
+                    if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("分拣数据发送完毕");
+                        updateListBox("一线分拣数据发送完毕");
                         return;
                     }
                  taskgroup.SyncWrite(datas);
@@ -278,7 +278,8 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 226)
                     {
-                        if (int.Parse(values[i].ToString()) == 0)
+
+                        if (values[i]!=null && int.Parse(values[i].ToString()) == 0)
                         {
                                                        
                             UnPokeService.UpdateTask(list, 15);
@@ -295,7 +296,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 226)
                     {
-                        if (int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null &&  int.Parse(values[i].ToString()) == 0)
                         {
 
                             UnPokeService.UpdateTask(list1, 15);
@@ -316,7 +317,10 @@ namespace SortingControlSys.SortingControl
 
                     lock (lockFlag)
                     {
-                        stateManager.WriteErrWithCheck(values[i].ToString(),clientId[i].ToString(),lineNum);
+                        if (values[i] != null)
+                        {
+                            stateManager.WriteErrWithCheck(values[i].ToString(), clientId[i].ToString(), lineNum);
+                        }
                     }
                     
                 }
