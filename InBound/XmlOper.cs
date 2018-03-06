@@ -118,7 +118,12 @@ namespace InBound
             {
                  xml = File.ReadAllText(path, encoding);
             }
-            if (xml == null || xml == "")
+            if (xml != null && !xml.EndsWith("</DeviceStateInfoModel>"))//写入xml异常 删除重写
+            {
+                File.Delete(path);
+                xml = "";
+            }
+            if (xml == null || xml == ""  )
                 return default(T);
             return XmlDeserialize<T>(xml, encoding);
         }

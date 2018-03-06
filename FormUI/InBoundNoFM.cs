@@ -268,5 +268,10 @@ namespace FormUI
             }
         }
 
+        private void CBAddress_SelectedIndexChanged(object sender, EventArgs e)
+        {
+         //   int i = 0;
+        }
+
     }
 }

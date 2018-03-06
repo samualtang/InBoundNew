@@ -14,6 +14,8 @@ namespace AutoRun
 {
     public partial class AutoRunFm : Form
     {
+
+       public static int scanTime = 0;
         public AutoRunFm()
         {
             InitializeComponent();
@@ -22,6 +24,7 @@ namespace AutoRun
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
+            scanTime = int.Parse(tbScanTime.Text);
             Thread thread = new Thread(new ThreadStart(startAutoInBound));
             thread.Start();
         }
@@ -48,10 +51,9 @@ namespace AutoRun
             // 发送堆垛机命令
             while (isRun)
             {
-
-             
+                            
                 ScanDataTable();
-                Thread.Sleep(int.Parse(tbScanTime.Text));
+                Thread.Sleep(scanTime * 1000);
             }
 
         }
@@ -64,17 +66,17 @@ namespace AutoRun
             while (isRunBuHuo)
             {
 
-                InBoundService.test(1);
-                InBoundService.test(2);
-                InBoundService.test(3);
-                InBoundService.test(4);
-                InBoundService.test(5);
-                InBoundService.test(6);
-                InBoundService.test(7);
-                InBoundService.test(8);
+                //InBoundService.test(1); 测试用
+                //InBoundService.test(2);
+                //InBoundService.test(3);
+                //InBoundService.test(4);
+                //InBoundService.test(5);
+                //InBoundService.test(6);
+                //InBoundService.test(7);
+                //InBoundService.test(8);
                 InBoundService.PreUpdateInOut(isSanpan);
-               
-                Thread.Sleep(int.Parse(tbScanTime.Text) );
+
+                Thread.Sleep(scanTime * 1000);
             }
 
         }
@@ -91,7 +93,7 @@ namespace AutoRun
 
                 UnPokeService.PreUpdateInOut(isSanpan);
 
-               // Thread.Sleep(int.Parse(tbScanTime.Text) * 1000);
+                Thread.Sleep(scanTime * 1000);
             }
 
         }
@@ -124,6 +126,7 @@ namespace AutoRun
         private void button3_Click(object sender, EventArgs e)
         {
             button3.Enabled = false;
+            scanTime = int.Parse(tbScanTime.Text);
             if (cbsanpan.Checked)
             {
                 isSanpan = true;
@@ -135,6 +138,7 @@ namespace AutoRun
         private void button4_Click(object sender, EventArgs e)
         {
             button4.Enabled = false;
+            scanTime = int.Parse(tbScanTime.Text);
             Thread thread = new Thread(new ThreadStart(startAutoUnNormalBuHuo));
             thread.Start();
         }

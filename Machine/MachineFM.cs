@@ -267,29 +267,7 @@ namespace SortingControlSys.SortingControl
                 groupList.Add(taskGroup20);
                 groupList.Add(taskGroup21);
                 groupList.Add(taskGroup22);
-                taskGroup22.callback += OnDataChange;
-                taskGroup21.callback += OnDataChange;
-                taskGroup20.callback += OnDataChange;
-                taskGroup19.callback += OnDataChange;
-                taskGroup18.callback += OnDataChange;
-                taskGroup17.callback += OnDataChange;
-                taskGroup16.callback += OnDataChange;
-                taskGroup15.callback += OnDataChange;
-                taskGroup14.callback += OnDataChange;
-                taskGroup13.callback += OnDataChange;
-                taskGroup12.callback += OnDataChange;
-                taskGroup11.callback += OnDataChange;
-                taskGroup10.callback += OnDataChange;
-                taskGroup9.callback += OnDataChange;
-                taskGroup8.callback += OnDataChange;
-                taskGroup7.callback += OnDataChange;
-                taskGroup6.callback += OnDataChange;
-                taskGroup5.callback += OnDataChange;
-                taskGroup4.callback += OnDataChange;
-                taskGroup3.callback += OnDataChange;
-                taskGroup2.callback += OnDataChange;
-                taskGroup1.callback += OnDataChange;
-                taskErrGroup.callback += OnDataChange;
+                regDataChange();
                 checkConnection();
                 // sendTask();
             }
@@ -297,6 +275,33 @@ namespace SortingControlSys.SortingControl
             {
                 updateListBox("连接服务器失败:" + e.Message);
             }
+        }
+
+        public void regDataChange()
+        {
+            taskGroup22.callback += OnDataChange;
+            taskGroup21.callback += OnDataChange;
+            taskGroup20.callback += OnDataChange;
+            taskGroup19.callback += OnDataChange;
+            taskGroup18.callback += OnDataChange;
+            taskGroup17.callback += OnDataChange;
+            taskGroup16.callback += OnDataChange;
+            taskGroup15.callback += OnDataChange;
+            taskGroup14.callback += OnDataChange;
+            taskGroup13.callback += OnDataChange;
+            taskGroup12.callback += OnDataChange;
+            taskGroup11.callback += OnDataChange;
+            taskGroup10.callback += OnDataChange;
+            taskGroup9.callback += OnDataChange;
+            taskGroup8.callback += OnDataChange;
+            taskGroup7.callback += OnDataChange;
+            taskGroup6.callback += OnDataChange;
+            taskGroup5.callback += OnDataChange;
+            taskGroup4.callback += OnDataChange;
+            taskGroup3.callback += OnDataChange;
+            taskGroup2.callback += OnDataChange;
+            taskGroup1.callback += OnDataChange;
+            taskErrGroup.callback += OnDataChange;
         }
         public void checkConnection()
         {
@@ -319,13 +324,13 @@ namespace SortingControlSys.SortingControl
             int i = 1;
             foreach (var item in groupList)
             {
-                //item.Write(3, 3);
-                //Thread.Sleep(10);
+              
                 item.Write(0, 3);
                 item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
                 i++;
             }
+           
         }
         Boolean CheckCanSend(int targetPort)
         {

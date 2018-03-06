@@ -158,29 +158,29 @@ namespace SortingControlSys.SortingControl
                 errGroup4 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);
                 ClearCacheGroup = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);
                 taskgroup.addItem(ItemCollection.GetTaskItem());
-                taskgroup.callback += OnDataChange;
+              
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
-                statusGroup1.callback += OnDataChange;
+              
                 statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//拨烟完成
-                statusGroup2.callback += OnDataChange;
+             
                 statusGroup3.addItem(ItemCollection.GetTaskStausItemGroup());
-                statusGroup3.callback += OnDataChange;
+              
 
                 statusGroup4.addItem(ItemCollection.GetTaskStatusSECItem1());
-                statusGroup4.callback += OnDataChange;
+              
                 statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());
-                statusGroup5.callback += OnDataChange;
+               
                 errGroup1.addItem(ItemCollection.GetTaskStatusItem3());
-                errGroup1.callback += OnDataChange;
+               
                 errGroup2.addItem(ItemCollection.GetTaskStatusItem4());
-                errGroup2.callback += OnDataChange;
+               
                 errGroup3.addItem(ItemCollection.GetTaskStatusSECItem3());
-                errGroup3.callback += OnDataChange;
+             
                 ClearCacheGroup.addItem(ItemCollection.GetClearTaskItem());
                 // ClearCacheGroup.callback += OnDataChange;
                 //errGroup4.addItem(ItemCollection.GetTaskStatusSECItem4());
                 //errGroup4.callback += OnDataChange;
-
+                regDataChange();
                 checkConnection();
                 // sendTask();
 
@@ -189,6 +189,19 @@ namespace SortingControlSys.SortingControl
             {
                 updateListBox("连接服务器失败:" + e.Message);
             }
+        }
+
+        public void regDataChange()
+        {
+            taskgroup.callback += OnDataChange;
+            statusGroup1.callback += OnDataChange;
+            statusGroup2.callback += OnDataChange;
+            statusGroup3.callback += OnDataChange;
+            statusGroup4.callback += OnDataChange;
+            statusGroup5.callback += OnDataChange;
+            errGroup1.callback += OnDataChange;
+            errGroup2.callback += OnDataChange;
+            errGroup3.callback += OnDataChange;
         }
         public void checkConnection()
         {
@@ -204,6 +217,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
             }
+          
         }
         Boolean CheckCanSend(int targetPort)
         {
