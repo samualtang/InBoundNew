@@ -59,7 +59,7 @@ namespace SortingControlSys.Model
             list.Add(OpcMachineServer+"DB1,DWORD50");
             list.Add(OpcMachineServer+"DB1,DWORD54");
             list.Add(OpcMachineServer+"DB1,W58");
-            list.Add(OpcMachineServer + "DB1,DWORD60");
+            list.Add(OpcMachineServer + "DB1,DINT60");
             list.Add(OpcMachineServer+"DB1,W48");
             return list;
         }

@@ -160,6 +160,9 @@ namespace SortingControlSys.SortingControl
         Group taskGroup11, taskGroup12, taskGroup13, taskGroup14, taskGroup15, taskGroup16, taskGroup17, taskGroup18, taskGroup19, taskGroup20;
         Group taskGroup21, taskGroup22;
         Group taskErrGroup;
+        Boolean b1 = false, b2 = false, b3 = false, b4 = false, b5 = false, b6 = false
+            , b7 = false, b8 = false, b9 = false, b10 = false, b11 = false, b12 = false, b13 = false, b14 = false, b15 = false,
+            b16 = false, b17 = false, b18 = false, b19 = false, b20 = false, b21 = false, b22 = false;
         //taskGroup23, taskGroup24, taskGroup25, taskGroup26, taskGroup27, taskGroup28, taskGroup29, taskGroup30;
         //Group taskGroup31,  taskGroup32, taskGroup33, taskGroup34, taskGroup35, taskGroup36, taskGroup37, taskGroup38, taskGroup39, taskGroup40;
         //Group taskGroup41,  taskGroup42, taskGroup43, taskGroup44, taskGroup45, taskGroup46, taskGroup47, taskGroup48, taskGroup49, taskGroup50;
@@ -168,6 +171,7 @@ namespace SortingControlSys.SortingControl
         //Group taskGroup71,  taskGroup72, taskGroup73, taskGroup74, taskGroup75, taskGroup76, taskGroup77, taskGroup78, taskGroup79, taskGroup80;
         //Group taskGroup81,  taskGroup82, taskGroup83, taskGroup84, taskGroup85, taskGroup86, taskGroup87, taskGroup88;
         List<Group> groupList = new List<Group>();
+        List<Boolean> groupBool = new List<Boolean>();
         public void Connect()
         {
             Type svrComponenttyp;
@@ -267,6 +271,28 @@ namespace SortingControlSys.SortingControl
                 groupList.Add(taskGroup20);
                 groupList.Add(taskGroup21);
                 groupList.Add(taskGroup22);
+                groupBool.Add(b1);
+                groupBool.Add(b2);
+                groupBool.Add(b3);
+                groupBool.Add(b4);
+                groupBool.Add(b5);
+                groupBool.Add(b6);
+                groupBool.Add(b7);
+                groupBool.Add(b8);
+                groupBool.Add(b9);
+                groupBool.Add(b10);
+                groupBool.Add(b11);
+                groupBool.Add(b12);
+                groupBool.Add(b13);
+                groupBool.Add(b14);
+                groupBool.Add(b15);
+                groupBool.Add(b16);
+                groupBool.Add(b17);
+                groupBool.Add(b18);
+                groupBool.Add(b19);
+                groupBool.Add(b20);
+                groupBool.Add(b21);
+                groupBool.Add(b22);
                 regDataChange();
                 checkConnection();
                 // sendTask();
@@ -325,7 +351,7 @@ namespace SortingControlSys.SortingControl
             foreach (var item in groupList)
             {
               
-                item.Write(0, 3);
+               // item.Write(0, 3);
                 item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
                 i++;
@@ -529,28 +555,34 @@ namespace SortingControlSys.SortingControl
                         if (int.Parse(values[i].ToString()) == 2)
                         {
 
-                            //if (tempList.Count > 0)
-                            //{
-                                //List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
-                                //if (temp != null)
-                                //{
-                                    //foreach (var item in temp)
-                                    //{
-                            if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
+                            if (tempList.Count > 0)
+                            {
+                                List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
+                                if (temp != null)
                                 {
-                                    String item =  groupList[Group - 1].Read(3).ToString();//任务号
+                                    if (!groupBool[Group - 1])
+                                    {
+                                        Thread.Sleep(100);
+                                        groupBool[Group - 1] = true;
+                                    }
+                                   
+                                    foreach (var item in temp)
+                                    {
+                            //if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
+                            //    {
+                                   // String item =  groupList[Group - 1].Read(3).ToString();//任务号
 
                                     updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                     writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
 
                                     TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
                                     removeKey(((groupNo - 1) * 22 + Group) + "");
-                                }
-                                    //}
                                 //}
+                                    }
+                                }
 
-                                // removeKey(Group + "");
-                            //}
+                                removeKey(Group + "");
+                            }
 
                             sendTask(((groupNo - 1) * 22 +Group) + "", groupList[Group - 1]);
                         }

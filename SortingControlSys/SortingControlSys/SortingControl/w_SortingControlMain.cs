@@ -221,9 +221,8 @@ namespace SortingControlSys.SortingControl
         }
         Boolean CheckCanSend(int targetPort)
         {
-            writeLog.Write("出口号：" + targetPort);
             int value = statusGroup3.Read(targetPort - 1).CastTo<int>(-1);
-            writeLog.Write(" value=" + value);
+            writeLog.Write("出口号：" + targetPort+" 值：" + value);
             if (value == 1)
             {
                 return true;
@@ -297,9 +296,40 @@ namespace SortingControlSys.SortingControl
 
                     statusGroup3.SyncWrite(datas);//写任务
                     string logstr = "";
+                    string logcolumnname = "";
                     for (int i = 0; i < datas.Length; i++)
-                    {
-                        logstr += i + ":" + datas[i] + ";";
+                    {   
+                        if (i==0) logcolumnname="任务号";
+                        else if (i == 1) logcolumnname = "虚拟出口号";
+                        else if (i == 2) logcolumnname = "主皮带号";
+                        else if (i == 3) logcolumnname = "条烟总数";
+                        else if (i == 4) logcolumnname = "烟柜1条数";
+                        else if (i == 5) logcolumnname = "起始位置";
+                        else if (i == 6) logcolumnname = "烟柜2条数";
+                        else if (i == 7) logcolumnname = "起始位置";
+                        else if (i == 8) logcolumnname = "烟柜3条数";
+                        else if (i == 9) logcolumnname = "起始位置";
+                        else if (i == 10) logcolumnname = "烟柜4条数";
+                        else if (i == 11) logcolumnname = "起始位置";
+                        else if (i == 12) logcolumnname = "烟柜5条数";
+                        else if (i == 13) logcolumnname = "起始位置";
+                        else if (i == 14) logcolumnname = "烟柜6条数";
+                        else if (i == 15) logcolumnname = "起始位置";
+                        else if (i == 16) logcolumnname = "烟柜7条数";
+                        else if (i == 17) logcolumnname = "起始位置";
+                        else if (i == 18) logcolumnname = "烟柜8条数";
+                        else if (i == 19) logcolumnname = "起始位置";
+                        else if (i == 20) logcolumnname = "烟柜9条数";
+                        else if (i == 21) logcolumnname = "起始位置";
+                        else if (i == 22) logcolumnname = "烟柜10条数";
+                        else if (i == 23) logcolumnname = "起始位置";
+                        else if (i == 24) logcolumnname = "烟柜11条数";
+                        else if (i == 25) logcolumnname = "起始位置";                      
+                        
+                        else if (i==26) logcolumnname = "写入标志位";
+
+                        logstr += logcolumnname + ":" + datas[i] + ";";
+                        //logstr += i + ":" + datas[i] + ";";
                     }
                     writeLog.Write(logstr);
                     updateListBox("组:" + sortgroupno2 + "----" + logstr);
@@ -351,9 +381,40 @@ namespace SortingControlSys.SortingControl
 
                     //}
                     string logstr = "";
+                    string logcolumnname = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
-                        logstr += i + ":" + datas[i] + ";";
+                        if (i == 0) logcolumnname = "任务号";
+                        else if (i == 1) logcolumnname = "虚拟出口号";
+                        else if (i == 2) logcolumnname = "主皮带号";
+                        else if (i == 3) logcolumnname = "条烟总数";
+                        else if (i == 4) logcolumnname = "烟柜1条数";
+                        else if (i == 5) logcolumnname = "起始位置";
+                        else if (i == 6) logcolumnname = "烟柜2条数";
+                        else if (i == 7) logcolumnname = "起始位置";
+                        else if (i == 8) logcolumnname = "烟柜3条数";
+                        else if (i == 9) logcolumnname = "起始位置";
+                        else if (i == 10) logcolumnname = "烟柜4条数";
+                        else if (i == 11) logcolumnname = "起始位置";
+                        else if (i == 12) logcolumnname = "烟柜5条数";
+                        else if (i == 13) logcolumnname = "起始位置";
+                        else if (i == 14) logcolumnname = "烟柜6条数";
+                        else if (i == 15) logcolumnname = "起始位置";
+                        else if (i == 16) logcolumnname = "烟柜7条数";
+                        else if (i == 17) logcolumnname = "起始位置";
+                        else if (i == 18) logcolumnname = "烟柜8条数";
+                        else if (i == 19) logcolumnname = "起始位置";
+                        else if (i == 20) logcolumnname = "烟柜9条数";
+                        else if (i == 21) logcolumnname = "起始位置";
+                        else if (i == 22) logcolumnname = "烟柜10条数";
+                        else if (i == 23) logcolumnname = "起始位置";
+                        else if (i == 24) logcolumnname = "烟柜11条数";
+                        else if (i == 25) logcolumnname = "起始位置";
+
+                        else if (i == 26) logcolumnname = "写入标志位";
+
+                        logstr += logcolumnname + ":" + datas[i] + ";";
+                       // logstr += i + ":" + datas[i] + ";";
                     }
                     writeLog.Write(logstr);
                     updateListBox("组:" + sortgroupno1 + "----" + logstr);
