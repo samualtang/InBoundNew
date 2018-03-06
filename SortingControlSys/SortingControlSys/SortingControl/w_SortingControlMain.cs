@@ -180,7 +180,7 @@ namespace SortingControlSys.SortingControl
                 // ClearCacheGroup.callback += OnDataChange;
                 //errGroup4.addItem(ItemCollection.GetTaskStatusSECItem4());
                 //errGroup4.callback += OnDataChange;
-
+                regDataChange();
                 checkConnection();
                 // sendTask();
 
@@ -217,7 +217,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
             }
-            regDataChange();
+          
         }
         Boolean CheckCanSend(int targetPort)
         {
