@@ -105,18 +105,38 @@ namespace highSpeed.baseData
                     if (para == 10 || para == 30)
                     {
 
-                        OracleParameter[] sqlpara = new OracleParameter[1];
+                        OracleParameter[] sqlpara = new OracleParameter[3];
                         //sqlpara[0] = new OracleParameter("p_time", date);
                         sqlpara[0] = new OracleParameter("bz", "0");
+                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+
+                        sqlpara[1].Direction = ParameterDirection.Output;
+                        sqlpara[2].Direction = ParameterDirection.Output;
+
                         db.ExecuteNonQueryWithProc("P_PRODUCE_REMOVE", sqlpara);
+                        if (sqlpara[1].Value.ToString() == "0")
+                        {
+                            MessageBox.Show(sqlpara[2].Value.ToString());
+                            return;
+                        }
 
                     }
                     else
                     {
-                        OracleParameter[] sqlpara = new OracleParameter[1];
-                        //sqlpara[0] = new OracleParameter("p_time", date);
+                        OracleParameter[] sqlpara = new OracleParameter[3];
                         sqlpara[0] = new OracleParameter("bz", "0");
+                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+
+                        sqlpara[1].Direction = ParameterDirection.Output;
+                        sqlpara[2].Direction = ParameterDirection.Output;
                         db.ExecuteNonQueryWithProc("P_UN_REMOVE", sqlpara);
+                        if (sqlpara[1].Value.ToString() == "0")
+                        {
+                            MessageBox.Show(sqlpara[2].Value.ToString());
+                            return;
+                        }
                     }
                     this.lab_showinfo.Text = "处理完成";
                     MessageBox.Show("历史数据处理完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
