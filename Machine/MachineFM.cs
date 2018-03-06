@@ -267,7 +267,7 @@ namespace SortingControlSys.SortingControl
                 groupList.Add(taskGroup20);
                 groupList.Add(taskGroup21);
                 groupList.Add(taskGroup22);
-              
+                regDataChange();
                 checkConnection();
                 // sendTask();
             }
@@ -330,7 +330,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
                 i++;
             }
-            regDataChange();
+           
         }
         Boolean CheckCanSend(int targetPort)
         {
