@@ -118,7 +118,7 @@ namespace InBound
             {
                  xml = File.ReadAllText(path, encoding);
             }
-            if (xml != null && !xml.EndsWith("</DeviceStateInfoModel>"))
+            if (xml != null && !xml.EndsWith("</DeviceStateInfoModel>"))//写入xml异常 删除重写
             {
                 File.Delete(path);
                 xml = "";
