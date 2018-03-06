@@ -31,11 +31,6 @@ namespace SortingControlSys.SortingControl
         /// <summary>
         /// 写报警记录，包括异常清除写入
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="len"></param>
-        /// <param name="temp"></param>
-        /// <param name="GroupNo"></param>
-        /// <param name="type">1皮带 2 烟柜 3 机械手</param>
         public void WriteErrWithCheck(string val, string index, string lineNum)
         {
             String deviceNo = "" + index;
@@ -43,7 +38,7 @@ namespace SortingControlSys.SortingControl
 
             if (lastInfo != val)
             {
-                String errMsg = "";
+                String errMsg = "";//取数据库取对应的错误信息
                 ErrListService.Add(deviceNo, decimal.Parse(lineNum), 40, errMsg, val);
             }
                 
