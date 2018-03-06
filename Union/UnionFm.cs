@@ -159,17 +159,17 @@ namespace SortingControlSys.SortingControl
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
                 errorGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
                 errorGroup.addItem(ItemCollection.GetTaskErrStatusItem());
-                errorGroup.callback += OnDataChange;
+              
                 taskgroup.addItem(ItemCollection.GetTaskStatusItem10());
-                taskgroup.callback += OnDataChange;
+               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem11());
-                statusGroup1.callback += OnDataChange;
+             
                 statusGroup2.addItem(ItemCollection.GetTaskStatusItem12());
-                statusGroup2.callback += OnDataChange;
+              
                 statusGroup3.addItem(ItemCollection.GetTaskStatusItem3());
-                statusGroup3.callback += OnDataChange;
+             
                 statusGroup4.addItem(ItemCollection.GetTaskStatusItem4());
-                statusGroup4.callback += OnDataChange;
+               
                 checkConnection();
             
             }
@@ -177,6 +177,16 @@ namespace SortingControlSys.SortingControl
             {
                 updateListBox("连接服务器失败:"+e.Message);
             }
+        }
+
+        public void regDataChange()
+        {
+            errorGroup.callback += OnDataChange;
+            taskgroup.callback += OnDataChange;
+            statusGroup1.callback += OnDataChange;
+            statusGroup2.callback += OnDataChange; 
+            statusGroup3.callback += OnDataChange;
+            statusGroup4.callback += OnDataChange;
         }
         public void checkConnection()
         {
@@ -190,6 +200,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
             }
+            regDataChange();
         }
         Boolean CheckCanSend(int targetPort)
         {
