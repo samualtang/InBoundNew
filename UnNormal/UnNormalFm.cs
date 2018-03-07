@@ -306,7 +306,13 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null &&  int.Parse(values[i].ToString()) == 0)
                         {
-
+                            String logstr = "";
+                            foreach (var item in list)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            writeLog.Write("任务号:" + logstr + "已接收");
+                            updateListBox("任务号:" + logstr + "已接收");
                             UnPokeService.UpdateTask(list1, 15);
                             UnPokeService.UpdateStroageInout(list1);
                             sendTask1();

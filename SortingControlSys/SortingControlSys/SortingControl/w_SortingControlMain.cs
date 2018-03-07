@@ -212,8 +212,14 @@ namespace SortingControlSys.SortingControl
             }
             else
             {
-                taskgroup.Write(2, 26);
-                statusGroup3.Write(2, 26);
+                if (taskgroup.Read(26).ToString() != "1")
+                {
+                    taskgroup.Write(2, 26);
+                }
+                if (statusGroup3.Read(26).ToString() != "1")
+                {
+                    statusGroup3.Write(2, 26);
+                }
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
                 isInit = true;
@@ -632,7 +638,10 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
-
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             if (tempList1.Count > 0)
                             {
 
@@ -951,6 +960,7 @@ namespace SortingControlSys.SortingControl
 
             this.Dispose();
             this.Close();
+            writeLog.Write("System exit........");
             System.Environment.Exit(System.Environment.ExitCode);
         }
         private void button11_Click(object sender, EventArgs e)

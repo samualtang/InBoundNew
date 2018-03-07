@@ -353,8 +353,12 @@ namespace SortingControlSys.SortingControl
             {
               
                // item.Write(0, 3);
-                item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
+                if (item.Read(4).ToString() != "1")
+                {
+                    item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
+                }
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
+
                 i++;
             }
             isInit = true;
