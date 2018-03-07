@@ -216,6 +216,7 @@ namespace SortingControlSys.SortingControl
                 statusGroup3.Write(2, 26);
                 updateListBox("连接服务器成功......");
                 updateControlEnable(false, button10);
+                isInit = true;
             }
           
         }
@@ -570,7 +571,10 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
-
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             if (tempList.Count > 0)
                             {
 
@@ -776,7 +780,7 @@ namespace SortingControlSys.SortingControl
                 statusGroup5.Release();
             }
         }
-
+        static Boolean isInit=false;
         private void button10_Click(object sender, EventArgs e)
         {
             //TaskService.GetSortTask(1);

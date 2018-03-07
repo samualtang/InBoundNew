@@ -30,6 +30,10 @@ namespace Machine
             if (!File.Exists(Path.Combine(fileLogPath + dataFile)))
                 return "";
             var list = XmlOper.XmlDeserializeFromFile<List<AlarmsFileModel>>(Path.Combine(fileLogPath + dataFile), Encoding.UTF8);
+            if (list == null)
+            {
+                return "";
+            }
             var model = list.Where(w => w.DeviceNo == deviceNo).FirstOrDefault();
             if (model == null)
             {

@@ -16,12 +16,12 @@ namespace Union
             {
             //初始化大于2M日志文件将自动删除;
 
-            this.fileSize=2048*1024*2;//2M
+            this.fileSize=2048*1024*200;//2M
 
             //默认路径
 
             this.fileLogPath = Application.StartupPath + "\\log\\";
-            this.logFileName="log.txt";
+            this.logFileName = "log" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
             }
 
         public int FileSize

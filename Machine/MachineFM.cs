@@ -163,6 +163,7 @@ namespace SortingControlSys.SortingControl
         Boolean b1 = false, b2 = false, b3 = false, b4 = false, b5 = false, b6 = false
             , b7 = false, b8 = false, b9 = false, b10 = false, b11 = false, b12 = false, b13 = false, b14 = false, b15 = false,
             b16 = false, b17 = false, b18 = false, b19 = false, b20 = false, b21 = false, b22 = false;
+        static Boolean isInit = false;
         //taskGroup23, taskGroup24, taskGroup25, taskGroup26, taskGroup27, taskGroup28, taskGroup29, taskGroup30;
         //Group taskGroup31,  taskGroup32, taskGroup33, taskGroup34, taskGroup35, taskGroup36, taskGroup37, taskGroup38, taskGroup39, taskGroup40;
         //Group taskGroup41,  taskGroup42, taskGroup43, taskGroup44, taskGroup45, taskGroup46, taskGroup47, taskGroup48, taskGroup49, taskGroup50;
@@ -356,6 +357,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
                 i++;
             }
+            isInit = true;
            
         }
         Boolean CheckCanSend(int targetPort)
@@ -469,7 +471,7 @@ namespace SortingControlSys.SortingControl
                         //   group.WriteR(datas[3], 1);
 
 
-                        String p2 = group.Read(1).ToString();
+                        String p2 = group.ReadD(1).ToString();
                         String p3 = group.Read(2).ToString();
                         //String p4 = group.Read(3).ToString();
                         //int count = 1;
@@ -560,12 +562,15 @@ namespace SortingControlSys.SortingControl
                                 List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
                                 if (temp != null)
                                 {
-                                    if (!groupBool[Group - 1])
+                                    //if (!groupBool[Group - 1])
+                                    //{
+                                    //    Thread.Sleep(100);
+                                    //    groupBool[Group - 1] = true;
+                                    //}
+                                    while (!isInit)
                                     {
                                         Thread.Sleep(100);
-                                        groupBool[Group - 1] = true;
                                     }
-                                   
                                     foreach (var item in temp)
                                     {
                             //if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
