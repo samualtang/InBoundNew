@@ -367,6 +367,12 @@
     <Compile Include="orderHandle\w_yxydata.designer.cs">
       <DependentUpon>w_yxydata.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_schedulereport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_schedulereport.designer.cs">
+      <DependentUpon>w_schedulereport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="progressBar.cs">
       <SubType>Form</SubType>
@@ -559,6 +565,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_yxydata.resx">
       <DependentUpon>w_yxydata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_schedulereport.resx">
+      <DependentUpon>w_schedulereport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="progressBar.resx">
       <DependentUpon>progressBar.cs</DependentUpon>

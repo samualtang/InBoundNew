@@ -610,6 +610,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 排程报表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_schedulereport frm = new w_schedulereport();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
        
     }

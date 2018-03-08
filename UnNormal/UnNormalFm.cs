@@ -44,7 +44,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
-                UnPokeService.getTask(25, lineNum, out list);
+               // UnPokeService.getTask(25, lineNum, out list);
                initdata();
             }
             catch (Exception e)
