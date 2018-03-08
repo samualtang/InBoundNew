@@ -287,6 +287,11 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = statusGroup3.Read(26).CastTo<int>(-1);//读任务写入标志
                 writeLog.Write("标志位：" + flag);
+                if (flag == -1)
+                {
+                    writeLog.Write("与PLC连接异常,请检查网络");
+                    updateListBox("与PLC连接异常,请检查网络");
+                }
                 if (flag == 2)//0：已取走， 1：已写入
                 {
 
@@ -353,6 +358,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
             }
         }
         void sendTask()
@@ -361,6 +367,11 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = taskgroup.Read(26).CastTo<int>(-1);//读任务写入标志
                 writeLog.Write("标志位：" + flag);
+                if (flag == -1)
+                {
+                    writeLog.Write("与PLC连接异常,请检查网络");
+                    updateListBox("与PLC连接异常,请检查网络");
+                }
                 if (flag == 2)//0：已取走， 1：已写入
                 {
 
@@ -438,6 +449,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
             }
         }
         public void WriteErr(int type, int len, String temp, decimal GroupNo)

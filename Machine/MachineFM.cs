@@ -448,6 +448,11 @@ namespace SortingControlSys.SortingControl
                 int flag = group.Read(4).CastTo<int>(-1);
                 writeLog.Write("exportnum:" + exportnum + ";标志位：" + flag);
                 updateListBox("exportnum:" + exportnum + ";标志位：" + flag);
+                if (flag == -1)
+                {
+                    writeLog.Write("与PLC连接异常,请检查网络");
+                    updateListBox("与PLC连接异常,请检查网络");
+                }
                 if (flag == 2)
                 {
                     List<String> temp = new List<string>();
@@ -529,6 +534,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
             }
         }
         public void CheckExport(String exportnum)
@@ -560,7 +566,10 @@ namespace SortingControlSys.SortingControl
                     {
                         if (int.Parse(values[i].ToString()) == 2)
                         {
-
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             if (tempList.Count > 0)
                             {
                                 List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
@@ -571,10 +580,7 @@ namespace SortingControlSys.SortingControl
                                     //    Thread.Sleep(100);
                                     //    groupBool[Group - 1] = true;
                                     //}
-                                    while (!isInit)
-                                    {
-                                        Thread.Sleep(100);
-                                    }
+                                    
                                     foreach (var item in temp)
                                     {
                             //if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")

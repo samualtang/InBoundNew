@@ -260,6 +260,11 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = taskgroup.Read(12).CastTo<int>(-1);
                 writeLog.Write("标志位：" + flag);
+                if (flag == -1)
+                {
+                    writeLog.Write("与PLC连接异常,请检查网络");
+                    updateListBox("与PLC连接异常,请检查网络");
+                }
                 if (flag == 0)
                 {
                    
@@ -295,6 +300,7 @@ namespace SortingControlSys.SortingControl
             catch(Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
             }
         }
         public static Object lockFlag = new Object();
