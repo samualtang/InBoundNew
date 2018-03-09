@@ -193,6 +193,7 @@ namespace SortingControlSys.SortingControl
             int flag = taskgroup.Read(12).CastTo<int>(-1);
             if (flag == 0)
             {
+                taskgroup.Write(5, 12);
                 taskgroup.Write(0, 12);
             }
             if (flag == -1)
