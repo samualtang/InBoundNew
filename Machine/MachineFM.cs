@@ -566,6 +566,10 @@ namespace SortingControlSys.SortingControl
                     {
                         if (int.Parse(values[i].ToString()) == 2)
                         {
+
+
+                            updateListBox("读到标志位2");
+                            writeLog.Write("读到标志位2");
                             while (!isInit)
                             {
                                 Thread.Sleep(100);
@@ -831,7 +835,8 @@ namespace SortingControlSys.SortingControl
             base.OnClosing(e);
 
             Disconnect();
-
+            updateListBox("system exit.......");
+            writeLog.Write("system exit.......");
             this.Dispose();
             this.Close();
             System.Environment.Exit(System.Environment.ExitCode);

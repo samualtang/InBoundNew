@@ -191,6 +191,10 @@ namespace SortingControlSys.SortingControl
         public void checkConnection()
         {
             int flag = taskgroup.Read(12).CastTo<int>(-1);
+            if (flag == 0)
+            {
+                taskgroup.Write(0, 12);
+            }
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
