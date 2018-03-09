@@ -81,6 +81,7 @@
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\WriteLog.cs" />
     <Compile Include="Business\ErrListService.cs" />
+    <Compile Include="Model\OrderGroupDetail.cs" />
     <Compile Include="UnionBit.cs" />
     <Compile Include="EntityData.Designer.cs">
       <AutoGen>True</AutoGen>

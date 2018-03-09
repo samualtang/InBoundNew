@@ -26,21 +26,40 @@ namespace highSpeed.PubFunc
         {
             if (fileName == null || maxBufferLength <= 0)
             {
+                
                 throw new ArgumentException("待发送的文件名称为空或发送缓冲区的大小设置不正确.");
             }
             int flag = 0;
             try
             {
+               
                 FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 long fileLen = fs.Length;                        // 文件长度
                 long leftLen = fileLen;                            // 未读取部分
                 int readLen = 0;                                // 已读取部分
                 byte[] buffer = null;
+                int tfileLen = (fileLen).ToString().Length;
+                int needZero = 4 - tfileLen;
+                String preStr = (fileLen).ToString();
+                if (needZero > 0)
+                {
+                    while (needZero > 0)
+                    {
+                        preStr = "0" + preStr;
+                        needZero--;
+                    }
 
+                }
                 if (fileLen <= maxBufferLength)
                 {            /* 文件可以一次读取*/
-                    buffer = new byte[fileLen];
-                    readLen = fs.Read(buffer, 0, (int)fileLen);
+                    buffer = new byte[fileLen+4];
+                   Byte[] b= System.Text.Encoding.Default.GetBytes(preStr);
+                   for (int i = 0; i < b.Length; i++)
+                   {
+                       buffer[i] = b[i];
+                   }
+
+                       readLen = fs.Read(buffer, 4, (int)fileLen);
                     flag = SendData(socket, buffer, outTime);
                 }
                 else

@@ -14,6 +14,7 @@ using InBound;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Configuration;
+using InBound.Model;
 
 namespace highSpeed.orderHandle
 {
@@ -110,19 +111,21 @@ namespace highSpeed.orderHandle
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel f = item as PokeGroupUIModel;
-                getVal = ConfigurationManager.AppSettings[f.ConfigKey].Split(',');
+                getVal = ConfigurationManager.AppSettings[f.ConfigKey].Split(';');
 
                 if (getVal.Count() > 0)
                 {
                     f.IpAddress = getVal[0];
                     f.Port = int.Parse(getVal[1]);
                 }
-
+                if (f.ZipFile == null)
+                    continue;
                 IPAddress address = IPAddress.Parse(f.IpAddress);
                 IPEndPoint endpoint = new IPEndPoint(address, f.Port);
                 Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socketClient.Connect(endpoint);
-                int i = SocketClientConnector.SendFile(socketClient, f.ZipFile, 10000, 1);
+                int i = SocketClientConnector.SendFile(socketClient, f.ZipFile, 102400, 1);
+                socketClient.Close();
                 if (i == 0)
                 {
                     MessageBox.Show(f.ZipFile + "文件发送成功");
@@ -139,40 +142,53 @@ namespace highSpeed.orderHandle
             foreach (var item in cblist.CheckedItems)
             {
                 PokeGroupUIModel model = item as PokeGroupUIModel;
-                if (model.GroupKind == "1")
+                for (var i = 0; i < gvdata.RowCount; i++)
                 {
-                    FetchProducePokeData(model);
-                }
-                else
-                {
-                    FetchUnPokeData(model);
+                    if (gvdata.Rows[i].Cells[0].Selected == true)
+                    {
+                        String seq = gvdata.Rows[i].Cells[4].Value.ToString();
+                        if (model.GroupKind == "1")
+                        {
+                            FetchProducePokeData(model,seq);
+                        }
+                        else
+                        {
+                            FetchUnPokeData(model,seq);
+                        }
+                    }
                 }
             }
         }
 
-        private void FetchProducePokeData(PokeGroupUIModel model)
+        private void FetchProducePokeData(PokeGroupUIModel model,String seq)
         {
-            List<T_PRODUCE_POKE> _pokeList = ProducePokeService.FetchProducePokeList(decimal.Parse(model.GroupNum));
+            List<OrderGroupDetail> _pokeList = ProducePokeService.FetchProducePokeList(decimal.Parse(model.GroupNum));
+            
             if (_pokeList.Count == 0) return;
             StringBuilder info = new StringBuilder();
+           // info = info + tasknum + taskseq + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + synseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + "," + bianhao + ",1;\r\n";
+           // int i = 0;
             foreach (var item in _pokeList)
             {
-                info.AppendFormat("{0},{1},{2},{3},{4},{5};\n", item.TASKNUM, item.TASKQTY, item.GROUPNO, item.POKENUM, item.TROUGHNUM, item.BILLCODE);
+               // i++;
+                info.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15};\r\n", item.TaskNum,item.TaskNum,item.CustomerCode,item.CustomerName,item.CigaretteCode,item.CigaretteName,item.PokeNum,seq,item.Seq,item.RegionCode,item.RegionName,item.OrderDate,DateTime.Now.ToShortTimeString(),"01","1","","");
+               
             }
             ExpToZipFile(info.ToString(), model);
         }
 
 
-        private void FetchUnPokeData(PokeGroupUIModel model)
+        private void FetchUnPokeData(PokeGroupUIModel model,String seq)
         {
             List<T_UN_POKE> _unpokeList = UnPokeService.FetchUnPokeList(model.GroupNum);
             if (_unpokeList.Count == 0) return;
             StringBuilder info = new StringBuilder();
             foreach (var item in _unpokeList)
             {
-                info.AppendFormat("{0},{1},{2},{3},{4},{5};\n", item.TASKNUM, item.TASKQTY, item.LINENUM, item.POKENUM, item.TROUGHNUM, item.BILLCODE);
+                info.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15};\r\n", item.TASKNUM, "123456789123", "测试客户", "430189", "芙蓉王", item.POKENUM, "1", "1", "0201", "xianluyi", "2018-03-07", "2018-03-09", "01", "1", "", "");
             }
             ExpToZipFile(info.ToString(), model);
+
         }
 
         private void ExpToZipFile(string info, PokeGroupUIModel model)
@@ -188,8 +204,11 @@ namespace highSpeed.orderHandle
             StreamWriter sw = new StreamWriter(filePath + "\\" + filename + ".Order", false, Encoding.UTF8);
             sw.WriteLine(info.Substring(0, info.Length - 1));
             sw.Close();//写入
+            filename = "RetailerOrder20180309171253579";
             GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
             model.ZipFile = filePath + "\\" + filename + ".zip";
+            model.OrderFile = filePath + "\\" + filename + ".Order";
+            MessageBox.Show("文件导出成功");
         }
 
 
@@ -224,6 +243,7 @@ namespace highSpeed.orderHandle
         public string IpAddress { get; set; }
         public int Port { get; set; }
         public string ZipFile { get; set; }
+        public string OrderFile { get; set; }
         public string ConfigKey { get; set; }
     }
 

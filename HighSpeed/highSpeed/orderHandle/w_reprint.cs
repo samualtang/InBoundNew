@@ -13,6 +13,7 @@ using highSpeed.PubFunc;
 using System.Configuration;
 using System.Net;
 using System.Net.Sockets;
+using InBound.Model;
 
 namespace highSpeed.orderHandle
 {
@@ -109,12 +110,12 @@ namespace highSpeed.orderHandle
 
         private void FetchProducePokeData(PokeGroupUIModel model)
         {
-            List<T_PRODUCE_POKE> _pokeList = ProducePokeService.FetchProducePokeList(decimal.Parse(model.GroupNum));
+            List<OrderGroupDetail> _pokeList = ProducePokeService.FetchProducePokeList(decimal.Parse(model.GroupNum));
             if (_pokeList.Count == 0) return;
             StringBuilder info = new StringBuilder();
             foreach (var item in _pokeList)
             {
-                info.AppendFormat("{0},{1},{2},{3},{4},{5};\n", item.TASKNUM, item.TASKQTY, item.GROUPNO, item.POKENUM, item.TROUGHNUM, item.BILLCODE);
+             //   info.AppendFormat("{0},{1},{2},{3},{4},{5};\n", item.TASKNUM, item.TASKQTY, item.GROUPNO, item.POKENUM, item.TROUGHNUM, item.BILLCODE);
             }
             ExpToZipFile(info.ToString(), model);
         }

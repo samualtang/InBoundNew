@@ -96,7 +96,7 @@ namespace InBound.Business
             return list;
         }
 
-        public static List<T_PRODUCE_POKE> FetchProducePokeList(decimal groupno)
+        public static List<OrderGroupDetail> FetchProducePokeList(decimal groupno)
         {
             /**
            SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,c.pokenum,a.regioncode,to_char(a.orderdate,'yyyy-mm-dd') AS enterdate 
@@ -109,14 +109,16 @@ namespace InBound.Business
              */
             using (Entities entity = new Entities())
             {
-                var query = from poke in entity.T_PRODUCE_POKE
-                            //join task in entity.T_PRODUCE_TASK on poke.TASKNUM equals task.TASKNUM
-                            //join sortgh in entity.T_PRODUCE_SORTTROUGH on poke.MACHINESEQ equals sortgh.MACHINESEQ
+                var query = (from poke in entity.T_PRODUCE_POKE
+                            join task in entity.T_PRODUCE_TASK on poke.TASKNUM equals task.TASKNUM
+                            join sortgh in entity.T_PRODUCE_SORTTROUGH on poke.TROUGHNUM equals sortgh.TROUGHNUM
                             where
-                                //sortgh.TROUGHTYPE == 10 && sortgh.CIGARETTETYPE == 20 && sortgh.STATE == "10" && 
+                                sortgh.TROUGHTYPE == 10 && sortgh.CIGARETTETYPE == 20 && sortgh.STATE == "10" && 
                             poke.GROUPNO == groupno
                             //&& task.SYNSEQ == 1 
-                            select poke;
+                            select new OrderGroupDetail() {  CigaretteCode=sortgh.CIGARETTECODE, CigaretteName=sortgh.CIGARETTENAME,
+                             CustomerCode=task.COMPANYCODE, CustomerName=task.CUSTOMERNAME, OrderDate=task.ORDERDATE, PokeNum=poke.POKENUM, RegionCode=task.REGIONCODE, RegionName=task.REGIONDESC,
+                            TaskNum=task.SORTNUM});
                 return query.ToList();
             }
         }

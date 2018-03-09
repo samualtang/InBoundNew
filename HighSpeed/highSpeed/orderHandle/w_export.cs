@@ -154,7 +154,7 @@ namespace highSpeed.orderHandle
                 GetFileToZip("E:\\HighSpeedExportData\\" + filename + ".Order", "E:\\HighSpeedExportData\\" + filename + ".zip", filename + ".Order");
                 //发送数据
 
-
+                
 
                 MessageBox.Show("数据导出成功，文件为" + "E:\\HighSpeedExportData\\" + filename + ".Order", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -168,7 +168,7 @@ namespace highSpeed.orderHandle
                 String exportnum = this.orderdata.SelectedRows[0].Cells["exportnum"].Value + "";
                 //取页面参数
 
-
+                export(synseq, "01", "1", "2");
 
 
 
