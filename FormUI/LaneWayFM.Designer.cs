@@ -48,10 +48,11 @@
             this.巷道编码,
             this.巷道名称,
             this.状态});
-            this.dataGridView1.Location = new System.Drawing.Point(21, 97);
+            this.dataGridView1.Location = new System.Drawing.Point(14, 80);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(511, 242);
+            this.dataGridView1.Size = new System.Drawing.Size(366, 178);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
@@ -79,18 +80,21 @@
             this.groupBox1.Controls.Add(this.btnDisable);
             this.groupBox1.Controls.Add(this.btnOut);
             this.groupBox1.Controls.Add(this.btnIn);
-            this.groupBox1.Location = new System.Drawing.Point(21, 13);
+            this.groupBox1.Location = new System.Drawing.Point(14, 9);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(511, 78);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(366, 52);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "操作";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(362, 27);
+            this.btnStart.Location = new System.Drawing.Point(283, 17);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(84, 44);
+            this.btnStart.Size = new System.Drawing.Size(56, 29);
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "启用";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -98,9 +102,10 @@
             // 
             // btnDisable
             // 
-            this.btnDisable.Location = new System.Drawing.Point(250, 27);
+            this.btnDisable.Location = new System.Drawing.Point(209, 17);
+            this.btnDisable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDisable.Name = "btnDisable";
-            this.btnDisable.Size = new System.Drawing.Size(84, 44);
+            this.btnDisable.Size = new System.Drawing.Size(56, 29);
             this.btnDisable.TabIndex = 2;
             this.btnDisable.Text = "禁用";
             this.btnDisable.UseVisualStyleBackColor = true;
@@ -108,9 +113,10 @@
             // 
             // btnOut
             // 
-            this.btnOut.Location = new System.Drawing.Point(146, 28);
+            this.btnOut.Location = new System.Drawing.Point(139, 18);
+            this.btnOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnOut.Name = "btnOut";
-            this.btnOut.Size = new System.Drawing.Size(84, 44);
+            this.btnOut.Size = new System.Drawing.Size(56, 29);
             this.btnOut.TabIndex = 1;
             this.btnOut.Text = "禁出";
             this.btnOut.UseVisualStyleBackColor = true;
@@ -118,9 +124,10 @@
             // 
             // btnIn
             // 
-            this.btnIn.Location = new System.Drawing.Point(35, 28);
+            this.btnIn.Location = new System.Drawing.Point(65, 18);
+            this.btnIn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnIn.Name = "btnIn";
-            this.btnIn.Size = new System.Drawing.Size(84, 44);
+            this.btnIn.Size = new System.Drawing.Size(56, 29);
             this.btnIn.TabIndex = 0;
             this.btnIn.Text = "禁入";
             this.btnIn.UseVisualStyleBackColor = true;
@@ -128,11 +135,12 @@
             // 
             // LaneWayFM
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(647, 351);
+            this.ClientSize = new System.Drawing.Size(410, 280);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "LaneWayFM";
             this.Text = "巷道管理";
             this.Load += new System.EventHandler(this.LaneWayFM_Load);

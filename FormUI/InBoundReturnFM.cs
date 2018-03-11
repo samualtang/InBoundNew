@@ -70,7 +70,7 @@ namespace FormUI
                 tbNum.Text = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
             }
         }
-        List<String> address = new List<string>() { "1222", "1232", "1412" };
+        List<String> address = new List<string>() { "1221", "1231", "1412" };
         private void button1_Click(object sender, EventArgs e)
         {
 

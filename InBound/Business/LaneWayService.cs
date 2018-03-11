@@ -11,7 +11,7 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = from item in entity.T_WMS_LANEWAY select item;
+              var query = from item in entity.T_WMS_LANEWAY orderby item.LANEWAYNO select item;
               return query.ToList();
           }
       }

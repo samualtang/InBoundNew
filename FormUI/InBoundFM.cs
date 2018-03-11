@@ -50,7 +50,7 @@ namespace FormUI
                 tbChooseName.Tag = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
-        List<String> address = new List<string>() { "1222", "1232", "1412" };
+        List<String> address = new List<string>() { "1221", "1231", "1412" };
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -87,6 +87,7 @@ namespace FormUI
             job.TUTYPE = 4;
             job.INPUTTYPE = 10;
             String palletNo = RefRFIDPalletService.GetPallet(tbRfid.Text);
+            job.BARCODE = palletNo;
             if (palletNo == "E")
             {
                 MessageBox.Show("该托盘已在使用,请确认Rfid是否输入正确");

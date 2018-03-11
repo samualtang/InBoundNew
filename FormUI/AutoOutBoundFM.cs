@@ -13,7 +13,7 @@ namespace FormUI
 {
     public partial class AutoOutBoundFM : Form
     {
-        List<String> address = new List<string>() { "1222", "1232", "1412" };
+        List<String> address = new List<string>() { "1221", "1231", "1412" };
         public AutoOutBoundFM()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace FormUI
         }
         private void search()
         {
-            List<InBound.T_WMS_ATSCELL_OUT> list = AtsCellOutService.getAutoList( tbCode.Text);
+            List<InBound.T_WMS_ATSCELL_OUT> list = AtsCellOutService.getAutoList(tbCode.Text, tbName.Text);
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = list;
            
@@ -81,9 +81,10 @@ namespace FormUI
                     INF_JOBDOWNLOAD job = new INF_JOBDOWNLOAD();
                     decimal id = BaseService.GetSeq("select S_ATSCELL_OUT.nextval from dual");
                     job.TARGET = address[cbAdress.SelectedIndex];
-                    job.BARCODE = AtsCellInfoService.GetCellInfo(job.SOURCE).PALLETNO;//托盘号
+                    
                     job.PLANQTY = detail.REQUESTQTY;
                     job.SOURCE = AtsCellOutService.getCellNoBig(detail.CIGARETTECODE, int.Parse(detail.REQUESTQTY.ToString()));
+                    job.BARCODE = AtsCellInfoService.GetCellInfo(job.SOURCE).PALLETNO;//托盘号
                     job.JOBTYPE = 52;//
                     job.PRIORITY = 50;
                     job.CREATEDATE = DateTime.Now;

@@ -204,12 +204,12 @@ namespace InBound.Business
  
             }
         }
-        public static List<T_WMS_ATSCELL_OUT> getAutoList(String cigaretteCode)
+        public static List<T_WMS_ATSCELL_OUT> getAutoList(String cigaretteCode,String cigaretteName )
         {
             using (Entities et = new Entities())
             {
                 var query = from item in et.T_WMS_ATSCELL_OUT
-                            where item.CIGARETTECODE.Contains(cigaretteCode)
+                            where item.CIGARETTECODE.Contains(cigaretteCode) && item.CIGARETTENAME.Contains(cigaretteName)
                             && item.STATUS==10
                             select item;
                
