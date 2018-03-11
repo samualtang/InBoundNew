@@ -30,7 +30,7 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+                code = item.BIGBOX_BAR +"0000"+ string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
             
             }
             FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
@@ -56,13 +56,20 @@ namespace RdlcPro
             InitializeComponent();
             reportViewer1.LocalReport.EnableExternalImages = true;
             BarCode128 barCode = new BarCode128();
-            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128A).Save(code + ".jpg");
+            code = code + "0000" + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+            FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+            barCode.GetCodeImage(code, LabelPrint.MvcGuestBook.Common.BarCode128.Encode.Code128C).Save("code.jpg");
 
             System.Drawing.Printing.PageSettings ps = reportViewer1.GetPageSettings();// new System.Drawing.Printing.PageSettings();
             ps.Landscape = false;
             
             Microsoft.Reporting.WinForms.ReportParameter params1;
-            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///" + Application.StartupPath + "\\" + code + ".jpg");
+            params1 = new Microsoft.Reporting.WinForms.ReportParameter("ImageAddress", "file:///" + Application.StartupPath + "\\code.jpg");
+            reportViewer1.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { params1 });
             reportViewer1.SetPageSettings(ps);
         }
         List<T_WMS_ITEM> GetList(String code,int num)
@@ -73,7 +80,7 @@ namespace RdlcPro
             if (item != null)
             {
                 //item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now)+"0000000000"; 
-                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now) ;
+                item.BIGBOX_BAR = "(91)" + item.BIGBOX_BAR + "0000" + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
             }
             for(int i=0;i<num;i++)
             {
@@ -86,7 +93,19 @@ namespace RdlcPro
             List<T_WMS_ITEM> list = new List<T_WMS_ITEM>();
 
             T_WMS_ITEM item = new T_WMS_ITEM();
-            item.BIGBOX_BAR = code;
+
+            WmsService service = new WmsService();
+            T_WMS_ITEM itemname = service.GetItemByBarCode(code);
+            if (itemname != null)
+            {
+                item.ITEMNAME = itemname.ITEMNAME;
+            }
+            else
+            {
+                item.ITEMNAME = "未知卷烟";
+            }
+            item.BIGBOX_BAR = "(91)" + code + "0000" + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+            
             for (int i = 0; i < num; i++)
             {
                 list.Add(item);
