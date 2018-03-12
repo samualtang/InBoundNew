@@ -355,6 +355,9 @@ namespace SortingControlSys.SortingControl
                // item.Write(0, 3);
                 if (item.Read(4).ToString() != "1")
                 {
+
+                    item.Write(5, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
+                    Thread.Sleep(10);
                     item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 }
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
@@ -587,7 +590,7 @@ namespace SortingControlSys.SortingControl
                                     
                                     //foreach (var item in temp)
                                     //{
-                            if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
+                            if (groupList[Group - 1].ReadD(3) != null && groupList[Group - 1].ReadD(3).ToString()!="0")
                                 {
                                     String item =  groupList[Group - 1].ReadD(3).ToString();//任务号
 

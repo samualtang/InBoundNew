@@ -101,38 +101,38 @@ namespace FormUI
             {
                 job.CDTYPE = 0;
             }
-            InfJobDownLoadService.InsertEntity(job);
-            //using (TransactionScope ts = new TransactionScope())
-            //{
-            //    InfJobDownLoadService.InsertEntity(job);
-               
-            //    //InBoundLineService.Update(entity.INBOUNDDETAILID, 0, num ?? 0);
-            //    AtsCellService.UpdateAtsCell(job.TARGET,30);//更新cellno状态
-            //    T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-            //    info.PALLETNO = palletNo;
-            //    info.DISMANTLE = 1;
-            //    info.CELLNO = job.TARGET;
-            //    info.STATUS = 10;//组盘
-            //    info.CREATETIME = DateTime.Now;
-            //    //info.INBOUNDID = inboundid;
-            //    if (cbcDuo.Checked)
-            //    {
-            //        info.DISMANTLE = 10;
-            //    }
-            //    else
-            //    {
-            //        info.DISMANTLE = 0;
-            //    }
-            //    AtsCellInfoService.InsertAtsCellInfo(info);
+          //  InfJobDownLoadService.InsertEntity(job);
+            using (TransactionScope ts = new TransactionScope())
+            {
+                InfJobDownLoadService.InsertEntity(job);
 
-            //    T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
-            //    detail.CIGARETTECODE = tbChooseName.Tag.ToString();
-            //    detail.CIGARETTENAME = tbChooseName.Text;
-            //    detail.QTY = decimal.Parse(tbNum.Text);
-            //    detail.PALLETNO = info.PALLETNO;
-            //    AtsCellInfoDetailService.InsertAtsCellInfo(detail);
-            //    ts.Complete();
-            //}
+                //InBoundLineService.Update(entity.INBOUNDDETAILID, 0, num ?? 0);
+                AtsCellService.UpdateAtsCell(job.TARGET, 30);//更新cellno状态
+                T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
+                info.PALLETNO = palletNo;
+                info.DISMANTLE = 1;
+                info.CELLNO = job.TARGET;
+                info.STATUS = 10;//组盘
+                info.CREATETIME = DateTime.Now;
+                //info.INBOUNDID = inboundid;
+                if (cbcDuo.Checked)
+                {
+                    info.DISMANTLE = 10;
+                }
+                else
+                {
+                    info.DISMANTLE = 0;
+                }
+                AtsCellInfoService.InsertAtsCellInfo(info);
+
+                T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
+                detail.CIGARETTECODE = tbChooseName.Tag.ToString();
+                detail.CIGARETTENAME = tbChooseName.Text;
+                detail.QTY = decimal.Parse(tbNum.Text);
+                detail.CELLNO = info.CELLNO;
+                AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+                ts.Complete();
+            }
             //MessageBox.Show("入库完成");
             tbChooseName.Text = "";
             tbChooseName.Tag = null;
