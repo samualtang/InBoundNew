@@ -568,6 +568,11 @@ namespace MainUI
             errorFm.Show();
         }
 
+        private void ³ö¿âToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
 
        

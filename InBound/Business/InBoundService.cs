@@ -206,7 +206,7 @@ namespace InBound.Business
 
                                     load1.JOBTYPE = 55;//补货出库
                                     load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)detail.QTY);//out cell
-                                    load1.TARGET = InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
+                                    load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                     load1.STATUS = 0;
                                     if (load1.SOURCE != "" && load1.TARGET != "")
                                     {
