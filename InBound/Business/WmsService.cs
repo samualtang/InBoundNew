@@ -43,5 +43,14 @@ namespace InBound.Business
                 return query.OrderBy(item => item.ITEMNAME).Skip(currentPage*pageSize).Take(pageSize).ToList();
             }
         }
+        //根据件烟码取商品名称
+        public T_WMS_ITEM GetItemByBarCode(String barcode)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_WMS_ITEM where item.BIGBOX_BAR == barcode select item).FirstOrDefault();
+                return query;
+            }
+        }
     }
 }

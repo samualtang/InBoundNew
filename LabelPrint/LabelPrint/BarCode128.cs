@@ -18,7 +18,7 @@ namespace LabelPrint
         public class BarCode128
         {
             private DataTable m_Code128 = new DataTable();
-            private uint m_Height = 140;
+            private uint m_Height = 150;
             /// <summary>
             /// 高度
             /// </summary>
