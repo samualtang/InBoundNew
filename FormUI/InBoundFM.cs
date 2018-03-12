@@ -133,7 +133,7 @@ namespace FormUI
             //    AtsCellInfoDetailService.InsertAtsCellInfo(detail);
             //    ts.Complete();
             //}
-            //MessageBox.Show("入库完成");
+            MessageBox.Show("任务已达");
             tbChooseName.Text = "";
             tbChooseName.Tag = null;
           
