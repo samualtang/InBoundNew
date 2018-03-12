@@ -589,7 +589,7 @@ namespace SortingControlSys.SortingControl
                                     //{
                             if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
                                 {
-                                    String item =  groupList[Group - 1].Read(3).ToString();//任务号
+                                    String item =  groupList[Group - 1].ReadD(3).ToString();//任务号
 
                                     updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                     writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
