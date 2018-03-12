@@ -570,7 +570,10 @@ namespace MainUI
 
         private void ³ö¿âToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FormUI.MOutBoundFM moutFm = new FormUI.MOutBoundFM();
+            moutFm.StartPosition = FormStartPosition.CenterScreen;
+            moutFm.Show();
+           
         }
 
         
