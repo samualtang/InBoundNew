@@ -101,7 +101,7 @@ namespace FormUI
             {
                 job.CDTYPE = 0;
             }
-<<<<<<< HEAD
+
           //  InfJobDownLoadService.InsertEntity(job);
             using (TransactionScope ts = new TransactionScope())
             {
@@ -135,8 +135,8 @@ namespace FormUI
                 ts.Complete();
             }
             //MessageBox.Show("入库完成");
-=======
-            InfJobDownLoadService.InsertEntity(job);
+
+            //InfJobDownLoadService.InsertEntity(job);
             //using (TransactionScope ts = new TransactionScope())
             //{
             //    InfJobDownLoadService.InsertEntity(job);
@@ -169,7 +169,7 @@ namespace FormUI
             //    ts.Complete();
             //}
             MessageBox.Show("任务已达");
->>>>>>> 008bd376ec862d4f723415f60883d593ccdde7ec
+
             tbChooseName.Text = "";
             tbChooseName.Tag = null;
           
