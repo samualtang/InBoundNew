@@ -43,23 +43,23 @@
             this.tbChooseName = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.卷烟编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.卷烟名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.件烟码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.总数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.储位 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.卷烟编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.卷烟名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.件烟码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.总数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -181,7 +181,6 @@
             this.cbAdress.FormattingEnabled = true;
             this.cbAdress.Items.AddRange(new object[] {
             "一楼一号出口",
-            "一楼二号出口",
             "二楼一号出口"});
             this.cbAdress.Location = new System.Drawing.Point(67, 27);
             this.cbAdress.Margin = new System.Windows.Forms.Padding(2);
@@ -231,46 +230,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "卷烟信息";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.卷烟编码,
-            this.卷烟名称,
-            this.件烟码,
-            this.总数量});
-            this.dataGridView1.Location = new System.Drawing.Point(2, 16);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(806, 184);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            // 
-            // 卷烟编码
-            // 
-            this.卷烟编码.DataPropertyName = "cigarettecode";
-            this.卷烟编码.HeaderText = "卷烟编码";
-            this.卷烟编码.Name = "卷烟编码";
-            // 
-            // 卷烟名称
-            // 
-            this.卷烟名称.DataPropertyName = "cigarettename";
-            this.卷烟名称.HeaderText = "卷烟名称";
-            this.卷烟名称.Name = "卷烟名称";
-            // 
-            // 件烟码
-            // 
-            this.件烟码.DataPropertyName = "BarCode";
-            this.件烟码.HeaderText = "件烟码";
-            this.件烟码.Name = "件烟码";
-            // 
-            // 总数量
-            // 
-            this.总数量.DataPropertyName = "QTY";
-            this.总数量.HeaderText = "总数量";
-            this.总数量.Name = "总数量";
-            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -318,6 +277,46 @@
             this.时间.HeaderText = "时间";
             this.时间.Name = "时间";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.卷烟编码,
+            this.卷烟名称,
+            this.件烟码,
+            this.总数量});
+            this.dataGridView1.Location = new System.Drawing.Point(2, 16);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 30;
+            this.dataGridView1.Size = new System.Drawing.Size(806, 184);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // 卷烟编码
+            // 
+            this.卷烟编码.DataPropertyName = "cigarettecode";
+            this.卷烟编码.HeaderText = "卷烟编码";
+            this.卷烟编码.Name = "卷烟编码";
+            // 
+            // 卷烟名称
+            // 
+            this.卷烟名称.DataPropertyName = "cigarettename";
+            this.卷烟名称.HeaderText = "卷烟名称";
+            this.卷烟名称.Name = "卷烟名称";
+            // 
+            // 件烟码
+            // 
+            this.件烟码.DataPropertyName = "BarCode";
+            this.件烟码.HeaderText = "件烟码";
+            this.件烟码.Name = "件烟码";
+            // 
+            // 总数量
+            // 
+            this.总数量.DataPropertyName = "QTY";
+            this.总数量.HeaderText = "总数量";
+            this.总数量.Name = "总数量";
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -347,8 +346,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -73,7 +73,7 @@ namespace FormUI
             INF_JOBDOWNLOAD job = new INF_JOBDOWNLOAD();
          
             job.SOURCE = address[cbAddress.SelectedIndex];
-            job.TARGET = AtsCellInService.getCellNo(tbChooseName.Tag.ToString());//储位地址
+            job.TARGET = AtsCellInService.getCellNoCode(tbChooseName.Tag.ToString());//储位地址
             if (job.TARGET == "")
             {
                 MessageBox.Show("获取储位信息失败");

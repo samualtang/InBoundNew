@@ -13,7 +13,7 @@ namespace FormUI
 {
     public partial class MOutBoundFM : Form
     {
-        List<String> address = new List<string>() { "1222", "1232", "1412" };
+        List<String> address = new List<string>() { "1231", "1412" };
         public MOutBoundFM()
         {
             InitializeComponent();
@@ -93,7 +93,7 @@ namespace FormUI
             String cigaretteName = ((List<String>)tbChooseName.Tag)[1].ToString();
             String cigaretteCode=((List<String>)tbChooseName.Tag)[0].ToString();
             int totalQty = int.Parse(((List<String>)tbChooseName.Tag)[3].ToString());
-            T_WMS_ITEM itemDetail = ItemService.GetItemByCode(cigaretteCode);
+            T_WMS_ITEM itemDetail = ItemService.GetItemByBarCode(cigaretteCode);
             if (planQty > totalQty)
             {
                 MessageBox.Show("计划出库数量大于库存,请修改出库数量");
@@ -149,6 +149,7 @@ namespace FormUI
                     job.TUTYPE = 4;
                     job.INPUTTYPE = 10;
                     job.TASKNO = id;
+                    job.TARGET = address[cbAdress.SelectedIndex];
                     using (TransactionScope ts = new TransactionScope())
                     {
                         InfJobDownLoadService.InsertEntity(job);

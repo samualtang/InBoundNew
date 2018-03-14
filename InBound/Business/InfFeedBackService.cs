@@ -270,7 +270,7 @@ namespace InBound.Business
                                   if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42)//入库单入库任务
                                   {
 
-                                      if (item.JOBTYPE == 20)
+                                      if (item.JOBTYPE == 20 )
                                       {
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
@@ -305,10 +305,10 @@ namespace InBound.Business
                                       }
                                       else if (item.JOBTYPE == 52)
                                       {
-                                          //AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
-                                          //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
-                                          //AtsCellInfoService.delete(item.SOURCE);
-                                          //AtsCellInfoDetailService.delete(item.SOURCE);
+                                          AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
+                                          AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
+                                          AtsCellInfoService.delete(item.SOURCE);
+                                          AtsCellInfoDetailService.delete(item.SOURCE);
                                       }
                                       else if(item.JOBTYPE==55)
                                       {
