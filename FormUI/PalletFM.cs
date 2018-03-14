@@ -209,7 +209,7 @@ namespace FormUI
             job.SOURCE = address[selectIndex];
             job.FULLCOUNT = item.FULLCOUNT;
             job.PILETYPE =decimal.Parse( item.DXTYPE);
-            job.TARGET = AtsCellInService.getCellNo(((List<String>)tbChooseName.Tag)[0].ToString());//储位地址
+            job.TARGET = AtsCellInService.getCellNoCode(((List<String>)tbChooseName.Tag)[0].ToString());//储位地址
             if (job.TARGET == "")
             {
                 MessageBox.Show("获取储位信息失败");

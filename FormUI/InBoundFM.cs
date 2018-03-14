@@ -50,7 +50,7 @@ namespace FormUI
                 tbChooseName.Tag = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
-        List<String> address = new List<string>() { "1221", "1231", "1412" };
+        List<String> address = new List<string>() { "1221", "1231", "1415" };
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -127,10 +127,12 @@ namespace FormUI
                 AtsCellInfoService.InsertAtsCellInfo(info);
 
                 T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
-                detail.CIGARETTECODE = tbChooseName.Tag.ToString();
+                detail.BARCODE = tbChooseName.Tag.ToString();
+                detail.CIGARETTECODE = ItemService.GetItemByBarCode(detail.BARCODE).ITEMNO;
                 detail.CIGARETTENAME = tbChooseName.Text;
                 detail.QTY = decimal.Parse(tbNum.Text);
                 detail.CELLNO = info.CELLNO;
+               
                 AtsCellInfoDetailService.InsertAtsCellInfo(detail);
                 ts.Complete();
             }
