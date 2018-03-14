@@ -29,7 +29,7 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE where item.LINENUM == lineNum && item.STATUS == 10 orderby item.SORTNUM, item.SECSORTNUM select item;
+                var query = from item in data.T_UN_POKE where item.LINENUM == lineNum && item.STATUS == 10 orderby item.SORTNUM, item.SECSORTNUM,item.MACHINESEQ select item;
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
