@@ -264,7 +264,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = taskgroup.Read(12).CastTo<int>(-1);
-                writeLog.Write("标志位：" + flag);
+                writeLog.Write("写入前读取标志位：" + flag);
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
@@ -278,6 +278,7 @@ namespace SortingControlSys.SortingControl
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("合流数据发送完毕");
+                        writeLog.Write("合流数据发送完毕");
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());
@@ -285,10 +286,24 @@ namespace SortingControlSys.SortingControl
                     //{
                        
                         taskgroup.SyncWrite(datas);
-                        string logstr = "";
+                        string logstr = "任务信息：";
+                        string f = "";
                         for (int i = 0; i < datas.Length; i++)
                         {
-                            logstr += i + ":" + datas[i] + ";";
+                            if (i == 0) f = "任务号";
+                            else if (i == 1) f = "出口号";
+                            else if (i == 2) f = "包装机号";
+                            else if (i == 3) f = "总条数";
+                            else if (i == 4) f = "1号机械手抓烟数";
+                            else if (i == 5) f = "2号机械手抓烟数";
+                            else if (i == 6) f = "3号机械手抓烟数";
+                            else if (i == 7) f = "4号机械手抓烟数";
+                            else if (i == 8) f = "5号机械手抓烟数";
+                            else if (i == 9) f = "6号机械手抓烟数";
+                            else if (i == 10) f = "7号机械手抓烟数";
+                            else if (i == 11) f = "8号机械手抓烟数";
+                            else if (i == 12) f = "标志位";
+                            logstr += f + ":" + datas[i] + ";";
                         }
                         writeLog.Write(logstr);
                         updateListBox(logstr);
@@ -355,6 +370,7 @@ namespace SortingControlSys.SortingControl
                             if (tempList.Count > 0)
                             {
                                 updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
                                 TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
                             }
                             
@@ -379,13 +395,14 @@ namespace SortingControlSys.SortingControl
                        // if (getKey(clientId[i])!=-1)
                        // {
                           //  int taskno = getKey(clientId[i]);
-                            writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                            writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
 
                             TaskService.UpdateUnionStatus( 20, tempvalue);
 
                             if (tempvalue != 0)
                             {
                                 updateListBox("任务:" + tempvalue + "已完成");
+                                writeLog.Write("合流任务号:" + tempvalue + "已完成");
                             }
                             statusGroup2.Write(0, clientId[i] - 1);
                             removeKey(clientId[i]);
@@ -503,7 +520,7 @@ namespace SortingControlSys.SortingControl
        }
        int i = 1;
        public void initdata() {
-           writeLog.Write("initdata");
+           writeLog.Write("启动程序。。。。。。");
            task_data.Rows.Clear();
            try
            {
@@ -615,6 +632,7 @@ namespace SortingControlSys.SortingControl
            
            this.Dispose();
            this.Close();
+           writeLog.Write("退出程序。。。。。。");
            System.Environment.Exit(System.Environment.ExitCode);
        }
        private void button11_Click(object sender, EventArgs e)
