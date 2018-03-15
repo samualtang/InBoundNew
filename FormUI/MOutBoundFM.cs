@@ -13,7 +13,7 @@ namespace FormUI
 {
     public partial class MOutBoundFM : Form
     {
-        List<String> address = new List<string>() { "1231", "1412" };
+        List<String> address = new List<string>() { "1231", "1415" };
         public MOutBoundFM()
         {
             InitializeComponent();
@@ -93,7 +93,7 @@ namespace FormUI
             String cigaretteName = ((List<String>)tbChooseName.Tag)[1].ToString();
             String cigaretteCode=((List<String>)tbChooseName.Tag)[0].ToString();
             int totalQty = int.Parse(((List<String>)tbChooseName.Tag)[3].ToString());
-            T_WMS_ITEM itemDetail = ItemService.GetItemByBarCode(cigaretteCode);
+            T_WMS_ITEM itemDetail = ItemService.GetItemByCode(cigaretteCode);
             if (planQty > totalQty)
             {
                 MessageBox.Show("计划出库数量大于库存,请修改出库数量");
@@ -146,7 +146,14 @@ namespace FormUI
                     job.PRIORITY = 50;
                     job.CREATEDATE = DateTime.Now;
                     job.BRANDID = itemDetail.BIGBOX_BAR;
-                    job.TUTYPE = 4;
+                    if (cbAdress.SelectedIndex == 1)
+                    {
+                        job.TUTYPE = 3;//二楼人工口
+                    }
+                    else
+                    {
+                        job.TUTYPE = 4;
+                    }
                     job.INPUTTYPE = 10;
                     job.TASKNO = id;
                     job.TARGET = address[cbAdress.SelectedIndex];

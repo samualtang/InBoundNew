@@ -73,7 +73,8 @@ namespace InBound.Business
                                       INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
                                       task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
                                       task1.ID = task1.JOBID;
-                                      task1.BRANDID = detail.BARCODE;
+                                      task1.BRANDID = temptask.BRANDID;
+                                      task1.BARCODE = cellInfo.PALLETNO;
                                       task1.SOURCE = temptask.EQUIPMENTID;
                                       task1.PLANQTY = 1;
                                       task1.INPUTTYPE = 10;
@@ -91,7 +92,8 @@ namespace InBound.Business
                                       INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
                                       task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
                                       task1.ID = task.JOBID;
-                                      task1.BRANDID = detail.BARCODE;
+                                      task1.BRANDID = temptask.BRANDID;
+                                      task1.BARCODE = cellInfo.PALLETNO;
                                       task1.SOURCE = temptask.EQUIPMENTID;
                                       task1.PLANQTY = detail.QTY - detail.REQUESTQTY;
                                       task1.INPUTTYPE = 10;
@@ -145,9 +147,9 @@ namespace InBound.Business
                                   {
                                       task.BRANDID = "1111111";
                                   }
-                                  task.TARGET = AtsCellInService.getCellNo(task.BRANDID + "");
+                                  task.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + "");
                                   T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-                                  info.PALLETNO = task.BARCODE;
+                                  info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
 
 
                                   info.CELLNO = task.TARGET;
@@ -180,7 +182,7 @@ namespace InBound.Business
                               {
                                   task.PRIORITY = 99;
                                   task.JOBTYPE = 50;
-                                  task.SOURCE = AtsCellOutService.getCellNo("1111111", 1);//托盘组任务
+                                  task.SOURCE = AtsCellOutService.getCellNoBig("1111111", 1);//托盘组任务
                               }
                               else if (task.TUTYPE == 2)//空托盘
                               {
