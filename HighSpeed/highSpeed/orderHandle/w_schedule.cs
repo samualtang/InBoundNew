@@ -326,10 +326,41 @@ namespace highSpeed.orderHandle
             {
                 MessageBox.Show(errmsg);
             }
-            this.button1.Enabled = true;
-            panel2.Visible = false;
-            label2.Visible = false;
-            progressBar1.Visible = false;
+          
+            updateControl(button1, true, true);
+          //  panel2.Visible = false;
+            updateControl(panel2, false,true);
+          //  label2.Visible = false;
+            updateControl(label2, false, true);
+          //  progressBar1.Visible = false;
+            updateControl(progressBar1, false, true);
+        }
+
+        private delegate void HandleDelegate1(Control control,bool isvisible,bool isenable);
+        public void updateControl(Control control, bool isvisible, bool isenable)
+        {
+
+            if (control.InvokeRequired)
+            {
+                //   this.txtreceive.BeginInvoke(new ShowDelegate(Show), strshow);//这个也可以
+
+                control.Invoke(new HandleDelegate1(updateControl), new Object[] { control, isvisible, isenable });
+            }
+            else
+            {
+                control.Visible = isvisible;
+                control.Enabled = isenable;
+            }
+        }
+        private void btn_all_Click(object sender, EventArgs e)
+        {
+            String czcodestr = "";
+            for (int i = 0; i < this.orderdata.RowCount; i++)
+            {
+                orderdata.Rows[i].Cells[0].Value = "true";
+                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[2].Value + "";
+            }
+            this.txt_codestr.Text = czcodestr;
         }
 
     }

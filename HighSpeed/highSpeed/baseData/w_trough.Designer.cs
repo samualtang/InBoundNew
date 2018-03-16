@@ -50,7 +50,7 @@
             this.pager1 = new WHC.Pager.WinControl.Pager();
             this.num = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.troughnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.设备编号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.machineseq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettecode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,9 +83,8 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1211, 62);
+            this.panel1.Size = new System.Drawing.Size(908, 50);
             this.panel1.TabIndex = 0;
             // 
             // cbctype
@@ -96,27 +95,28 @@
             "标准烟",
             "异型烟",
             "异型混合"});
-            this.cbctype.Location = new System.Drawing.Point(672, 20);
-            this.cbctype.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbctype.Location = new System.Drawing.Point(504, 16);
+            this.cbctype.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbctype.Name = "cbctype";
-            this.cbctype.Size = new System.Drawing.Size(135, 23);
+            this.cbctype.Size = new System.Drawing.Size(102, 20);
             this.cbctype.TabIndex = 17;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(588, 26);
+            this.label3.Location = new System.Drawing.Point(441, 21);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 15);
+            this.label3.Size = new System.Drawing.Size(59, 12);
             this.label3.TabIndex = 16;
             this.label3.Text = "卷烟类型:";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1100, 16);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Location = new System.Drawing.Point(825, 13);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(68, 29);
+            this.button2.Size = new System.Drawing.Size(51, 23);
             this.button2.TabIndex = 15;
             this.button2.Text = "增加";
             this.button2.UseVisualStyleBackColor = true;
@@ -125,9 +125,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(359, 26);
+            this.label1.Location = new System.Drawing.Point(269, 21);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 15);
+            this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 14;
             this.label1.Text = "通道类型:";
             // 
@@ -139,18 +140,17 @@
             "重力式货架",
             "皮带机",
             "分拣出口"});
-            this.cbtype.Location = new System.Drawing.Point(453, 21);
-            this.cbtype.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbtype.Location = new System.Drawing.Point(340, 17);
+            this.cbtype.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbtype.Name = "cbtype";
-            this.cbtype.Size = new System.Drawing.Size(128, 23);
+            this.cbtype.Size = new System.Drawing.Size(97, 20);
             this.cbtype.TabIndex = 13;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1441, 16);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(1081, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(65, 29);
+            this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 12;
             this.button1.Text = "验证";
             this.button1.UseVisualStyleBackColor = true;
@@ -158,10 +158,9 @@
             // 
             // btn_toexcel
             // 
-            this.btn_toexcel.Location = new System.Drawing.Point(1363, 16);
-            this.btn_toexcel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_toexcel.Location = new System.Drawing.Point(1022, 13);
             this.btn_toexcel.Name = "btn_toexcel";
-            this.btn_toexcel.Size = new System.Drawing.Size(59, 29);
+            this.btn_toexcel.Size = new System.Drawing.Size(44, 23);
             this.btn_toexcel.TabIndex = 11;
             this.btn_toexcel.Text = "导出";
             this.btn_toexcel.UseVisualStyleBackColor = true;
@@ -169,10 +168,9 @@
             // 
             // btn_print
             // 
-            this.btn_print.Location = new System.Drawing.Point(1271, 16);
-            this.btn_print.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_print.Location = new System.Drawing.Point(953, 13);
             this.btn_print.Name = "btn_print";
-            this.btn_print.Size = new System.Drawing.Size(68, 29);
+            this.btn_print.Size = new System.Drawing.Size(51, 23);
             this.btn_print.TabIndex = 10;
             this.btn_print.Text = "打印";
             this.btn_print.UseVisualStyleBackColor = true;
@@ -180,10 +178,9 @@
             // 
             // btn_amend
             // 
-            this.btn_amend.Location = new System.Drawing.Point(1183, 16);
-            this.btn_amend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_amend.Location = new System.Drawing.Point(887, 13);
             this.btn_amend.Name = "btn_amend";
-            this.btn_amend.Size = new System.Drawing.Size(72, 29);
+            this.btn_amend.Size = new System.Drawing.Size(54, 23);
             this.btn_amend.TabIndex = 8;
             this.btn_amend.Text = "修改";
             this.btn_amend.UseVisualStyleBackColor = true;
@@ -191,10 +188,9 @@
             // 
             // btn_qy
             // 
-            this.btn_qy.Location = new System.Drawing.Point(917, 16);
-            this.btn_qy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_qy.Location = new System.Drawing.Point(688, 13);
             this.btn_qy.Name = "btn_qy";
-            this.btn_qy.Size = new System.Drawing.Size(75, 29);
+            this.btn_qy.Size = new System.Drawing.Size(56, 23);
             this.btn_qy.TabIndex = 7;
             this.btn_qy.Text = "启用";
             this.btn_qy.UseVisualStyleBackColor = true;
@@ -202,10 +198,9 @@
             // 
             // btn_jy
             // 
-            this.btn_jy.Location = new System.Drawing.Point(1007, 16);
-            this.btn_jy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_jy.Location = new System.Drawing.Point(755, 13);
             this.btn_jy.Name = "btn_jy";
-            this.btn_jy.Size = new System.Drawing.Size(75, 29);
+            this.btn_jy.Size = new System.Drawing.Size(56, 23);
             this.btn_jy.TabIndex = 6;
             this.btn_jy.Text = "禁用";
             this.btn_jy.UseVisualStyleBackColor = true;
@@ -213,10 +208,9 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(841, 16);
-            this.btn_search.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_search.Location = new System.Drawing.Point(631, 13);
             this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(68, 29);
+            this.btn_search.Size = new System.Drawing.Size(51, 23);
             this.btn_search.TabIndex = 5;
             this.btn_search.Text = "查询";
             this.btn_search.UseVisualStyleBackColor = true;
@@ -224,10 +218,9 @@
             // 
             // txt_keywd
             // 
-            this.txt_keywd.Location = new System.Drawing.Point(220, 19);
-            this.txt_keywd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_keywd.Location = new System.Drawing.Point(165, 15);
             this.txt_keywd.Name = "txt_keywd";
-            this.txt_keywd.Size = new System.Drawing.Size(132, 25);
+            this.txt_keywd.Size = new System.Drawing.Size(100, 21);
             this.txt_keywd.TabIndex = 4;
             this.txt_keywd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_keywd_KeyDown);
             // 
@@ -235,20 +228,18 @@
             // 
             this.box_condition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.box_condition.FormattingEnabled = true;
-            this.box_condition.Location = new System.Drawing.Point(79, 20);
-            this.box_condition.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.box_condition.Location = new System.Drawing.Point(59, 16);
             this.box_condition.Name = "box_condition";
-            this.box_condition.Size = new System.Drawing.Size(132, 23);
+            this.box_condition.Size = new System.Drawing.Size(100, 20);
             this.box_condition.TabIndex = 3;
             this.box_condition.SelectedIndexChanged += new System.EventHandler(this.box_condition_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 24);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(0, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 1;
             this.label2.Text = "查询条件";
             // 
@@ -260,7 +251,7 @@
             this.troughdata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.num,
             this.troughnum,
-            this.设备编号,
+            this.machineseq,
             this.cigarettecode,
             this.cigarettename,
             this.cigarettetype,
@@ -270,14 +261,13 @@
             this.type,
             this.ctype,
             this.id});
-            this.troughdata.Location = new System.Drawing.Point(0, 62);
-            this.troughdata.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.troughdata.Location = new System.Drawing.Point(0, 50);
             this.troughdata.MultiSelect = false;
             this.troughdata.Name = "troughdata";
             this.troughdata.ReadOnly = true;
             this.troughdata.RowTemplate.Height = 23;
             this.troughdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.troughdata.Size = new System.Drawing.Size(1583, 742);
+            this.troughdata.Size = new System.Drawing.Size(1187, 594);
             this.troughdata.TabIndex = 0;
             this.troughdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.troughdata_CellClick);
             this.troughdata.MouseClick += new System.Windows.Forms.MouseEventHandler(this.troughdata_MouseClick);
@@ -327,18 +317,18 @@
             this.dgVprint1.LastPageMode = true;
             this.dgVprint1.LineSpace = 50F;
             this.dgVprint1.MainTitle = "表格主标题";
-            this.dgVprint1.MainTitleFont = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.MainTitleFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.MinFontSize = 6F;
             this.dgVprint1.OuterBorder = false;
             this.dgVprint1.OuterBorderColor = System.Drawing.Color.Black;
             this.dgVprint1.OuterBorderWidth = 5.08F;
             this.dgVprint1.PageFooterColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageFooterFont = new System.Drawing.Font("华文行楷", 9F);
+            this.dgVprint1.PageFooterFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageFooterLeft = null;
             this.dgVprint1.PageFooterMiddle = "共[总页数]页 第[页码]页";
             this.dgVprint1.PageFooterRight = null;
             this.dgVprint1.PageHeaderColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("华文行楷", 9F);
+            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageHeaderLeft = null;
             this.dgVprint1.PageHeaderMiddle = null;
             this.dgVprint1.PageHeaderRight = null;
@@ -390,7 +380,7 @@
             this.dgVprint1.TableTopRightTitleAlign = System.Drawing.StringAlignment.Far;
             this.dgVprint1.TitleTextStyle = 0;
             this.dgVprint1.WaterMarkColor = System.Drawing.Color.Red;
-            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("华文行楷", 80F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 80F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.WaterMarkLandscape = true;
             this.dgVprint1.WaterMarkOpacity = ((byte)(128));
             this.dgVprint1.WaterMarkText = "";
@@ -408,11 +398,10 @@
             // 
             this.pager1.CurrentPageIndex = 1;
             this.pager1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pager1.Location = new System.Drawing.Point(0, 800);
-            this.pager1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pager1.Location = new System.Drawing.Point(0, 640);
             this.pager1.Name = "pager1";
             this.pager1.RecordCount = 0;
-            this.pager1.Size = new System.Drawing.Size(1465, 56);
+            this.pager1.Size = new System.Drawing.Size(1099, 45);
             this.pager1.TabIndex = 1;
             // 
             // num
@@ -423,7 +412,7 @@
             this.num.Name = "num";
             this.num.ReadOnly = true;
             this.num.Visible = false;
-            this.num.Width = 62;
+            this.num.Width = 54;
             // 
             // troughnum
             // 
@@ -432,14 +421,14 @@
             this.troughnum.HeaderText = "烟道编号";
             this.troughnum.Name = "troughnum";
             this.troughnum.ReadOnly = true;
-            this.troughnum.Width = 92;
+            this.troughnum.Width = 78;
             // 
-            // 设备编号
+            // machineseq
             // 
-            this.设备编号.DataPropertyName = "machineseq";
-            this.设备编号.HeaderText = "设备编号";
-            this.设备编号.Name = "设备编号";
-            this.设备编号.ReadOnly = true;
+            this.machineseq.DataPropertyName = "machineseq";
+            this.machineseq.HeaderText = "设备编号";
+            this.machineseq.Name = "machineseq";
+            this.machineseq.ReadOnly = true;
             // 
             // cigarettecode
             // 
@@ -455,7 +444,7 @@
             this.cigarettename.HeaderText = "品牌名称";
             this.cigarettename.Name = "cigarettename";
             this.cigarettename.ReadOnly = true;
-            this.cigarettename.Width = 92;
+            this.cigarettename.Width = 78;
             // 
             // cigarettetype
             // 
@@ -478,7 +467,7 @@
             this.status.HeaderText = "使用状态";
             this.status.Name = "status";
             this.status.ReadOnly = true;
-            this.status.Width = 92;
+            this.status.Width = 78;
             // 
             // state
             // 
@@ -514,13 +503,12 @@
             // 
             // win_trough
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1211, 618);
+            this.ClientSize = new System.Drawing.Size(908, 494);
             this.Controls.Add(this.pager1);
             this.Controls.Add(this.troughdata);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "win_trough";
             this.Text = "分拣通道管理";
             this.Load += new System.EventHandler(this.win_trough_Load);
@@ -554,7 +542,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridViewTextBoxColumn num;
         private System.Windows.Forms.DataGridViewTextBoxColumn troughnum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 设备编号;
+        private System.Windows.Forms.DataGridViewTextBoxColumn machineseq;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettecode;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettename;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettetype;
