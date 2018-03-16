@@ -135,7 +135,7 @@ namespace InBound.Business
                                   task.SOURCE = temptask.EQUIPMENTID;
                                   task.JOBTYPE = 20;
                                   task.INBOUNDNO = temptask.INBOUNDNO;
-                                  task.BARCODE = temptask.BARCODE;
+                                  task.BARCODE = RefRFIDPalletService.GetSeq() + ""; //temptask.BARCODE;
                                   task.PRIORITY = 50;
                                   //task.BARCODE=
                                   var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == task.INBOUNDNO select line).FirstOrDefault();
