@@ -155,7 +155,7 @@ namespace highSpeed.orderHandle
 
         private void btn_schedule_Click(object sender, EventArgs e)
         {
-            //P_PRODUCE_updatesortnum
+            
             String codestr = this.txt_codestr.Text.Trim();
             //DateTime time = DateTime.Parse(this.datePick.Value.ToString());
             //String date = string.Format("{0:d}", time);
@@ -249,7 +249,7 @@ namespace highSpeed.orderHandle
                             this.orderdata.AutoGenerateColumns = false;
                         }
                     }
-                    btn_schedule.Enabled = true;
+                    
                     seek();
                 }
                 else
@@ -261,7 +261,7 @@ namespace highSpeed.orderHandle
             {
                 MessageBox.Show("请添加一个新的批次,再进行排程操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
+            btn_schedule.Enabled = true;
         }
 
         private void btn_search_Click(object sender, EventArgs e)
@@ -289,7 +289,12 @@ namespace highSpeed.orderHandle
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            this.button1.Enabled = false;//防止点击多下
+            panel2.Visible = true;
+            label2.Visible = true;
+            progressBar1.Visible = true;
+            progressBar1.Value = 0;
+            label2.Text = "正在对分拣车组任务数据进重新排序";
             Thread thread = new Thread(new ThreadStart(Sort));
             thread.Start();
 
@@ -297,6 +302,9 @@ namespace highSpeed.orderHandle
         }
         void Sort()
         {
+            
+            
+            
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
             sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
@@ -311,13 +319,48 @@ namespace highSpeed.orderHandle
             String errmsg = sqlpara[1].Value.ToString();
             if (errcode == "1")
             {
-                MessageBox.Show("排序成功");
+                MessageBox.Show("分拣车组任务排序成功！");
             }
 
             else
             {
                 MessageBox.Show(errmsg);
             }
+          
+            updateControl(button1, true, true);
+          //  panel2.Visible = false;
+            updateControl(panel2, false,true);
+          //  label2.Visible = false;
+            updateControl(label2, false, true);
+          //  progressBar1.Visible = false;
+            updateControl(progressBar1, false, true);
+        }
+
+        private delegate void HandleDelegate1(Control control,bool isvisible,bool isenable);
+        public void updateControl(Control control, bool isvisible, bool isenable)
+        {
+
+            if (control.InvokeRequired)
+            {
+                //   this.txtreceive.BeginInvoke(new ShowDelegate(Show), strshow);//这个也可以
+
+                control.Invoke(new HandleDelegate1(updateControl), new Object[] { control, isvisible, isenable });
+            }
+            else
+            {
+                control.Visible = isvisible;
+                control.Enabled = isenable;
+            }
+        }
+        private void btn_all_Click(object sender, EventArgs e)
+        {
+            String czcodestr = "";
+            for (int i = 0; i < this.orderdata.RowCount; i++)
+            {
+                orderdata.Rows[i].Cells[0].Value = "true";
+                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[2].Value + "";
+            }
+            this.txt_codestr.Text = czcodestr;
         }
 
     }

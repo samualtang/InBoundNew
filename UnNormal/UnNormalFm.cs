@@ -333,7 +333,7 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null)
                         {
-                            stateManager.WriteErrWithCheck(values[i].ToString(), clientId[i].ToString(), lineNum);
+                            stateManager.WriteErrWithCheck(Math.Abs(int.Parse(values[i].ToString())).ToString(), clientId[i].ToString(), lineNum);
                         }
                     }
                     

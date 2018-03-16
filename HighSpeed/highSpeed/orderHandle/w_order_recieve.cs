@@ -108,6 +108,7 @@ namespace highSpeed.orderHandle
 
         private void btn_recieve_Click(object sender, EventArgs e)
         {
+            this.btn_recieve.Enabled = false;//接收按钮屏蔽，防止再次点击
             String codestr = this.txt_codestr.Text.Trim();
             DateTime time = DateTime.Parse(this.datePick.Value.ToString());
             String date = string.Format("{0:d}", time);
@@ -227,6 +228,7 @@ namespace highSpeed.orderHandle
             {
                 MessageBox.Show("请至少选择一个要接收订单的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            this.btn_recieve.Enabled = true;//接收按钮放开
         }
 
 
