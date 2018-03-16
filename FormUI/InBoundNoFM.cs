@@ -143,7 +143,7 @@ namespace FormUI
          
         }
         int i = 0;
-        int selectIndex = 0;
+      public static  int selectIndex = 0;
         delegate void getIndex();
         void getCBSelectIndex()
         {
@@ -209,7 +209,6 @@ namespace FormUI
             using (TransactionScope ts = new TransactionScope())
             {
                 InfJobDownLoadService.InsertEntity(job);
-                //InBoundLineService.Update(entity.INBOUNDDETAILID, 0, num ?? 0);
                 ts.Complete();
             }
             this.BeginInvoke(new SearchHanlder(search));

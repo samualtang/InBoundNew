@@ -182,6 +182,7 @@ namespace InBound.Business
                               {
                                   task.PRIORITY = 99;
                                   task.JOBTYPE = 50;
+                                  //task.TARGET = "1192";
                                   task.SOURCE = AtsCellOutService.getCellNoBig("1111111", 1);//托盘组任务
                               }
                               else if (task.TUTYPE == 2)//空托盘
