@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SortingControlSys.PubFunc;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -20,7 +19,7 @@ using SortingControlSys.Model;
 using InBound.Model;
 using InBound.Business;
 using Machine;
-
+using InBound;
 
 namespace SortingControlSys.SortingControl
 {

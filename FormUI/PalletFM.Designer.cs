@@ -43,6 +43,13 @@
             this.供应商 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.品牌名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.品牌代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.锁定数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.入库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.INBOUNDDETAILID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbcDuo = new System.Windows.Forms.CheckBox();
@@ -54,13 +61,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.CBAddress = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.品牌名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.品牌代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.锁定数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.入库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.INBOUNDDETAILID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.logList = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -76,18 +77,21 @@
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1193, 73);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(795, 49);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(546, 26);
+            this.button2.Location = new System.Drawing.Point(364, 17);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 30);
+            this.button2.Size = new System.Drawing.Size(50, 20);
             this.button2.TabIndex = 7;
             this.button2.Text = "查询";
             this.button2.UseVisualStyleBackColor = true;
@@ -95,42 +99,48 @@
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(370, 24);
+            this.dateTimePicker2.Location = new System.Drawing.Point(247, 16);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(169, 28);
+            this.dateTimePicker2.Size = new System.Drawing.Size(114, 21);
             this.dateTimePicker2.TabIndex = 6;
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(101, 22);
+            this.dateTimePicker1.Location = new System.Drawing.Point(67, 15);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(169, 28);
+            this.dateTimePicker1.Size = new System.Drawing.Size(114, 21);
             this.dateTimePicker1.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(287, 29);
+            this.label2.Location = new System.Drawing.Point(191, 19);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 18);
+            this.label2.Size = new System.Drawing.Size(59, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "结束时间:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 32);
+            this.label1.Location = new System.Drawing.Point(4, 21);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 18);
+            this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "开始时间:";
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 109);
+            this.groupBox3.Location = new System.Drawing.Point(8, 73);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1193, 248);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Size = new System.Drawing.Size(808, 165);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "入库单信息";
@@ -145,10 +155,11 @@
             this.货主,
             this.供应商,
             this.数量});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 24);
+            this.dataGridView1.Location = new System.Drawing.Point(2, 16);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(1177, 217);
+            this.dataGridView1.Size = new System.Drawing.Size(793, 145);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -199,127 +210,14 @@
             this.锁定数量,
             this.入库数量,
             this.INBOUNDDETAILID});
-            this.dataGridView2.Location = new System.Drawing.Point(0, 27);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 18);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 30;
-            this.dataGridView2.Size = new System.Drawing.Size(1212, 308);
+            this.dataGridView2.Size = new System.Drawing.Size(795, 205);
             this.dataGridView2.TabIndex = 3;
             this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.dataGridView2);
-            this.groupBox4.Location = new System.Drawing.Point(12, 443);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1218, 342);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "入库详细信息";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.cbcDuo);
-            this.groupBox2.Controls.Add(this.tbRfid);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.tbChooseName);
-            this.groupBox2.Controls.Add(this.tbNum);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.CBAddress);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Location = new System.Drawing.Point(15, 364);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1209, 73);
-            this.groupBox2.TabIndex = 5;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "入库操作";
-            // 
-            // cbcDuo
-            // 
-            this.cbcDuo.AutoSize = true;
-            this.cbcDuo.Checked = true;
-            this.cbcDuo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbcDuo.Location = new System.Drawing.Point(871, 20);
-            this.cbcDuo.Name = "cbcDuo";
-            this.cbcDuo.Size = new System.Drawing.Size(106, 22);
-            this.cbcDuo.TabIndex = 15;
-            this.cbcDuo.Text = "自动拆垛";
-            this.cbcDuo.UseVisualStyleBackColor = true;
-            // 
-            // tbRfid
-            // 
-            this.tbRfid.Location = new System.Drawing.Point(624, 20);
-            this.tbRfid.Name = "tbRfid";
-            this.tbRfid.Size = new System.Drawing.Size(111, 28);
-            this.tbRfid.TabIndex = 13;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(565, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 18);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "RFID:";
-            // 
-            // tbChooseName
-            // 
-            this.tbChooseName.Location = new System.Drawing.Point(379, 23);
-            this.tbChooseName.Name = "tbChooseName";
-            this.tbChooseName.Size = new System.Drawing.Size(170, 28);
-            this.tbChooseName.TabIndex = 9;
-            // 
-            // tbNum
-            // 
-            this.tbNum.ForeColor = System.Drawing.Color.Red;
-            this.tbNum.Location = new System.Drawing.Point(320, 21);
-            this.tbNum.Name = "tbNum";
-            this.tbNum.Size = new System.Drawing.Size(53, 28);
-            this.tbNum.TabIndex = 8;
-            this.tbNum.Text = "30";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(225, 28);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 18);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "入库数量:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 18);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "入口地址:";
-            // 
-            // CBAddress
-            // 
-            this.CBAddress.FormattingEnabled = true;
-            this.CBAddress.Items.AddRange(new object[] {
-            "人工码垛一号入口",
-            "人工码垛二号入口",
-            "异型烟码垛一号入口",
-            "二楼入库一号入口"});
-            this.CBAddress.Location = new System.Drawing.Point(98, 23);
-            this.CBAddress.Name = "CBAddress";
-            this.CBAddress.Size = new System.Drawing.Size(121, 26);
-            this.CBAddress.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(754, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 33);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "入库";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // 任务号
             // 
@@ -364,15 +262,153 @@
             this.INBOUNDDETAILID.Name = "INBOUNDDETAILID";
             this.INBOUNDDETAILID.Visible = false;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.dataGridView2);
+            this.groupBox4.Location = new System.Drawing.Point(8, 295);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Size = new System.Drawing.Size(808, 228);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "入库详细信息";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbcDuo);
+            this.groupBox2.Controls.Add(this.tbRfid);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.tbChooseName);
+            this.groupBox2.Controls.Add(this.tbNum);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.CBAddress);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Location = new System.Drawing.Point(10, 243);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Size = new System.Drawing.Size(806, 49);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "入库操作";
+            // 
+            // cbcDuo
+            // 
+            this.cbcDuo.AutoSize = true;
+            this.cbcDuo.Checked = true;
+            this.cbcDuo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbcDuo.Location = new System.Drawing.Point(581, 13);
+            this.cbcDuo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbcDuo.Name = "cbcDuo";
+            this.cbcDuo.Size = new System.Drawing.Size(72, 16);
+            this.cbcDuo.TabIndex = 15;
+            this.cbcDuo.Text = "自动拆垛";
+            this.cbcDuo.UseVisualStyleBackColor = true;
+            // 
+            // tbRfid
+            // 
+            this.tbRfid.Location = new System.Drawing.Point(416, 13);
+            this.tbRfid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbRfid.Name = "tbRfid";
+            this.tbRfid.Size = new System.Drawing.Size(75, 21);
+            this.tbRfid.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(377, 17);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "RFID:";
+            // 
+            // tbChooseName
+            // 
+            this.tbChooseName.Location = new System.Drawing.Point(253, 15);
+            this.tbChooseName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbChooseName.Name = "tbChooseName";
+            this.tbChooseName.Size = new System.Drawing.Size(115, 21);
+            this.tbChooseName.TabIndex = 9;
+            // 
+            // tbNum
+            // 
+            this.tbNum.ForeColor = System.Drawing.Color.Red;
+            this.tbNum.Location = new System.Drawing.Point(213, 14);
+            this.tbNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbNum.Name = "tbNum";
+            this.tbNum.Size = new System.Drawing.Size(37, 21);
+            this.tbNum.TabIndex = 8;
+            this.tbNum.Text = "30";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(150, 19);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "入库数量:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 19);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "入口地址:";
+            // 
+            // CBAddress
+            // 
+            this.CBAddress.FormattingEnabled = true;
+            this.CBAddress.Items.AddRange(new object[] {
+            "人工码垛一号入口",
+            "人工码垛二号入口",
+            "异型烟码垛一号入口",
+            "二楼入库一号入口"});
+            this.CBAddress.Location = new System.Drawing.Point(65, 15);
+            this.CBAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBAddress.Name = "CBAddress";
+            this.CBAddress.Size = new System.Drawing.Size(82, 20);
+            this.CBAddress.TabIndex = 4;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(503, 10);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(64, 22);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "入库";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // logList
+            // 
+            this.logList.FormattingEnabled = true;
+            this.logList.ItemHeight = 12;
+            this.logList.Location = new System.Drawing.Point(8, 529);
+            this.logList.Name = "logList";
+            this.logList.Size = new System.Drawing.Size(808, 88);
+            this.logList.TabIndex = 6;
+            // 
             // PalletFM
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1260, 790);
+            this.ClientSize = new System.Drawing.Size(840, 642);
+            this.Controls.Add(this.logList);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "PalletFM";
             this.Text = "托盘入库";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoInBoundFM_FormClosed);
@@ -424,5 +460,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 锁定数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn 入库数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn INBOUNDDETAILID;
+        private System.Windows.Forms.ListBox logList;
     }
 }

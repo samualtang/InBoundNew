@@ -63,7 +63,7 @@ namespace InBound.Business
           {
               var query = (from item in entity.INF_JOBDOWNLOAD
                            join item2 in entity.INF_JOBFEEDBACK on item.JOBID equals item2.JOBID
-                           where  item.JOBTYPE == 55 && item.TARGET == "1415" && item2.FEEDBACKSTATUS == 99
+                           where  item.JOBTYPE == 55 && item.TARGET == "1415" && item2.FEEDBACKSTATUS == 99 
                            orderby item.RESPONDDATE descending
                            select item).FirstOrDefault();
               return query;

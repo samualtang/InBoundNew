@@ -64,7 +64,6 @@
     <Compile Include="Alarms.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\ItemCollection.cs" />
-    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MachineFM.cs">
@@ -80,7 +79,6 @@
     <Compile Include="StatusManager.Designer.cs">
       <DependentUpon>StatusManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="WriteLog.cs" />
     <Compile Include="w_main.cs">
       <SubType>Form</SubType>
     </Compile>

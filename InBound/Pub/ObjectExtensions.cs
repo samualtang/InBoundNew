@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace SortingControlSys.SortingControl
+namespace InBound
 {
     /// <summary>
     ///     通用类型扩展方法类

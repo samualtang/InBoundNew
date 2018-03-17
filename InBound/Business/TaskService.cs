@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using InBound.Model;
 using System.Transactions;
-using SortingControlSys.PubFunc;
+using InBound;
 
 
 namespace InBound.Business

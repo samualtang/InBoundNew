@@ -36,6 +36,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.入库单号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.准运证号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.合同号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.货主 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.供应商 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.品牌名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,12 +59,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.CBAddress = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.供应商 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.货主 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.合同号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.准运证号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.入库单号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.logList = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -160,6 +161,42 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // 入库单号
+            // 
+            this.入库单号.DataPropertyName = "INBOUNDID";
+            this.入库单号.HeaderText = "入库单号";
+            this.入库单号.Name = "入库单号";
+            // 
+            // 准运证号
+            // 
+            this.准运证号.DataPropertyName = "NAVICERT";
+            this.准运证号.HeaderText = "准运证号";
+            this.准运证号.Name = "准运证号";
+            // 
+            // 合同号
+            // 
+            this.合同号.DataPropertyName = "CONTRACTNO";
+            this.合同号.HeaderText = "合同号";
+            this.合同号.Name = "合同号";
+            // 
+            // 货主
+            // 
+            this.货主.DataPropertyName = "CONSIGNSOR";
+            this.货主.HeaderText = "货主";
+            this.货主.Name = "货主";
+            // 
+            // 供应商
+            // 
+            this.供应商.DataPropertyName = "SUPPLIER";
+            this.供应商.HeaderText = "供应商";
+            this.供应商.Name = "供应商";
+            // 
+            // 数量
+            // 
+            this.数量.DataPropertyName = "QTY";
+            this.数量.HeaderText = "数量";
+            this.数量.Name = "数量";
             // 
             // dataGridView2
             // 
@@ -290,6 +327,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "刷新入库详情";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // label3
             // 
@@ -326,47 +364,21 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // 数量
+            // logList
             // 
-            this.数量.DataPropertyName = "QTY";
-            this.数量.HeaderText = "数量";
-            this.数量.Name = "数量";
-            // 
-            // 供应商
-            // 
-            this.供应商.DataPropertyName = "SUPPLIER";
-            this.供应商.HeaderText = "供应商";
-            this.供应商.Name = "供应商";
-            // 
-            // 货主
-            // 
-            this.货主.DataPropertyName = "CONSIGNSOR";
-            this.货主.HeaderText = "货主";
-            this.货主.Name = "货主";
-            // 
-            // 合同号
-            // 
-            this.合同号.DataPropertyName = "CONTRACTNO";
-            this.合同号.HeaderText = "合同号";
-            this.合同号.Name = "合同号";
-            // 
-            // 准运证号
-            // 
-            this.准运证号.DataPropertyName = "NAVICERT";
-            this.准运证号.HeaderText = "准运证号";
-            this.准运证号.Name = "准运证号";
-            // 
-            // 入库单号
-            // 
-            this.入库单号.DataPropertyName = "INBOUNDID";
-            this.入库单号.HeaderText = "入库单号";
-            this.入库单号.Name = "入库单号";
+            this.logList.FormattingEnabled = true;
+            this.logList.ItemHeight = 12;
+            this.logList.Location = new System.Drawing.Point(8, 530);
+            this.logList.Name = "logList";
+            this.logList.Size = new System.Drawing.Size(787, 112);
+            this.logList.TabIndex = 6;
             // 
             // InBoundNoFM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 541);
+            this.ClientSize = new System.Drawing.Size(841, 650);
+            this.Controls.Add(this.logList);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -421,5 +433,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 货主;
         private System.Windows.Forms.DataGridViewTextBoxColumn 供应商;
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
+        private System.Windows.Forms.ListBox logList;
     }
 }

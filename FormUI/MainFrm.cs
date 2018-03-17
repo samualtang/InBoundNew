@@ -576,6 +576,11 @@ namespace MainUI
            
         }
 
+        private void »Îø‚ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
 
        

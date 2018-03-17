@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SortingControlSys.PubFunc;
 using InBound;
 using InBound.Business;
 using System.Configuration;

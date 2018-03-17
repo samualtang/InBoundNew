@@ -51,6 +51,22 @@ namespace FormUI
             }
         }
         List<String> address = new List<string>() { "1221", "1231", "1415" };
+        delegate void HandleDelegate(String text);
+        public void updateListBox(string info)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            if (this.logList.InvokeRequired)
+            {
+
+
+                this.logList.Invoke(new HandleDelegate(updateListBox), info);
+            }
+            else
+            {
+                this.logList.Items.Insert(0, time + "    " + info);
+
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -170,8 +186,9 @@ namespace FormUI
             //    AtsCellInfoDetailService.InsertAtsCellInfo(detail);
             //    ts.Complete();
             //}
-            MessageBox.Show("任务已达");
-
+            MessageBox.Show("任务已下达");
+            updateListBox(job.JOBID + "号任务已下达;入口地址:" + job.SOURCE);
+            WriteLog.GetLog().Write(job.JOBID + "号任务已下达;入口地址:" + job.SOURCE);
             tbChooseName.Text = "";
             tbChooseName.Tag = null;
           

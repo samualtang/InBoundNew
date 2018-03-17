@@ -131,6 +131,7 @@
             this.入库ToolStripMenuItem.Name = "入库ToolStripMenuItem";
             this.入库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.入库ToolStripMenuItem.Text = "入库";
+            this.入库ToolStripMenuItem.Click += new System.EventHandler(this.入库ToolStripMenuItem_Click);
             // 
             // 人工入库ToolStripMenuItem
             // 
@@ -151,14 +152,14 @@
             // 出库ToolStripMenuItem
             // 
             this.出库ToolStripMenuItem.Name = "出库ToolStripMenuItem";
-            this.出库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.出库ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.出库ToolStripMenuItem.Text = "出库";
             this.出库ToolStripMenuItem.Click += new System.EventHandler(this.出库ToolStripMenuItem_Click);
             // 
             // 自动补货出库ToolStripMenuItem
             // 
             this.自动补货出库ToolStripMenuItem.Name = "自动补货出库ToolStripMenuItem";
-            this.自动补货出库ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.自动补货出库ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.自动补货出库ToolStripMenuItem.Text = "自动补货出库";
             this.自动补货出库ToolStripMenuItem.Click += new System.EventHandler(this.自动补货出库ToolStripMenuItem_Click);
             // 
@@ -258,7 +259,7 @@
             // 人工拆垛ToolStripMenuItem2
             // 
             this.人工拆垛ToolStripMenuItem2.Name = "人工拆垛ToolStripMenuItem2";
-            this.人工拆垛ToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+            this.人工拆垛ToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.人工拆垛ToolStripMenuItem2.Text = "人工拆垛";
             this.人工拆垛ToolStripMenuItem2.Click += new System.EventHandler(this.人工拆垛ToolStripMenuItem2_Click);
             // 

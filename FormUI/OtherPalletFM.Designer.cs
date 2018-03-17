@@ -59,6 +59,7 @@
             this.tbNum = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.logList = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -75,9 +76,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(795, 49);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -86,7 +87,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(364, 17);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(50, 20);
             this.button2.TabIndex = 7;
@@ -97,7 +98,7 @@
             // dateTimePicker2
             // 
             this.dateTimePicker2.Location = new System.Drawing.Point(247, 16);
-            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(114, 21);
             this.dateTimePicker2.TabIndex = 6;
@@ -105,7 +106,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(67, 15);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(114, 21);
             this.dateTimePicker1.TabIndex = 5;
@@ -134,10 +135,10 @@
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
             this.groupBox3.Location = new System.Drawing.Point(8, 73);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox3.Size = new System.Drawing.Size(795, 165);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox3.Size = new System.Drawing.Size(808, 165);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "入库单信息";
@@ -153,10 +154,10 @@
             this.供应商,
             this.数量});
             this.dataGridView1.Location = new System.Drawing.Point(2, 16);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(785, 145);
+            this.dataGridView1.Size = new System.Drawing.Size(802, 145);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -208,7 +209,7 @@
             this.入库数量,
             this.INBOUNDDETAILID});
             this.dataGridView2.Location = new System.Drawing.Point(0, 18);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 30;
             this.dataGridView2.Size = new System.Drawing.Size(808, 205);
@@ -263,9 +264,9 @@
             // 
             this.groupBox4.Controls.Add(this.dataGridView2);
             this.groupBox4.Location = new System.Drawing.Point(8, 295);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(812, 228);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
@@ -281,9 +282,9 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Location = new System.Drawing.Point(10, 243);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(806, 49);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
@@ -295,7 +296,7 @@
             this.cbcDuo.Checked = true;
             this.cbcDuo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbcDuo.Location = new System.Drawing.Point(443, 13);
-            this.cbcDuo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbcDuo.Margin = new System.Windows.Forms.Padding(2);
             this.cbcDuo.Name = "cbcDuo";
             this.cbcDuo.Size = new System.Drawing.Size(72, 16);
             this.cbcDuo.TabIndex = 15;
@@ -305,7 +306,7 @@
             // tbRfid
             // 
             this.tbRfid.Location = new System.Drawing.Point(278, 13);
-            this.tbRfid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbRfid.Margin = new System.Windows.Forms.Padding(2);
             this.tbRfid.Name = "tbRfid";
             this.tbRfid.Size = new System.Drawing.Size(75, 21);
             this.tbRfid.TabIndex = 13;
@@ -323,7 +324,7 @@
             // tbChooseName
             // 
             this.tbChooseName.Location = new System.Drawing.Point(115, 15);
-            this.tbChooseName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbChooseName.Margin = new System.Windows.Forms.Padding(2);
             this.tbChooseName.Name = "tbChooseName";
             this.tbChooseName.Size = new System.Drawing.Size(115, 21);
             this.tbChooseName.TabIndex = 9;
@@ -332,7 +333,7 @@
             // 
             this.tbNum.ForeColor = System.Drawing.Color.Red;
             this.tbNum.Location = new System.Drawing.Point(75, 14);
-            this.tbNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbNum.Margin = new System.Windows.Forms.Padding(2);
             this.tbNum.Name = "tbNum";
             this.tbNum.Size = new System.Drawing.Size(37, 21);
             this.tbNum.TabIndex = 8;
@@ -352,7 +353,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(365, 10);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(64, 22);
             this.button1.TabIndex = 2;
@@ -360,16 +361,26 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // logList
+            // 
+            this.logList.FormattingEnabled = true;
+            this.logList.ItemHeight = 12;
+            this.logList.Location = new System.Drawing.Point(8, 528);
+            this.logList.Name = "logList";
+            this.logList.Size = new System.Drawing.Size(808, 88);
+            this.logList.TabIndex = 6;
+            // 
             // OtherPalletFM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(840, 494);
+            this.ClientSize = new System.Drawing.Size(840, 633);
+            this.Controls.Add(this.logList);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OtherPalletFM";
             this.Text = "托盘入库";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoInBoundFM_FormClosed);
@@ -419,5 +430,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 锁定数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn 入库数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn INBOUNDDETAILID;
+        private System.Windows.Forms.ListBox logList;
     }
 }

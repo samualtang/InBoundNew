@@ -52,14 +52,14 @@ namespace highSpeed.PubFunc
                 }
                 if (fileLen <= maxBufferLength)
                 {            /* 文件可以一次读取*/
-                    buffer = new byte[fileLen+4];
+                    buffer = new byte[fileLen+4+1];
                    Byte[] b= System.Text.Encoding.Default.GetBytes(preStr);
                    for (int i = 0; i < b.Length; i++)
                    {
                        buffer[i] = b[i];
                    }
-
-                       readLen = fs.Read(buffer, 4, (int)fileLen);
+                   buffer[fileLen +4] = 2;
+                    readLen = fs.Read(buffer, 4, (int)fileLen);
                     flag = SendData(socket, buffer, outTime);
                 }
                 else

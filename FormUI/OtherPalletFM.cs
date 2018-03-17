@@ -165,6 +165,23 @@ namespace FormUI
          
         //}
         // 发送堆垛机命令
+
+        delegate void HandleDelegate(String text);
+        public void updateListBox(string info)
+        {
+            String time = DateTime.Now.ToLongTimeString();
+            if (this.logList.InvokeRequired)
+            {
+
+
+                this.logList.Invoke(new HandleDelegate(updateListBox), info);
+            }
+            else
+            {
+                this.logList.Items.Insert(0, time + "    " + info);
+
+            }
+        }
         public void sendTask()
         {
             //List<T_WMS_INBOUND_LINE> list = InBoundLineService.GetItem(inboundid);
@@ -255,6 +272,8 @@ namespace FormUI
             detail.QTY = job.PLANQTY;
             detail.CELLNO = info.CELLNO;
             AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+            MessageBox.Show("任务已下达");
+            WriteLog.GetLog().Write(job.JOBID + "号任务已下达;入口地址:" + job.SOURCE);
             searchTask();
             initText();
         }
