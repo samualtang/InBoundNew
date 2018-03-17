@@ -81,6 +81,7 @@
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\ErrListService.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />
+    <Compile Include="Model\UseRate.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />
     <Compile Include="Pub\WriteLog.cs" />
     <Compile Include="UnionBit.cs" />

@@ -17,6 +17,14 @@ namespace InBound.Business
                 return query.ToList();
             }
         }
+        public static List<InBound.T_WMS_INBOUND> GetItemSec(DateTime start, DateTime end)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = from item in entity.T_WMS_INBOUND where item.CREATETIME >= start && item.CREATETIME < end  && (item.INTYPE == 10 || item.INTYPE == 30 || item.INTYPE == 40) select item;
+                return query.ToList();
+            }
+        }
         public static void Update(decimal inboundid, string status)
         {
             using (Entities entity = new Entities())

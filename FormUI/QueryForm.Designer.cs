@@ -30,7 +30,6 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.cbtype = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -41,6 +40,17 @@
             this.品牌编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.入库单编号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtCellNO = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbtype = new System.Windows.Forms.ComboBox();
+            this.txtCode = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPlace = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -48,21 +58,31 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dateTimePicker2);
+            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.txtPlace);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.txtCode);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtCellNO);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.cbtype);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(28, 27);
+            this.groupBox1.Location = new System.Drawing.Point(28, 11);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(803, 37);
+            this.groupBox1.Size = new System.Drawing.Size(904, 88);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(147, 10);
+            this.button1.Location = new System.Drawing.Point(663, 38);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(50, 21);
@@ -70,20 +90,6 @@
             this.button1.Text = "查询";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // cbtype
-            // 
-            this.cbtype.FormattingEnabled = true;
-            this.cbtype.Items.AddRange(new object[] {
-            "码垛任务",
-            "入库单入库",
-            "托盘入库",
-            "补货出库"});
-            this.cbtype.Location = new System.Drawing.Point(45, 13);
-            this.cbtype.Margin = new System.Windows.Forms.Padding(2);
-            this.cbtype.Name = "cbtype";
-            this.cbtype.Size = new System.Drawing.Size(82, 20);
-            this.cbtype.TabIndex = 1;
             // 
             // label1
             // 
@@ -98,11 +104,11 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(28, 68);
+            this.groupBox2.Location = new System.Drawing.Point(28, 103);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(803, 327);
+            this.groupBox2.Size = new System.Drawing.Size(904, 421);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "详情";
@@ -122,8 +128,9 @@
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(795, 251);
+            this.dataGridView1.Size = new System.Drawing.Size(877, 399);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // 任务编号
             // 
@@ -167,17 +174,121 @@
             this.入库单编号.HeaderText = "入库单编号";
             this.入库单编号.Name = "入库单编号";
             // 
+            // txtCellNO
+            // 
+            this.txtCellNO.Location = new System.Drawing.Point(77, 58);
+            this.txtCellNO.Name = "txtCellNO";
+            this.txtCellNO.Size = new System.Drawing.Size(100, 21);
+            this.txtCellNO.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 12);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "储位编号:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(221, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "品牌件码:";
+            // 
+            // cbtype
+            // 
+            this.cbtype.FormattingEnabled = true;
+            this.cbtype.Items.AddRange(new object[] {
+            "所有",
+            "码垛任务",
+            "入库单入库任务",
+            "成品入库 ",
+            "返库任务",
+            "一楼返库 ",
+            "出库任务 ",
+            "一楼出库  ",
+            "补货出库 ",
+            "自动拆垛补货任务 ",
+            "人工拆垛补货任务 ",
+            "开箱任务 ",
+            "托盘条码下达",
+            "任务取消 ",
+            "空托盘回收任务"});
+            this.cbtype.Location = new System.Drawing.Point(77, 15);
+            this.cbtype.Margin = new System.Windows.Forms.Padding(2);
+            this.cbtype.Name = "cbtype";
+            this.cbtype.Size = new System.Drawing.Size(100, 20);
+            this.cbtype.TabIndex = 1;
+            // 
+            // txtCode
+            // 
+            this.txtCode.Location = new System.Drawing.Point(297, 58);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(100, 21);
+            this.txtCode.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(428, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "工位:";
+            // 
+            // txtPlace
+            // 
+            this.txtPlace.Location = new System.Drawing.Point(496, 58);
+            this.txtPlace.Name = "txtPlace";
+            this.txtPlace.Size = new System.Drawing.Size(108, 21);
+            this.txtPlace.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(223, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "开始时间:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(430, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 12);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "结束时间:";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(297, 13);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(100, 21);
+            this.dateTimePicker1.TabIndex = 12;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(495, 14);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(109, 21);
+            this.dateTimePicker2.TabIndex = 13;
+            // 
             // QueryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(869, 403);
+            this.ClientSize = new System.Drawing.Size(943, 530);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "QueryForm";
             this.Text = "任务查询";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.QueryForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -191,7 +302,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox cbtype;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -202,5 +312,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 品牌编码;
         private System.Windows.Forms.DataGridViewTextBoxColumn 计划数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn 入库单编号;
+        private System.Windows.Forms.TextBox txtCode;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtCellNO;
+        private System.Windows.Forms.ComboBox cbtype;
+        private System.Windows.Forms.TextBox txtPlace;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }

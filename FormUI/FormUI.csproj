@@ -214,6 +214,18 @@
     <Compile Include="ReportDetailForm.Designer.cs">
       <DependentUpon>ReportDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InBoundNoReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InBoundNoReport.Designer.cs">
+      <DependentUpon>InBoundNoReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LaneWayFMReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaneWayFMReport.Designer.cs">
+      <DependentUpon>LaneWayFMReport.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CellForm.resx">
       <DependentUpon>CellForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportDetailForm.resx">
       <DependentUpon>ReportDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InBoundNoReport.resx">
+      <DependentUpon>InBoundNoReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaneWayFMReport.resx">
+      <DependentUpon>LaneWayFMReport.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>
