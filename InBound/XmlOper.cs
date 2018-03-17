@@ -29,6 +29,7 @@ namespace InBound
             {
                 serializer.Serialize(writer, o);
                 writer.Close();
+                
             }
         }
 
@@ -118,7 +119,7 @@ namespace InBound
             {
                  xml = File.ReadAllText(path, encoding);
             }
-            if (xml != null && !xml.EndsWith("</DeviceStateInfoModel>"))//写入xml异常 删除重写
+            if (xml != null && !xml.EndsWith("</ArrayOfDeviceStateInfoModel>"))//写入xml异常 删除重写
             {
                 File.Delete(path);
                 xml = "";

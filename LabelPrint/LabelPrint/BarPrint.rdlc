@@ -186,68 +186,41 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Image Name="Image4">
-                      <Source>Embedded</Source>
-                      <Value>logo</Value>
-                      <Sizing>FitProportional</Sizing>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>25pt</PaddingLeft>
-                        <PaddingRight>5pt</PaddingRight>
-                        <PaddingTop>5pt</PaddingTop>
-                        <PaddingBottom>10pt</PaddingBottom>
-                      </Style>
-                    </Image>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox3">
+                    <Textbox Name="Textbox4">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>中　国　烟　草</Value>
+                              <Value>长株潭物流</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>华文宋体</FontFamily>
                                 <FontSize>20pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>CHINA TOBACCO</Value>
-                              <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>18pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>8pt</PaddingTop>
+                        <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -506,8 +479,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BARSource</DataSetName>
-        <Height>5.48554cm</Height>
-        <Width>9.82933cm</Width>
+        <Height>5.48556cm</Height>
+        <Width>9.82932cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -528,7 +501,7 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>98.29327mm</Width>
+  <Width>98.2933mm</Width>
   <Page>
     <PageHeight>7.5cm</PageHeight>
     <PageWidth>10.5cm</PageWidth>

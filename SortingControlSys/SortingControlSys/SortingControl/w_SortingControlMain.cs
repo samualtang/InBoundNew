@@ -286,7 +286,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = statusGroup3.Read(26).CastTo<int>(-1);//读任务写入标志
-                writeLog.Write("标志位：" + flag);
+                writeLog.Write(sortgroupno2 + "组写任务前电控标志位标志位：" + flag);
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
@@ -300,6 +300,7 @@ namespace SortingControlSys.SortingControl
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
                         updateListBox(sortgroupno2 + "组分拣数据发送完毕");
+                        writeLog.Write(sortgroupno2 + "组分拣数据发送完毕");
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());//取虚拟出口号
@@ -366,7 +367,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = taskgroup.Read(26).CastTo<int>(-1);//读任务写入标志
-                writeLog.Write("标志位：" + flag);
+                writeLog.Write(sortgroupno1 + "组写任务前电控标志位：" + flag);
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
@@ -380,6 +381,7 @@ namespace SortingControlSys.SortingControl
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
                         updateListBox(sortgroupno1 + "组分拣数据发送完毕");
+                        writeLog.Write(sortgroupno1 + "组分拣数据发送完毕");
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());//取虚拟出口号
@@ -587,7 +589,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 27)//监控写入标识位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
                         {
                             while (!isInit)
                             {
@@ -598,6 +600,7 @@ namespace SortingControlSys.SortingControl
 
                                 TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write(sortgroupno1 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
                             }
 
                             sendTask();
@@ -621,13 +624,14 @@ namespace SortingControlSys.SortingControl
                         if (getKey(tempList, clientId[i]) != -1)
                         {
                             // int taskno = getKey(tempList, clientId[i]);
-                            writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                            writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno1);
                             TaskService.UpdateStatus(sortgroupno1, 20, tempvalue);//将第一组分拣任务改为完成完成
 
                             if (tempvalue != 0)
                             {
                                 updateListBox("任务:" + tempvalue + "已完成");
+                                writeLog.Write(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                             }
 
                             removeKey(tempList, clientId[i]);
@@ -659,6 +663,7 @@ namespace SortingControlSys.SortingControl
 
                                 TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno2 + "---任务:" + tempList1.ElementAt(tempList1.Count - 1).Value + "已接收");
+                                writeLog.Write(sortgroupno2 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
                             }
 
                             sendTask1();
@@ -682,7 +687,7 @@ namespace SortingControlSys.SortingControl
                         if (getKey(tempList1, clientId[i]) != -1)
                         {
                             // int taskno = getKey(tempList1, clientId[i]);
-                            writeLog.Write("出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                            writeLog.Write("从电控读取" + sortgroupno2+ "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno2);
                             TaskService.UpdateStatus(sortgroupno2, 20, tempvalue);//将第一组分拣任务改为完成完成
 
@@ -690,6 +695,7 @@ namespace SortingControlSys.SortingControl
                             if (tempvalue != 0)
                             {
                                 updateListBox("任务:" + tempvalue + "已完成");
+                                writeLog.Write(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                             }
 
                             removeKey(tempList1, clientId[i]);
@@ -852,7 +858,7 @@ namespace SortingControlSys.SortingControl
         int i = 1;
         public void initdata()
         {//刷新分拣进度等
-            writeLog.Write("initdata");
+            writeLog.Write("启动程序。。。。。。");
 
             task_data.Rows.Clear();
             try
@@ -972,7 +978,7 @@ namespace SortingControlSys.SortingControl
 
             this.Dispose();
             this.Close();
-            writeLog.Write("System exit........");
+            writeLog.Write("退出程序。。。。。。");
             System.Environment.Exit(System.Environment.ExitCode);
         }
         private void button11_Click(object sender, EventArgs e)

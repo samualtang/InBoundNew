@@ -43,7 +43,7 @@
             this.textBox2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox2.Location = new System.Drawing.Point(95, 159);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(113, 31);
+            this.textBox2.Size = new System.Drawing.Size(113, 23);
             this.textBox2.TabIndex = 1;
             this.textBox2.UseSystemPasswordChar = true;
             this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
@@ -72,7 +72,7 @@
             // 
             this.txtUserName.Location = new System.Drawing.Point(98, 128);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(110, 28);
+            this.txtUserName.Size = new System.Drawing.Size(110, 21);
             this.txtUserName.TabIndex = 4;
             // 
             // w_user
@@ -80,7 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.BackgroundImage = global::highSpeed.Properties.Resources.login2;
-            this.ClientSize = new System.Drawing.Size(284, 179);
+            this.ClientSize = new System.Drawing.Size(320, 219);
             this.ControlBox = false;
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.textBox2);

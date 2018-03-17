@@ -13,7 +13,7 @@ namespace FormUI
 {
     public partial class MOutBoundFM : Form
     {
-        List<String> address = new List<string>() { "1222", "1232", "1412" };
+        List<String> address = new List<string>() { "1231", "1355" };
         public MOutBoundFM()
         {
             InitializeComponent();
@@ -146,9 +146,17 @@ namespace FormUI
                     job.PRIORITY = 50;
                     job.CREATEDATE = DateTime.Now;
                     job.BRANDID = itemDetail.BIGBOX_BAR;
-                    job.TUTYPE = 4;
+                    if (cbAdress.SelectedIndex == 1)
+                    {
+                        job.TUTYPE = 3;//二楼人工口
+                    }
+                    else
+                    {
+                        job.TUTYPE = 4;
+                    }
                     job.INPUTTYPE = 10;
                     job.TASKNO = id;
+                    job.TARGET = address[cbAdress.SelectedIndex];
                     using (TransactionScope ts = new TransactionScope())
                     {
                         InfJobDownLoadService.InsertEntity(job);

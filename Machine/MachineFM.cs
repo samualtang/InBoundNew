@@ -355,10 +355,13 @@ namespace SortingControlSys.SortingControl
                // item.Write(0, 3);
                 if (item.Read(4).ToString() != "1")
                 {
+
+                    item.Write(5, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
+                    Thread.Sleep(10);
                     item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 }
                 updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
-
+                writeLog.Write(i + "号机械手初始化完成");
                 i++;
             }
             isInit = true;
@@ -446,7 +449,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = group.Read(4).CastTo<int>(-1);
-                writeLog.Write("exportnum:" + exportnum + ";标志位：" + flag);
+                writeLog.Write(exportnum + "号机械手写任务前标志位：" + flag);
                 updateListBox("exportnum:" + exportnum + ";标志位：" + flag);
                 if (flag == -1)
                 {
@@ -461,7 +464,7 @@ namespace SortingControlSys.SortingControl
 
                     if (int.Parse(datas[1].ToString()) == 0)
                     {
-                        writeLog.Write("通道" + exportnum + ":机械手数据发送完毕");
+                        writeLog.Write(exportnum + "号机械手任务发送完毕");
                         updateListBox("通道" + exportnum + ":机械手数据发送完毕");
                         return;
                     }
@@ -480,15 +483,15 @@ namespace SortingControlSys.SortingControl
                         //   group.WriteR(datas[3], 1);
 
 
-                        String p2 = group.ReadD(1).ToString();
-                        String p3 = group.Read(2).ToString();
+                        String p2 = group.ReadD(1).ToString();//任务号
+                        String p3 = group.Read(2).ToString();//抓烟数
                         //String p4 = group.Read(3).ToString();
                         //int count = 1;
 
                         if (p2 == datas[1].ToString() && p3 == datas[2].ToString())
                         {
 
-                            group.WriteR(1, 4);
+                            group.WriteR(1, 4);//标志位
 
                             //String p5 = group.Read(3).ToString();
 
@@ -503,14 +506,21 @@ namespace SortingControlSys.SortingControl
                             if (!string.IsNullOrWhiteSpace(errorInfo))
                             {
                                 updateListBox(errorInfo);
+                                writeLog.Write("写入任务异常："+errorInfo);
                             }
                             //  j = 1000;
-                            string logstr = "通道:" + exportnum + "   ";
+                            string logstr = exportnum + "号机械手写入任务信息：";
+                            string f = "";
                             for (int i = 0; i < datas.Length; i++)
                             {
-                                logstr += i + ":" + datas[i] + ";";
+                                if (i == 0) f = "任务完成号";
+                                else if (i == 1) f = "任务号";
+                                else if (i == 2) f = "抓烟数";
+                                else if (i == 3) f = "电控已接收任务号";
+                                else if (i == 4) f = "标志位";
+                                logstr +=  f+ ":" + datas[i] + ";";
                             }
-                            writeLog.Write(p2 + ":" + p3);
+                            writeLog.Write(p2 + "号任务抓烟数" + p3);
                             writeLog.Write(logstr);
                             updateListBox(logstr);
                             updateListBox(":" + p2 + ":" + p3);
@@ -523,7 +533,7 @@ namespace SortingControlSys.SortingControl
                         {
                             j++;
                             updateListBox("写入p2:" + datas[1] + ";p3:" + datas[2] + " 读取内容:p2=" + p2 + "; p3=" + p3);
-
+                            writeLog.Write("写入任务信息不正确，请检查！");
                         }
 
 
@@ -569,7 +579,7 @@ namespace SortingControlSys.SortingControl
 
 
                             updateListBox("读到标志位2");
-                            writeLog.Write("读到标志位2");
+                            writeLog.Write("读到第"+Group+"号机械手写入标志位2");
                             while (!isInit)
                             {
                                 Thread.Sleep(100);
@@ -587,12 +597,12 @@ namespace SortingControlSys.SortingControl
                                     
                                     //foreach (var item in temp)
                                     //{
-                            if (groupList[Group - 1].Read(3) != null && groupList[Group - 1].Read(3).ToString()!="0")
+                            if (groupList[Group - 1].ReadD(3) != null && groupList[Group - 1].ReadD(3).ToString()!="0")
                                 {
-                                    String item =  groupList[Group - 1].Read(3).ToString();//任务号
+                                    String item =  groupList[Group - 1].ReadD(3).ToString();//任务号
 
                                     updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
-                                    writeLog.Write(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
+                                    writeLog.Write(((groupNo - 1) * 22 + Group) + "号机械手已接收:" + item + "号任务");
 
                                     TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
                                     removeKey(((groupNo - 1) * 22 + Group) + "");
@@ -611,8 +621,8 @@ namespace SortingControlSys.SortingControl
                     {
                         if (decimal.Parse(values[i].ToString()) != 0)
                         {
-                            writeLog.Write((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
-                            updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成"));
+                            writeLog.Write((((groupNo - 1) * 22 + Group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
+                            updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成任务"));
                             TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
                          
                         }
@@ -712,7 +722,7 @@ namespace SortingControlSys.SortingControl
         int i = 1;
         public void initdata()
         {
-            writeLog.Write("initdata");
+            writeLog.Write("启动程序。。。。。。");
             task_data.Rows.Clear();
             try
             {
@@ -836,7 +846,7 @@ namespace SortingControlSys.SortingControl
 
             Disconnect();
             updateListBox("system exit.......");
-            writeLog.Write("system exit.......");
+            writeLog.Write("退出程序。。。。。。");
             this.Dispose();
             this.Close();
             System.Environment.Exit(System.Environment.ExitCode);

@@ -2801,7 +2801,7 @@ namespace InBound.Business
                     {
                         values[0] = query.SORTNUM;
                         values[1] = query.UNIONEXPORTNUM;
-                        values[2] = query.PACKAGEMACHINE;
+                        values[2] = query.PACKAGEMACHINE;//包装机号
                         values[3] = query2.Sum(x => x.POKENUM);
                         values[4] = query2.Where(x => x.GROUPNO == 1).Sum(x => x.POKENUM);
                         values[5] = query2.Where(x => x.GROUPNO == 2).Sum(x => x.POKENUM);

@@ -226,7 +226,9 @@ namespace highSpeed.baseData
                 String cigarettecode = this.troughdata.SelectedRows[0].Cells["cigarettecode"].Value.ToString();
                 String ctype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
                 String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
-                DialogResult MsgBoxResult = MessageBox.Show("确定启用"+desc+"【"+id+"】通道吗？",//对话框的显示内容 
+                String machineseq = this.troughdata.SelectedRows[0].Cells["machineseq"].Value.ToString();
+                String throughnum = this.troughdata.SelectedRows[0].Cells["troughnum"].Value.ToString();
+                DialogResult MsgBoxResult = MessageBox.Show("确定启用" + desc + "【设备号：" + machineseq + "/通道号：" + throughnum + "】通道吗？",//对话框的显示内容 
                                                             "提示",//对话框的标题 
                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
@@ -237,7 +239,7 @@ namespace highSpeed.baseData
                     {
                         if (cigarettecode == null || cigarettecode == "")
                         {
-                            MessageBox.Show("请选择品牌在启用通道.");
+                            MessageBox.Show("请选择品牌再启用通道.");
                             return;
 
                         }
@@ -247,7 +249,7 @@ namespace highSpeed.baseData
                     {
                         Db.Open();
                         Db.ExecuteNonQuery(updatesql);
-                        MessageBox.Show(desc+"通道号【" + id + "】的通道已启用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(desc + " 【设备号：" + machineseq + "/通道号：" + throughnum + "】的通道已启用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         seek();
 
                     }
@@ -265,7 +267,7 @@ namespace highSpeed.baseData
             }
             else
             {
-                MessageBox.Show("请点击选择您要启用的分拣通道!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("请点击选择您要启用的设备通道!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -284,7 +286,9 @@ namespace highSpeed.baseData
                 String desc = this.troughdata.SelectedRows[0].Cells[9].Value.ToString();
                String ctype= this.troughdata.CurrentRow.Cells["ctype"].Value+"";
                String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
-                DialogResult MsgBoxResult = MessageBox.Show("确定禁用"+desc+"【"+id+"】通道吗？",//对话框的显示内容 
+               String machineseq = this.troughdata.SelectedRows[0].Cells["machineseq"].Value.ToString();
+               String throughnum = this.troughdata.SelectedRows[0].Cells["troughnum"].Value.ToString();
+               DialogResult MsgBoxResult = MessageBox.Show("确定禁用" + desc + "【设备号：" + machineseq + "/通道号：" + throughnum + "】通道吗？",//对话框的显示内容 
                                                             "提示",//对话框的标题 
                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
@@ -296,7 +300,7 @@ namespace highSpeed.baseData
                     {
                         Db.Open();
                         Db.ExecuteNonQuery(updatesql);
-                        MessageBox.Show(desc + "【" + id + "】的通道已禁用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(desc + "【设备号：" + machineseq + "/通道号：" + throughnum + "】的通道已禁用!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         seek();
 
                     }
@@ -351,7 +355,7 @@ namespace highSpeed.baseData
                 seek();
             }
             else {
-                MessageBox.Show("请点击选择您要修改的分拣通道!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("请点击选择您要修改的设备通道!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -398,7 +402,7 @@ namespace highSpeed.baseData
 
         private void btn_toexcel_Click(object sender, EventArgs e)
         {
-            dgVprint1.ExportDGVToExcel2(this.troughdata, "分拣通道信息", "sorttroughInfo.xls", true);
+            dgVprint1.ExportDGVToExcel2(this.troughdata, "设备通道信息", "sorttroughInfo.xls", true);
         }
 
         private void button1_Click(object sender, EventArgs e)

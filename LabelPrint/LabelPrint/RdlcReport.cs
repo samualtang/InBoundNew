@@ -30,7 +30,7 @@ namespace RdlcPro
             T_WMS_ITEM item = service.GetItemByCode(code);
             if (item != null)
             {
-                code = item.BIGBOX_BAR +"0000"+ string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+                code ="91"+ item.BIGBOX_BAR +"0000"+ string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
             
             }
             FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
@@ -56,7 +56,7 @@ namespace RdlcPro
             InitializeComponent();
             reportViewer1.LocalReport.EnableExternalImages = true;
             BarCode128 barCode = new BarCode128();
-            code = code + "0000" + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
+            code = "91"+code + "0000" + string.Format("{0:yyyyMMddHHmmss}", DateTime.Now);
             FileInfo file = new FileInfo(Application.StartupPath + "\\code.jpg");
             if (file.Exists)
             {

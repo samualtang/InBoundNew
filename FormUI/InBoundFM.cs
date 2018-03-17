@@ -50,7 +50,7 @@ namespace FormUI
                 tbChooseName.Tag = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
-        List<String> address = new List<string>() { "1221", "1231", "1412" };
+        List<String> address = new List<string>() { "1221", "1231", "1415" };
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -73,7 +73,7 @@ namespace FormUI
             INF_JOBDOWNLOAD job = new INF_JOBDOWNLOAD();
          
             job.SOURCE = address[cbAddress.SelectedIndex];
-            job.TARGET = AtsCellInService.getCellNo(tbChooseName.Tag.ToString());//储位地址
+            job.TARGET = AtsCellInService.getCellNoCode(tbChooseName.Tag.ToString());//储位地址
             if (job.TARGET == "")
             {
                 MessageBox.Show("获取储位信息失败");
@@ -101,7 +101,44 @@ namespace FormUI
             {
                 job.CDTYPE = 0;
             }
-            InfJobDownLoadService.InsertEntity(job);
+
+          //  InfJobDownLoadService.InsertEntity(job);
+            using (TransactionScope ts = new TransactionScope())
+            {
+                InfJobDownLoadService.InsertEntity(job);
+
+                //InBoundLineService.Update(entity.INBOUNDDETAILID, 0, num ?? 0);
+                AtsCellService.UpdateAtsCell(job.TARGET, 30);//更新cellno状态
+                T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
+                info.PALLETNO = palletNo;
+                info.DISMANTLE = 1;
+                info.CELLNO = job.TARGET;
+                info.STATUS = 10;//组盘
+                info.CREATETIME = DateTime.Now;
+                //info.INBOUNDID = inboundid;
+                if (cbcDuo.Checked)
+                {
+                    info.DISMANTLE = 10;
+                }
+                else
+                {
+                    info.DISMANTLE = 0;
+                }
+                AtsCellInfoService.InsertAtsCellInfo(info);
+
+                T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
+                detail.BARCODE = tbChooseName.Tag.ToString();
+                detail.CIGARETTECODE = ItemService.GetItemByBarCode(detail.BARCODE).ITEMNO;
+                detail.CIGARETTENAME = tbChooseName.Text;
+                detail.QTY = decimal.Parse(tbNum.Text);
+                detail.CELLNO = info.CELLNO;
+               
+                AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+                ts.Complete();
+            }
+            //MessageBox.Show("入库完成");
+
+            //InfJobDownLoadService.InsertEntity(job);
             //using (TransactionScope ts = new TransactionScope())
             //{
             //    InfJobDownLoadService.InsertEntity(job);
@@ -133,7 +170,8 @@ namespace FormUI
             //    AtsCellInfoDetailService.InsertAtsCellInfo(detail);
             //    ts.Complete();
             //}
-            //MessageBox.Show("入库完成");
+            MessageBox.Show("任务已达");
+
             tbChooseName.Text = "";
             tbChooseName.Tag = null;
           

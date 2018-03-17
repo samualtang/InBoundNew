@@ -20,6 +20,14 @@ namespace InBound.Business
           }
 
       }
+      public static decimal GetSeq()
+      {
+          using (Entities context = new Entities())
+          {
+              return context.ExecuteStoreQuery<decimal>("select SEQ_PalletNO.Nextval from dual").First();
+          }
+
+      }
       public static DataTable Query(string sqlString, params object[] dbParams)
       {
          
