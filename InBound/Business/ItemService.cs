@@ -11,7 +11,7 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = from item in entity.T_WMS_ITEM where   item.ITEMNO.Contains(code) &&  item.ITEMNAME.Contains(name) && item.ITEMNO.Length==7 select item;
+              var query = from item in entity.T_WMS_ITEM where   item.BIGBOX_BAR.Contains(code) &&  item.ITEMNAME.Contains(name) && item.ITEMNO.Length==7 select item;
               return query.ToList();
           }
       }
