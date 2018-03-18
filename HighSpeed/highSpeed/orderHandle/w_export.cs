@@ -31,7 +31,7 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
 
-            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,t.exportnum from highspeed.t_produce_task t group BY t.batchcode,t.synseq,t.exportnum ";
+            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from t_produce_task t group BY t.batchcode,t.synseq order by synseq ";
             //MessageBox.Show(strsql);
             Bind(strsql);
         }
@@ -84,14 +84,20 @@ namespace highSpeed.orderHandle
         {
             orderdata.ClearSelection();
         }
-
+        //多条打码机的数据可以写到一个文件上发送过去，不过每次发送的明细不能超过一万条
         private void export(string synseq, string lineno,string groupno,string linetype)//lineno打码机编号
         {
             int taskseq = 0, seq = 1; String info = "";
             String tasknum = "", cuscode = "", cusname = "", itemno = "", itemname = "", quantity = "", regioncode = "", orderdate = "", cuscodetmp = "";
-            String sql = "SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,b.quantity,a.regioncode,to_char(c.enterdate,'yyyy-mm-dd') AS enterdate " +
+            //task表中不知道大品牌拆到了哪几组，所以数据只能从poke表中获取
+            /*String sql = "SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,b.quantity,a.regioncode,to_char(c.enterdate,'yyyy-mm-dd') AS enterdate " +
                          "FROM highspeed.t_produce_task a,highspeed.t_produce_taskline b,dbm.twms_excpo c WHERE a.tasknum=b.tasknum " +
                          " and a.billcode=c.extnum and a.synseq='" + synseq + "' and a.exportnum='" + "" + "' ORDER BY a.tasknum";
+            */
+            String sql = "select p.sortnum ,t.customercode,t.customername,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
+                        " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortorder r "+
+                        " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.state=10 and r.groupno=p.groupno and t.synseq="+synseq+
+                        " order by p.sortnum,p.groupno ";
            /**
             String sql = SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,c.pokenum,a.regioncode,to_char(a.orderdate,'yyyy-mm-dd') AS enterdate 
                          FROM t_produce_task a,t_produce_sorttrough b,t_produce_poke c 
@@ -105,7 +111,18 @@ namespace highSpeed.orderHandle
                          and a.synseq='1' and c.linenum=2 
                          ORDER BY c.sortnum,c.secsortnum;
             * **/
+
+
+            //取批次号
+            String batchcodesql = "select SEQ_ONEHAOGONGCHENG.Nextval from dual";
+
+            
+
             Db.Open();
+            DataTable dtseq = Db.Query(batchcodesql);
+            String onesynseq = dtseq.Rows[0][0].ToString();//一号工程批次号
+
+
             DataTable table = Db.Query(sql);
             int len = table.Rows.Count;
             String[] infostr = new String[len];
@@ -117,21 +134,21 @@ namespace highSpeed.orderHandle
                 {
                     DataRow row = table.Rows[i];
 
-                    tasknum = row["TASKNUM"].ToString();
+                    tasknum = row["SORTNUM"].ToString();
                     cuscode = row["CUSTOMERCODE"].ToString();
                     cusname = row["CUSTOMERNAME"].ToString();
                     itemno = row["CIGARETTECODE"].ToString();
                     itemname = row["CIGARETTENAME"].ToString();
                     quantity = row["QUANTITY"].ToString();
                     regioncode = row["REGIONCODE"].ToString();
-                    orderdate = row["ENTERDATE"].ToString().Substring(0, 10);
-                    orderdate = orderdate.Replace("/", "-");
+                    orderdate = row["ODATE"].ToString();                    
+                    lineno = row["SORTNAME"].ToString();
                     taskseq++;
                     if (i + 1 < len) cuscodetmp = table.Rows[i + 1]["CUSTOMERCODE"].ToString();
                     else cuscodetmp = "";
 
                     //infostr[i] = tasknum + taskseq + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + ",2," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + ",S1001,1";
-                    info = info + tasknum + taskseq + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + ","+synseq+"," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + ","+lineno+",1;\r\n";
+                    info = info + tasknum + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + onesynseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + "," + lineno + ",1;\r\n";
 
                     if (cuscode != cuscodetmp)
                     {
@@ -140,23 +157,23 @@ namespace highSpeed.orderHandle
                     }
                 }
                 String folder = "HighSpeedExportData";
-                if (!Directory.Exists("E:\\" + folder))
+                if (!Directory.Exists("D:\\" + folder))
                 {
-                    Directory.CreateDirectory("E:\\" + folder);
+                    Directory.CreateDirectory("D:\\" + folder);
                 }
                 DateTime dt = DateTime.Now;
                 String time = string.Format("{0:yyyyMMddHHmmssfff}", dt);
                 String filename =  "RetailerOrder" + time;
-                StreamWriter sw = new StreamWriter("E:\\HighSpeedExportData\\" + filename + ".Order", false, Encoding.UTF8);
+                StreamWriter sw = new StreamWriter("D:\\HighSpeedExportData\\" + filename + ".Order", false, Encoding.UTF8);
                 sw.WriteLine(info.Substring(0, info.Length - 1));
                 sw.Close();//写入
-                //CompressFile("E:\\" + filename + ".Order");
-                GetFileToZip("E:\\HighSpeedExportData\\" + filename + ".Order", "E:\\HighSpeedExportData\\" + filename + ".zip", filename + ".Order");
+                //CompressFile("D:\\" + filename + ".Order");
+                GetFileToZip("D:\\HighSpeedExportData\\" + filename + ".Order", "D:\\HighSpeedExportData\\" + filename + ".zip", filename + ".Order");
                 //发送数据
 
                 
 
-                MessageBox.Show("数据导出成功，文件为" + "E:\\HighSpeedExportData\\" + filename + ".Order", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("数据导出成功，文件为" + "D:\\HighSpeedExportData\\" + filename + ".Order", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -165,7 +182,7 @@ namespace highSpeed.orderHandle
             int count = this.orderdata.SelectedRows.Count;
             if(count>0){
                 String synseq = this.orderdata.SelectedRows[0].Cells["synseq"].Value + "";
-                String exportnum = this.orderdata.SelectedRows[0].Cells["exportnum"].Value + "";
+               // String exportnum = this.orderdata.SelectedRows[0].Cells["exportnum"].Value + "";
                 //取页面参数
 
                 export(synseq, "01", "1", "2");

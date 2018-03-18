@@ -138,6 +138,8 @@ namespace highSpeed.baseData
                             "cigarettecode,cigarettename,state,troughtype as type,cigarettetype as ctype,decode(cigarettetype,'10','混合','20','标准','30','异型','异型混合')as cigarettetype,decode(state,'10','正常','0','禁用')as status, " +
                             "decode(troughtype,10,'分拣',20,'重力式货架',30,'皮带机',40,'分拣出口')as troughtype from t_produce_sorttrough t where  1=1" + tmp +
                             " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
+            String temps = tmp +
+                            " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
             //MessageBox.Show(strsql);
             int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where 1=1 " + tmp).ToString());
             Bind(strsql);
@@ -409,21 +411,21 @@ namespace highSpeed.baseData
         {
             Db.Open();
             OracleParameter[] sqlpara;
-            sqlpara = new OracleParameter[3];
-            sqlpara[0] = new OracleParameter("p_bz", "20");
-            sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 300);
-            sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+            sqlpara = new OracleParameter[2];
+            
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 300);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
+            sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
-            sqlpara[2].Direction = ParameterDirection.Output;
 
             Db.ExecuteNonQueryWithProc("P_PRODUCE_Validation", sqlpara);
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-            string errcode = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
-            string errmsg = sqlpara[2].Value == null ? "" : sqlpara[2].Value.ToString();
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
             Db.Close();
             if (errcode == "1")
             {

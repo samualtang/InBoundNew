@@ -286,7 +286,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = statusGroup3.Read(26).CastTo<int>(-1);//读任务写入标志
-                writeLog.Write(sortgroupno2 + "组写任务前电控标志位标志位：" + flag);
+                writeLog.Write(sortgroupno2 + "组写任务前电控标志位：" + flag);
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
