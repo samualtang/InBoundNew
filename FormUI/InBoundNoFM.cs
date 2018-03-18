@@ -128,6 +128,22 @@ namespace FormUI
        {
            tbChooseName.Text = text;
        }
+       delegate void HandleDelegate(String text);
+       public void updateListBox(string info)
+       {
+           String time = DateTime.Now.ToLongTimeString();
+           if (this.logList.InvokeRequired)
+           {
+
+
+               this.logList.Invoke(new HandleDelegate(updateListBox), info);
+           }
+           else
+           {
+               this.logList.Items.Insert(0, time + "    " + info);
+
+           }
+       }
 
         bool isRun = true;
         public void startAutoInBound()
@@ -143,7 +159,7 @@ namespace FormUI
          
         }
         int i = 0;
-        int selectIndex = 0;
+      public static  int selectIndex = 0;
         delegate void getIndex();
         void getCBSelectIndex()
         {
@@ -209,13 +225,14 @@ namespace FormUI
             using (TransactionScope ts = new TransactionScope())
             {
                 InfJobDownLoadService.InsertEntity(job);
-                //InBoundLineService.Update(entity.INBOUNDDETAILID, 0, num ?? 0);
                 ts.Complete();
             }
             this.BeginInvoke(new SearchHanlder(search));
             searchTask();
             initText();
             MessageBox.Show("任务已下达");
+            updateListBox(job.JOBID + "号任务已下达;入口地址:"+job.SOURCE);
+            WriteLog.GetLog().Write(job.JOBID + "号任务已下达;入口地址:" + job.SOURCE);
         }
         delegate void SearchHanlder();
 
@@ -276,6 +293,11 @@ namespace FormUI
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            searchTask();
         }
 
     }

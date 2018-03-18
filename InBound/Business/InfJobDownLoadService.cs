@@ -40,18 +40,23 @@ namespace InBound.Business
               dataEntity.SaveChanges();
           }
       }
-      public static List<INF_JOBDOWNLOAD> Query(int jobtype)
+      public static List<INF_JOBDOWNLOAD> Query(int jobtype, DateTime begin, DateTime end, String code, String cellno, String place)
       {
           using (Entities dataEntity = new Entities())
           {
               if (jobtype == -1)
               {
-                  var query = from item in dataEntity.INF_JOBDOWNLOAD  select item;
+                  var query = from item in dataEntity.INF_JOBDOWNLOAD where  item.CREATEDATE>=begin && item.CREATEDATE<=end && item.BRANDID.Contains(code) && (item.SOURCE.Contains(cellno) || item.TARGET.Contains(cellno))
+                              && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
+                              select item;
                   return query.ToList();
               }
               else
               {
-                  var query = from item in dataEntity.INF_JOBDOWNLOAD where item.JOBTYPE == jobtype select item;
+                  var query = from item in dataEntity.INF_JOBDOWNLOAD where item.JOBTYPE == jobtype && item.CREATEDATE>=begin && item.CREATEDATE<=end  &&
+                              item.BRANDID.Contains(code) && (item.SOURCE.Contains(cellno) || item.TARGET.Contains(cellno))
+                              && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
+                  select item;
                   return query.ToList();
               }
           }
@@ -63,7 +68,7 @@ namespace InBound.Business
           {
               var query = (from item in entity.INF_JOBDOWNLOAD
                            join item2 in entity.INF_JOBFEEDBACK on item.JOBID equals item2.JOBID
-                           where  item.JOBTYPE == 55 && item.TARGET == "1415" && item2.FEEDBACKSTATUS == 99
+                           where  item.JOBTYPE == 55 && item.TARGET == "1415" && item2.FEEDBACKSTATUS == 99 
                            orderby item.RESPONDDATE descending
                            select item).FirstOrDefault();
               return query;

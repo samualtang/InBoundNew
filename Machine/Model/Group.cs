@@ -5,7 +5,7 @@ using System.Text;
 using OpcRcw.Da;
 using OpcRcw.Comn;
 using System.Runtime.InteropServices;
-using SortingControlSys.PubFunc;
+using InBound;
 
 namespace SortingControlSys.Model
 {

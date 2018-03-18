@@ -207,6 +207,14 @@ namespace MainUI
             {
                 listView1.Items.Add("异常查询", 3);
             }
+            if (menuInfo.Contains(3005))
+            {
+                listView1.Items.Add("单据查询", 3);
+            }
+            if (menuInfo.Contains(3006))
+            {
+                listView1.Items.Add("巷道使用率", 3);
+            }
         }
 
         private void CreateFoList()
@@ -424,6 +432,16 @@ namespace MainUI
                         cfm.StartPosition = FormStartPosition.CenterScreen;
                         cfm.Show();
                         break;
+                    case "单据查询":
+                        FormUI.InBoundNoReport inBoundReport = new FormUI.InBoundNoReport();
+                        inBoundReport.StartPosition = FormStartPosition.CenterScreen;
+                        inBoundReport.Show();
+                        break;
+                    case "巷道使用率":
+                        FormUI.LaneWayFMReport laneWayReport = new FormUI.LaneWayFMReport();
+                        laneWayReport.StartPosition = FormStartPosition.CenterScreen;
+                        laneWayReport.Show();
+                        break;
 
                 }
             }
@@ -574,6 +592,25 @@ namespace MainUI
             moutFm.StartPosition = FormStartPosition.CenterScreen;
             moutFm.Show();
            
+        }
+
+        private void 入库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 单据查询ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.InBoundNoReport moutFm = new FormUI.InBoundNoReport();
+            moutFm.StartPosition = FormStartPosition.CenterScreen;
+            moutFm.Show();
+        }
+
+        private void 巷道使用率ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.LaneWayFMReport moutFm = new FormUI.LaneWayFMReport();
+            moutFm.StartPosition = FormStartPosition.CenterScreen;
+            moutFm.Show();
         }
 
         

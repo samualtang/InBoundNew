@@ -80,6 +80,8 @@ namespace InBound.Business
                 return query;
             
         }
+
+
         public static List<OutBound> GetReport()
         {
             using (Entities entity = new Entities())

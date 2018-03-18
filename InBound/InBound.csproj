@@ -79,9 +79,11 @@
     <Compile Include="Business\AtsCellCJService.cs" />
     <Compile Include="Business\SysUserService.cs" />
     <Compile Include="Business\WmsType.cs" />
-    <Compile Include="Business\WriteLog.cs" />
     <Compile Include="Business\ErrListService.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />
+    <Compile Include="Model\UseRate.cs" />
+    <Compile Include="Pub\ObjectExtensions.cs" />
+    <Compile Include="Pub\WriteLog.cs" />
     <Compile Include="UnionBit.cs" />
     <Compile Include="EntityData.Designer.cs">
       <AutoGen>True</AutoGen>

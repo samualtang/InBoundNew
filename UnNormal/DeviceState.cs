@@ -35,10 +35,19 @@ namespace SortingControlSys.SortingControl
         {
             String deviceNo = "" + index;
             string lastInfo = fileOper.ReadLastInfo(deviceNo).Trim();
-
+            if (lastInfo == "")
+                lastInfo = "0";
             if (lastInfo != val)
             {
                 String errMsg = "";//取数据库取对应的错误信息
+                if (val == "0")
+                {
+                     errMsg = "消除将来从数据库获取";//取数据库取对应的错误信息
+                }
+                else
+                {
+                    errMsg = "消除将来从数据库获取";
+                }
                 ErrListService.Add(deviceNo, decimal.Parse(lineNum), 40, errMsg, val);
             }
                 
@@ -91,6 +100,8 @@ namespace SortingControlSys.SortingControl
             }
         }
 
+
+      
         public void write(DeviceStateInfoModel obj)
         {
             List<DeviceStateInfoModel> list = new List<DeviceStateInfoModel>();

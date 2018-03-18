@@ -4,26 +4,30 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace SortingControlSys.PubFunc
+namespace InBound
 {
     public class WriteLog
     {
-        //--20171014
         private int fileSize;
         private string fileLogPath;
         private string logFileName;
-
-        //构造函数
+         public static WriteLog log;
+         public static WriteLog GetLog()
+        {
+            if(log==null)
+            log = new WriteLog();
+            return log;
+        }
         public WriteLog()
             {
-
             //初始化大于2M日志文件将自动删除;
-            this.fileSize=2048*1024*2;//2M内存大小
+
+            this.fileSize=2048*1024*200;//2M
 
             //默认路径
 
             this.fileLogPath = Application.StartupPath + "\\log\\";
-            this.logFileName="log.txt";
+            this.logFileName = "log" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
             }
 
         public int FileSize
