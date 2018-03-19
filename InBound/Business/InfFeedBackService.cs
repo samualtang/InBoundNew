@@ -178,19 +178,22 @@ namespace InBound.Business
                           else if (temptask.REQUESTTYPE == 2)//出库请求
                           {
                               task.TARGET = temptask.EQUIPMENTID;
-                              if (task.TUTYPE == 3)//空托盘组
+                              if (temptask.TUTYPE == 3)//空托盘组
                               {
                                   task.PRIORITY = 99;
                                   task.JOBTYPE = 50;
-                                  //task.TARGET = "1192";
+                                  task.BRANDID = "1111111";
+                                 
                                   task.SOURCE = AtsCellOutService.getCellNoBig("1111111", 1);//托盘组任务
+                                  
+                                 
                               }
-                              else if (task.TUTYPE == 2)//空托盘
+                              else if (temptask.TUTYPE == 2)//空托盘
                               {
                                   task.JOBTYPE = 90;
                                   task.BARCODE = "";//获取托盘号 读取RFID
                               }
-                              else if (task.TUTYPE == 4)//实托盘
+                              else if (temptask.TUTYPE == 4)//实托盘
                               {
                                   task.JOBTYPE = 50;
                               }
@@ -201,7 +204,12 @@ namespace InBound.Business
                           task.STATUS = 0;
                           if (task.SOURCE != null && task.SOURCE != "" && task.TARGET != null && task.TARGET != "")//根据地址判断是否下任务
                           {
+                              task.BARCODE = AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
                               dataEntity.INF_JOBDOWNLOAD.AddObject(task);
+                          }
+                          else
+                          {
+                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
                           }
                           //}
                           //else //储位中存在该托盘  肯定就是返库任务 人工站台拆垛完成触发的返库任务
@@ -220,11 +228,13 @@ namespace InBound.Business
                           load.ID = dataEntity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
                           load.JOBID = load.ID;
                           load.JOBTYPE = 91;// 指定拆垛机械手任务
-                          load.BRANDID = temptask.BRANDID;
+                          
                           load.CREATEDATE = DateTime.Now;
                           INF_JOBDOWNLOAD item = InfJobDownLoadService.GetDetail(temptask.JOBID);
+                          load.BRANDID = item.BRANDID;
                           String cellNo = item.SOURCE;
                           decimal jobType =item.JOBTYPE??0;
+                          load.PILETYPE = item.PILETYPE;
                           load.EXTATTR1 = (AtsCellInfoDetailService.GetDetail(cellNo).QTY??0)+"";//实际数量
                           load.PLANQTY = AtsCellInfoDetailService.GetDetail(cellNo).REQUESTQTY ?? 0;//拆垛数量
                           load.PRIORITY = 50;
@@ -232,10 +242,12 @@ namespace InBound.Business
 
 
                           load.TARGET = temptask.EQUIPMENTID;
+                          load.SOURCE = load.TARGET;
+                          load.PILETYPE = item.PILETYPE;
                           load.STATUS = 0;
                           dataEntity.AddToINF_JOBDOWNLOAD(load);
                           dataEntity.SaveChanges();
-                          ts.Complete();
+                          
 
                           var cdtask = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == temptask.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
                           if (cdtask != null && cdtask.Count > 0)
@@ -243,10 +255,10 @@ namespace InBound.Business
                               cdtask.ForEach(x => x.STATUS = 0);
                               cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
                           }
-                          if (jobType == 52)
+                          if (jobType == 55)
                           {
                               AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
-                              AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
+                              //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
                               AtsCellInfoService.delete(item.SOURCE);
                               AtsCellInfoDetailService.delete(item.SOURCE);
                           }

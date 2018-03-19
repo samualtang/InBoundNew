@@ -207,17 +207,36 @@ namespace InBound.Business
                                     INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
                                     load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
                                     load1.JOBID = load1.ID;
-                                    load1.BRANDID = task.CIGARETTECODE;
+                                    load1.BRANDID = load.BRANDID;
                                     load1.CREATEDATE = DateTime.Now;
                                     load1.PLANQTY = detail.QTY;
                                     load1.PRIORITY = 50;
-
+                                    load1.PILETYPE = ItemService.GetItemByBarCode(load.BRANDID).CDTYPE;
+                                    //load1.TUTYPE = 1;//无返库
                                     load1.JOBTYPE = 55;//补货出库
                                     load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)detail.QTY);//out cell
                                     load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                     load1.STATUS = 0;
+                                   
                                     if (load1.SOURCE != "" && load1.TARGET != "")
                                     {
+                                        T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                        T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                        if (dinfo.DISMANTLE == 10)
+                                        {
+                                            if (dl.REQUESTQTY != dl.QTY)
+                                            {
+                                                load1.TUTYPE = 2;//返库
+                                            }
+                                            else
+                                            {
+                                                load1.TUTYPE = 1;//不返库
+                                            }
+                                        }
+                                        else
+                                        {
+                                            load1.TUTYPE = 3;
+                                        }
                                         load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
                                         entity.INF_JOBDOWNLOAD.AddObject(load1);
                                     }
@@ -270,7 +289,7 @@ namespace InBound.Business
 
                                         load2.PRIORITY = 50;
                                         load2.SOURCE = load1.TARGET;//out cell立库出口
-                                        load2.TARGET = querySource.TROUGHNUM;
+                                        load2.TARGET = item.TROUGHNUM;
                                         load2.STATUS = 0;
                                         entity.INF_JOBDOWNLOAD.AddObject(load2);
 
@@ -310,6 +329,7 @@ namespace InBound.Business
                                         load1.JOBID = load1.ID;
                                         load1.JOBTYPE = 55;
                                         load1.BRANDID = load.BRANDID;
+                                        load1.PILETYPE = ItemService.GetItemByBarCode(load.BRANDID).CDTYPE;
                                         load1.CREATEDATE = DateTime.Now;
                                         if (querySource.BOXCOUNT > 15)
                                         {
@@ -328,11 +348,29 @@ namespace InBound.Business
                                         }
                                         load1.PRIORITY = 50;
                                         load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)querySource.BOXCOUNT);//out cell
-                                        load1.TARGET = InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+
+                                        load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
                                         load1.STATUS = 0;
                                         if (load1.SOURCE != "" && load1.TARGET != "")
                                         {
-                                            load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
+                                            T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                            T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                            if (dinfo.DISMANTLE == 10)
+                                            {
+                                                if (dl.REQUESTQTY != dl.QTY)
+                                                {
+                                                    load1.TUTYPE = 2;
+                                                }
+                                                else
+                                                {
+                                                    load1.TUTYPE = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                load1.TUTYPE = 3;
+                                            }
+                                            load1.BARCODE = dl.BARCODE;
                                             entity.INF_JOBDOWNLOAD.AddObject(load1);
                                         }
                                         else
@@ -387,7 +425,7 @@ namespace InBound.Business
 
                                             load2.PRIORITY = 50;
                                             load2.SOURCE = load1.TARGET;//out cell立库出口
-                                            load2.TARGET = querySource.TROUGHNUM;
+                                            load2.TARGET = item.TROUGHNUM;
                                             //load2.STATUS = 0;
                                             entity.INF_JOBDOWNLOAD.AddObject(load2);
 

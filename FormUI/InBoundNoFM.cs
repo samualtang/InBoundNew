@@ -119,8 +119,10 @@ namespace FormUI
             }
             else
             {
-                Thread thread = new Thread(new ThreadStart(startAutoInBound));
-                thread.Start();
+
+                startAutoInBound();
+                //Thread thread = new Thread(new ThreadStart(startAutoInBound));
+                //thread.Start();
             }
         }
        delegate void UpdateTextBox(String text);
@@ -205,7 +207,7 @@ namespace FormUI
             INF_JOBDOWNLOAD job = new INF_JOBDOWNLOAD();
             T_WMS_ITEM item=ItemService.GetItemByBarCode(((List<String>)tbChooseName.Tag)[1].ToString());
             CBAddress.BeginInvoke(new getIndex(getCBSelectIndex));
-            job.SOURCE = address[selectIndex];
+            job.SOURCE = address[CBAddress.SelectedIndex];
             job.TARGET = "A1";
             job.PLANQTY = num;
             job.JOBTYPE = 10;//码垛任务
