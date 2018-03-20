@@ -15,9 +15,10 @@ namespace InBound.Business
           using (Entities dataEntity = new Entities())
           {
 
-              decimal id = 0;
-              id = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobfeedback.nextval from dual").First(); //decimal.Parse(dt.Rows[0][0].ToString());
-              entity.ID = id+"";
+            //  decimal id = 0;
+              //id = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobfeedback.nextval from dual").First(); //decimal.Parse(dt.Rows[0][0].ToString());
+             // entity.ID = id+"";
+              entity.ID = Guid.NewGuid().ToString("N");
               entity.STATUS = 0;
               dataEntity.INF_JOBFEEDBACK.AddObject(entity);
               dataEntity.SaveChanges();
@@ -68,27 +69,28 @@ namespace InBound.Business
                               {
                                   if (temptask.EQUIPMENTID == "1422")
                                   {
-                                      INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
-                                      task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
-                                      task1.ID = task1.JOBID;
-                                      task1.BRANDID = "1111111";
-                                      task1.BARCODE = RefRFIDPalletService.GetSeq()+"";
-                                      task1.SOURCE = temptask.EQUIPMENTID;
-                                      task1.PLANQTY = 10;
-                                      task1.INPUTTYPE = 10;
-                                      task1.JOBTYPE = 100;//空托盘回收任务
-                                      task1.TARGET = AtsCellInService.getCellNoCode(task1.BRANDID + ""); //空托盘指定地址
-                                      task1.TUTYPE = 2;
-                                      task1.CREATEDATE = DateTime.Now;
-                                      task1.PRIORITY = 50;
-                                      dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
-                                      if (task1.TARGET != null && task1.TARGET != "")
+                                     
+                                      task.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
+
+                                      task.BRANDID = "1111111";
+                                      task.BARCODE = RefRFIDPalletService.GetSeq() + "";
+                                      task.SOURCE = temptask.EQUIPMENTID;
+                                      task.PLANQTY = 10;
+
+                                      task.JOBTYPE = 100;//空托盘回收任务
+                                      task.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + ""); //空托盘指定地址
+                                      task.TUTYPE = 2;
+
+                                      task.PRIORITY = 50;
+
+
+                                      if (task.TARGET != null && task.TARGET != "")
                                       {
                                           T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
                                           info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
 
                                           task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
-                                          info.CELLNO = task1.TARGET;
+                                          info.CELLNO = task.TARGET;
                                           info.STATUS = 10;//组盘
                                           info.CREATETIME = DateTime.Now;
                                           info.INBOUNDID = task.INBOUNDNO;
@@ -98,7 +100,7 @@ namespace InBound.Business
                                           AtsCellInfoService.InsertAtsCellInfo(info);
 
                                           T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
-                                          detail.BARCODE = task1.BRANDID + "";
+                                          detail.BARCODE = task.BRANDID + "";
                                           T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
 
                                           detail.CIGARETTECODE = item.ITEMNO;
@@ -426,7 +428,7 @@ namespace InBound.Business
                                               task1.PLANQTY = 1;
                                               task1.INPUTTYPE = 10;
                                               task1.JOBTYPE = 100;//空托盘回收任务
-                                              task1.TARGET = "1423";//空托盘指定地址
+                                              task1.TARGET = "1422";//空托盘指定地址
                                               task1.TUTYPE = 2;
                                               task1.PRIORITY = 50;
                                               task1.STATUS = 0;

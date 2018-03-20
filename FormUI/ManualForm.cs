@@ -45,7 +45,7 @@ namespace FormUI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (list != null && list.Count>0)
+            if (jobid != null && jobid != "0")
             {
                 InBound.INF_JOBFEEDBACK request = new InBound.INF_JOBFEEDBACK();
                 //request.ID = Guid.NewGuid().ToString("N");
@@ -53,8 +53,12 @@ namespace FormUI
                 request.FEEDBACKSTATUS = 99;
                 request.ERRORCODE = "OK";
                 request.ENTERDATE = DateTime.Now;
-              //  request.STATUS = 0;
+                //  request.STATUS = 0;
                 InfFeedBackService.InsertEntity(request);
+            }
+            else
+            {
+                MessageBox.Show("请选择记录");
             }
         }
         String jobid = "0";
