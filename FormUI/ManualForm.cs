@@ -47,12 +47,29 @@ namespace FormUI
         {
             if (list != null && list.Count>0)
             {
-                InBound.INF_EQUIPMENTREQUEST request = new InBound.INF_EQUIPMENTREQUEST();
-                request.BARCODE = load.BARCODE;
-                request.REQUESTTYPE = 1;
-                request.EQUIPMENTID = load.SOURCE;
-                request.STATUS = 0;
-                InfEquipmentRequestService.insert(request);
+                InBound.INF_JOBFEEDBACK request = new InBound.INF_JOBFEEDBACK();
+                //request.ID = Guid.NewGuid().ToString("N");
+                request.JOBID = jobid;
+                request.FEEDBACKSTATUS = 99;
+                request.ERRORCODE = "OK";
+                request.ENTERDATE = DateTime.Now;
+              //  request.STATUS = 0;
+                InfFeedBackService.InsertEntity(request);
+            }
+        }
+        String jobid = "0";
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows != null && dataGridView1.SelectedRows.Count > 0)
+            {
+
+                jobid = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+               
             }
         }
 

@@ -166,7 +166,7 @@ namespace InBound.Business
                                 load.SOURCE = querySource.TROUGHNUM;
                                 load.TARGET = task.TROUGHNUM + "";
                                 load.STATUS = 0;
-
+                                load.TUTYPE = 4;
 
                                 T_WMS_STORAGEAREA_INOUT outTask1 = new T_WMS_STORAGEAREA_INOUT();
 
@@ -211,7 +211,7 @@ namespace InBound.Business
                                     load1.CREATEDATE = DateTime.Now;
                                     load1.PLANQTY = detail.QTY;
                                     load1.PRIORITY = 50;
-                                    load1.PILETYPE = ItemService.GetItemByBarCode(load.BRANDID).CDTYPE;
+                                    load1.PILETYPE =decimal.Parse( ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
                                     //load1.TUTYPE = 1;//无返库
                                     load1.JOBTYPE = 55;//补货出库
                                     load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)detail.QTY);//out cell
@@ -264,6 +264,7 @@ namespace InBound.Business
                                         load2.CREATEDATE = DateTime.Now;
                                         load2.STATUS = 2;//出库完成置0
                                         load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                        load2.TUTYPE = 4;
                                         decimal planQty = item.MANTISSA ?? 0;
                                         if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
                                         {
@@ -329,8 +330,9 @@ namespace InBound.Business
                                         load1.JOBID = load1.ID;
                                         load1.JOBTYPE = 55;
                                         load1.BRANDID = load.BRANDID;
-                                        load1.PILETYPE = ItemService.GetItemByBarCode(load.BRANDID).CDTYPE;
+                                        load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
                                         load1.CREATEDATE = DateTime.Now;
+                                      
                                         if (querySource.BOXCOUNT > 15)
                                         {
                                             if (troughQty < 2)
@@ -400,6 +402,7 @@ namespace InBound.Business
                                             load2.CREATEDATE = DateTime.Now;
                                             load2.STATUS = 2;//出库完成置0
                                             load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                            load2.TUTYPE = 4;
                                             decimal planQty = item.MANTISSA ?? 0;
                                             if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
                                             {
