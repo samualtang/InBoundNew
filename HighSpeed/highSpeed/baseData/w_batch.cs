@@ -79,7 +79,7 @@ namespace highSpeed.baseData
             String strnormal = isNCompleted();
             Boolean ispass = false;
             int para = 0;
-            if (cbnormal.Checked && cbunnormal.Checked)
+            if (cbnormal.Checked && cbunnormal.Checked)//都已经点选
             {
                 if (strnormal == "0" && strunnormal == "0")
                 {

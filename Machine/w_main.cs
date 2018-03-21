@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using InBound;
 using SortingControlSys.SortingControl;
+using System.Configuration;
 
 namespace SortingControlSys
 {
@@ -28,6 +29,8 @@ namespace SortingControlSys
                 w_SortingControlMain = null;
                 return;
             }
+            decimal machinegroupno = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            this.Text = "长株潭烟草公司机械手系统-组" + machinegroupno;
             w_SortingControlMain.MdiParent = this;
             //w_SortingControlMain.WindowState = FormWindowState.Maximized;
             w_SortingControlMain.FormBorderStyle = FormBorderStyle.None;

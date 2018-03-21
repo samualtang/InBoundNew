@@ -2805,12 +2805,14 @@ namespace InBound.Business
                         values[3] = query2.Sum(x => x.POKENUM);
                         values[4] = query2.Where(x => x.GROUPNO == 1).Sum(x => x.POKENUM);
                         values[5] = query2.Where(x => x.GROUPNO == 2).Sum(x => x.POKENUM);
-                        values[6] = query2.Where(x => x.GROUPNO == 3).Sum(x => x.POKENUM);
-                        values[7] = query2.Where(x => x.GROUPNO == 4).Sum(x => x.POKENUM);
+                        //由于机械手第三组分出来的烟对应的是合流第四组机械手，这里3和4组对应有个对调
+                        values[6] = query2.Where(x => x.GROUPNO == 4).Sum(x => x.POKENUM);
+                        values[7] = query2.Where(x => x.GROUPNO == 3).Sum(x => x.POKENUM);
                         values[8] = query2.Where(x => x.GROUPNO == 5).Sum(x => x.POKENUM);
                         values[9] = query2.Where(x => x.GROUPNO == 6).Sum(x => x.POKENUM);
-                        values[10] = query2.Where(x => x.GROUPNO == 7).Sum(x => x.POKENUM);
-                        values[11] = query2.Where(x => x.GROUPNO == 8).Sum(x => x.POKENUM);
+                        //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
+                        values[10] = query2.Where(x => x.GROUPNO == 8).Sum(x => x.POKENUM);
+                        values[11] = query2.Where(x => x.GROUPNO == 7).Sum(x => x.POKENUM);
                         values[12] = 1;
                     }
                 }

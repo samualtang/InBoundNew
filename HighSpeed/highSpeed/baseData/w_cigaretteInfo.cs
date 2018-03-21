@@ -29,7 +29,35 @@ namespace highSpeed.baseData
             
             list.Add(new dxtype {  name="自动拆垛", cdtype="10"});
             list.Add(new dxtype { name = "人工拆垛", cdtype = "0" });
+            
             InitializeComponent();
+            init();
+        }
+
+        public void init()
+        {
+            //初始化查询条件下拉框
+            DataTable conditiontable = new DataTable();
+            conditiontable.Columns.Add("value", typeof(string));
+            conditiontable.Columns.Add("txtvalue", typeof(string));
+
+            DataRow dr = conditiontable.NewRow();
+            dr["value"] = "itemno";
+            dr["txtvalue"] = "品牌代码";
+
+            DataRow dr1 = conditiontable.NewRow();
+            dr1["value"] = "itemname";
+            dr1["txtvalue"] = "品牌名称";
+
+            conditiontable.Rows.Add(dr);
+            conditiontable.Rows.Add(dr1);
+
+            //this.box_type = new ComboBox();
+            this.box_type.DataSource = conditiontable;
+            this.box_type.DisplayMember = "txtvalue";
+            this.box_type.ValueMember = "value";
+            this.box_type.SelectedIndex = 0;
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,10 +75,17 @@ namespace highSpeed.baseData
         private void seek()
         {
             String strsql = "select itemno,itemname,shortname,fullcount,cdtype,bigbox_bar,weight,iscanscancode || ''iscanscancodes ,dxtype,outtype from t_wms_item where length(itemno)=7";
-            if (this.textBox1.Text.Trim() != null && this.textBox1.Text.Trim() != "")
+
+            string types = this.box_type.SelectedValue + "";
+            string keywd = this.txt_keywd.Text.Trim();
+            String tmp = "";
+            
+            if (types != null && types != "" && keywd != null && keywd != "")
             {
-                strsql = strsql + " and (itemname like '%" + this.textBox1.Text.Trim() + "%' or itemno like '%" + this.textBox1.Text.Trim() + "%')";
+                strsql = strsql + " and " + types + " like'%" + keywd + "%'";
             }
+            
+
            
             Bind(strsql);
         }
@@ -156,7 +191,7 @@ namespace highSpeed.baseData
         {
             try
             {
-                this.textBox1.Text = "";
+                this.txt_keywd.Text = "";
 
             }
             catch (Exception ex)

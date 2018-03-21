@@ -125,10 +125,15 @@ namespace highSpeed.orderHandle
                 Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socketClient.Connect(endpoint);
                 int i = SocketClientConnector.SendFile(socketClient, f.ZipFile, 102400, 1);
-                socketClient.Close();
+               
                 if (i == 0)
                 {
                     MessageBox.Show(f.ZipFile + "文件发送成功");
+                    Byte[] bytes=new Byte[1024];
+                    socketClient.Receive(bytes);
+                    socketClient.Disconnect(false);
+                    socketClient.Close();
+
                 }
                 else
                 {
@@ -204,7 +209,7 @@ namespace highSpeed.orderHandle
             StreamWriter sw = new StreamWriter(filePath + "\\" + filename + ".Order", false, Encoding.UTF8);
             sw.WriteLine(info.Substring(0, info.Length - 1));
             sw.Close();//写入
-            filename = "RetailerOrder20180309171253579";
+            filename = "RetailerOrder20170721105739";
             GetFileToZip(filePath + "\\" + filename + ".Order", filePath + "\\" + filename + ".zip", filename + ".Order");
             model.ZipFile = filePath + "\\" + filename + ".zip";
             model.OrderFile = filePath + "\\" + filename + ".Order";

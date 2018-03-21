@@ -11,6 +11,51 @@ namespace highSpeed.PubFunc
 {
     public class SocketClientConnector
     {
+        public static byte[] intToBytes(int num, int len)
+		{
+			byte[] array = new byte[len];
+			int num2 = (len - 1) * 8;
+			int num3 = 255 << num2;
+			for (int i = 0; i < len; i++)
+			{
+				array[i] = (byte)(((ulong)num & (ulong)((long)num3)) >> num2);
+				num2 -= 8;
+				num3 >>= 8;
+			}
+			return array;
+		}
+
+        public static byte[] BuildByte(string fileName)
+		{
+			if (string.IsNullOrEmpty(fileName))
+			{
+                return null;
+				//throw new ZipException("生成压缩文件字符流时异常,文件名为空!");
+			}
+			byte[] result=null;
+			try
+			{
+				byte[] array = File.ReadAllBytes(fileName);
+				byte[] array2 = intToBytes(array.Length, 4);
+				byte[] array3 = new byte[array.Length + array2.Length];
+				for (int i = 0; i < array2.Length; i++)
+				{
+					array3[i] = array2[i];
+				}
+				for (int j = 0; j < array.Length; j++)
+				{
+					array3[array2.Length + j] = array[j];
+				}
+				result = array3;
+			}
+			catch (Exception ex)
+			{
+				//this.logger.Error("根据文件名称生成字节数组过程异常:", ex);
+				//throw new ZipException("根据文件名称生成字节数组过程异常:" + ex.StackTrace);
+			}
+			return result;
+		}
+
         /// <summary>
         /// 向远程主机发送文件
         /// </summary>
@@ -33,60 +78,61 @@ namespace highSpeed.PubFunc
             try
             {
                
-                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                long fileLen = fs.Length;                        // 文件长度
-                long leftLen = fileLen;                            // 未读取部分
-                int readLen = 0;                                // 已读取部分
-                byte[] buffer = null;
-                int tfileLen = (fileLen).ToString().Length;
-                int needZero = 4 - tfileLen;
-                String preStr = (fileLen).ToString();
-                if (needZero > 0)
-                {
-                    while (needZero > 0)
-                    {
-                        preStr = "0" + preStr;
-                        needZero--;
-                    }
+                //FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                //long fileLen = fs.Length;                        // 文件长度
+                //long leftLen = fileLen;                            // 未读取部分
+                //int readLen = 0;                                // 已读取部分
+                //byte[] buffer = null;
+                //int tfileLen = (fileLen).ToString().Length;
+                //int needZero = 4 - tfileLen;
+                //String preStr = (fileLen).ToString();
+                //if (needZero > 0)
+                //{
+                //    while (needZero > 0)
+                //    {
+                //        preStr = "0" + preStr;
+                //        needZero--;
+                //    }
 
-                }
-                if (fileLen <= maxBufferLength)
-                {            /* 文件可以一次读取*/
-                    buffer = new byte[fileLen+4+1];
-                   Byte[] b= System.Text.Encoding.Default.GetBytes(preStr);
-                   for (int i = 0; i < b.Length; i++)
-                   {
-                       buffer[i] = b[i];
-                   }
-                   buffer[fileLen +4] = 2;
-                    readLen = fs.Read(buffer, 4, (int)fileLen);
+                //}
+                //if (fileLen <= maxBufferLength)
+                //{            /* 文件可以一次读取*/
+                //    buffer = new byte[fileLen+4+1];
+                //   Byte[] b= System.Text.Encoding.Default.GetBytes(preStr);
+                //   for (int i = 0; i < b.Length; i++)
+                //   {
+                //       buffer[i] = b[i];
+                //   }
+                //   buffer[fileLen +4] = 2;
+                //    readLen = fs.Read(buffer, 4, (int)fileLen);
+                byte[] buffer = BuildByte(fileName);
                     flag = SendData(socket, buffer, outTime);
-                }
-                else
-                {
-                    /* 循环读取文件,并发送 */
+                //}
+                //else
+                //{
+                //    /* 循环读取文件,并发送 */
 
-                    while (leftLen != 0)
-                    {
-                        if (leftLen < maxBufferLength)
-                        {
-                            buffer = new byte[leftLen];
-                            readLen = fs.Read(buffer, 0, Convert.ToInt32(leftLen));
-                        }
-                        else
-                        {
-                            buffer = new byte[maxBufferLength];
-                            readLen = fs.Read(buffer, 0, maxBufferLength);
-                        }
-                        if ((flag = SendData(socket, buffer, outTime)) < 0)
-                        {
-                            break;
-                        }
-                        leftLen -= readLen;
-                    }
-                }
-                fs.Flush();
-                fs.Close();
+                //    while (leftLen != 0)
+                //    {
+                //        if (leftLen < maxBufferLength)
+                //        {
+                //            buffer = new byte[leftLen];
+                //            readLen = fs.Read(buffer, 0, Convert.ToInt32(leftLen));
+                //        }
+                //        else
+                //        {
+                //            buffer = new byte[maxBufferLength];
+                //            readLen = fs.Read(buffer, 0, maxBufferLength);
+                //        }
+                //        if ((flag = SendData(socket, buffer, outTime)) < 0)
+                //        {
+                //            break;
+                //        }
+                //        leftLen -= readLen;
+                //    }
+                //}
+                //fs.Flush();
+                //fs.Close();
             }
             catch (IOException e)
             {
