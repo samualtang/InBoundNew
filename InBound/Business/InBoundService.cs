@@ -69,7 +69,7 @@ namespace InBound.Business
                         var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 3 && item.CELLNO == task.TROUGHNUM select item).Sum(x => x.QTY).GetValueOrDefault();//获取通道调拨数量
 
                         decimal THRESHOLD = 0;
-                        if (task.CLEARUP == 10)
+                        if (task.CLEARUP == 10)//清空上层烟柜
                         {
                             THRESHOLD = task.CLEARTHRESHOLD ?? 0;
                             query = query - ProducePokeService.GetTroughFirstUnFinished(task.TROUGHNUM);
