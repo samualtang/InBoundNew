@@ -41,7 +41,7 @@ namespace highSpeed.baseData
             {
                 status = 20;
             }
-            String sSql = "select t.* from t_un t where status="+status+" order by machineseq,pokeid";
+            String sSql = "select t.* from highspeed.hunheview t where status="+status+" order by machineseq,pokeid";
             Bind(sSql);
         }
 

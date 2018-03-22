@@ -624,6 +624,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 混合道补烟顺序ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_hunhereportprint frm = new w_hunhereportprint();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
        
     }

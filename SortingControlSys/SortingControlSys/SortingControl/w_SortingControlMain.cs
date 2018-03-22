@@ -205,7 +205,7 @@ namespace SortingControlSys.SortingControl
         }
         public void checkConnection()
         {
-            int flag = taskgroup.Read(25).CastTo<int>(-1);
+            int flag = taskgroup.Read(26).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
@@ -663,7 +663,7 @@ namespace SortingControlSys.SortingControl
 
                                 TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno2 + "---任务:" + tempList1.ElementAt(tempList1.Count - 1).Value + "已接收");
-                                writeLog.Write(sortgroupno2 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
+                                writeLog.Write(sortgroupno2 + "组:" + tempList1.ElementAt(tempList1.Count - 1).Value + "号任务已接收");
                             }
 
                             sendTask1();
