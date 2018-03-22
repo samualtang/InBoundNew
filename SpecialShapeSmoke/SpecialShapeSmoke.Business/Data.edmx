@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="10.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="T_PRODUCE_REPLENISHPLAN" EntityType="Model.Store.T_PRODUCE_REPLENISHPLAN" store:Type="Tables" Schema="HIGHSPEED" />
+          <EntitySet Name="HUNHEVIEW" EntityType="Model.Store.HUNHEVIEW" store:Type="Views" store:Schema="HIGHSPEED" store:Name="HUNHEVIEW">
+            <DefiningQuery>SELECT 
+      "HUNHEVIEW"."TASKNUM" AS "TASKNUM", 
+      "HUNHEVIEW"."POKEID" AS "POKEID", 
+      "HUNHEVIEW"."CIGARETTECODE" AS "CIGARETTECODE", 
+      "HUNHEVIEW"."CIGARETTENAME" AS "CIGARETTENAME", 
+      "HUNHEVIEW"."QUANTITY" AS "QUANTITY", 
+      "HUNHEVIEW"."MACHINESEQ" AS "MACHINESEQ", 
+      "HUNHEVIEW"."CUSTOMERNAME" AS "CUSTOMERNAME", 
+      "HUNHEVIEW"."REGIONCODE" AS "REGIONCODE", 
+      "HUNHEVIEW"."STATUS" AS "STATUS", 
+      "HUNHEVIEW"."SORTSEQ" AS "SORTSEQ"
+      FROM "HIGHSPEED"."HUNHEVIEW" "HUNHEVIEW"</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="T_PRODUCE_REPLENISHPLAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="50" />
+          <Property Name="REPLENISHQTY" Type="number" />
+          <Property Name="ISCOMPLETED" Type="number" />
+          <Property Name="TROUGHNUM" Type="varchar2" MaxLength="30" />
+          <Property Name="REPLENISHLINE" Type="number" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="TRANSPORTATIONLINE" Type="number" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="JYCODE" Type="varchar2" MaxLength="50" />
+          <Property Name="TYPE" Type="number" />
+          <Property Name="TASKNUM" Type="varchar2" MaxLength="20" />
+          <Property Name="MANTISSA" Type="number" />
+          <Property Name="SCANTIME" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'HIGHSPEED.HUNHEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HUNHEVIEW">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" />
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="QUANTITY" Type="number" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="CUSTOMERNAME" Type="varchar2" MaxLength="200" />
+          <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="STATUS" Type="number" />
+          <Property Name="SORTSEQ" Type="number" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataEntities">
+          <EntitySet Name="T_PRODUCE_REPLENISHPLAN" EntityType="Model.T_PRODUCE_REPLENISHPLAN" />
+          <EntitySet Name="HUNHEVIEW" EntityType="Model.HUNHEVIEW" />
+        </EntityContainer>
+        <EntityType Name="T_PRODUCE_REPLENISHPLAN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="CIGARETTECODE" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="CIGARETTENAME" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="REPLENISHQTY" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="ISCOMPLETED" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TROUGHNUM" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="REPLENISHLINE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="STATUS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TRANSPORTATIONLINE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="FINISHTIME" Type="DateTime" />
+          <Property Name="JYCODE" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="TASKNUM" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MANTISSA" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="SCANTIME" />
+        </EntityType>
+        <EntityType Name="HUNHEVIEW">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QUANTITY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CUSTOMERNAME" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTSEQ" Precision="38" Scale="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DataEntities">
+          <EntitySetMapping Name="T_PRODUCE_REPLENISHPLAN"><EntityTypeMapping TypeName="Model.T_PRODUCE_REPLENISHPLAN"><MappingFragment StoreEntitySet="T_PRODUCE_REPLENISHPLAN">
+            <ScalarProperty Name="SCANTIME" ColumnName="SCANTIME" />
+                <ScalarProperty Name="MANTISSA" ColumnName="MANTISSA" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+            <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+            <ScalarProperty Name="REPLENISHQTY" ColumnName="REPLENISHQTY" />
+            <ScalarProperty Name="ISCOMPLETED" ColumnName="ISCOMPLETED" />
+            <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+            <ScalarProperty Name="REPLENISHLINE" ColumnName="REPLENISHLINE" />
+            <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+            <ScalarProperty Name="TRANSPORTATIONLINE" ColumnName="TRANSPORTATIONLINE" />
+            <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+            <ScalarProperty Name="JYCODE" ColumnName="JYCODE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HUNHEVIEW">
+            <EntityTypeMapping TypeName="Model.HUNHEVIEW">
+              <MappingFragment StoreEntitySet="HUNHEVIEW">
+                <ScalarProperty Name="SORTSEQ" ColumnName="SORTSEQ" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="REGIONCODE" ColumnName="REGIONCODE" />
+                <ScalarProperty Name="CUSTOMERNAME" ColumnName="CUSTOMERNAME" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Data">
+        <EntityTypeShape EntityType="Model.T_PRODUCE_REPLENISHPLAN" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1161507161458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.HUNHEVIEW" Width="1.5" PointX="3.375" PointY="0.75" Height="2.9251310221354156" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -40,7 +40,7 @@ namespace InBound.Business
                     {
                         values[j * 9] = item.POKEID;//流水号
                         values[j * 9 + 1] = item.TROUGHNUM;//烟道地址
-                        values[j * 9 + 2] = 0;//位数标志
+                        values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//任务号
                         values[j * 9 + 4] = 0;//包装号
                         values[j * 9 + 5] = 0;//备用
