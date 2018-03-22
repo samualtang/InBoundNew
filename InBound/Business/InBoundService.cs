@@ -349,7 +349,7 @@ namespace InBound.Business
                                             load1.PLANQTY = (int)querySource.BOXCOUNT;
                                         }
                                         load1.PRIORITY = 50;
-                                        load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)querySource.BOXCOUNT);//out cell
+                                        load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE,  (int)load1.PLANQTY );//out cell
 
                                         load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
                                         load1.STATUS = 0;

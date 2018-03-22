@@ -137,6 +137,7 @@ namespace InBound.Business
                             load1.JOBTYPE = 55;//补货出库
                             if (load1.SOURCE != "" && load1.TARGET != "")
                             {
+                                load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                 entity.INF_JOBDOWNLOAD.AddObject(load1);
                             }
                             else
@@ -236,7 +237,7 @@ namespace InBound.Business
                                 load1.STATUS = 0;
                                 if (load1.SOURCE != "" && load1.TARGET != "")
                                 {
-                                    //load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).;
+                                    load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                     entity.INF_JOBDOWNLOAD.AddObject(load1);
                                 }
                                 else
