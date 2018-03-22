@@ -40,7 +40,7 @@ namespace InBound.Business
                     {
                         values[j * 9] = item.POKEID;//流水号
                         values[j * 9 + 1] = item.TROUGHNUM;//烟道地址
-                        values[j * 9 + 2] = 0;//位数标志
+                        values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//任务号
                         values[j * 9 + 4] = 0;//包装号
                         values[j * 9 + 5] = 0;//备用
@@ -137,6 +137,7 @@ namespace InBound.Business
                             load1.JOBTYPE = 55;//补货出库
                             if (load1.SOURCE != "" && load1.TARGET != "")
                             {
+                                load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                 entity.INF_JOBDOWNLOAD.AddObject(load1);
                             }
                             else
@@ -236,7 +237,7 @@ namespace InBound.Business
                                 load1.STATUS = 0;
                                 if (load1.SOURCE != "" && load1.TARGET != "")
                                 {
-                                    //load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).;
+                                    load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                     entity.INF_JOBDOWNLOAD.AddObject(load1);
                                 }
                                 else

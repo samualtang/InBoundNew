@@ -69,7 +69,7 @@ namespace InBound.Business
                         var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 3 && item.CELLNO == task.TROUGHNUM select item).Sum(x => x.QTY).GetValueOrDefault();//获取通道调拨数量
 
                         decimal THRESHOLD = 0;
-                        if (task.CLEARUP == 10)
+                        if (task.CLEARUP == 10)//清空上层烟柜
                         {
                             THRESHOLD = task.CLEARTHRESHOLD ?? 0;
                             query = query - ProducePokeService.GetTroughFirstUnFinished(task.TROUGHNUM);
@@ -349,7 +349,7 @@ namespace InBound.Business
                                             load1.PLANQTY = (int)querySource.BOXCOUNT;
                                         }
                                         load1.PRIORITY = 50;
-                                        load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)querySource.BOXCOUNT);//out cell
+                                        load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE,  (int)load1.PLANQTY );//out cell
 
                                         load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
                                         load1.STATUS = 0;

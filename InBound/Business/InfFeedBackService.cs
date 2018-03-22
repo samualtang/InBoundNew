@@ -33,6 +33,7 @@ namespace InBound.Business
           
               using (Entities dataEntity = new Entities())
               {
+                  
                   var query = (from item in dataEntity.INF_JOBFEEDBACK
                                join item2 in dataEntity.INF_JOBDOWNLOAD
                                    on item.JOBID equals item2.JOBID
@@ -114,24 +115,24 @@ namespace InBound.Business
                                   {
                                       T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.CheckPalletExist(temptask.BARCODE);//检查托盘号是否存在
                                       T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellInfo.CELLNO);
-                                      if (detail.REQUESTQTY == detail.QTY) //&& (cellInfo.DISMANTLE==0)
-                                      {
-                                          INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
-                                          task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
-                                          task1.ID = task1.JOBID;
-                                          task1.BRANDID = temptask.BRANDID;
-                                          task1.BARCODE = cellInfo.PALLETNO;
-                                          task1.SOURCE = temptask.EQUIPMENTID;
-                                          task1.PLANQTY = 1;
-                                          task1.INPUTTYPE = 10;
-                                          task1.JOBTYPE = 100;//空托盘回收任务
-                                          task1.TARGET = "1422";//空托盘指定地址
-                                          task1.TUTYPE = 2;
-                                          task1.CREATEDATE = DateTime.Now;
-                                          task1.PRIORITY = 50;
-                                          dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
+                                      //if (detail.REQUESTQTY == detail.QTY) //&& (cellInfo.DISMANTLE==0)
+                                      //{
+                                      //    INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
+                                      //    task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
+                                      //    task1.ID = task1.JOBID;
+                                      //    task1.BRANDID = temptask.BRANDID;
+                                      //    task1.BARCODE = cellInfo.PALLETNO;
+                                      //    task1.SOURCE = temptask.EQUIPMENTID;
+                                      //    task1.PLANQTY = 1;
+                                      //    task1.INPUTTYPE = 10;
+                                      //    task1.JOBTYPE = 100;//空托盘回收任务
+                                      //    task1.TARGET = "1422";//空托盘指定地址
+                                      //    task1.TUTYPE = 2;
+                                      //    task1.CREATEDATE = DateTime.Now;
+                                      //    task1.PRIORITY = 50;
+                                      //    dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
 
-                                      }
+                                      //}
                                       if (detail.REQUESTQTY != detail.QTY)
                                       {
 
@@ -284,6 +285,7 @@ namespace InBound.Business
                           load.PILETYPE = item.PILETYPE;
                           load.EXTATTR1 = (AtsCellInfoDetailService.GetDetail(cellNo).QTY??0)+"";//实际数量
                           load.PLANQTY = AtsCellInfoDetailService.GetDetail(cellNo).REQUESTQTY ?? 0;//拆垛数量
+                          load.BARCODE = AtsCellInfoService.GetCellInfo(cellNo).PALLETNO;
                           load.PRIORITY = 50;
                         //  load.SOURCE = querySource.TROUGHNUM;
 
