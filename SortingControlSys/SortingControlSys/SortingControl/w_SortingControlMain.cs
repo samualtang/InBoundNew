@@ -160,15 +160,15 @@ namespace SortingControlSys.SortingControl
                 taskgroup.addItem(ItemCollection.GetTaskItem());
               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
-              
-                statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//拨烟完成
+
+                statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//第一组条烟到达，暂时没用
              
                 statusGroup3.addItem(ItemCollection.GetTaskStausItemGroup());
               
 
                 statusGroup4.addItem(ItemCollection.GetTaskStatusSECItem1());
-              
-                statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());
+
+                statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());//第二组条烟到达，暂时没用
                
                 errGroup1.addItem(ItemCollection.GetTaskStatusItem3());
                
@@ -195,10 +195,10 @@ namespace SortingControlSys.SortingControl
         {
             taskgroup.callback += OnDataChange;
             statusGroup1.callback += OnDataChange;
-            statusGroup2.callback += OnDataChange;
+            //statusGroup2.callback += OnDataChange;//第一组条烟到达信号，暂时没用
             statusGroup3.callback += OnDataChange;
             statusGroup4.callback += OnDataChange;
-            statusGroup5.callback += OnDataChange;
+            //statusGroup5.callback += OnDataChange;//第二组条烟到达信号，暂时没用
             errGroup1.callback += OnDataChange;
             errGroup2.callback += OnDataChange;
             errGroup3.callback += OnDataChange;

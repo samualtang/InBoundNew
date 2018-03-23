@@ -55,6 +55,7 @@ namespace SortingControlSys.SortingControl
             };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            writeLog.Write(" 机械手组" + groupNo + " 应用程序启动");
             serverIp = ConfigurationManager.AppSettings["ServerIP"].ToString();
             ItemCollection.OpcMachineServer = ConfigurationManager.AppSettings["OpcMachineServer"].ToString();
             try
@@ -65,6 +66,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception e)
             {
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
+                writeLog.Write(" 数据网络故障");
                 this.Close();
             }
 
@@ -300,6 +302,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception e)
             {
                 updateListBox("连接服务器失败:" + e.Message);
+                writeLog.Write("连接服务器失败:" + e.Message);
             }
         }
 
@@ -335,10 +338,12 @@ namespace SortingControlSys.SortingControl
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
+                writeLog.Write("连接服务器失败,请检查网络.");
             }
             else
             {
                 updateListBox("连接服务器成功......");
+                writeLog.Write("连接服务器成功......");
                 InitPlcData();
                 updateControlEnable(false, button10);
             }
@@ -359,8 +364,8 @@ namespace SortingControlSys.SortingControl
                     Thread.Sleep(10);
                     item.Write(2, 4);//初始化将每个机械手db块的写入标志置为2.   0为已取走，1为已写入
                 }
-                updateListBox("通道号:" + i + ";初始值:" + item.Read(4));
-                writeLog.Write(i + "号机械手初始化完成");
+                updateListBox("初始化检查  通道号:" + i + ";初始值:" + item.Read(4));
+                writeLog.Write("初始化检查  通道号:" + i + ";初始值:" + item.Read(4));
                 i++;
             }
             isInit = true;
@@ -449,7 +454,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = group.Read(4).CastTo<int>(-1);
                 writeLog.Write(exportnum + "号机械手写任务前标志位：" + flag);
-                updateListBox("exportnum:" + exportnum + ";标志位：" + flag);
+                updateListBox(exportnum + "号机械手写任务前标志位：" + flag);
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
@@ -463,7 +468,7 @@ namespace SortingControlSys.SortingControl
 
                     if (int.Parse(datas[1].ToString()) == 0)
                     {
-                        writeLog.Write(exportnum + "号机械手任务发送完毕");
+                        writeLog.Write("通道" + exportnum + ":机械手数据发送完毕");
                         updateListBox("通道" + exportnum + ":机械手数据发送完毕");
                         return;
                     }
@@ -477,7 +482,7 @@ namespace SortingControlSys.SortingControl
                     while (j < writeCount)//基于程序的健壮性 以及保护机制 防止数据丢失
                     {
 
-                        group.WriteR(datas[1], 1);
+                        group.WriteR(datas[1], 1);//每个任务共四个相关的db位---任务号：数量：电控写的接收任务号，上位不写：标志位（上位写1，电控接收写2,同时在第三个字节里写任务号）
                         group.WriteR(datas[2], 2);
                         //   group.WriteR(datas[3], 1);
 
@@ -519,10 +524,10 @@ namespace SortingControlSys.SortingControl
                                 else if (i == 4) f = "标志位";
                                 logstr +=  f+ ":" + datas[i] + ";";
                             }
-                            writeLog.Write(p2 + "号任务抓烟数" + p3);
-                            writeLog.Write(logstr);
-                            updateListBox(logstr);
-                            updateListBox(":" + p2 + ":" + p3);
+                            //writeLog.Write(p2 + "号任务抓烟数" + p3);
+                            writeLog.Write("数据成功写入：" + logstr);
+                            updateListBox("数据成功写入：" + logstr);
+                            //updateListBox(":" + p2 + ":" + p3);
                             CheckExport(exportnum);
                             tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
                             break;
@@ -531,8 +536,8 @@ namespace SortingControlSys.SortingControl
                         else
                         {
                             j++;
-                            updateListBox("写入p2:" + datas[1] + ";p3:" + datas[2] + " 读取内容:p2=" + p2 + "; p3=" + p3);
-                            writeLog.Write("写入任务信息不正确，请检查！");
+                            updateListBox("写入值和随后读出值不致   写入p2:" + datas[1] + ";p3:" + datas[2] + " 读取内容:p2=" + p2 + "; p3=" + p3);
+                            writeLog.Write("写入值和随后读出值不致   写入p2:" + datas[1] + ";p3:" + datas[2] + " 读取内容:p2=" + p2 + "; p3=" + p3);
                         }
 
 
