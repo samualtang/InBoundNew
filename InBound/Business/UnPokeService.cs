@@ -36,10 +36,21 @@ namespace InBound.Business
                 if (list != null)
                 {
                     int j = 0;
+                    decimal machineseq = 0;
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
-                        values[j * 9 + 1] = item.TROUGHNUM;//烟道地址
+                      //  machineseq = item.MACHINESEQ;
+                        if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
+                        {
+                            machineseq = item.MACHINESEQ??0 - 1000;
+                        }
+                        else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)
+                        {
+                            machineseq = item.MACHINESEQ??0 - 2000;
+                        }
+
+                        values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//任务号
                         values[j * 9 + 4] = 0;//包装号
