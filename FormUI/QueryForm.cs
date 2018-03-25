@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using InBound.Business;
+using InBound;
 
 namespace FormUI
 {
@@ -111,6 +112,20 @@ namespace FormUI
                 {
                     e.Value = "空托盘回收任务";
                 }
+            }
+
+            if (e.ColumnIndex == 8)
+            {
+               INF_JOBFEEDBACK feed= InfFeedBackService.GetFeedBack(e.Value.ToString());
+               if (feed != null)
+               {
+                   e.Value = "已完成";
+
+               }
+               else
+               {
+                   e.Value = "未完成";
+               }
             }
         }
 

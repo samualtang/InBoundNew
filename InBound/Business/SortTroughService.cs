@@ -11,7 +11,7 @@ namespace InBound.Business
        {
            using (Entities dataentity = new Entities())
            {
-               var query = from item in dataentity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == troughtype && item.CIGARETTETYPE == cigarettetype && item.STATE == "10" select item;
+               var query = from item in dataentity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == troughtype && item.CIGARETTETYPE == cigarettetype && item.CIGARETTECODE!=null && item.STATE == "10" orderby item.MACHINESEQ select item ;
                return query.ToList();
            }
        }

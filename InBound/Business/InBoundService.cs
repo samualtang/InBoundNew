@@ -78,7 +78,7 @@ namespace InBound.Business
                         {
                             THRESHOLD = task.THRESHOLD??0;
                         }
-                        if (task.MAINTISSALESS == 10)
+                        if (task.MAINTISSALESS == 10)//烟柜量
                         {
                             decimal leftOrderQty = ProducePokeService.GetTroughUnFinished(task.TROUGHNUM);
                             if (query + task.MANTISSA > leftOrderQty)
@@ -106,7 +106,10 @@ namespace InBound.Business
                             //    groupno = 4;
                             //}
                             var querySourcetemp = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 20 && item.CIGARETTECODE == task.CIGARETTECODE && item.STATE == "10" && item.GROUPNO == task.REPLENISHLINE select item).ToList();//找出对应重力式货架通道
+                            if (querySourcetemp == null || querySourcetemp.Count == 0)
+                                continue;
                             var querySource = querySourcetemp[0];
+                            
                             List<OutBound> search = null;
                             decimal totalCount = 0;
                             decimal totalMantissa = 0;
@@ -118,14 +121,15 @@ namespace InBound.Business
                             }
 
                             int tempCount = 0;
-                            while (query + tempCount + task.MANTISSA < THRESHOLD)//循环补烟柜
+                            ///循环补烟柜
+                            while (query + tempCount + task.MANTISSA < THRESHOLD)
                             {
 
-                                if (task.CLEARUP == 10)
+                                if (task.CLEARUP == 10)//已完成清空上层烟柜
                                 {
                                     SortTroughService.updateTroughClearUp(10, 20, task.TROUGHNUM);
                                 }
-                                totalCount = 0;
+                                totalCount = 0;//重力式货架库存
                                 if (querySourcetemp != null && querySourcetemp.Count > 0)//从库存大的先出
                                 {
 
@@ -217,7 +221,7 @@ namespace InBound.Business
                                     load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)detail.QTY);//out cell
                                     load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                     load1.STATUS = 0;
-                                   
+                                    
                                     if (load1.SOURCE != "" && load1.TARGET != "")
                                     {
                                         T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
@@ -248,7 +252,7 @@ namespace InBound.Business
                                         }
                                         break;
                                     }
-                                    totalCount += detail.QTY ?? 0;
+                                    totalCount += (detail.QTY ?? 0);
                                     //下达重力式货架补货计划
                                     decimal tempPlanQty = detail.QTY ?? 0;
                                     foreach (var item in querySourcetemp)
@@ -308,11 +312,11 @@ namespace InBound.Business
                                         outTask4.GROUPNO = item.GROUPNO;
                                         outTask4.CREATETIME = DateTime.Now;
                                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                        tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                        tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                         entity.SaveChanges();
                                     }
                                 }
-                                else
+                                else //非散盘优先
                                 {
                                     if (totalCount + totalMantissa <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
                                     {
@@ -372,7 +376,7 @@ namespace InBound.Business
                                             {
                                                 load1.TUTYPE = 3;
                                             }
-                                            load1.BARCODE = dl.BARCODE;
+                                            load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                             entity.INF_JOBDOWNLOAD.AddObject(load1);
                                         }
                                         else
@@ -384,7 +388,7 @@ namespace InBound.Business
                                             break;
                                         }
 
-                                        totalCount += load1.PLANQTY ?? 0;
+                                        totalCount += (load1.PLANQTY ?? 0);
                                         decimal tempPlanQty = load1.PLANQTY ?? 0;
 
 
@@ -452,7 +456,7 @@ namespace InBound.Business
                                         entity.SaveChanges();
                                     }
                                 }
-                                if (totalCount + totalMantissa > 0)//重力式货架有货 才下开箱任务
+                                if (totalCount + totalMantissa > 0)//重力式货架没有库存 不下任务 可以改成从db块读取
                                 {
                                     entity.INF_JOBDOWNLOAD.AddObject(load);
                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask1);
@@ -690,6 +694,7 @@ namespace InBound.Business
             catch (Exception ex)
             {
                 String error = ex.Message;
+                WriteLog.GetLog().Write(error);
             }
         }//预补结束
         public static void test(decimal groupno)

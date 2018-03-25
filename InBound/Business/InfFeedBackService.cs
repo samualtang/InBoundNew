@@ -24,6 +24,17 @@ namespace InBound.Business
               dataEntity.SaveChanges();
           }
       }
+
+      public static INF_JOBFEEDBACK GetFeedBack(String jobid)
+      {
+
+          using (Entities dataEntity = new Entities())
+          {
+
+              var query = (from item in dataEntity.INF_JOBFEEDBACK where item.JOBID == jobid && item.FEEDBACKSTATUS==99 select item).FirstOrDefault();
+              return query;
+          }
+      }
       public static WriteLog log = new WriteLog();
       public static void AutoWriteFinishTask()
       {
@@ -80,7 +91,7 @@ namespace InBound.Business
 
                                       task.JOBTYPE = 100;//空托盘回收任务
                                       task.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + ""); //空托盘指定地址
-                                      task.TUTYPE = 2;
+                                      task.TUTYPE = 3;
 
                                       task.PRIORITY = 50;
 
@@ -139,7 +150,7 @@ namespace InBound.Business
                                           INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
                                           task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
                                           task1.ID = task.JOBID;
-                                          task1.BRANDID = temptask.BRANDID;
+                                          task1.BRANDID = detail.BARCODE;
                                           task1.BARCODE = cellInfo.PALLETNO;
                                           task1.SOURCE = temptask.EQUIPMENTID;
                                           task1.PLANQTY = detail.QTY - detail.REQUESTQTY;
@@ -148,31 +159,32 @@ namespace InBound.Business
                                           task1.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + "");
                                           task1.TUTYPE = 4;
                                           task1.PRIORITY = 50;
+                                          task1.STATUS = 0;
                                           task1.CREATEDATE = DateTime.Now;
                                           dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
 
                                           T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
                                           info.PALLETNO = cellInfo.PALLETNO;
                                           // info.DISMANTLE = 1;
-                                          info.CELLNO = task.TARGET;
+                                          info.CELLNO = task1.TARGET;
                                           info.STATUS = 10;//组盘
                                           info.CREATETIME = cellInfo.CREATETIME;
                                           info.INBOUNDID = task.INBOUNDNO;
-
+                                          task.TUTYPE = 4;
                                           info.DISMANTLE = 10;
 
                                           AtsCellInfoService.InsertAtsCellInfo(info);
 
                                           T_WMS_ATSCELLINFO_DETAIL details = new T_WMS_ATSCELLINFO_DETAIL();
-                                          details.BARCODE = task.BRANDID + "";
+                                          details.BARCODE = detail.BARCODE;
                                           T_WMS_ITEM item = ItemService.GetItemByBarCode(details.BARCODE);
                                           details.CIGARETTECODE = item.ITEMNO;
                                           details.CIGARETTENAME = item.ITEMNAME;
-                                          details.QTY = task.PLANQTY;
+                                          details.QTY = task1.PLANQTY;
                                           details.CELLNO = info.CELLNO;
                                           AtsCellInfoDetailService.InsertAtsCellInfo(details);
                                       }
-
+                                      AtsCellService.UpdateAtsCell(detail.CELLNO, 10);
                                       AtsCellInfoService.delete(detail.CELLNO);
                                       AtsCellInfoDetailService.delete(detail.CELLNO);
                                   }
@@ -209,7 +221,7 @@ namespace InBound.Business
                                       info.CONSIGNOR = inboundLine.CONSIGNSOR;
                                   }
                                   info.DISMANTLE = 10;
-
+                                  task.TUTYPE = 4;
                                   AtsCellInfoService.InsertAtsCellInfo(info);
 
                                   T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
@@ -245,8 +257,9 @@ namespace InBound.Business
                               {
                                   task.JOBTYPE = 50;
                               }
+                              task.TUTYPE = temptask.TUTYPE;
                           }
-                          task.TUTYPE = temptask.TUTYPE;
+                         // task.TUTYPE = temptask.TUTYPE;
 
                           task.CREATEDATE = DateTime.Now;
                           task.STATUS = 0;
@@ -271,50 +284,63 @@ namespace InBound.Business
                       else//下达拆垛任务
                       {
                           //新建指定拆垛机械手任务
-
-                          INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
-                          load.ID = dataEntity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
-                          load.JOBID = load.ID;
-                          load.JOBTYPE = 91;// 指定拆垛机械手任务
-                          
-                          load.CREATEDATE = DateTime.Now;
-                          INF_JOBDOWNLOAD item = InfJobDownLoadService.GetDetail(temptask.JOBID);
-                          load.BRANDID = item.BRANDID;
-                          String cellNo = item.SOURCE;
-                          decimal jobType =item.JOBTYPE??0;
-                          load.PILETYPE = item.PILETYPE;
-                          load.EXTATTR1 = (AtsCellInfoDetailService.GetDetail(cellNo).QTY??0)+"";//实际数量
-                          load.PLANQTY = AtsCellInfoDetailService.GetDetail(cellNo).REQUESTQTY ?? 0;//拆垛数量
-                          load.BARCODE = AtsCellInfoService.GetCellInfo(cellNo).PALLETNO;
-                          load.PRIORITY = 50;
-                        //  load.SOURCE = querySource.TROUGHNUM;
-
-
-                          load.TARGET = temptask.EQUIPMENTID;
-                          load.SOURCE = load.TARGET;
-                          load.PILETYPE = item.PILETYPE;
-                          load.STATUS = 0;
-                          dataEntity.AddToINF_JOBDOWNLOAD(load);
-                          dataEntity.SaveChanges();
-                          
-
-                          var cdtask = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == temptask.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
-                          if (cdtask != null && cdtask.Count > 0)
+                          if (temptask.EQUIPMENTID == "1415")
                           {
-                              cdtask.ForEach(x => x.STATUS = 0);
-                              cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
+                              INF_JOBDOWNLOAD inf = InfJobDownLoadService.GetDetail(temptask.JOBID);
+                              if (inf.JOBTYPE != 55)
+                              {
+                                  temptask.STATUS = 1;
+                              }
                           }
-                          if (jobType == 55)
+                          else
                           {
-                              AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
-                              //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
-                              AtsCellInfoService.delete(item.SOURCE);
-                              AtsCellInfoDetailService.delete(item.SOURCE);
+
+                              INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
+                              load.ID = dataEntity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                              load.JOBID = load.ID;
+                              load.JOBTYPE = 91;// 指定拆垛机械手任务
+
+                              load.CREATEDATE = DateTime.Now;
+                              INF_JOBDOWNLOAD item = InfJobDownLoadService.GetDetail(temptask.JOBID);
+                              load.BRANDID = item.BRANDID;
+                              String cellNo = item.SOURCE;
+                              decimal jobType = item.JOBTYPE ?? 0;
+                              load.PILETYPE = item.PILETYPE;
+                              T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellNo);
+                              load.EXTATTR1 = (detail.QTY ?? 0) + "";//实际数量
+                              load.PLANQTY = detail.REQUESTQTY ?? 0;//拆垛数量
+                              load.BARCODE = AtsCellInfoService.GetCellInfo(cellNo).PALLETNO;
+                              load.PRIORITY = 50;
+                              //  load.SOURCE = querySource.TROUGHNUM;
+
+
+                              load.TARGET = temptask.EQUIPMENTID;
+                              load.SOURCE = load.TARGET;
+                              load.PILETYPE = item.PILETYPE;
+                              load.STATUS = 0;
+                              dataEntity.AddToINF_JOBDOWNLOAD(load);
+                              dataEntity.SaveChanges();
+
+
+                              var cdtask = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == temptask.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
+                              if (cdtask != null && cdtask.Count > 0)
+                              {
+                                  cdtask.ForEach(x => x.STATUS = 0);
+                                  cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
+                              }
+                              if (jobType == 55 && detail.QTY == detail.REQUESTQTY)
+                              {
+                                  AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
+                                  //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
+                                  AtsCellInfoService.delete(item.SOURCE);
+                                  AtsCellInfoDetailService.delete(item.SOURCE);
+                              }
+                              temptask.STATUS = 1;
                           }
                           //AtsCellService.UpdateAtsCell(cellNo, 10);//任务置空闲
                           //AtsCellInfoService.delete(cellNo);
                           //AtsCellInfoDetailService.delete(cellNo);
-                          temptask.STATUS = 1;
+                         
                           dataEntity.SaveChanges();
                           ts.Complete();
                           
@@ -332,7 +358,7 @@ namespace InBound.Business
                               {
                                   var feedback = (from feed in dataEntity.INF_JOBFEEDBACK where feed.JOBID == item.JOBID && feed.FEEDBACKSTATUS == 99 select feed).FirstOrDefault();
                                   feedback.STATUS = 10;
-                                  if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42)//入库单入库任务
+                                  if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42 || item.JOBTYPE==100)//入库单入库任务
                                   {
 
                                       if (item.JOBTYPE == 20 )
@@ -494,6 +520,7 @@ namespace InBound.Business
                                           report.ForEach(x => x.STATUS = 20);
                                       }
                                   }
+                                  
                                   else if (item.JOBTYPE == 120)
                                   {
                                       AtsCellCJService.Del(item.EXTATTR1);

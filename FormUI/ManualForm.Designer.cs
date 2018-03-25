@@ -37,8 +37,7 @@
             this.源地址 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.目标地址 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.品牌编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.返库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.拆垛数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -87,8 +86,7 @@
             this.源地址,
             this.目标地址,
             this.品牌编码,
-            this.计划数量,
-            this.返库数量});
+            this.拆垛数量});
             this.dataGridView1.Location = new System.Drawing.Point(4, 18);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
@@ -128,16 +126,11 @@
             this.品牌编码.HeaderText = "品牌编码";
             this.品牌编码.Name = "品牌编码";
             // 
-            // 计划数量
+            // 拆垛数量
             // 
-            this.计划数量.DataPropertyName = "planqty";
-            this.计划数量.HeaderText = "计划数量";
-            this.计划数量.Name = "计划数量";
-            // 
-            // 返库数量
-            // 
-            this.返库数量.HeaderText = "返库数量";
-            this.返库数量.Name = "返库数量";
+            this.拆垛数量.DataPropertyName = "planqty";
+            this.拆垛数量.HeaderText = "拆垛数量";
+            this.拆垛数量.Name = "拆垛数量";
             // 
             // ManualForm
             // 
@@ -168,7 +161,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 源地址;
         private System.Windows.Forms.DataGridViewTextBoxColumn 目标地址;
         private System.Windows.Forms.DataGridViewTextBoxColumn 品牌编码;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 计划数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 返库数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 拆垛数量;
     }
 }

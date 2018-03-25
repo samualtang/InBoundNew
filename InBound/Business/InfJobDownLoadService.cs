@@ -66,11 +66,12 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = (from item in entity.INF_JOBDOWNLOAD
-                           join item2 in entity.INF_JOBFEEDBACK on item.JOBID equals item2.JOBID
-                           where  item.JOBTYPE == 55 && item.TARGET == "1415" && item2.FEEDBACKSTATUS == 99 
+              var query = (from item in entity.INF_EQUIPMENTREQUEST
+                           join item2 in entity.INF_JOBDOWNLOAD
+                           on item.JOBID equals item2.JOBID
+                           where  item2.JOBTYPE == 55 && item.EQUIPMENTID == "1415" && item.STATUS == 0 
                            orderby item.RESPONDDATE descending
-                           select item).FirstOrDefault();
+                           select item2).FirstOrDefault();
               return query;
           }
       }

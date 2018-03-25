@@ -18,5 +18,28 @@ namespace InBound.Business
             }
 
         }
+        public static INF_EQUIPMENTREQUEST GetEquipMentRequest(String  jobid)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query = (from item in dataentity.INF_EQUIPMENTREQUEST
+                             where item.STATUS == 0 && item.JOBID == jobid && item.REQUESTTYPE == 3 && item.EQUIPMENTID == "1415"
+                             select item).FirstOrDefault();
+                return query;
+            }
+
+        }
+
+        public static void UpdateEquipMentRequest(String jobid, decimal status)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.INF_EQUIPMENTREQUEST
+                             where item.STATUS == 0 && item.JOBID == jobid && item.REQUESTTYPE == 3 && item.EQUIPMENTID == "1415"
+                             select item).FirstOrDefault();
+                query.STATUS = status;
+                data.SaveChanges();
+            }
+        }
     }
 }
