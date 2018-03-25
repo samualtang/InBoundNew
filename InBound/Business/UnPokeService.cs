@@ -40,7 +40,7 @@ namespace InBound.Business
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
-                      //  machineseq = item.MACHINESEQ;
+                        machineseq = item.MACHINESEQ;
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
                         {
                             machineseq = item.MACHINESEQ??0 - 1000;
