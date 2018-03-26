@@ -18,6 +18,7 @@ namespace InBound.Business
                 info.ID = id;
                 data.AddToT_WMS_ATSCELLINFO_DETAIL(info);
                 data.SaveChanges();
+                WriteLog.GetLog().Write("插入" + info.CIGARETTENAME + ":" + info.CIGARETTECODE + "储位号:" + info.CELLNO);
 
             }
         }
@@ -132,6 +133,7 @@ namespace InBound.Business
                 if(query!=null)
                 {
                  entity.T_WMS_ATSCELLINFO_DETAIL.DeleteObject(query);
+                 WriteLog.GetLog().Write("删除储位T_WMS_ATSCELLINFO_DETAIL信息:" + query.CELLNO);
                 }
                 entity.SaveChanges();
             }

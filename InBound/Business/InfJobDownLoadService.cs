@@ -24,6 +24,18 @@ namespace InBound.Business
               dataEntity.SaveChanges();
           }
       }
+      public static void UpdateJopDownLoad(String jobid, decimal status)
+      {
+          using (Entities dataEntity = new Entities())
+          {
+              var query = (from item in dataEntity.INF_JOBDOWNLOAD where item.JOBID == jobid select item).FirstOrDefault();
+              if (query != null)
+              {
+                  query.STATUS = status;
+                  dataEntity.SaveChanges();
+              }
+          }
+      }
       public static void InsertCancelTask(INF_JOBDOWNLOAD entity)
       {
           using (Entities dataEntity = new Entities())
@@ -66,12 +78,10 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = (from item in entity.INF_EQUIPMENTREQUEST
-                           join item2 in entity.INF_JOBDOWNLOAD
-                           on item.JOBID equals item2.JOBID
-                           where  item2.JOBTYPE == 55 && item.EQUIPMENTID == "1415" && item.STATUS == 0 
+              var query = (from item in entity.INF_JOBDOWNLOAD
+                           where  item.JOBTYPE == 91 && item.SOURCE == "1415" && item.STATUS == 1
                            orderby item.RESPONDDATE descending
-                           select item2).FirstOrDefault();
+                           select item).FirstOrDefault();
               return query;
           }
       }

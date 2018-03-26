@@ -131,7 +131,7 @@ namespace MainUI
             }
             if (!menuInfo.Contains(6001))
             {
-                人工拆垛ToolStripMenuItem1.Visible = false;
+                人工拆垛ToolStripMenuItem2.Visible = false;
             }
         }
         private void CreateFList()
@@ -187,6 +187,7 @@ namespace MainUI
             {
                 listView1.Items.Add("人工拆垛", 0);
             }
+            
         }
         private void CreateTList()
         {

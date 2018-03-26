@@ -268,6 +268,7 @@ namespace InBound.Business
                                         load2.CREATEDATE = DateTime.Now;
                                         load2.STATUS = 2;//出库完成置0
                                         load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                       // load2.EXTATTR3 = load2.JOBID + "";//用来关联出库任务
                                         load2.TUTYPE = 4;
                                         decimal planQty = item.MANTISSA ?? 0;
                                         if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
@@ -406,6 +407,7 @@ namespace InBound.Business
                                             load2.CREATEDATE = DateTime.Now;
                                             load2.STATUS = 2;//出库完成置0
                                             load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                           // load2.EXTATTR2 = load2.JOBID + "";//用来关联出库任务
                                             load2.TUTYPE = 4;
                                             decimal planQty = item.MANTISSA ?? 0;
                                             if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)

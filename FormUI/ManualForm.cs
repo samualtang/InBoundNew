@@ -79,10 +79,11 @@ namespace FormUI
                 //    dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
 
                 //}
-                INF_EQUIPMENTREQUEST request = InfEquipmentRequestService.GetEquipMentRequest(jobid);
+               // INF_EQUIPMENTREQUEST request = InfEquipmentRequestService.GetEquipMentRequest(jobid);
                 INF_JOBDOWNLOAD download = InfJobDownLoadService.GetDetail(jobid);
-                T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(download.SOURCE);
-                T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.GetCellInfo(detail.CELLNO);
+                 T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.GetCellInfoByBarCode(download.BARCODE);
+                T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellInfo.CELLNO);
+               
                 using (TransactionScope ts = new TransactionScope())
                 {
                     if (detail.REQUESTQTY != detail.QTY)
@@ -128,8 +129,10 @@ namespace FormUI
                     AtsCellService.UpdateAtsCell(detail.CELLNO, 10);
                     AtsCellInfoService.delete(detail.CELLNO);
                     AtsCellInfoDetailService.delete(detail.CELLNO);
-                    InfEquipmentRequestService.UpdateEquipMentRequest(jobid, 1);
+                    InfJobDownLoadService.UpdateJopDownLoad(jobid, 3);
+                  //  InfEquipmentRequestService.UpdateEquipMentRequest(jobid, 1);
                     ts.Complete();
+                    search();
                 }
             }
             else

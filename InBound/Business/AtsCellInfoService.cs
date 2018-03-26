@@ -39,7 +39,14 @@ namespace InBound.Business
               return query;
           }
       }
-      
+      public static T_WMS_ATSCELLINFO GetCellInfoByBarCode(string barcode)
+      {
+          using (Entities entity = new Entities())
+          {
+              var query = (from item in entity.T_WMS_ATSCELLINFO where item.PALLETNO == barcode select item).FirstOrDefault();
+              return query;
+          }
+      }
       public static T_WMS_ATSCELLINFO GetCellInfo(string cellno, Entities entity)
       {
           
@@ -102,8 +109,10 @@ namespace InBound.Business
               if (query != null)
               {
                   entity.T_WMS_ATSCELLINFO.DeleteObject(query);
+                  WriteLog.GetLog().Write("删除储位T_WMS_ATSCELLINFO信息:" + query.CELLNO);
               }
               entity.SaveChanges();
+             
           }
       }
       public static void delete(String cellno, Entities entity)

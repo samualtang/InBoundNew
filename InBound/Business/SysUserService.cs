@@ -31,8 +31,8 @@ namespace InBound.Business
           {
               var query = (from item in entity.T_SYS_USER
                            join item2 in entity.T_SYS_MENUROLERELATIVE
-                           on item.ROLEID equals item2.SYSROLEID
-                           where item.USERCODE == userName
+                            on item.ROLEID equals item2.SYSROLEID
+                           where item.USERCODE == userName 
                            select item2.MENUID).ToList();
               
               
