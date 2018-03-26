@@ -42,6 +42,10 @@ namespace highSpeed.baseData
                 status = 20;
             }
             String sSql = "select t.* from highspeed.hunheview t where status="+status+" order by machineseq,pokeid";
+            //select p.sortnum,p.machineseq,h.cigarettecode,h.cigarettename,t.regioncode
+//from t_un_poke p,t_un_task t,t_produce_sorttrough h
+//where p.sortnum=t.sortnum and p.troughnum=h.troughnum and h.troughtype=10 and h.cigarettetype!=20 and h.state=10  --and p.machineseq=1061
+//order by p.linenum,p.sortnum,p.secsortnum,p.machineseq,p.troughnum
             Bind(sSql);
         }
 

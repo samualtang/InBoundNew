@@ -41,7 +41,10 @@ namespace highSpeed.baseData
             {
                 status = 20;
             }
-            String sSql = "select t.* from t_un t where status="+status+" order by machineseq,pokeid";
+            String sSql = "select p.sortnum,p.machineseq,h.cigarettecode,h.cigarettename,t.regioncode,p.pokenum,t.customername "+
+                          "from t_un_poke p,t_un_task t,t_produce_sorttrough h "+
+                          "where p.sortnum=t.sortnum and p.troughnum=h.troughnum and h.troughtype=10 and h.cigarettetype=40 and h.state=10 and p.status="+status+
+                          "order by p.linenum,p.sortnum,p.secsortnum,p.machineseq,p.troughnum";
             Bind(sSql);
         }
 
@@ -57,23 +60,22 @@ namespace highSpeed.baseData
             task_data.Rows.Clear();
             try
             {
-                String machineseq = "", cusname = "", cigarename = "", sortseq="",quantity = "", taskquantity = "",chezu,tasknum;
+                String machineseq = "", cusname = "", cigarename = "", pokenum = "", sortnum = "", regioncode = "";
                 while (myread != null && myread.Read())
                 {
                     machineseq = myread["machineseq"].ToString().Trim();
                     cusname = myread["customername"].ToString().Trim();
                     cigarename = myread["cigarettename"].ToString().Trim();
-                    quantity = myread["quantity"].ToString().Trim();
-                    tasknum = myread["tasknum"].ToString().Trim();
-                    chezu = myread["regioncode"].ToString().Trim();
-                    sortseq = myread["sortseq"].ToString().Trim();
+                    pokenum = myread["pokenum"].ToString().Trim();
+                    sortnum = myread["sortnum"].ToString().Trim();
+                    regioncode = myread["regioncode"].ToString().Trim();
                     int index = this.task_data.Rows.Add();
                     this.task_data.Rows[index].Cells[0].Value = machineseq;
                     this.task_data.Rows[index].Cells[1].Value = cusname;
                     this.task_data.Rows[index].Cells[2].Value = cigarename;
-                    this.task_data.Rows[index].Cells[3].Value = quantity;
-                    this.task_data.Rows[index].Cells[4].Value = tasknum;
-                    this.task_data.Rows[index].Cells[5].Value = chezu + "/" + sortseq;
+                    this.task_data.Rows[index].Cells[3].Value = pokenum;
+                    this.task_data.Rows[index].Cells[4].Value = sortnum;
+                    this.task_data.Rows[index].Cells[5].Value = regioncode;
                 }
                
 
@@ -90,21 +92,12 @@ namespace highSpeed.baseData
         }
         #endregion
 
+
         private void btn_search_Click(object sender, EventArgs e)
         {
             seek();
         }
 
-        private void txt_keywd_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) {
-                seek();
-            }
-        }
-
-       
-
-       
 
         private void btn_print_Click(object sender, EventArgs e)
         {
@@ -113,11 +106,6 @@ namespace highSpeed.baseData
            // dgVprint1.PaperLandscape = true;//用横向打印，默认是纵向
 
             dgVprint1.Print(task_data);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            seek();
         }
 
        

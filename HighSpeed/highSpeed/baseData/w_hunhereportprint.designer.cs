@@ -68,7 +68,7 @@
             this.button1.TabIndex = 15;
             this.button1.Text = "查询";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.btn_search_Click);
             // 
             // radioButton3
             // 
@@ -176,18 +176,18 @@
             this.dgVprint1.LastPageMode = true;
             this.dgVprint1.LineSpace = 50F;
             this.dgVprint1.MainTitle = "表格主标题";
-            this.dgVprint1.MainTitleFont = new System.Drawing.Font("SimHei", 16F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.MainTitleFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.MinFontSize = 6F;
             this.dgVprint1.OuterBorder = false;
             this.dgVprint1.OuterBorderColor = System.Drawing.Color.Black;
             this.dgVprint1.OuterBorderWidth = 5.08F;
             this.dgVprint1.PageFooterColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageFooterFont = new System.Drawing.Font("STXingkai", 9F);
+            this.dgVprint1.PageFooterFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageFooterLeft = null;
             this.dgVprint1.PageFooterMiddle = "共[总页数]页 第[页码]页";
             this.dgVprint1.PageFooterRight = null;
             this.dgVprint1.PageHeaderColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("STXingkai", 9F);
+            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageHeaderLeft = null;
             this.dgVprint1.PageHeaderMiddle = null;
             this.dgVprint1.PageHeaderRight = null;
@@ -216,7 +216,7 @@
             this.dgVprint1.SortColumn = "";
             this.dgVprint1.SortMode = System.ComponentModel.ListSortDirection.Ascending;
             this.dgVprint1.SubTitle = "";
-            this.dgVprint1.SubTitleFont = new System.Drawing.Font("SimSun", 12F);
+            this.dgVprint1.SubTitleFont = new System.Drawing.Font("宋体", 12F);
             this.dgVprint1.SubTitleStyle = 0;
             this.dgVprint1.SumBackColor = System.Drawing.Color.Empty;
             this.dgVprint1.SumColumns = "";
@@ -226,11 +226,11 @@
             this.dgVprint1.TableBottomLeftTitleAlign = System.Drawing.StringAlignment.Near;
             this.dgVprint1.TableBottomMiddleTitleAlign = System.Drawing.StringAlignment.Center;
             this.dgVprint1.TableBottomRightTitleAlign = System.Drawing.StringAlignment.Far;
-            this.dgVprint1.TableFooterFont = new System.Drawing.Font("SimSun", 10F);
+            this.dgVprint1.TableFooterFont = new System.Drawing.Font("宋体", 10F);
             this.dgVprint1.TableFooterLeft = null;
             this.dgVprint1.TableFooterMiddle = null;
             this.dgVprint1.TableFooterRight = null;
-            this.dgVprint1.TableHeaderFont = new System.Drawing.Font("SimSun", 10F);
+            this.dgVprint1.TableHeaderFont = new System.Drawing.Font("宋体", 10F);
             this.dgVprint1.TableHeaderLeft = null;
             this.dgVprint1.TableHeaderMiddle = null;
             this.dgVprint1.TableHeaderRight = null;
@@ -239,12 +239,12 @@
             this.dgVprint1.TableTopRightTitleAlign = System.Drawing.StringAlignment.Far;
             this.dgVprint1.TitleTextStyle = 0;
             this.dgVprint1.WaterMarkColor = System.Drawing.Color.Red;
-            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("STXingkai", 80F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 80F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.WaterMarkLandscape = true;
             this.dgVprint1.WaterMarkOpacity = ((byte)(128));
             this.dgVprint1.WaterMarkText = "";
             this.dgVprint1.WindowTitle = "打印预览结果";
-            this.dgVprint1.ZDXFont = new System.Drawing.Font("SimSun", 9F);
+            this.dgVprint1.ZDXFont = new System.Drawing.Font("宋体", 9F);
             this.dgVprint1.ZDXLinecoLor = System.Drawing.Color.Black;
             this.dgVprint1.ZDXLineStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.dgVprint1.ZDXPosition = 0F;
@@ -264,6 +264,7 @@
             // 
             this.Column1.HeaderText = "客户名称";
             this.Column1.Name = "Column1";
+            this.Column1.Width = 240;
             // 
             // troughinfo
             // 

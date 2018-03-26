@@ -54,9 +54,11 @@ namespace highSpeed.baseData
             }
         }
 
-        private void closeBatch() {
+        private void closeBatch(int bz) {
             db.Open();
-            String sql = "update t_produce_batch set state=0,endtime=sysdate where state=1";
+            String cond="";
+            if(bz!=30)cond=" and batchtype="+bz;
+            String sql = "update t_produce_batch set state=0,endtime=sysdate where state=10"+cond;
             db.ExecuteNonQuery(sql);
             db.Close();
         }
@@ -73,7 +75,7 @@ namespace highSpeed.baseData
             }
             else 
             {
-                closeBatch();
+                closeBatch(para);
                 String insertsql = "insert into t_produce_batch(batchcode,starttime,state,batchtype)" ;
                                   
 
@@ -122,7 +124,7 @@ namespace highSpeed.baseData
                         }
 
                     }
-                    else
+                    if (para == 20 || para == 30)
                     {
                         OracleParameter[] sqlpara = new OracleParameter[3];
                         sqlpara[0] = new OracleParameter("bz", "0");
