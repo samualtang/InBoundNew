@@ -37,7 +37,9 @@ namespace InBound.Business
               if(query!=null)
               {
                   query.WORKSTATUS = status;
+
                   data.SaveChanges();
+                  WriteLog.GetLog().Write("修改储位工作状态:" + cellno + ":" + status);
               }
           }
       }

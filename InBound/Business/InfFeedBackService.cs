@@ -99,14 +99,14 @@ namespace InBound.Business
                                       if (task.TARGET != null && task.TARGET != "")
                                       {
                                           T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-                                          info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
+                                         // info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
 
                                           task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
                                           info.CELLNO = task.TARGET;
                                           info.STATUS = 10;//组盘
                                           info.CREATETIME = DateTime.Now;
                                           info.INBOUNDID = task.INBOUNDNO;
-
+                                          info.PALLETNO = task.BARCODE;
                                           info.DISMANTLE = 10;
 
                                           AtsCellInfoService.InsertAtsCellInfo(info);
@@ -195,7 +195,7 @@ namespace InBound.Business
                                   task.SOURCE = temptask.EQUIPMENTID;
                                   task.JOBTYPE = 20;
                                   task.INBOUNDNO = temptask.INBOUNDNO;
-                                  task.BARCODE = RefRFIDPalletService.GetSeq() + ""; //temptask.BARCODE;
+                                 // task.BARCODE = RefRFIDPalletService.GetSeq() + ""; //temptask.BARCODE;
                                   task.PRIORITY = 50;
                                   //task.BARCODE=
                                   var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == task.INBOUNDNO select line).FirstOrDefault();
@@ -209,10 +209,11 @@ namespace InBound.Business
                                   }
                                   task.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + "");
                                   T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-                                  info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
+                                  //info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
 
                                   task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
                                   info.CELLNO = task.TARGET;
+                                  info.PALLETNO = task.BARCODE;
                                   info.STATUS = 10;//组盘
                                   info.CREATETIME = DateTime.Now;
                                   info.INBOUNDID = task.INBOUNDNO;
@@ -432,7 +433,7 @@ namespace InBound.Business
                                       INF_JOBDOWNLOAD load = InfJobDownLoadService.GetDetail(item.EXTATTR2,dataEntity);
                                       //INF_JOBDOWNLOAD load2 = InfJobDownLoadService.GetDetail(item.EXTATTR3, dataEntity);
                                     //  T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(load.SOURCE, dataEntity);
-                                      T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.GetCellInfo(load.SOURCE,dataEntity);//检查托盘号是否存在
+                                    //  T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.GetCellInfo(load.SOURCE,dataEntity);//检查托盘号是否存在
 
                                       //if (load!=null && detail!=null && load.BRANDID != detail.BARCODE)
                                       //{
