@@ -55,6 +55,8 @@ namespace SortingControlSys.SortingControl
             };
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            decimal machinegroupno = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
+            this.Text = "长株潭烟草公司机械手系统-组" + machinegroupno;
             writeLog.Write(" 机械手组" + groupNo + " 应用程序启动");
             serverIp = ConfigurationManager.AppSettings["ServerIP"].ToString();
             ItemCollection.OpcMachineServer = ConfigurationManager.AppSettings["OpcMachineServer"].ToString();
@@ -822,22 +824,22 @@ namespace SortingControlSys.SortingControl
 
         private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-                                                        "操作提示",//对话框的标题 
-                                                        MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                        MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                        MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-            //Console.WriteLine(MsgBoxResult);
-            if (MsgBoxResult == DialogResult.Yes)
-            {
-                System.Environment.Exit(System.Environment.ExitCode);
-                this.Dispose();
-                this.Close();
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+            //                                            "操作提示",//对话框的标题 
+            //                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            ////Console.WriteLine(MsgBoxResult);
+            //if (MsgBoxResult == DialogResult.Yes)
+            //{
+            //    System.Environment.Exit(System.Environment.ExitCode);
+            //    this.Dispose();
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    e.Cancel = true;
+            //}
         }
 
         public void exitFunc()
@@ -848,12 +850,30 @@ namespace SortingControlSys.SortingControl
         {
             base.OnClosing(e);
 
-            Disconnect();
-            updateListBox("system exit.......");
-            writeLog.Write("退出程序。。。。。。");
-            this.Dispose();
-            this.Close();
-            System.Environment.Exit(System.Environment.ExitCode);
+            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                             "操作提示",//对话框的标题  
+                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+                Disconnect();
+
+
+                Disconnect();
+                updateListBox("system exit.......");
+                writeLog.Write("退出程序。。。。。。");
+                this.Dispose();
+                this.Close();
+                System.Environment.Exit(System.Environment.ExitCode);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+
+          
         }
         private void button11_Click(object sender, EventArgs e)
         {

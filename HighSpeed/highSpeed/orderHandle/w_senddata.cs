@@ -131,6 +131,7 @@ namespace highSpeed.orderHandle
                     MessageBox.Show(f.ZipFile + "文件发送成功");
                     Byte[] bytes=new Byte[1024];
                     socketClient.Receive(bytes);
+                    System.Text.UTF8Encoding.UTF8.GetString(bytes);
                     socketClient.Disconnect(false);
                     socketClient.Close();
 

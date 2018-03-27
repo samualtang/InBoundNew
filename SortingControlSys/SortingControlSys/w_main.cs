@@ -31,13 +31,15 @@ namespace SortingControlSys
             }
          decimal   sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
          this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2;
-            w_SortingControlMain.MdiParent = this;
+           // w_SortingControlMain.MdiParent = this;
             //w_SortingControlMain.WindowState = FormWindowState.Maximized;
-            w_SortingControlMain.FormBorderStyle = FormBorderStyle.None;
+            w_SortingControlMain.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             w_SortingControlMain.Width = 1920;
             w_SortingControlMain.Height = 700;
             w_SortingControlMain.Show();
+            this.Close();
         }
+
 
         #region 查找是否已经打开
         /// <summary>
@@ -68,5 +70,36 @@ namespace SortingControlSys
             return blResult;
         }
         #endregion
+
+        private void w_main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+        //    DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+        //                                                     "操作提示",//对话框的标题  
+        //                                                     MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+        //                                                     MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+        //                                                     MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+        //    //Console.WriteLine(MsgBoxResult);
+        //    if (MsgBoxResult == DialogResult.Yes)
+        //    {
+        //        System.Environment.Exit(System.Environment.ExitCode);
+        //        this.Dispose();
+        //        this.Close();
+        //    }
+        //    else
+        //    {
+        //        e.Cancel = true;
+        //    }
+        //    MessageBox.Show("close......");
+        }
+
+        private void w_main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+            //                                                "操作提示",//对话框的标题  
+            //                                                MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                                MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //MessageBox.Show("close......");
+        }
     }
 }

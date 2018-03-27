@@ -15,7 +15,7 @@ namespace Machine
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new  SortingControlSys.w_main());
+            Application.Run(new SortingControlSys.SortingControl.MachineFM());
         }
     }
 }

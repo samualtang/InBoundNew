@@ -62,7 +62,7 @@ namespace SortingControlSys
                  * */
                 try
                 {
-                    w_main form1 = new w_main();
+                    w_SortingControlMain form1 = new w_SortingControlMain();
                     form1.WindowState = FormWindowState.Maximized;
                     Application.Run(form1);
                 }

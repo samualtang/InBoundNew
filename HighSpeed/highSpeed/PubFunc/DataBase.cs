@@ -193,6 +193,11 @@ namespace highSpeed.PubFunc
         {
             if (innerConnection.State == ConnectionState.Open)
                 innerConnection.Close();
+            if (innerCommand != null)
+            {
+                innerCommand.CommandText = "";
+                //innerCommand.CommandType = CommandType.;
+            }
         }
         #endregion
 
@@ -258,6 +263,8 @@ namespace highSpeed.PubFunc
             {
                 ds = new DataSet();
                 dt = new DataTable();
+                innerCommand.Parameters.Clear();
+                innerCommand.CommandType = CommandType.Text;
                 innerCommand.CommandText = sql;
                 innerDataAdapter.Fill(ds);
             }
@@ -276,7 +283,8 @@ namespace highSpeed.PubFunc
             try
             {
                 ds = new DataSet();
-
+                innerCommand.Parameters.Clear();
+                innerCommand.CommandType = CommandType.Text;
                 innerCommand.CommandText = sql;
                 innerDataAdapter.Fill(ds);
             }

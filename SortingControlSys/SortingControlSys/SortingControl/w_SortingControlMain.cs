@@ -47,6 +47,8 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             updateListBox("应用程序启动");
+            decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+            this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2;
             try
             {
                 sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
@@ -951,35 +953,50 @@ namespace SortingControlSys.SortingControl
 
         private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-                                                             "操作提示",//对话框的标题 
-                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-            //Console.WriteLine(MsgBoxResult);
-            if (MsgBoxResult == DialogResult.Yes)
-            {
-                System.Environment.Exit(System.Environment.ExitCode);
-                this.Dispose();
-                this.Close();
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+            //                                                 "操作提示",//对话框的标题 
+            //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                                 MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                                 MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            ////Console.WriteLine(MsgBoxResult);
+            //if (MsgBoxResult == DialogResult.Yes)
+            //{
+            //    System.Environment.Exit(System.Environment.ExitCode);
+            //    this.Dispose();
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    e.Cancel = true;
+            //}
         }
 
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
+            //base.OnClosing(e);
+           DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                             "操作提示",//对话框的标题  
+                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+           //Console.WriteLine(MsgBoxResult);
+           if (MsgBoxResult == DialogResult.Yes)
+           {
+               Disconnect();
 
-            Disconnect();
-
-            this.Dispose();
-            this.Close();
-            writeLog.Write("退出程序。。。。。。");
-            System.Environment.Exit(System.Environment.ExitCode);
+               
+               writeLog.Write("退出程序。。。。。。");
+               System.Environment.Exit(System.Environment.ExitCode);
+               
+               this.Dispose();
+               this.Close();
+           }
+           else
+           {
+               e.Cancel = true;
+           }
+           
         }
         private void button11_Click(object sender, EventArgs e)
         {
@@ -993,6 +1010,14 @@ namespace SortingControlSys.SortingControl
         {
 
             updateControlEnable(true, button10);
+            //Application.Exit();
+            /*if (MessageBox.Show("是否确实关闭窗口？", "询问", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                //System.Environment.Exit(System.Environment.ExitCode);
+                
+                this.Dispose();
+                this.Close();
+            }*/
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -1055,6 +1080,11 @@ namespace SortingControlSys.SortingControl
               //  btn.Text = string.Format("{0}停止", lineName);
             }
             return isStop;
+        }
+
+        private void w_SortingControlMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //MessageBox.Show("close.....");
         }
     }
 }

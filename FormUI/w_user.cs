@@ -139,7 +139,7 @@ namespace FormUI
 
         private void w_user_FormClosing(object sender, FormClosingEventArgs e)
         {
-          
+            //MessageBox.Show("错误");
         }
 
     }

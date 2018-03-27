@@ -364,7 +364,6 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.ControlBox = false;
             this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
@@ -373,6 +372,7 @@
             this.Name = "MachineFM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "卷烟信息";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_SortingControlMain_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
