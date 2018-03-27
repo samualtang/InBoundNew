@@ -49,6 +49,7 @@ namespace InBound.Business
                 query1.STATUS = 30;
                 var query3 = (from item in entity.T_WMS_ATSCELLINFO_DETAIL where item.CELLNO == cellno select item).FirstOrDefault();
                 query3.REQUESTQTY = 0;
+                WriteLog.GetLog().Write("修改储位:"+query.CELLNO+"状态为20,对应储位明细状态为30,申请出库数量为0");
                 entity.SaveChanges();
             }
         }

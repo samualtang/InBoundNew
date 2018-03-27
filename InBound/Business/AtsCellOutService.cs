@@ -157,6 +157,7 @@ namespace InBound.Business
                      var query2=(from item in et.T_WMS_ATSCELLINFO_DETAIL where item.CELLNO==cellno select item).FirstOrDefault();
                   query2.REQUESTQTY=requestQty;
                   et.SaveChanges();
+                  WriteLog.GetLog().Write("修改储位:" + cellno + "状态30,储位明细状态为20,出库申请数量:" + requestQty);
               }
         }
         public static String getCellNoByTime(String cigarettecode)
@@ -170,10 +171,13 @@ namespace InBound.Business
                              on item2.CELLNO equals item3.CELLNO
                              join item4 in et.T_WMS_LANEWAY
                              on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                            on item4.LANEWAYNO equals item5.EQUIPMENTID
                              where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
                              && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                              && item2.STATUS == 30//上架
                              && item3.CIGARETTECODE == cigarettecode
+                             && item5.EQUIPMENTSTATUS=="1"
                              orderby item2.INBOUNDTIME
                              select item.CELLNO).FirstOrDefault();
                 if (query != null)
@@ -275,10 +279,13 @@ namespace InBound.Business
                              on item2.CELLNO equals item3.CELLNO
                              join item4 in et.T_WMS_LANEWAY
                              on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                            on item4.LANEWAYNO equals item5.EQUIPMENTID
                              where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
                              && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                              && item2.STATUS == 30//上架
                              && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
+                             && item5.EQUIPMENTSTATUS=="1"
                              orderby item2.INBOUNDTIME, item.DISTANCE
                              select item.CELLNO).ToList();
                 if (query != null && query.Count>0)
@@ -307,10 +314,13 @@ namespace InBound.Business
                              on item2.CELLNO equals item3.CELLNO
                              join item4 in et.T_WMS_LANEWAY
                              on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                            on item4.LANEWAYNO equals item5.EQUIPMENTID
                              where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
                              && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                              && item2.STATUS == 30//上架
                              && item3.CIGARETTECODE == cigarettecode && item3.QTY == qty
+                             && item5.EQUIPMENTSTATUS=="1"
                              orderby item2.INBOUNDTIME, item.DISTANCE
                              select item.CELLNO).FirstOrDefault();
                 if (query != null)
@@ -345,10 +355,13 @@ namespace InBound.Business
                              on item2.CELLNO equals item3.CELLNO
                              join item4 in et.T_WMS_LANEWAY
                              on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                             on item4.LANEWAYNO equals item5.EQUIPMENTID
                              where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
                              && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                              && item2.STATUS == 30//上架
                              && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
+                             && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
                              orderby item2.INBOUNDTIME, item.DISTANCE
                              select item.CELLNO).FirstOrDefault();
                 if (query != null)
@@ -382,10 +395,13 @@ namespace InBound.Business
                              on item2.CELLNO equals item3.CELLNO
                              join item4 in et.T_WMS_LANEWAY
                              on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                            on item4.LANEWAYNO equals item5.EQUIPMENTID
                              where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
                              && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                              && item2.STATUS == 30//上架
                              && item3.CIGARETTECODE == cigarettecode && item3.QTY < qty
+                             && item5.EQUIPMENTSTATUS=="1"
                              orderby item2.INBOUNDTIME, item.DISTANCE
                              select item.CELLNO).FirstOrDefault();
                 if (query != null)

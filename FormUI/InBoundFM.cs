@@ -102,7 +102,7 @@ namespace FormUI
             job.BRANDID = tbChooseName.Tag.ToString();
             job.TUTYPE = 4;
             job.INPUTTYPE = 10;
-            String palletNo = RefRFIDPalletService.GetPallet(tbRfid.Text);
+            String palletNo = RefRFIDPalletService.GetSeq() + "";// RefRFIDPalletService.GetPallet(tbRfid.Text);
             job.BARCODE = palletNo;
             if (palletNo == "E")
             {
@@ -141,7 +141,7 @@ namespace FormUI
                     info.DISMANTLE = 0;
                 }
                 AtsCellInfoService.InsertAtsCellInfo(info);
-
+               
                 T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
                 detail.BARCODE = tbChooseName.Tag.ToString();
                 detail.CIGARETTECODE = ItemService.GetItemByBarCode(detail.BARCODE).ITEMNO;
@@ -151,6 +151,7 @@ namespace FormUI
                
                 AtsCellInfoDetailService.InsertAtsCellInfo(detail);
                 ts.Complete();
+                WriteLog.GetLog().Write("储位明细信息状态:10 储位号:" + job.TARGET);
             }
             //MessageBox.Show("入库完成");
 

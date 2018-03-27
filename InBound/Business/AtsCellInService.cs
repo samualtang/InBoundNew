@@ -49,8 +49,11 @@ namespace InBound.Business
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item4 in et.T_WMS_LANEWAY
                                  on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                 on item4.LANEWAYNO equals item5.EQUIPMENTID
                                  where (item.STATUS == 10 || item.STATUS == 30) && item.WORKSTATUS == 10//储位空闲状态正常
-                                 && (item4.STATUS == 10 || item4.STATUS == 30) //巷道状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 30)  //巷道状态正常
+                                 && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
                                  select item.LANEWAYNO).Distinct().ToList();
                     if (query != null)
                     {
@@ -83,6 +86,7 @@ namespace InBound.Business
                         query3.WORKSTATUS = 30;
                         var query4 = (from item in et.T_WMS_ATSCELLINFO_DETAIL where item.CELLNO == query3.CELLNO select item).FirstOrDefault();
                         et.SaveChanges();
+                        WriteLog.GetLog().Write("修改储位号:" + query3.CELLNO + "状态为30");
                         return query3.CELLNO;
 
                     }

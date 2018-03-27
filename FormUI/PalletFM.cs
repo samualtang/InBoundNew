@@ -238,7 +238,7 @@ namespace FormUI
             job.TUTYPE = 4;
             job.INPUTTYPE = 10;
             job.INBOUNDNO = int.Parse(((List<String>)tbChooseName.Tag)[1].ToString());
-            String palletNo = RefRFIDPalletService.GetPallet(tbRfid.Text);
+            String palletNo = RefRFIDPalletService.GetSeq() + "";
             if (palletNo == "E")
             {
                 MessageBox.Show("该托盘已在使用,请确认Rfid是否输入正确");
@@ -264,7 +264,7 @@ namespace FormUI
             info.INBOUNDID = job.INBOUNDNO;
 
             info.DISMANTLE = 10;
-
+            WriteLog.GetLog().Write("储位明细信息状态:10 储位号:" + job.TARGET);
             AtsCellInfoService.InsertAtsCellInfo(info);
 
             T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
