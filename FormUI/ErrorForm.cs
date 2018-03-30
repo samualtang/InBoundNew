@@ -69,7 +69,7 @@ namespace FormUI
                      load1.JOBID=jobid;
                      load1.JOBTYPE=97;
                      InfJobDownLoadService.InsertCancelTask(load1);
-                
+                     search();
             }
             else {
                 MessageBox.Show("请选择需要取消的任务");
