@@ -140,7 +140,7 @@ namespace highSpeed.baseData
                             " )tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
             String temps = tmp +
                             " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
-            MessageBox.Show(strsql);
+            //MessageBox.Show(strsql);
             int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where 1=1 " + tmp).ToString());
             Console.WriteLine(strsql);
           //  Db.Open();

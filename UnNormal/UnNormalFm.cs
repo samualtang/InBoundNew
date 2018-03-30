@@ -483,11 +483,18 @@ namespace SortingControlSys.SortingControl
        }
        private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
        {
+         
+       }
+       
+       protected override void OnClosing(CancelEventArgs e)
+       {
+           base.OnClosing(e);
+
            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-                                                            "操作提示",//对话框的标题 
-                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                                                           "操作提示",//对话框的标题 
+                                                           MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                           MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                           MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
            if (MsgBoxResult == DialogResult.Yes)
            {
                System.Environment.Exit(System.Environment.ExitCode);
@@ -498,17 +505,6 @@ namespace SortingControlSys.SortingControl
            {
                e.Cancel = true;
            }
-       }
-       
-       protected override void OnClosing(CancelEventArgs e)
-       {
-           base.OnClosing(e);
-
-           Disconnect();
-           
-           this.Dispose();
-           this.Close();
-           System.Environment.Exit(System.Environment.ExitCode);
        }
        private void button11_Click(object sender, EventArgs e)
        {
@@ -546,6 +542,11 @@ namespace SortingControlSys.SortingControl
 
 
            pass.Show();
+       }
+
+       private void UnNormalFm_Load(object sender, EventArgs e)
+       {
+
        }
       
      

@@ -16,7 +16,7 @@ namespace Union
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new w_main());
+            Application.Run(new SortingControlSys.SortingControl.UnionFm());
         }
     }
 }

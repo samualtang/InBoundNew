@@ -47,7 +47,7 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             updateListBox("应用程序启动");
-            decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+             sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
             this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2;
             try
             {
@@ -163,14 +163,14 @@ namespace SortingControlSys.SortingControl
               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
 
-                statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//第一组条烟到达，暂时没用
+                statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//第一组完成信息
              
                 statusGroup3.addItem(ItemCollection.GetTaskStausItemGroup());
               
 
                 statusGroup4.addItem(ItemCollection.GetTaskStatusSECItem1());
 
-                statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());//第二组条烟到达，暂时没用
+                statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());//第二组完成信息
                
                 errGroup1.addItem(ItemCollection.GetTaskStatusItem3());
                
@@ -196,11 +196,11 @@ namespace SortingControlSys.SortingControl
         public void regDataChange()
         {
             taskgroup.callback += OnDataChange;
-            statusGroup1.callback += OnDataChange;
-            //statusGroup2.callback += OnDataChange;//第一组条烟到达信号，暂时没用
+           // statusGroup1.callback += OnDataChange;
+            statusGroup2.callback += OnDataChange;//第一组完成信息
             statusGroup3.callback += OnDataChange;
-            statusGroup4.callback += OnDataChange;
-            //statusGroup5.callback += OnDataChange;//第二组条烟到达信号，暂时没用
+            //statusGroup4.callback += OnDataChange;
+            statusGroup5.callback += OnDataChange;//第二组完成信息
             errGroup1.callback += OnDataChange;
             errGroup2.callback += OnDataChange;
             errGroup3.callback += OnDataChange;
@@ -271,13 +271,16 @@ namespace SortingControlSys.SortingControl
             int i = -1;
             if (list != null)
             {
-                foreach (var item in list)
-                {
-                    if (item.Key == export)
+                //lock (lockFlg)
+                //{
+                    foreach (var item in list)
                     {
-                        i = item.Value;
-                        break;
-                    }
+                        if (item.Key == export)
+                        {
+                            i = item.Value;
+                            break;
+                        }
+                   // }
                 }
             }
             return i;
@@ -1086,5 +1089,7 @@ namespace SortingControlSys.SortingControl
         {
             //MessageBox.Show("close.....");
         }
+
+
     }
 }

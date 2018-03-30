@@ -1119,7 +1119,7 @@ namespace InBound.Business
             //    }
             //}
         }
-        public static void UpdateUnionStatus(decimal stage, int sortnum)
+        public static void UpdateUnionStatus(decimal stage, int sortnum)//更新合流状态
         {
             using (Entities entity = new Entities())
             {
@@ -1130,13 +1130,17 @@ namespace InBound.Business
                     {
                         item.UNIONSTATE = stage;
                     }
-                    // entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select tasknum from t_produce_poke where status!=20)");
+                    //如果是合流完成,则将task表状态置为完成
+                    if (stage == 20)
+                    {
+                        entity.ExecuteStoreCommand("update t_produce_task set state=30 where  sortnum=" + sortnum);
+                    }
                     entity.SaveChanges();
                 }
             }
 
         }
-        public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)
+        public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
         {
 
 
@@ -1149,7 +1153,7 @@ namespace InBound.Business
                     {
                         item.SORTSTATE = stage;
                     }
-                    entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=20)");
+                    //entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=20)");
                     entity.SaveChanges();
                 }
             }
