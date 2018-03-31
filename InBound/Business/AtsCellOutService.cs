@@ -164,8 +164,8 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                lock (lockFlag)
-                {
+                //lock (lockFlag)
+                //{
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -191,7 +191,7 @@ namespace InBound.Business
                         return "";
 
                     }
-                }
+                //}
             }
         }
 
@@ -275,8 +275,8 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                lock (lockFlag)
-                {
+                //lock (lockFlag)
+                //{
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -305,7 +305,7 @@ namespace InBound.Business
                         return "";
 
                     }
-                }
+                //}
             }
 
         }
@@ -313,8 +313,8 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                lock (lockFlag)
-                {
+                //lock (lockFlag)
+                //{
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -341,7 +341,7 @@ namespace InBound.Business
                         return "";
 
                     }
-                }
+                //}
             }
 
         }
@@ -357,8 +357,8 @@ namespace InBound.Business
                 {
                     return cellno;
                 }
-                lock (lockFlag)
-                {
+                //lock (lockFlag)
+                //{
 
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
@@ -386,7 +386,7 @@ namespace InBound.Business
                         return "";
 
                     }
-                }
+                //}
             }
            
         }
@@ -401,8 +401,8 @@ namespace InBound.Business
                 {
                     return cellno;
                 }
-                lock (lockFlag)
-                {
+                //lock (lockFlag)
+                //{
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -429,7 +429,7 @@ namespace InBound.Business
                         return "";
 
                     }
-                }
+                //}
             }
 
         }

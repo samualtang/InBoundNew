@@ -64,7 +64,8 @@ namespace FormUI
                         InfJobDownLoadService.InsertEntity(load2);
                     }
                 }
-                
+                InfFeedBackService.UpdateErrorJob(jobid);
+
                      INF_JOBDOWNLOAD load1=new INF_JOBDOWNLOAD();
                      load1.JOBID=jobid;
                      load1.JOBTYPE=97;

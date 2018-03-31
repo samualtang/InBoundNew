@@ -35,6 +35,21 @@ namespace InBound.Business
               return query;
           }
       }
+
+      public static void UpdateErrorJob(String jobid)
+      {
+
+          using (Entities dataEntity = new Entities())
+          {
+
+              var query = (from item in dataEntity.INF_JOBFEEDBACK where item.JOBID == jobid && item.FEEDBACKSTATUS==98  select item).FirstOrDefault();
+              if (query != null)
+              {
+                  query.STATUS = 10;
+                  dataEntity.SaveChanges();
+              }
+          }
+      }
       public static WriteLog log = new WriteLog();
       public static void AutoWriteFinishTask()
       {
