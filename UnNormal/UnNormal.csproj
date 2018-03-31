@@ -135,6 +135,7 @@
     <Content Include="Resources\bg21.JPG" />
     <Content Include="Resources\btnCancel.bmp" />
     <Content Include="Resources\btnOk.bmp" />
+    <None Include="Resources\edit.jpg" />
     <Content Include="Resources\Icon.ico" />
     <Content Include="Resources\ic_launcher.png" />
     <Content Include="Resources\login2.bmp" />

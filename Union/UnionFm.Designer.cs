@@ -31,17 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnionFm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +49,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -88,46 +88,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(300, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 33);
-            this.button6.TabIndex = 9;
-            this.button6.Text = "修改状态";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button12
-            // 
-            this.button12.BackgroundImage = global::Union.Properties.Resources.stop;
-            this.button12.Location = new System.Drawing.Point(97, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(99, 43);
-            this.button12.TabIndex = 8;
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.BackgroundImage = global::Union.Properties.Resources.rfresh;
-            this.button11.Location = new System.Drawing.Point(194, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 43);
-            this.button11.TabIndex = 7;
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button10
-            // 
-            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
-            this.button10.Location = new System.Drawing.Point(0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 43);
-            this.button10.TabIndex = 0;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button5
             // 
@@ -180,15 +140,6 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "关闭";
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 43);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // task_data
             // 
@@ -297,11 +248,59 @@
             this.listError.Size = new System.Drawing.Size(346, 245);
             this.listError.TabIndex = 40;
             // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::Union.Properties.Resources.edit;
+            this.button6.Location = new System.Drawing.Point(292, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(101, 43);
+            this.button6.TabIndex = 9;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button12
+            // 
+            this.button12.BackgroundImage = global::Union.Properties.Resources.stop;
+            this.button12.Location = new System.Drawing.Point(97, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(99, 43);
+            this.button12.TabIndex = 8;
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button11
+            // 
+            this.button11.BackgroundImage = global::Union.Properties.Resources.rfresh;
+            this.button11.Location = new System.Drawing.Point(194, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 43);
+            this.button11.TabIndex = 7;
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 43);
+            this.button10.TabIndex = 0;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 43);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // UnionFm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.ControlBox = false;
             this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
@@ -309,8 +308,8 @@
             this.Controls.Add(this.panel1);
             this.Name = "UnionFm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "卷烟信息";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_SortingControlMain_FormClosing);
+            this.Text = "合流信息系统";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);

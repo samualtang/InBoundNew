@@ -143,6 +143,35 @@ namespace SortingControlSys.SortingControl
             Connect();
         }
         Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5,errorGroup;
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                             "操作提示",//对话框的标题  
+                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+                Disconnect();
+
+
+                Disconnect();
+                updateListBox("system exit.......");
+                writeLog.Write("退出程序。。。。。。");
+                this.Dispose();
+                this.Close();
+                System.Environment.Exit(System.Environment.ExitCode);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+
+
+        }
         public void Connect()
         {
             Type svrComponenttyp;
@@ -220,22 +249,26 @@ namespace SortingControlSys.SortingControl
                 return false;
         }
         List<KeyValuePair<int, int>> tempList = new List<KeyValuePair<int, int>>();
+     
         public void removeKey(int export)
         {
             int i = 0;
             if (tempList != null)
             {
-                foreach (var item in tempList)
+                lock (lockFlag)
                 {
-                    i++;
-                    if(item.Key==export)
+                    foreach (var item in tempList)
                     {
-
-                        if (i != tempList.Count)
+                        i++;
+                        if (item.Key == export)
                         {
-                            tempList.Remove(item);
-                        }
+
+                            if (i != tempList.Count)
+                            {
+                                tempList.Remove(item);
+                            }
                             break;
+                        }
                     }
                 }
             }
@@ -246,12 +279,15 @@ namespace SortingControlSys.SortingControl
             int i = -1;
             if (tempList != null)
             {
-                foreach (var item in tempList)
+                lock (lockFlag)
                 {
-                    if (item.Key == export)
+                    foreach (var item in tempList)
                     {
-                        i= item.Value;
-                        break;
+                        if (item.Key == export)
+                        {
+                            i = item.Value;
+                            break;
+                        }
                     }
                 }
             }
@@ -603,38 +639,11 @@ namespace SortingControlSys.SortingControl
                 
             }
        }
-       private void w_SortingControlMain_FormClosing(object sender, FormClosingEventArgs e)
-       {
-           DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-                                                            "操作提示",//对话框的标题 
-                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-           if (MsgBoxResult == DialogResult.Yes)
-           {
-               System.Environment.Exit(System.Environment.ExitCode);
-               this.Dispose();
-               this.Close();
-           }
-           else
-           {
-               e.Cancel = true;
-           }
-       }
+       
        public void exitFunc() { 
        
        }
-       protected override void OnClosing(CancelEventArgs e)
-       {
-           base.OnClosing(e);
-
-           Disconnect();
-           
-           this.Dispose();
-           this.Close();
-           writeLog.Write("退出程序。。。。。。");
-           System.Environment.Exit(System.Environment.ExitCode);
-       }
+      
        private void button11_Click(object sender, EventArgs e)
        {
            this.task_data.BeginInvoke(new Action(() => { initdata(); }));

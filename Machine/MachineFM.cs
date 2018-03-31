@@ -431,17 +431,21 @@ namespace SortingControlSys.SortingControl
                 }
             }
         }
+        public object lockFlag1 = new object();
         public List<String> getKey(String export)
         {
             List<String> i = null;
             if (tempList != null)
             {
-                foreach (var item in tempList)
+                lock (lockFlag1)
                 {
-                    if (item.Key == export)
+                    foreach (var item in tempList)
                     {
-                        i = item.Value;
-                        break;
+                        if (item.Key == export)
+                        {
+                            i = item.Value;
+                            break;
+                        }
                     }
                 }
             }
@@ -530,8 +534,8 @@ namespace SortingControlSys.SortingControl
                             writeLog.Write("数据成功写入：" + logstr);
                             updateListBox("数据成功写入：" + logstr);
                             //updateListBox(":" + p2 + ":" + p3);
-                            CheckExport(exportnum);
-                            tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
+                          //  CheckExport(exportnum);
+                       //     tempList.Add(new KeyValuePair<String, List<String>>(exportnum, temp));
                             break;
 
                         }
@@ -551,6 +555,13 @@ namespace SortingControlSys.SortingControl
             {
                 writeLog.Write(ex.Message);
                 updateListBox(ex.Message);
+                Thread.Sleep(1000);
+                if (ex.InnerException != null && ex.InnerException.Message!=null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask(exportnum, group);//异常后重新发送
             }
         }
         public void CheckExport(String exportnum)
@@ -585,16 +596,16 @@ namespace SortingControlSys.SortingControl
 
 
                             updateListBox("读到标志位2");
-                            writeLog.Write("读到第"+Group+"号机械手写入标志位2");
+                            writeLog.Write("读到第" + (groupNo - 1) * 22 + Group + "号机械手写入标志位2");
                             while (!isInit)
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList.Count > 0)
-                            {
-                                List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
-                                if (temp != null)
-                                {
+                            //if (tempList.Count > 0)
+                            //{
+                            //    List<String> temp = getKey(((groupNo - 1) * 22 + Group) + "");
+                            //    if (temp != null)
+                            //    {
                                     //if (!groupBool[Group - 1])
                                     //{
                                     //    Thread.Sleep(100);
@@ -614,10 +625,10 @@ namespace SortingControlSys.SortingControl
                                     removeKey(((groupNo - 1) * 22 + Group) + "");
                                 }
                                    // }
-                                }
+                                //}
 
-                                removeKey(Group + "");
-                            }
+                               // removeKey(Group + "");
+                            //}
 
                             sendTask(((groupNo - 1) * 22 +Group) + "", groupList[Group - 1]);
                         }
@@ -882,7 +893,7 @@ namespace SortingControlSys.SortingControl
 
 
 
-
+    
         private void button12_Click(object sender, EventArgs e)
         {
 
