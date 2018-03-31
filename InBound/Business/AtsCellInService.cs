@@ -40,12 +40,14 @@ namespace InBound.Business
             }
         }
 
+        public static Object lockFlag = new Object();
       
         public static String getCellNoCode(String barcode)
         {
             using (Entities et = new Entities())
             {
-                
+                lock(lockFlag)
+                {
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item4 in et.T_WMS_LANEWAY
                                  on item.LANEWAYNO equals item4.LANEWAYNO
@@ -88,13 +90,14 @@ namespace InBound.Business
                         et.SaveChanges();
                         WriteLog.GetLog().Write("修改储位号:" + query3.CELLNO + "状态为30");
                         return query3.CELLNO;
-
                     }
                     else
                     {
                         return "";
 
                     }
+                    }
+                    
                 
             }
         }

@@ -164,30 +164,33 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                var query = (from item in et.T_WMS_ATSCELL
-                             join item2 in et.T_WMS_ATSCELLINFO
-                            on item.CELLNO equals item2.CELLNO
-                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                             on item2.CELLNO equals item3.CELLNO
-                             join item4 in et.T_WMS_LANEWAY
-                             on item.LANEWAYNO equals item4.LANEWAYNO
-                             join item5 in et.INF_EQUIPMENTSTATUS
-                            on item4.LANEWAYNO equals item5.EQUIPMENTID
-                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                             && item2.STATUS == 30//上架
-                             && item3.CIGARETTECODE == cigarettecode
-                             && item5.EQUIPMENTSTATUS=="1"
-                             orderby item2.INBOUNDTIME
-                             select item.CELLNO).FirstOrDefault();
-                if (query != null)
+                lock (lockFlag)
                 {
-                    return query;
-                }
-                else
-                {
-                    return "";
+                    var query = (from item in et.T_WMS_ATSCELL
+                                 join item2 in et.T_WMS_ATSCELLINFO
+                                on item.CELLNO equals item2.CELLNO
+                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                                 on item2.CELLNO equals item3.CELLNO
+                                 join item4 in et.T_WMS_LANEWAY
+                                 on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                on item4.LANEWAYNO equals item5.EQUIPMENTID
+                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                                 && item2.STATUS == 30//上架
+                                 && item3.CIGARETTECODE == cigarettecode
+                                 && item5.EQUIPMENTSTATUS == "1"
+                                 orderby item2.INBOUNDTIME
+                                 select item.CELLNO).FirstOrDefault();
+                    if (query != null)
+                    {
+                        return query;
+                    }
+                    else
+                    {
+                        return "";
 
+                    }
                 }
             }
         }
@@ -272,33 +275,36 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                var query = (from item in et.T_WMS_ATSCELL
-                             join item2 in et.T_WMS_ATSCELLINFO
-                            on item.CELLNO equals item2.CELLNO
-                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                             on item2.CELLNO equals item3.CELLNO
-                             join item4 in et.T_WMS_LANEWAY
-                             on item.LANEWAYNO equals item4.LANEWAYNO
-                             join item5 in et.INF_EQUIPMENTSTATUS
-                            on item4.LANEWAYNO equals item5.EQUIPMENTID
-                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                             && item2.STATUS == 30//上架
-                             && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
-                             && item5.EQUIPMENTSTATUS=="1"
-                             orderby item2.INBOUNDTIME, item.DISTANCE
-                             select item.CELLNO).ToList();
-                if (query != null && query.Count>0)
+                lock (lockFlag)
                 {
-                    Random rd = new Random();
-                   int seed= rd.Next(query.Count);
-                   UpdateCellOutStatus(query[seed], qty);
-                   return query[seed];
-                }
-                else
-                {
-                    return "";
+                    var query = (from item in et.T_WMS_ATSCELL
+                                 join item2 in et.T_WMS_ATSCELLINFO
+                                on item.CELLNO equals item2.CELLNO
+                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                                 on item2.CELLNO equals item3.CELLNO
+                                 join item4 in et.T_WMS_LANEWAY
+                                 on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                on item4.LANEWAYNO equals item5.EQUIPMENTID
+                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                                 && item2.STATUS == 30//上架
+                                 && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
+                                 && item5.EQUIPMENTSTATUS == "1"
+                                 orderby item2.INBOUNDTIME, item.DISTANCE
+                                 select item.CELLNO).ToList();
+                    if (query != null && query.Count > 0)
+                    {
+                        Random rd = new Random();
+                        int seed = rd.Next(query.Count);
+                        UpdateCellOutStatus(query[seed], qty);
+                        return query[seed];
+                    }
+                    else
+                    {
+                        return "";
 
+                    }
                 }
             }
 
@@ -307,36 +313,39 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                var query = (from item in et.T_WMS_ATSCELL
-                             join item2 in et.T_WMS_ATSCELLINFO
-                            on item.CELLNO equals item2.CELLNO
-                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                             on item2.CELLNO equals item3.CELLNO
-                             join item4 in et.T_WMS_LANEWAY
-                             on item.LANEWAYNO equals item4.LANEWAYNO
-                             join item5 in et.INF_EQUIPMENTSTATUS
-                            on item4.LANEWAYNO equals item5.EQUIPMENTID
-                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                             && item2.STATUS == 30//上架
-                             && item3.CIGARETTECODE == cigarettecode && item3.QTY == qty
-                             && item5.EQUIPMENTSTATUS=="1"
-                             orderby item2.INBOUNDTIME, item.DISTANCE
-                             select item.CELLNO).FirstOrDefault();
-                if (query != null)
+                lock (lockFlag)
                 {
-                    UpdateCellOutStatus(query, qty);
-                    return query;
-                }
-                else
-                {
-                    return "";
+                    var query = (from item in et.T_WMS_ATSCELL
+                                 join item2 in et.T_WMS_ATSCELLINFO
+                                on item.CELLNO equals item2.CELLNO
+                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                                 on item2.CELLNO equals item3.CELLNO
+                                 join item4 in et.T_WMS_LANEWAY
+                                 on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                on item4.LANEWAYNO equals item5.EQUIPMENTID
+                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                                 && item2.STATUS == 30//上架
+                                 && item3.CIGARETTECODE == cigarettecode && item3.QTY == qty
+                                 && item5.EQUIPMENTSTATUS == "1"
+                                 orderby item2.INBOUNDTIME, item.DISTANCE
+                                 select item.CELLNO).FirstOrDefault();
+                    if (query != null)
+                    {
+                        UpdateCellOutStatus(query, qty);
+                        return query;
+                    }
+                    else
+                    {
+                        return "";
 
+                    }
                 }
             }
 
         }
-        
+        public static Object lockFlag = new Object();
        public static String getCellNoBig(String cigarettecode, int qty)
         {
             using (Entities et = new Entities())
@@ -348,31 +357,35 @@ namespace InBound.Business
                 {
                     return cellno;
                 }
-                var query = (from item in et.T_WMS_ATSCELL
-                             join item2 in et.T_WMS_ATSCELLINFO
-                            on item.CELLNO equals item2.CELLNO
-                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                             on item2.CELLNO equals item3.CELLNO
-                             join item4 in et.T_WMS_LANEWAY
-                             on item.LANEWAYNO equals item4.LANEWAYNO
-                             join item5 in et.INF_EQUIPMENTSTATUS
-                             on item4.LANEWAYNO equals item5.EQUIPMENTID
-                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                             && item2.STATUS == 30//上架
-                             && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
-                             && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
-                             orderby item2.INBOUNDTIME, item.DISTANCE
-                             select item.CELLNO).FirstOrDefault();
-                if (query != null)
+                lock (lockFlag)
                 {
-                    UpdateCellOutStatus(query, qty);
-                    return query;
-                }
-                else
-                {
-                     return "";
 
+                    var query = (from item in et.T_WMS_ATSCELL
+                                 join item2 in et.T_WMS_ATSCELLINFO
+                                on item.CELLNO equals item2.CELLNO
+                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                                 on item2.CELLNO equals item3.CELLNO
+                                 join item4 in et.T_WMS_LANEWAY
+                                 on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                 on item4.LANEWAYNO equals item5.EQUIPMENTID
+                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                                 && item2.STATUS == 30//上架
+                                 && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
+                                 && item5.EQUIPMENTSTATUS == "1" //堆垛机正常
+                                 orderby item2.INBOUNDTIME, item.DISTANCE
+                                 select item.CELLNO).FirstOrDefault();
+                    if (query != null)
+                    {
+                        UpdateCellOutStatus(query, qty);
+                        return query;
+                    }
+                    else
+                    {
+                        return "";
+
+                    }
                 }
             }
            
@@ -388,31 +401,34 @@ namespace InBound.Business
                 {
                     return cellno;
                 }
-                var query = (from item in et.T_WMS_ATSCELL
-                             join item2 in et.T_WMS_ATSCELLINFO
-                            on item.CELLNO equals item2.CELLNO
-                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                             on item2.CELLNO equals item3.CELLNO
-                             join item4 in et.T_WMS_LANEWAY
-                             on item.LANEWAYNO equals item4.LANEWAYNO
-                             join item5 in et.INF_EQUIPMENTSTATUS
-                            on item4.LANEWAYNO equals item5.EQUIPMENTID
-                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                             && item2.STATUS == 30//上架
-                             && item3.CIGARETTECODE == cigarettecode && item3.QTY < qty
-                             && item5.EQUIPMENTSTATUS=="1"
-                             orderby item2.INBOUNDTIME, item.DISTANCE
-                             select item.CELLNO).FirstOrDefault();
-                if (query != null)
+                lock (lockFlag)
                 {
-                    UpdateCellOutStatus(query, qty);
-                    return query;
-                }
-                else
-                {
-                    return "";
+                    var query = (from item in et.T_WMS_ATSCELL
+                                 join item2 in et.T_WMS_ATSCELLINFO
+                                on item.CELLNO equals item2.CELLNO
+                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                                 on item2.CELLNO equals item3.CELLNO
+                                 join item4 in et.T_WMS_LANEWAY
+                                 on item.LANEWAYNO equals item4.LANEWAYNO
+                                 join item5 in et.INF_EQUIPMENTSTATUS
+                                on item4.LANEWAYNO equals item5.EQUIPMENTID
+                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                                 && item2.STATUS == 30//上架
+                                 && item3.CIGARETTECODE == cigarettecode && item3.QTY < qty
+                                 && item5.EQUIPMENTSTATUS == "1"
+                                 orderby item2.INBOUNDTIME, item.DISTANCE
+                                 select item.CELLNO).FirstOrDefault();
+                    if (query != null)
+                    {
+                        UpdateCellOutStatus(query, qty);
+                        return query;
+                    }
+                    else
+                    {
+                        return "";
 
+                    }
                 }
             }
 
