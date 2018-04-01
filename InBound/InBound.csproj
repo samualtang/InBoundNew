@@ -112,6 +112,7 @@
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\Entities.datasource" />
   </ItemGroup>
   <ItemGroup>

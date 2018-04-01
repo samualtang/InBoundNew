@@ -657,7 +657,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 27)//监控写入标识位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
                         {
                             while (!isInit)
                             {

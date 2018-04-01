@@ -76,19 +76,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskStatusItem10()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer+"DB1,W2");
-           list.Add(OpcUnionServer+"DB1,W4");
-           list.Add(OpcUnionServer+"DB1,W6");
-           list.Add(OpcUnionServer+"DB1,W8");
-           list.Add(OpcUnionServer+"DB1,W10");
-           list.Add(OpcUnionServer+"DB1,W12");
-           list.Add(OpcUnionServer+"DB1,W14");
-           list.Add(OpcUnionServer+"DB1,W16");
-           list.Add(OpcUnionServer+"DB1,W18");
-           list.Add(OpcUnionServer+"DB1,W20");
-           list.Add(OpcUnionServer+"DB1,W22");
-           list.Add(OpcUnionServer+"DB1,W24");
-           list.Add(OpcUnionServer+"DB1,W0");
+           list.Add(OpcUnionServer + "DB1,W2");  //任务号
+           list.Add(OpcUnionServer + "DB1,W4");   //出口号
+           list.Add(OpcUnionServer + "DB1,W6");   //包装机号
+           list.Add(OpcUnionServer + "DB1,W8");   //总条数
+           list.Add(OpcUnionServer + "DB1,W10");   //1号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W12");   //2号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W14");   //3号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W16");   //4号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W18");   //5号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W20");   //6号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W22");   //7号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W24");   //8号机械手抓烟数
+           list.Add(OpcUnionServer + "DB1,W0");   //任务接收标志位,1为上位发送,0为电控接收
            return list;
        }
        public static List<string> GetTaskStatusItem11()

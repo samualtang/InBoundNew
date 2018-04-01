@@ -33,9 +33,11 @@
             this.btn_print = new System.Windows.Forms.Button();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.orderdata = new System.Windows.Forms.DataGridView();
+            this.num = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettecode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ccount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.SuspendLayout();
@@ -104,18 +106,18 @@
             this.dgVprint1.LastPageMode = true;
             this.dgVprint1.LineSpace = 50F;
             this.dgVprint1.MainTitle = "表格主标题";
-            this.dgVprint1.MainTitleFont = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.MainTitleFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.MinFontSize = 6F;
             this.dgVprint1.OuterBorder = false;
             this.dgVprint1.OuterBorderColor = System.Drawing.Color.Black;
             this.dgVprint1.OuterBorderWidth = 5.08F;
             this.dgVprint1.PageFooterColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageFooterFont = new System.Drawing.Font("华文行楷", 9F);
+            this.dgVprint1.PageFooterFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageFooterLeft = null;
             this.dgVprint1.PageFooterMiddle = "共[总页数]页 第[页码]页";
             this.dgVprint1.PageFooterRight = null;
             this.dgVprint1.PageHeaderColor = System.Drawing.Color.Black;
-            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("华文行楷", 9F);
+            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dgVprint1.PageHeaderLeft = null;
             this.dgVprint1.PageHeaderMiddle = null;
             this.dgVprint1.PageHeaderRight = null;
@@ -167,7 +169,7 @@
             this.dgVprint1.TableTopRightTitleAlign = System.Drawing.StringAlignment.Far;
             this.dgVprint1.TitleTextStyle = 0;
             this.dgVprint1.WaterMarkColor = System.Drawing.Color.Red;
-            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("华文行楷", 80F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 80F, System.Drawing.FontStyle.Bold);
             this.dgVprint1.WaterMarkLandscape = true;
             this.dgVprint1.WaterMarkOpacity = ((byte)(128));
             this.dgVprint1.WaterMarkText = "";
@@ -186,9 +188,11 @@
             this.orderdata.AllowUserToAddRows = false;
             this.orderdata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderdata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.num,
             this.cigarettecode,
             this.cigarettename,
-            this.orderqty});
+            this.orderqty,
+            this.ccount});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderdata.Location = new System.Drawing.Point(0, 43);
             this.orderdata.Name = "orderdata";
@@ -198,23 +202,42 @@
             this.orderdata.Size = new System.Drawing.Size(914, 219);
             this.orderdata.TabIndex = 2;
             // 
+            // num
+            // 
+            this.num.DataPropertyName = "num";
+            this.num.HeaderText = "序号";
+            this.num.Name = "num";
+            this.num.ReadOnly = true;
+            this.num.Width = 60;
+            // 
             // cigarettecode
             // 
             this.cigarettecode.DataPropertyName = "cigarettecode";
             this.cigarettecode.HeaderText = "品牌代码";
             this.cigarettecode.Name = "cigarettecode";
+            this.cigarettecode.ReadOnly = true;
             // 
             // cigarettename
             // 
             this.cigarettename.DataPropertyName = "cigarettename";
             this.cigarettename.HeaderText = "品牌名称";
             this.cigarettename.Name = "cigarettename";
+            this.cigarettename.ReadOnly = true;
+            this.cigarettename.Width = 150;
             // 
             // orderqty
             // 
             this.orderqty.DataPropertyName = "orderqty";
             this.orderqty.HeaderText = "订货数量";
             this.orderqty.Name = "orderqty";
+            this.orderqty.ReadOnly = true;
+            // 
+            // ccount
+            // 
+            this.ccount.DataPropertyName = "ccount";
+            this.ccount.HeaderText = "订单户数";
+            this.ccount.Name = "ccount";
+            this.ccount.ReadOnly = true;
             // 
             // win_yxyreplenish
             // 
@@ -237,8 +260,10 @@
         private System.Windows.Forms.Button btn_print;
         private VBprinter.DGVprint dgVprint1;
         private System.Windows.Forms.DataGridView orderdata;
+        private System.Windows.Forms.DataGridViewTextBoxColumn num;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettecode;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettename;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderqty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ccount;
     }
 }

@@ -85,7 +85,7 @@ namespace highSpeed.baseData
             String strsql = "SELECT tmp.* from(select rownum as num,t.* from (select cigarettename,cigarettecode,mantissa,machineseq,THRESHOLD,BOXCOUNT,clearup,maintissaless from t_produce_sorttrough where state=10 " + wherecause
                             + "  order by to_number(machineseq))t)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by tmp.num";
             //MessageBox.Show(strsql);
-            int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where state=0 and cigarettetype=20"  ).ToString());
+            int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where state=10 " + wherecause).ToString());
             Bind(strsql);
             pager1.RecordCount = total;
             this.pager1.InitPageInfo();

@@ -398,7 +398,7 @@
             // 
             this.pager1.CurrentPageIndex = 1;
             this.pager1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pager1.Location = new System.Drawing.Point(0, 640);
+            this.pager1.Location = new System.Drawing.Point(0, 645);
             this.pager1.Name = "pager1";
             this.pager1.RecordCount = 0;
             this.pager1.Size = new System.Drawing.Size(1099, 45);

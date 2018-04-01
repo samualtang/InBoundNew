@@ -24,12 +24,13 @@ namespace highSpeed.orderHandle
         private void seek()
         {
 
-            
 
 
 
-            String strsql = "SELECT line.cigarettecode,line.cigarettename,SUM(line.quantity)AS orderqty FROM t_produce_orderline line "+
-                            "WHERE line.allowsort='非标' GROUP BY line.cigarettecode,line.cigarettename ORDER BY orderqty desc";
+
+            String strsql = "  SELECT ROWNUM AS num, cigarettecode,cigarettename,ccount ,orderqty  FROM" +
+                            "(SELECT line.cigarettecode,line.cigarettename,count(*) as ccount,SUM(line.quantity)AS orderqty FROM t_produce_orderline line " +
+                           " WHERE line.allowsort='非标' GROUP BY line.cigarettecode,line.cigarettename ORDER BY orderqty desc)";
 
             //MessageBox.Show(strsql);
             Bind(strsql);

@@ -42,6 +42,7 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             updateListBox("应用程序启动");
+            writeLog.Write("应用程序启动");
            // TaskService.GetUnionTask();
 
            
@@ -205,6 +206,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception e)
             {
                 updateListBox("连接服务器失败:"+e.Message);
+                writeLog.Write("连接服务器失败:" + e.Message);
             }
         }
 
@@ -223,7 +225,7 @@ namespace SortingControlSys.SortingControl
             if (flag == 0)
             {
                 taskgroup.Write(5, 12);
-                taskgroup.Write(0, 12);
+                taskgroup.Write(0, 12);//初始化状态为可接收状态
             }
             if (flag == -1)
             {
@@ -232,6 +234,7 @@ namespace SortingControlSys.SortingControl
             else
             {
                 updateListBox("连接服务器成功......");
+                writeLog.Write("连接服务器成功......数据初始化成功!"  );
                 updateControlEnable(false, button10);
             }
             regDataChange();
@@ -300,7 +303,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = taskgroup.Read(12).CastTo<int>(-1);
-                writeLog.Write("写入前读取标志位：" + flag);
+                
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
@@ -404,10 +407,10 @@ namespace SortingControlSys.SortingControl
                         {
                             
                             if (tempList.Count > 0)
-                            {
+                            {                                                               
+                                TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
                                 updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
                                 writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
                             }
                             
                             sendTask();
@@ -431,14 +434,21 @@ namespace SortingControlSys.SortingControl
                        // if (getKey(clientId[i])!=-1)
                        // {
                           //  int taskno = getKey(clientId[i]);
-                            writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
-
-                            TaskService.UpdateUnionStatus( 20, tempvalue);
+                        writeLog.Write("从电控出口号：" + clientId[i] + "获取到任务号:" + tempvalue + "完成信号 ");
+                            try
+                            {
+                                TaskService.UpdateUnionStatus(20, tempvalue);
+                            }
+                            catch(Exception ex)
+                            {
+                                writeLog.Write("数据库更新合流状态位失败: "+ex.Message);
+                                updateListBox("数据库更新合流状态位失败: "+ex.Message);
+                            }
 
                             if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + tempvalue + "已完成");
-                                writeLog.Write("合流任务号:" + tempvalue + "已完成");
+                                updateListBox("任务:" + tempvalue + "数据库状态已置完成");
+                                writeLog.Write("合流任务号:" + tempvalue + "数据库状态已置完成");
                             }
                             statusGroup2.Write(0, clientId[i] - 1);
                             removeKey(clientId[i]);
@@ -556,7 +566,7 @@ namespace SortingControlSys.SortingControl
        }
        int i = 1;
        public void initdata() {
-           writeLog.Write("启动程序。。。。。。");
+           //writeLog.Write("启动程序。。。。。。");
            task_data.Rows.Clear();
            try
            {
