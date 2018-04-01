@@ -3415,6 +3415,30 @@ namespace InBound
         private Nullable<global::System.Decimal> _CLEARTHRESHOLD;
         partial void OnCLEARTHRESHOLDChanging(Nullable<global::System.Decimal> value);
         partial void OnCLEARTHRESHOLDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SEQ
+        {
+            get
+            {
+                return _SEQ;
+            }
+            set
+            {
+                OnSEQChanging(value);
+                ReportPropertyChanging("SEQ");
+                _SEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SEQ");
+                OnSEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SEQ;
+        partial void OnSEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnSEQChanged();
 
         #endregion
 
