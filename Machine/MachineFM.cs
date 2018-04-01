@@ -739,7 +739,7 @@ namespace SortingControlSys.SortingControl
         int i = 1;
         public void initdata()
         {
-            writeLog.Write("启动程序。。。。。。");
+            //writeLog.Write("启动程序。。。。。。");
             task_data.Rows.Clear();
             try
             {
@@ -931,7 +931,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 Group no = groupList[cmbMachines.SelectedIndex];
-                no.Write(3, 3);
+                no.Write(3, 4);
                 MessageBox.Show("操作完成！");
             }
             catch (Exception ex)

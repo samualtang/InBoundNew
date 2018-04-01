@@ -40,14 +40,18 @@ namespace SpecialShapeSmoke
             lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             if (lineNum == "1")
             {
-                boxText = new String[] { "1059", "1060", "1061" };
+                boxText = new String[] { "1059", "1060", "1061", };
                 troughno = new decimal[] { 1059, 1060, 1061 };
 
 
             }
-            else
+            else if(lineNum =="2")
             {
-                boxText = new String[] { "2059", "2060", "2061" };
+               //动态添加
+            }
+            else 
+            {
+                 boxText = new String[] { "2059", "2060", "2061" };
                 troughno = new decimal[] { 2059, 2060, 2061 };
             }
             p.Width = Screen.PrimaryScreen.Bounds.Width;
@@ -88,6 +92,8 @@ namespace SpecialShapeSmoke
             search.Location = new Point(p.Width - 4*topHeight, 0);
             p.Controls.Add(search);
 
+           
+
             //Button refresh = new Button();
             //refresh.Width = 2 * topHeight;
             //refresh.Height = topHeight;
@@ -97,7 +103,8 @@ namespace SpecialShapeSmoke
             //refresh.Click += Refresh;
             //refresh.Location = new Point(p.Width - 7 * topHeight, 0);
             //p.Controls.Add(refresh);
-            addGroupBox(3);
+
+            addGroupBox(4);
             Thread thread = new Thread(ConnectServer);
             thread.Start();
             
@@ -333,7 +340,7 @@ namespace SpecialShapeSmoke
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
+            base.OnClosing(e); 
             stop = true;
            
         }

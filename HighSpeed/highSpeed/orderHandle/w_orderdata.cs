@@ -24,7 +24,7 @@ namespace highSpeed.orderHandle
         private void seek()
         {
 
-            String strsql = "SELECT cigarettecode,cigarettename,SUM(quantity)AS orderqty FROM t_produce_orderline GROUP BY cigarettecode,cigarettename ORDER BY orderqty desc"; 
+            String strsql = "select rownum as num  , cigarettecode,cigarettename,  ccount,  orderqty  from (SELECT  cigarettecode,cigarettename,count(*) as ccount,SUM(quantity) AS orderqty    FROM t_produce_orderline GROUP BY cigarettecode,cigarettename ORDER BY orderqty   desc)"; 
                             
             //MessageBox.Show(strsql);
             Bind(strsql);
