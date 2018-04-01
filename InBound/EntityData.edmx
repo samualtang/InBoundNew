@@ -167,6 +167,7 @@
           <Property Name="MAINTISSALESS" Type="number" />
           <Property Name="CLEARUP" Type="number" />
           <Property Name="CLEARTHRESHOLD" Type="number" />
+          <Property Name="SEQ" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -1546,6 +1547,7 @@
           <Property Type="Decimal" Name="MAINTISSALESS" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CLEARUP" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CLEARTHRESHOLD" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SEQ" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2280,6 +2282,7 @@
           <EntitySetMapping Name="T_PRODUCE_SORTTROUGH">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_SORTTROUGH">
               <MappingFragment StoreEntitySet="T_PRODUCE_SORTTROUGH">
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
                 <ScalarProperty Name="CLEARTHRESHOLD" ColumnName="CLEARTHRESHOLD" />
                 <ScalarProperty Name="CLEARUP" ColumnName="CLEARUP" />
                 <ScalarProperty Name="MAINTISSALESS" ColumnName="MAINTISSALESS" />
@@ -2324,7 +2327,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="EntityData" ZoomLevel="48">
+      <Diagram Name="EntityData" ZoomLevel="55">
         <EntityTypeShape EntityType="Model.T_WMS_CONSIGNOR" Width="1.5" PointX="6.75" PointY="6.75" Height="1.9202278645833246" />
         <EntityTypeShape EntityType="Model.T_WMS_INOUTBOUND_TASK" Width="1.5" PointX="8.75" PointY="8.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="4.75" PointY="9.75" Height="7.8336393229166674" />
@@ -2358,7 +2361,7 @@
         <EntityTypeShape EntityType="Model.T_SYS_USER" Width="1.5" PointX="22.375" PointY="0.75" Height="12.476115722656246" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_TASK" Width="1.5" PointX="0.75" PointY="16.75" Height="7.1275642903645746" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.375" PointY="3.75" Height="4.6443082682291674" />
-        <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="5.02634765625001" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="5.2173673502604174" />
       </Diagram>
     </Diagrams>
   </Designer>
