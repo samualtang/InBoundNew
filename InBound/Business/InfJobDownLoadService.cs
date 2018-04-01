@@ -93,7 +93,7 @@ namespace InBound.Business
               DateTime dt = DateTime.Now.AddDays(-1);
               var query = (from item in entity.INF_JOBDOWNLOAD
                            join item2 in entity.INF_JOBFEEDBACK on item.JOBID equals item2.JOBID
-                           where item2.FEEDBACKSTATUS == 98 && item.RESPONDDATE > dt
+                           where item2.FEEDBACKSTATUS == 98 && item2.STATUS==0 && item.RESPONDDATE > dt
                            orderby item.RESPONDDATE descending
                            select new Error{ BRANDID=item.BRANDID, RESDATE =item.RESPONDDATE, JOBID=item.JOBID, PLANQTY=item.PLANQTY, JOBTYPE=item.JOBTYPE, SOURCE=item.SOURCE, TARGET=item.TARGET, ERRORCODE=item2.ERRORCODE }).ToList();
               return query ;

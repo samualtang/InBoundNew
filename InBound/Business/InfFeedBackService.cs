@@ -35,6 +35,21 @@ namespace InBound.Business
               return query;
           }
       }
+
+      public static void UpdateErrorJob(String jobid)
+      {
+
+          using (Entities dataEntity = new Entities())
+          {
+
+              var query = (from item in dataEntity.INF_JOBFEEDBACK where item.JOBID == jobid && item.FEEDBACKSTATUS==98  select item).FirstOrDefault();
+              if (query != null)
+              {
+                  query.STATUS = 10;
+                  dataEntity.SaveChanges();
+              }
+          }
+      }
       public static WriteLog log = new WriteLog();
       public static void AutoWriteFinishTask()
       {
@@ -51,7 +66,7 @@ namespace InBound.Business
                                where item.STATUS == 0 && item.FEEDBACKSTATUS == 99
                               // && item2.INPUTTYPE == 10 
                                select item2).ToList();//执行完的任务
-                  var query2 = (from item in dataEntity.INF_EQUIPMENTREQUEST 
+                   var query2 = (from item in dataEntity.INF_EQUIPMENTREQUEST 
                                 where item.STATUS == 0 
                                 select item).ToList();//wcs申请的任务
                   if (query2 != null && query2.Count > 0)
@@ -72,7 +87,7 @@ namespace InBound.Business
                       task.BRANDID = temptask.BRANDID;
                       task.PLANQTY = temptask.REQUESTQTY;
                       task.INPUTTYPE = 10;
-
+                      temptask.RESPONDDATE = DateTime.Now;
                       if (temptask.REQUESTTYPE != 3)
                       {
                           if (temptask.REQUESTTYPE == 1)//入库请求
@@ -125,6 +140,10 @@ namespace InBound.Business
                                   else
                                   {
                                       T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.CheckPalletExist(temptask.BARCODE);//检查托盘号是否存在
+                                      if (cellInfo == null)
+                                      {
+                                          continue;
+                                      }
                                       T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellInfo.CELLNO);
                                       //if (detail.REQUESTQTY == detail.QTY) //&& (cellInfo.DISMANTLE==0)
                                       //{
@@ -246,6 +265,8 @@ namespace InBound.Business
                                   task.BRANDID = "1111111";
                                  
                                   task.SOURCE = AtsCellOutService.getCellNoBig("1111111", 1);//托盘组任务
+                                  if (task.SOURCE == "")
+                                      continue;
                                   task.BARCODE = AtsCellInfoService.GetCellInfo(task.SOURCE).PALLETNO;
                                  
                               }
