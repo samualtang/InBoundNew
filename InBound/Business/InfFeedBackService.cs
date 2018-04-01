@@ -387,6 +387,8 @@ namespace InBound.Business
                                       {
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
+                                          if (inboundLine == null)
+                                              continue;
                                           inboundLine.ABOXQTY += item.PLANQTY;
                                           if (inboundLine.ABOXQTY + inboundLine.OTHERQTY == inboundLine.BOXQTY)
                                           {
