@@ -307,7 +307,7 @@ namespace SortingControlSys.SortingControl
                         if (values[i] != null &&  int.Parse(values[i].ToString()) == 0)
                         {
                             String logstr = "";
-                            foreach (var item in list)
+                            foreach (var item in list1)
                             {
                                 logstr += item.POKEID + ";";
                             }
