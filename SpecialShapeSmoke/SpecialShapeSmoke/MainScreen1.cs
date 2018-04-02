@@ -24,8 +24,7 @@ namespace SpecialShapeSmoke
         int labelHeight = 50;
         int boxTop = 40;
         int boxBottom = 10;
-        int troughNum = 0;//烟道数量
-        bool stop = false; 
+        bool stop = false;
         String lineNum = "0";
         Label chezu = new Label();
         public string[] boxText = null;
@@ -38,39 +37,10 @@ namespace SpecialShapeSmoke
             this.Hide();
             this.Show();
             Panel p = new Panel();
-
-            lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
-            if (lineNum == "1")
-            { 
-                string no = ConfigurationManager.AppSettings["throuhID"].ToString();//配置文件读取通道编号
-                boxText = getstring(no);  
-                troughno = GetTroughtphyc(boxText);
-                if (troughno.Length > 7)
-                {
-                    writeLog.Write(DateTime.Now.ToString() + ":最大通道数为7");
-                    return;
-                }
-                addGroupBox(troughno.Length);
-                
-            }
-            else if(lineNum == "2")
-            {
-                string no = ConfigurationManager.AppSettings["throuhID2"].ToString();//配置文件读取通道编号
-                boxText = getstring(no);
-                troughno = GetTroughtphyc(boxText);
-                if (troughno.Length > 7)
-                {
-                    writeLog.Write(DateTime.Now.ToString() + ":最大通道数为7");
-                    return;
-                }
-                addGroupBox(troughno.Length);
-            }
-
-
             //lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
 
             boxText =  ConfigurationManager.AppSettings["troughList"].ToString().Split(',');
-            lineNum = boxText.Length.ToString();
+            lineNum = boxText.Length.ToString();//改为了通道个数
             troughno = new decimal[boxText.Length];
             for (int i = 0; i < boxText.Length; i++)
             {
@@ -91,7 +61,6 @@ namespace SpecialShapeSmoke
             //     boxText = new String[] { "2059", "2060", "2061" };
             //    troughno = new decimal[] { 2059, 2060, 2061 };
             //}
-
             p.Width = Screen.PrimaryScreen.Bounds.Width;
             p.Height = topHeight;
             p.BackgroundImage = global::SpecialShapeSmoke.Properties.Resources.topfj;
@@ -132,16 +101,7 @@ namespace SpecialShapeSmoke
             search.Location = new Point(p.Width - 4*topHeight, 0);
             p.Controls.Add(search);
 
-
-            //Button addShape = new Button();
-            //addShape.Width = 2 * topHeight;
-            //addShape.Height = topHeight;
-            //addShape.BackColor = Color.Silver;
-            //addShape.Font = new Font("宋体", 25, FontStyle.Bold);
-            //addShape.Text = "增添";
-            //addShape.Click += addShapeSmoke;
-            //addShape.Location = new Point(p.Width - 6 * topHeight, 0);
-            //p.Controls.Add(addShape);
+           
 
             //Button refresh = new Button();
             //refresh.Width = 2 * topHeight;
@@ -153,39 +113,15 @@ namespace SpecialShapeSmoke
             //refresh.Location = new Point(p.Width - 7 * topHeight, 0);
             //p.Controls.Add(refresh);
 
-
             addGroupBox(int.Parse( lineNum));
-
             Thread thread = new Thread(ConnectServer);
             thread.Start();
-             
-        }
-        /// <summary>
-        /// 获取配置文件通道号
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public string[] getstring(string str)
-        {
-            string [] newStr ;
-              newStr = str.Split(',');
-            return newStr;
-        }
-        /// <summary>
-        /// 获取配置文件物理通道号
-        /// </summary>
-        /// <param name="dec"></param>
-        /// <returns></returns>
-        public decimal[] GetTroughtphyc(string[] dec)
-        {
-            decimal[] dim = new decimal[dec.Length];
-            for (int i = 0; i < dec.Length; i++)
-            {
-                dim[i] = Convert.ToDecimal(dec[i]);
-            }
-            return dim;
-        }
+            
+            
 
+
+        }
+       
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
@@ -224,10 +160,11 @@ namespace SpecialShapeSmoke
             }
         }
         void ConnectServer()
-        { 
+        {
+
             while (true)
             {
-                getData(troughno);
+                getData();
                 Thread.Sleep(2000);
             }
             //socket = new ClientSocket(ipaddress, PORT);
@@ -240,12 +177,6 @@ namespace SpecialShapeSmoke
         //List<HUNHEVIEW> through2 = new List<HUNHEVIEW>();
         //List<HUNHEVIEW> through3 = new List<HUNHEVIEW>();
 
-        List<HUNHEVIEW>[] through;
-        /// <summary>
-        /// 清理所有通道的烟
-        /// </summary>
-     
-
         //通道集合
         List<HUNHEVIEW>[] throughList;
         public void clearAllText()
@@ -255,59 +186,26 @@ namespace SpecialShapeSmoke
             for (int i = 0; i < throughList.Length; i++)
             {
                 for (int j = 0; j < panelList[i].Controls.Count; j++)
-
                 {
                     Label lbl = (Label)panelList[i].Controls[j];
                     updateLabel("", lbl);
                 }
-
-            } 
-            //for (int i = 0; i < panelList[1].Controls.Count; i++)
-            //{
-            //    Label lbl = (Label)panelList[1].Controls[i];
-            //    updateLabel("", lbl);
-            //}
-            //if (troughNum == 3)//烟道数量
-            //{
-            //    for (int i = 0; i < panelList[2].Controls.Count; i++)
-            //    {
-            //        Label lbl = (Label)panelList[2].Controls[i];
-            //        updateLabel("", lbl);
-            //    }
-            //}
-
             }
 
           
-
-        
-        public void getData(decimal[] data)
+        }
+        public void getData()
         {
                // writeLog.Write("Receive Resend Data:"+data);
-            clearAllText();
+                clearAllText();
                 try
                 {
-
-                    for (int i = 0; i < troughno.Length; i++)
-                    {
-                        through[i] = service.GetTroughCigarette(data[i], 300);
-                        initText(panelList[i],through[i]);
-                    }
-                    
-                    //through1 = GroupList(service.GetTroughCigarette(troughno[0], 300));
-                    //through2 = GroupList(service.GetTroughCigarette(troughno[1], 300));
-                    //through3 = GroupList(service.GetTroughCigarette(troughno[2], 300));
-                    //initText(panelList[0], through1);
-                    //initText(panelList[1], through2);
-                    //initText(panelList[2], through3);
-
                     for (int i = 0; i < throughList.Length; i++)
                     {
                         throughList[i]= GroupList(service.GetTroughCigarette(troughno[i], 300));
                         initText(panelList[i], throughList[i]);
                     }
                     
-
                     //var item = service.GetBeginTask();
                     //if (item != null && item.Count > 0)
                     //{
@@ -324,14 +222,8 @@ namespace SpecialShapeSmoke
 
         public void Refresh(object sender, EventArgs e)
         {
-            getData(troughno);
+            getData();
         }
-
-        public void addShapeSmoke(object sender, EventArgs e)
-        {
-          
-        }
-
         public void initText(GroupBox box, List<HUNHEVIEW> list)
         {
             if (box != null && list != null)
@@ -356,8 +248,8 @@ namespace SpecialShapeSmoke
                        
                     }
                 }
-                catch (Exception e)
-                { writeLog.Write(DateTime.Now.ToString()+":" + e.Message); }
+                catch
+                { }
             }
         }
         void OpenWin(object sender, EventArgs e)
