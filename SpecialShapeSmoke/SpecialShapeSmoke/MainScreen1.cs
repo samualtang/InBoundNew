@@ -64,6 +64,8 @@ namespace SpecialShapeSmoke
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
 
+
+
             Button close = new Button();
             close.Width = topHeight;
             close.Height = topHeight;
