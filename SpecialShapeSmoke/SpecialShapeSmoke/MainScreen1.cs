@@ -38,6 +38,7 @@ namespace SpecialShapeSmoke
             this.Hide();
             this.Show();
             Panel p = new Panel();
+
             lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             if (lineNum == "1")
             { 
@@ -64,6 +65,32 @@ namespace SpecialShapeSmoke
                 }
                 addGroupBox(troughno.Length);
             }
+
+
+            //lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
+
+            boxText =  ConfigurationManager.AppSettings["troughList"].ToString().Split(',');
+            lineNum = boxText.Length.ToString();
+            troughno = new decimal[boxText.Length];
+            for (int i = 0; i < boxText.Length; i++)
+            {
+                troughno[i] =Convert.ToDecimal( boxText[i]) ;
+            }
+
+            //if (lineNum == "1")
+            //{
+            //    boxText = new String[] { "1059", "1060", "1061", };
+            //    troughno = new decimal[] { 1059, 1060, 1061 };
+            //}
+            //else if(lineNum =="2")
+            //{
+            //   //动态添加
+            //}
+            //else 
+            //{
+            //     boxText = new String[] { "2059", "2060", "2061" };
+            //    troughno = new decimal[] { 2059, 2060, 2061 };
+            //}
 
             p.Width = Screen.PrimaryScreen.Bounds.Width;
             p.Height = topHeight;
@@ -125,7 +152,10 @@ namespace SpecialShapeSmoke
             //refresh.Click += Refresh;
             //refresh.Location = new Point(p.Width - 7 * topHeight, 0);
             //p.Controls.Add(refresh);
-            
+
+
+            addGroupBox(int.Parse( lineNum));
+
             Thread thread = new Thread(ConnectServer);
             thread.Start();
              
@@ -209,19 +239,28 @@ namespace SpecialShapeSmoke
         //List<HUNHEVIEW> through1 = new List<HUNHEVIEW>();
         //List<HUNHEVIEW> through2 = new List<HUNHEVIEW>();
         //List<HUNHEVIEW> through3 = new List<HUNHEVIEW>();
+
         List<HUNHEVIEW>[] through;
         /// <summary>
         /// 清理所有通道的烟
         /// </summary>
+     
+
+        //通道集合
+        List<HUNHEVIEW>[] throughList;
         public void clearAllText()
         {
-            for (int i = 0; i < troughno.Length; i++)
+            throughList =  new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
+
+            for (int i = 0; i < throughList.Length; i++)
             {
-                for (int j  = 0; j < panelList[i].Controls.Count; j++)
+                for (int j = 0; j < panelList[i].Controls.Count; j++)
+
                 {
                     Label lbl = (Label)panelList[i].Controls[j];
                     updateLabel("", lbl);
                 }
+
             } 
             //for (int i = 0; i < panelList[1].Controls.Count; i++)
             //{
@@ -236,13 +275,19 @@ namespace SpecialShapeSmoke
             //        updateLabel("", lbl);
             //    }
             //}
-        }
+
+            }
+
+          
+
+        
         public void getData(decimal[] data)
         {
                // writeLog.Write("Receive Resend Data:"+data);
             clearAllText();
                 try
                 {
+
                     for (int i = 0; i < troughno.Length; i++)
                     {
                         through[i] = service.GetTroughCigarette(data[i], 300);
@@ -255,6 +300,14 @@ namespace SpecialShapeSmoke
                     //initText(panelList[0], through1);
                     //initText(panelList[1], through2);
                     //initText(panelList[2], through3);
+
+                    for (int i = 0; i < throughList.Length; i++)
+                    {
+                        throughList[i]= GroupList(service.GetTroughCigarette(troughno[i], 300));
+                        initText(panelList[i], throughList[i]);
+                    }
+                    
+
                     //var item = service.GetBeginTask();
                     //if (item != null && item.Count > 0)
                     //{
