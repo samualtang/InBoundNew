@@ -82,7 +82,7 @@ namespace InBound.Business
                        {
                            if (task.PLANQTY != null)
                            {
-                               StroageInOutService.UpdateInOut(task.JOBID, task.PLANQTY ?? 0, dataEntity);
+                               StroageInOutService.UpdateInOut(task.JOBID, task.ACTQTY ?? 0, dataEntity);
                                task.STATUS = 1;
                                dataEntity.SaveChanges();
                            }
