@@ -11,7 +11,7 @@ namespace SortingControlSys.Model
        /// 获取任务item
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetTaskItem()
+       public static List<string> GetTaskItem()//第一组任务
        {
            List<string> list = new List<string>();
            for (int i = 0; i <= 900; i++)
@@ -249,7 +249,7 @@ namespace SortingControlSys.Model
            return list;
        }
 
-       public static List<string> GetTaskItem1()
+       public static List<string> GetTaskItem1()//第二组任务
        {
            List<string> list = new List<string>();
            for (int i = 0; i <= 900; i++)

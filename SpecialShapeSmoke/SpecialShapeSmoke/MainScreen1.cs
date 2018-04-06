@@ -159,6 +159,44 @@ namespace SpecialShapeSmoke
                 return null;
             }
         }
+        //与上面的方法相同 页面填充测试数据时使用的-yq
+        public List<HUNHEVIEW_cs> GroupList_cs(List<HUNHEVIEW_cs> list)
+        {
+            if (list != null)
+            {
+                List<HUNHEVIEW_cs> temp = new List<HUNHEVIEW_cs>();
+                HUNHEVIEW_cs tempview = null;
+                int count = 0;
+                foreach (var item in list)//遍历取到的数据（名称、编码、通道号）
+                {
+                    count++;
+                    if (tempview == null)//如果tempview没有数据 赋值当前遍历的值
+                    {
+                        tempview = item;
+                    }
+                    else if (item.CIGARETTECODE != tempview.CIGARETTECODE)//如果当前遍历的数据的香烟编码不等于上一次遍历
+                    {
+                        temp.Add(tempview);//将上一次遍历的数据存入集合
+                        tempview = item;//重新赋值 
+                    }
+                    else//如果等于上一次遍历的编码
+                    {
+                        tempview.TROUGHNUM += item.TROUGHNUM;//将编码拼接
+                    }
+                    if (count == list.Count)//如果当前遍历的是最后一个
+                    {
+                        temp.Add(tempview);
+                    }
+                }
+                return temp;
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
         void ConnectServer()
         {
 
@@ -172,18 +210,27 @@ namespace SpecialShapeSmoke
             //socket.startListen();
         }
 
-        HunHeService service = new HunHeService();
-        //List<HUNHEVIEW> through1 = new List<HUNHEVIEW>();
-        //List<HUNHEVIEW> through2 = new List<HUNHEVIEW>();
-        //List<HUNHEVIEW> through3 = new List<HUNHEVIEW>();
+        HunHeService service = new HunHeService(); 
 
         //通道集合
         List<HUNHEVIEW>[] throughList;
+        //测试数据填充用的通道集合-yq
+        List<HUNHEVIEW_cs>[] throughList_cs;
         public void clearAllText()
         {
-            throughList =  new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
+            //throughList =  new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
+            //for (int i = 0; i < throughList.Length; i++)
+            //{
+            //    for (int j = 0; j < panelList[i].Controls.Count; j++)
+            //    {
+            //        Label lbl = (Label)panelList[i].Controls[j];
+            //        updateLabel("", lbl);
+            //    }
+            //}
 
-            for (int i = 0; i < throughList.Length; i++)
+            //测试数据填充用的-yq
+            throughList_cs = new List<HUNHEVIEW_cs>[Convert.ToInt32(lineNum)];
+            for (int i = 0; i < throughList_cs.Length; i++)
             {
                 for (int j = 0; j < panelList[i].Controls.Count; j++)
                 {
@@ -191,8 +238,6 @@ namespace SpecialShapeSmoke
                     updateLabel("", lbl);
                 }
             }
-
-          
         }
         public void getData()
         {
@@ -200,12 +245,21 @@ namespace SpecialShapeSmoke
                 clearAllText();
                 try
                 {
-                    for (int i = 0; i < throughList.Length; i++)
+                    //for (int i = 0; i < throughList.Length; i++)
+                    //{
+                    //    throughList[i] = GroupList(service.GetTroughCigarette(troughno[i], 300));
+                    //    initText(panelList[i], throughList[i]);
+                    //}
+
+
+                    //测试数据填充用的 替换了上面注释的代码-yq
+                    for (int i = 0; i < throughList_cs.Length; i++)
                     {
-                        throughList[i]= GroupList(service.GetTroughCigarette(troughno[i], 300));
-                        initText(panelList[i], throughList[i]);
+                        //throughList_cs[i] = GroupList_cs(service.GetTroughCigarette_cs(troughno[i], 300));//第二个
+                        throughList_cs[i] = service.GetTroughCigarette_cs(troughno[i], 300);//第一个
+                        initText_cs(panelList[i], throughList_cs[i]);
                     }
-                    
+
                     //var item = service.GetBeginTask();
                     //if (item != null && item.Count > 0)
                     //{
@@ -252,6 +306,83 @@ namespace SpecialShapeSmoke
                 { }
             }
         }
+        //测试数据填充用的 -yq
+        public void initText_cs(GroupBox box, List<HUNHEVIEW_cs> list)
+        {
+            if (box != null && list != null)
+            {
+                int i = labelCount - 1;
+                try
+                {
+                    string tagid = "";//标识上一个通道烟的编码
+                    string tagname = "";
+                    int num = 0;
+                    int falg1 = 0;//最大长度
+                    int falg2 = 0;//当前位置
+                    foreach (var item in list)
+                    {
+                        falg2++;
+                        falg1 = list.Count;
+                        if (falg2 == 1)//如果是第一个
+                        {
+                            tagid = item.CIGARETTECODE;
+                            tagname = item.CIGARETTENAME;
+                        }
+                        else if (falg2 != 0 && falg2 != falg1)//如果不是第一个 也不是最后一个
+                        {
+                            if (tagid != item.CIGARETTECODE)//编码与前面的一个不同
+                            {
+                                Label lbl = (Label)box.Controls[i];
+                                i--;
+                                updateLabel(tagname + ":" + num + "条通道", lbl);
+                                tagname = item.CIGARETTENAME;
+                                tagid = item.CIGARETTECODE;
+                                num = 0;
+                            }
+                        }
+                        else if (falg2 == falg1)
+                        {
+                            if (tagid == item.CIGARETTECODE)//编码与前面的一个相同
+                            {
+                                num++;
+                                Label lbl = (Label)box.Controls[i];
+                                i--;
+                                updateLabel(tagname + ":" + num + "条通道", lbl);
+                            }
+                            else
+                            {
+                                Label lbls = (Label)box.Controls[i];
+                                i--;
+                                updateLabel(tagname + ":" + num + "条通道", lbls);
+
+                                Label lbl = (Label)box.Controls[i];
+                                i--;
+                                updateLabel(item.CIGARETTENAME + ":1条通道", lbl);
+                                num = 0;
+                            }
+                            falg2 = 0;
+                            falg1 = 0;
+                        }
+                        num++;
+                    }
+
+                    //foreach (var item in list)
+                    //{
+                    //    decimal count = Convert.ToDecimal(item.TROUGHNUM);
+                    //    if (count >= 1)
+                    //    {
+                    //        Label lbl = (Label)box.Controls[i];
+                    //        i--;
+                    //        updateLabel(item.CIGARETTENAME + ":" + count.ToString().Length / 3 + "条", lbl);
+                    //    }
+                    //}
+
+                }
+                catch
+                { }
+            }
+        }
+
         void OpenWin(object sender, EventArgs e)
         {
            

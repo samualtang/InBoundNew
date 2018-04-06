@@ -360,6 +360,13 @@ namespace SortingControlSys.SortingControl
             {
                 writeLog.Write(ex.Message);
                 updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask();//异常后重新发送
             }
         }
         public static Object lockFlag = new Object();

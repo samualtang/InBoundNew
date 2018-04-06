@@ -555,7 +555,7 @@ namespace SortingControlSys.SortingControl
             {
                 writeLog.Write(ex.Message);
                 updateListBox(ex.Message);
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
                 if (ex.InnerException != null && ex.InnerException.Message!=null)
                 {
                     writeLog.Write(ex.InnerException.Message);
