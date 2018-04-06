@@ -124,6 +124,7 @@ namespace SortingControlSys.SortingControl
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);
                 errgroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
+
                 taskgroup.addItem(ItemCollection.GetTaskItem());
                 taskgroup.callback += OnDataChange;
                 errgroup.addItem(ItemCollection.GetTaskError());
@@ -307,7 +308,7 @@ namespace SortingControlSys.SortingControl
                         if (values[i] != null &&  int.Parse(values[i].ToString()) == 0)
                         {
                             String logstr = "";
-                            foreach (var item in list)
+                            foreach (var item in list1)
                             {
                                 logstr += item.POKEID + ";";
                             }

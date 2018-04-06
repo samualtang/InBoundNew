@@ -365,6 +365,13 @@ namespace SortingControlSys.SortingControl
             {
                 writeLog.Write(ex.Message);
                 updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask1();//异常后重新发送
             }
         }
         void sendTask()
@@ -457,6 +464,13 @@ namespace SortingControlSys.SortingControl
             {
                 writeLog.Write(ex.Message);
                 updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask();//异常后重新发送
             }
         }
         public void WriteErr(int type, int len, String temp, decimal GroupNo)
@@ -863,7 +877,7 @@ namespace SortingControlSys.SortingControl
         int i = 1;
         public void initdata()
         {//刷新分拣进度等
-            writeLog.Write("启动程序。。。。。。");
+            //writeLog.Write("启动程序。。。。。。");
 
             task_data.Rows.Clear();
             try
