@@ -65,15 +65,6 @@ namespace AutoRun
           
             while (isRunBuHuo)
             {
-
-                //InBoundService.test(1); 测试用
-                //InBoundService.test(2);
-                //InBoundService.test(3);
-                //InBoundService.test(4);
-                //InBoundService.test(5);
-                //InBoundService.test(6);
-                //InBoundService.test(7);
-                //InBoundService.test(8);
                 InBoundService.PreUpdateInOut(isSanpan);
 
                 Thread.Sleep(scanTime * 1000);

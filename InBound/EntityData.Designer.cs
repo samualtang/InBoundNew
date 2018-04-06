@@ -260,22 +260,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_DEVICESTATUS> T_WMS_DEVICESTATUS
-        {
-            get
-            {
-                if ((_T_WMS_DEVICESTATUS == null))
-                {
-                    _T_WMS_DEVICESTATUS = base.CreateObjectSet<T_WMS_DEVICESTATUS>("T_WMS_DEVICESTATUS");
-                }
-                return _T_WMS_DEVICESTATUS;
-            }
-        }
-        private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_ATSCELL_CJ_HIS> T_WMS_ATSCELL_CJ_HIS
         {
             get
@@ -452,22 +436,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_DEVICEERRLIST> T_WMS_DEVICEERRLIST
-        {
-            get
-            {
-                if ((_T_WMS_DEVICEERRLIST == null))
-                {
-                    _T_WMS_DEVICEERRLIST = base.CreateObjectSet<T_WMS_DEVICEERRLIST>("T_WMS_DEVICEERRLIST");
-                }
-                return _T_WMS_DEVICEERRLIST;
-            }
-        }
-        private ObjectSet<T_WMS_DEVICEERRLIST> _T_WMS_DEVICEERRLIST;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<INF_DEVICESTATUS> INF_DEVICESTATUS
         {
             get
@@ -608,6 +576,38 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRODUCE_SORTTROUGH> _T_PRODUCE_SORTTROUGH;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_DEVICEERRLIST> T_WMS_DEVICEERRLIST
+        {
+            get
+            {
+                if ((_T_WMS_DEVICEERRLIST == null))
+                {
+                    _T_WMS_DEVICEERRLIST = base.CreateObjectSet<T_WMS_DEVICEERRLIST>("T_WMS_DEVICEERRLIST");
+                }
+                return _T_WMS_DEVICEERRLIST;
+            }
+        }
+        private ObjectSet<T_WMS_DEVICEERRLIST> _T_WMS_DEVICEERRLIST;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_DEVICESTATUS> T_WMS_DEVICESTATUS
+        {
+            get
+            {
+                if ((_T_WMS_DEVICESTATUS == null))
+                {
+                    _T_WMS_DEVICESTATUS = base.CreateObjectSet<T_WMS_DEVICESTATUS>("T_WMS_DEVICESTATUS");
+                }
+                return _T_WMS_DEVICESTATUS;
+            }
+        }
+        private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
 
         #endregion
 
@@ -710,14 +710,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_WMS_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
-        {
-            base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
-        }
-    
-        /// <summary>
         /// 用于向 T_WMS_ATSCELL_CJ_HIS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_WMS_ATSCELL_CJ_HIS(T_WMS_ATSCELL_CJ_HIS t_WMS_ATSCELL_CJ_HIS)
@@ -806,14 +798,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_WMS_DEVICEERRLIST EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_DEVICEERRLIST(T_WMS_DEVICEERRLIST t_WMS_DEVICEERRLIST)
-        {
-            base.AddObject("T_WMS_DEVICEERRLIST", t_WMS_DEVICEERRLIST);
-        }
-    
-        /// <summary>
         /// 用于向 INF_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToINF_DEVICESTATUS(INF_DEVICESTATUS iNF_DEVICESTATUS)
@@ -883,6 +867,22 @@ namespace InBound
         public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
         {
             base.AddObject("T_PRODUCE_SORTTROUGH", t_PRODUCE_SORTTROUGH);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_DEVICEERRLIST EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_DEVICEERRLIST(T_WMS_DEVICEERRLIST t_WMS_DEVICEERRLIST)
+        {
+            base.AddObject("T_WMS_DEVICEERRLIST", t_WMS_DEVICEERRLIST);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
+        {
+            base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
         }
 
         #endregion
@@ -9918,6 +9918,54 @@ namespace InBound
         private Nullable<global::System.Decimal> _TYPE;
         partial void OnTYPEChanging(Nullable<global::System.Decimal> value);
         partial void OnTYPEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MAXTASKNUM
+        {
+            get
+            {
+                return _MAXTASKNUM;
+            }
+            set
+            {
+                OnMAXTASKNUMChanging(value);
+                ReportPropertyChanging("MAXTASKNUM");
+                _MAXTASKNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MAXTASKNUM");
+                OnMAXTASKNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MAXTASKNUM;
+        partial void OnMAXTASKNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnMAXTASKNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CAPACITY
+        {
+            get
+            {
+                return _CAPACITY;
+            }
+            set
+            {
+                OnCAPACITYChanging(value);
+                ReportPropertyChanging("CAPACITY");
+                _CAPACITY = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CAPACITY");
+                OnCAPACITYChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CAPACITY;
+        partial void OnCAPACITYChanging(Nullable<global::System.Decimal> value);
+        partial void OnCAPACITYChanged();
 
         #endregion
 

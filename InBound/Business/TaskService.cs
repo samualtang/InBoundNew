@@ -1140,6 +1140,15 @@ namespace InBound.Business
             }
 
         }
+
+        public static List<T_PRODUCE_POKE> getList(decimal groupno, decimal sortnum)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+                return query;
+            }
+        }
         public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
         {
 

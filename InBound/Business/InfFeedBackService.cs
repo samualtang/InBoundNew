@@ -69,14 +69,33 @@ namespace InBound.Business
                    var query2 = (from item in dataEntity.INF_EQUIPMENTREQUEST 
                                 where item.STATUS == 0 
                                 select item).ToList();//wcs申请的任务
+
+                   var query3 =( from item in dataEntity.INF_JOBDOWNLOAD
+                                join item2 in dataEntity.INF_JOBFEEDBACK
+                                on item.JOBID equals item2.JOBID
+                                where (item.JOBTYPE == 60 || item.JOBTYPE == 70)
+                                && item2.FEEDBACKSTATUS == 1
+                                 select item2).ToList();
+                   if (query3 != null)
+                   {
+                       foreach (var task in query3)
+                       {
+                           if (task.PLANQTY != null)
+                           {
+                               StroageInOutService.UpdateInOut(task.JOBID, task.PLANQTY ?? 0, dataEntity);
+                               task.STATUS = 1;
+                               dataEntity.SaveChanges();
+                           }
+                       }
+                   }
                   if (query2 != null && query2.Count > 0)
                   {
-
+                      #region
                       foreach (var temptask in query2)
                       {
-                          
-                  using (TransactionScope ts = new TransactionScope())
-                  {
+
+                          //using (TransactionScope ts = new TransactionScope())
+                          //{
                       INF_JOBDOWNLOAD task = new INF_JOBDOWNLOAD();
                       //T_WMS_ATSCELLINFO cellInfo = AtsCellInfoService.CheckPalletExist(temptask.BARCODE);//检查托盘号是否存在
                       //if (temptask.BARCODE != null && temptask.BARCODE != "" && (cellInfo==null))//储位中不存在该托盘 || cellInfo.PALLETNO==temptask.BARCODE))
@@ -90,13 +109,14 @@ namespace InBound.Business
                       temptask.RESPONDDATE = DateTime.Now;
                       if (temptask.REQUESTTYPE != 3)
                       {
+                          #region
                           if (temptask.REQUESTTYPE == 1)//入库请求
                           {
-                              if (temptask.INBOUNDNO == null || temptask.INBOUNDNO==0) //返库
+                              if (temptask.INBOUNDNO == null || temptask.INBOUNDNO == 0) //返库
                               {
-                                  if (temptask.EQUIPMENTID == "1422")
+                                  if (temptask.EQUIPMENTID == "1422")//空托盘返库
                                   {
-                                     
+
                                       task.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
 
                                       task.BRANDID = "1111111";
@@ -111,30 +131,53 @@ namespace InBound.Business
                                       task.PRIORITY = 50;
 
 
-                                      if (task.TARGET != null && task.TARGET != "")
+                                      try
                                       {
-                                          T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-                                         // info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
+                                          if (task.TARGET != null && task.TARGET != "")
+                                          {
+                                              using (TransactionScope ts = new TransactionScope())
+                                              {
+                                                  T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
+                                                  // info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
 
-                                          task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
-                                          info.CELLNO = task.TARGET;
-                                          info.STATUS = 10;//组盘
-                                          info.CREATETIME = DateTime.Now;
-                                          info.INBOUNDID = task.INBOUNDNO;
-                                          info.PALLETNO = task.BARCODE;
-                                          info.DISMANTLE = 10;
+                                                  task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
+                                                  info.CELLNO = task.TARGET;
+                                                  info.STATUS = 10;//组盘
+                                                  info.CREATETIME = DateTime.Now;
+                                                  info.INBOUNDID = task.INBOUNDNO;
+                                                  info.PALLETNO = task.BARCODE;
+                                                  info.DISMANTLE = 10;
 
-                                          AtsCellInfoService.InsertAtsCellInfo(info);
+                                                  AtsCellInfoService.InsertAtsCellInfo(info);
 
-                                          T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
-                                          detail.BARCODE = task.BRANDID + "";
-                                          T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
+                                                  T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
+                                                  detail.BARCODE = task.BRANDID + "";
+                                                  T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
 
-                                          detail.CIGARETTECODE = item.ITEMNO;
-                                          detail.CIGARETTENAME = item.ITEMNAME;
-                                          detail.QTY = task.PLANQTY;
-                                          detail.CELLNO = info.CELLNO;
-                                          AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+                                                  detail.CIGARETTECODE = item.ITEMNO;
+                                                  detail.CIGARETTENAME = item.ITEMNAME;
+                                                  detail.QTY = task.PLANQTY;
+                                                  detail.CELLNO = info.CELLNO;
+                                                  AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+                                                  task.CREATEDATE = DateTime.Now;
+                                                  task.STATUS = 0;
+                                                  dataEntity.INF_JOBDOWNLOAD.AddObject(task);
+                                                  temptask.STATUS = 1;
+                                                  dataEntity.SaveChanges();
+                                                  ts.Complete();
+                                              }
+                                          }
+                                          else
+                                          {
+                                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
+                                          }
+                                      }
+                                      catch (Exception ex)
+                                      {
+                                          if (task.TARGET != "")
+                                          {
+                                              InBoundService.RollBack(task.TARGET); //回滚
+                                          }
                                       }
                                   }
                                   else
@@ -145,24 +188,7 @@ namespace InBound.Business
                                           continue;
                                       }
                                       T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellInfo.CELLNO);
-                                      //if (detail.REQUESTQTY == detail.QTY) //&& (cellInfo.DISMANTLE==0)
-                                      //{
-                                      //    INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
-                                      //    task1.JOBID = dataEntity.ExecuteStoreQuery<decimal>("select s_inf_jobdownload.nextval from dual").First() + "";
-                                      //    task1.ID = task1.JOBID;
-                                      //    task1.BRANDID = temptask.BRANDID;
-                                      //    task1.BARCODE = cellInfo.PALLETNO;
-                                      //    task1.SOURCE = temptask.EQUIPMENTID;
-                                      //    task1.PLANQTY = 1;
-                                      //    task1.INPUTTYPE = 10;
-                                      //    task1.JOBTYPE = 100;//空托盘回收任务
-                                      //    task1.TARGET = "1422";//空托盘指定地址
-                                      //    task1.TUTYPE = 2;
-                                      //    task1.CREATEDATE = DateTime.Now;
-                                      //    task1.PRIORITY = 50;
-                                      //    dataEntity.INF_JOBDOWNLOAD.AddObject(task1);
 
-                                      //}
                                       if (detail.REQUESTQTY != detail.QTY)
                                       {
 
@@ -191,21 +217,48 @@ namespace InBound.Business
                                           info.INBOUNDID = task.INBOUNDNO;
                                           task.TUTYPE = 4;
                                           info.DISMANTLE = 10;
+                                          try
+                                          {
+                                              using (TransactionScope ts = new TransactionScope())
+                                              {
+                                                  AtsCellInfoService.InsertAtsCellInfo(info);
 
-                                          AtsCellInfoService.InsertAtsCellInfo(info);
-
-                                          T_WMS_ATSCELLINFO_DETAIL details = new T_WMS_ATSCELLINFO_DETAIL();
-                                          details.BARCODE = detail.BARCODE;
-                                          T_WMS_ITEM item = ItemService.GetItemByBarCode(details.BARCODE);
-                                          details.CIGARETTECODE = item.ITEMNO;
-                                          details.CIGARETTENAME = item.ITEMNAME;
-                                          details.QTY = task1.PLANQTY;
-                                          details.CELLNO = info.CELLNO;
-                                          AtsCellInfoDetailService.InsertAtsCellInfo(details);
+                                                  T_WMS_ATSCELLINFO_DETAIL details = new T_WMS_ATSCELLINFO_DETAIL();
+                                                  details.BARCODE = detail.BARCODE;
+                                                  T_WMS_ITEM item = ItemService.GetItemByBarCode(details.BARCODE);
+                                                  details.CIGARETTECODE = item.ITEMNO;
+                                                  details.CIGARETTENAME = item.ITEMNAME;
+                                                  details.QTY = task1.PLANQTY;
+                                                  details.CELLNO = info.CELLNO;
+                                                  AtsCellInfoDetailService.InsertAtsCellInfo(details);
+                                                  AtsCellService.UpdateAtsCell(detail.CELLNO, 10);
+                                                  AtsCellInfoService.delete(detail.CELLNO);
+                                                  AtsCellInfoDetailService.delete(detail.CELLNO);
+                                                  temptask.STATUS = 1;
+                                                  dataEntity.SaveChanges();
+                                                  ts.Complete();
+                                              }
+                                          }
+                                          catch (Exception ex)
+                                          {
+                                              if (task1.TARGET != "")
+                                              {
+                                                  InBoundService.RollBack(task1.TARGET); //回滚
+                                              }
+                                          }
                                       }
-                                      AtsCellService.UpdateAtsCell(detail.CELLNO, 10);
-                                      AtsCellInfoService.delete(detail.CELLNO);
-                                      AtsCellInfoDetailService.delete(detail.CELLNO);
+                                      else
+                                      {
+                                          using (TransactionScope ts = new TransactionScope())
+                                          {
+                                              AtsCellService.UpdateAtsCell(detail.CELLNO, 10);
+                                              AtsCellInfoService.delete(detail.CELLNO);
+                                              AtsCellInfoDetailService.delete(detail.CELLNO);
+                                              temptask.STATUS = 1;
+                                              dataEntity.SaveChanges();
+                                              ts.Complete();
+                                          }
+                                      }
                                   }
                               }
                               else//入库单入库
@@ -214,47 +267,86 @@ namespace InBound.Business
                                   task.SOURCE = temptask.EQUIPMENTID;
                                   task.JOBTYPE = 20;
                                   task.INBOUNDNO = temptask.INBOUNDNO;
-                                 // task.BARCODE = RefRFIDPalletService.GetSeq() + ""; //temptask.BARCODE;
+                                  // task.BARCODE = RefRFIDPalletService.GetSeq() + ""; //temptask.BARCODE;
                                   task.PRIORITY = 50;
                                   //task.BARCODE=
-                                  var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == task.INBOUNDNO select line).FirstOrDefault();
-                                  if (inboundLine != null)
-                                  {
-                                      inboundLine.LOCKQTY += task.PLANQTY;
-                                  }
-                                  if (temptask.TUTYPE == 3 || temptask.TUTYPE == 2)//空托盘、空托盘组
-                                  {
-                                      task.BRANDID = "1111111";
-                                  }
                                   task.TARGET = AtsCellInService.getCellNoCode(task.BRANDID + "");
-                                  T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
-                                  //info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
-
-                                  task.BARCODE = RefRFIDPalletService.GetSeq() + "";// AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
-                                  info.CELLNO = task.TARGET;
-                                  info.PALLETNO = task.BARCODE;
-                                  info.STATUS = 10;//组盘
-                                  info.CREATETIME = DateTime.Now;
-                                  info.INBOUNDID = task.INBOUNDNO;
-                                  if (inboundLine != null)
+                                  try
                                   {
-                                      info.CONSIGNOR = inboundLine.CONSIGNSOR;
+                                      using (TransactionScope ts = new TransactionScope())
+                                      {
+                                          task.BARCODE = RefRFIDPalletService.GetSeq() + "";
+                                          var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == task.INBOUNDNO select line).FirstOrDefault();
+                                          if (inboundLine != null)
+                                          {
+                                              inboundLine.LOCKQTY += task.PLANQTY;
+                                          }
+                                          if (temptask.TUTYPE == 3 || temptask.TUTYPE == 2)//空托盘、空托盘组
+                                          {
+                                              task.BRANDID = "1111111";
+                                          }
+
+                                          T_WMS_ATSCELLINFO info = new T_WMS_ATSCELLINFO();
+                                          //info.PALLETNO = RefRFIDPalletService.GetSeq() + "";// task.BARCODE;
+
+                                          // AtsCellInfoService.GetCellInfo(task.TARGET).PALLETNO;
+                                          info.CELLNO = task.TARGET;
+                                          info.PALLETNO = task.BARCODE;
+                                          info.STATUS = 10;//组盘
+                                          info.CREATETIME = DateTime.Now;
+                                          info.INBOUNDID = task.INBOUNDNO;
+                                          if (inboundLine != null)
+                                          {
+                                              info.CONSIGNOR = inboundLine.CONSIGNSOR;
+                                          }
+                                          info.DISMANTLE = 10;
+                                          task.TUTYPE = 4;
+                                          AtsCellInfoService.InsertAtsCellInfo(info);
+
+                                          T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
+                                          detail.BARCODE = task.BRANDID + "";
+                                          T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
+
+                                          detail.CIGARETTECODE = item.ITEMNO;
+                                          detail.CIGARETTENAME = item.ITEMNAME;
+                                          detail.QTY = task.PLANQTY;
+                                          detail.CELLNO = info.CELLNO;
+                                          AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+
+
+                                          task.CREATEDATE = DateTime.Now;
+                                          task.STATUS = 0;
+                                          if (task.SOURCE != null && task.SOURCE != "" && task.TARGET != null && task.TARGET != "")//根据地址判断是否下任务
+                                          {
+
+                                              dataEntity.INF_JOBDOWNLOAD.AddObject(task);
+                                          }
+                                          else
+                                          {
+                                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
+                                          }
+                                          //}
+                                          //else //储位中存在该托盘  肯定就是返库任务 人工站台拆垛完成触发的返库任务
+                                          //{
+
+                                          //}
+                                          temptask.STATUS = 1;
+                                          dataEntity.SaveChanges();
+                                          ts.Complete();
+                                      }
                                   }
-                                  info.DISMANTLE = 10;
-                                  task.TUTYPE = 4;
-                                  AtsCellInfoService.InsertAtsCellInfo(info);
-
-                                  T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
-                                  detail.BARCODE = task.BRANDID + "";
-                                  T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
-
-                                  detail.CIGARETTECODE = item.ITEMNO;
-                                  detail.CIGARETTENAME = item.ITEMNAME;
-                                  detail.QTY = task.PLANQTY;
-                                  detail.CELLNO = info.CELLNO;
-                                  AtsCellInfoDetailService.InsertAtsCellInfo(detail);
+                                  catch (Exception ex)
+                                  {
+                                      if (task.TARGET != "")
+                                      {
+                                          InBoundService.RollBack(task.TARGET); //回滚
+                                      }
+                                  }
                               }
+                              
                           }
+                          #endregion
+                          #region
                           else if (temptask.REQUESTTYPE == 2)//出库请求
                           {
                               task.TARGET = temptask.EQUIPMENTID;
@@ -263,120 +355,134 @@ namespace InBound.Business
                                   task.PRIORITY = 99;
                                   task.JOBTYPE = 50;
                                   task.BRANDID = "1111111";
-                                 
+
                                   task.SOURCE = AtsCellOutService.getCellNoBig("1111111", 1);//托盘组任务
                                   if (task.SOURCE == "")
-                                      continue;
-                                  task.BARCODE = AtsCellInfoService.GetCellInfo(task.SOURCE).PALLETNO;
-                                 
-                              }
-                              else if (temptask.TUTYPE == 2)//空托盘
-                              {
-                                  task.JOBTYPE = 90;
-                                  task.BARCODE = "";//获取托盘号 读取RFID
-                              }
-                              else if (temptask.TUTYPE == 4)//实托盘
-                              {
-                                  task.JOBTYPE = 50;
-                              }
-                              task.TUTYPE = temptask.TUTYPE;
-                          }
-                         // task.TUTYPE = temptask.TUTYPE;
+                                  {
+                                      //WriteLog.GetLog().Write("暂无出库的");
+                                      //continue;
+                                  }
+                                  else
+                                  {
+                                      task.BARCODE = AtsCellInfoService.GetCellInfo(task.SOURCE).PALLETNO;
+                                  }
 
-                          task.CREATEDATE = DateTime.Now;
-                          task.STATUS = 0;
-                          if (task.SOURCE != null && task.SOURCE != "" && task.TARGET != null && task.TARGET != "")//根据地址判断是否下任务
-                          {
+                                  task.TUTYPE = temptask.TUTYPE;
+                                  task.CREATEDATE = DateTime.Now;
+                                  task.STATUS = 0;
+                                  if (task.SOURCE != null && task.SOURCE != "" && task.TARGET != null && task.TARGET != "")//根据地址判断是否下任务
+                                  {
+
+                                      dataEntity.INF_JOBDOWNLOAD.AddObject(task);
+                                  }
+                                  else
+                                  {
+                                      WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
+                                  }
+                                
+                                  temptask.STATUS = 1;
+                                  dataEntity.SaveChanges();
+                              }
+                              //else if (temptask.TUTYPE == 2)//空托盘
+                              //{
+                              //    task.JOBTYPE = 90;
+                              //    task.BARCODE = "";//获取托盘号 读取RFID
+                              //}
+                              //else if (temptask.TUTYPE == 4)//实托盘
+                              //{
+                              //    task.JOBTYPE = 50;
+                              //}
                              
-                              dataEntity.INF_JOBDOWNLOAD.AddObject(task);
                           }
-                          else
-                          {
-                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
-                          }
-                          //}
-                          //else //储位中存在该托盘  肯定就是返库任务 人工站台拆垛完成触发的返库任务
-                          //{
+                          #endregion
+                          // task.TUTYPE = temptask.TUTYPE;
 
-                          //}
-                          temptask.STATUS = 1;
-                          dataEntity.SaveChanges();
-                          ts.Complete();
+
+                          // ts.Complete();
                       }
                       else//下达拆垛任务
                       {
+                          #region
                           //新建指定拆垛机械手任务
-                          INF_JOBDOWNLOAD inf = InfJobDownLoadService.GetDetail(temptask.JOBID);
-                          if (temptask.EQUIPMENTID == "1415" && inf.JOBTYPE != 55)
+                          using (TransactionScope ts = new TransactionScope())
                           {
-                            
-                              
+                              INF_JOBDOWNLOAD inf = InfJobDownLoadService.GetDetail(temptask.JOBID);
+
+                              inf.STATUS = 10;//出库任务完成
+                              if (temptask.EQUIPMENTID == "1415" && inf.JOBTYPE != 55)
+                              {
+
+
                                   temptask.STATUS = 1;
-                              
-                          }
-                          else
-                          {
 
-                              INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
-                              load.ID = dataEntity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
-                              load.JOBID = load.ID;
-                              load.JOBTYPE = 91;// 指定拆垛机械手任务
-
-                              load.CREATEDATE = DateTime.Now;
-                              INF_JOBDOWNLOAD item = InfJobDownLoadService.GetDetail(temptask.JOBID);
-                              load.BRANDID = item.BRANDID;
-                              String cellNo = item.SOURCE;
-                              decimal jobType = item.JOBTYPE ?? 0;
-                              load.PILETYPE = item.PILETYPE;
-                              T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellNo);
-                              load.EXTATTR1 = (detail.QTY ?? 0) + "";//实际数量
-                              load.PLANQTY = detail.REQUESTQTY ?? 0;//拆垛数量
-                              load.BARCODE = AtsCellInfoService.GetCellInfo(cellNo).PALLETNO;
-                              load.PRIORITY = 50;
-                              //  load.SOURCE = querySource.TROUGHNUM;
+                              }
+                              else
+                              {
 
 
-                              load.TARGET = temptask.EQUIPMENTID;
-                              load.SOURCE = load.TARGET;
-                              load.PILETYPE = item.PILETYPE;
-                              load.STATUS = 0;
-                              dataEntity.AddToINF_JOBDOWNLOAD(load);
+                                  INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
+                                  load.ID = dataEntity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                  load.JOBID = load.ID;
+                                  load.JOBTYPE = 91;// 指定拆垛机械手任务
+
+                                  load.CREATEDATE = DateTime.Now;
+                                  INF_JOBDOWNLOAD item = InfJobDownLoadService.GetDetail(temptask.JOBID);
+                                  load.BRANDID = item.BRANDID;
+                                  String cellNo = item.SOURCE;
+                                  decimal jobType = item.JOBTYPE ?? 0;
+                                  load.PILETYPE = item.PILETYPE;
+                                  T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellNo);
+                                  load.EXTATTR1 = (detail.QTY ?? 0) + "";//实际数量
+                                  load.PLANQTY = detail.REQUESTQTY ?? 0;//拆垛数量
+                                  load.BARCODE = AtsCellInfoService.GetCellInfo(cellNo).PALLETNO;
+                                  load.PRIORITY = 50;
+                                  //  load.SOURCE = querySource.TROUGHNUM;
+
+
+                                  load.TARGET = temptask.EQUIPMENTID;
+                                  load.SOURCE = load.TARGET;
+                                  load.PILETYPE = item.PILETYPE;
+                                  load.STATUS = 0;
+                                  dataEntity.AddToINF_JOBDOWNLOAD(load);
+                                  dataEntity.SaveChanges();
+
+
+                                  var cdtask = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == temptask.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
+                                  if (cdtask != null && cdtask.Count > 0)
+                                  {
+                                      cdtask.ForEach(x => x.STATUS = 0);
+                                      cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
+                                  }
+                                  if (jobType == 55 && detail.QTY == detail.REQUESTQTY && temptask.EQUIPMENTID != "1415")
+                                  {
+                                      
+                                      AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
+                                      //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
+                                      AtsCellInfoService.delete(item.SOURCE);
+                                      AtsCellInfoDetailService.delete(item.SOURCE);
+                                  }
+                                  temptask.STATUS = 1;
+
+
+                              }
+                          #endregion
+                            
+
                               dataEntity.SaveChanges();
+                               ts.Complete();
 
-
-                              var cdtask = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == temptask.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
-                              if (cdtask != null && cdtask.Count > 0)
-                              {
-                                  cdtask.ForEach(x => x.STATUS = 0);
-                                  cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
-                              }
-                              if (jobType == 55 && detail.QTY == detail.REQUESTQTY)
-                              {
-                                  AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
-                                  //AtsCellOutService.UpdateObject(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
-                                  AtsCellInfoService.delete(item.SOURCE);
-                                  AtsCellInfoDetailService.delete(item.SOURCE);
-                              }
-                              temptask.STATUS = 1;
                           }
-                          //AtsCellService.UpdateAtsCell(cellNo, 10);//任务置空闲
-                          //AtsCellInfoService.delete(cellNo);
-                          //AtsCellInfoDetailService.delete(cellNo);
-                         
-                          dataEntity.SaveChanges();
-                          ts.Complete();
-                          
                       }
-                  
+                    
                       }
-                      }
+                      #endregion
                   }
                   if (query != null && query.Count > 0)
                   {
                       foreach (var item in query)
                       {
-                          
-                              using (TransactionScope ts = new TransactionScope())
+                          #region
+                          using (TransactionScope ts = new TransactionScope())
                               {
                                   var feedback = (from feed in dataEntity.INF_JOBFEEDBACK where feed.JOBID == item.JOBID && feed.FEEDBACKSTATUS == 99 select feed).FirstOrDefault();
                                   feedback.STATUS = 10;
@@ -388,7 +494,10 @@ namespace InBound.Business
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
                                           if (inboundLine == null)
+                                          {
+                                              WriteLog.GetLog().Write("找不到入库单号:"+item.INBOUNDNO);
                                               continue;
+                                          }
                                           inboundLine.ABOXQTY += item.PLANQTY;
                                           if (inboundLine.ABOXQTY + inboundLine.OTHERQTY == inboundLine.BOXQTY)
                                           {
@@ -420,6 +529,7 @@ namespace InBound.Business
                                       if (info != null)
                                       {
                                           info.STATUS = 30;
+                                          info.INBOUNDTIME = DateTime.Now;
                                       }
 
 
@@ -552,9 +662,9 @@ namespace InBound.Business
                                   }
                                   dataEntity.SaveChanges();
                                   ts.Complete();
-                              
-                          }
 
+                              }
+                          #endregion
                       }
                   }
                 

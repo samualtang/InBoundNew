@@ -82,6 +82,7 @@
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\ErrListService.cs" />
     <Compile Include="Model\HUNHEVIEW.cs" />
+    <Compile Include="Model\LaneWayTaskCount.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />
     <Compile Include="Model\UseRate.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />

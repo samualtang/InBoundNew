@@ -16,7 +16,9 @@ namespace InBound
         public string BarCode { get; set; }
         public string CIGARETTENAME { get; set; }
         public decimal QTY { get; set; }
+        public decimal PlanQty { get; set; }
         public string CELLNO { get; set; }
         public DateTime? CREATETIME { get; set; }
+
     }
 }

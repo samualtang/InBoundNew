@@ -59,7 +59,7 @@ namespace InBound.Business
               if (jobtype == -1)
               {
                   var query = from item in dataEntity.INF_JOBDOWNLOAD where  item.CREATEDATE>=begin && item.CREATEDATE<=end && item.BRANDID.Contains(code) && (item.SOURCE.Contains(cellno) || item.TARGET.Contains(cellno))
-                              && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
+                              && (item.SOURCE.Contains(place) || item.TARGET.Contains(place)) orderby item.SOURCE
                               select item;
                   return query.ToList();
               }
@@ -68,6 +68,7 @@ namespace InBound.Business
                   var query = from item in dataEntity.INF_JOBDOWNLOAD where item.JOBTYPE == jobtype && item.CREATEDATE>=begin && item.CREATEDATE<=end  &&
                               item.BRANDID.Contains(code) && (item.SOURCE.Contains(cellno) || item.TARGET.Contains(cellno))
                               && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
+                              orderby item.SOURCE
                   select item;
                   return query.ToList();
               }

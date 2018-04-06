@@ -309,28 +309,67 @@ namespace InBound.Business
             }
 
         }
+
+        public static List<String> getLaneWayTaskCount()
+        {
+            using (Entities et = new Entities())
+            {
+
+                var taskqy = (from item in et.INF_JOBDOWNLOAD
+                              where item.JOBTYPE == 55
+                                  && item.STATUS != 10
+                              select new LaneWayTaskCount() { layewayno = "3"+item.SOURCE.Substring(0, 3), taskCount = 1 }).ToList();
+                if (taskqy != null && taskqy.Count>0)
+                {
+                    taskqy.Add(new LaneWayTaskCount() { layewayno="3001", taskCount=1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3002", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3003", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3004", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3005", taskCount = 1 });
+                    taskqy= taskqy.GroupBy(x => x.layewayno).Select(group => new LaneWayTaskCount() { layewayno = group.Key, taskCount = group.Count()-1 }).ToList();
+                    
+                    var query = (from item in et.T_WMS_DEVICESTATUS where item.TYPE == 30 select item).ToList();
+                    var query1 = (from item in taskqy
+                                  join item2 in query
+                                      on item.layewayno equals item2.DEVICENO
+                                  select new LaneWayTaskCount() { layewayno = item.layewayno.Substring(3,1), taskCount = item.taskCount, maxCount = item2.MAXTASKNUM ?? 0 }).ToList().Where(x => x.taskCount < x.maxCount).Select(x=>x.layewayno).ToList();
+
+
+                    return query1;
+                }
+                else
+                {
+                    return new List<string>() { "1","2","3","4","5"};
+                }
+            }
+
+        }
         public static String getCellNoEqual(String cigarettecode, int qty)
         {
             using (Entities et = new Entities())
             {
                 //lock (lockFlag)
                 //{
+
+
+                var list = getLaneWayTaskCount();
+               
                     var query = (from item in et.T_WMS_ATSCELL
-                                 join item2 in et.T_WMS_ATSCELLINFO
-                                on item.CELLNO equals item2.CELLNO
-                                 join item3 in et.T_WMS_ATSCELLINFO_DETAIL
-                                 on item2.CELLNO equals item3.CELLNO
-                                 join item4 in et.T_WMS_LANEWAY
-                                 on item.LANEWAYNO equals item4.LANEWAYNO
-                                 join item5 in et.INF_EQUIPMENTSTATUS
-                                on item4.LANEWAYNO equals item5.EQUIPMENTID
-                                 where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
-                                 && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
-                                 && item2.STATUS == 30//上架
-                                 && item3.CIGARETTECODE == cigarettecode && item3.QTY == qty
-                                 && item5.EQUIPMENTSTATUS == "1"
-                                 orderby item2.INBOUNDTIME, item.DISTANCE
-                                 select item.CELLNO).FirstOrDefault();
+                             join item2 in et.T_WMS_ATSCELLINFO
+                            on item.CELLNO equals item2.CELLNO
+                             join item3 in et.T_WMS_ATSCELLINFO_DETAIL
+                             on item2.CELLNO equals item3.CELLNO
+                             join item4 in et.T_WMS_LANEWAY
+                             on item.LANEWAYNO equals item4.LANEWAYNO
+                             join item5 in et.INF_EQUIPMENTSTATUS
+                            on item4.LANEWAYNO equals item5.EQUIPMENTID
+                             where (item.STATUS == 10 || item.STATUS == 20) && item.WORKSTATUS == 20//储位状态正常
+                             && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
+                             && item2.STATUS == 30//上架
+                             && item3.CIGARETTECODE == cigarettecode && item3.QTY == qty
+                             && item5.EQUIPMENTSTATUS == "1" && list.Contains(item4.LANEWAYNO)
+                             orderby item2.INBOUNDTIME, item.DISTANCE
+                             select item.CELLNO).FirstOrDefault();
                     if (query != null)
                     {
                         UpdateCellOutStatus(query, qty);
@@ -341,6 +380,8 @@ namespace InBound.Business
                         return "";
 
                     }
+               
+                    
                 //}
             }
 
@@ -359,7 +400,8 @@ namespace InBound.Business
                 }
                 //lock (lockFlag)
                 //{
-
+                var list = getLaneWayTaskCount();
+                
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -374,6 +416,7 @@ namespace InBound.Business
                                  && item2.STATUS == 30//上架
                                  && item3.CIGARETTECODE == cigarettecode && item3.QTY >= qty
                                  && item5.EQUIPMENTSTATUS == "1" //堆垛机正常
+                                 && list.Contains(item4.LANEWAYNO)
                                  orderby item2.INBOUNDTIME, item.DISTANCE
                                  select item.CELLNO).FirstOrDefault();
                     if (query != null)
@@ -403,6 +446,7 @@ namespace InBound.Business
                 }
                 //lock (lockFlag)
                 //{
+                var list = getLaneWayTaskCount();
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item2 in et.T_WMS_ATSCELLINFO
                                 on item.CELLNO equals item2.CELLNO
@@ -416,7 +460,7 @@ namespace InBound.Business
                                  && (item4.STATUS == 10 || item4.STATUS == 20) //巷道状态正常
                                  && item2.STATUS == 30//上架
                                  && item3.CIGARETTECODE == cigarettecode && item3.QTY < qty
-                                 && item5.EQUIPMENTSTATUS == "1"
+                                 && item5.EQUIPMENTSTATUS == "1" && list.Contains(item4.LANEWAYNO)
                                  orderby item2.INBOUNDTIME, item.DISTANCE
                                  select item.CELLNO).FirstOrDefault();
                     if (query != null)

@@ -25,6 +25,18 @@ namespace InBound.Business
             }
        }
 
+       public static void UpdateInOut(String taskno, decimal qty, Entities dataEntity)
+       {
+          
+               var query = (from item in dataEntity.T_WMS_STORAGEAREA_INOUT where item.TASKNO == taskno select item).FirstOrDefault();
+               if (query != null)
+               {
+                   query.BOXQTY = qty;
+                  // dataEntity.SaveChanges();
+               }
+
+          
+       }
        public static void RollBackOrder(string billcode)
        {
            using (Entities dataEntity = new Entities())

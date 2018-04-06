@@ -501,6 +501,8 @@
           <Property Name="DEVICENAME" Type="nvarchar2" MaxLength="50" />
           <Property Name="STATUS" Type="number" />
           <Property Name="TYPE" Type="number" />
+          <Property Name="MAXTASKNUM" Type="number" />
+          <Property Name="CAPACITY" Type="number" />
         </EntityType>
         <EntityType Name="T_WMS_INBOUND">
           <Key>
@@ -803,7 +805,6 @@
             <Parameter Name="P_ERRCODE" Mode="Out" Type="String" />
             <Parameter Name="P_ERRMSG" Mode="Out" Type="String" />
           </FunctionImport>
-          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
           <FunctionImport Name="PROC_IN_FIXLANEWAY">
             <Parameter Name="P_CODE" Mode="In" Type="String" />
             <Parameter Name="P_LANEWAYNO" Mode="In" Type="String" />
@@ -821,7 +822,6 @@
           <EntitySet Name="T_WMS_ATSCELL_OUT" EntityType="Model.T_WMS_ATSCELL_OUT" />
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.INF_JOBDOWNLOAD" />
           <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
-          <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
           <EntitySet Name="INF_DEVICESTATUS" EntityType="Model.INF_DEVICESTATUS" />
           <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.INF_EQUIPMENTREQUEST" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.T_WMS_ATSCELL_IN" />
@@ -831,6 +831,8 @@
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.T_PRODUCE_TASK" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
+          <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
+          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1100,16 +1102,6 @@
           <Property Type="Decimal" Name="TOTALQTY" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
         </EntityType>
-        <EntityType Name="T_WMS_DEVICESTATUS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="DEVICENO" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DEVICENAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
-        </EntityType>
         <EntityType Name="T_WMS_ATSCELL_CJ_HIS">
           <Key>
             <PropertyRef Name="ID" />
@@ -1312,19 +1304,6 @@
           <Property Type="Decimal" Name="CIGARATTETYPE" Precision="38" Scale="0" />
           <Property Type="String" Name="CREATENAME" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
-        </EntityType>
-        <EntityType Name="T_WMS_DEVICEERRLIST">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="DECICENO" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DEVICENAME" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ERRORCODE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ERRORMSG" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ERRTIME" />
-          <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="INF_DEVICESTATUS">
@@ -1548,6 +1527,31 @@
           <Property Type="Decimal" Name="CLEARUP" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CLEARTHRESHOLD" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SEQ" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICEERRLIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DECICENO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DEVICENAME" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ERRORCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ERRORMSG" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ERRTIME" />
+          <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DEVICENO" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DEVICENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAXTASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CAPACITY" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1836,17 +1840,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_DEVICESTATUS">
-            <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
-              <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
-                <ScalarProperty Name="DEVICENO" ColumnName="DEVICENO" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="PROC_IN_FIXLANEWAY" FunctionName="Model.Store.PROC_IN_FIXLANEWAY" />
           <EntitySetMapping Name="T_WMS_ATSCELL_CJ_HIS">
             <EntityTypeMapping TypeName="Model.T_WMS_ATSCELL_CJ_HIS">
@@ -2058,20 +2051,6 @@
                 <ScalarProperty Name="QTY" ColumnName="QTY" />
                 <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
                 <ScalarProperty Name="AREAID" ColumnName="AREAID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_DEVICEERRLIST">
-            <EntityTypeMapping TypeName="Model.T_WMS_DEVICEERRLIST">
-              <MappingFragment StoreEntitySet="T_WMS_DEVICEERRLIST">
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="ERRORTYPE" ColumnName="ERRORTYPE" />
-                <ScalarProperty Name="ERRTIME" ColumnName="ERRTIME" />
-                <ScalarProperty Name="ERRORMSG" ColumnName="ERRORMSG" />
-                <ScalarProperty Name="ERRORCODE" ColumnName="ERRORCODE" />
-                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
-                <ScalarProperty Name="DECICENO" ColumnName="DECICENO" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2307,6 +2286,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_DEVICEERRLIST">
+            <EntityTypeMapping TypeName="Model.T_WMS_DEVICEERRLIST">
+              <MappingFragment StoreEntitySet="T_WMS_DEVICEERRLIST">
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="ERRORTYPE" ColumnName="ERRORTYPE" />
+                <ScalarProperty Name="ERRTIME" ColumnName="ERRTIME" />
+                <ScalarProperty Name="ERRORMSG" ColumnName="ERRORMSG" />
+                <ScalarProperty Name="ERRORCODE" ColumnName="ERRORCODE" />
+                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
+                <ScalarProperty Name="DECICENO" ColumnName="DECICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_DEVICESTATUS">
+            <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
+              <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="MAXTASKNUM" ColumnName="MAXTASKNUM" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
+                <ScalarProperty Name="DEVICENO" ColumnName="DEVICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2340,7 +2346,6 @@
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL" Width="1.5" PointX="3.375" PointY="3.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO_DETAIL" Width="1.5" PointX="5.375" PointY="0.75" Height="2.2898160807291674" />
         <EntityTypeShape EntityType="Model.T_WMS_LOG" Width="1.5" PointX="18.375" PointY="18.75" Height="18.18210937500001" />
-        <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="13.375" PointY="3.75" Height="1.9202278645833246" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_CJ_HIS" Width="1.5" PointX="16.375" PointY="10.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_UN_TASKLINE" Width="1.5" PointX="19.75" PointY="0.75" Height="2.1050219726562602" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELLINFO" Width="1.5" PointX="0.75" PointY="12.75" Height="2.4746101888020746" />
@@ -2352,7 +2357,6 @@
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_OUT" Width="1.5" PointX="13.375" PointY="9.75" Height="3.5833748372395746" />
         <EntityTypeShape EntityType="Model.INF_JOBDOWNLOAD" Width="1.5" PointX="20.375" PointY="8.75" Height="5.43131591796876" />
         <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="7.75" Height="3.9529630533854174" />
-        <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="9.375" PointY="20.75" Height="2.4746101888020746" />
         <EntityTypeShape EntityType="Model.INF_DEVICESTATUS" Width="1.5" PointX="0.75" PointY="3.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.INF_EQUIPMENTREQUEST" Width="1.5" PointX="7.75" PointY="0.75" Height="3.2137866210937602" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_IN" Width="1.5" PointX="20.75" PointY="15.75" Height="2.8441984049479174" />
@@ -2362,6 +2366,8 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_TASK" Width="1.5" PointX="0.75" PointY="16.75" Height="7.1275642903645746" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.375" PointY="3.75" Height="4.6443082682291674" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="5.2173673502604174" />
+        <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="12.375" PointY="3.75" Height="2.4746101888020746" />
+        <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.2898160807291674" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Data.OracleClient;
 using System.IO;
 using highSpeed.PubFunc;
+using InBound.Business;
+using InBound;
 
 namespace highSpeed
 {
@@ -21,8 +23,7 @@ namespace highSpeed
         public w_user()
         {
             InitializeComponent();
-            
-
+          
         }
 
       
@@ -75,6 +76,7 @@ namespace highSpeed
         #region btn_OK
         private void button1_Click(object sender, EventArgs e)
         {
+           
             try
             {
                 string ls_pass;

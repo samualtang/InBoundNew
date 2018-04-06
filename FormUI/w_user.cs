@@ -10,6 +10,8 @@ using System.Data.OracleClient;
 using System.IO;
 using InBound.Business;
 using FormUI.TooL;
+using InBound;
+using InBound.Model;
 
 namespace FormUI
 {
@@ -76,8 +78,12 @@ namespace FormUI
         private void button1_Click(object sender, EventArgs e)
         {
            
+            //List<T_PRODUCE_POKE> list= TaskService.getList(1, 1);
+            //String str = "12";
             try
             {
+              // throw(new Exception());
+                 
                 string ls_pass;
               
                 ls_pass = textBox2.Text;
