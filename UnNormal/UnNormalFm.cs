@@ -109,7 +109,7 @@ namespace SortingControlSys.SortingControl
             
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,errgroup;
+        Group taskgroup,taskGroup1,statusGroup2,statusGroup3,errgroup,SixCabinetGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -120,18 +120,25 @@ namespace SortingControlSys.SortingControl
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
                 taskgroup = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);
-                statusGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
+                taskGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);
                 errgroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
+
+                //异形烟6个烟柜
+                SixCabinetGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+                SixCabinetGroup.addItem(ItemCollection.GetSixCabinetTaskItem());
+                SixCabinetGroup.callback += OnDataChange;
+
 
                 taskgroup.addItem(ItemCollection.GetTaskItem());
                 taskgroup.callback += OnDataChange;
                 errgroup.addItem(ItemCollection.GetTaskError());
                 errgroup.callback += OnDataChange;
 
-                statusGroup1.addItem(ItemCollection.GetTaskItem1());
-                statusGroup1.callback += OnDataChange;
+
+                taskGroup1.addItem(ItemCollection.GetTaskItem1());
+                taskGroup1.callback += OnDataChange;
                 statusGroup2.addItem(ItemCollection.GetTaskItem2());
                 //statusGroup2.callback += OnDataChange;
                 statusGroup3.addItem(ItemCollection.GetTaskItem3());
@@ -210,14 +217,15 @@ namespace SortingControlSys.SortingControl
         delegate void delSendTask();
         List<T_UN_POKE> list = new List<T_UN_POKE>();
         List<T_UN_POKE> list1 = new List<T_UN_POKE>();
+        List<T_UN_POKE> listSix = new List<T_UN_POKE>();//六组烟柜
 
         void sendTask1()
         {
 
             try
             {
-                int flag = statusGroup1.Read(225).CastTo<int>(-1);
-                writeLog.Write("标志位：" + flag);
+                int flag = taskGroup1.Read(225).CastTo<int>(-1);
+                writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     object[] datas = UnPokeService.getTask(25, "2", out list1);
@@ -226,7 +234,7 @@ namespace SortingControlSys.SortingControl
                         updateListBox("二线分拣数据发送完毕");
                         return;
                     }
-                    statusGroup1.SyncWrite(datas);
+                    taskGroup1.SyncWrite(datas);
                     string logstr = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
@@ -247,7 +255,7 @@ namespace SortingControlSys.SortingControl
             try
             {
                 int flag = taskgroup.Read(225).CastTo<int>(-1);
-                writeLog.Write("标志位：" + flag);
+                writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     object[] datas = UnPokeService.getTask(25,"1",out list);
@@ -262,7 +270,7 @@ namespace SortingControlSys.SortingControl
                  {
                    logstr += i + ":" + datas[i] + ";";
                  }
-                 writeLog.Write("分拣线1:"+logstr);
+                 writeLog.Write("分拣线一:"+logstr);
                  updateListBox(logstr);
                  }
             }
@@ -271,8 +279,40 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write(ex.Message);
             }
         }
+        /// <summary>
+        /// 六组烟柜
+        /// </summary>
+        void sendSixCabinetTask()
+        { 
+            try
+            {
+                int flag = SixCabinetGroup.Read(225).CastTo<int>(-1);
+                writeLog.Write("烟柜发送数据前读标志位：" + flag);
+                if (flag == 0)
+                {
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix);
+                    if (int.Parse(datas[0].ToString()) == 0)
+                    {
+                        updateListBox("烟柜分拣数据发送完毕");
+                        return;
+                    }
+                    SixCabinetGroup.SyncWrite(datas);
+                    string logstr = "";
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        logstr += i + ":" + datas[i] + ";";
+                    }
+                    writeLog.Write("烟柜分拣发送数据:" + logstr);
+                    updateListBox(logstr);
+                }
+            }
+            catch (Exception ex)
+            {
+                writeLog.Write(ex.Message);
+            }
+        }
         public static Object lockFlag = new Object();
-        public void OnDataChange(int group,int[] clientId, object[] values)
+        public void OnDataChange(int group, int[] clientId, object[] values)
         {
             if (group == 1)
             {
@@ -281,7 +321,7 @@ namespace SortingControlSys.SortingControl
                     if (clientId[i] == 226)
                     {
 
-                        if (values[i]!=null && int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
                         {
 
                             String logstr = "";
@@ -289,8 +329,8 @@ namespace SortingControlSys.SortingControl
                             {
                                 logstr += item.POKEID + ";";
                             }
-                            writeLog.Write("任务号:" + logstr + "已接收");
-                            updateListBox("任务号:" + logstr + "已接收");
+                            writeLog.Write("第一组任务号:" + logstr + "已接收");
+                            updateListBox("第一组任务号:" + logstr + "已接收");
                             UnPokeService.UpdateTask(list, 15);
                             UnPokeService.UpdateStroageInout(list);
                             sendTask();
@@ -305,15 +345,15 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 226)
                     {
-                        if (values[i] != null &&  int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
                         {
                             String logstr = "";
                             foreach (var item in list1)
                             {
                                 logstr += item.POKEID + ";";
                             }
-                            writeLog.Write("任务号:" + logstr + "已接收");
-                            updateListBox("任务号:" + logstr + "已接收");
+                            writeLog.Write("第二组任务号:" + logstr + "已接收");
+                            updateListBox("第二组任务号:" + logstr + "已接收");
                             UnPokeService.UpdateTask(list1, 15);
                             UnPokeService.UpdateStroageInout(list1);
                             sendTask1();
@@ -326,9 +366,9 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    
-                         // clientId[i]//序号
-                         // values[i]//值
+
+                    // clientId[i]//序号
+                    // values[i]//值
 
                     lock (lockFlag)
                     {
@@ -337,11 +377,34 @@ namespace SortingControlSys.SortingControl
                             stateManager.WriteErrWithCheck(Math.Abs(int.Parse(values[i].ToString())).ToString(), clientId[i].ToString(), lineNum);
                         }
                     }
-                    
+
+                }
+            }
+            else if (group == 6)//六组烟柜
+            {
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                    if (clientId[i] == 226)
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        {
+                            String logstr = "";
+                            foreach (var item in listSix)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            writeLog.Write("烟柜任务号:" + logstr + "已接收");
+                            updateListBox("烟柜任务号:" + logstr + "已接收");
+                            UnPokeService.UpdateTask(listSix, 15);
+                           // UnPokeService.UpdateStroageInout(listSix);
+                            sendSixCabinetTask();
+                        }
+                        break;
+                    }
                 }
             }
 
-            }
+        }
 
 
         public DeviceStateManager stateManager = new DeviceStateManager();
@@ -357,9 +420,9 @@ namespace SortingControlSys.SortingControl
             {
                 taskgroup.Release();
             }
-            if (statusGroup1 != null)
+            if (taskGroup1 != null)
             {
-                statusGroup1.Release();
+                taskGroup1.Release();
             }
             if (statusGroup2 != null)
             {

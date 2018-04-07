@@ -372,22 +372,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_UN_POKE> T_UN_POKE
-        {
-            get
-            {
-                if ((_T_UN_POKE == null))
-                {
-                    _T_UN_POKE = base.CreateObjectSet<T_UN_POKE>("T_UN_POKE");
-                }
-                return _T_UN_POKE;
-            }
-        }
-        private ObjectSet<T_UN_POKE> _T_UN_POKE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_ATSCELL_OUT> T_WMS_ATSCELL_OUT
         {
             get
@@ -608,6 +592,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_UN_POKE> T_UN_POKE
+        {
+            get
+            {
+                if ((_T_UN_POKE == null))
+                {
+                    _T_UN_POKE = base.CreateObjectSet<T_UN_POKE>("T_UN_POKE");
+                }
+                return _T_UN_POKE;
+            }
+        }
+        private ObjectSet<T_UN_POKE> _T_UN_POKE;
 
         #endregion
 
@@ -766,14 +766,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_UN_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
-        {
-            base.AddObject("T_UN_POKE", t_UN_POKE);
-        }
-    
-        /// <summary>
         /// 用于向 T_WMS_ATSCELL_OUT EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_WMS_ATSCELL_OUT(T_WMS_ATSCELL_OUT t_WMS_ATSCELL_OUT)
@@ -883,6 +875,14 @@ namespace InBound
         public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
         {
             base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
+        }
+    
+        /// <summary>
+        /// 用于向 T_UN_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
+        {
+            base.AddObject("T_UN_POKE", t_UN_POKE);
         }
 
         #endregion
@@ -6836,6 +6836,54 @@ namespace InBound
         private global::System.String _BILLCODE;
         partial void OnBILLCODEChanging(global::System.String value);
         partial void OnBILLCODEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CTYPE
+        {
+            get
+            {
+                return _CTYPE;
+            }
+            set
+            {
+                OnCTYPEChanging(value);
+                ReportPropertyChanging("CTYPE");
+                _CTYPE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CTYPE");
+                OnCTYPEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CTYPE;
+        partial void OnCTYPEChanging(Nullable<global::System.Decimal> value);
+        partial void OnCTYPEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SENDTASKNUM
+        {
+            get
+            {
+                return _SENDTASKNUM;
+            }
+            set
+            {
+                OnSENDTASKNUMChanging(value);
+                ReportPropertyChanging("SENDTASKNUM");
+                _SENDTASKNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SENDTASKNUM");
+                OnSENDTASKNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SENDTASKNUM;
+        partial void OnSENDTASKNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSENDTASKNUMChanged();
 
         #endregion
 

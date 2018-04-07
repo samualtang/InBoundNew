@@ -52,11 +52,61 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = item.SORTNUM;//任务号
+                        values[j * 9 + 3] = item.CUSTOMERCODE;//任务号
                         values[j * 9 + 4] = 0;//包装号
                         values[j * 9 + 5] = 0;//备用
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
-                        values[j * 9 + 7] = 0;//备用
+                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
+                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
+                        j++;
+                    }
+                    values[values.Length - 1] = 1;
+                }
+                return values;
+            }
+        }
+        /// <summary>
+        /// 六组烟柜
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <returns></returns>
+        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        { 
+            object[] values = new object[226];//一个任务
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var query = from item in data.T_UN_POKE 
+                            where item.STATUS == 10  && item.CTYPE ==2 
+                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item;
+                
+
+                if (query != null)
+                    list = query.Take(takeSize).ToList();
+                outlist = list;
+                if (list != null)
+                {
+                    int j = 0;
+                    decimal machineseq = 0;//物理通道号
+                    foreach (var item in list)
+                    {
+                        values[j * 9] = item.POKEID;//流水号
+                        machineseq = (item.MACHINESEQ ?? 0);
+                       
+
+                        values[j * 9 + 1] = machineseq;//烟道地址
+                        values[j * 9 + 2] = 21;//尾数标志 >20
+                        values[j * 9 + 3] = item.CUSTOMERCODE;//客户号
+                        values[j * 9 + 4] = 0;//包装号
+                        values[j * 9 + 5] = 0;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
+                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
                     }
