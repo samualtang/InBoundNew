@@ -251,7 +251,6 @@ namespace SortingControlSys.SortingControl
                         updateListBox("二线分拣数据发送完毕");
                         return;
                     }
-                    taskGroup1.SyncWrite(datas);
                     string logstr = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
@@ -259,6 +258,16 @@ namespace SortingControlSys.SortingControl
                     }
                     writeLog.Write("分拣线2:" + logstr);
                     updateListBox("分拣线2:" + logstr);
+                    taskGroup1.SyncWrite(datas);
+
+                    //写完db块后,再读出来 
+                    String p1 = "";
+                    for (int i = 0; i <= 224; )
+                    {
+                        p1 += taskGroup1.Read(i).ToString();//pokeid 
+                        i = i + 8;
+                    }
+                    writeLog.Write("读出第二组电控写入值:" + p1);
                 }
             }
             catch (Exception ex)
@@ -275,21 +284,35 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    object[] datas = UnPokeService.getTask(25,"1",out list);
+                    object[] datas = UnPokeService.getTask(25, "1", out list);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("一线分拣数据发送完毕");
                         return;
+                    } 
+                    string logstr = "";
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        logstr += i + ":" + datas[i] + ";";
                     }
-                 taskgroup.SyncWrite(datas);
-                 string logstr = "";
-                 for (int i = 0; i < datas.Length; i++)
-                 {
-                   logstr += i + ":" + datas[i] + ";";
-                 }
-                 writeLog.Write("分拣线一:"+logstr);
-                 updateListBox("分拣线一:" + logstr);
-                 }
+
+                    writeLog.Write("分拣线一:" + logstr);
+                    updateListBox("分拣线一:" + logstr);
+
+                    taskgroup.SyncWrite(datas);
+
+
+
+                    //写完db块后,再读出来 
+                    String p1 = "";
+                    for (int i = 0; i <= 224; )
+                    {
+                        p1 += taskgroup.Read(i).ToString() ;//pokeid 
+                        i = i + 8;
+                    }
+                    writeLog.Write("读出第一组电控写入值:" + p1);
+
+                }
             }
             catch(Exception ex)
             {
@@ -313,7 +336,6 @@ namespace SortingControlSys.SortingControl
                         updateListBox("烟柜分拣数据发送完毕");
                         return;
                     }
-                    SixCabinetGroup.SyncWrite(datas);
                     string logstr = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
@@ -321,6 +343,16 @@ namespace SortingControlSys.SortingControl
                     }
                     writeLog.Write("烟柜分拣发送数据:" + logstr);
                     updateListBox("烟柜分拣发送数据:" + logstr);
+                    //写电控
+                    SixCabinetGroup.SyncWrite(datas);
+                    //读电控
+                    String p1 = "";
+                    for (int i = 0; i <= 224; )
+                    {
+                        p1 += SixCabinetGroup.Read(i).ToString();//pokeid 
+                        i = i + 8;
+                    }
+                    writeLog.Write("读出烟柜电控写入值:" + p1);
                 }
             }
             catch (Exception ex)
