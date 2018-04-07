@@ -29,7 +29,7 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE where item.LINENUM == lineNum && item.STATUS == 10 orderby item.SORTNUM, item.SECSORTNUM,item.MACHINESEQ,item.TROUGHNUM select item;
+                var query = from item in data.T_UN_POKE where item.LINENUM == lineNum && item.STATUS == 10 && item.CTYPE==1  orderby item.SORTNUM, item.SECSORTNUM,item.MACHINESEQ,item.TROUGHNUM select item;
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
@@ -37,9 +37,15 @@ namespace InBound.Business
                 {
                     int j = 0;
                     decimal machineseq = 0;
+                    String customercode = "";
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
+                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        if (customercode.Length > 9)
+                        {
+                            customercode = customercode.Substring(customercode.Length - 9, 9);
+                        }
                         machineseq = (item.MACHINESEQ??0);
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
                         {
@@ -52,7 +58,7 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = item.CUSTOMERCODE;//任务号
+                        values[j * 9 + 3] = customercode;//任务号
                         values[j * 9 + 4] = 0;//包装号
                         values[j * 9 + 5] = 0;//备用
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
@@ -94,15 +100,19 @@ namespace InBound.Business
                 {
                     int j = 0;
                     decimal machineseq = 0;//物理通道号
+                    String customercode = "";
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
                         machineseq = (item.MACHINESEQ ?? 0);
-                       
+                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        if (customercode.Length>9) {
+                            customercode = customercode.Substring(customercode.Length-9  ,9);
+                        }
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = item.CUSTOMERCODE;//客户号
+                        values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 4] = 0;//包装号
                         values[j * 9 + 5] = 0;//备用:发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号

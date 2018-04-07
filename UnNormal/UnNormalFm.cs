@@ -50,6 +50,7 @@ namespace SortingControlSys.SortingControl
             catch (Exception e)
             {
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
+                writeLog.Write("请检查一下数据网络,在重新打开系统");
                 this.Close();
             }
          }
@@ -153,15 +154,31 @@ namespace SortingControlSys.SortingControl
         }
         public void checkConnection()
         {
-            int flag = taskgroup.Read(11).CastTo<int>(-1);
+            int flag = taskgroup.Read(225).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
+                writeLog.Write(" 连接服务器失败,请检查网络." );
             }
             else
-            {
+            {   //接收位初始化
+                if (taskgroup.Read(225).ToString() != "1")
+                {
+                    taskgroup.Write(2, 225);
+                }
+                if (taskGroup1.Read(225).ToString() != "1")
+                {
+                    taskGroup1.Write(2, 225);
+                }
+                if (SixCabinetGroup.Read(225).ToString() != "1")
+                {
+                    SixCabinetGroup.Write(2, 225);
+                }
+
                 updateListBox("连接服务器成功......");
+                writeLog.Write(" 连接服务器成功......");
                 updateControlEnable(false, button10);
+                isInit = true;
             }
         }
         Boolean CheckCanSend(int targetPort)
@@ -226,7 +243,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = taskGroup1.Read(225).CastTo<int>(-1);
                 writeLog.Write("二线发送数据前读标志位：" + flag);
-                if (flag == 0)
+                if (flag == 2)
                 {
                     object[] datas = UnPokeService.getTask(25, "2", out list1);
                     if (int.Parse(datas[0].ToString())== 0)
@@ -241,7 +258,7 @@ namespace SortingControlSys.SortingControl
                         logstr += i + ":" + datas[i] + ";";
                     }
                     writeLog.Write("分拣线2:" + logstr);
-                    updateListBox(logstr);
+                    updateListBox("分拣线2:" + logstr);
                 }
             }
             catch (Exception ex)
@@ -256,7 +273,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = taskgroup.Read(225).CastTo<int>(-1);
                 writeLog.Write("一线发送数据前读标志位：" + flag);
-                if (flag == 0)
+                if (flag == 2)
                 {
                     object[] datas = UnPokeService.getTask(25,"1",out list);
                     if (int.Parse(datas[0].ToString()) == 0)
@@ -271,7 +288,7 @@ namespace SortingControlSys.SortingControl
                    logstr += i + ":" + datas[i] + ";";
                  }
                  writeLog.Write("分拣线一:"+logstr);
-                 updateListBox(logstr);
+                 updateListBox("分拣线一:" + logstr);
                  }
             }
             catch(Exception ex)
@@ -288,7 +305,7 @@ namespace SortingControlSys.SortingControl
             {
                 int flag = SixCabinetGroup.Read(225).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
-                if (flag == 0)
+                if (flag == 2)
                 {
                     object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix);
                     if (int.Parse(datas[0].ToString()) == 0)
@@ -303,7 +320,7 @@ namespace SortingControlSys.SortingControl
                         logstr += i + ":" + datas[i] + ";";
                     }
                     writeLog.Write("烟柜分拣发送数据:" + logstr);
-                    updateListBox(logstr);
+                    updateListBox("烟柜分拣发送数据:" + logstr);
                 }
             }
             catch (Exception ex)
@@ -321,9 +338,12 @@ namespace SortingControlSys.SortingControl
                     if (clientId[i] == 226)
                     {
 
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
                         {
-
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             String logstr = "";
                             foreach (var item in list)
                             {
@@ -345,8 +365,12 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 226)
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
                         {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             String logstr = "";
                             foreach (var item in list1)
                             {
@@ -386,8 +410,12 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 226)
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
                         {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
                             String logstr = "";
                             foreach (var item in listSix)
                             {
@@ -434,6 +462,7 @@ namespace SortingControlSys.SortingControl
             }
             
         }
+        static Boolean isInit = false;
         private void button10_Click(object sender, EventArgs e)
         {
             // UnPokeService.getTask(25);
