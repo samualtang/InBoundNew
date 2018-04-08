@@ -264,7 +264,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 224; )
                     {
-                        p1 += taskGroup1.Read(i).ToString();//pokeid 
+                        p1 += taskGroup1.Read(i).ToString() + ";";//pokeid 
                         i = i + 8;
                     }
                     writeLog.Write("读出第二组电控写入值:" + p1);
@@ -273,6 +273,14 @@ namespace SortingControlSys.SortingControl
             catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask1();//异常后重新发送
             }
         }
         void sendTask()
@@ -307,7 +315,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 224; )
                     {
-                        p1 += taskgroup.Read(i).ToString() ;//pokeid 
+                        p1 += taskgroup.Read(i).ToString() + ";";//pokeid  
                         i = i + 8;
                     }
                     writeLog.Write("读出第一组电控写入值:" + p1);
@@ -317,6 +325,14 @@ namespace SortingControlSys.SortingControl
             catch(Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendTask();//异常后重新发送
             }
         }
         /// <summary>
@@ -349,7 +365,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 224; )
                     {
-                        p1 += SixCabinetGroup.Read(i).ToString();//pokeid 
+                        p1 += SixCabinetGroup.Read(i).ToString()+";";//pokeid 
                         i = i + 8;
                     }
                     writeLog.Write("读出烟柜电控写入值:" + p1);
@@ -358,6 +374,14 @@ namespace SortingControlSys.SortingControl
             catch (Exception ex)
             {
                 writeLog.Write(ex.Message);
+                updateListBox(ex.Message);
+                Thread.Sleep(10000);
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    writeLog.Write(ex.InnerException.Message);
+                    updateListBox(ex.InnerException.Message);
+                }
+                sendSixCabinetTask();//异常后重新发送
             }
         }
         public static Object lockFlag = new Object();
@@ -381,10 +405,13 @@ namespace SortingControlSys.SortingControl
                             {
                                 logstr += item.POKEID + ";";
                             }
-                            writeLog.Write("第一组任务号:" + logstr + "已接收");
-                            updateListBox("第一组任务号:" + logstr + "已接收");
-                            UnPokeService.UpdateTask(list, 15);
-                            UnPokeService.UpdateStroageInout(list);
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("第一组任务号:" + logstr + "已接收");
+                                updateListBox("第一组任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(list, 15);
+                                UnPokeService.UpdateStroageInout(list);
+                            }
                             sendTask();
                         }
                         break;
@@ -408,10 +435,13 @@ namespace SortingControlSys.SortingControl
                             {
                                 logstr += item.POKEID + ";";
                             }
-                            writeLog.Write("第二组任务号:" + logstr + "已接收");
-                            updateListBox("第二组任务号:" + logstr + "已接收");
-                            UnPokeService.UpdateTask(list1, 15);
-                            UnPokeService.UpdateStroageInout(list1);
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("第二组任务号:" + logstr + "已接收");
+                                updateListBox("第二组任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(list1, 15);
+                                UnPokeService.UpdateStroageInout(list1);
+                            }
                             sendTask1();
                         }
                         break;
@@ -453,10 +483,13 @@ namespace SortingControlSys.SortingControl
                             {
                                 logstr += item.POKEID + ";";
                             }
-                            writeLog.Write("烟柜任务号:" + logstr + "已接收");
-                            updateListBox("烟柜任务号:" + logstr + "已接收");
-                            UnPokeService.UpdateTask(listSix, 15);
-                           // UnPokeService.UpdateStroageInout(listSix);
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("烟柜任务号:" + logstr + "已接收");
+                                updateListBox("烟柜任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(listSix, 15);
+                                // UnPokeService.UpdateStroageInout(listSix);
+                            }
                             sendSixCabinetTask();
                         }
                         break;
