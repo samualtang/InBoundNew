@@ -113,8 +113,11 @@ namespace FormUI
                     e.Value = "空托盘回收任务";
                 }
             }
-
-            if (e.ColumnIndex == 8)
+            if (e.ColumnIndex == 7)
+            {
+                e.Value = ItemService.GetItemByBarCode(e.Value.ToString()).ITEMNAME;
+            }
+            if (e.ColumnIndex == 10)
             {
                INF_JOBFEEDBACK feed= InfFeedBackService.GetFeedBack(e.Value.ToString());
                if (feed != null)

@@ -188,8 +188,8 @@ namespace InBound.Business
                                           continue;
                                       }
                                       T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoDetailService.GetDetail(cellInfo.CELLNO);
-
-                                      if (detail.REQUESTQTY != detail.QTY)
+                                     
+                                      if ( (detail.REQUESTQTY??0) != detail.QTY)
                                       {
 
                                           INF_JOBDOWNLOAD task1 = new INF_JOBDOWNLOAD();
@@ -406,9 +406,10 @@ namespace InBound.Business
                           //新建指定拆垛机械手任务
                           using (TransactionScope ts = new TransactionScope())
                           {
-                              INF_JOBDOWNLOAD inf = InfJobDownLoadService.GetDetail(temptask.JOBID);
+                              INF_JOBDOWNLOAD inf = InfJobDownLoadService.GetDetail(temptask.JOBID,dataEntity);
 
                               inf.STATUS = 10;//出库任务完成
+
                               if (temptask.EQUIPMENTID == "1415" && inf.JOBTYPE != 55)
                               {
 

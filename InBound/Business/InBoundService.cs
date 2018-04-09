@@ -171,16 +171,16 @@ namespace InBound.Business
                                             {
                                                 totalCount += temp.QTY;
                                                 TotalplanQty += temp.PlanQty;
-                                                if (qtyTemp <= (itemsource.MANTISSA ?? 0 + temp.QTY))
+                                                if (qtyTemp <= ((itemsource.MANTISSA ?? 0) + temp.QTY))
                                                 {
-                                                    qtyTemp = itemsource.MANTISSA ?? 0 + temp.QTY;
+                                                    qtyTemp = (itemsource.MANTISSA ?? 0) + temp.QTY;
                                                     maxIndex = i;
                                                 }
 
                                             }
                                             else
                                             {
-                                                if (qtyTemp <= itemsource.MANTISSA)
+                                                if (qtyTemp < itemsource.MANTISSA)
                                                 {
                                                     qtyTemp = itemsource.MANTISSA??0;
                                                     maxIndex = i;
@@ -194,7 +194,7 @@ namespace InBound.Business
                                        // {
                                        //     break;//无实际库存
                                        // }
-                                        querySource = querySourcetemp.Find(x => x.TROUGHNUM == search[maxIndex].CELLNO);
+                                        querySource = querySourcetemp[maxIndex];// querySourcetemp.Find(x => x.TROUGHNUM == search[maxIndex].CELLNO);
 
                                    // }
                                 }
@@ -517,6 +517,8 @@ namespace InBound.Business
                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
                                     tempCount += 50;
                                     entity.SaveChanges();
+                                    break;
+
                                 }
                                 else
                                 {

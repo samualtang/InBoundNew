@@ -83,7 +83,8 @@ namespace FormUI
             try
             {
               // throw(new Exception());
-                 
+
+            
                 string ls_pass;
               
                 ls_pass = textBox2.Text;

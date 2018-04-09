@@ -51,9 +51,10 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = from item in entity.T_WMS_INBOUND_LINE 
+              var query = from item in entity.T_WMS_INBOUND_LINE
+                          
                           //是否加载满托盘 以及垛形
-                          where item.INBOUNDID==inboundid //&& item.BOXQTY-item.LOCKQTY>0
+                          where item.INBOUNDID == inboundid //&& item.BOXQTY-item.LOCKQTY>0
                           select item;
               return query.ToList();
           }

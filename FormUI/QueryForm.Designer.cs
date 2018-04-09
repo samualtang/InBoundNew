@@ -51,6 +51,8 @@
             this.品牌编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.入库单编号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.品牌 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.垛型 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.状态 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
@@ -77,7 +79,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(964, 88);
+            this.groupBox1.Size = new System.Drawing.Size(1160, 88);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
@@ -215,7 +217,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(964, 421);
+            this.groupBox2.Size = new System.Drawing.Size(1160, 421);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "详情";
@@ -231,13 +233,15 @@
             this.品牌编码,
             this.计划数量,
             this.入库单编号,
+            this.品牌,
+            this.垛型,
             this.时间,
             this.状态});
             this.dataGridView1.Location = new System.Drawing.Point(4, 18);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(949, 399);
+            this.dataGridView1.Size = new System.Drawing.Size(1135, 399);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
@@ -283,6 +287,18 @@
             this.入库单编号.HeaderText = "入库单编号";
             this.入库单编号.Name = "入库单编号";
             // 
+            // 品牌
+            // 
+            this.品牌.DataPropertyName = "Brandid";
+            this.品牌.HeaderText = "品牌";
+            this.品牌.Name = "品牌";
+            // 
+            // 垛型
+            // 
+            this.垛型.DataPropertyName = "piletype";
+            this.垛型.HeaderText = "垛型";
+            this.垛型.Name = "垛型";
+            // 
             // 时间
             // 
             this.时间.DataPropertyName = "Createdate";
@@ -299,7 +315,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 530);
+            this.ClientSize = new System.Drawing.Size(1199, 530);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -339,6 +355,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 品牌编码;
         private System.Windows.Forms.DataGridViewTextBoxColumn 计划数量;
         private System.Windows.Forms.DataGridViewTextBoxColumn 入库单编号;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 品牌;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 垛型;
         private System.Windows.Forms.DataGridViewTextBoxColumn 时间;
         private System.Windows.Forms.DataGridViewTextBoxColumn 状态;
     }

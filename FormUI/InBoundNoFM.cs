@@ -255,7 +255,11 @@ namespace FormUI
         }
         private void dataGridView2_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-           
+
+            if (e.ColumnIndex == 7 && e.Value != null)
+            {
+               e.Value= ItemService.GetItemByBarCode(e.Value.ToString()).DXTYPE.ToString();
+            }
         }
 
         private void AutoInBoundFM_FormClosed(object sender, FormClosedEventArgs e)

@@ -43,13 +43,6 @@
             this.供应商 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.品牌名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.件烟码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.锁定数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.入库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.INBOUNDDETAILID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbChooseName = new System.Windows.Forms.TextBox();
@@ -60,6 +53,14 @@
             this.CBAddress = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.logList = new System.Windows.Forms.ListBox();
+            this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.品牌名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.件烟码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.计划数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.锁定数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.入库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.INBOUNDDETAILID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.垛型 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -208,7 +209,8 @@
             this.计划数量,
             this.锁定数量,
             this.入库数量,
-            this.INBOUNDDETAILID});
+            this.INBOUNDDETAILID,
+            this.垛型});
             this.dataGridView2.Location = new System.Drawing.Point(0, 18);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView2.Name = "dataGridView2";
@@ -217,49 +219,6 @@
             this.dataGridView2.TabIndex = 3;
             this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
-            // 
-            // 任务号
-            // 
-            this.任务号.DataPropertyName = "INBOUNDID";
-            this.任务号.HeaderText = "入库单号";
-            this.任务号.Name = "任务号";
-            // 
-            // 品牌名称
-            // 
-            this.品牌名称.DataPropertyName = "cigarettename";
-            this.品牌名称.HeaderText = "品牌名称";
-            this.品牌名称.Name = "品牌名称";
-            // 
-            // 件烟码
-            // 
-            this.件烟码.DataPropertyName = "barcode";
-            this.件烟码.HeaderText = "件烟码";
-            this.件烟码.Name = "件烟码";
-            // 
-            // 计划数量
-            // 
-            this.计划数量.DataPropertyName = "boxqty";
-            this.计划数量.HeaderText = "计划数量";
-            this.计划数量.Name = "计划数量";
-            // 
-            // 锁定数量
-            // 
-            this.锁定数量.DataPropertyName = "lockqty";
-            this.锁定数量.HeaderText = "锁定数量";
-            this.锁定数量.Name = "锁定数量";
-            // 
-            // 入库数量
-            // 
-            this.入库数量.DataPropertyName = "aboxqty";
-            this.入库数量.HeaderText = "入库数量";
-            this.入库数量.Name = "入库数量";
-            // 
-            // INBOUNDDETAILID
-            // 
-            this.INBOUNDDETAILID.DataPropertyName = "INBOUNDDETAILID";
-            this.INBOUNDDETAILID.HeaderText = "INBOUNDDETAILID";
-            this.INBOUNDDETAILID.Name = "INBOUNDDETAILID";
-            this.INBOUNDDETAILID.Visible = false;
             // 
             // groupBox4
             // 
@@ -373,6 +332,55 @@
             this.logList.Size = new System.Drawing.Size(787, 112);
             this.logList.TabIndex = 6;
             // 
+            // 任务号
+            // 
+            this.任务号.DataPropertyName = "INBOUNDID";
+            this.任务号.HeaderText = "入库单号";
+            this.任务号.Name = "任务号";
+            // 
+            // 品牌名称
+            // 
+            this.品牌名称.DataPropertyName = "cigarettename";
+            this.品牌名称.HeaderText = "品牌名称";
+            this.品牌名称.Name = "品牌名称";
+            // 
+            // 件烟码
+            // 
+            this.件烟码.DataPropertyName = "barcode";
+            this.件烟码.HeaderText = "件烟码";
+            this.件烟码.Name = "件烟码";
+            // 
+            // 计划数量
+            // 
+            this.计划数量.DataPropertyName = "boxqty";
+            this.计划数量.HeaderText = "计划数量";
+            this.计划数量.Name = "计划数量";
+            // 
+            // 锁定数量
+            // 
+            this.锁定数量.DataPropertyName = "lockqty";
+            this.锁定数量.HeaderText = "锁定数量";
+            this.锁定数量.Name = "锁定数量";
+            // 
+            // 入库数量
+            // 
+            this.入库数量.DataPropertyName = "aboxqty";
+            this.入库数量.HeaderText = "入库数量";
+            this.入库数量.Name = "入库数量";
+            // 
+            // INBOUNDDETAILID
+            // 
+            this.INBOUNDDETAILID.DataPropertyName = "INBOUNDDETAILID";
+            this.INBOUNDDETAILID.HeaderText = "INBOUNDDETAILID";
+            this.INBOUNDDETAILID.Name = "INBOUNDDETAILID";
+            this.INBOUNDDETAILID.Visible = false;
+            // 
+            // 垛型
+            // 
+            this.垛型.DataPropertyName = "barcode";
+            this.垛型.HeaderText = "垛型";
+            this.垛型.Name = "垛型";
+            // 
             // InBoundNoFM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -420,13 +428,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox CBAddress;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 任务号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 品牌名称;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 件烟码;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 计划数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 锁定数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 入库数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn INBOUNDDETAILID;
         private System.Windows.Forms.DataGridViewTextBoxColumn 入库单号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 准运证号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 合同号;
@@ -434,5 +435,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 供应商;
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
         private System.Windows.Forms.ListBox logList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 任务号;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 品牌名称;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 件烟码;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 计划数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 锁定数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 入库数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn INBOUNDDETAILID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 垛型;
     }
 }
