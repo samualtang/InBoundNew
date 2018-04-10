@@ -505,6 +505,7 @@
           <Property Name="TYPE" Type="number" />
           <Property Name="MAXTASKNUM" Type="number" />
           <Property Name="CAPACITY" Type="number" />
+          <Property Name="TROUGHNUM" Type="nvarchar2" MaxLength="500" />
         </EntityType>
         <EntityType Name="T_WMS_INBOUND">
           <Key>
@@ -833,8 +834,8 @@
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
           <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
-          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
+          <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1524,18 +1525,6 @@
           <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
         </EntityType>
-        <EntityType Name="T_WMS_DEVICESTATUS">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="DEVICENO" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DEVICENAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MAXTASKNUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="CAPACITY" Precision="38" Scale="0" />
-        </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
             <PropertyRef Name="POKEID" />
@@ -1556,6 +1545,19 @@
           <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SENDTASKNUM" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_DEVICESTATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DEVICENO" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DEVICENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAXTASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CAPACITY" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2284,19 +2286,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_DEVICESTATUS">
-            <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
-              <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
-                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
-                <ScalarProperty Name="MAXTASKNUM" ColumnName="MAXTASKNUM" />
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
-                <ScalarProperty Name="DEVICENO" ColumnName="DEVICENO" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_UN_POKE">
             <EntityTypeMapping TypeName="Model.T_UN_POKE">
               <MappingFragment StoreEntitySet="T_UN_POKE">
@@ -2316,6 +2305,20 @@
                 <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
                 <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
                 <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_DEVICESTATUS">
+            <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
+              <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="MAXTASKNUM" ColumnName="MAXTASKNUM" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DEVICENAME" ColumnName="DEVICENAME" />
+                <ScalarProperty Name="DEVICENO" ColumnName="DEVICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2372,8 +2375,8 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="15.375" PointY="3.75" Height="4.6443082682291674" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="5.2173673502604174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="12.375" PointY="3.75" Height="2.4746101888020746" />
-        <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.2898160807291674" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="17.375" PointY="3.75" Height="4.0712491861979174" />
+        <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.4746101888020746" />
       </Diagram>
     </Diagrams>
   </Designer>

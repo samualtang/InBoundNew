@@ -655,8 +655,9 @@ namespace InBound.Business
                                       {
                                           report.ForEach(x => x.STATUS = 20);
                                       }
+                                      INF_JOBDOWNLOAD kxLoad = InfJobDownLoadService.GetDetail(item.JOBID, dataEntity);
+                                      kxLoad.STATUS = 10;
                                   }
-                                  
                                   else if (item.JOBTYPE == 120)
                                   {
                                       AtsCellCJService.Del(item.EXTATTR1);

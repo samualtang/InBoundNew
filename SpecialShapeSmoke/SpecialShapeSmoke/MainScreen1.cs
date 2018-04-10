@@ -160,12 +160,12 @@ namespace SpecialShapeSmoke
             }
         }
         //与上面的方法相同 页面填充测试数据时使用的-yq
-        public List<HUNHEVIEW_cs> GroupList_cs(List<HUNHEVIEW_cs> list)
+        public List<HUNHEVIEW> GroupList_cs(List<HUNHEVIEW> list)
         {
             if (list != null)
             {
-                List<HUNHEVIEW_cs> temp = new List<HUNHEVIEW_cs>();
-                HUNHEVIEW_cs tempview = null;
+                List<HUNHEVIEW> temp = new List<HUNHEVIEW>();
+                HUNHEVIEW tempview = null;
                 int count = 0;
                 foreach (var item in list)//遍历取到的数据（名称、编码、通道号）
                 {
@@ -215,7 +215,7 @@ namespace SpecialShapeSmoke
         //通道集合
         List<HUNHEVIEW>[] throughList;
         //测试数据填充用的通道集合-yq
-        List<HUNHEVIEW_cs>[] throughList_cs;
+        List<HUNHEVIEW>[] throughList_cs;
         public void clearAllText()
         {
             //throughList =  new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
@@ -229,7 +229,7 @@ namespace SpecialShapeSmoke
             //}
 
             //测试数据填充用的-yq
-            throughList_cs = new List<HUNHEVIEW_cs>[Convert.ToInt32(lineNum)];
+            throughList_cs = new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
             for (int i = 0; i < throughList_cs.Length; i++)
             {
                 for (int j = 0; j < panelList[i].Controls.Count; j++)
@@ -256,7 +256,7 @@ namespace SpecialShapeSmoke
                     for (int i = 0; i < throughList_cs.Length; i++)
                     {
                         //throughList_cs[i] = GroupList_cs(service.GetTroughCigarette_cs(troughno[i], 300));//第二个
-                        throughList_cs[i] = service.GetTroughCigarette_cs(troughno[i], 300);//第一个
+                        throughList_cs[i] = service.GetTroughCigarette(troughno[i], 300);//第一个
                         initText_cs(panelList[i], throughList_cs[i]);
                     }
 
@@ -307,7 +307,7 @@ namespace SpecialShapeSmoke
             }
         }
         //测试数据填充用的 -yq
-        public void initText_cs(GroupBox box, List<HUNHEVIEW_cs> list)
+        public void initText_cs(GroupBox box, List<HUNHEVIEW> list)
         {
             if (box != null && list != null)
             {

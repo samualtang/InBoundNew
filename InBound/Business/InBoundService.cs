@@ -55,7 +55,7 @@ namespace InBound.Business
         }
 
 
-        public static void PreUpdateInOut(bool unFullFirst)
+        public static void PreUpdateInOut(bool unFullFirst,PlcGroup group)
         {
             List<T_PRODUCE_SORTTROUGH> listNormal = SortTroughService.GetTrough(10, 20);//分拣通道
             List<T_PRODUCE_SORTTROUGH> listHj = SortTroughService.GetTrough(20, 20);//重力式货架
@@ -87,7 +87,9 @@ namespace InBound.Business
                                 continue;
                             }
                         }
-                        if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货
+                        Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
+                        if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
+                        //if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货 暂时屏蔽
                         {
                             //decimal groupno = 1;
                             //if (task.GROUPNO <= 2)
@@ -116,10 +118,15 @@ namespace InBound.Business
                             decimal TotalplanQty = 0;
                             decimal totalMantissa = 0;
                             decimal troughQty = 0;//通道数量
+                            decimal outingCount = 0;
                             troughQty = querySourcetemp.Count;
+
                             foreach (var itemsource in querySourcetemp)
                             {
                                 totalMantissa += itemsource.MANTISSA ?? 0;
+                                var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY)??0;
+                                outingCount += outquery;
+
                             }
 
                             int tempCount = 0;
@@ -366,7 +373,7 @@ namespace InBound.Business
                                 }
                                 else //非散盘优先
                                 {
-                                    if (TotalplanQty + totalMantissa <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
+                                    if (TotalplanQty + totalMantissa+Math.Abs(outingCount) <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
                                     {
                                         //var query2 = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.CELLNO == outTask1.CELLNO select item).Sum(x => x.QTY);
                                         //if (query2 != null)
@@ -509,7 +516,8 @@ namespace InBound.Business
                                        // entity.SaveChanges();
                                     }
                                 }
-                                if (totalCount + totalMantissa > 0)//重力式货架没有库存 不下任务 可以改成从db块读取
+                                
+                                if (totalCount + totalMantissa > 0 && AtsCellOutService.checkCanSendTaskCount(task.TROUGHNUM))//重力式货架没有库存 不下任务 可以改成从db块读取
                                 {
                                     entity.INF_JOBDOWNLOAD.AddObject(load);
                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask1);

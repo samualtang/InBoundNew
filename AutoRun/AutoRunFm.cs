@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Threading;
 using InBound.Business;
 using InBound.Model;
+using InBound;
+using OpcRcw.Da;
 
 namespace AutoRun
 {
@@ -58,14 +60,24 @@ namespace AutoRun
 
         }
         bool isRunBuHuo = true;
+        IOPCServer pIOPCServer;  //定义opcServer对象
+        PlcGroup FJCount;
+        internal const string SERVER_NAME = "OPC.SimaticNET";
+        internal const int LOCALE_ID = 0x409;    
         public void startAutoBuHuo()
         {
 
+            Type svrComponenttyp;
+            Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
+            FJCount = new PlcGroup(pIOPCServer, 1, "group", 1, LOCALE_ID);//组号由这里定义
+            FJCount.addItem(PlcItemCollection.GetTaskCountItem());
 
-          
+            
             while (isRunBuHuo)
             {
-                InBoundService.PreUpdateInOut(isSanpan);
+                InBoundService.PreUpdateInOut(isSanpan,FJCount);
 
                 Thread.Sleep(scanTime * 1000);
             }

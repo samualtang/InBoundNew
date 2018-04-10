@@ -310,6 +310,26 @@ namespace InBound.Business
 
         }
 
+        public static bool checkCanSendTaskCount(String troughnum)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_WMS_DEVICESTATUS where item.TYPE == 50 && item.TROUGHNUM.Contains(troughnum) select item).FirstOrDefault();
+
+                var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBTYPE == 80 && query.DEVICENO.Contains(item.TARGET) && item.STATUS != 10 select item).Count();
+
+                if (query2==null || query2 < query.MAXTASKNUM) //小于阀值
+                {
+                    return true;
+                }
+                else
+                {
+                    WriteLog.GetLog().Write("通道号:" + troughnum + "对应的开箱机未完成任务数大于阀值暂不开箱");
+                    return false;
+                }
+
+            }
+        }
         public static List<String> getLaneWayTaskCount()
         {
             using (Entities et = new Entities())

@@ -580,22 +580,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_DEVICESTATUS> T_WMS_DEVICESTATUS
-        {
-            get
-            {
-                if ((_T_WMS_DEVICESTATUS == null))
-                {
-                    _T_WMS_DEVICESTATUS = base.CreateObjectSet<T_WMS_DEVICESTATUS>("T_WMS_DEVICESTATUS");
-                }
-                return _T_WMS_DEVICESTATUS;
-            }
-        }
-        private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_UN_POKE> T_UN_POKE
         {
             get
@@ -608,6 +592,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_UN_POKE> _T_UN_POKE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_DEVICESTATUS> T_WMS_DEVICESTATUS
+        {
+            get
+            {
+                if ((_T_WMS_DEVICESTATUS == null))
+                {
+                    _T_WMS_DEVICESTATUS = base.CreateObjectSet<T_WMS_DEVICESTATUS>("T_WMS_DEVICESTATUS");
+                }
+                return _T_WMS_DEVICESTATUS;
+            }
+        }
+        private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
 
         #endregion
 
@@ -870,19 +870,19 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_WMS_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
-        {
-            base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
-        }
-    
-        /// <summary>
         /// 用于向 T_UN_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
         {
             base.AddObject("T_UN_POKE", t_UN_POKE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
+        {
+            base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
         }
 
         #endregion
@@ -10014,6 +10014,30 @@ namespace InBound
         private Nullable<global::System.Decimal> _CAPACITY;
         partial void OnCAPACITYChanging(Nullable<global::System.Decimal> value);
         partial void OnCAPACITYChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TROUGHNUM
+        {
+            get
+            {
+                return _TROUGHNUM;
+            }
+            set
+            {
+                OnTROUGHNUMChanging(value);
+                ReportPropertyChanging("TROUGHNUM");
+                _TROUGHNUM = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TROUGHNUM");
+                OnTROUGHNUMChanged();
+            }
+        }
+        private global::System.String _TROUGHNUM;
+        partial void OnTROUGHNUMChanging(global::System.String value);
+        partial void OnTROUGHNUMChanged();
 
         #endregion
 

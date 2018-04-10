@@ -36,7 +36,7 @@ namespace FormUI
             
 
                 DateTime now = DateTime.Now;
-                InBoundService.PreUpdateInOut(spfirst);
+                InBoundService.PreUpdateInOut(spfirst,null);
                 DateTime end = DateTime.Now;
                 TimeSpan span = end.Subtract(now);
                
