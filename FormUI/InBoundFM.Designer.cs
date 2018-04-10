@@ -62,9 +62,9 @@
             this.groupBox1.Controls.Add(this.tbCode);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(10, 83);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(353, 49);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -73,7 +73,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(225, 21);
-            this.tbName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbName.Margin = new System.Windows.Forms.Padding(2);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(99, 21);
             this.tbName.TabIndex = 3;
@@ -92,7 +92,7 @@
             // tbCode
             // 
             this.tbCode.Location = new System.Drawing.Point(70, 21);
-            this.tbCode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbCode.Margin = new System.Windows.Forms.Padding(2);
             this.tbCode.Name = "tbCode";
             this.tbCode.Size = new System.Drawing.Size(89, 21);
             this.tbCode.TabIndex = 1;
@@ -120,9 +120,9 @@
             this.groupBox2.Controls.Add(this.tbNum);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Location = new System.Drawing.Point(10, 8);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(754, 49);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
@@ -136,7 +136,7 @@
             "楼下二号入口",
             "楼上一号入口"});
             this.cbAddress.Location = new System.Drawing.Point(69, 17);
-            this.cbAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbAddress.Margin = new System.Windows.Forms.Padding(2);
             this.cbAddress.Name = "cbAddress";
             this.cbAddress.Size = new System.Drawing.Size(82, 20);
             this.cbAddress.TabIndex = 8;
@@ -154,7 +154,7 @@
             // tbRfid
             // 
             this.tbRfid.Location = new System.Drawing.Point(277, 19);
-            this.tbRfid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbRfid.Margin = new System.Windows.Forms.Padding(2);
             this.tbRfid.Name = "tbRfid";
             this.tbRfid.Size = new System.Drawing.Size(68, 21);
             this.tbRfid.TabIndex = 6;
@@ -173,17 +173,17 @@
             // 
             this.cbcDuo.AutoSize = true;
             this.cbcDuo.Location = new System.Drawing.Point(360, 21);
-            this.cbcDuo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbcDuo.Margin = new System.Windows.Forms.Padding(2);
             this.cbcDuo.Name = "cbcDuo";
-            this.cbcDuo.Size = new System.Drawing.Size(72, 16);
+            this.cbcDuo.Size = new System.Drawing.Size(60, 16);
             this.cbcDuo.TabIndex = 4;
-            this.cbcDuo.Text = "能否拆垛";
+            this.cbcDuo.Text = "能拆垛";
             this.cbcDuo.UseVisualStyleBackColor = true;
             // 
             // tbChooseName
             // 
             this.tbChooseName.Location = new System.Drawing.Point(489, 17);
-            this.tbChooseName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbChooseName.Margin = new System.Windows.Forms.Padding(2);
             this.tbChooseName.Name = "tbChooseName";
             this.tbChooseName.Size = new System.Drawing.Size(163, 21);
             this.tbChooseName.TabIndex = 3;
@@ -191,7 +191,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(435, 15);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(50, 22);
             this.button1.TabIndex = 2;
@@ -203,7 +203,7 @@
             // 
             this.tbNum.ForeColor = System.Drawing.Color.Red;
             this.tbNum.Location = new System.Drawing.Point(209, 19);
-            this.tbNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbNum.Margin = new System.Windows.Forms.Padding(2);
             this.tbNum.Name = "tbNum";
             this.tbNum.Size = new System.Drawing.Size(35, 21);
             this.tbNum.TabIndex = 1;
@@ -224,9 +224,9 @@
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
             this.groupBox3.Location = new System.Drawing.Point(8, 144);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(812, 204);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
@@ -240,7 +240,7 @@
             this.卷烟名称,
             this.卷烟编码});
             this.dataGridView1.Location = new System.Drawing.Point(2, 17);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
             this.dataGridView1.Size = new System.Drawing.Size(806, 184);
@@ -283,7 +283,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "InBoundFM";
             this.Text = "成品入库";
             this.Load += new System.EventHandler(this.InBoundFM_Load);
