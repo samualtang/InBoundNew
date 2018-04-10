@@ -49,8 +49,18 @@ namespace SortingControlSys.Model
 
            return list;
        }
+       
+       public static List<string> GetShapeSmokeTaskItem() 
+       {
+           List<string> list = new List<string>();
+           for (int i = 0; i <= 900; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB33,DINT" + i);
+               i += 3;
+           }
 
-
+           return list;
+       }
        public static List<string> GetTaskError()
        {
            List<string> list = new List<string>();

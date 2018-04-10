@@ -14,12 +14,18 @@ namespace InBound.Business
            using (Entities entity = new Entities())
            {
                //List<HUNHEVIEW> list = null;
-               var query = (from item in entity.T_UN_POKE
-                            join item2 in entity.T_PRODUCE_SORTTROUGH
-                                on item.TROUGHNUM equals item2.TROUGHNUM
-                            where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 30 && item.STATUS==15
-                                && item.MACHINESEQ == seq orderby item.SORTNUM
-                            select new HUNHEVIEW() { CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, QUANTITY = item.POKENUM }).Take(qty).ToList();
+               //var query = (from item in entity.T_UN_POKE
+               //             join item2 in entity.T_PRODUCE_SORTTROUGH
+               //                 on item.TROUGHNUM equals item2.TROUGHNUM
+               //             where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 30 && item.STATUS==15
+               //                 && item.MACHINESEQ == seq orderby item.SORTNUM
+               //             select new HUNHEVIEW() { CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, QUANTITY = item.POKENUM }).Take(qty).ToList();
+
+               var query = (from item in entity.T_PRODUCE_SORTTROUGH
+                           where   item.TROUGHTYPE == 20 &&  item.CIGARETTECODE != null && item.GROUPNO == seq orderby item.TROUGHNUM
+                            select new HUNHEVIEW() { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, TROUGHNUM = item.TROUGHNUM }).ToList();
+
+                
                return query;
            }
 
