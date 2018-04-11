@@ -38,6 +38,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
+    <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\Union\Lib\opcrcw.comn.dll</HintPath>
+    </Reference>
+    <Reference Include="opcrcw.da, Version=3.0.3.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\Union\Lib\opcrcw.da.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -100,6 +110,10 @@
     <ProjectReference Include="..\..\InBound\InBound.csproj">
       <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
       <Name>InBound</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Union\Union.csproj">
+      <Project>{E8AF3672-8E09-4451-B63F-3A6F322C2EE1}</Project>
+      <Name>Union</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -169,7 +169,7 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 4] = 0;//包装号
-                        values[j * 9 + 5] = 0;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
@@ -581,8 +581,7 @@ namespace InBound.Business
                     {
                         var query = (from items in data.T_UN_POKE where items.POKEID == item.POKEID select items).FirstOrDefault();
                         query.STATUS = status;
-                    }
-
+                    } 
                 }
                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
@@ -593,17 +592,15 @@ namespace InBound.Business
         public static void UpdateunTask(decimal sendtasknum, int status)
         {
             using (Entities data = new Entities())
-            {   
-                if (sendtasknum != null)
+            {    
+                var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList(); 
+                foreach (var item in query)
                 {
-                    var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList(); 
-                    foreach (var item in query)
-                    {
-                        item.STATUS = status;
-                    } 
-                } 
-                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                    item.STATUS = status;
+                }   
+                data.ExecuteStoreCommand("update t_un_task set state=20 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
+                
             }
         }
 

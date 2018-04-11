@@ -131,10 +131,14 @@ namespace SortingControlSys.SortingControl
                 SixCabinetGroup.addItem(ItemCollection.GetSixCabinetTaskItem());
                 SixCabinetGroup.callback += OnDataChange;
 
+              
+
                 //接收完成信号组
                 FinishSignalGroup = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
-                FinishSignalGroup.addItem(ItemCollection.GetFinishSignalTaskItem());
+                FinishSignalGroup.addItem(ItemCollection.GetFinishSignalTaskItem()); 
                 FinishSignalGroup.callback += OnDataChange;
+                
+              
 
 
                 taskgroup.addItem(ItemCollection.GetTaskItem());
@@ -511,6 +515,7 @@ namespace SortingControlSys.SortingControl
                         try
                         {
                             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+                            writeLog.Write("数据库更新完成");
                         }
                         catch (Exception ex)
                         {
