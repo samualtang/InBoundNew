@@ -49,15 +49,16 @@ namespace SortingControlSys.Model
 
            return list;
        }
-       
-       public static List<string> GetShapeSmokeTaskItem() 
+       /// <summary>
+       /// 获取完成信号
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetFinishSignalGroupTaskItem() 
        {
-           List<string> list = new List<string>();
-           for (int i = 0; i <= 900; i++)
-           {
-               list.Add("S7:[UnnormalConnection]DB33,DINT" + i);
-               i += 3;
-           }
+           List<string> list = new List<string>(); 
+           list.Add("S7:[UnnormalConnection]DB33,DINT0");
+           list.Add("S7:[UnnormalConnection]DB33,DINT4");
+           list.Add("S7:[UnnormalConnection]DB33,DINT8");
 
            return list;
        }

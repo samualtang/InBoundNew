@@ -125,6 +125,61 @@ namespace InBound.Business
                 return values;
             }
         }
+        /// <summary>
+        /// 获取完成信号
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <returns></returns>
+        public static object[] GetFinishSignalTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        {
+
+            object[] values = new object[226];//一个任务
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var query = from item in data.T_UN_POKE
+                            where item.STATUS == 10 && item.CTYPE == 2
+                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
+                            select item; 
+                if (query != null)
+                    list = query.Take(takeSize).ToList();
+                outlist = list;
+                if (list != null)
+                {
+                    int j = 0;
+                    decimal machineseq = 0;//物理通道号
+                    String customercode = "";
+                    foreach (var item in list)
+                    {
+                        values[j * 9] = item.POKEID;//流水号
+                        machineseq = (item.MACHINESEQ ?? 0);
+                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        if (customercode.Length > 9)
+                        {
+                            customercode = customercode.Substring(customercode.Length - 9, 9);
+                        }
+
+                        values[j * 9 + 1] = machineseq;//烟道地址
+                        values[j * 9 + 2] = 21;//尾数标志 >20
+                        values[j * 9 + 3] = customercode;//客户号
+                        values[j * 9 + 4] = 0;//包装号
+                        values[j * 9 + 5] = 0;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
+                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
+                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
+                        j++;
+                    }
+                    values[values.Length - 1] = 1;
+                }
+                return values;
+            }
+        }
 
         public static object[] getCode()
         {
@@ -432,7 +487,8 @@ namespace InBound.Business
                        // decimal totalQty = tempList.Sum(x => x.TASKQTY) ?? 0;
                         T_UN_POKE poke = tempList[0];
                         
-                        var query = (from itemlist in entity.T_WMS_STORAGEAREA_INOUT where itemlist.TASKNO == poke.BILLCODE && itemlist.AREAID==3 && itemlist.CELLNO==num  && itemlist.QTY<0 select itemlist).FirstOrDefault();
+                        var query = (from itemlist in entity.T_WMS_STORAGEAREA_INOUT 
+                                     where itemlist.TASKNO == poke.BILLCODE && itemlist.AREAID==3 && itemlist.CELLNO==num  && itemlist.QTY<0 select itemlist).FirstOrDefault();
                         if (query != null)
                             break;
                         decimal totalQty = (from itemlist1 in entity.T_UN_POKE
@@ -448,7 +504,7 @@ namespace InBound.Business
                         outTask2.BARCODE = item.BIGBOX_BAR;
                         outTask2.CIGARETTENAME = item.ITEMNAME;
                         outTask2.INOUTTYPE = 10;//出
-                        outTask2.QTY = -totalQty;
+                        outTask2.QTY = -totalQty;   
                         outTask2.CREATETIME = DateTime.Now;
                         outTask2.STATUS = 10;
                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
@@ -528,6 +584,25 @@ namespace InBound.Business
                     }
 
                 }
+                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                data.SaveChanges();
+            }
+        }
+        
+        // 根据异形烟整包任务号更新poke表中状态
+        public static void UpdateunTask(decimal sendtasknum, int status)
+        {
+            using (Entities data = new Entities())
+            {   
+                if (sendtasknum != null)
+                {
+                    var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList(); 
+                    foreach (var item in query)
+                    {
+                        item.STATUS = status;
+                    }
+                    
+                } 
                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
             }
