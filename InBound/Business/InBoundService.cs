@@ -252,7 +252,7 @@ namespace InBound.Business
                                 outTask2.STATUS = 10;
 
 
-                                decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa);//重力式货架尾数  是否要减一
+                                decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa+Math.Abs(outingCount));//重力式货架尾数  是否要减一
                                 //List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetAllUnFullPallet();
                                 T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftCount).FirstOrDefault();// list.Find(x => x.QTY == leftCount && x.CIGARETTECODE == task.CIGARETTECODE);
                                 if (detail != null && unFullFirst)
@@ -267,40 +267,40 @@ namespace InBound.Business
                                     load1.PILETYPE =decimal.Parse( ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
                                     //load1.TUTYPE = 1;//无返库
                                     load1.JOBTYPE = 55;//补货出库
-                                    load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, (int)detail.QTY);//out cell
+                                    load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
                                     load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                     load1.STATUS = 0;
                                     cellno = load1.SOURCE;
-                                            if (load1.SOURCE != "" && load1.TARGET != "")
+                                    if (load1.SOURCE != "" && load1.TARGET != "")
+                                    {
+                                        T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                        T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                        if (dinfo.DISMANTLE == 10)
+                                        {
+                                            if (dl.REQUESTQTY != dl.QTY)
                                             {
-                                                T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
-                                                T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
-                                                if (dinfo.DISMANTLE == 10)
-                                                {
-                                                    if (dl.REQUESTQTY != dl.QTY)
-                                                    {
-                                                        load1.TUTYPE = 2;//返库
-                                                    }
-                                                    else
-                                                    {
-                                                        load1.TUTYPE = 1;//不返库
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    load1.TUTYPE = 3;
-                                                }
-                                                load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
-                                                entity.INF_JOBDOWNLOAD.AddObject(load1);
+                                                load1.TUTYPE = 2;//返库
                                             }
                                             else
                                             {
-                                                if (load1.SOURCE != "")
-                                                {
-                                                    RollBack(load1.SOURCE);
-                                                }
-                                               // break;
+                                                load1.TUTYPE = 1;//不返库
                                             }
+                                        }
+                                        else
+                                        {
+                                            load1.TUTYPE = 3;
+                                        }
+                                        load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
+                                        entity.INF_JOBDOWNLOAD.AddObject(load1);
+                                    }
+                                    else
+                                    {
+                                        if (load1.SOURCE != "")
+                                        {
+                                            RollBack(load1.SOURCE);
+                                        }
+                                        // break;
+                                    }
                                             TotalplanQty += (detail.QTY ?? 0);
                                             //下达重力式货架补货计划
                                             decimal tempPlanQty = detail.QTY ?? 0;

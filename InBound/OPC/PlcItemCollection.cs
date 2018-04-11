@@ -17,19 +17,19 @@ namespace InBound
             List<string> list = new List<string>();
             for (int i = 1; i <= 22; i++)
             {
-             list.Add(OpcPresortServer1+"DB40,W" + ((i - 1) * 20 + 18));//为烟柜内部皮带的条烟总数
+             list.Add(OpcPresortServer1+"DB40,W" + ((i - 1) * 20 + 10));//为烟柜内部皮带的条烟总数
             }
             for (int i = 1; i <= 22; i++)
             {
-                list.Add(OpcPresortServer2 + "DB40,W" + ((i - 1) * 20 + 18));//为烟柜内部皮带的条烟总数
+                list.Add(OpcPresortServer2 + "DB40,W" + ((i - 1) * 20 + 10));//为烟柜内部皮带的条烟总数
             }
             for (int i = 1; i <= 22; i++)
             {
-                list.Add(OpcPresortServer3 + "DB40,W" + ((i - 1) * 20 + 18));//为烟柜内部皮带的条烟总数
+                list.Add(OpcPresortServer3 + "DB40,W" + ((i - 1) * 20 + 10));//为烟柜内部皮带的条烟总数
             }
             for (int i = 1; i <= 22; i++)
             {
-                list.Add(OpcPresortServer4 + "DB40,W" + ((i - 1) * 20 + 18));//为烟柜内部皮带的条烟总数
+                list.Add(OpcPresortServer4 + "DB40,W" + ((i - 1) * 20 + 10));//为烟柜内部皮带的条烟总数
             }
 
             return list;
