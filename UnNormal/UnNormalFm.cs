@@ -133,7 +133,7 @@ namespace SortingControlSys.SortingControl
 
                 //接收完成信号组
                 FinishSignalGroup = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
-                FinishSignalGroup.addItem(ItemCollection.GetFinishSignalGroupTaskItem());
+                FinishSignalGroup.addItem(ItemCollection.GetFinishSignalTaskItem());
                 FinishSignalGroup.callback += OnDataChange;
 
 
@@ -268,7 +268,7 @@ namespace SortingControlSys.SortingControl
 
                     //写完db块后,再读出来 
                     String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 8)
+                    for (int i = 0; i <= 225; i = i + 9)
                     {
                         p1 += taskGroup1.Read(i).ToString() + ";";//pokeid  
                     }
@@ -367,7 +367,7 @@ namespace SortingControlSys.SortingControl
                     SixCabinetGroup.SyncWrite(datas);
                     //读电控
                     String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 8)
+                    for (int i = 0; i <= 225; i = i + 9)
                     {
                         p1 += SixCabinetGroup.Read(i).ToString()+";";//pokeid  
                     }
@@ -510,7 +510,7 @@ namespace SortingControlSys.SortingControl
                        writeLog.Write("从异形烟线：" + clientId[i] + "获取到完成任务号:" + tempvalue );
                         try
                         {
-                            UnPokeService.UpdateunTask(tempvalue,20);
+                            UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
                         }
                         catch (Exception ex)
                         {

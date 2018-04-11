@@ -11,6 +11,10 @@ using System.Configuration;
 using InBound;
 using InBound.Model;
 using InBound.Business;
+using System.Text.RegularExpressions;
+using OpcRcw.Da;
+using OpcRcw.Comn;
+using SortingControlSys.Model;
 namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
@@ -28,7 +32,7 @@ namespace SpecialShapeSmoke
         bool falge = false;//单通多显标志位
         String lineNum = "0";
         Control control;
-        
+
         Label chezu = new Label();
         public string[] boxText = null;
         public decimal[] troughno = null;
@@ -40,7 +44,7 @@ namespace SpecialShapeSmoke
             this.Hide();
             this.Show();
             Panel p = new Panel();
-           
+
             lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             if (lineNum == "1")
             {
@@ -145,7 +149,8 @@ namespace SpecialShapeSmoke
 
 
         }
-       
+      
+
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
@@ -185,16 +190,38 @@ namespace SpecialShapeSmoke
                 return null;
             }
         }
-         
-      
+
+        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
+
+        internal const string GROUP_NAME = "grp1";                  // Group name 
+        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH. 
+        IOPCServer pIOPCServer;  //定义opcServer对象.
+        SortingControlSys.Model.Group FinishSignalGroup;//完成信号
 
         void ConnectServer()
-        { 
-            while (true)
+        {
+            try
             {
-                getData(); 
-                Thread.Sleep(2000);
+                Type svrComponenttyp;
+                Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+
+                pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
+
+                FinishSignalGroup = new SortingControlSys.Model.Group(pIOPCServer, 1, "group", 1, LOCALE_ID);
+                
+
+                while (true)
+                {
+                    getData();
+                    Thread.Sleep(2000);
+                }
             }
+            catch (Exception e )
+            { 
+                writeLog.Write(e.Message);
+            }
+           
             //socket = new ClientSocket(ipaddress, PORT);
             //socket.method+=getData;
             //socket.startListen();

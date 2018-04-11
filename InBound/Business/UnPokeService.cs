@@ -496,7 +496,7 @@ namespace InBound.Business
                                       select itemlist1).Sum(x => x.TASKQTY??0);
                         T_WMS_STORAGEAREA_INOUT outTask2 = new T_WMS_STORAGEAREA_INOUT();
                         outTask2.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
-                        outTask2.AREAID = 3;//烟柜
+                        outTask2.AREAID = 3;//烟柜 分拣
                         outTask2.TASKNO = poke.BILLCODE;
                         outTask2.CELLNO = poke.TROUGHNUM;
                         outTask2.CIGARETTECODE = poke.CIGARETTECODE;
@@ -600,8 +600,7 @@ namespace InBound.Business
                     foreach (var item in query)
                     {
                         item.STATUS = status;
-                    }
-                    
+                    } 
                 } 
                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();

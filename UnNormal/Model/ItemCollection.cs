@@ -53,12 +53,12 @@ namespace SortingControlSys.Model
        /// 获取完成信号
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetFinishSignalGroupTaskItem() 
+       public static List<string> GetFinishSignalTaskItem() 
        {
            List<string> list = new List<string>(); 
-           list.Add("S7:[UnnormalConnection]DB33,DINT0");
-           list.Add("S7:[UnnormalConnection]DB33,DINT4");
-           list.Add("S7:[UnnormalConnection]DB33,DINT8");
+           list.Add("S7:[UnnormalConnection]DB33,DINT0");//烟柜
+           list.Add("S7:[UnnormalConnection]DB33,DINT4");//烟仓
+           list.Add("S7:[UnnormalConnection]DB33,DINT8");//混合道
 
            return list;
        }
