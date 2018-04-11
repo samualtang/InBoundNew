@@ -255,7 +255,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    object[] datas = UnPokeService.getTask(25, "2", out list1);
+                    decimal packageNum = 0;
+                    object[] datas = UnPokeService.getTask(25, "2", out list1,out packageNum);
                     if (int.Parse(datas[0].ToString())== 0)
                     {
                         updateListBox("二线分拣数据发送完毕");
@@ -269,7 +270,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("分拣线2:" + logstr);
                     updateListBox("分拣线2:" + logstr);
                     taskGroup1.SyncWrite(datas);
-
+                    UnPokeService.UpdateTaskNum(list1, packageNum);
                     //写完db块后,再读出来 
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
@@ -301,7 +302,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    object[] datas = UnPokeService.getTask(25, "1", out list);
+                    decimal packageNum=0;
+                    object[] datas = UnPokeService.getTask(25, "1", out list,out packageNum);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("一线分拣数据发送完毕");
@@ -318,7 +320,7 @@ namespace SortingControlSys.SortingControl
 
                     taskgroup.SyncWrite(datas);
 
-
+                    UnPokeService.UpdateTaskNum(list, packageNum);
 
                     //写完db块后,再读出来 
                     String p1 = "";
@@ -354,7 +356,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix);
+                    decimal packageNum = 0;
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix, out packageNum);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");
@@ -369,6 +372,8 @@ namespace SortingControlSys.SortingControl
                     updateListBox("烟柜分拣发送数据:" + logstr);
                     //写电控
                     SixCabinetGroup.SyncWrite(datas);
+                 
+                    UnPokeService.UpdateTaskNum(listSix, packageNum);
                     //读电控
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)

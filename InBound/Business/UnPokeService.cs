@@ -18,10 +18,54 @@ namespace InBound.Business
                 data.ExecuteStoreCommand("update t_un_poke set sortmachine=10");
             }
         }
-        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+
+        public static void UpdateTaskNum(List<T_UN_POKE> task, decimal sendtaskNum)
+        {
+            using (Entities data = new Entities())
+            {
+                if (task != null)
+                {
+                    foreach (var item in task)
+                    {
+                        var query = (from items in data.T_UN_POKE where items.POKEID == item.POKEID select items).FirstOrDefault();
+                        query.SENDTASKNUM = sendtaskNum;
+                    }
+                }
+                data.SaveChanges();
+            }
+        }
+        public static decimal getPackageNum(decimal ctype, String lineNum)
+        {
+            using (Entities data = new Entities())
+            {
+                if (lineNum != null)
+                {
+                    var query = (from item in data.T_UN_POKE where item.LINENUM == lineNum && item.CTYPE == ctype orderby item.SENDTASKNUM descending select item.SENDTASKNUM).FirstOrDefault();
+                    if (query != null)
+                    {
+                        return query ?? 0;
+                     }
+                    else
+                        return 1; 
+                }
+                else
+                {
+                    var query = (from item in data.T_UN_POKE where item.CTYPE == ctype orderby item.SENDTASKNUM descending select item.SENDTASKNUM).FirstOrDefault();
+                    if (query != null)
+                    {
+                        return query ?? 0;
+                    }
+                    else
+                        return 1;
+
+                }
+            }
+        }
+
+        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out decimal pNum)
         {
 
-            object[] values = new object[226];
+            object[] values = new object[228];
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -33,6 +77,8 @@ namespace InBound.Business
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
+                decimal packageNum = getPackageNum(1, lineNum);
+                pNum = packageNum;
                 if (list != null)
                 {
                     int j = 0;
@@ -59,13 +105,22 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//任务号
-                        values[j * 9 + 4] = 0;//包装号
-                        values[j * 9 + 5] = 0;//备用
+                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
-                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
+                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码 
                         j++;
+                        if (values[225] != null)//获取所有POkeID
+                        {
+                            for (int i = 0; i < 228; i = i + 9)
+                            {
+                                values[227] += values[i].ToString() + ",";
+                            } 
+                        }
                     }
+                   
+                  
                     values[values.Length - 1] = 1;
                 }
                 return values;
@@ -78,9 +133,9 @@ namespace InBound.Business
         /// <param name="lineNum"></param>
         /// <param name="outlist"></param>
         /// <returns></returns>
-        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist, out decimal packageNum)
         { 
-            object[] values = new object[226];//一个任务
+            object[] values = new object[228];//一个任务
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -91,8 +146,8 @@ namespace InBound.Business
                 var query = from item in data.T_UN_POKE 
                             where item.STATUS == 10  && item.CTYPE ==2 
                             orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item;
-                
 
+                packageNum = getPackageNum(2, null);
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
@@ -113,13 +168,22 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
-                        values[j * 9 + 4] = 0;//包装号
-                        values[j * 9 + 5] = 0;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
+                        if (values[225] != null)
+                        {
+                            for (int i = 0; i < 228; i = i + 9)//获取所有POkeID
+                            {
+                                values[227] += values[i].ToString() + ",";
+                            }
+                            values[values.Length - 1] = 1;
+                        }
                     }
+                    
                     values[values.Length - 1] = 1;
                 }
                 return values;
@@ -133,9 +197,8 @@ namespace InBound.Business
         /// <param name="outlist"></param>
         /// <returns></returns>
         public static object[] GetFinishSignalTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
-        {
-
-            object[] values = new object[226];//一个任务
+        {  
+            object[] values = new object[228];//一个任务
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -163,8 +226,7 @@ namespace InBound.Business
                         if (customercode.Length > 9)
                         {
                             customercode = customercode.Substring(customercode.Length - 9, 9);
-                        }
-
+                        } 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
@@ -174,8 +236,16 @@ namespace InBound.Business
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
+                        if (values[225] != null)
+                        {
+                            for (int i = 0; i < 228; i = i + 9)//获取所有POkeID
+                            {
+                                values[227] += values[i].ToString() + ",";
+                            }
+                            values[values.Length - 1] = 1;
+                        }
                     }
-                    values[values.Length - 1] = 1;
+                  
                 }
                 return values;
             }
@@ -211,8 +281,6 @@ namespace InBound.Business
         }
         public static void RollBack(string cellno)
         {
-
-
             using (Entities entity = new Entities())
             {
                 var query = (from item in entity.T_WMS_ATSCELL where item.CELLNO == cellno select item).FirstOrDefault();
