@@ -11,6 +11,10 @@ using System.Configuration;
 using InBound;
 using InBound.Model;
 using InBound.Business;
+using System.Text.RegularExpressions;
+using OpcRcw.Da;
+using OpcRcw.Comn;
+using SortingControlSys.Model;
 namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
@@ -28,7 +32,7 @@ namespace SpecialShapeSmoke
         bool falge = false;//单通多显标志位
         String lineNum = "0";
         Control control;
-        
+
         Label chezu = new Label();
         public string[] boxText = null;
         public decimal[] troughno = null;
@@ -40,7 +44,7 @@ namespace SpecialShapeSmoke
             this.Hide();
             this.Show();
             Panel p = new Panel();
-           
+
             lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             if (lineNum == "1")
             {
@@ -52,11 +56,11 @@ namespace SpecialShapeSmoke
                 {
                     troughno[i] = Convert.ToDecimal(boxText[i]);
                 }  
-                for (int i = 0; i < throughList.Length; i++)//根据通道号查询烟
-                {
-                    throughList[i] = service.GetTroughCigarette(troughno[i], 300);//第一个
+                //for (int i = 0; i < throughList.Length; i++)//根据通道号查询烟
+                //{
+                //    throughList[i] = service.GetTroughCigarette(troughno[i], 300);//第一个
 
-                }
+                //}
                 stop = true;
                 falge = true;
                 addGroupBoxByNew(2);//单个屏幕显示 
@@ -145,7 +149,8 @@ namespace SpecialShapeSmoke
 
 
         }
-       
+      
+
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
@@ -185,16 +190,38 @@ namespace SpecialShapeSmoke
                 return null;
             }
         }
-         
-      
+
+        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
+
+        internal const string GROUP_NAME = "grp1";                  // Group name 
+        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH. 
+        IOPCServer pIOPCServer;  //定义opcServer对象.
+        SortingControlSys.Model.Group FinishSignalGroup;//完成信号
 
         void ConnectServer()
-        { 
-            while (true)
+        {
+            try
             {
-                getData(); 
-                Thread.Sleep(2000);
+                Type svrComponenttyp;
+                Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+
+                pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
+
+                FinishSignalGroup = new SortingControlSys.Model.Group(pIOPCServer, 1, "group", 1, LOCALE_ID);
+                
+
+                while (true)
+                {
+                    getData();
+                    Thread.Sleep(2000);
+                }
             }
+            catch (Exception e )
+            { 
+                writeLog.Write(e.Message);
+            }
+           
             //socket = new ClientSocket(ipaddress, PORT);
             //socket.method+=getData;
             //socket.startListen();
@@ -209,7 +236,7 @@ namespace SpecialShapeSmoke
         {
            
             
-            //测试数据填充用的-yq
+            // 数据填充用的 
             throughList = new List<HUNHEVIEW>[Convert.ToInt32(lineNum)];
             for (int i = 0; i < throughList.Length; i++)
             { 
@@ -227,14 +254,14 @@ namespace SpecialShapeSmoke
         {
                // writeLog.Write("Receive Resend Data:"+data);
                 clearAllText();
-                //try
-                //{
+                try
+                {
                     //for (int i = 0; i < throughList.Length; i++)
                     //{
                     //    throughList[i] = GroupList(service.GetTroughCigarette(troughno[i], 300));
                     //    initText(panelList[i], throughList[i]);
                     //} 
-                    //测试数据填充用的 替换了上面注释的代码-yq
+                
                     for (int i = 0; i < throughList.Length; i++)
                     {
                         throughList[i] = GroupList(service.GetTroughCigarette(troughno[i], 300));//第二个
@@ -246,11 +273,11 @@ namespace SpecialShapeSmoke
                     //{
                     //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
                     //}
-                //}
-                //catch (Exception e)
-                //{
-                //    writeLog.Write(e.Message);
-                //}
+                }
+                catch (Exception e)
+                {
+                    writeLog.Write(e.Message);
+                }
                 //MessageBox.Show(data);
 
         }
@@ -270,8 +297,9 @@ namespace SpecialShapeSmoke
                {
                    foreach (var item in list)
                    {
-                       decimal count = item.QUANTITY ?? 0;
-                       if (count >= 1)
+                     //  decimal count = item.QUANTITY ?? 0;
+                       decimal count = Convert.ToDecimal(item.TROUGHNUM); 
+                       if (count >= 1 && i>= 0)
                        {
                            Label lbl = (Label)box.Controls[i];
                            i--;
@@ -281,13 +309,13 @@ namespace SpecialShapeSmoke
 
                            if (falge && newlist != null && stop)//单通道多显示
                            {
-                               control = Controls.Find("orBox", true)[0];//获取控件名称
-
+                               control = Controls.Find("orBox", true)[0];//获取控件名称 
                                int y = newlist.Count();
                                foreach (var item2 in newlist)
                                {
                                    Label lbl2 = (Label)control.Controls[y - 1];
                                    y--;
+                                  // updateLabel((17 + i - 1) + item.CIGARETTENAME + ":" + count + "条", lbl2);
                                    updateLabel((17 + y - 1) + item2.CIGARETTENAME + ":" + Convert.ToDecimal(item2.TROUGHNUM).ToString().Length / 3 + "条" + item2.CIGARETTECODE, lbl2);
                                }
                                falge = false;
