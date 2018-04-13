@@ -87,9 +87,10 @@ namespace InBound.Business
                                 continue;
                             }
                         }
-                        Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
-                        if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
-                        //if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货 暂时屏蔽
+                       // Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
+                        //if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
+                        #region
+                        if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货 暂时屏蔽
                         {
                             //decimal groupno = 1;
                             //if (task.GROUPNO <= 2)
@@ -112,7 +113,7 @@ namespace InBound.Business
                             if (querySourcetemp == null || querySourcetemp.Count == 0)
                                 continue;
                             var querySource = querySourcetemp[0];
-                            
+
                             List<OutBound> search = null;
                             decimal totalCount = 0;
                             decimal TotalplanQty = 0;
@@ -124,35 +125,36 @@ namespace InBound.Business
                             foreach (var itemsource in querySourcetemp)
                             {
                                 totalMantissa += itemsource.MANTISSA ?? 0;
-                                var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY)??0;
+                                var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
                                 outingCount += outquery;
-
+                                itemsource.LASTMANTISSA = outquery;
                             }
 
                             int tempCount = 0;
                             ///循环补烟柜
                             ///
                             /// 
-                            String cellno = ""; 
+                            String cellno = "";
                             while (query + tempCount + task.MANTISSA < THRESHOLD)
                             {
                                 cellno = "";
-                                try{
-                                if (task.CLEARUP == 10)//已完成清空上层烟柜
+                                try
                                 {
-                                    SortTroughService.updateTroughClearUp(10, 20, task.TROUGHNUM);
-                                }
-                                totalCount = 0;//重力式货架库存
-                                TotalplanQty = 0;
-                                if (querySourcetemp != null && querySourcetemp.Count > 0)//从库存大的先出
-                                {
+                                    if (task.CLEARUP == 10)//已完成清空上层烟柜
+                                    {
+                                        SortTroughService.updateTroughClearUp(10, 20, task.TROUGHNUM);
+                                    }
+                                    totalCount = 0;//重力式货架库存
+                                    TotalplanQty = 0;
+                                    if (querySourcetemp != null && querySourcetemp.Count > 0)//从库存大的先出
+                                    {
 
-                                    var list1 = querySourcetemp.Select(x => x.TROUGHNUM).ToList();
-                                    search = (from item in entity.T_WMS_STORAGEAREA_INOUT
-                                              where list1.Contains(item.CELLNO) && item.AREAID == 2
-                                              group item by new { item.CELLNO } into g
-                                              select new OutBound() {  CELLNO = g.Key.CELLNO, PlanQty=g.Sum(item=>item.QTY??0), QTY = g.Sum(item => item.BOXQTY) ?? 0 }).ToList();
-                                   
+                                        var list1 = querySourcetemp.Select(x => x.TROUGHNUM).ToList();
+                                        search = (from item in entity.T_WMS_STORAGEAREA_INOUT
+                                                  where list1.Contains(item.CELLNO) && item.AREAID == 2
+                                                  group item by new { item.CELLNO } into g
+                                                  select new OutBound() { CELLNO = g.Key.CELLNO, PlanQty = g.Sum(item => item.QTY ?? 0), QTY = g.Sum(item => item.BOXQTY) ?? 0 }).ToList();
+
                                         decimal qtyTemp = 0;
                                         int maxIndex = 0;
                                         //for (int j = 0; j < search.Count; j++)
@@ -169,7 +171,7 @@ namespace InBound.Business
                                         int i = 0;
                                         foreach (var itemsource in querySourcetemp)
                                         {
-                                            OutBound temp =null;
+                                            OutBound temp = null;
                                             if (search != null && search.Count > 0)
                                             {
                                                 temp = search.Find(x => x.CELLNO == itemsource.TROUGHNUM);
@@ -189,228 +191,86 @@ namespace InBound.Business
                                             {
                                                 if (qtyTemp < itemsource.MANTISSA)
                                                 {
-                                                    qtyTemp = itemsource.MANTISSA??0;
+                                                    qtyTemp = itemsource.MANTISSA ?? 0;
                                                     maxIndex = i;
                                                 }
- 
+
                                             }
                                             i++;
                                         }
 
-                                       //if (totalCount <= 0)
-                                       // {
-                                       //     break;//无实际库存
-                                       // }
+                                        //if (totalCount <= 0)
+                                        // {
+                                        //     break;//无实际库存
+                                        // }
                                         querySource = querySourcetemp[maxIndex];// querySourcetemp.Find(x => x.TROUGHNUM == search[maxIndex].CELLNO);
 
-                                   // }
-                                }
-
-                                //生成开箱计划
-                                INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
-                                load.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
-                                load.JOBID = load.ID;
-                                load.JOBTYPE = 80;
-                                load.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
-                                load.CREATEDATE = DateTime.Now;
-                                load.PLANQTY = 1;
-                                load.PRIORITY = 50;
-                                load.SOURCE = querySource.TROUGHNUM;
-                                load.TARGET = task.TROUGHNUM + "";
-                                load.STATUS = 0;
-                                load.TUTYPE = 4;
-
-                                T_WMS_STORAGEAREA_INOUT outTask1 = new T_WMS_STORAGEAREA_INOUT();
-
-                                outTask1.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
-                                outTask1.AREAID = 2;//重力式货架
-                                outTask1.TASKNO = load.JOBID;
-                                outTask1.CELLNO = querySource.TROUGHNUM;
-                                outTask1.CIGARETTECODE = task.CIGARETTECODE;
-                                outTask1.CIGARETTENAME = task.CIGARETTENAME.Trim();
-                                outTask1.BARCODE = load.BRANDID + "";
-                                outTask1.INOUTTYPE = 10;//出
-                                outTask1.QTY = -1;
-                                outTask1.BOXQTY = -1;
-                                outTask1.GROUPNO = querySource.GROUPNO;
-                                outTask1.STATUS = 10;
-                                outTask1.CREATETIME = DateTime.Now;
-
-
-                                T_WMS_STORAGEAREA_INOUT outTask2 = new T_WMS_STORAGEAREA_INOUT();
-                                outTask2.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
-                                outTask2.AREAID = 3;//烟柜
-                                outTask2.TASKNO = load.JOBID;
-                                outTask2.CELLNO = task.TROUGHNUM;
-                                outTask2.CIGARETTECODE = task.CIGARETTECODE;
-                                outTask2.BARCODE = load.BRANDID + "";
-                                outTask2.CIGARETTENAME = task.CIGARETTENAME.Trim();
-                                outTask2.INOUTTYPE = 20;//入
-                                outTask2.QTY = 50;
-                                outTask2.GROUPNO = task.GROUPNO;
-                                outTask2.CREATETIME = DateTime.Now;
-                                outTask2.STATUS = 10;
-
-
-                                decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa+Math.Abs(outingCount));//重力式货架尾数  是否要减一
-                                //List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetAllUnFullPallet();
-                                T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftCount).FirstOrDefault();// list.Find(x => x.QTY == leftCount && x.CIGARETTECODE == task.CIGARETTECODE);
-                                if (detail != null && unFullFirst)
-                                {
-                                    INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
-                                    load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
-                                    load1.JOBID = load1.ID;
-                                    load1.BRANDID = load.BRANDID;
-                                    load1.CREATEDATE = DateTime.Now;
-                                    load1.PLANQTY = detail.QTY;
-                                    load1.PRIORITY = 50;
-                                    load1.PILETYPE =decimal.Parse( ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
-                                    //load1.TUTYPE = 1;//无返库
-                                    load1.JOBTYPE = 55;//补货出库
-                                    load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
-                                    load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
-                                    load1.STATUS = 0;
-                                    cellno = load1.SOURCE;
-                                    if (load1.SOURCE != "" && load1.TARGET != "")
-                                    {
-                                        T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
-                                        T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
-                                        if (dinfo.DISMANTLE == 10)
-                                        {
-                                            if (dl.REQUESTQTY != dl.QTY)
-                                            {
-                                                load1.TUTYPE = 2;//返库
-                                            }
-                                            else
-                                            {
-                                                load1.TUTYPE = 1;//不返库
-                                            }
-                                        }
-                                        else
-                                        {
-                                            load1.TUTYPE = 3;
-                                        }
-                                        load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
-                                        entity.INF_JOBDOWNLOAD.AddObject(load1);
+                                        // }
                                     }
-                                    else
+
+                                    //生成开箱计划
+                                    INF_JOBDOWNLOAD load = new INF_JOBDOWNLOAD();
+                                    load.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                    load.JOBID = load.ID;
+                                    load.JOBTYPE = 80;
+                                    load.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
+                                    load.CREATEDATE = DateTime.Now;
+                                    load.PLANQTY = 1;
+                                    load.PRIORITY = 50;
+                                    load.SOURCE = querySource.TROUGHNUM;
+                                    load.TARGET = task.TROUGHNUM + "";
+                                    load.STATUS = 0;
+                                    load.TUTYPE = 4;
+
+                                    T_WMS_STORAGEAREA_INOUT outTask1 = new T_WMS_STORAGEAREA_INOUT();
+
+                                    outTask1.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                                    outTask1.AREAID = 2;//重力式货架
+                                    outTask1.TASKNO = load.JOBID;
+                                    outTask1.CELLNO = querySource.TROUGHNUM;
+                                    outTask1.CIGARETTECODE = task.CIGARETTECODE;
+                                    outTask1.CIGARETTENAME = task.CIGARETTENAME.Trim();
+                                    outTask1.BARCODE = load.BRANDID + "";
+                                    outTask1.INOUTTYPE = 10;//出
+                                    outTask1.QTY = -1;
+                                    outTask1.BOXQTY = -1;
+                                    outTask1.GROUPNO = querySource.GROUPNO;
+                                    outTask1.STATUS = 10;
+                                    outTask1.CREATETIME = DateTime.Now;
+
+
+                                    T_WMS_STORAGEAREA_INOUT outTask2 = new T_WMS_STORAGEAREA_INOUT();
+                                    outTask2.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                                    outTask2.AREAID = 3;//烟柜
+                                    outTask2.TASKNO = load.JOBID;
+                                    outTask2.CELLNO = task.TROUGHNUM;
+                                    outTask2.CIGARETTECODE = task.CIGARETTECODE;
+                                    outTask2.BARCODE = load.BRANDID + "";
+                                    outTask2.CIGARETTENAME = task.CIGARETTENAME.Trim();
+                                    outTask2.INOUTTYPE = 20;//入
+                                    outTask2.QTY = 50;
+                                    outTask2.GROUPNO = task.GROUPNO;
+                                    outTask2.CREATETIME = DateTime.Now;
+                                    outTask2.STATUS = 10;
+
+
+                                    decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa + Math.Abs(outingCount));//重力式货架尾数  是否要减一
+                                    //List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetAllUnFullPallet();
+                                    T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftCount).FirstOrDefault();// list.Find(x => x.QTY == leftCount && x.CIGARETTECODE == task.CIGARETTECODE);
+                                    if (detail != null && unFullFirst)
                                     {
-                                        if (load1.SOURCE != "")
-                                        {
-                                            RollBack(load1.SOURCE);
-                                        }
-                                        // break;
-                                    }
-                                            TotalplanQty += (detail.QTY ?? 0);
-                                            //下达重力式货架补货计划
-                                            decimal tempPlanQty = detail.QTY ?? 0;
-                                            if (load1.SOURCE != "")
-                                            {
-                                                foreach (var item in querySourcetemp)
-                                                {
-                                                    if (tempPlanQty <= 0)
-                                                    {
-                                                        break;
-                                                    }
-                                                    INF_JOBDOWNLOAD load2 = new INF_JOBDOWNLOAD();
-                                                    load2.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
-                                                    load2.JOBID = load2.ID;
-                                                    load2.BRANDID = load.BRANDID;
-                                                    load2.CREATEDATE = DateTime.Now;
-                                                    load2.STATUS = 2;//出库完成置0
-                                                    load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
-                                                    // load2.EXTATTR3 = load2.JOBID + "";//用来关联出库任务
-                                                    load2.TUTYPE = 4;
-                                                    decimal planQty = item.MANTISSA ?? 0;
-                                                    if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
-                                                    {
-                                                        load2.JOBTYPE = 60;
-                                                    }
-                                                    else
-                                                    {
-                                                        load2.JOBTYPE = 70;//人工码垛
-                                                    }
-                                                    if (search!=null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
-                                                    {
-                                                        planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
-                                                    }
-                                                    if (tempPlanQty >= FullCount - planQty)
-                                                    {
-                                                        load2.PLANQTY = FullCount - planQty;
-                                                    }
-                                                    else
-                                                    {
-                                                        load2.PLANQTY = tempPlanQty;
-
-                                                    }
-
-                                                    load2.PRIORITY = 50;
-                                                    load2.SOURCE = load1.TARGET;//out cell立库出口
-                                                    load2.TARGET = item.TROUGHNUM;
-                                                    load2.STATUS = 0;
-                                                    entity.INF_JOBDOWNLOAD.AddObject(load2);
-
-                                                    T_WMS_STORAGEAREA_INOUT outTask4 = new T_WMS_STORAGEAREA_INOUT();
-                                                    outTask4.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
-                                                    outTask4.AREAID = 2;//重力式货架
-                                                    outTask4.CELLNO = item.TROUGHNUM;
-                                                    outTask4.TASKNO = load2.JOBID;
-                                                    outTask4.CIGARETTECODE = item.CIGARETTECODE;
-                                                    outTask4.CIGARETTENAME = item.CIGARETTENAME.Trim();
-                                                    outTask4.BARCODE = load.BRANDID + "";
-                                                    outTask4.INOUTTYPE = 20;//入库
-                                                    outTask4.QTY = load2.PLANQTY;
-                                                    outTask4.STATUS = 10;
-                                                    outTask4.GROUPNO = item.GROUPNO;
-                                                    outTask4.CREATETIME = DateTime.Now;
-                                                    entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                                    tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
-                                                    //  entity.SaveChanges();
-                                                }
-                                            }
-                                       
-
-                                }
-                                else //非散盘优先
-                                {
-                                    if (TotalplanQty + totalMantissa+Math.Abs(outingCount) <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
-                                    {
-                                        //var query2 = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.CELLNO == outTask1.CELLNO select item).Sum(x => x.QTY);
-                                        //if (query2 != null)
-                                        //{
-
-
-                                        //    if (query2 + querySource.MANTISSA <= querySource.THRESHOLD)
-                                        //    {
-
-                                        //下达立库补货计划
                                         INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
                                         load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
                                         load1.JOBID = load1.ID;
-                                        load1.JOBTYPE = 55;
                                         load1.BRANDID = load.BRANDID;
-                                        load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
                                         load1.CREATEDATE = DateTime.Now;
-                                      
-                                        if (querySource.BOXCOUNT > 15)
-                                        {
-                                            if (troughQty < 2)
-                                            {
-                                                load1.PLANQTY = 15;
-                                            }
-                                            else
-                                            {
-                                                load1.PLANQTY = (int)querySource.BOXCOUNT;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            load1.PLANQTY = (int)querySource.BOXCOUNT;
-                                        }
+                                        load1.PLANQTY = detail.QTY;
                                         load1.PRIORITY = 50;
-                                        load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE,  (int)load1.PLANQTY );//out cell
-
-                                        load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+                                        load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
+                                        //load1.TUTYPE = 1;//无返库
+                                        load1.JOBTYPE = 55;//补货出库
+                                        load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
+                                        load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                         load1.STATUS = 0;
                                         cellno = load1.SOURCE;
                                         if (load1.SOURCE != "" && load1.TARGET != "")
@@ -421,18 +281,18 @@ namespace InBound.Business
                                             {
                                                 if (dl.REQUESTQTY != dl.QTY)
                                                 {
-                                                    load1.TUTYPE = 2;
+                                                    load1.TUTYPE = 2;//返库
                                                 }
                                                 else
                                                 {
-                                                    load1.TUTYPE = 1;
+                                                    load1.TUTYPE = 1;//不返库
                                                 }
                                             }
                                             else
                                             {
                                                 load1.TUTYPE = 3;
                                             }
-                                            load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
+                                            load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
                                             entity.INF_JOBDOWNLOAD.AddObject(load1);
                                         }
                                         else
@@ -441,16 +301,13 @@ namespace InBound.Business
                                             {
                                                 RollBack(load1.SOURCE);
                                             }
-                                           // break;
+                                            // break;
                                         }
-
-                                        TotalplanQty += (load1.PLANQTY ?? 0);
-                                        decimal tempPlanQty = load1.PLANQTY ?? 0;
-
+                                        TotalplanQty += (detail.QTY ?? 0);
+                                        //下达重力式货架补货计划
+                                        decimal tempPlanQty = detail.QTY ?? 0;
                                         if (load1.SOURCE != "")
                                         {
-
-                                            //下达重力式货架补货计划
                                             foreach (var item in querySourcetemp)
                                             {
                                                 if (tempPlanQty <= 0)
@@ -460,13 +317,13 @@ namespace InBound.Business
                                                 INF_JOBDOWNLOAD load2 = new INF_JOBDOWNLOAD();
                                                 load2.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
                                                 load2.JOBID = load2.ID;
-                                                load2.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
+                                                load2.BRANDID = load.BRANDID;
                                                 load2.CREATEDATE = DateTime.Now;
                                                 load2.STATUS = 2;//出库完成置0
                                                 load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
-                                                // load2.EXTATTR2 = load2.JOBID + "";//用来关联出库任务
+                                                // load2.EXTATTR3 = load2.JOBID + "";//用来关联出库任务
                                                 load2.TUTYPE = 4;
-                                                decimal planQty = item.MANTISSA ?? 0;
+                                                decimal planQty =( item.MANTISSA ?? 0)+(item.LASTMANTISSA??0);
                                                 if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
                                                 {
                                                     load2.JOBTYPE = 60;
@@ -475,7 +332,7 @@ namespace InBound.Business
                                                 {
                                                     load2.JOBTYPE = 70;//人工码垛
                                                 }
-                                                if (search!=null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
+                                                if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
                                                 {
                                                     planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
                                                 }
@@ -492,7 +349,7 @@ namespace InBound.Business
                                                 load2.PRIORITY = 50;
                                                 load2.SOURCE = load1.TARGET;//out cell立库出口
                                                 load2.TARGET = item.TROUGHNUM;
-                                                //load2.STATUS = 0;
+                                                load2.STATUS = 0;
                                                 entity.INF_JOBDOWNLOAD.AddObject(load2);
 
                                                 T_WMS_STORAGEAREA_INOUT outTask4 = new T_WMS_STORAGEAREA_INOUT();
@@ -502,49 +359,527 @@ namespace InBound.Business
                                                 outTask4.TASKNO = load2.JOBID;
                                                 outTask4.CIGARETTECODE = item.CIGARETTECODE;
                                                 outTask4.CIGARETTENAME = item.CIGARETTENAME.Trim();
-                                                outTask4.BARCODE = load2.BRANDID + "";
+                                                outTask4.BARCODE = load.BRANDID + "";
                                                 outTask4.INOUTTYPE = 20;//入库
                                                 outTask4.QTY = load2.PLANQTY;
                                                 outTask4.STATUS = 10;
                                                 outTask4.GROUPNO = item.GROUPNO;
                                                 outTask4.CREATETIME = DateTime.Now;
                                                 entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                                tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
-                                                //entity.SaveChanges();
+                                                tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
+                                                //  entity.SaveChanges();
                                             }
                                         }
-                                       // entity.SaveChanges();
+
+
+                                    }
+                                    else //非散盘优先
+                                    {
+                                        if (TotalplanQty + totalMantissa + Math.Abs(outingCount) <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
+                                        {
+                                            //var query2 = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.CELLNO == outTask1.CELLNO select item).Sum(x => x.QTY);
+                                            //if (query2 != null)
+                                            //{
+
+
+                                            //    if (query2 + querySource.MANTISSA <= querySource.THRESHOLD)
+                                            //    {
+
+                                            //下达立库补货计划
+                                            INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
+                                            load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                            load1.JOBID = load1.ID;
+                                            load1.JOBTYPE = 55;
+                                            load1.BRANDID = load.BRANDID;
+                                            load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load.BRANDID).DXTYPE);
+                                            load1.CREATEDATE = DateTime.Now;
+
+                                            if (querySource.BOXCOUNT > 15)
+                                            {
+                                                if (troughQty < 2)
+                                                {
+                                                    load1.PLANQTY = 15;
+                                                }
+                                                else
+                                                {
+                                                    load1.PLANQTY = (int)querySource.BOXCOUNT;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                load1.PLANQTY = (int)querySource.BOXCOUNT;
+                                            }
+                                            load1.PRIORITY = 50;
+                                            load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, (int)load1.PLANQTY);//out cell
+
+                                            load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+                                            load1.STATUS = 0;
+                                            cellno = load1.SOURCE;
+                                            if (load1.SOURCE != "" && load1.TARGET != "")
+                                            {
+                                                T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                                T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                                if (dinfo.DISMANTLE == 10)
+                                                {
+                                                    if (dl.REQUESTQTY != dl.QTY)
+                                                    {
+                                                        load1.TUTYPE = 2;
+                                                    }
+                                                    else
+                                                    {
+                                                        load1.TUTYPE = 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    load1.TUTYPE = 3;
+                                                }
+                                                load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
+                                                entity.INF_JOBDOWNLOAD.AddObject(load1);
+                                            }
+                                            else
+                                            {
+                                                if (load1.SOURCE != "")
+                                                {
+                                                    RollBack(load1.SOURCE);
+                                                }
+                                                // break;
+                                            }
+
+                                            TotalplanQty += (load1.PLANQTY ?? 0);
+                                            decimal tempPlanQty = load1.PLANQTY ?? 0;
+
+                                            if (load1.SOURCE != "")
+                                            {
+
+                                                //下达重力式货架补货计划
+                                                foreach (var item in querySourcetemp)
+                                                {
+                                                    if (tempPlanQty <= 0)
+                                                    {
+                                                        break;
+                                                    }
+                                                    INF_JOBDOWNLOAD load2 = new INF_JOBDOWNLOAD();
+                                                    load2.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                                    load2.JOBID = load2.ID;
+                                                    load2.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
+                                                    load2.CREATEDATE = DateTime.Now;
+                                                    load2.STATUS = 2;//出库完成置0
+                                                    load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                                    // load2.EXTATTR2 = load2.JOBID + "";//用来关联出库任务
+                                                    load2.TUTYPE = 4;
+                                                    decimal planQty = (item.MANTISSA ?? 0) + (item.LASTMANTISSA ?? 0);
+                                                    if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
+                                                    {
+                                                        load2.JOBTYPE = 60;
+                                                    }
+                                                    else
+                                                    {
+                                                        load2.JOBTYPE = 70;//人工码垛
+                                                    }
+                                                    if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
+                                                    {
+                                                        planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                                    }
+                                                    if (tempPlanQty >= FullCount - planQty)
+                                                    {
+                                                        load2.PLANQTY = FullCount - planQty;
+                                                    }
+                                                    else
+                                                    {
+                                                        load2.PLANQTY = tempPlanQty;
+
+                                                    }
+
+                                                    load2.PRIORITY = 50;
+                                                    load2.SOURCE = load1.TARGET;//out cell立库出口
+                                                    load2.TARGET = item.TROUGHNUM;
+                                                    //load2.STATUS = 0;
+                                                    entity.INF_JOBDOWNLOAD.AddObject(load2);
+
+                                                    T_WMS_STORAGEAREA_INOUT outTask4 = new T_WMS_STORAGEAREA_INOUT();
+                                                    outTask4.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                                                    outTask4.AREAID = 2;//重力式货架
+                                                    outTask4.CELLNO = item.TROUGHNUM;
+                                                    outTask4.TASKNO = load2.JOBID;
+                                                    outTask4.CIGARETTECODE = item.CIGARETTECODE;
+                                                    outTask4.CIGARETTENAME = item.CIGARETTENAME.Trim();
+                                                    outTask4.BARCODE = load2.BRANDID + "";
+                                                    outTask4.INOUTTYPE = 20;//入库
+                                                    outTask4.QTY = load2.PLANQTY;
+                                                    outTask4.STATUS = 10;
+                                                    outTask4.GROUPNO = item.GROUPNO;
+                                                    outTask4.CREATETIME = DateTime.Now;
+                                                    entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
+                                                    tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                                    //entity.SaveChanges();
+                                                }
+                                            }
+                                            // entity.SaveChanges();
+                                        }
+                                    }
+
+                                    if (totalCount + totalMantissa > 0 && AtsCellOutService.checkCanSendTaskCount(task.TROUGHNUM))//重力式货架没有库存 不下任务 可以改成从db块读取
+                                    {
+                                        entity.INF_JOBDOWNLOAD.AddObject(load);
+                                        entity.AddToT_WMS_STORAGEAREA_INOUT(outTask1);
+                                        totalCount -= 1;
+                                        entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
+                                        tempCount += 50;
+                                        entity.SaveChanges();
+                                        break;
+
+                                    }
+                                    else
+                                    {
+                                        entity.SaveChanges();
+                                        break;
+
+                                    }
+
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    if (cellno != "")
+                                    {
+                                        RollBack(cellno);
                                     }
                                 }
-                                
-                                if (totalCount + totalMantissa > 0 && AtsCellOutService.checkCanSendTaskCount(task.TROUGHNUM))//重力式货架没有库存 不下任务 可以改成从db块读取
-                                {
-                                    entity.INF_JOBDOWNLOAD.AddObject(load);
-                                    entity.AddToT_WMS_STORAGEAREA_INOUT(outTask1);
-                                    totalCount -= 1;
-                                    entity.AddToT_WMS_STORAGEAREA_INOUT(outTask2);
-                                    tempCount += 50;
-                                    entity.SaveChanges();
-                                    break;
+                            }
 
+                        }
+                        #endregion
+                        else
+                        {
+                            String cellno = "";
+                            try
+                            {
+                            var querySourcetemp = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 20 && item.CIGARETTECODE == task.CIGARETTECODE && item.STATE == "10" && item.GROUPNO == task.REPLENISHLINE select item).ToList();//找出对应重力式货架通道
+                            if (querySourcetemp == null || querySourcetemp.Count == 0)
+                                continue;
+                            var querySource = querySourcetemp[0];
+
+                            List<OutBound> search = null;
+                            decimal totalCount = 0;
+                            decimal TotalplanQty = 0;
+                            decimal totalMantissa = 0;
+                            decimal troughQty = 0;//通道数量
+                            decimal outingCount = 0;
+                            troughQty = querySourcetemp.Count;
+
+                            foreach (var itemsource in querySourcetemp)
+                            {
+                                totalMantissa += itemsource.MANTISSA ?? 0;
+                                var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
+                                outingCount += outquery;
+                                itemsource.LASTMANTISSA = outquery;
+
+                            }
+                            var list1 = querySourcetemp.Select(x => x.TROUGHNUM).ToList();
+                            search = (from item in entity.T_WMS_STORAGEAREA_INOUT
+                                      where list1.Contains(item.CELLNO) && item.AREAID == 2
+                                      group item by new { item.CELLNO } into g
+                                      select new OutBound() { CELLNO = g.Key.CELLNO, PlanQty = g.Sum(item => item.QTY ?? 0), QTY = g.Sum(item => item.BOXQTY) ?? 0 }).ToList();
+
+                         
+                           
+                            foreach (var itemsource in querySourcetemp)
+                            {
+                                OutBound temp = null;
+                                if (search != null && search.Count > 0)
+                                {
+                                    temp = search.Find(x => x.CELLNO == itemsource.TROUGHNUM);
+                                }
+                                if (temp != null)
+                                {
+                                    totalCount += temp.QTY;
+                                    TotalplanQty += temp.PlanQty;
+                                   
+
+                                }
+                                                              
+                            }
+
+                            decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa + Math.Abs(outingCount));//重力式货架尾数  是否要减一
+                            //List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetAllUnFullPallet();
+                            T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftCount).FirstOrDefault();// list.Find(x => x.QTY == leftCount && x.CIGARETTECODE == task.CIGARETTECODE);
+                            #region
+                            if (detail != null && unFullFirst)
+                            {
+                                INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
+                                load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                load1.JOBID = load1.ID;
+                                load1.BRANDID = detail.BARCODE;
+                                load1.CREATEDATE = DateTime.Now;
+                                load1.PLANQTY = detail.QTY;
+                                load1.PRIORITY = 50;
+                                load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load1.BRANDID).DXTYPE);
+                                //load1.TUTYPE = 1;//无返库
+                                load1.JOBTYPE = 55;//补货出库
+                                load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
+                                load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
+                                load1.STATUS = 0;
+                                cellno = load1.SOURCE;
+                                if (load1.SOURCE != "" && load1.TARGET != "")
+                                {
+                                    T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                    T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                    if (dinfo.DISMANTLE == 10)
+                                    {
+                                        if (dl.REQUESTQTY != dl.QTY)
+                                        {
+                                            load1.TUTYPE = 2;//返库
+                                        }
+                                        else
+                                        {
+                                            load1.TUTYPE = 1;//不返库
+                                        }
+                                    }
+                                    else
+                                    {
+                                        load1.TUTYPE = 3;
+                                    }
+                                    load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
+                                    entity.INF_JOBDOWNLOAD.AddObject(load1);
                                 }
                                 else
                                 {
-                                    entity.SaveChanges();
-                                    break;
-                                  
+                                    if (load1.SOURCE != "")
+                                    {
+                                        RollBack(load1.SOURCE);
+                                    }
+                                    // break;
                                 }
-                               
+                                TotalplanQty += (detail.QTY ?? 0);
+                                //下达重力式货架补货计划
+                                decimal tempPlanQty = detail.QTY ?? 0;
+                                if (load1.SOURCE != "")
+                                {
+                                    foreach (var item in querySourcetemp)
+                                    {
+                                        if (tempPlanQty <= 0)
+                                        {
+                                            break;
+                                        }
+                                        INF_JOBDOWNLOAD load2 = new INF_JOBDOWNLOAD();
+                                        load2.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                        load2.JOBID = load2.ID;
+                                        load2.BRANDID = load1.BRANDID;
+                                        load2.CREATEDATE = DateTime.Now;
+                                        load2.STATUS = 2;//出库完成置0
+                                        load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                        // load2.EXTATTR3 = load2.JOBID + "";//用来关联出库任务
+                                        load2.TUTYPE = 4;
+                                        decimal planQty =( item.MANTISSA ?? 0)+(item.LASTMANTISSA??0);
+                                        if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
+                                        {
+                                            load2.JOBTYPE = 60;
+                                        }
+                                        else
+                                        {
+                                            load2.JOBTYPE = 70;//人工码垛
+                                        }
+                                        if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
+                                        {
+                                            planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                        }
+                                        if (tempPlanQty >= FullCount - planQty)
+                                        {
+                                            load2.PLANQTY = FullCount - planQty;
+                                        }
+                                        else
+                                        {
+                                            load2.PLANQTY = tempPlanQty;
+
+                                        }
+
+                                        load2.PRIORITY = 50;
+                                        load2.SOURCE = load1.TARGET;//out cell立库出口
+                                        load2.TARGET = item.TROUGHNUM;
+                                        load2.STATUS = 0;
+                                        entity.INF_JOBDOWNLOAD.AddObject(load2);
+
+                                        T_WMS_STORAGEAREA_INOUT outTask4 = new T_WMS_STORAGEAREA_INOUT();
+                                        outTask4.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                                        outTask4.AREAID = 2;//重力式货架
+                                        outTask4.CELLNO = item.TROUGHNUM;
+                                        outTask4.TASKNO = load2.JOBID;
+                                        outTask4.CIGARETTECODE = item.CIGARETTECODE;
+                                        outTask4.CIGARETTENAME = item.CIGARETTENAME.Trim();
+                                        outTask4.BARCODE = load1.BRANDID + "";
+                                        outTask4.INOUTTYPE = 20;//入库
+                                        outTask4.QTY = load2.PLANQTY;
+                                        outTask4.STATUS = 10;
+                                        outTask4.GROUPNO = item.GROUPNO;
+                                        outTask4.CREATETIME = DateTime.Now;
+                                        entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
+                                        tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
+                                        //  entity.SaveChanges();
+                                    }
+                                }
+
 
                             }
-                            catch(Exception ex)
+                            #endregion
+                            else
                             {
-                                if (cellno != "")
+                                if (TotalplanQty + totalMantissa + Math.Abs(outingCount) <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量
                                 {
-                                    RollBack(cellno);
+                                    //var query2 = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.CELLNO == outTask1.CELLNO select item).Sum(x => x.QTY);
+                                    //if (query2 != null)
+                                    //{
+
+
+                                    //    if (query2 + querySource.MANTISSA <= querySource.THRESHOLD)
+                                    //    {
+
+                                    //下达立库补货计划
+                                    INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
+                                    load1.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                    load1.JOBID = load1.ID;
+                                    load1.JOBTYPE = 55;
+                                    load1.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
+                                    load1.PILETYPE = decimal.Parse(ItemService.GetItemByBarCode(load1.BRANDID).DXTYPE);
+                                    load1.CREATEDATE = DateTime.Now;
+
+                                    if (querySource.BOXCOUNT > 15)
+                                    {
+                                        if (troughQty < 2)
+                                        {
+                                            load1.PLANQTY = 15;
+                                        }
+                                        else
+                                        {
+                                            load1.PLANQTY = (int)querySource.BOXCOUNT;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        load1.PLANQTY = (int)querySource.BOXCOUNT;
+                                    }
+                                    load1.PRIORITY = 50;
+                                    load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, (int)load1.PLANQTY);//out cell
+
+                                    load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+                                    load1.STATUS = 0;
+                                    cellno = load1.SOURCE;
+                                    if (load1.SOURCE != "" && load1.TARGET != "")
+                                    {
+                                        T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                        T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                        if (dinfo.DISMANTLE == 10)
+                                        {
+                                            if (dl.REQUESTQTY != dl.QTY)
+                                            {
+                                                load1.TUTYPE = 2;
+                                            }
+                                            else
+                                            {
+                                                load1.TUTYPE = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            load1.TUTYPE = 3;
+                                        }
+                                        load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
+                                        entity.INF_JOBDOWNLOAD.AddObject(load1);
+                                    }
+                                    else
+                                    {
+                                        if (load1.SOURCE != "")
+                                        {
+                                            RollBack(load1.SOURCE);
+                                        }
+                                        // break;
+                                    }
+
+                                    TotalplanQty += (load1.PLANQTY ?? 0);
+                                    decimal tempPlanQty = load1.PLANQTY ?? 0;
+
+                                    if (load1.SOURCE != "")
+                                    {
+
+                                        //下达重力式货架补货计划
+                                        foreach (var item in querySourcetemp)
+                                        {
+                                            if (tempPlanQty <= 0)
+                                            {
+                                                break;
+                                            }
+                                            INF_JOBDOWNLOAD load2 = new INF_JOBDOWNLOAD();
+                                            load2.ID = entity.ExecuteStoreQuery<decimal>("select S_INF_JOBDOWNLOAD.nextval from dual").First() + "";
+                                            load2.JOBID = load2.ID;
+                                            load2.BRANDID = ItemService.GetItemByCode(task.CIGARETTECODE).BIGBOX_BAR;
+                                            load2.CREATEDATE = DateTime.Now;
+                                            load2.STATUS = 2;//出库完成置0
+                                            load2.EXTATTR2 = load1.JOBID + "";//用来关联出库任务
+                                            // load2.EXTATTR2 = load2.JOBID + "";//用来关联出库任务
+                                            load2.TUTYPE = 4;
+                                            decimal planQty = (item.MANTISSA ?? 0)+(item.LASTMANTISSA??0);
+                                            if (AtsCellInfoService.GetCellInfo(load1.SOURCE).DISMANTLE == 10)
+                                            {
+                                                load2.JOBTYPE = 60;
+                                            }
+                                            else
+                                            {
+                                                load2.JOBTYPE = 70;//人工码垛
+                                            }
+                                            if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
+                                            {
+                                                planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                            }
+                                            if (tempPlanQty >= FullCount - planQty)
+                                            {
+                                                load2.PLANQTY = FullCount - planQty;
+                                            }
+                                            else
+                                            {
+                                                load2.PLANQTY = tempPlanQty;
+
+                                            }
+
+                                            load2.PRIORITY = 50;
+                                            load2.SOURCE = load1.TARGET;//out cell立库出口
+                                            load2.TARGET = item.TROUGHNUM;
+                                            //load2.STATUS = 0;
+                                            entity.INF_JOBDOWNLOAD.AddObject(load2);
+
+                                            T_WMS_STORAGEAREA_INOUT outTask4 = new T_WMS_STORAGEAREA_INOUT();
+                                            outTask4.ID = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                                            outTask4.AREAID = 2;//重力式货架
+                                            outTask4.CELLNO = item.TROUGHNUM;
+                                            outTask4.TASKNO = load2.JOBID;
+                                            outTask4.CIGARETTECODE = item.CIGARETTECODE;
+                                            outTask4.CIGARETTENAME = item.CIGARETTENAME.Trim();
+                                            outTask4.BARCODE = load2.BRANDID + "";
+                                            outTask4.INOUTTYPE = 20;//入库
+                                            outTask4.QTY = load2.PLANQTY;
+                                            outTask4.STATUS = 10;
+                                            outTask4.GROUPNO = item.GROUPNO;
+                                            outTask4.CREATETIME = DateTime.Now;
+                                            entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
+                                            tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                            
+                                        }
+                                    }
+                                    
                                 }
                             }
+                            entity.SaveChanges();
+                        } 
+                        catch(Exception ex)
+                        {
+                            if (ex != null && ex.Message != null)
+                            {
+                                WriteLog.GetLog().Write(ex.Message);
                             }
+                            if (cellno != "")
+                            {
+                                RollBack(cellno);
+                            }
+                        }
 
                         }
 

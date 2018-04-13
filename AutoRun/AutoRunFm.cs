@@ -67,17 +67,17 @@ namespace AutoRun
         public void startAutoBuHuo()
         {
 
-            Type svrComponenttyp;
-            Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
-            pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-            FJCount = new PlcGroup(pIOPCServer, 1, "group", 1, LOCALE_ID);//组号由这里定义
-            FJCount.addItem(PlcItemCollection.GetTaskCountItem());
+            //Type svrComponenttyp;
+            //Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+            //svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            //pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
+            //FJCount = new PlcGroup(pIOPCServer, 1, "group", 1, LOCALE_ID);//组号由这里定义
+            //FJCount.addItem(PlcItemCollection.GetTaskCountItem());
 
             
             while (isRunBuHuo)
             {
-                InBoundService.PreUpdateInOut(isSanpan,FJCount);
+                InBoundService.PreUpdateInOut(isSanpan,null);
 
                 Thread.Sleep(scanTime * 1000);
             }

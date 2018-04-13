@@ -316,7 +316,7 @@ namespace InBound.Business
             {
                 var query = (from item in entity.T_WMS_DEVICESTATUS where item.TYPE == 50 && item.TROUGHNUM.Contains(troughnum) select item).FirstOrDefault();
 
-                var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBTYPE == 80 && query.DEVICENO.Contains(item.TARGET) && item.STATUS != 10 select item).Count();
+                var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBTYPE == 80 && query.TROUGHNUM.Contains(item.TARGET) && item.STATUS != 10 select item).Count();
 
                 if (query2==null || query2 < query.MAXTASKNUM) //小于阀值
                 {
@@ -330,6 +330,8 @@ namespace InBound.Business
 
             }
         }
+
+
         public static List<String> getLaneWayTaskCount()
         {
             using (Entities et = new Entities())
@@ -363,6 +365,28 @@ namespace InBound.Business
                 }
             }
 
+        }
+
+        public static String getCellNoAll(String cigarettecode, int qty)
+        {
+            string cellno = getCellNoEqual(cigarettecode, qty);
+            if (cellno == "")
+            {
+                cellno = getCellNoBig(cigarettecode, qty);
+                if (cellno == "")
+                {
+                    cellno = getCellNoSmall(cigarettecode, qty);
+                    return cellno;
+                }
+                else
+                {
+                    return cellno;
+                }
+            }
+            else
+            {
+                return cellno;
+            }
         }
         public static String getCellNoEqual(String cigarettecode, int qty)
         {
