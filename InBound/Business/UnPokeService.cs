@@ -64,8 +64,7 @@ namespace InBound.Business
 
         public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out decimal pNum)
         {
-
-            object[] values = new object[228];
+            object[] values = new object[227];
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -79,6 +78,7 @@ namespace InBound.Business
                 outlist = list;
                 decimal packageNum = getPackageNum(1, lineNum);
                 pNum = packageNum;
+                decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
@@ -104,24 +104,18 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = customercode;//任务号
+                        values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 4] = packageNum;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码 
                         j++;
-                        if (values[225] != null)//获取所有POkeID
-                        {
-                            for (int i = 0; i < 228; i = i + 9)
-                            {
-                                values[227] += values[i].ToString() + ",";
-                            } 
-                        }
-                    }
-                   
-                  
-                    values[values.Length - 1] = 1;
+                        checkcode += item.POKEID;
+                        
+                    } 
+                    values[225] = 1;//完成信号
+                    values[226] = checkcode;//校验码,为流水号之和
                 }
                 return values;
             }
@@ -135,7 +129,7 @@ namespace InBound.Business
         /// <returns></returns>
         public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist, out decimal packageNum)
         { 
-            object[] values = new object[228];//一个任务
+            object[] values = new object[227];//一个任务
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -151,11 +145,13 @@ namespace InBound.Business
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
+                decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
                     decimal machineseq = 0;//物理通道号
                     String customercode = "";
+                    
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
@@ -169,26 +165,83 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 4] = packageNum;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
-                        if (values[225] != null)
-                        {
-                            for (int i = 0; i < 228; i = i + 9)//获取所有POkeID
-                            {
-                                values[227] += values[i].ToString() + ",";
-                            }
-                            values[values.Length - 1] = 1;
-                        }
+                        checkcode += item.POKEID;
                     }
-                    
-                    values[values.Length - 1] = 1;
+
+                    values[225] = 1;//完成信号
+                    values[226] = checkcode;//校验码,为流水号之和
                 }
                 return values;
             }
         }
+        /// <summary>
+        /// 混合烟道
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <param name="packageNum"></param>
+        /// <returns></returns>
+        public static object[] getShapeSmokeTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist, out decimal packageNum)
+        {
+            object[] values = new object[227];//一个任务
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var query = from item in data.T_UN_POKE
+                            where item.STATUS == 10 && item.CTYPE == 1
+                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
+                            select item;
+
+                packageNum = getPackageNum(2, null);
+                if (query != null)
+                    list = query.Take(takeSize).ToList();
+                outlist = list;
+                decimal checkcode = 0;//校验码,为流水号之和
+                if (list != null)
+                {
+                    int j = 0;
+                    decimal machineseq = 0;//物理通道号
+                    String customercode = "";
+
+                    foreach (var item in list)
+                    {
+                        values[j * 9] = item.POKEID;//流水号
+                        machineseq = (item.MACHINESEQ ?? 0);
+                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        if (customercode.Length > 9)
+                        {
+                            customercode = customercode.Substring(customercode.Length - 9, 9);
+                        }
+
+                        values[j * 9 + 1] = machineseq;//烟道地址
+                        values[j * 9 + 2] = 21;//尾数标志 >20
+                        values[j * 9 + 3] = customercode;//客户号
+                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
+                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
+                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
+                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
+                        j++;
+                        checkcode += item.POKEID;
+                    }
+
+                    values[225] = 1;//完成信号
+                    values[226] = checkcode;//校验码,为流水号之和
+                }
+                return values;
+            }
+        }
+  
         /// <summary>
         /// 获取完成信号
         /// </summary>
@@ -198,7 +251,7 @@ namespace InBound.Business
         /// <returns></returns>
         public static object[] GetFinishSignalTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
         {  
-            object[] values = new object[228];//一个任务
+            object[] values = new object[227];//一个任务
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -213,6 +266,7 @@ namespace InBound.Business
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
+                decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
@@ -231,21 +285,15 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 4] = 0;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//备用:发送任务号 25条为一个任务 
+                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
                         j++;
-                        if (values[225] != null)
-                        {
-                            for (int i = 0; i < 228; i = i + 9)//获取所有POkeID
-                            {
-                                values[227] += values[i].ToString() + ",";
-                            }
-                            values[values.Length - 1] = 1;
-                        }
+                        checkcode += item.POKEID;
                     }
-                  
+                    values[225] = 1;//完成信号
+                    values[226] = checkcode;//校验码,为流水号之和
                 }
                 return values;
             }
@@ -650,6 +698,33 @@ namespace InBound.Business
                         var query = (from items in data.T_UN_POKE where items.POKEID == item.POKEID select items).FirstOrDefault();
                         query.STATUS = status;
                     } 
+                }
+                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                data.SaveChanges();
+            }
+        }
+        /// <summary>
+        /// 混合烟道
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="status"></param>
+        /// <param name="tasknum"></param>
+        public static void UpdateTask(List<T_UN_POKE> task, int status, decimal tasknum)
+        {
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var query1=  from item in data.T_UN_POKE
+                             where item.TASKNUM == tasknum && item.STATUS == 10 && item.TASKNUM > tasknum  
+                            select item ;
+                if (query1 != null)
+                {
+                    list = query1.ToList(); 
+                    foreach (var item in list)
+                    {
+                        var query = (from items in data.T_UN_POKE where items.TASKNUM == tasknum select items).FirstOrDefault();
+                        query.STATUS = status;
+                    }
                 }
                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
