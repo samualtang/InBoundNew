@@ -318,18 +318,15 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("分拣线一:" + logstr);
                     updateListBox("分拣线一:" + logstr);
 
-                    taskgroup.SyncWrite(datas);
-
-                    UnPokeService.UpdateTaskNum(list, packageNum);
-
+                    taskgroup.SyncWrite(datas); 
+                    UnPokeService.UpdateTaskNum(list, packageNum); 
                     //写完db块后,再读出来 
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
                         p1 += taskgroup.Read(i).ToString() + ";";//pokeid   
                     }
-                    writeLog.Write("读出第一组电控写入值:" + p1);
-
+                    writeLog.Write("读出第一组电控写入值:" + p1); 
                 }
             }
             catch(Exception ex)

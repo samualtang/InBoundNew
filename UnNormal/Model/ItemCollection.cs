@@ -14,7 +14,7 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskItem()//第一组任务
        {
            List<string> list = new List<string>();
-           for (int i = 0; i <= 900; i++)
+           for (int i = 0; i <= 904; i++)
            {
                list.Add("S7:[UnnormalConnection]DB30,DINT"+i);
                i += 3;
@@ -26,7 +26,7 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskItem1()//第二组任务
        {
            List<string> list = new List<string>();
-           for (int i = 0; i <= 900; i++)
+           for (int i = 0; i <= 904; i++)
            {
                list.Add("S7:[UnnormalConnection]DB31,DINT" + i);
                i += 3;
@@ -41,7 +41,7 @@ namespace SortingControlSys.Model
        public static List<string> GetSixCabinetTaskItem()//六个烟柜任务
        {
            List<string> list = new List<string>();
-           for (int i = 0; i <= 900; i++)
+           for (int i = 0; i <= 904; i++)
            {
                list.Add("S7:[UnnormalConnection]DB32,DINT" + i);
                i += 3;
