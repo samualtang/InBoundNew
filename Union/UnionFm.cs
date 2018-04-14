@@ -44,7 +44,7 @@ namespace SortingControlSys.SortingControl
             updateListBox("应用程序启动");
             writeLog.Write("应用程序启动");
            // TaskService.GetUnionTask();
-
+            this.Text = "长株潭烟草公司合流信息系统      Version:" + ConfigurationManager.AppSettings["Version"].ToString(); 
            
             alarms.AlarmsHandler += (obj) =>
             {

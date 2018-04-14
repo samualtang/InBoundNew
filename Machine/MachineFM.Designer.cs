@@ -28,26 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MachineFM));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.cmbMachines = new System.Windows.Forms.ComboBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,6 +55,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -128,46 +128,6 @@
             this.cmbMachines.Size = new System.Drawing.Size(87, 20);
             this.cmbMachines.TabIndex = 10;
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(300, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 33);
-            this.button6.TabIndex = 9;
-            this.button6.Text = "修改状态";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button12
-            // 
-            this.button12.BackgroundImage = global::Machine.Properties.Resources.stop;
-            this.button12.Location = new System.Drawing.Point(97, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(99, 43);
-            this.button12.TabIndex = 8;
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.BackgroundImage = global::Machine.Properties.Resources.rfresh;
-            this.button11.Location = new System.Drawing.Point(194, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 43);
-            this.button11.TabIndex = 7;
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button10
-            // 
-            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
-            this.button10.Location = new System.Drawing.Point(0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 43);
-            this.button10.TabIndex = 0;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(953, 4);
@@ -220,26 +180,17 @@
             this.button2.Text = "关闭";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 43);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.regioncode,
@@ -248,26 +199,26 @@
             this.cuscount,
             this.finishqty,
             this.percent});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.task_data.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.task_data.DefaultCellStyle = dataGridViewCellStyle5;
             this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
             this.task_data.Location = new System.Drawing.Point(0, 43);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.task_data.RowTemplate.Height = 23;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.task_data.Size = new System.Drawing.Size(1038, 376);
@@ -359,6 +310,55 @@
             this.listError.Name = "listError";
             this.listError.Size = new System.Drawing.Size(444, 245);
             this.listError.TabIndex = 40;
+            // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::Machine.Properties.Resources.edit;
+            this.button6.Location = new System.Drawing.Point(290, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(99, 43);
+            this.button6.TabIndex = 9;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button12
+            // 
+            this.button12.BackgroundImage = global::Machine.Properties.Resources.stop;
+            this.button12.Location = new System.Drawing.Point(97, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(99, 43);
+            this.button12.TabIndex = 8;
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button11
+            // 
+            this.button11.BackgroundImage = global::Machine.Properties.Resources.rfresh;
+            this.button11.Location = new System.Drawing.Point(194, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 43);
+            this.button11.TabIndex = 7;
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 43);
+            this.button10.TabIndex = 0;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 43);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // MachineFM
             // 

@@ -56,7 +56,7 @@ namespace SortingControlSys.SortingControl
             updateListBox("应用程序启动");
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
             decimal machinegroupno = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
-            this.Text = "长株潭烟草公司机械手系统-组" + machinegroupno;
+            this.Text = "长株潭烟草公司机械手系统-组" + machinegroupno + "      Version:" + ConfigurationManager.AppSettings["Version"].ToString(); 
             writeLog.Write(" 机械手组" + groupNo + " 应用程序启动");
             serverIp = ConfigurationManager.AppSettings["ServerIP"].ToString();
             ItemCollection.OpcMachineServer = ConfigurationManager.AppSettings["OpcMachineServer"].ToString();
