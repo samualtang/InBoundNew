@@ -316,7 +316,7 @@ namespace InBound.Business
             {
                 var query = (from item in entity.T_WMS_DEVICESTATUS where item.TYPE == 50 && item.TROUGHNUM.Contains(troughnum) select item).FirstOrDefault();
 
-                var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBTYPE == 80 && query.TROUGHNUM.Contains(item.TARGET) && item.STATUS != 10 select item).Count();
+                var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBTYPE == 80 && query.TROUGHNUM.Contains(item.TARGET) && item.STATUS != 20  select item).Count();
 
                 if (query2==null || query2 < query.MAXTASKNUM) //小于阀值
                 {
