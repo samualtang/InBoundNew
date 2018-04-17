@@ -15,7 +15,15 @@ namespace InBound.Business
               return query.ToList();
           }
       }
-
+      public static INF_EQUIPMENTSTATUS GetINFEQUIPMENTSTATUS(String eid)
+      {
+          using (Entities entity = new Entities())
+          {
+              var query = from item in entity.INF_EQUIPMENTSTATUS where item.EQUIPMENTID==eid
+                  orderby item.EQUIPMENTID select item;
+              return query.FirstOrDefault();
+          }
+      }
    
       
     }
