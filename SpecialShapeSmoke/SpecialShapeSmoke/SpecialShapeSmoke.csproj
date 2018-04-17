@@ -71,6 +71,8 @@
     <Compile Include="MainScreen1.Designer.cs">
       <DependentUpon>MainScreen1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\ItemCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainScreen1.resx">
@@ -103,8 +105,8 @@
     <Content Include="Image\icon_exit.png" />
     <Content Include="Image\mainbj.png" />
     <Content Include="Image\topfj.png" />
-    <Content Include="lib\DevComponents.DotNetBar2.dll" />
-    <Content Include="lib\WHC.Pager.WinControlEx.dll" />
+    <Content Include="Properties\lib\DevComponents.DotNetBar2.dll" />
+    <Content Include="Properties\lib\WHC.Pager.WinControlEx.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\InBound\InBound.csproj">

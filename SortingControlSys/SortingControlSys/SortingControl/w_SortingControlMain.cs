@@ -48,7 +48,7 @@ namespace SortingControlSys.SortingControl
             InitializeComponent();
             updateListBox("应用程序启动");
              sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
-            this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2;
+             this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2 + "      Version:" + ConfigurationManager.AppSettings["Version"].ToString();
             try
             {
                 sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
