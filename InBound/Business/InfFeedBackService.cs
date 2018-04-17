@@ -187,6 +187,7 @@ namespace InBound.Business
                                           }
                                           else
                                           {
+
                                               WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
                                           }
                                       }
@@ -341,7 +342,9 @@ namespace InBound.Business
                                           }
                                           else
                                           {
-                                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无库存");
+                                              
+                                              WriteLog.GetLog().Write("品牌" + task.BRANDID + "暂无可用货架");
+                                              continue;
                                           }
                                           //}
                                           //else //储位中存在该托盘  肯定就是返库任务 人工站台拆垛完成触发的返库任务
@@ -510,6 +513,7 @@ namespace InBound.Business
 
                                       if (item.JOBTYPE == 20 )
                                       {
+                                          InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10,dataEntity);
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
                                           if (inboundLine == null)
@@ -571,6 +575,7 @@ namespace InBound.Business
                                       }
                                       else if(item.JOBTYPE==55)
                                       {
+                                          InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10, dataEntity);
                                           //下达拆垛任务
                                           //var task = (from taskitem in dataEntity.INF_JOBDOWNLOAD where taskitem.EXTATTR2 == item.JOBID && taskitem.STATUS == 2 select taskitem).ToList();
                                           //if (task != null && task.Count > 0)

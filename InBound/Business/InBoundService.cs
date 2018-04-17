@@ -53,7 +53,34 @@ namespace InBound.Business
                 entity.SaveChanges();
             }
         }
-
+        public static String getTarget(String cellNo)
+        {
+            if (cellNo == "")
+                return cellNo;
+            String layewayno = cellNo.Substring(2, 1);
+            if (layewayno == "1" || layewayno == "2")
+            {
+                String id = Inf_EquipmentStatusService.GetINFEQUIPMENTSTATUS("1341").EQUIPMENTSTATUS;
+                if (id == "1")
+                {
+                    int taskcount = InfJobDownLoadService.GetMiddleUnFinishTask();
+                    if (taskcount == 0)
+                    {
+                        return "1341";
+                    }
+                    else
+                    return "1355";
+                }
+                else
+                {
+                    return "1355";
+                }
+            }
+            else
+            {
+                return "1355";
+            }
+        }
 
         public static void PreUpdateInOut(bool unFullFirst,PlcGroup group)
         {
@@ -270,7 +297,7 @@ namespace InBound.Business
                                         //load1.TUTYPE = 1;//无返库
                                         load1.JOBTYPE = 55;//补货出库
                                         load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
-                                        load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
+                                        load1.TARGET = getTarget(load1.SOURCE); //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                         load1.STATUS = 0;
                                         cellno = load1.SOURCE;
                                         if (load1.SOURCE != "" && load1.TARGET != "")
@@ -412,7 +439,7 @@ namespace InBound.Business
                                             load1.PRIORITY = 50;
                                             load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, (int)load1.PLANQTY);//out cell
 
-                                            load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+                                            load1.TARGET = getTarget(load1.SOURCE);// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
                                             load1.STATUS = 0;
                                             cellno = load1.SOURCE;
                                             if (load1.SOURCE != "" && load1.TARGET != "")
@@ -618,7 +645,7 @@ namespace InBound.Business
                                 //load1.TUTYPE = 1;//无返库
                                 load1.JOBTYPE = 55;//补货出库
                                 load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, (int)detail.QTY);//out cell
-                                load1.TARGET = "1355"; //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
+                                load1.TARGET = getTarget(load1.SOURCE); //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, detail.QTY ?? 0);//出口
                                 load1.STATUS = 0;
                                 cellno = load1.SOURCE;
                                 if (load1.SOURCE != "" && load1.TARGET != "")
@@ -761,7 +788,7 @@ namespace InBound.Business
                                     load1.PRIORITY = 50;
                                     load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, (int)load1.PLANQTY);//out cell
 
-                                    load1.TARGET = "1355";// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
+                                    load1.TARGET = getTarget(load1.SOURCE);// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);//立库出口
                                     load1.STATUS = 0;
                                     cellno = load1.SOURCE;
                                     if (load1.SOURCE != "" && load1.TARGET != "")

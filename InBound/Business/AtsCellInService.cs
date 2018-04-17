@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.Objects;
 using System.Data.EntityClient;
+using InBound.Model;
 
 
 namespace InBound.Business
@@ -41,13 +42,48 @@ namespace InBound.Business
         }
 
         public static Object lockFlag = new Object();
-      
+
+        public static List<String> getLaneWayTaskCount()
+        {
+            using (Entities et = new Entities())
+            {
+
+                var taskqy = (from item in et.INF_JOBDOWNLOAD
+                              where item.JOBTYPE == 20
+                                  && item.STATUS != 10
+                              select new LaneWayTaskCount() { layewayno = "3" + item.TARGET.Substring(0, 3), taskCount = 1 }).ToList();
+                if (taskqy != null && taskqy.Count > 0)
+                {
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3001", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3002", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3003", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3004", taskCount = 1 });
+                    taskqy.Add(new LaneWayTaskCount() { layewayno = "3005", taskCount = 1 });
+                    taskqy = taskqy.GroupBy(x => x.layewayno).Select(group => new LaneWayTaskCount() { layewayno = group.Key, taskCount = group.Count() - 1 }).ToList();
+
+                    var query = (from item in et.T_WMS_DEVICESTATUS where item.TYPE == 30 select item).ToList();
+                    var query1 = (from item in taskqy
+                                  join item2 in query
+                                      on item.layewayno equals item2.DEVICENO
+                                  select new LaneWayTaskCount() { layewayno = item.layewayno.Substring(3, 1), taskCount = item.taskCount, maxCount = Decimal.Parse(item2.TROUGHNUM) }).ToList().Where(x => x.taskCount < x.maxCount).Select(x => x.layewayno).ToList();
+
+
+                    return query1;
+                }
+                else
+                {
+                    return new List<string>() { "1", "2", "3", "4", "5" };
+                }
+            }
+
+        }
         public static String getCellNoCode(String barcode)
         {
             using (Entities et = new Entities())
             {
                 lock(lockFlag)
                 {
+                    var list = getLaneWayTaskCount();
                     var query = (from item in et.T_WMS_ATSCELL
                                  join item4 in et.T_WMS_LANEWAY
                                  on item.LANEWAYNO equals item4.LANEWAYNO
@@ -56,6 +92,7 @@ namespace InBound.Business
                                  where (item.STATUS == 10 || item.STATUS == 30) && item.WORKSTATUS == 10//储位空闲状态正常
                                  && (item4.STATUS == 10 || item4.STATUS == 30)  //巷道状态正常
                                  && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
+                                 && list.Contains(item4.LANEWAYNO)
                                  select item.LANEWAYNO).Distinct().ToList();
                     if (query != null)
                     {

@@ -87,7 +87,7 @@ namespace InBound.Business
                            on item2.LANEWAYNO equals item4.LANEWAYNO
                            join item5 in entity.T_PRODUCE_SORTTROUGH
                            on item3.CIGARETTECODE equals item5.CIGARETTECODE
-                           where item.STATUS == 30 && item2.WORKSTATUS == 10 && (item2.STATUS == 10 || item2.STATUS == 20)
+                           where item.STATUS == 30 && item2.WORKSTATUS == 20 && (item2.STATUS == 10 || item2.STATUS == 20)
                             && (item4.STATUS == 10 || item4.STATUS == 20) && item5.TROUGHTYPE == 10 && item5.CIGARETTETYPE == 20 && item5.STATE == "10" && item3.QTY == qty && item5.CIGARETTECODE==code
                            select item3).Distinct().ToList();
               return query;
