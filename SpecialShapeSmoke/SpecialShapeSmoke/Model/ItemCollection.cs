@@ -6,8 +6,7 @@ using System.Text;
 namespace SpecialShapeSmoke.Model
 {
     public static class ItemCollection
-    {
-        public static String OpcPresortServer = "S7:[UnnormalConnection]";
+    { 
         /// <summary>
         /// 混合烟道条烟完成,用于混合道的补烟提示
         /// </summary>
