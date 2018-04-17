@@ -109,8 +109,8 @@ namespace FormUI
             { 
                 String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
            
-                String OutMaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数(堆垛机对应出库最大任务数)
-                String InMaxTaskNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//开箱机对应烟柜通道 和 堆垛机对应入库的最大数量
+                String OutMaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//  堆垛机对应出库最大任务数 
+                String InMaxTaskNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//  堆垛机对应入库的最大数量
                 //MessageBox.Show(code +"  "+ OutMaxTaskNum + "  " + InMaxTaskNum);
                 DeviceService.UpdateDevice(code, OutMaxTaskNum, InMaxTaskNum); 
              
@@ -119,7 +119,7 @@ namespace FormUI
             else if (cmbSelectDeviceName.SelectedIndex == 2)
             {
                 String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                String MaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数(堆垛机对应出库最大任务数)
+                String MaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数 
                 String TroughNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//开箱机对应烟柜通道   
                 //MessageBox.Show(code + "  " + MaxTaskNum + "  " + TroughNum);
                 DeviceService.UpdateDevice(code, TroughNum ,Convert.ToInt32(MaxTaskNum)); 

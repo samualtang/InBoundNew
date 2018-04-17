@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using InBound.Model;
+using System.Configuration;
 
 namespace InBound.Business
 {
@@ -14,7 +15,8 @@ namespace InBound.Business
            using (Entities entity = new Entities())
            {
                try
-               { 
+               {
+                 
                    //List<HUNHEVIEW> list = null;
                    var query = (from item in entity.T_UN_POKE
                                 join item2 in entity.T_PRODUCE_SORTTROUGH
