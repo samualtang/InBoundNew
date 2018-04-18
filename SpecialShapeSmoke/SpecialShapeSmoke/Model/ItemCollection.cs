@@ -9,7 +9,7 @@ namespace SpecialShapeSmoke.Model
     { 
 
 
-        public static List<string> GetTaskStatusByShape3Item()// 混合烟道
+        public static List<string> GetTaskStatusByShapeItem()// 混合烟道
         {
             List<string> list = new List<string>();
             list.Add("S7:[UnnormalConnection]DB33,DINT12");//第一组1号烟仓 1001 0 
@@ -21,7 +21,7 @@ namespace SpecialShapeSmoke.Model
             list.Add("S7:[UnnormalConnection]DB33,DINT36");//第二组2号烟仓   2002 6 
             list.Add("S7:[UnnormalConnection]DB33,DINT40");//第二组59号烟仓  2059 7  
             list.Add("S7:[UnnormalConnection]DB33,DINT44");//第二组60号烟仓  2060 8
-            list.Add("S7:[UnnormalConnection]DB33,DINT48");//第二组61号烟仓  2061  9       
+            list.Add("S7:[UnnormalConnection]DB33,DINT48");//第二组61号烟仓  2061 9       
 
             return list;
         }

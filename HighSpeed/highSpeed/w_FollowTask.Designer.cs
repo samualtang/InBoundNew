@@ -1,6 +1,6 @@
-﻿namespace SpecialShapeSmoke
+﻿namespace highSpeed
 {
-    partial class MainScreen1
+    partial class w_FollowTask
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // MainScreen1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "MainScreen1";
-            this.Text = "Form1";
-            this.ResumeLayout(false);
-
+            this.Text = "w_FollowTask";
         }
 
         #endregion
-
-
-
     }
 }
-

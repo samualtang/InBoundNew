@@ -410,6 +410,12 @@
     <Compile Include="w_database_set.Designer.cs">
       <DependentUpon>w_database_set.cs</DependentUpon>
     </Compile>
+    <Compile Include="w_FollowTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_FollowTask.Designer.cs">
+      <DependentUpon>w_FollowTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="w_main.cs">
       <SubType>Form</SubType>
     </Compile>
