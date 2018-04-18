@@ -284,7 +284,7 @@ namespace SpecialShapeSmoke
                     while (true) 
                     {
                       getData();
-                      Thread.Sleep(20000);//每20秒刷新一次
+                      Thread.Sleep(5000);//每5秒刷新一次
                     }
                 }
             }
@@ -405,11 +405,10 @@ namespace SpecialShapeSmoke
             //    }
             //}
         //}
-      
+        bool flag = true;//初始化
         /// <summary>
         /// 获取数据
-        /// </summary>
-        /// 
+        /// </summary>  
         public void getData()
         {
                // writeLog.Write("Receive Resend Data:"+data);
@@ -418,24 +417,21 @@ namespace SpecialShapeSmoke
                 {
                     int countGroupBox = 0;//groupBox总数
                     int countnum = 0;
-                    //int jobFinish = -1;//分拣结束标志
                     // string[] Flag = new string[2];   
                     decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
                     //finishNo[0] = dbMesg;
                     //finishNo[1] = dbMesg2; 
-                    if (dbMesg == -1 && dbMesg2 == -1)
+
+                    #region
+                    //decimal packageNum = 0;
+                    if (flag)
                     {
-                        if (dbIndex[1] == -1) { countGroupBox = 1; } else { countGroupBox = 2; }
-                        for (int k = 0; k < countGroupBox; k++)
-                        {
-                            Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
-                            updateLabel("请等待分拣任务!", lbl2);
-                        }
+                        finishNo[0] = 0;
+                        finishNo[1] = 0;
+                        flag = false;
                     }
                     else
                     {
-                        #region
-                        //decimal packageNum = 0;
                         if (dbIndex[1] == -1)//  是1061 和2061 单个通道
                         {
                             finishNo[0] = ShapeGroup3.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
@@ -445,42 +441,51 @@ namespace SpecialShapeSmoke
                             finishNo[0] = ShapeGroup3.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
                             finishNo[1] = ShapeGroup3.Read((int)dbIndex[1]).CastTo<int>(-1);
                         }
-                        #endregion
-                        if (dbMesg != -1 || dbMesg2 != -1)
+                    }
+                    writeLog.Write("接收DB块值:" + finishNo[0] + "    " + finishNo[1]);
+                    #endregion
+                    if (finishNo[0] != -1 || finishNo[1] != -1)
+                    {
+                        if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
+                        for (int j = 0; j < countnum; j++)//数据获取核心
                         {
-                            if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
-                            for (int j = 0; j < countnum; j++)//数据获取核心
+                            throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
+                            initText(panelList[j], throughList[j]);
+                        }
+                        if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
+                        {
+                            Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                            updateLabel("分拣任务完成!分拣结束!", lbl2);
+                        }
+                        if (!CheckTrough())
+                        {
+                            if (throughList[1].Count <= 0)
                             {
-                                throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
-                                initText(panelList[j], throughList[j]);
-                            }
-                            if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
-                            {
-                                Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                                Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
                                 updateLabel("分拣任务完成!分拣结束!", lbl2);
                             }
-                            if (!CheckTrough())
-                            {
-                                if (throughList[1].Count <= 0)
-                                {
-                                    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
-                                    updateLabel("分拣任务完成!分拣结束!", lbl2);
-                                }
-                            }
-
-                        }
-
-                        //  var item = service.GetBeginTask();
-                        //if (item != null && item.Count > 0)
-                        //{
-                        //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
-                        //}
-                        //}
+                        } 
                     }
+                    else
+                    {
+                        if (CheckTrough()) { countGroupBox = 1; } else { countGroupBox = 2; }
+                        for (int k = 0; k < countGroupBox; k++)
+                        {
+                            Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
+                            updateLabel("请等待分拣任务!", lbl2);
+                        }
+                    }
+
+                    //  var item = service.GetBeginTask();
+                    //if (item != null && item.Count > 0)
+                    //{
+                    //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
+                    //}
+
                 }
                 catch (Exception e)
                 {
-                    writeLog.Write("GetData():"+e.Message);
+                    writeLog.Write("GetData():" + e.Message);
                 }
                 //MessageBox.Show(data);
 
