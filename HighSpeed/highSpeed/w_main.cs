@@ -638,6 +638,18 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 机械手ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+           
+            //switch ()
+            //{
+            //    case "机械手":
+            //        MessageBox.Show("1");
+            //        break;
+            //}
+        }
+
 
        
     }

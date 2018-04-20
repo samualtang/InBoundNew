@@ -52,6 +52,7 @@ namespace FormUI
         {
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = DeviceService.GetList();
+            dataGridView1.ReadOnly = true;
             dataGridView1.Columns[3].Visible = false;
             dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[5].Visible = true;
@@ -78,8 +79,9 @@ namespace FormUI
         }
         void DgvBind()
         {
+            dataGridView1.ReadOnly = false;
             if (cmbSelectDeviceName.SelectedIndex == 1)
-            {
+            { 
                 dataGridView1.Columns[3].Visible = true;
                 dataGridView1.Columns[4].Visible = true;
                 dataGridView1.Columns[5].Visible = false;
@@ -88,8 +90,7 @@ namespace FormUI
                 dataGridView1.Columns[4].HeaderCell.Value = "堆垛机对应入库的最大数量";
             }
             else if (cmbSelectDeviceName.SelectedIndex == 2)
-            {
-
+            { 
                 dataGridView1.Columns[3].Visible = true;
                 dataGridView1.Columns[4].Visible = true;
                 dataGridView1.Columns[5].Visible = false;
@@ -100,29 +101,36 @@ namespace FormUI
             }
         }
         private void btnChange_Click(object sender, EventArgs e)
-        { 
-            if (dataGridView1.SelectedRows.Count < 1)
+        {
+            try
             {
-                MessageBox.Show("请选择一行进行操作");
+                if (dataGridView1.SelectedRows.Count < 1)
+                {
+                    MessageBox.Show("请选择一行进行操作");
+                }
+                else if (cmbSelectDeviceName.SelectedIndex == 1)
+                { 
+                    String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString(); 
+                    String OutMaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//  堆垛机对应出库最大任务数 
+                    String InMaxTaskNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//  堆垛机对应入库的最大数量
+                    //MessageBox.Show(code +"  "+ OutMaxTaskNum + "  " + InMaxTaskNum);
+                    DeviceService.UpdateDevice(code, OutMaxTaskNum, InMaxTaskNum);
+                    MessageBox.Show("修改成功");
+                    // search();
+                }
+                else if (cmbSelectDeviceName.SelectedIndex == 2)
+                {
+                    String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    String MaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数 
+                    String TroughNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//开箱机对应烟柜通道   
+                    //MessageBox.Show(code + "  " + MaxTaskNum + "  " + TroughNum);
+                    DeviceService.UpdateDevice(code, TroughNum, Convert.ToInt32(MaxTaskNum));
+                    MessageBox.Show("修改成功");
+                }
             }
-            else if (cmbSelectDeviceName.SelectedIndex == 1)
-            { 
-                String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-           
-                String OutMaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数(堆垛机对应出库最大任务数)
-                String InMaxTaskNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//开箱机对应烟柜通道 和 堆垛机对应入库的最大数量
-                //MessageBox.Show(code +"  "+ OutMaxTaskNum + "  " + InMaxTaskNum);
-                DeviceService.UpdateDevice(code, OutMaxTaskNum, InMaxTaskNum); 
-             
-               // search();
-            }
-            else if (cmbSelectDeviceName.SelectedIndex == 2)
+            catch (Exception)
             {
-                String code = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                String MaxTaskNum = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();//最大任务数(堆垛机对应出库最大任务数)
-                String TroughNum = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();//开箱机对应烟柜通道   
-                //MessageBox.Show(code + "  " + MaxTaskNum + "  " + TroughNum);
-                DeviceService.UpdateDevice(code, TroughNum ,Convert.ToInt32(MaxTaskNum)); 
+                MessageBox.Show("修改失败");
             }
         }
 
@@ -163,7 +171,7 @@ namespace FormUI
                     status = 0;
                 }
                 // MessageBox.Show(status + ""+code);
-                // DeviceService.UpdateEntity(code, status);
+                DeviceService.UpdateEntity(code, status);
                 search();
             }
         }

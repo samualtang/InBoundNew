@@ -47,6 +47,7 @@ namespace SortingControlSys.SortingControl
         {
             InitializeComponent();
             updateListBox("应用程序启动");
+            writeLog.Write(" 应用程序启动");
              sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
              this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2 + "      Version:" + ConfigurationManager.AppSettings["Version"].ToString();
             try
@@ -190,6 +191,8 @@ namespace SortingControlSys.SortingControl
             catch (Exception e)
             {
                 updateListBox("连接服务器失败:" + e.Message);
+                writeLog.Write("连接服务器失败:" + e.Message);
+                
             }
         }
 
@@ -211,6 +214,7 @@ namespace SortingControlSys.SortingControl
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
+                writeLog.Write("连接服务器失败,请检查网络.");
             }
             else
             {
@@ -223,6 +227,7 @@ namespace SortingControlSys.SortingControl
                     statusGroup3.Write(2, 26);
                 }
                 updateListBox("连接服务器成功......");
+                writeLog.Write("连接服务器成功......");
                 updateControlEnable(false, button10);
                 isInit = true;
             }
@@ -349,7 +354,7 @@ namespace SortingControlSys.SortingControl
                         logstr += logcolumnname + ":" + datas[i] + ";";
                         //logstr += i + ":" + datas[i] + ";";
                     }
-                    writeLog.Write(logstr);
+                    writeLog.Write("组:" + sortgroupno2 + "----" + logstr);
                     updateListBox("组:" + sortgroupno2 + "----" + logstr);
                     removeKey(tempList1, export);
                     tempList1.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
@@ -448,7 +453,7 @@ namespace SortingControlSys.SortingControl
                         logstr += logcolumnname + ":" + datas[i] + ";";
                        // logstr += i + ":" + datas[i] + ";";
                     }
-                    writeLog.Write(logstr);
+                    writeLog.Write("组:" + sortgroupno1 + "----" +logstr);
                     updateListBox("组:" + sortgroupno1 + "----" + logstr);
                     removeKey(tempList, export);
                     tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));//任务号和出口号对应起来
@@ -713,7 +718,7 @@ namespace SortingControlSys.SortingControl
 
                             if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + tempvalue + "已完成");
+                                updateListBox(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                             }
 
