@@ -49,7 +49,7 @@ namespace InBound.Business
             {
 
                 var taskqy = (from item in et.INF_JOBDOWNLOAD
-                              where item.JOBTYPE == 20
+                              where (item.JOBTYPE == 20 || item.JOBTYPE==30)
                                   && item.STATUS != 10
                               select new LaneWayTaskCount() { layewayno = "3" + item.TARGET.Substring(0, 3), taskCount = 1 }).ToList();
                 if (taskqy != null && taskqy.Count > 0)
@@ -92,7 +92,7 @@ namespace InBound.Business
                                  where (item.STATUS == 10 || item.STATUS == 30) && item.WORKSTATUS == 10//储位空闲状态正常
                                  && (item4.STATUS == 10 || item4.STATUS == 30)  //巷道状态正常
                                  && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
-                                 && list.Contains(item4.LANEWAYNO)
+                                 && list.Contains(item4.LANEWAYNO) orderby item.LANEWAYNO descending
                                  select item.LANEWAYNO).Distinct().ToList();
                     if (query != null)
                     {

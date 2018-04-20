@@ -24,7 +24,18 @@ namespace InBound.Business
               dataEntity.SaveChanges();
           }
       }
+      public static int GetPalletUnFinishTask()
+      {
+          using (Entities dataEntity = new Entities())
+          {
+              var query = (from item in dataEntity.INF_JOBDOWNLOAD
+                           where item.JOBTYPE == 50 && item.TARGET == "1192"
+                               && item.STATUS != 10
+                           select item).Count();
+              return query;
 
+          }
+      }
       public static int GetMiddleUnFinishTask ()
       {
           using (Entities dataEntity = new Entities())

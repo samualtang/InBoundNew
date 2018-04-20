@@ -132,8 +132,9 @@ namespace FormUI
                     InfJobDownLoadService.UpdateJopDownLoad(jobid, 3);
                   //  InfEquipmentRequestService.UpdateEquipMentRequest(jobid, 1);
                     ts.Complete();
-                    search();
+                   
                 }
+                search();
             }
             else
             {

@@ -108,7 +108,7 @@ namespace InBound.Business
                    }
                   if (query2 != null && query2.Count > 0)
                   {
-                      #region
+                      
                       foreach (var temptask in query2)
                       {
 
@@ -127,7 +127,7 @@ namespace InBound.Business
                       temptask.RESPONDDATE = DateTime.Now;
                       if (temptask.REQUESTTYPE != 3)
                       {
-                          #region
+                         
                           if (temptask.REQUESTTYPE == 1)//入库请求
                           {
                               if (temptask.INBOUNDNO == null || temptask.INBOUNDNO == 0) //返库
@@ -366,8 +366,7 @@ namespace InBound.Business
                               }
                               
                           }
-                          #endregion
-                          #region
+                        
                           else if (temptask.REQUESTTYPE == 2)//出库请求
                           {
                               task.TARGET = temptask.EQUIPMENTID;
@@ -415,7 +414,7 @@ namespace InBound.Business
                               //}
                              
                           }
-                          #endregion
+                         
                           // task.TUTYPE = temptask.TUTYPE;
 
 
@@ -423,7 +422,7 @@ namespace InBound.Business
                       }
                       else//下达拆垛任务
                       {
-                          #region
+                         
                           //新建指定拆垛机械手任务
                           using (TransactionScope ts = new TransactionScope())
                           {
@@ -487,7 +486,7 @@ namespace InBound.Business
 
 
                               }
-                          #endregion
+                        
                             
 
                               dataEntity.SaveChanges();
@@ -497,23 +496,23 @@ namespace InBound.Business
                       }
                     
                       }
-                      #endregion
+                     
                   }
                   if (query != null && query.Count > 0)
                   {
                       foreach (var item in query)
                       {
-                          #region
+                        
                           using (TransactionScope ts = new TransactionScope())
                               {
                                   var feedback = (from feed in dataEntity.INF_JOBFEEDBACK where feed.JOBID == item.JOBID && feed.FEEDBACKSTATUS == 99 select feed).FirstOrDefault();
                                   feedback.STATUS = 10;
                                   if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42 || item.JOBTYPE==100)//入库单入库任务
                                   {
-
+                                      InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10, dataEntity);
                                       if (item.JOBTYPE == 20 )
                                       {
-                                          InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10,dataEntity);
+                                         
                                           String code = item.BRANDID + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == code select line).FirstOrDefault();
                                           if (inboundLine == null)
@@ -565,6 +564,7 @@ namespace InBound.Business
                                           AtsCellService.UpdateAtsCell(item.SOURCE, 10);//任务置空闲
                                           AtsCellInfoService.delete(item.SOURCE);
                                           AtsCellInfoDetailService.delete(item.SOURCE);
+                                          InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10, dataEntity);
                                       }
                                       else if (item.JOBTYPE == 52)
                                       {
@@ -690,7 +690,7 @@ namespace InBound.Business
                                   ts.Complete();
 
                               }
-                          #endregion
+                        
                       }
                   }
                 

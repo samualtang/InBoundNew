@@ -340,6 +340,34 @@ namespace InBound.Business
                 entity.SaveChanges();
             }
         }
+        public static String getTarget(String cellNo)
+        {
+            if (cellNo == "")
+                return cellNo;
+            String layewayno = cellNo.Substring(2, 1);
+            if (layewayno == "1" || layewayno == "2")
+            {
+                String id = Inf_EquipmentStatusService.GetINFEQUIPMENTSTATUS("1341").EQUIPMENTSTATUS;
+                if (id == "1")
+                {
+                    int taskcount = InfJobDownLoadService.GetMiddleUnFinishTask();
+                    if (taskcount == 0)
+                    {
+                        return "1341";
+                    }
+                    else
+                        return "1355";
+                }
+                else
+                {
+                    return "1355";
+                }
+            }
+            else
+            {
+                return "1355";
+            }
+        }
         public static void PreUpdateInOut(bool unFullFirst)
         {
             unFullFirst = false;//不管散盘优先
@@ -370,16 +398,33 @@ namespace InBound.Business
                             load1.CREATEDATE = DateTime.Now;
                             load1.PLANQTY = leftBox;
                             load1.PRIORITY = 50;
-
+                            load1.PILETYPE = decimal.Parse(itemDetail.DXTYPE);
                             load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, leftBox);//out cell
-                            load1.TARGET = InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, leftBox);//异型烟人工出口
+                            load1.TARGET = getTarget(load1.SOURCE); //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, leftBox);//异型烟人工出口
 
                             load1.STATUS = 0;
 
                             load1.JOBTYPE = 55;//补货出库
                             if (load1.SOURCE != "" && load1.TARGET != "")
                             {
-                                load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
+                                T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                if (dinfo.DISMANTLE == 10)
+                                {
+                                    if (dl.REQUESTQTY != dl.QTY)
+                                    {
+                                        load1.TUTYPE = 2;//返库
+                                    }
+                                    else
+                                    {
+                                        load1.TUTYPE = 1;//不返库
+                                    }
+                                }
+                                else
+                                {
+                                    load1.TUTYPE = 3;
+                                }
+                                load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
                                 entity.INF_JOBDOWNLOAD.AddObject(load1);
                             }
                             else
@@ -424,7 +469,7 @@ namespace InBound.Business
                             load2.EXTATTR2 = load1.JOBID + "";
                             load2.PRIORITY = 50;
                             load2.SOURCE = load1.TARGET;//out cell立库出口
-                            load2.TARGET = task.TROUGHNUM;//异型烟货架通道
+                            load2.TARGET ="11020";//异型烟货架通道
                             load2.STATUS = 0;
                             entity.INF_JOBDOWNLOAD.AddObject(load2);
 
@@ -471,15 +516,32 @@ namespace InBound.Business
                                 load1.CREATEDATE = DateTime.Now;
                                 load1.PLANQTY = task.BOXCOUNT;
                                 load1.PRIORITY = 50;
-
+                                load1.PILETYPE = decimal.Parse(itemDetail.DXTYPE);
                                 load1.JOBTYPE = 55;//补货出库
-                                load1.SOURCE = AtsCellOutService.getCellNoBig(task.CIGARETTECODE, int.Parse((task.BOXCOUNT ?? 0) + ""));//out cell
-                                load1.TARGET = InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, task.BOXCOUNT ?? 0);//异型烟人工出口
+                                load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, int.Parse((task.BOXCOUNT ?? 0) + ""));//out cell
+                                load1.TARGET = getTarget(load1.SOURCE);// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, task.BOXCOUNT ?? 0);//异型烟人工出口
 
                                 load1.STATUS = 0;
                                 if (load1.SOURCE != "" && load1.TARGET != "")
                                 {
-                                    load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
+                                    T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
+                                    T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                    if (dinfo.DISMANTLE == 10)
+                                    {
+                                        if (dl.REQUESTQTY != dl.QTY)
+                                        {
+                                            load1.TUTYPE = 2;//返库
+                                        }
+                                        else
+                                        {
+                                            load1.TUTYPE = 1;//不返库
+                                        }
+                                    }
+                                    else
+                                    {
+                                        load1.TUTYPE = 3;
+                                    }
+                                    load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
                                     entity.INF_JOBDOWNLOAD.AddObject(load1);
                                 }
                                 else
@@ -527,7 +589,7 @@ namespace InBound.Business
 
                                 load2.PRIORITY = 50;
                                 load2.SOURCE = load1.TARGET;//out cell立库出口
-                                load2.TARGET = task.TROUGHNUM;//异型烟货架通道
+                                load2.TARGET = "11020";//异型烟货架通道
                                 //load2.STATUS = 0;
                                 entity.INF_JOBDOWNLOAD.AddObject(load2);
 
