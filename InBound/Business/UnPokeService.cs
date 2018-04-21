@@ -111,7 +111,7 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号
-                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 4] = pNum;//包装号
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
@@ -144,10 +144,9 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 var query = from item in data.T_UN_POKE 
-                            where item.STATUS == 10  && item.CTYPE ==2 
-                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item;
-
-                packageNum = getPackageNum(2, null);
+                            where item.STATUS == 10  && item.CTYPE ==2  && item.LINENUM == lineNum
+                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item; 
+                packageNum = getPackageNum(2, lineNum);
                 if (query != null)
                     list = query.Take(takeSize).ToList();
                 outlist = list;
@@ -185,6 +184,23 @@ namespace InBound.Business
                 return values;
             }
         }
+        /// <summary>
+        /// 获取烟柜分拣线
+        /// </summary>
+        /// <returns>烟柜分拣线</returns>
+        public static String getSixCabinetLineNum()
+        {
+            string lineNum;
+            using(Entities data = new Entities ())
+            {
+                lineNum = (from item in data.T_UN_POKE
+                                where item.STATUS == 10 && item.CTYPE == 2
+                                orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
+                                select item).Select(a => new { lineNum = a.LINENUM }).FirstOrDefault().lineNum;//分拣线  
+            }
+            return lineNum;
+         }
+
         /// <summary>
         /// 混合烟道
         /// </summary>

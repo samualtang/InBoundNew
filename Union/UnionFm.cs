@@ -92,7 +92,7 @@ namespace SortingControlSys.SortingControl
         {
             base.OnLoad(e);
             tempList = TaskService.initunionTask();
-            //TaskService.GetUnionTask(0);
+           // TaskService.GetUnionTask(0);
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
@@ -326,11 +326,15 @@ namespace SortingControlSys.SortingControl
             return i;
         }
         delegate void delSendTask();
+      //  int count =1;//记数
+        /// <summary>
+        /// 合流数据
+        /// </summary>
         void sendTask()
         {
-            
             try
-            {
+            { 
+                //Thread.Sleep(500);//0.5
                 int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
                 
                 if (flag == -1)
@@ -348,21 +352,19 @@ namespace SortingControlSys.SortingControl
                     string banbelte = TaskService.GetBanMainBelt();//  任务为0被禁用主皮带 和 已禁用主皮带 
                         for (int i = 1; i < 5; i++)
                         {
-                            if (banbelte.Contains(i.ToString()))
+                            if (banbelte.Contains(i.ToString())) 
                             { 
                                 continue;
                             }
-                            tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1);
+                            tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1); 
                             if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
                             {
                                 mainbelt = i;
                                 break;
                             } 
                         }
-                  
-                    object[] datas = TaskService.GetUnionTask(mainbelt);
-                    ///////////////////////////////////////////////
-
+                    object[] datas = TaskService.GetUnionTask(mainbelt); 
+                    /////////////////////////////////////////////// 
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("合流数据发送完毕");
@@ -375,7 +377,7 @@ namespace SortingControlSys.SortingControl
                     //{
                        
                         taskgroup.SyncWrite(datas);
-                        string logstr = "任务信息：";
+                        string logstr = "任务信息：";// +count++;
                         string f = "";
                         for (int i = 0; i < datas.Length; i++)
                         {
@@ -587,7 +589,6 @@ namespace SortingControlSys.SortingControl
      
         public void Disconnect()
         {
-           
             if (pIOPCServer != null)
             {
                 Marshal.ReleaseComObject(pIOPCServer);

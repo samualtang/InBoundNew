@@ -237,11 +237,11 @@ namespace SortingControlSys.SortingControl
                 //{
                 //    statusGroup3.Write(2, 26);
                 //}
-                if (SendTaskStatesGroup.Read(0).ToString() != "1")//监控标志位第一组
+                if (SendTaskStatesGroup.Read(0).ToString() != "1")//监控标志位第一组 产生跳变
                 {
                     SendTaskStatesGroup.Write(2, 0);
                 }
-                if (SendTaskStatesGroup.Read(1).ToString() != "1")//监控标志位第二组
+                if (SendTaskStatesGroup.Read(1).ToString() != "1")//监控标志位第二组 
                 {
                     SendTaskStatesGroup.Write(2, 1);
                 }
@@ -687,7 +687,6 @@ namespace SortingControlSys.SortingControl
                             this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
 
                         }
-
                     }
                     else
                     {
@@ -713,7 +712,7 @@ namespace SortingControlSys.SortingControl
                                 TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno2 + "---任务:" + tempList1.ElementAt(tempList1.Count - 1).Value + "已接收");
                                 writeLog.Write(sortgroupno2 + "组:" + tempList1.ElementAt(tempList1.Count - 1).Value + "号任务已接收");
-                            } 
+                            }
                             sendTask1();
                         }
                         break;
@@ -735,7 +734,7 @@ namespace SortingControlSys.SortingControl
                         if (getKey(tempList1, clientId[i]) != -1)
                         {
                             // int taskno = getKey(tempList1, clientId[i]);
-                            writeLog.Write("从电控读取" + sortgroupno2+ "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                            writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno2);
                             TaskService.UpdateStatus(sortgroupno2, 20, tempvalue);//将第一组分拣任务改为完成完成
 
@@ -819,13 +818,15 @@ namespace SortingControlSys.SortingControl
                 }
             }
             else if (group == 10)
-            { }
+            {
 
-          else  if (group == 12)//监控标志位 第一组 和第二组
+            }
+
+            else if (group == 12)//监控标志位 第一组 和第二组
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    if (clientId[i] == 1)//第一组
+                    if (clientId[i] == 1)//第一组 监控标志位
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
                         {
@@ -834,17 +835,16 @@ namespace SortingControlSys.SortingControl
                                 Thread.Sleep(100);
                             }
                             if (tempList.Count > 0)
-                            { 
+                            {
                                 TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                                 updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
                                 writeLog.Write(sortgroupno1 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
                             }
-
                             sendTask();
                         }
 
                     }
-                    if (clientId[i] == 2)//第二组
+                    if (clientId[i] == 2)//第二组 监控标志位
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
                         {
@@ -853,22 +853,19 @@ namespace SortingControlSys.SortingControl
                                 Thread.Sleep(100);
                             }
                             if (tempList.Count > 0)
-                            { 
-                                TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                                updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                writeLog.Write(sortgroupno1 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
-                            }
-
-                            sendTask();
+                            {
+                                TaskService.UpdateStatus(sortgroupno2, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                                updateListBox("组" + sortgroupno2 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write(sortgroupno2 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
+                            } 
+                            sendTask1();
                         }
                     }
                 }
             }
         }
         public void Disconnect()
-        {
-
-
+        { 
             if (pIOPCServer != null)
             {
                 Marshal.ReleaseComObject(pIOPCServer);

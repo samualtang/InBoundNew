@@ -10,6 +10,7 @@ using highSpeed.baseData;
 using highSpeed.orderHandle;
 using highSpeed.PubFunc;
 using highSpeed.statement;
+using InBound.Business;
 
 
 namespace highSpeed
@@ -68,6 +69,11 @@ namespace highSpeed
                 {
                     Form tmpFrm = MdiChildren[i];
                     if (tmpFrm.Text == frm.Text)
+                    {
+                        blResult = true;
+                        tmpFrm.Activate();
+                    }
+                    else if (frm.Text == "")
                     {
                         blResult = true;
                         tmpFrm.Activate();
@@ -639,15 +645,97 @@ namespace highSpeed
         }
 
         private void 机械手ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-           
+        { 
+            w_MachineTask fm = new w_MachineTask();
+            if (CheckExist(fm) == true)
+            {
+                fm.Dispose();
+                fm = null;
+                return;
+            }
+            fm.MdiParent = this;
+            fm.Show();
+              //ToolStripMenuItem tlsText = sender as ToolStripMenuItem;
+
+              //switch (tlsText.Text)
+              //{
+              //    case "机械手":
+                    
+              //        break;
+              //    case "预分拣":
+                    
+              //        break;
+              //    case "合流":
+              //        w_MachineTask wf2 = new w_MachineTask(tlsText.Text );
+              //        if (CheckExist(wf2) == true)
+              //        {
+              //            wf2.Dispose();
+              //            wf2 = null;
+              //            return;
+              //        } 
+              //        wf2.MdiParent = this;
+              //        wf2.Show();
+
+              //        break;
+              //    case "异形烟":
+              //        w_MachineTask wf3 = new w_MachineTask(tlsText.Text );
+              //        if (CheckExist(wf3) == true)
+              //        {
+              //            wf3.Dispose();
+              //            wf3 = null;
+              //            return;
+              //        }
+              //        wf3.MdiParent = this;
+              //        wf3.Show();
+
+              //        break;
+              //}
             //switch ()
             //{
             //    case "机械手":
             //        MessageBox.Show("1");
             //        break;
             //}
+        }
+
+        private void 预分拣ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           W_FenJTask fm = new W_FenJTask(); 
+            if (CheckExist(fm) == true)
+            {
+                fm.Dispose();
+                fm = null;
+                return;
+            }
+            fm.MdiParent = this;
+            fm.Show(); 
+        }
+
+        private void 合流ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_UnionTask fm = new w_UnionTask();
+            if (CheckExist(fm) == true)
+            {
+                fm.Dispose();
+                fm = null;
+                return;
+            }
+            fm.MdiParent = this;
+            fm.Show();
+
+        }
+
+        private void 异形烟ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_UnNormal fm = new w_UnNormal();
+            if (CheckExist(fm) == true)
+            {
+                fm.Dispose();
+                fm = null;
+                return;
+            }
+            fm.MdiParent = this;
+            fm.Show();
         }
 
 

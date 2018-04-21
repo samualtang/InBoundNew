@@ -256,8 +256,7 @@ namespace SortingControlSys.SortingControl
         /// 第二组
         /// </summary>
         void sendTask2()
-        {
-
+        { 
             try
             {
                 int flag = SendTaskStatesGroup.Read(1).CastTo<int>(-1);
@@ -353,6 +352,7 @@ namespace SortingControlSys.SortingControl
                     updateListBox(ex.InnerException.Message);
                 }
                 sendTask1();//异常后重新发送
+
             }
         }
         /// <summary>
@@ -367,7 +367,8 @@ namespace SortingControlSys.SortingControl
                 if (flag == 2)
                 {
                     decimal packageNum = 0;
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix, out packageNum);
+                    string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
+                    object[] datas = UnPokeService.getSixCabinetTask(25, linenum, out listSix, out packageNum);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");
@@ -381,8 +382,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("烟柜分拣发送数据:" + logstr);
                     updateListBox("烟柜分拣发送数据:" + logstr);
                     //写电控
-                    SixCabinetGroup.SyncWrite(datas);
-                  
+                    SixCabinetGroup.SyncWrite(datas); 
                     //读电控
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
@@ -410,7 +410,7 @@ namespace SortingControlSys.SortingControl
         public static Object lockFlag = new Object();
         public void OnDataChange(int group, int[] clientId, object[] values)
         {
-            if (group == 1)
+            if (group == 1)// 暂时没用 被监控标志取代 
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
@@ -441,7 +441,7 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
-            else if (group == 2)
+            else if (group == 2)//  暂时没用 被监控标志取代 
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
@@ -489,7 +489,7 @@ namespace SortingControlSys.SortingControl
 
                 }
             }
-            else if (group == 6)//六组烟柜
+            else if (group == 6)//六组烟柜 暂时没用 被监控标志取代 
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {

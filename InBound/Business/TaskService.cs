@@ -2870,6 +2870,7 @@ namespace InBound.Business
             }
             return values;
         }
+        //static int count = 1;//记数
         /// <summary>
         /// 合流任务
         /// </summary>
@@ -2895,8 +2896,8 @@ namespace InBound.Business
 
                     if (query2 != null && query2.Count > 0)
                     {
-                        values[0] = query.SORTNUM;
-                        values[1] = query.UNIONEXPORTNUM;
+                        values[0] = query.SORTNUM;//递增
+                        values[1] = query.UNIONEXPORTNUM ;
                         values[2] = query.PACKAGEMACHINE;//包装机号
                         values[3] = query2.Sum(x => x.POKENUM);
                         values[4] = query2.Where(x => x.GROUPNO == 1).Sum(x => x.POKENUM);
