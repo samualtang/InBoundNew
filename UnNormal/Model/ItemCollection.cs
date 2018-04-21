@@ -34,6 +34,8 @@ namespace SortingControlSys.Model
           
            return list;
        }
+       
+
        /// <summary>
        /// 六组烟柜任务
        /// </summary>
@@ -46,6 +48,19 @@ namespace SortingControlSys.Model
                list.Add("S7:[UnnormalConnection]DB32,DINT" + i);
                i += 3;
            }
+
+           return list;
+       }
+       /// <summary>
+       /// 监控三个发送标志位
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSendStatesItem() 
+       {
+           List<string> list = new List<string>();
+           list.Add("S7:[UnnormalConnection]DB30,DINT900");//第一组
+           list.Add("S7:[UnnormalConnection]DB31,DINT900");//第二组
+           list.Add("S7:[UnnormalConnection]DB32,DINT900");//烟柜
 
            return list;
        }

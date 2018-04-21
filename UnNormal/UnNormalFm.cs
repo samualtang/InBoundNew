@@ -110,7 +110,7 @@ namespace SortingControlSys.SortingControl
             
             Connect();
         }
-        Group taskgroup, taskGroup1, statusGroup2, statusGroup3, errgroup, SixCabinetGroup, FinishSignalGroup;
+        Group taskgroup1, taskGroup2,SendTaskStatesGroup, statusGroup2, statusGroup3, errgroup, SixCabinetGroup, FinishSignalGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -120,39 +120,35 @@ namespace SortingControlSys.SortingControl
             {
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-                taskgroup = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);
-                taskGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
+                taskgroup1 = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);//立式一组
+                taskGroup2 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);//立式二组
+                SixCabinetGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+               //监控发送标志
+                SendTaskStatesGroup =  new Group(pIOPCServer , 8 ,"group8",1,LOCALE_ID);
+
+
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);
                 errgroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
 
                 //异形烟6个烟柜
-                SixCabinetGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+                taskgroup1.addItem(ItemCollection.GetTaskItem());
                 SixCabinetGroup.addItem(ItemCollection.GetSixCabinetTaskItem());
-                SixCabinetGroup.callback += OnDataChange;
-
-              
+                taskGroup2.addItem(ItemCollection.GetTaskItem1());
+                //监控发送标志
+                SendTaskStatesGroup.addItem(ItemCollection.GetSendStatesItem());
+                SendTaskStatesGroup.callback += OnDataChange;
 
                 //接收完成信号组
                 FinishSignalGroup = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
                 FinishSignalGroup.addItem(ItemCollection.GetFinishSignalTaskItem()); 
                 FinishSignalGroup.callback += OnDataChange;
-                
-              
-
-
-                taskgroup.addItem(ItemCollection.GetTaskItem());
-                taskgroup.callback += OnDataChange;
+                  
                 errgroup.addItem(ItemCollection.GetTaskError());
                 errgroup.callback += OnDataChange;
-
-
-                taskGroup1.addItem(ItemCollection.GetTaskItem1());
-                taskGroup1.callback += OnDataChange;
-                statusGroup2.addItem(ItemCollection.GetTaskItem2());
-                //statusGroup2.callback += OnDataChange;
-                statusGroup3.addItem(ItemCollection.GetTaskItem3());
-                //statusGroup3.callback += OnDataChange;
+                 
+                statusGroup2.addItem(ItemCollection.GetTaskItem2()); 
+                statusGroup3.addItem(ItemCollection.GetTaskItem3());   
                 checkConnection();
             
             }
@@ -163,7 +159,7 @@ namespace SortingControlSys.SortingControl
         }
         public void checkConnection()
         {
-            int flag = taskgroup.Read(225).CastTo<int>(-1);
+            int flag = taskgroup1.Read(225).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
@@ -171,19 +167,30 @@ namespace SortingControlSys.SortingControl
             }
             else
             {   //接收位初始化
-                if (taskgroup.Read(225).ToString() != "1")
+                //if (taskgroup1.Read(225).ToString() != "1")
+                //{
+                //    taskgroup1.Write(2, 225);
+                //}
+                //if (taskGroup2.Read(225).ToString() != "1")
+                //{
+                //    taskGroup2.Write(2, 225);
+                //}
+                //if (SixCabinetGroup.Read(225).ToString() != "1")
+                //{
+                //    SixCabinetGroup.Write(2, 225);
+                //}
+                if (SendTaskStatesGroup.Read(0).ToString() != "1")
                 {
-                    taskgroup.Write(2, 225);
+                    SendTaskStatesGroup.Write(2, 0);
                 }
-                if (taskGroup1.Read(225).ToString() != "1")
+                if (SendTaskStatesGroup.Read(1).ToString() != "1")
                 {
-                    taskGroup1.Write(2, 225);
+                    SendTaskStatesGroup.Write(2, 1);
                 }
-                if (SixCabinetGroup.Read(225).ToString() != "1")
+                if (SendTaskStatesGroup.Read(2).ToString() != "1")
                 {
-                    SixCabinetGroup.Write(2, 225);
+                    SendTaskStatesGroup.Write(2, 2);
                 }
-
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......");
                 updateControlEnable(false, button10);
@@ -245,13 +252,15 @@ namespace SortingControlSys.SortingControl
         List<T_UN_POKE> list1 = new List<T_UN_POKE>();
         List<T_UN_POKE> listSix = new List<T_UN_POKE>();//六组烟柜
         List<T_UN_POKE> listFinishSignal = new List<T_UN_POKE>();
-
-        void sendTask1()
+        /// <summary>
+        /// 第二组
+        /// </summary>
+        void sendTask2()
         {
 
             try
             {
-                int flag = taskGroup1.Read(225).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.Read(1).CastTo<int>(-1);
                 writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -269,15 +278,16 @@ namespace SortingControlSys.SortingControl
                     }
                     writeLog.Write("分拣线2:" + logstr);
                     updateListBox("分拣线2:" + logstr);
-                    taskGroup1.SyncWrite(datas);
-                    UnPokeService.UpdateTaskNum(list1, packageNum);
+                    taskGroup2.SyncWrite(datas);
+                   
                     //写完db块后,再读出来 
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += taskGroup1.Read(i).ToString() + ";";//pokeid  
+                        p1 += taskGroup2.Read(i).ToString() + ";";//pokeid  
                     }
                     writeLog.Write("读出第二组电控写入值:" + p1);
+                    UnPokeService.UpdateTaskNum(list1, packageNum);
                 }
             }
             catch (Exception ex)
@@ -290,15 +300,18 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write(ex.InnerException.Message);
                     updateListBox(ex.InnerException.Message);
                 }
-                sendTask1();//异常后重新发送
+                sendTask2();//异常后重新发送
             }
         }
-        void sendTask()
+        /// <summary>
+        /// 第一组
+        /// </summary>
+        void sendTask1()
         {
             
             try
             {
-                int flag = taskgroup.Read(225).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -318,15 +331,15 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("分拣线一:" + logstr);
                     updateListBox("分拣线一:" + logstr);
 
-                    taskgroup.SyncWrite(datas); 
-                    UnPokeService.UpdateTaskNum(list, packageNum); 
+                    taskgroup1.SyncWrite(datas);  
                     //写完db块后,再读出来 
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += taskgroup.Read(i).ToString() + ";";//pokeid   
+                        p1 += taskgroup1.Read(i).ToString() + ";";//pokeid   
                     }
-                    writeLog.Write("读出第一组电控写入值:" + p1); 
+                    writeLog.Write("读出第一组电控写入值:" + p1);
+                    UnPokeService.UpdateTaskNum(list, packageNum); 
                 }
             }
             catch(Exception ex)
@@ -339,7 +352,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write(ex.InnerException.Message);
                     updateListBox(ex.InnerException.Message);
                 }
-                sendTask();//异常后重新发送
+                sendTask1();//异常后重新发送
             }
         }
         /// <summary>
@@ -349,7 +362,7 @@ namespace SortingControlSys.SortingControl
         { 
             try
             {
-                int flag = SixCabinetGroup.Read(225).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.Read(2).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -369,8 +382,7 @@ namespace SortingControlSys.SortingControl
                     updateListBox("烟柜分拣发送数据:" + logstr);
                     //写电控
                     SixCabinetGroup.SyncWrite(datas);
-                 
-                    UnPokeService.UpdateTaskNum(listSix, packageNum);
+                  
                     //读电控
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
@@ -378,6 +390,7 @@ namespace SortingControlSys.SortingControl
                         p1 += SixCabinetGroup.Read(i).ToString()+";";//pokeid  
                     }
                     writeLog.Write("读出烟柜电控写入值:" + p1);
+                    UnPokeService.UpdateTaskNum(listSix, packageNum);
                 }
             }
             catch (Exception ex)
@@ -422,7 +435,7 @@ namespace SortingControlSys.SortingControl
                                 UnPokeService.UpdateTask(list, 15);
                                 UnPokeService.UpdateStroageInout(list);
                             }
-                            sendTask();
+                            sendTask1();
                         }
                         break;
                     }
@@ -452,7 +465,7 @@ namespace SortingControlSys.SortingControl
                                 UnPokeService.UpdateTask(list1, 15);
                                 UnPokeService.UpdateStroageInout(list1);
                             }
-                            sendTask1();
+                            sendTask2();
                         }
                         break;
                     }
@@ -538,6 +551,85 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
+            else if (group == 8)//监控发送状态位 1为上位写 2为电控已接收
+            {
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                    if (clientId[i] == 1)//第一组
+                    {
+
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            String logstr = "";
+                            foreach (var item in list)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("第一组任务号:" + logstr + "已接收");
+                                updateListBox("第一组任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(list, 15);
+                                UnPokeService.UpdateStroageInout(list);
+                            }
+                            sendTask1();
+                        } 
+                    } 
+                    if (clientId[i] == 2)//第二组
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            String logstr = "";
+                            foreach (var item in list1)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("第二组任务号:" + logstr + "已接收");
+                                updateListBox("第二组任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(list1, 15);
+                                UnPokeService.UpdateStroageInout(list1);
+                            }
+                            sendTask2();
+                        }
+
+                    }
+                    if (clientId[i] == 3)//烟柜
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            String logstr = "";
+                            foreach (var item in listSix)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("烟柜任务号:" + logstr + "已接收");
+                                updateListBox("烟柜任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(listSix, 15);
+                                // UnPokeService.UpdateStroageInout(listSix);
+                            }
+                            sendSixCabinetTask();
+                        }
+
+                    }
+                     
+                }
+            }
 
         }
 
@@ -551,13 +643,13 @@ namespace SortingControlSys.SortingControl
                 Marshal.ReleaseComObject(pIOPCServer);
                 pIOPCServer = null;
             }
-            if (taskgroup != null)
+            if (taskgroup1 != null)
             {
-                taskgroup.Release();
+                taskgroup1.Release();
             }
-            if (taskGroup1 != null)
+            if (taskGroup2 != null)
             {
-                taskGroup1.Release();
+                taskGroup2.Release();
             }
             if (statusGroup2 != null)
             {

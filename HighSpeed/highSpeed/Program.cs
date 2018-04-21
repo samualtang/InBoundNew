@@ -19,10 +19,12 @@ namespace highSpeed
         /// </summary>
         [STAThread]
         static void Main(string[] args)
-        {
+        { 
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            //w_main fw = new w_main();
+            //Application.Run(fw);
             if (args.Length == 0)
             {
                 if (PublicFun.start())
@@ -46,7 +48,7 @@ namespace highSpeed
 
 
                 //异步调用
-               // Application.Run(form1);
+                // Application.Run(form1);
                 //getCustomerHandler gchandler = new getCustomerHandler(DataPublic.getCustomer);
                 //IAsyncResult result = gchandler.BeginInvoke( new AsyncCallback(CallBackMethod), null);
                 //异步调用结束
@@ -64,7 +66,7 @@ namespace highSpeed
                 {
                     return;
                 }
-               
+
 
             }
 

@@ -410,17 +410,35 @@
     <Compile Include="w_database_set.Designer.cs">
       <DependentUpon>w_database_set.cs</DependentUpon>
     </Compile>
-    <Compile Include="w_FollowTask.cs">
+    <Compile Include="W_FenJTask.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="w_FollowTask.Designer.cs">
-      <DependentUpon>w_FollowTask.cs</DependentUpon>
+    <Compile Include="W_FenJTask.Designer.cs">
+      <DependentUpon>W_FenJTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_MachineTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_MachineTask.Designer.cs">
+      <DependentUpon>w_MachineTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_UnionTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_UnionTask.Designer.cs">
+      <DependentUpon>w_UnionTask.cs</DependentUpon>
     </Compile>
     <Compile Include="w_main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="w_main.Designer.cs">
       <DependentUpon>w_main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="w_UnNormal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="w_UnNormal.Designer.cs">
+      <DependentUpon>w_UnNormal.cs</DependentUpon>
     </Compile>
     <Compile Include="w_user.cs">
       <SubType>Form</SubType>
@@ -594,8 +612,20 @@
     <EmbeddedResource Include="statement\w_binningSummary.resx">
       <DependentUpon>w_binningSummary.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="W_FenJTask.resx">
+      <DependentUpon>W_FenJTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_MachineTask.resx">
+      <DependentUpon>w_MachineTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="w_main.resx">
       <DependentUpon>w_main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_UnionTask.resx">
+      <DependentUpon>w_UnionTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="w_UnNormal.resx">
+      <DependentUpon>w_UnNormal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="w_user.resx">
       <DependentUpon>w_user.cs</DependentUpon>

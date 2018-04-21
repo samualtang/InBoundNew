@@ -191,7 +191,7 @@ namespace highSpeed.orderHandle
                     if (!tempCode.Equals(regioncode))
                     {
                         //判断累计记录数是否大于10000，大于则将之前的记录数导出，否则将记录数合并
-                        if (rowCcount + count > 10000)
+                        if (rowCcount + count > 1000000000)
                         {
                             label2.Text = "正在压缩第" + fileSeq + "个文件...";
                             label2.Refresh();
