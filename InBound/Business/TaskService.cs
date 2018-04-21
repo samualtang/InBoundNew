@@ -2374,7 +2374,7 @@ namespace InBound.Business
                             values[1] = int.Parse(item.ExportNum);//虚拟出口号
                             values[2] = item.MainBelt;
                             values[3] = 0;
-                            values[26] = 1;
+                            values[26] = 1;//标志位  ||27
                         }
                         item.SortTroughNum = item.Machineseq + "";
                         double tempNum = double.Parse(item.SortTroughNum);
@@ -2796,20 +2796,103 @@ namespace InBound.Business
             //}
 
         }
-
-        public static object[] GetUnionTask()//合流任务
+        /// <summary>
+        /// 查询禁用主皮带
+        /// </summary>
+        /// <returns>禁用主皮带</returns>
+        public static string GetBanMainBelt()
         {
-            object[] values = new object[13];
+            string banbelt = "";
+            using (Entities entity = new Entities())
+            {
+                var queryMainBelt1 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT ==1 select item).Distinct().Count();//一号皮带任务总数
+                var queryMainBelt2 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 2 select item).Distinct().Count();//二号皮带任务总数
+                var queryMainBelt3 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 3 select item).Distinct().Count();//三号皮带任务总数
+                var queryMainBelt4 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 4 select item).Distinct().Count();//四号皮带任务总数
+                if (queryMainBelt1 == 0)
+                {
+                    banbelt += "1";
+                }
+                else if (queryMainBelt2 == 0)
+                {
+                    banbelt += "2";
+                }
+                else if (queryMainBelt3 == 0)
+                {
+                    banbelt += "3";
+                }
+                else if (queryMainBelt4 == 0)
+                {
+                    banbelt += "4";
+                } 
+                var query =  (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 && item.STATE == "0" orderby item.MACHINESEQ select item).ToList();
+                foreach (var item in query)
+                {
+                    banbelt += item.MACHINESEQ + ",";
+                }
+            }
+            return banbelt;
+        }
+
+        
+        /// <summary>
+        /// 给PLC赋 皮带状态初始值
+        /// </summary>
+        public static object[] FristTime()
+        {
+            int fg = 0;
+            object[] values = new object[4];
+            //for (int i = 0; i < values.Length; i++)
+            //{
+            //    values[i] = 0;
+            //}
+            using (Entities entity = new Entities())
+            {
+                var query3 = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 orderby item.MACHINESEQ select item).ToList();
+              //  values[12] = 2;//标志位
+                foreach (var item in query3)
+                {
+                    if (fg < 4)
+                    {
+                        int BeltState;//主皮带状态 
+                        if (item.STATE == "10")//如果为启用 置为1 则为 0
+                        {
+                            BeltState = 1;// 皮带为启用   投入 
+                        }
+                        else
+                        {
+                            BeltState = 0;//皮带为禁用   挂起
+                        }
+                        values[fg] = BeltState;
+                        fg++;
+                    }
+                }
+            }
+            return values;
+        }
+        /// <summary>
+        /// 合流任务
+        /// </summary>
+        /// <param name="mainbelt">主皮带</param>
+        /// <returns></returns>
+        public static object[] GetUnionTask(int mainbelt)//合流任务
+        {
+            object[] values = new object[21];//13+4=17+4= [21]
+            int fg = 1;
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
             }
             using (Entities entity = new Entities())
             {
-                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 orderby item.SORTNUM select item).FirstOrDefault();
+               
+                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == mainbelt orderby item.SORTNUM select item).FirstOrDefault();
                 if (query != null)
-                {
+                { 
                     var query2 = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == query.SORTNUM select item).ToList();
+                    //主皮带状态
+                    var query3 = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 orderby item.MACHINESEQ select item).ToList();
+
                     if (query2 != null && query2.Count > 0)
                     {
                         values[0] = query.SORTNUM;
@@ -2826,7 +2909,41 @@ namespace InBound.Business
                         //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
                         values[10] = query2.Where(x => x.GROUPNO == 8).Sum(x => x.POKENUM);
                         values[11] = query2.Where(x => x.GROUPNO == 7).Sum(x => x.POKENUM);
-                        values[12] = 1;
+                        values[12] = 1;//标志位
+
+                        //电控的值 
+                        values[13] = 2;//1为可用状态 0为禁止 2 为上位重置
+                        values[14] = 2; 
+                        values[15] = 2;
+                        values[16] = 2;
+
+                        //查询禁用主皮带
+                      
+                        //写给电控哪条主皮带禁用  启用为1  禁用 0 
+                        foreach (var item in query3)
+                        {
+                            if (fg < 5)
+                            {
+                                int BeltState;//主皮带状态 
+                                if (item.STATE == "10")//如果为启用 置为1 则为 0
+                                {
+                                    BeltState = 1;// 皮带为启用   投入 
+                                }
+                                else
+                                {
+                                    BeltState = 0;//皮带为禁用   挂起
+                                }
+                                values[16 + fg] = BeltState;
+                                fg++;
+                            }
+                        } 
+                        //foreach (var item in query3)
+                        //{
+                        //    for (int i =1; i < 5; i++)
+                        //    {
+                        //        values[(16 + i)] = item.MACHINESEQ.CastTo<int>(10);// 如果没有查询结果 则说明该主皮带以启用 置为10  否则为置为 主皮带编号
+                        //    } 
+                        //} 
                     }
                 }
             }
@@ -2954,6 +3071,7 @@ namespace InBound.Business
 
             //}
             //return values;
+            
         }
         public static String FRW = "1430204";
         public static String JBS = "1430105";

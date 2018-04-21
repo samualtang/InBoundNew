@@ -34,32 +34,38 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
+        //在原来的包号上加1
         public static decimal getPackageNum(decimal ctype, String lineNum)
         {
-            using (Entities data = new Entities())
-            {
-                if (lineNum != null)
-                {
-                    var query = (from item in data.T_UN_POKE where item.LINENUM == lineNum && item.CTYPE == ctype orderby item.SENDTASKNUM descending select item.SENDTASKNUM).FirstOrDefault();
-                    if (query != null)
-                    {
-                        return query ?? 0;
-                     }
-                    else
-                        return 1; 
-                }
-                else
-                {
-                    var query = (from item in data.T_UN_POKE where item.CTYPE == ctype orderby item.SENDTASKNUM descending select item.SENDTASKNUM).FirstOrDefault();
-                    if (query != null)
-                    {
-                        return query ?? 0;
-                    }
-                    else
-                        return 1;
 
-                }
-            }
+            decimal packgenum = BaseService.GetSeq("select s_produce_un_sendtasknum.nextval from dual");
+
+            return packgenum;
+            //using (Entities data = new Entities())
+            //{
+            //    if (lineNum != null)
+            //    {
+            //        //item.LINENUM == lineNum && item.CTYPE == ctype descending 
+            //        var query = (from item in data.T_UN_POKE    orderby item.SENDTASKNUM select item.SENDTASKNUM).FirstOrDefault();
+            //        if (query != null)
+            //        {
+            //            return (query ?? 0)+1;
+            //         }
+            //        else
+            //            return 1; 
+            //    }
+            //    else
+            //    {
+            //        var query = (from item in data.T_UN_POKE where item.CTYPE == ctype orderby item.SENDTASKNUM  select item.SENDTASKNUM).FirstOrDefault();
+            //        if (query != null)
+            //        {
+            //            return (query ?? 0) + 1;
+            //        }
+            //        else
+            //            return 1;
+
+            //    }
+            //}
         }
 
         public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out decimal pNum)

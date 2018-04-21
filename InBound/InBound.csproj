@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Business\AtsCellInService.cs" />
     <Compile Include="Business\BaseService.cs" />
+    <Compile Include="Business\FolloTaskService.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />
     <Compile Include="Business\InOutStrategy.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Business\SysUserService.cs" />
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\ErrListService.cs" />
+    <Compile Include="Model\FollowTaskDeail.cs" />
     <Compile Include="Model\HUNHEVIEW.cs" />
     <Compile Include="Model\LaneWayTaskCount.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />

@@ -41,9 +41,24 @@ namespace SortingControlSys.Model
             //list.Add(OpcPresortServer+"DB1,W90");
             //list.Add(OpcPresortServer+"DB1,W92");
             //list.Add(OpcPresortServer+"DB1,W94");
-            list.Add(OpcPresortServer+"DB1,W0");
+            list.Add(OpcPresortServer+"DB1,W0"); 
             return list;
         }
+        /// <summary>
+        /// 监控标志位
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetSendTaskStateItem()
+        {
+            List<string> list = new List<string>();
+            list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
+            list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
+            return list;
+        }
+        /// <summary>
+        /// 第二组任务
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetTaskStausItemGroup()
         {
             List<string> list = new List<string>();
@@ -51,7 +66,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB101,W" + i);
             }
-            list.Add(OpcPresortServer+"DB101,W0");
+           list.Add(OpcPresortServer+"DB101,W0"); 
             return list;
         }
         public static List<string> GetTaskStatusItem1()
@@ -64,7 +79,10 @@ namespace SortingControlSys.Model
 
             return list;
         }
-
+        /// <summary>
+        /// 第一组完成信息
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetTaskStatusItem2()
         {
             List<string> list = new List<string>();
@@ -72,8 +90,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB30,W" + i);
             }
-
-
+            list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
             return list;
         }
         public static List<string> GetTaskStatusItem3()//A01-A27
@@ -136,6 +153,7 @@ namespace SortingControlSys.Model
 
         //    return list;
         //}
+      
         public static List<string> GetTaskStatusSECItem1()
         {
             List<string> list = new List<string>();
@@ -146,6 +164,10 @@ namespace SortingControlSys.Model
 
             return list;
         }
+        /// <summary>
+        /// 第二组完成信息
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetTaskStatusSECItem2()
         {
             List<string> list = new List<string>();
@@ -153,8 +175,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB130,W" + i);
             }
-
-
+            list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
             return list;
         }
 

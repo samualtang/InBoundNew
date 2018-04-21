@@ -12,6 +12,7 @@ using System.Threading;
 using System.Runtime.Remoting.Messaging;
 using System.Collections;
 using System.Configuration;
+
 using OpcRcw.Da;
 using OpcRcw.Comn;
 using System.Runtime.InteropServices;
@@ -21,6 +22,7 @@ using InBound.Business;
 using Union;
 using InBound;
 using Machine;
+
 namespace SortingControlSys.SortingControl
 {
     public partial class UnionFm : Form
@@ -90,7 +92,7 @@ namespace SortingControlSys.SortingControl
         {
             base.OnLoad(e);
             tempList = TaskService.initunionTask();
-            TaskService.GetUnionTask();
+            //TaskService.GetUnionTask(0);
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
@@ -143,7 +145,7 @@ namespace SortingControlSys.SortingControl
             //TaskService.GetUnionTask();
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5,errorGroup;
+        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5,errorGroup,SendTaskStatesGroup;
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -188,6 +190,10 @@ namespace SortingControlSys.SortingControl
                 statusGroup3 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
                 errorGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+
+                SendTaskStatesGroup = new Group(pIOPCServer,7, "group7", 1, LOCALE_ID);//监控标志位   2 为可接收  
+                SendTaskStatesGroup.addItem(ItemCollection.GetSendTaskStatesItem());
+
                 errorGroup.addItem(ItemCollection.GetTaskErrStatusItem());
               
                 taskgroup.addItem(ItemCollection.GetTaskStatusItem10());
@@ -212,20 +218,40 @@ namespace SortingControlSys.SortingControl
 
         public void regDataChange()
         {
+            SendTaskStatesGroup.callback += OnDataChange;//监控标志位
             errorGroup.callback += OnDataChange;
-            taskgroup.callback += OnDataChange;
+            //taskgroup.callback += OnDataChange;//合流信息
             statusGroup1.callback += OnDataChange;
             statusGroup2.callback += OnDataChange; 
             statusGroup3.callback += OnDataChange;
             statusGroup4.callback += OnDataChange;
         }
+        /// <summary>
+        /// 给PLC写入 主皮带 初始值
+        /// </summary>
+        public void FristTimeToPLC()
+        {
+            string log = ""; 
+            object[] datas = TaskService.FristTime();
+            taskgroup.SyncWrite(datas[0],17);//给PLC写入 主皮带 初始值
+            taskgroup.SyncWrite(datas[1], 18);
+            taskgroup.SyncWrite(datas[2], 19);
+            taskgroup.SyncWrite(datas[3], 20);
+            for (int i = 0; i < 4; i++)
+            {
+                log += i + "号" + datas[i] + " 状态 ,";
+            }
+            writeLog.Write("主皮带初始值为:" + log); 
+        }
         public void checkConnection()
         {
-            int flag = taskgroup.Read(12).CastTo<int>(-1);
-            if (flag == 0)
+          
+            int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
+            if (flag == 0 || flag == 2)
             {
-                taskgroup.Write(5, 12);
-                taskgroup.Write(0, 12);//初始化状态为可接收状态
+                FristTimeToPLC();//初始值在跳变之前
+                SendTaskStatesGroup.Write(5, 0);//先写5,为了产生跳变
+                SendTaskStatesGroup.Write(2,0);//初始化状态为可接收状态 
             }
             if (flag == -1)
             {
@@ -235,8 +261,10 @@ namespace SortingControlSys.SortingControl
             {
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
+               
                 updateControlEnable(false, button10);
             }
+
             regDataChange();
         }
         Boolean CheckCanSend(int targetPort)
@@ -253,6 +281,7 @@ namespace SortingControlSys.SortingControl
         }
         List<KeyValuePair<int, int>> tempList = new List<KeyValuePair<int, int>>();
      
+
         public void removeKey(int export)
         {
             int i = 0;
@@ -302,22 +331,43 @@ namespace SortingControlSys.SortingControl
             
             try
             {
-                int flag = taskgroup.Read(12).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
                 
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                if (flag == 0)
+                int mainbelt = 0;
+                int tempmainbelte =0;
+                if (flag == 2)//接收信号   现在改为 2 
                 {
-                   
-                    object[] datas = TaskService.GetUnionTask();
-                   
+                    /////////////////////////////////////////////////////////////////////////
+                    //先找出上位禁用的主皮带
+                    //找到哪根主皮带可以接收任务,为0表示可以接收任务
+                    string banbelte = TaskService.GetBanMainBelt();//  任务为0被禁用主皮带 和 已禁用主皮带 
+                        for (int i = 1; i < 5; i++)
+                        {
+                            if (banbelte.Contains(i.ToString()))
+                            { 
+                                continue;
+                            }
+                            tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1);
+                            if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
+                            {
+                                mainbelt = i;
+                                break;
+                            } 
+                        }
+                  
+                    object[] datas = TaskService.GetUnionTask(mainbelt);
+                    ///////////////////////////////////////////////
+
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("合流数据发送完毕");
                         writeLog.Write("合流数据发送完毕");
+
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());
@@ -333,8 +383,8 @@ namespace SortingControlSys.SortingControl
                             else if (i == 1) f = "出口号";
                             else if (i == 2) f = "包装机号";
                             else if (i == 3) f = "总条数";
-                            else if (i == 4) f = "1号机械手抓烟数";
                             else if (i == 5) f = "2号机械手抓烟数";
+                            else if (i == 4) f = "1号机械手抓烟数";
                             else if (i == 6) f = "3号机械手抓烟数";
                             else if (i == 7) f = "4号机械手抓烟数";
                             else if (i == 8) f = "5号机械手抓烟数";
@@ -342,6 +392,14 @@ namespace SortingControlSys.SortingControl
                             else if (i == 10) f = "7号机械手抓烟数";
                             else if (i == 11) f = "8号机械手抓烟数";
                             else if (i == 12) f = "标志位";
+                            else if (i == 13) f = "电控一号主皮带是否可接受任务状态";
+                            else if (i == 14) f = "电控二号主皮带是否可接受任务状态";
+                            else if (i == 15) f = "电控三号主皮带是否可接受任务状态";
+                            else if (i == 16) f = "电控四号主皮带是否可接受任务状态";
+                            else if (i == 17) f = "上位一号主皮带禁用状态";
+                            else if (i == 18) f = "上位二号主皮带禁用状态";
+                            else if (i == 19) f = "上位三号主皮带禁用状态";
+                            else if (i == 20) f = "上位四号主皮带禁用状态";
                             logstr += f + ":" + datas[i] + ";";
                         }
                         writeLog.Write(logstr);
@@ -404,7 +462,7 @@ namespace SortingControlSys.SortingControl
         }
         public void OnDataChange(int group,int[] clientId, object[] values)
         {
-            if (group == 1)
+            if (group == 1)//暂时没用
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
@@ -437,32 +495,32 @@ namespace SortingControlSys.SortingControl
                     int tempvalue=int.Parse((values[i].ToString()));
                     if (tempvalue >= 1)
                     {
-                       
-                       // if (getKey(clientId[i])!=-1)
-                       // {
-                          //  int taskno = getKey(clientId[i]);
-                        writeLog.Write("从电控出口号：" + clientId[i] + "获取到任务号:" + tempvalue + "完成信号 ");
-                            try
-                            {
-                                TaskService.UpdateUnionStatus(20, tempvalue);
-                            }
-                            catch(Exception ex)
-                            {
-                                writeLog.Write("数据库更新合流状态位失败: "+ex.Message);
-                                updateListBox("数据库更新合流状态位失败: "+ex.Message);
-                            }
 
-                            if (tempvalue != 0)
-                            {
-                                updateListBox("任务:" + tempvalue + "数据库状态已置完成");
-                                writeLog.Write("合流任务号:" + tempvalue + "数据库状态已置完成");
-                            }
-                            statusGroup2.Write(0, clientId[i] - 1);
-                            removeKey(clientId[i]);
-                            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
-                           
+                        // if (getKey(clientId[i])!=-1)
+                        // {
+                        //  int taskno = getKey(clientId[i]);
+                        writeLog.Write("从电控出口号：" + clientId[i] + "获取到任务号:" + tempvalue + "完成信号 ");
+                        try
+                        {
+                            TaskService.UpdateUnionStatus(20, tempvalue);
+                        }
+                        catch (Exception ex)
+                        {
+                            writeLog.Write("数据库更新合流状态位失败: " + ex.Message);
+                            updateListBox("数据库更新合流状态位失败: " + ex.Message);
+                        }
+
+                        if (tempvalue != 0)
+                        {
+                            updateListBox("任务:" + tempvalue + "数据库状态已置完成");
+                            writeLog.Write("合流任务号:" + tempvalue + "数据库状态已置完成");
+                        }
+                        statusGroup2.Write(0, clientId[i] - 1);
+                        removeKey(clientId[i]);
+                        this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+
                         //}
-                        
+
                     }
                 }
             }
@@ -505,6 +563,26 @@ namespace SortingControlSys.SortingControl
                  
                 }
             }
+            else if (group == 7)//监控标志位
+            {
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                    if (clientId[i] == 1)
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
+                        {
+
+                            if (tempList.Count > 0)
+                            {
+                                TaskService.UpdateUnionStatus(15, tempList.ElementAt(tempList.Count - 1).Value);
+                                updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                            } 
+                            sendTask();
+                        } 
+                    }
+                }
+            }
         }
      
         public void Disconnect()
@@ -538,6 +616,10 @@ namespace SortingControlSys.SortingControl
             if (statusGroup5 != null)
             {
                 statusGroup5.Release();
+            }
+            if (SendTaskStatesGroup != null)
+            {
+                SendTaskStatesGroup.Release();
             }
         }
         private void button10_Click(object sender, EventArgs e)

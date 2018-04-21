@@ -73,22 +73,45 @@ namespace SortingControlSys.Model
            }
            return list;
        }
+       /// <summary>
+       /// 合流信息
+       /// </summary>
+       /// <returns></returns>
        public static List<string> GetTaskStatusItem10()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W2");  //任务号
-           list.Add(OpcUnionServer + "DB1,W4");   //出口号
-           list.Add(OpcUnionServer + "DB1,W6");   //包装机号
-           list.Add(OpcUnionServer + "DB1,W8");   //总条数
-           list.Add(OpcUnionServer + "DB1,W10");   //1号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W12");   //2号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W14");   //3号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W16");   //4号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W18");   //5号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W20");   //6号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W22");   //7号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W24");   //8号机械手抓烟数
-           list.Add(OpcUnionServer + "DB1,W0");   //任务接收标志位,1为上位发送,0为电控接收
+           list.Add(OpcUnionServer + "DB1,W2");  //任务号 0
+           list.Add(OpcUnionServer + "DB1,W4");   //出口号 1
+           list.Add(OpcUnionServer + "DB1,W6");   //包装机号 2
+           list.Add(OpcUnionServer + "DB1,W8");   //总条数 3
+           list.Add(OpcUnionServer + "DB1,W10");   //1号机械手抓烟数 4
+           list.Add(OpcUnionServer + "DB1,W12");   //2号机械手抓烟数 5
+           list.Add(OpcUnionServer + "DB1,W14");   //3号机械手抓烟数 6 
+           list.Add(OpcUnionServer + "DB1,W16");   //4号机械手抓烟数 7 
+           list.Add(OpcUnionServer + "DB1,W18");   //5号机械手抓烟数 8
+           list.Add(OpcUnionServer + "DB1,W20");   //6号机械手抓烟数 9
+           list.Add(OpcUnionServer + "DB1,W22");   //7号机械手抓烟数 10
+           list.Add(OpcUnionServer + "DB1,W24");   //8号机械手抓烟数  11
+           list.Add(OpcUnionServer + "DB1,W0");//状态,1为上位写,2为电控接收12
+           list.Add(OpcUnionServer + "DB1,W26");//存放电控主皮带是否可接收任务 1号主皮带 13
+           list.Add(OpcUnionServer + "DB1,W28");//                             2号主皮带 14
+           list.Add(OpcUnionServer + "DB1,W30");//                             3号主皮带 15
+           list.Add(OpcUnionServer + "DB1,W32");//                             4号主皮带  16
+           list.Add(OpcUnionServer + "DB1,W34");//存放上位主皮带是否可用 1号主皮带 17
+           list.Add(OpcUnionServer + "DB1,W36");//                       2号主皮带 18
+           list.Add(OpcUnionServer + "DB1,W38");//                       3号主皮带 19
+           list.Add(OpcUnionServer + "DB1,W40");//                       4号主皮带  20
+           
+           return list;
+       }
+       /// <summary>
+       /// 监控发送标志位
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSendTaskStatesItem()//合流机械手信息采集
+       {
+           List<string> list = new List<string>();
+           list.Add(OpcUnionServer + "DB1,W0");   //任务接收标志位,1为上位发送,0为电控接收 //2 
            return list;
        }
        public static List<string> GetTaskStatusItem11()

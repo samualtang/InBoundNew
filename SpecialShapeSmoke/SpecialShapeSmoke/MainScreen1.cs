@@ -438,7 +438,7 @@ namespace SpecialShapeSmoke
                     {
                        Log  += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
                     }
-                   writeLog.Write(Log) ;
+                  
                      #endregion
                     if (finishNo[0] != -1 || finishNo[1] != -1)
                     {
@@ -448,6 +448,7 @@ namespace SpecialShapeSmoke
                             throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
                             initText(panelList[j], throughList[j]);
                         }
+                        writeLog.Write(Log);
                         if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
                         {
                             Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
@@ -519,12 +520,13 @@ namespace SpecialShapeSmoke
                                 {
                                     Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[labStart];
                                     labStart++;
-                                    updateLabel( (labStart+15)+":  "+item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
+                                    updateLabel((labStart + 15) + ":  " + item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
                                 }
                             }
                             falge = false;
                         }
                     }
+                   
                     if (CheckTrough()){falge = true;}
                 }
                 catch (Exception e)
@@ -674,15 +676,15 @@ namespace SpecialShapeSmoke
         void lbl_Click(object sender, EventArgs e)
         {
 
-            string lblName = ((Label)sender).Name;
+            //string lblName = ((Label)sender).Name;
 
-            Label lbl2 = (Label)Controls.Find("orBox0", true)[0].Controls.Find(lblName, true)[0];
-             string text =lbl2.Text;
+            //Label lbl2 = (Label)Controls.Find("orBox0", true)[0].Controls.Find(lblName, true)[0];
+            // string text =lbl2.Text;
 
             //lbl2.BackColor = Color.Red;
             
 
-            MessageBox.Show("单击了这个Label" + lbl2.Name); 
+        //    MessageBox.Show("单击了这个Label" + lbl2.Name); 
            // throw new NotImplementedException();
         }
         private delegate void HandleDelegate1(string info, Label label);
