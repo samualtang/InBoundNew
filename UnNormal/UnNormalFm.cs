@@ -35,7 +35,7 @@ namespace SortingControlSys.SortingControl
         String lineNum = "";
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
-        public WriteLog writeLog = new WriteLog();
+        public WriteLog writeLog =  WriteLog.GetLog();
         public UnNormalFm()
         {
             InitializeComponent();

@@ -41,7 +41,7 @@ namespace SortingControlSys.SortingControl
         int writeCount = 2;
 
         decimal groupNo = 1;
-        public WriteLog writeLog = new WriteLog();
+        public WriteLog writeLog =  WriteLog.GetLog();
         Dictionary<string, string> dicList = new Dictionary<string, string>();
         Alarms alarms = new Alarms();
         public MachineFM()

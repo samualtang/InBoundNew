@@ -20,7 +20,7 @@ namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
     {
-        WriteLog writeLog = new WriteLog();
+        WriteLog writeLog =  WriteLog.GetLog();
         List<GroupBox> panelList = new List<GroupBox>();
         List<T_UN_POKE> listShape = new List<T_UN_POKE>();
         internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
