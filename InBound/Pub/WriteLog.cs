@@ -18,7 +18,7 @@ namespace InBound
             log = new WriteLog();
             return log;
         }
-        public WriteLog()
+        private WriteLog()
             {
             //初始化大于399M日志文件将自动删除;
 
@@ -66,10 +66,14 @@ namespace InBound
             }
         }
 
+        object flag = new object();
 
         public void Write(string Message)
         {
-            this.Write(this.logFileName, Message);
+            lock (flag)
+            {
+                this.Write(this.logFileName, Message);
+            }
         }
 
         public void Write(string LogFileName,string Message)

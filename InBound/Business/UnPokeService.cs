@@ -370,17 +370,21 @@ namespace InBound.Business
         }
         public static void PreUpdateInOut(bool unFullFirst)
         {
-            unFullFirst = false;//不管散盘优先
+           // unFullFirst = false;//不管散盘优先
             List<T_PRODUCE_SORTTROUGH> listNormal = SortTroughService.GetTroughNotINCigaretteType(10, 20);//分拣通道
 
             using (Entities entity = new Entities())
             {
                 foreach (var task in listNormal)
                 {
+                    String cellno = "";
+                    try
+                    {
+                    
                     var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 3 && item.CELLNO == task.TROUGHNUM select item).Sum(x => x.QTY).GetValueOrDefault();
 
                     var itemDetail = ItemService.GetItemByCode(task.CIGARETTECODE);
-                    var leftCount = 0;// task.TRANSPORTATIONLINE - (query + task.MANTISSA);//容量值-理论尾数值
+                    var leftCount = task.TRANSPORTATIONLINE - (query + task.MANTISSA);//容量值-理论尾数值
                     int leftBox = int.Parse((leftCount) / (itemDetail.JT_SIZE ?? 0) + "");//可补件数
                     List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftBox);//立库是否有数量等于可补数量的托盘
 
@@ -401,7 +405,7 @@ namespace InBound.Business
                             load1.PILETYPE = decimal.Parse(itemDetail.DXTYPE);
                             load1.SOURCE = AtsCellOutService.getCellNoEqual(task.CIGARETTECODE, leftBox);//out cell
                             load1.TARGET = getTarget(load1.SOURCE); //InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, leftBox);//异型烟人工出口
-
+                            cellno = load1.SOURCE;
                             load1.STATUS = 0;
 
                             load1.JOBTYPE = 55;//补货出库
@@ -520,7 +524,7 @@ namespace InBound.Business
                                 load1.JOBTYPE = 55;//补货出库
                                 load1.SOURCE = AtsCellOutService.getCellNoAll(task.CIGARETTECODE, int.Parse((task.BOXCOUNT ?? 0) + ""));//out cell
                                 load1.TARGET = getTarget(load1.SOURCE);// InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, task.BOXCOUNT ?? 0);//异型烟人工出口
-
+                                cellno = load1.SOURCE;
                                 load1.STATUS = 0;
                                 if (load1.SOURCE != "" && load1.TARGET != "")
                                 {
@@ -636,6 +640,18 @@ namespace InBound.Business
                             }
 
 
+                        }
+                    }
+                }
+                    catch(Exception ex)
+                    {
+                        if(cellno!=null &&cellno!="")
+                        {
+                            RollBack(cellno);
+                        }
+                        if (ex != null && ex.Message != null)
+                        {
+                            WriteLog.GetLog().Write("异常:"+ex.Message);
                         }
                     }
                 }

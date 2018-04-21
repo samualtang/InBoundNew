@@ -389,6 +389,7 @@ namespace InBound.Business
                                                 outTask4.BARCODE = load.BRANDID + "";
                                                 outTask4.INOUTTYPE = 20;//入库
                                                 outTask4.QTY = load2.PLANQTY;
+                                                outTask4.BOXQTY = 0;
                                                 outTask4.STATUS = 10;
                                                 outTask4.GROUPNO = item.GROUPNO;
                                                 outTask4.CREATETIME = DateTime.Now;
@@ -535,6 +536,7 @@ namespace InBound.Business
                                                     outTask4.INOUTTYPE = 20;//入库
                                                     outTask4.QTY = load2.PLANQTY;
                                                     outTask4.STATUS = 10;
+                                                    outTask4.BOXQTY = 0;
                                                     outTask4.GROUPNO = item.GROUPNO;
                                                     outTask4.CREATETIME = DateTime.Now;
                                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
@@ -737,6 +739,7 @@ namespace InBound.Business
                                         outTask4.BARCODE = load1.BRANDID + "";
                                         outTask4.INOUTTYPE = 20;//入库
                                         outTask4.QTY = load2.PLANQTY;
+                                        outTask4.BOXQTY = 0;
                                         outTask4.STATUS = 10;
                                         outTask4.GROUPNO = item.GROUPNO;
                                         outTask4.CREATETIME = DateTime.Now;
@@ -884,6 +887,7 @@ namespace InBound.Business
                                             outTask4.INOUTTYPE = 20;//入库
                                             outTask4.QTY = load2.PLANQTY;
                                             outTask4.STATUS = 10;
+                                            outTask4.BOXQTY = 0;
                                             outTask4.GROUPNO = item.GROUPNO;
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);

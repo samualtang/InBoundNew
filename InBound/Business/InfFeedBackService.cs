@@ -50,7 +50,7 @@ namespace InBound.Business
               }
           }
       }
-      public static WriteLog log = new WriteLog();
+      public static WriteLog log = WriteLog.GetLog();
       public static void AutoWriteFinishTask()
       {
           //10 码垛任务 20  入库单入库任务 30 成品入库 40 返库任务 50 出库任务
