@@ -28,6 +28,7 @@ namespace AutoRun
             button1.Enabled = false;
             scanTime = int.Parse(tbScanTime.Text);
             Thread thread = new Thread(new ThreadStart(startAutoInBound));
+            thread.IsBackground = true;
             thread.Start();
         }
         delegate void HandleDelegate(string msg);
@@ -135,6 +136,7 @@ namespace AutoRun
                 isSanpan = true;
             }
             Thread thread = new Thread(new ThreadStart(startAutoBuHuo));
+            thread.IsBackground = true;
             thread.Start();
         }
 
@@ -143,6 +145,7 @@ namespace AutoRun
             button4.Enabled = false;
             scanTime = int.Parse(tbScanTime.Text);
             Thread thread = new Thread(new ThreadStart(startAutoUnNormalBuHuo));
+            thread.IsBackground = true;
             thread.Start();
         }
 

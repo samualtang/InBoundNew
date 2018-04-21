@@ -181,7 +181,8 @@
             this.cbAdress.FormattingEnabled = true;
             this.cbAdress.Items.AddRange(new object[] {
             "一楼一号出口",
-            "二楼一号出口"});
+            "二楼一号出口",
+            "一楼托盘出库口"});
             this.cbAdress.Location = new System.Drawing.Point(67, 27);
             this.cbAdress.Margin = new System.Windows.Forms.Padding(2);
             this.cbAdress.Name = "cbAdress";

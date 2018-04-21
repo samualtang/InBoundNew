@@ -116,7 +116,7 @@ namespace InBound.Business
                         }
                        // Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
                         //if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
-                        #region
+                       
                         if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货 暂时屏蔽
                         {
                             //decimal groupno = 1;
@@ -576,7 +576,7 @@ namespace InBound.Business
                             }
 
                         }
-                        #endregion
+                       
                         else
                         {
                             String cellno = "";
@@ -631,7 +631,7 @@ namespace InBound.Business
                             decimal leftCount = troughQty * FullCount - (totalCount + totalMantissa + Math.Abs(outingCount));//重力式货架尾数  是否要减一
                             //List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetAllUnFullPallet();
                             T_WMS_ATSCELLINFO_DETAIL detail = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftCount).FirstOrDefault();// list.Find(x => x.QTY == leftCount && x.CIGARETTECODE == task.CIGARETTECODE);
-                            #region
+                          
                             if (detail != null && unFullFirst)
                             {
                                 INF_JOBDOWNLOAD load1 = new INF_JOBDOWNLOAD();
@@ -748,7 +748,7 @@ namespace InBound.Business
 
 
                             }
-                            #endregion
+                          
                             else
                             {
                                 if (TotalplanQty + totalMantissa + Math.Abs(outingCount) <= (querySource.THRESHOLD) * troughQty)//小于阀值数 乘以通道数量

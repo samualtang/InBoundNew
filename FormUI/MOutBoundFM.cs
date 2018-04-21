@@ -13,7 +13,7 @@ namespace FormUI
 {
     public partial class MOutBoundFM : Form
     {
-        List<String> address = new List<string>() { "1231", "1355" };
+        List<String> address = new List<string>() { "1231", "1355","1192" };
         public MOutBoundFM()
         {
             InitializeComponent();
@@ -73,10 +73,40 @@ namespace FormUI
                 MessageBox.Show("请选择出库口");
                 return;
             }
+            
             if (tbChooseName.Tag == null)
             {
                 MessageBox.Show("请选择出库品牌");
                 return;
+            }
+             if (cbAdress.SelectedIndex == 2)
+            {
+                if (((List<String>)tbChooseName.Tag)[0].ToString() != "1111111")
+                {
+                    MessageBox.Show("托盘出库中只能出库托盘");
+                    return;
+
+                }
+                else
+                {
+                    if (InfJobDownLoadService.GetPalletUnFinishTask() > 0)
+                    {
+                        DialogResult MsgBoxResult = MessageBox.Show("已有在出库的托盘任务,确定要空托盘出库?",//对话框的显示内容 
+                                                        "操作提示",//对话框的标题  
+                                                        MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                        MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                        MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                        //Console.WriteLine(MsgBoxResult);
+                        if (MsgBoxResult == DialogResult.Yes)
+                        {
+                           
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
             }
             if (cbType.SelectedIndex == -1)
             {
