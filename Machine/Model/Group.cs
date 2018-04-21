@@ -197,7 +197,7 @@ namespace SortingControlSys.Model
             }
 
         }
-        public WriteLog writeLog = new WriteLog();
+        public WriteLog writeLog =  WriteLog.GetLog();
         public void SyncWrite(object[] values, out bool iserror, out string errorInfo)
         {
             int nCancelid;

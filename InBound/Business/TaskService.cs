@@ -2348,7 +2348,7 @@ namespace InBound.Business
         //订单完成触发
         public static object[] GetSortTask(decimal sortgroupno)
         {
-            WriteLog writeLog = new WriteLog();
+            WriteLog writeLog =  WriteLog.GetLog();
 
             object[] values = new object[27];
             for (int i = 0; i < values.Length; i++)//初始化一个数组
@@ -2400,7 +2400,7 @@ namespace InBound.Business
         //订单完成触发
         public static object[] GetTask1()//任务号/虚拟出口号/总条数/每个道德数量和位置。。。/写入标志，1
         {
-            WriteLog writeLog = new WriteLog();
+            WriteLog writeLog =  WriteLog.GetLog();
 
             object[] values = new object[26];
             for (int i = 0; i < values.Length; i++)//初始化一个数组
