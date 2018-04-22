@@ -26,15 +26,13 @@ namespace highSpeed
         }
         decimal TsakNum  ;//任务号
         decimal Machineseq;//设备号
-       
         decimal UnionTsakNum;//合单任务号
         decimal GroupNo1;//烟柜 组号
         decimal GroupNo2;//烟柜 
         decimal SortNum;//排序号
         private void w_FollowTask_Load(object sender, EventArgs e)
         {
-            BindSelectCmb();
-            
+            BindSelectCmb(); 
             dgvTask.DataSource = list;
         }
         /// <summary>
@@ -174,8 +172,7 @@ namespace highSpeed
 
 
         private void cmbSelectC_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+        { 
             if (cmbSelectC.SelectedItem.ToString() == "设备号")
             {
                 lblNo1.Text = "设备号:";

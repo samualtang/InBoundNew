@@ -6,7 +6,10 @@ using InBound.Model;
 
 namespace InBound.Business
 {
-  public   class FolloTaskService
+    /// <summary>
+    /// 任务跟踪
+    /// </summary>
+    public class FolloTaskService
     {
         public void test()
         { }
@@ -28,7 +31,11 @@ namespace InBound.Business
             }
         }
 
-
+        /// <summary>
+        /// 获取机械手任务
+        /// </summary>
+        /// <param name="machineseq"></param>
+        /// <returns></returns>
         public static List<FollowTaskDeail> getAllMachineTask(decimal machineseq)
         {
             using (Entities dataentity = new Entities())
@@ -45,7 +52,12 @@ namespace InBound.Business
 
             }
         }
-
+        /// <summary>
+        /// 获取合流机械手任务
+        /// </summary>
+        /// <param name="machineseq"></param>
+        /// <param name="uniontaskNum"></param>
+        /// <returns></returns>
         public static List<FollowTaskDeail> getMachineTask(decimal machineseq, decimal uniontaskNum)
         {
             using (Entities dataentity = new Entities())
@@ -61,6 +73,12 @@ namespace InBound.Business
 
             }
         }
+        /// <summary>
+        /// 所有分拣任务
+        /// </summary>
+        /// <param name="groupNo1">组1</param>
+        /// <param name="groupNo2">组2 </param>
+        /// <returns></returns>
         public static List<FollowTaskDeail> getFJDataAll(decimal groupNo1, decimal groupNo2)
         {
             using (Entities dataentity = new Entities())
@@ -70,13 +88,26 @@ namespace InBound.Business
                                 on item.TROUGHNUM equals item2.TROUGHNUM
                             where (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new FollowTaskDeail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new FollowTaskDeail() { 
+                                CIGARETTDECODE = item2.CIGARETTECODE,
+                                CIGARETTDENAME = item2.CIGARETTENAME,
+                                Machineseq = item.MACHINESEQ ?? 0, 
+                                SortNum = item.SORTNUM ?? 0, 
+                                tNum = item.POKENUM ?? 0, 
+                                Billcode = item.BILLCODE, 
+                                SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
             }
         }
-
+        /// <summary>
+        /// 根据sortnum查询分拣任务
+        /// </summary>
+        /// <param name="sortnum"></param>
+        /// <param name="groupNo1"></param>
+        /// <param name="groupNo2"></param>
+        /// <returns></returns>
         public static List<FollowTaskDeail> getFJData(decimal sortnum, decimal groupNo1, decimal groupNo2)
         {
             using (Entities dataentity = new Entities())
@@ -88,7 +119,7 @@ namespace InBound.Business
                             orderby item.SORTNUM
                             select new FollowTaskDeail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList();
+                    return query.OrderBy(x => x.SortNum).ToList() ;
                 else return null;
             }
         }

@@ -326,15 +326,14 @@ namespace SortingControlSys.SortingControl
             return i;
         }
         delegate void delSendTask();
-      //  int count =1;//记数
+        int count =1;//记数
         /// <summary>
         /// 合流数据
         /// </summary>
         void sendTask()
         {
             try
-            { 
-                //Thread.Sleep(500);//0.5
+            {  
                 int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
                 
                 if (flag == -1)
@@ -350,20 +349,20 @@ namespace SortingControlSys.SortingControl
                     //先找出上位禁用的主皮带
                     //找到哪根主皮带可以接收任务,为0表示可以接收任务
                     string banbelte = TaskService.GetBanMainBelt();//  任务为0被禁用主皮带 和 已禁用主皮带 
-                        for (int i = 1; i < 5; i++)
+                    for (int i = 1; i < 5; i++)
+                    {
+                        if (banbelte.Contains(i.ToString())) //123
                         {
-                            if (banbelte.Contains(i.ToString())) 
-                            { 
-                                continue;
-                            }
-                            tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1); 
-                            if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
-                            {
-                                mainbelt = i;
-                                break;
-                            } 
+                            continue;
                         }
-                    object[] datas = TaskService.GetUnionTask(mainbelt); 
+                        tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1);
+                        if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
+                        {
+                            mainbelt = i;//4
+                            break;
+                        }
+                    }
+                    object[] datas = TaskService.GetUnionTask(mainbelt, banbelte);
                     /////////////////////////////////////////////// 
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
@@ -375,45 +374,45 @@ namespace SortingControlSys.SortingControl
                     int export = int.Parse(datas[1].ToString());
                     //if (CheckCanSend(export))
                     //{
-                       
-                        taskgroup.SyncWrite(datas);
-                        string logstr = "任务信息：";// +count++;
-                        string f = "";
-                        for (int i = 0; i < datas.Length; i++)
-                        {
-                            if (i == 0) f = "任务号";
-                            else if (i == 1) f = "出口号";
-                            else if (i == 2) f = "包装机号";
-                            else if (i == 3) f = "总条数";
-                            else if (i == 5) f = "2号机械手抓烟数";
-                            else if (i == 4) f = "1号机械手抓烟数";
-                            else if (i == 6) f = "3号机械手抓烟数";
-                            else if (i == 7) f = "4号机械手抓烟数";
-                            else if (i == 8) f = "5号机械手抓烟数";
-                            else if (i == 9) f = "6号机械手抓烟数";
-                            else if (i == 10) f = "7号机械手抓烟数";
-                            else if (i == 11) f = "8号机械手抓烟数";
-                            else if (i == 12) f = "标志位";
-                            else if (i == 13) f = "电控一号主皮带是否可接受任务状态";
-                            else if (i == 14) f = "电控二号主皮带是否可接受任务状态";
-                            else if (i == 15) f = "电控三号主皮带是否可接受任务状态";
-                            else if (i == 16) f = "电控四号主皮带是否可接受任务状态";
-                            else if (i == 17) f = "上位一号主皮带禁用状态";
-                            else if (i == 18) f = "上位二号主皮带禁用状态";
-                            else if (i == 19) f = "上位三号主皮带禁用状态";
-                            else if (i == 20) f = "上位四号主皮带禁用状态";
-                            logstr += f + ":" + datas[i] + ";";
-                        }
-                        writeLog.Write(logstr);
-                        updateListBox(logstr);
-                        removeKey(export);
-                        tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));
+
+                    taskgroup.SyncWrite(datas);
+                    string logstr = "任务信息：" + count++;
+                    string f = "";
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        if (i == 0) f = "任务号";
+                        else if (i == 1) f = "出口号";
+                        else if (i == 2) f = "包装机号";
+                        else if (i == 3) f = "总条数";
+                        else if (i == 5) f = "2号机械手抓烟数";
+                        else if (i == 4) f = "1号机械手抓烟数";
+                        else if (i == 6) f = "3号机械手抓烟数";
+                        else if (i == 7) f = "4号机械手抓烟数";
+                        else if (i == 8) f = "5号机械手抓烟数";
+                        else if (i == 9) f = "6号机械手抓烟数";
+                        else if (i == 10) f = "7号机械手抓烟数";
+                        else if (i == 11) f = "8号机械手抓烟数";
+                        else if (i == 12) f = "标志位";
+                        else if (i == 13) f = "电控一号主皮带是否可接受任务状态";
+                        else if (i == 14) f = "电控二号主皮带是否可接受任务状态";
+                        else if (i == 15) f = "电控三号主皮带是否可接受任务状态";
+                        else if (i == 16) f = "电控四号主皮带是否可接受任务状态";
+                        else if (i == 17) f = "上位一号主皮带禁用状态";
+                        else if (i == 18) f = "上位二号主皮带禁用状态";
+                        else if (i == 19) f = "上位三号主皮带禁用状态";
+                        else if (i == 20) f = "上位四号主皮带禁用状态";
+                        logstr += f + ":" + datas[i] + ";";
+                    }
+                    writeLog.Write(logstr);
+                    updateListBox(logstr);
+                    removeKey(export);
+                    tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));
                     //}
-                   // else
+                    // else
                     //{
                     //    Thread.Sleep(1000);
                     //    sendTask();
-                   // }
+                    // }
                 }
             }
             catch(Exception ex)

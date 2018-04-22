@@ -190,13 +190,22 @@ namespace InBound.Business
         /// <returns>烟柜分拣线</returns>
         public static String getSixCabinetLineNum()
         {
-            string lineNum;
+            string lineNum ="";
             using(Entities data = new Entities ())
             {
-                lineNum = (from item in data.T_UN_POKE
+             var    query = (from item in data.T_UN_POKE
                                 where item.STATUS == 10 && item.CTYPE == 2
                                 orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
-                                select item).Select(a => new { lineNum = a.LINENUM }).FirstOrDefault().lineNum;//分拣线  
+                                select item).FirstOrDefault();//分拣线  
+             if (query != null)
+             {
+                 lineNum = query.LINENUM;
+             }
+             else
+             {
+                 lineNum = "3";//没有数据
+             }
+           
             }
             return lineNum;
          }
@@ -243,8 +252,7 @@ namespace InBound.Business
                         if (customercode.Length > 9)
                         {
                             customercode = customercode.Substring(customercode.Length - 9, 9);
-                        }
-
+                        } 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = customercode;//客户号

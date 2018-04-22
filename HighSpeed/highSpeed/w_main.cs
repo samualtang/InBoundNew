@@ -646,7 +646,7 @@ namespace highSpeed
 
         private void 机械手ToolStripMenuItem_Click(object sender, EventArgs e)
         { 
-            w_MachineTask fm = new w_MachineTask();
+            w_MachineTask fm = new w_MachineTask("机械手");
             if (CheckExist(fm) == true)
             {
                 fm.Dispose();

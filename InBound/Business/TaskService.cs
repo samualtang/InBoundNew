@@ -2805,23 +2805,23 @@ namespace InBound.Business
             string banbelt = "";
             using (Entities entity = new Entities())
             {
-                var queryMainBelt1 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT ==1 select item).Distinct().Count();//一号皮带任务总数
-                var queryMainBelt2 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 2 select item).Distinct().Count();//二号皮带任务总数
-                var queryMainBelt3 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 3 select item).Distinct().Count();//三号皮带任务总数
-                var queryMainBelt4 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 4 select item).Distinct().Count();//四号皮带任务总数
+                var queryMainBelt1 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT ==1 select item.TASKNUM).Distinct().Count();//一号皮带任务总数
+                var queryMainBelt2 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 2 select item.TASKNUM).Distinct().Count();//二号皮带任务总数
+                var queryMainBelt3 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 3 select item.TASKNUM).Distinct().Count();//三号皮带任务总数
+                var queryMainBelt4 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 4 select item.TASKNUM).Distinct().Count();//四号皮带任务总数
                 if (queryMainBelt1 == 0)
                 {
                     banbelt += "1";
                 }
-                else if (queryMainBelt2 == 0)
+                if (queryMainBelt2 == 0)
                 {
                     banbelt += "2";
                 }
-                else if (queryMainBelt3 == 0)
+               if (queryMainBelt3 == 0)
                 {
                     banbelt += "3";
                 }
-                else if (queryMainBelt4 == 0)
+               if (queryMainBelt4 == 0)
                 {
                     banbelt += "4";
                 } 
@@ -2870,16 +2870,17 @@ namespace InBound.Business
             }
             return values;
         }
-        //static int count = 1;//记数
+
         /// <summary>
         /// 合流任务
         /// </summary>
         /// <param name="mainbelt">主皮带</param>
-        /// <returns></returns>
-        public static object[] GetUnionTask(int mainbelt)//合流任务
+        /// <param name="noTaskNelt">无任务皮带</param>
+        /// <returns></returns>  
+        public static object[] GetUnionTask(int mainbelt,string noTaskNelt)//合流任务
         {
             object[] values = new object[21];//13+4=17+4= [21]
-            int fg = 1;
+            //int fg = 1;
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -2917,34 +2918,39 @@ namespace InBound.Business
                         values[14] = 2; 
                         values[15] = 2;
                         values[16] = 2;
-
                         //查询禁用主皮带
-                      
-                        //写给电控哪条主皮带禁用  启用为1  禁用 0 
-                        foreach (var item in query3)
-                        {
-                            if (fg < 5)
-                            {
-                                int BeltState;//主皮带状态 
-                                if (item.STATE == "10")//如果为启用 置为1 则为 0
-                                {
-                                    BeltState = 1;// 皮带为启用   投入 
-                                }
-                                else
-                                {
-                                    BeltState = 0;//皮带为禁用   挂起
-                                }
-                                values[16 + fg] = BeltState;
-                                fg++;
+
+
+                        //如果没有任务数 则发送给电控 主皮带号 禁用
+                        for (int beltNo = 1; beltNo < 5; beltNo++)
+                        { 
+                            if (!noTaskNelt.Contains(beltNo.ToString()))
+                            { 
+                                values[16 + beltNo] = 1;//启用
                             }
-                        } 
+                            else
+                            {
+                                values[16 + beltNo] = 0; //禁用
+                            }
+                        }
+                        //写给电控哪条主皮带禁用  启用为1  禁用 0 
                         //foreach (var item in query3)
                         //{
-                        //    for (int i =1; i < 5; i++)
+                        //    if (fg < 5)
                         //    {
-                        //        values[(16 + i)] = item.MACHINESEQ.CastTo<int>(10);// 如果没有查询结果 则说明该主皮带以启用 置为10  否则为置为 主皮带编号
-                        //    } 
-                        //} 
+                        //        int BeltState;//主皮带状态 
+                        //        if (item.STATE == "10")//如果为启用 置为1 则为 0
+                        //        {
+                        //            BeltState = 1;// 皮带为启用   投入 
+                        //        }
+                        //        else
+                        //        {
+                        //            BeltState = 0;//皮带为禁用   挂起
+                        //        }
+                        //        values[16 + fg] = BeltState;
+                        //        fg++;
+                        //    }
+                        //}  
                     }
                 }
             }
