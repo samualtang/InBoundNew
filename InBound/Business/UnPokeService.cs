@@ -414,7 +414,7 @@ namespace InBound.Business
                     var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 3 && item.CELLNO == task.TROUGHNUM select item).Sum(x => x.QTY).GetValueOrDefault();
 
                     var itemDetail = ItemService.GetItemByCode(task.CIGARETTECODE);
-                    var leftCount = task.TRANSPORTATIONLINE - (query + task.MANTISSA);//容量值-理论尾数值
+                    var leftCount = (task.TRANSPORTATIONLINE??0) - (query + task.MANTISSA);//容量值-理论尾数值
                     int leftBox = int.Parse((leftCount) / (itemDetail.JT_SIZE ?? 0) + "");//可补件数
                     List<T_WMS_ATSCELLINFO_DETAIL> list = AtsCellInfoService.GetDetail(task.CIGARETTECODE, leftBox);//立库是否有数量等于可补数量的托盘
 
@@ -458,7 +458,7 @@ namespace InBound.Business
                                 {
                                     load1.TUTYPE = 3;
                                 }
-                                load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
+                                load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                 entity.INF_JOBDOWNLOAD.AddObject(load1);
                             }
                             else
@@ -575,7 +575,7 @@ namespace InBound.Business
                                     {
                                         load1.TUTYPE = 3;
                                     }
-                                    load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
+                                    load1.BARCODE = AtsCellInfoService.GetCellInfo(load1.SOURCE).PALLETNO;
                                     entity.INF_JOBDOWNLOAD.AddObject(load1);
                                 }
                                 else
