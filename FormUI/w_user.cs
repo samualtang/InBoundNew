@@ -12,6 +12,7 @@ using InBound.Business;
 using FormUI.TooL;
 using InBound;
 using InBound.Model;
+using InBound.Pub;
 
 namespace FormUI
 {
@@ -89,7 +90,8 @@ namespace FormUI
                 string ls_pass;
               
                 ls_pass = textBox2.Text;
-                if (ls_pass == "")
+               ls_pass= Security.MD5Encrypt(ls_pass).ToLower();
+                  if (ls_pass == "")
                 {
                     MessageBox.Show("请输入密码", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

@@ -117,4 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="notifyicon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>128, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="notifyicon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
+        AAD///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////AQBw/0UAcP+BAHD/Rf//
+        /wH///8B////Af///wEAcP9zAHD/rwBw/3MAcP8x////Af///wH///8B////AQBw/58AcP//AHD//wBw
+        //8AcP/H////Af///wEAcP9zAHD//wBw//8AcP//Enr//1Wg/7P///8BAHD/gQBw/8MAcP//CXX//4G4
+        //8wi///AHD//wBw/zH///8BAHD/rwBw//+u0v//bq7//7/b///d7P//CHX/6QBw//8AcP//CXX//73a
+        ///V5///AHD//wBw/9X///8B////AQBw/3MAcP//P5P/////////////WqL//wBw//8nhv//vdr/////
+        ////////2On//xh9//8AcP//AHD/hf///wEAcP8HAHD//wZz////////9fn//wBw//8Jdf//4e7/////
+        ///////////////////A3P//AHD//wBw/8P///8BAHD/CQBw//8Gc////////9jp//8AcP//J4b/////
+        /////////////////////////////wBw//8AcP//////AQBw/5MAcP//RZf////////7/f//AHD//wNy
+        ///Y6f///////////////////////7TV//8AcP//AHD/w////wEAcP/PAHD//8/k/////////////2Oo
+        //8AcP//IYP//67S///5/P//8Pf//5zH//8Sev//AHD//wBw/3n///8BAHD/9wBw///2+v//////////
+        ///6/P//SJj//wBw//8AcP//AHD//wBw//8AcP//AHD//wZz/+H///8B////AQBw/7sAcP//utj/////
+        //////////////////+Nv///QpX//wVz//8OeP//S5r//5/J//8jhP9t////Af///wEAcP9/AHD//yGD
+        ///h7v///////////////////////////////////f7//83j//+WxP//I4T/Lf///wH///8B////AQBw
+        /7cAcP//CXX//2yt//+92v//3uz//8/k//+u0v//RZf//wBw//8AcP//AHD/mf///wH///8B////Af//
+        /wEAcP8PAHD/pQBw//8AcP//AHD//wBw//8AcP//AHD//wBw//8AcP/bAHD/bf///wH///8B////Af//
+        /wH///8B////Af///wEAcP8xAHD/gQBw/78AcP/fAHD/zwBw/68AcP9zAHD/Cf///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8BDXf/DQ13/xP///8B////Af///wH///8B////Af//
+        /wH///8BAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA
+        //8AAP//AAD//w==
+</value>
+  </data>
 </root>

@@ -11,6 +11,7 @@ using System.IO;
 using highSpeed.PubFunc;
 using InBound.Business;
 using InBound;
+using InBound.Pub;
 
 namespace highSpeed
 {
@@ -82,6 +83,7 @@ namespace highSpeed
                 string ls_pass;
                 int intCount;
                 ls_pass = textBox2.Text;
+                ls_pass = Security.MD5Encrypt(ls_pass).ToLower();
                 if (ls_pass == "")
                 {
                     MessageBox.Show("请输入密码", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);

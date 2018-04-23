@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoRunFm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.cbsanpan = new System.Windows.Forms.CheckBox();
@@ -37,7 +39,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.lblog = new System.Windows.Forms.ListBox();
+            this.notifyicon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMainForm = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -139,6 +146,35 @@
             this.lblog.Size = new System.Drawing.Size(637, 196);
             this.lblog.TabIndex = 1;
             // 
+            // notifyicon
+            // 
+            this.notifyicon.ContextMenuStrip = this.menu;
+            this.notifyicon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyicon.Icon")));
+            this.notifyicon.Text = "wms后台程序";
+            this.notifyicon.Visible = true;
+            this.notifyicon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // menu
+            // 
+            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuExit,
+            this.openMainForm});
+            this.menu.Name = "contextMenuStrip1";
+            this.menu.Size = new System.Drawing.Size(153, 70);
+            this.menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menu_ItemClicked);
+            // 
+            // menuExit
+            // 
+            this.menuExit.Name = "menuExit";
+            this.menuExit.Size = new System.Drawing.Size(152, 22);
+            this.menuExit.Text = "退出";
+            // 
+            // openMainForm
+            // 
+            this.openMainForm.Name = "openMainForm";
+            this.openMainForm.Size = new System.Drawing.Size(152, 22);
+            this.openMainForm.Text = "打开主面板";
+            // 
             // AutoRunFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -149,9 +185,12 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AutoRunFm";
             this.Text = "自动任务";
+            this.MinimumSizeChanged += new System.EventHandler(this.AutoRunFm_MinimumSizeChanged);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AutoRunFm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AutoRunFm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.menu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -167,6 +206,10 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckBox cbsanpan;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.NotifyIcon notifyicon;
+        private System.Windows.Forms.ContextMenuStrip menu;
+        private System.Windows.Forms.ToolStripMenuItem menuExit;
+        private System.Windows.Forms.ToolStripMenuItem openMainForm;
     }
 }
 

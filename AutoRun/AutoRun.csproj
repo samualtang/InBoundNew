@@ -104,6 +104,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Image\favicon.ico" />
     <Content Include="lib\opcrcw.comn.dll" />
     <Content Include="lib\opcrcw.da.dll" />
   </ItemGroup>

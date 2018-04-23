@@ -100,6 +100,7 @@
     <Compile Include="OPC\PlcGroup.cs" />
     <Compile Include="OPC\PlcItemCollection.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />
+    <Compile Include="Pub\Security.cs" />
     <Compile Include="Pub\WriteLog.cs" />
     <Compile Include="UnionBit.cs" />
     <Compile Include="EntityData.Designer.cs">

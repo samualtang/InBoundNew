@@ -156,5 +156,65 @@ namespace AutoRun
             isRunBuHuo = false;
         }
 
+        private void AutoRunFm_MinimumSizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal && this.Visible == true)
+            {
+                this.notifyicon.Visible = true;//在通知区显示Form的Icon
+                this.WindowState = FormWindowState.Minimized;
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+            }
+        }
+
+        private void AutoRunFm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing && !isClose)
+            {
+                //取消"关闭窗口"事件
+                e.Cancel = true;
+                //使关闭时窗口向右下角缩小的效果
+                this.WindowState = FormWindowState.Minimized;
+                this.notifyicon.Visible = true;
+                this.Hide();
+                return;
+            }
+        }
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.Visible)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.notifyicon.Visible = true;
+                this.Hide();
+            }
+            else
+            {
+                this.Visible = true;
+                this.WindowState = FormWindowState.Normal;
+                this.Activate();
+            }
+        }
+        bool isClose = false;
+        private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "menuExit")
+            {
+                isClose = true;
+                this.notifyicon.ShowBalloonTip(30, "注意", "wms后台服务退出", ToolTipIcon.Info);
+                this.Close();
+            }
+            else if (e.ClickedItem.Name == "openMainForm")
+            {
+                if (!this.Visible)
+                {
+                    this.Visible = true;
+                    this.WindowState = FormWindowState.Normal;
+                    this.Activate();
+                }
+              
+            }
+        }
+
     }
 }
