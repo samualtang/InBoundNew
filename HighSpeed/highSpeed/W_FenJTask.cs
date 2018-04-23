@@ -146,7 +146,16 @@ namespace highSpeed
                         groupNo1 = Convert.ToDecimal(txtInfo.Text.Replace(" ", ""));
                         groupNo2 = Convert.ToDecimal(txtinfo2.Text.Replace(" ", ""));
                         SortNum = Convert.ToDecimal(txtinfo3.Text.Replace(" ", ""));
-                        dgvTask.DataSource = FolloTaskService.getFJData(SortNum, groupNo1, groupNo2);
+                        dgvTask.DataSource = FolloTaskService.getFJData(SortNum, groupNo1, groupNo2).Select(a => new
+                        {
+                            CIGARETTDECODE = a.CIGARETTDECODE,
+                            CIGARETTDENAME = a.CIGARETTDENAME,
+                            Machineseq = a.Machineseq,
+                            SortNum = a.SortNum,
+                            tNum = a.tNum,
+                            Billcode = a.Billcode,
+                            SortState = a.SortState
+                        }).ToList(); ;
                         DgvBind();
                     }
                     else
