@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using InBound;
+
 
 namespace highSpeed
 {
@@ -14,6 +16,7 @@ namespace highSpeed
         public w_UnNormal()
         {
             InitializeComponent();
+            dgvTask.DoubleBufferedDataGirdView(true);
             this.Text = "异形烟";
         }
     }

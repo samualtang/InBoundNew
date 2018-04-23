@@ -6,7 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 using InBound.Business;
+using InBound;
+
 
 namespace highSpeed
 {
@@ -15,6 +18,7 @@ namespace highSpeed
         public W_FenJTask()
         {
             InitializeComponent();
+            dgvTask.DoubleBufferedDataGirdView(true);
             this.Text = "分拣";
         }
 
@@ -24,7 +28,7 @@ namespace highSpeed
         private void W_FenJTask_Load(object sender, EventArgs e)
         {
             dgvTask.DataSource = FolloTaskService.getFJDataAll(1, 1);
-            
+             
             BindSelectCmb();
             DgvBind();
         }

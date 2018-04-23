@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_all = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_search = new System.Windows.Forms.Button();
             this.txt_codestr = new System.Windows.Forms.TextBox();
@@ -43,7 +44,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.btn_all = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -63,6 +63,17 @@
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
             // 
+            // btn_all
+            // 
+            this.btn_all.Location = new System.Drawing.Point(643, 11);
+            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_all.Name = "btn_all";
+            this.btn_all.Size = new System.Drawing.Size(75, 22);
+            this.btn_all.TabIndex = 14;
+            this.btn_all.Text = "全选";
+            this.btn_all.UseVisualStyleBackColor = true;
+            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(805, 11);
@@ -71,6 +82,7 @@
             this.button1.TabIndex = 13;
             this.button1.Text = "设置排序";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btn_search
@@ -97,7 +109,7 @@
             this.btn_schedule.Name = "btn_schedule";
             this.btn_schedule.Size = new System.Drawing.Size(75, 23);
             this.btn_schedule.TabIndex = 5;
-            this.btn_schedule.Text = "排程";
+            this.btn_schedule.Text = "预排程";
             this.btn_schedule.UseVisualStyleBackColor = true;
             this.btn_schedule.Click += new System.EventHandler(this.btn_schedule_Click);
             // 
@@ -193,17 +205,6 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
-            // btn_all
-            // 
-            this.btn_all.Location = new System.Drawing.Point(643, 11);
-            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_all.Name = "btn_all";
-            this.btn_all.Size = new System.Drawing.Size(75, 22);
-            this.btn_all.TabIndex = 14;
-            this.btn_all.Text = "全选";
-            this.btn_all.UseVisualStyleBackColor = true;
-            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
-            // 
             // win_schedule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -213,7 +214,7 @@
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
             this.Name = "win_schedule";
-            this.Text = "任务排程";
+            this.Text = "预排程";
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

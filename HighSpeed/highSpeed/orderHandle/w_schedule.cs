@@ -197,7 +197,7 @@ namespace highSpeed.orderHandle
 
                             sqlpara[2].Direction = ParameterDirection.Output;
                             sqlpara[3].Direction = ParameterDirection.Output;
-                            Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);
+                            Db.ExecuteNonQueryWithProc("P_PRODUCE_PRE_SCHEDULE", sqlpara);// 修改前的存储过程 P_PRODUCE_SCHEDULE
                             //MessageBox.Show(date);
                             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             errcode = sqlpara[2].Value.ToString();
@@ -312,7 +312,7 @@ namespace highSpeed.orderHandle
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
             Db.Open();
-            Db.ExecuteNonQueryWithProc("P_PRODUCE_updatesortnum", sqlpara);
+            Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//更改前存储过程  P_PRODUCE_updatesortnum
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             String errcode = sqlpara[0].Value.ToString();

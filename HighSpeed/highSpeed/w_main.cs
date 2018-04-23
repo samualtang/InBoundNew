@@ -229,9 +229,23 @@ namespace highSpeed
             frm.Show();
         }
 
-        private void 任务排程ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 预排程ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             win_schedule frm = new win_schedule();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+     
+        private void 任务排程ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            w_SortFm frm = new w_SortFm();
             if (CheckExist(frm) == true)
             {
                 frm.Dispose();
@@ -654,48 +668,7 @@ namespace highSpeed
                 return;
             }
             fm.MdiParent = this;
-            fm.Show();
-              //ToolStripMenuItem tlsText = sender as ToolStripMenuItem;
-
-              //switch (tlsText.Text)
-              //{
-              //    case "机械手":
-                    
-              //        break;
-              //    case "预分拣":
-                    
-              //        break;
-              //    case "合流":
-              //        w_MachineTask wf2 = new w_MachineTask(tlsText.Text );
-              //        if (CheckExist(wf2) == true)
-              //        {
-              //            wf2.Dispose();
-              //            wf2 = null;
-              //            return;
-              //        } 
-              //        wf2.MdiParent = this;
-              //        wf2.Show();
-
-              //        break;
-              //    case "异形烟":
-              //        w_MachineTask wf3 = new w_MachineTask(tlsText.Text );
-              //        if (CheckExist(wf3) == true)
-              //        {
-              //            wf3.Dispose();
-              //            wf3 = null;
-              //            return;
-              //        }
-              //        wf3.MdiParent = this;
-              //        wf3.Show();
-
-              //        break;
-              //}
-            //switch ()
-            //{
-            //    case "机械手":
-            //        MessageBox.Show("1");
-            //        break;
-            //}
+            fm.Show(); 
         }
 
         private void 预分拣ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -737,6 +710,12 @@ namespace highSpeed
             fm.MdiParent = this;
             fm.Show();
         }
+
+
+
+
+
+       
 
 
        

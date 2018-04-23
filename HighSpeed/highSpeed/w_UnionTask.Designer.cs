@@ -75,6 +75,7 @@
             this.btnOk.TabIndex = 6;
             this.btnOk.Text = "查 询";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // cmbSelectC
             // 
@@ -85,6 +86,7 @@
             this.cmbSelectC.Name = "cmbSelectC";
             this.cmbSelectC.Size = new System.Drawing.Size(140, 23);
             this.cmbSelectC.TabIndex = 5;
+            this.cmbSelectC.SelectedIndexChanged += new System.EventHandler(this.cmbSelectC_SelectedIndexChanged);
             // 
             // lblNo1
             // 

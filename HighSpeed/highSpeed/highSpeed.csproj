@@ -295,6 +295,12 @@
     <Compile Include="orderHandle\w_senddata.Designer.cs">
       <DependentUpon>w_senddata.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_SortFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_SortFm.Designer.cs">
+      <DependentUpon>w_SortFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_un_schedule.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -553,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_senddata.resx">
       <DependentUpon>w_senddata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_SortFm.resx">
+      <DependentUpon>w_SortFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_un_schedule.resx">
       <DependentUpon>w_un_schedule.cs</DependentUpon>

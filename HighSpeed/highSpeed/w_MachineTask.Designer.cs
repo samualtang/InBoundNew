@@ -68,7 +68,6 @@
             this.txtInfo.Name = "txtInfo";
             this.txtInfo.Size = new System.Drawing.Size(142, 24);
             this.txtInfo.TabIndex = 2;
-            this.txtInfo.TextChanged += new System.EventHandler(this.txtInfo_TextChanged);
             // 
             // lblSelect
             // 

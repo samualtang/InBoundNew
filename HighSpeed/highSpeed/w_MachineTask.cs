@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using InBound;
 using InBound.Business;
+using System.Reflection;
 
 namespace highSpeed
 {
@@ -19,11 +20,13 @@ namespace highSpeed
         }
         List<T_PRODUCE_TASK> list = TaskService.getAllTask();
         public w_MachineTask(string HeadText )
-        { 
+        {  
             InitializeComponent();
             this.Text = HeadText;
-            
+            dgvTask.DoubleBufferedDataGirdView(true);
         }
+        
+
         decimal TsakNum  ;//任务号
         decimal Machineseq;//设备号
         decimal UnionTsakNum;//合单任务号
@@ -55,8 +58,7 @@ namespace highSpeed
             
                 switch (cmbSelectC.SelectedItem.ToString())
                 {
-                    case "所有任务":
-
+                    case "所有任务": 
                         if (!string.IsNullOrWhiteSpace(txtInfo.Text))
                         {
                             TsakNum = Convert.ToDecimal(txtInfo.Text.Replace(" ",""));
@@ -148,10 +150,6 @@ namespace highSpeed
                 dgvTask.Columns[6].HeaderCell.Value = "抓烟状态"; 
             }
         }
-        private void txtInfo_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
         /// <summary>
         /// 文本和文本框是否显示 
         /// </summary>
@@ -189,7 +187,35 @@ namespace highSpeed
                 lblNo1.Text = "任务号:"; 
                 lblVisbleFalseOrTrue(1);
             }
+        
         }
-
+      
     }
+
+    ///// <summary>
+    ///// 双缓冲，解决闪烁问题   扩展方法，使用反射 将此类定义给DataGirdView或ListView所在的窗体类外面即可 
+    ///// </summary>
+    //public static class DoubleBufferDataGridView
+    //{
+    //    /// <summary>
+    //    /// 双缓冲，解决闪烁问题  
+    //    /// </summary>
+    //    /// <param name="dgv">DataGridView</param>
+    //    /// <param name="flag">默认True</param>
+    //    public static void DoubleBufferedDataGirdView(this DataGridView dgv, bool flag)
+    //    {
+    //        Type dgvType = dgv.GetType();
+    //        PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+    //        pi.SetValue(dgv, flag, null);
+    //    }
+
+    //    public static void w(this DataGridView dgv)
+    //    {
+    //        bool flag=true;
+    //        Type dgvType = dgv.GetType();
+    //        PropertyInfo pi = dgvType.GetProperty("DoubleSS", BindingFlags.Instance | BindingFlags.NonPublic);
+    //        pi.SetValue(dgv, flag, null);
+    //    }
+    //}
+
 }
