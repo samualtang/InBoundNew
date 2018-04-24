@@ -22,6 +22,7 @@ namespace highSpeed
         decimal sortnum;//排序号
         private void w_UnionTask_Load(object sender, EventArgs e)
         {
+      
             BindSelectCmb();
             dgvTask.DataSource = FolloTaskService.getUnionDataAll(); 
         }
@@ -34,6 +35,9 @@ namespace highSpeed
         {
             if (a == 1)
             {
+
+                lblNo1.Visible = true;
+                txtinfo1.Visible = true;
                 lblNo2.Visible = false;
                 txtInfo2.Visible = false;
             }
@@ -69,34 +73,35 @@ namespace highSpeed
         { 
             if (cmbSelectC.SelectedIndex == 0)//设备号
             {
-                dgvTask.Columns[0].HeaderCell.Value = "香烟编号";
-                dgvTask.Columns[1].HeaderCell.Value = "香烟名称";
-                dgvTask.Columns[2].HeaderCell.Value = "设备号";
-                dgvTask.Columns[3].HeaderCell.Value = "合流任务号";
-                dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
-                dgvTask.Columns[5].HeaderCell.Value = "订单号";
-                dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
+                dgvTask.Columns[0].HeaderCell.Value = "排序号";
+                dgvTask.Columns[1].HeaderCell.Value = "抓数";
+                dgvTask.Columns[2].HeaderCell.Value = "订单号";
+                dgvTask.Columns[3].HeaderCell.Value = "合流状态";
+                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
+                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
+                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
             }
             else if (cmbSelectC.SelectedIndex == 1)
             {
-                dgvTask.Columns[0].HeaderCell.Value = "香烟编号";
-                dgvTask.Columns[1].HeaderCell.Value = "香烟名称";
-                dgvTask.Columns[2].HeaderCell.Value = "设备号";
-                dgvTask.Columns[3].HeaderCell.Value = "合流任务号";
-                dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
-                dgvTask.Columns[5].HeaderCell.Value = "订单号";
-                dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
+                dgvTask.Columns[0].HeaderCell.Value = "排序号";
+                dgvTask.Columns[1].HeaderCell.Value = "抓数";
+                dgvTask.Columns[2].HeaderCell.Value = "订单号";
+                dgvTask.Columns[3].HeaderCell.Value = "合流状态";
+                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
+                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
+                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
             }
         }
 
         private void cmbSelectC_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbSelectC.SelectedIndex == 0)
-            {
+            { 
                 lblVisbleFalseOrTrue(2);
             }
             else if (cmbSelectC.SelectedIndex == 1)
-            {
+            { 
+                lblNo1.Text = "排序号:";
                 lblVisbleFalseOrTrue(1);
             }
         }
@@ -106,12 +111,25 @@ namespace highSpeed
             switch (cmbSelectC.SelectedItem.ToString())
             {
                 case "所有合流任务":
-                          dgvTask.DataSource = FolloTaskService.getUnionDataAll();
+                          dgvTask.DataSource = FolloTaskService.getUnionDataAll().Select(a=>  new {
+                              SortNum = a.SortNum,
+                              tNum = a.tNum, 
+                              BILLDCODE  = a .Billcode,
+                              UNIONSTATE = a.UnionState
+                          }).ToList();
+                          DgvBind();
                     break;
                 case "排序号":
                     if (!string.IsNullOrWhiteSpace(txtinfo1.Text.Replace(" ", "")))
                     {
-                        dgvTask.DataSource = FolloTaskService.getUnionData(sortnum); 
+                        dgvTask.DataSource = FolloTaskService.getUnionData(sortnum).Select(a => new
+                        {
+                            SortNum = a.SortNum,
+                            tNum = a.tNum,
+                            BILLDCODE = a.Billcode,
+                            UNIONSTATE = a.UnionState
+                        }).ToList();
+                        DgvBind();
                     }
                     else
                     {

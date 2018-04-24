@@ -36,6 +36,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.rdbUnionDan = new System.Windows.Forms.RadioButton();
+            this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -43,6 +45,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rdbUnUnionDan);
+            this.panel1.Controls.Add(this.rdbUnionDan);
             this.panel1.Controls.Add(this.lblInFO);
             this.panel1.Controls.Add(this.btnSort);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -87,9 +91,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(31, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 12);
+            this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 1;
-            this.label2.Text = "正在读取数据...";
+            this.label2.Text = "正在排程......";
             // 
             // progressBar1
             // 
@@ -101,11 +105,19 @@
             // 
             // dgvSortInfo
             // 
+            this.dgvSortInfo.AllowUserToAddRows = false;
+            this.dgvSortInfo.AllowUserToDeleteRows = false;
+            this.dgvSortInfo.AllowUserToResizeColumns = false;
+            this.dgvSortInfo.AllowUserToResizeRows = false;
+            this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 48);
+            this.dgvSortInfo.MultiSelect = false;
             this.dgvSortInfo.Name = "dgvSortInfo";
+            this.dgvSortInfo.ReadOnly = true;
             this.dgvSortInfo.RowTemplate.Height = 23;
+            this.dgvSortInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSortInfo.Size = new System.Drawing.Size(921, 618);
             this.dgvSortInfo.TabIndex = 5;
             // 
@@ -120,6 +132,28 @@
             this.pager1.Size = new System.Drawing.Size(921, 45);
             this.pager1.TabIndex = 6;
             this.pager1.Visible = false;
+            // 
+            // rdbUnionDan
+            // 
+            this.rdbUnionDan.AutoSize = true;
+            this.rdbUnionDan.Location = new System.Drawing.Point(537, 14);
+            this.rdbUnionDan.Name = "rdbUnionDan";
+            this.rdbUnionDan.Size = new System.Drawing.Size(47, 16);
+            this.rdbUnionDan.TabIndex = 2;
+            this.rdbUnionDan.TabStop = true;
+            this.rdbUnionDan.Text = "合单";
+            this.rdbUnionDan.UseVisualStyleBackColor = true;
+            // 
+            // rdbUnUnionDan
+            // 
+            this.rdbUnUnionDan.AutoSize = true;
+            this.rdbUnUnionDan.Location = new System.Drawing.Point(627, 14);
+            this.rdbUnUnionDan.Name = "rdbUnUnionDan";
+            this.rdbUnUnionDan.Size = new System.Drawing.Size(59, 16);
+            this.rdbUnUnionDan.TabIndex = 2;
+            this.rdbUnUnionDan.TabStop = true;
+            this.rdbUnUnionDan.Text = "不合单";
+            this.rdbUnUnionDan.UseVisualStyleBackColor = true;
             // 
             // w_SortFm
             // 
@@ -153,5 +187,7 @@
         private System.Windows.Forms.Label lblInFO;
         private System.Windows.Forms.DataGridView dgvSortInfo;
         private WHC.Pager.WinControl.Pager pager1;
+        private System.Windows.Forms.RadioButton rdbUnUnionDan;
+        private System.Windows.Forms.RadioButton rdbUnionDan;
     }
 }

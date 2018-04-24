@@ -29,6 +29,7 @@ namespace highSpeed.orderHandle
             this.pager1.PageChanged += new WHC.Pager.WinControl.PageChangedEventHandler(pager1_PageChanged);
             this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
             this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
+            rdbUnionDan.Checked = true;
             //this.pager1.GetChildAtPoint(7).Visible = false;
             seek();
             pager1.Width = dgvSortInfo.Width;
@@ -105,6 +106,20 @@ namespace highSpeed.orderHandle
          }
         private void btnSort_Click(object sender, EventArgs e)
         {
+            if (rdbUnionDan.Checked)//合单
+            {
+
+
+            }
+            else if (rdbUnUnionDan.Checked)//不合单
+            {
+
+
+            }
+            else
+            {
+                MessageBox.Show("请选择合单或者不合单");
+            }
             this.btnSort.Enabled = false;//防止点击多下
             panel2.Visible = true;
             label2.Visible = true;
@@ -116,7 +131,8 @@ namespace highSpeed.orderHandle
         }
 
         void Sort()
-        { 
+        {
+            int rcounts = 1000;//大约十秒 
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
             sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
@@ -125,27 +141,41 @@ namespace highSpeed.orderHandle
             sqlpara[1].Direction = ParameterDirection.Output;
             Db.Open();
             Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
+
+            for (int i = 0; i < rcounts; i++)
+            {
+                if (progressBar1.Maximum > progressBar1.Value)
+                {
+                    Application.DoEvents();
+                    progressBar1.Value = ((i + 1) * 100 / rcounts);
+                    progressBar1.Refresh();
+                    label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                    label2.Refresh();
+                }
+            } 
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             String errcode = sqlpara[0].Value.ToString();
             String errmsg = sqlpara[1].Value.ToString();
             if (errcode == "1")
             {
+                panel2.Visible = false;
                 MessageBox.Show("分拣车组任务排序成功！");
             }
 
             else
             {
+                panel2.Visible = false;
                 MessageBox.Show(errmsg);
             }
-
+             
             updateControl(btnSort, true, true);
             //  panel2.Visible = false;
             updateControl(panel2, false, true);
             //  label2.Visible = false;
             updateControl(label2, false, true);
             //  progressBar1.Visible = false;
-            updateControl(progressBar1, false, true);
+           //updateControl(progressBar1, true, true);
         }
         private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
 

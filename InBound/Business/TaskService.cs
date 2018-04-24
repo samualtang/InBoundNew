@@ -2808,9 +2808,7 @@ namespace InBound.Business
                 for (int i = 1; i < 5; i++)
                 {
                       //数据禁用主皮带 t_produce_poke
-                       var queryMainBelt = (from item in entity.T_PRODUCE_POKE 
-                                            where item.UNIONSTATE == 10 && item.MAINBELT == i 
-                                            select item.TASKNUM).Distinct().Count();//一号皮带任务总数
+                       var queryMainBelt = (from item in entity.T_PRODUCE_POKE   where item.UNIONSTATE == 10 && item.MAINBELT == i   select item.TASKNUM).Distinct().Count();//一号皮带任务总数
                        if (queryMainBelt == 0)
                        {
                            banbelt += i ;
@@ -2855,9 +2853,9 @@ namespace InBound.Business
         /// 合流任务
         /// </summary>
         /// <param name="mainbelt">主皮带</param>
-        /// <param name="noTaskNelt">无任务皮带</param>
+        /// <param name="noTaskBelt">无任务皮带</param>
         /// <returns></returns>  
-        public static object[] GetUnionTask(int mainbelt,string noTaskNelt)//合流任务
+        public static object[] GetUnionTask(int mainbelt,string noTaskBelt)//合流任务
         {
             object[] values = new object[21];//13+4=17+4= [21]
             //int fg = 1;
@@ -2902,7 +2900,7 @@ namespace InBound.Business
                         //如果没有任务数 则发送给电控 主皮带号 禁用
                         for (int beltNo = 1; beltNo < 5; beltNo++)
                         { 
-                            if (!noTaskNelt.Contains(beltNo.ToString()))
+                            if (!noTaskBelt.Contains(beltNo.ToString()))
                             { 
                                 values[16 + beltNo] = 1;//启用
                             }

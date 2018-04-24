@@ -71,6 +71,7 @@ namespace SpecialShapeSmoke
         public MainScreen1()
         {
             InitializeComponent();
+          
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.Hide();
