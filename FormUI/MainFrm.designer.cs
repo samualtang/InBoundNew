@@ -46,6 +46,8 @@
             this.储位明细ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.出入库查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异常查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.单据查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.巷道使用率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.仓库管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.巷道管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设备管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +67,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.imageListZip = new System.Windows.Forms.ImageList(this.components);
-            this.单据查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.巷道使用率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.预定储位查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -173,7 +174,8 @@
             this.出入库查询ToolStripMenuItem,
             this.异常查询ToolStripMenuItem,
             this.单据查询ToolStripMenuItem,
-            this.巷道使用率ToolStripMenuItem});
+            this.巷道使用率ToolStripMenuItem,
+            this.预定储位查询ToolStripMenuItem});
             this.统计报表ToolStripMenuItem.Name = "统计报表ToolStripMenuItem";
             this.统计报表ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.统计报表ToolStripMenuItem.Text = "统计报表";
@@ -206,6 +208,20 @@
             this.异常查询ToolStripMenuItem.Text = "异常查询";
             this.异常查询ToolStripMenuItem.Click += new System.EventHandler(this.异常查询ToolStripMenuItem_Click_1);
             // 
+            // 单据查询ToolStripMenuItem
+            // 
+            this.单据查询ToolStripMenuItem.Name = "单据查询ToolStripMenuItem";
+            this.单据查询ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.单据查询ToolStripMenuItem.Text = "单据查询";
+            this.单据查询ToolStripMenuItem.Click += new System.EventHandler(this.单据查询ToolStripMenuItem_Click);
+            // 
+            // 巷道使用率ToolStripMenuItem
+            // 
+            this.巷道使用率ToolStripMenuItem.Name = "巷道使用率ToolStripMenuItem";
+            this.巷道使用率ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.巷道使用率ToolStripMenuItem.Text = "巷道使用率";
+            this.巷道使用率ToolStripMenuItem.Click += new System.EventHandler(this.巷道使用率ToolStripMenuItem_Click);
+            // 
             // 仓库管理ToolStripMenuItem
             // 
             this.仓库管理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -219,21 +235,21 @@
             // 巷道管理ToolStripMenuItem
             // 
             this.巷道管理ToolStripMenuItem.Name = "巷道管理ToolStripMenuItem";
-            this.巷道管理ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.巷道管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.巷道管理ToolStripMenuItem.Text = "巷道管理";
             this.巷道管理ToolStripMenuItem.Click += new System.EventHandler(this.巷道管理ToolStripMenuItem_Click);
             // 
             // 设备管理ToolStripMenuItem
             // 
             this.设备管理ToolStripMenuItem.Name = "设备管理ToolStripMenuItem";
-            this.设备管理ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.设备管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.设备管理ToolStripMenuItem.Text = "设备管理";
             this.设备管理ToolStripMenuItem.Click += new System.EventHandler(this.设备管理ToolStripMenuItem_Click);
             // 
             // 可疑储位ToolStripMenuItem
             // 
             this.可疑储位ToolStripMenuItem.Name = "可疑储位ToolStripMenuItem";
-            this.可疑储位ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.可疑储位ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.可疑储位ToolStripMenuItem.Text = "可疑储位";
             this.可疑储位ToolStripMenuItem.Click += new System.EventHandler(this.可疑储位ToolStripMenuItem_Click);
             // 
@@ -404,19 +420,12 @@
             this.imageListZip.Images.SetKeyName(5, "bat02_04.gif");
             this.imageListZip.Images.SetKeyName(6, "bg04.jpg");
             // 
-            // 单据查询ToolStripMenuItem
+            // 预定储位查询ToolStripMenuItem
             // 
-            this.单据查询ToolStripMenuItem.Name = "单据查询ToolStripMenuItem";
-            this.单据查询ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.单据查询ToolStripMenuItem.Text = "单据查询";
-            this.单据查询ToolStripMenuItem.Click += new System.EventHandler(this.单据查询ToolStripMenuItem_Click);
-            // 
-            // 巷道使用率ToolStripMenuItem
-            // 
-            this.巷道使用率ToolStripMenuItem.Name = "巷道使用率ToolStripMenuItem";
-            this.巷道使用率ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.巷道使用率ToolStripMenuItem.Text = "巷道使用率";
-            this.巷道使用率ToolStripMenuItem.Click += new System.EventHandler(this.巷道使用率ToolStripMenuItem_Click);
+            this.预定储位查询ToolStripMenuItem.Name = "预定储位查询ToolStripMenuItem";
+            this.预定储位查询ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.预定储位查询ToolStripMenuItem.Text = "预定储位查询";
+            this.预定储位查询ToolStripMenuItem.Click += new System.EventHandler(this.预定储位查询ToolStripMenuItem_Click);
             // 
             // MainFrm
             // 
@@ -479,6 +488,7 @@
         private System.Windows.Forms.ToolStripMenuItem 异常查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 单据查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 巷道使用率ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 预定储位查询ToolStripMenuItem;
 
 
 

@@ -92,8 +92,36 @@ namespace InBound.Business
                             on item.CELLNO equals
                             item2.CELLNO
                             where item2.STATUS == 30
-                            group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
-                            select new OutBound() { CIGARETTECODE = g.Key.CIGARETTECODE, CIGARETTENAME = g.Key.CIGARETTENAME, QTY = g.Sum(item => item.QTY)??0 };
+                            //group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
+                            select new OutBound() { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY ?? 0 };
+                return query.OrderBy(x => x.CIGARETTECODE).ToList();
+            }
+        }
+        public static List<OutBound> GetCheckIng()
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = from item in entity.T_WMS_ATSCELLINFO_DETAIL
+                            join item2 in entity.T_WMS_ATSCELLINFO
+                            on item.CELLNO equals
+                            item2.CELLNO
+                            where item2.STATUS != 30
+                           // group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
+                            select new OutBound() {status=item2.STATUS??0, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY ?? 0 };
+                return query.OrderBy(x => x.CIGARETTECODE).ToList();
+            }
+        }
+        public static List<OutBound> GetCheckIng(String cigarettename, String code)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = from item in entity.T_WMS_ATSCELLINFO_DETAIL
+                            join item2 in entity.T_WMS_ATSCELLINFO
+                            on item.CELLNO equals
+                            item2.CELLNO
+                            where item2.STATUS != 30 && item.CIGARETTENAME.Contains(cigarettename) && item.CIGARETTECODE.Contains(code)
+                            // group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
+                            select new OutBound() { status=item2.STATUS??0,CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY ?? 0, CELLNO = item2.CELLNO, CREATETIME = item2.CREATETIME };
                 return query.OrderBy(x => x.CIGARETTECODE).ToList();
             }
         }
@@ -107,7 +135,7 @@ namespace InBound.Business
                             item2.CELLNO
                             where item2.STATUS == 30 && item.CIGARETTENAME.Contains(cigarettename) && item.CIGARETTECODE.Contains(code)
                            // group item by new { item.CIGARETTECODE, item.CIGARETTENAME } into g
-                            select new OutBound() { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY??0, CELLNO=item2.CELLNO, CREATETIME=item2.CREATETIME };
+                            select new OutBound() { status=item2.STATUS??0, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item.CIGARETTENAME, QTY = item.QTY??0, CELLNO=item2.CELLNO, CREATETIME=item2.CREATETIME };
                 return query.OrderBy(x=>x.CIGARETTECODE).ToList();
             }
         }

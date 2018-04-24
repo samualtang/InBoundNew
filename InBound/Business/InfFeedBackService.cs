@@ -80,13 +80,13 @@ namespace InBound.Business
                                  join item2 in dataEntity.INF_JOBFEEDBACK
                                  on item.JOBID equals item2.JOBID
                                  where (item.JOBTYPE == 80)
-                                 && item2.FEEDBACKSTATUS == 100 && item.STATUS==1
+                                 && item2.FEEDBACKSTATUS == 100 && item.STATUS==1//出重力式货架完成
                                  select item).ToList();
                    if (query4 != null)
                    {
                        foreach (var task in query4)
                        {
-                           InfJobDownLoadService.UpdateJopDownLoad(task.JOBID, 10);
+                           InfJobDownLoadService.UpdateJopDownLoad(task.JOBID, 10,dataEntity);
                            var report = (from reportitem in dataEntity.T_WMS_STORAGEAREA_INOUT where reportitem.TASKNO == task.JOBID select reportitem).ToList();
                            if (report != null && report.Count > 0)
                            {
@@ -473,6 +473,7 @@ namespace InBound.Business
                                   {
                                       cdtask.ForEach(x => x.STATUS = 0);
                                       cdtask.ForEach(x => x.SOURCE = temptask.EQUIPMENTID);
+                                      cdtask.ForEach(x => x.CREATEDATE = DateTime.Now);
                                   }
                                   if (jobType == 55 && detail.QTY == detail.REQUESTQTY && temptask.EQUIPMENTID != "1415")
                                   {
@@ -604,6 +605,7 @@ namespace InBound.Business
                                           if (report != null && report.Count > 0)
                                           {
                                               report.ForEach(x => x.STATUS = 20);
+                                              report.ForEach(x => x.FINISHTIME = DateTime.Now);
                                           }
                                           //if (detail.REQUESTQTY == detail.QTY) //&& (cellInfo.DISMANTLE==0)
                                           //{
@@ -680,7 +682,7 @@ namespace InBound.Business
                                       }
 
                                       INF_JOBDOWNLOAD kxLoad = InfJobDownLoadService.GetDetail(item.JOBID, dataEntity);
-                                      kxLoad.STATUS = 20;
+                                      kxLoad.STATUS = 20;//开箱完成
                                   }
                                   else if (item.JOBTYPE == 120)
                                   {

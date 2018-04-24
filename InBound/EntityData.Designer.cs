@@ -404,22 +404,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_STORAGEAREA_INOUT> T_WMS_STORAGEAREA_INOUT
-        {
-            get
-            {
-                if ((_T_WMS_STORAGEAREA_INOUT == null))
-                {
-                    _T_WMS_STORAGEAREA_INOUT = base.CreateObjectSet<T_WMS_STORAGEAREA_INOUT>("T_WMS_STORAGEAREA_INOUT");
-                }
-                return _T_WMS_STORAGEAREA_INOUT;
-            }
-        }
-        private ObjectSet<T_WMS_STORAGEAREA_INOUT> _T_WMS_STORAGEAREA_INOUT;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<INF_DEVICESTATUS> INF_DEVICESTATUS
         {
             get
@@ -608,6 +592,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_DEVICESTATUS> _T_WMS_DEVICESTATUS;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_STORAGEAREA_INOUT> T_WMS_STORAGEAREA_INOUT
+        {
+            get
+            {
+                if ((_T_WMS_STORAGEAREA_INOUT == null))
+                {
+                    _T_WMS_STORAGEAREA_INOUT = base.CreateObjectSet<T_WMS_STORAGEAREA_INOUT>("T_WMS_STORAGEAREA_INOUT");
+                }
+                return _T_WMS_STORAGEAREA_INOUT;
+            }
+        }
+        private ObjectSet<T_WMS_STORAGEAREA_INOUT> _T_WMS_STORAGEAREA_INOUT;
 
         #endregion
 
@@ -782,14 +782,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_WMS_STORAGEAREA_INOUT EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_STORAGEAREA_INOUT(T_WMS_STORAGEAREA_INOUT t_WMS_STORAGEAREA_INOUT)
-        {
-            base.AddObject("T_WMS_STORAGEAREA_INOUT", t_WMS_STORAGEAREA_INOUT);
-        }
-    
-        /// <summary>
         /// 用于向 INF_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToINF_DEVICESTATUS(INF_DEVICESTATUS iNF_DEVICESTATUS)
@@ -883,6 +875,14 @@ namespace InBound
         public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
         {
             base.AddObject("T_WMS_DEVICESTATUS", t_WMS_DEVICESTATUS);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_STORAGEAREA_INOUT EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_STORAGEAREA_INOUT(T_WMS_STORAGEAREA_INOUT t_WMS_STORAGEAREA_INOUT)
+        {
+            base.AddObject("T_WMS_STORAGEAREA_INOUT", t_WMS_STORAGEAREA_INOUT);
         }
 
         #endregion
@@ -15316,6 +15316,30 @@ namespace InBound
         private Nullable<global::System.Decimal> _GROUPNO;
         partial void OnGROUPNOChanging(Nullable<global::System.Decimal> value);
         partial void OnGROUPNOChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String BILLCODE
+        {
+            get
+            {
+                return _BILLCODE;
+            }
+            set
+            {
+                OnBILLCODEChanging(value);
+                ReportPropertyChanging("BILLCODE");
+                _BILLCODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BILLCODE");
+                OnBILLCODEChanged();
+            }
+        }
+        private global::System.String _BILLCODE;
+        partial void OnBILLCODEChanging(global::System.String value);
+        partial void OnBILLCODEChanged();
 
         #endregion
 

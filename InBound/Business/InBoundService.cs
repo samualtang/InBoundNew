@@ -447,6 +447,7 @@ namespace InBound.Business
                                             {
                                                 T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
                                                 T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                                load1.PLANQTY = dl.REQUESTQTY;
                                                 if (dinfo.DISMANTLE == 10)
                                                 {
                                                     if (dl.REQUESTQTY != dl.QTY)
@@ -798,6 +799,7 @@ namespace InBound.Business
                                     {
                                         T_WMS_ATSCELLINFO_DETAIL dl = AtsCellInfoDetailService.GetDetail(load1.SOURCE);
                                         T_WMS_ATSCELLINFO dinfo = AtsCellInfoService.GetCellInfo(load1.SOURCE);
+                                        load1.PLANQTY = dl.REQUESTQTY;
                                         if (dinfo.DISMANTLE == 10)
                                         {
                                             if (dl.REQUESTQTY != dl.QTY)

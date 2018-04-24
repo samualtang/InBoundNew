@@ -236,6 +236,12 @@
     <Compile Include="LaneWayFMReport.Designer.cs">
       <DependentUpon>LaneWayFMReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckIngForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckIngForm.Designer.cs">
+      <DependentUpon>CheckIngForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CellForm.resx">
       <DependentUpon>CellForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LaneWayFMReport.resx">
       <DependentUpon>LaneWayFMReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckIngForm.resx">
+      <DependentUpon>CheckIngForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>

@@ -614,6 +614,13 @@ namespace MainUI
             moutFm.Show();
         }
 
+        private void ‘§∂®¥¢Œª≤È—ØToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUI.CheckIngForm moutFm = new FormUI.CheckIngForm();
+            moutFm.StartPosition = FormStartPosition.CenterScreen;
+            moutFm.Show();
+        }
+
         
 
        

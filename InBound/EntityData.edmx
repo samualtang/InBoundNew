@@ -762,6 +762,7 @@
           <Property Name="CREATENAME" Type="nvarchar2" MaxLength="20" />
           <Property Name="BARCODE" Type="varchar2" MaxLength="30" />
           <Property Name="GROUPNO" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="50" />
         </EntityType>
         <Function Name="PROC_IN_CELLNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ZOOMTEL">
           <Parameter Name="P_CODE" Type="varchar2" Mode="In" />
@@ -823,7 +824,6 @@
           <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.INF_EQUIPMENTSTATUS" />
           <EntitySet Name="T_WMS_ATSCELL_OUT" EntityType="Model.T_WMS_ATSCELL_OUT" />
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.INF_JOBDOWNLOAD" />
-          <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
           <EntitySet Name="INF_DEVICESTATUS" EntityType="Model.INF_DEVICESTATUS" />
           <EntitySet Name="INF_EQUIPMENTREQUEST" EntityType="Model.INF_EQUIPMENTREQUEST" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.T_WMS_ATSCELL_IN" />
@@ -836,6 +836,7 @@
           <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
+          <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1269,27 +1270,6 @@
           <Property Type="Decimal" Name="CDTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="TASKNO" Precision="38" Scale="0" />
         </EntityType>
-        <EntityType Name="T_WMS_STORAGEAREA_INOUT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="AREAID" Precision="38" Scale="0" />
-          <Property Type="String" Name="CELLNO" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="INOUTTYPE" Precision="38" Scale="0" />
-          <Property Type="String" Name="TASKNO" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CREATETIME" />
-          <Property Type="DateTime" Name="FINISHTIME" />
-          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="BOXQTY" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="CIGARATTETYPE" Precision="38" Scale="0" />
-          <Property Type="String" Name="CREATENAME" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
-        </EntityType>
         <EntityType Name="INF_DEVICESTATUS">
           <Key>
             <PropertyRef Name="DEVICEID" />
@@ -1558,6 +1538,28 @@
           <Property Type="Decimal" Name="MAXTASKNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="CAPACITY" Precision="38" Scale="0" />
           <Property Type="String" Name="TROUGHNUM" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_WMS_STORAGEAREA_INOUT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="AREAID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CELLNO" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="INOUTTYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="TASKNO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="BOXQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CIGARATTETYPE" Precision="38" Scale="0" />
+          <Property Type="String" Name="CREATENAME" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2019,28 +2021,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_STORAGEAREA_INOUT">
-            <EntityTypeMapping TypeName="Model.T_WMS_STORAGEAREA_INOUT">
-              <MappingFragment StoreEntitySet="T_WMS_STORAGEAREA_INOUT">
-                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
-                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
-                <ScalarProperty Name="CREATENAME" ColumnName="CREATENAME" />
-                <ScalarProperty Name="CIGARATTETYPE" ColumnName="CIGARATTETYPE" />
-                <ScalarProperty Name="BOXQTY" ColumnName="BOXQTY" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
-                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
-                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
-                <ScalarProperty Name="INOUTTYPE" ColumnName="INOUTTYPE" />
-                <ScalarProperty Name="QTY" ColumnName="QTY" />
-                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
-                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INF_DEVICESTATUS">
             <EntityTypeMapping TypeName="Model.INF_DEVICESTATUS">
               <MappingFragment StoreEntitySet="INF_DEVICESTATUS">
@@ -2322,6 +2302,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_STORAGEAREA_INOUT">
+            <EntityTypeMapping TypeName="Model.T_WMS_STORAGEAREA_INOUT">
+              <MappingFragment StoreEntitySet="T_WMS_STORAGEAREA_INOUT">
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
+                <ScalarProperty Name="CREATENAME" ColumnName="CREATENAME" />
+                <ScalarProperty Name="CIGARATTETYPE" ColumnName="CIGARATTETYPE" />
+                <ScalarProperty Name="BOXQTY" ColumnName="BOXQTY" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
+                <ScalarProperty Name="INOUTTYPE" ColumnName="INOUTTYPE" />
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
+                <ScalarProperty Name="CELLNO" ColumnName="CELLNO" />
+                <ScalarProperty Name="AREAID" ColumnName="AREAID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2364,7 +2367,6 @@
         <EntityTypeShape EntityType="Model.INF_EQUIPMENTSTATUS" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_OUT" Width="1.5" PointX="13.375" PointY="9.75" Height="3.5833748372395746" />
         <EntityTypeShape EntityType="Model.INF_JOBDOWNLOAD" Width="1.5" PointX="20.375" PointY="8.75" Height="5.43131591796876" />
-        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="7.75" Height="3.9529630533854174" />
         <EntityTypeShape EntityType="Model.INF_DEVICESTATUS" Width="1.5" PointX="0.75" PointY="3.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.INF_EQUIPMENTREQUEST" Width="1.5" PointX="7.75" PointY="0.75" Height="3.2137866210937602" />
         <EntityTypeShape EntityType="Model.T_WMS_ATSCELL_IN" Width="1.5" PointX="20.75" PointY="15.75" Height="2.8441984049479174" />
@@ -2377,6 +2379,7 @@
         <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="12.375" PointY="3.75" Height="2.4746101888020746" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="17.375" PointY="3.75" Height="4.0712491861979174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.4746101888020746" />
+        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="6.75" Height="4.1377571614583246" />
       </Diagram>
     </Diagrams>
   </Designer>

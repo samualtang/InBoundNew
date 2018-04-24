@@ -19,6 +19,7 @@ namespace InBound
         public decimal PlanQty { get; set; }
         public string CELLNO { get; set; }
         public DateTime? CREATETIME { get; set; }
+        public decimal status { get; set; }
 
     }
 }

@@ -509,7 +509,7 @@ namespace InBound.Business
                                  select item.CELLNO).FirstOrDefault();
                     if (query != null)
                     {
-                        UpdateCellOutStatus(query, qty);
+                        UpdateCellOutStatus(query, (int)(AtsCellInfoDetailService.GetDetail(query).QTY??0));
                         return query;
                     }
                     else
