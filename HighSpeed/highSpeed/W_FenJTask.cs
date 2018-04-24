@@ -6,7 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 using InBound.Business;
+using InBound;
+
 
 namespace highSpeed
 {
@@ -15,6 +18,7 @@ namespace highSpeed
         public W_FenJTask()
         {
             InitializeComponent();
+            dgvTask.DoubleBufferedDataGirdView(true);
             this.Text = "分拣";
         }
 
@@ -24,7 +28,7 @@ namespace highSpeed
         private void W_FenJTask_Load(object sender, EventArgs e)
         {
             dgvTask.DataSource = FolloTaskService.getFJDataAll(1, 1);
-            
+             
             BindSelectCmb();
             DgvBind();
         }
@@ -146,7 +150,16 @@ namespace highSpeed
                         groupNo1 = Convert.ToDecimal(txtInfo.Text.Replace(" ", ""));
                         groupNo2 = Convert.ToDecimal(txtinfo2.Text.Replace(" ", ""));
                         SortNum = Convert.ToDecimal(txtinfo3.Text.Replace(" ", ""));
-                        dgvTask.DataSource = FolloTaskService.getFJData(SortNum, groupNo1, groupNo2);
+                        dgvTask.DataSource = FolloTaskService.getFJData(SortNum, groupNo1, groupNo2).Select(a => new
+                        {
+                            CIGARETTDECODE = a.CIGARETTDECODE,
+                            CIGARETTDENAME = a.CIGARETTDENAME,
+                            Machineseq = a.Machineseq,
+                            SortNum = a.SortNum,
+                            tNum = a.tNum,
+                            Billcode = a.Billcode,
+                            SortState = a.SortState
+                        }).ToList(); ;
                         DgvBind();
                     }
                     else

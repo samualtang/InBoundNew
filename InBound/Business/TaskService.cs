@@ -2804,27 +2804,17 @@ namespace InBound.Business
         {
             string banbelt = "";
             using (Entities entity = new Entities())
-            {
-                var queryMainBelt1 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT ==1 select item.TASKNUM).Distinct().Count();//一号皮带任务总数
-                var queryMainBelt2 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 2 select item.TASKNUM).Distinct().Count();//二号皮带任务总数
-                var queryMainBelt3 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 3 select item.TASKNUM).Distinct().Count();//三号皮带任务总数
-                var queryMainBelt4 = (from item in entity.T_PRODUCE_POKE where item.UNIONSTATE == 10 && item.MAINBELT == 4 select item.TASKNUM).Distinct().Count();//四号皮带任务总数
-                if (queryMainBelt1 == 0)
+            { 
+                for (int i = 1; i < 5; i++)
                 {
-                    banbelt += "1";
-                }
-                if (queryMainBelt2 == 0)
-                {
-                    banbelt += "2";
-                }
-               if (queryMainBelt3 == 0)
-                {
-                    banbelt += "3";
-                }
-               if (queryMainBelt4 == 0)
-                {
-                    banbelt += "4";
+                      //数据禁用主皮带 t_produce_poke
+                       var queryMainBelt = (from item in entity.T_PRODUCE_POKE   where item.UNIONSTATE == 10 && item.MAINBELT == i   select item.TASKNUM).Distinct().Count();//一号皮带任务总数
+                       if (queryMainBelt == 0)
+                       {
+                           banbelt += i ;
+                       } 
                 } 
+                //物理禁用主皮带 t_produce_sorttrough
                 var query =  (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 && item.STATE == "0" orderby item.MACHINESEQ select item).ToList();
                 foreach (var item in query)
                 {
@@ -2839,35 +2829,23 @@ namespace InBound.Business
         /// 给PLC赋 皮带状态初始值
         /// </summary>
         public static object[] FristTime()
-        {
-            int fg = 0;
+        { 
+            int i = 1;
             object[] values = new object[4];
-            //for (int i = 0; i < values.Length; i++)
-            //{
-            //    values[i] = 0;
-            //}
-            using (Entities entity = new Entities())
-            {
-                var query3 = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 orderby item.MACHINESEQ select item).ToList();
-              //  values[12] = 2;//标志位
-                foreach (var item in query3)
+            string banbelt = GetBanMainBelt();// int BeltState;//主皮带状态 
+            for (int index = 0; index < 4; index++)
+            {    
+                if (!banbelt.Contains(i.ToString()))//如果为启用 置为1 则为 0
                 {
-                    if (fg < 4)
-                    {
-                        int BeltState;//主皮带状态 
-                        if (item.STATE == "10")//如果为启用 置为1 则为 0
-                        {
-                            BeltState = 1;// 皮带为启用   投入 
-                        }
-                        else
-                        {
-                            BeltState = 0;//皮带为禁用   挂起
-                        }
-                        values[fg] = BeltState;
-                        fg++;
-                    }
+                    values[index] = 1;// 皮带为启用   投入 
                 }
+                else
+                {
+                    values[index] = 0;//皮带为禁用   挂起
+                }
+                i++;
             }
+
             return values;
         }
 
@@ -2875,9 +2853,9 @@ namespace InBound.Business
         /// 合流任务
         /// </summary>
         /// <param name="mainbelt">主皮带</param>
-        /// <param name="noTaskNelt">无任务皮带</param>
+        /// <param name="noTaskBelt">无任务皮带</param>
         /// <returns></returns>  
-        public static object[] GetUnionTask(int mainbelt,string noTaskNelt)//合流任务
+        public static object[] GetUnionTask(int mainbelt,string noTaskBelt)//合流任务
         {
             object[] values = new object[21];//13+4=17+4= [21]
             //int fg = 1;
@@ -2918,13 +2896,11 @@ namespace InBound.Business
                         values[14] = 2; 
                         values[15] = 2;
                         values[16] = 2;
-                        //查询禁用主皮带
-
-
+                        //查询禁用主皮带 
                         //如果没有任务数 则发送给电控 主皮带号 禁用
                         for (int beltNo = 1; beltNo < 5; beltNo++)
                         { 
-                            if (!noTaskNelt.Contains(beltNo.ToString()))
+                            if (!noTaskBelt.Contains(beltNo.ToString()))
                             { 
                                 values[16 + beltNo] = 1;//启用
                             }
@@ -2933,6 +2909,7 @@ namespace InBound.Business
                                 values[16 + beltNo] = 0; //禁用
                             }
                         }
+                        #region
                         //写给电控哪条主皮带禁用  启用为1  禁用 0 
                         //foreach (var item in query3)
                         //{
@@ -2951,10 +2928,12 @@ namespace InBound.Business
                         //        fg++;
                         //    }
                         //}  
+                        #endregion
                     }
                 }
             }
             return values;
+            #region
             //object[] values = new object[12];
             //for (int i = 0; i < values.Length; i++)
             //{
@@ -3078,7 +3057,7 @@ namespace InBound.Business
 
             //}
             //return values;
-            
+            #endregion
         }
         public static String FRW = "1430204";
         public static String JBS = "1430105";

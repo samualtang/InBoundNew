@@ -123,7 +123,10 @@ namespace InBound.Business
                 else return null;
             }
         }
-
+        /// <summary>
+        /// 获取合流数据
+        /// </summary>
+        /// <returns></returns>
         public static List<FollowTaskDeail> getUnionDataAll()
         {
             using (Entities dataentity = new Entities())

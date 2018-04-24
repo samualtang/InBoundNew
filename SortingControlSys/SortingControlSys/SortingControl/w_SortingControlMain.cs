@@ -662,7 +662,7 @@ namespace SortingControlSys.SortingControl
             {
 
             }
-            else if (group == 3)//监控分拣任务完成信号
+            else if (group == 3)//监控分拣任务完成信号 组一
             {
                 for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
                 {
@@ -694,7 +694,7 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
-            else if (group == 4) //被监控标志取代
+            else if (group == 4) //被监控标志取代 组二
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
@@ -746,10 +746,8 @@ namespace SortingControlSys.SortingControl
                             }
 
                             removeKey(tempList1, clientId[i]);
-                            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
-
-                        }
-
+                            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+                        } 
                     }
                     else
                     {

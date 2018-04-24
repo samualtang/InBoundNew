@@ -62,7 +62,7 @@
             this.cbnormal.Checked = true;
             this.cbnormal.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbnormal.Location = new System.Drawing.Point(18, 20);
-            this.cbnormal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbnormal.Margin = new System.Windows.Forms.Padding(2);
             this.cbnormal.Name = "cbnormal";
             this.cbnormal.Size = new System.Drawing.Size(60, 16);
             this.cbnormal.TabIndex = 3;
@@ -75,7 +75,7 @@
             this.cbunnormal.Checked = true;
             this.cbunnormal.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbunnormal.Location = new System.Drawing.Point(128, 20);
-            this.cbunnormal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbunnormal.Margin = new System.Windows.Forms.Padding(2);
             this.cbunnormal.Name = "cbunnormal";
             this.cbunnormal.Size = new System.Drawing.Size(60, 16);
             this.cbunnormal.TabIndex = 2;
