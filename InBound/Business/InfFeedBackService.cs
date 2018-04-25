@@ -112,6 +112,7 @@ namespace InBound.Business
                       foreach (var temptask in query2)
                       {
 
+                          try{
                           //using (TransactionScope ts = new TransactionScope())
                           //{
                       INF_JOBDOWNLOAD task = new INF_JOBDOWNLOAD();
@@ -495,7 +496,11 @@ namespace InBound.Business
 
                           }
                       }
-                    
+                      }
+                      catch(Exception ex)
+                      {
+                          WriteLog.GetLog().Write("错误信息:" + ex.Message);
+                      }
                       }
                      
                   }
@@ -506,6 +511,7 @@ namespace InBound.Business
                         
                           using (TransactionScope ts = new TransactionScope())
                               {
+                              try{
                                   var feedback = (from feed in dataEntity.INF_JOBFEEDBACK where feed.JOBID == item.JOBID && feed.FEEDBACKSTATUS == 99 select feed).FirstOrDefault();
                                   feedback.STATUS = 10;
                                   if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42 || item.JOBTYPE==100)//入库单入库任务
@@ -546,7 +552,7 @@ namespace InBound.Business
                                       {
                                           AtsCellOutService.UpdateObjectSec(item.TASKNO ?? 0, AtsCellInfoDetailService.GetDetail(item.SOURCE).QTY ?? 0);
                                       }
-                                      AtsCellService.UpdateAtsCell(item.TARGET, 20);//更新cellno状态 载货
+                                      AtsCellService.UpdateAtsCell(item.TARGET, 20,dataEntity);//更新cellno状态 载货
 
                                       var info = (from cellinfo in dataEntity.T_WMS_ATSCELLINFO where cellinfo.CELLNO == item.TARGET select cellinfo).FirstOrDefault();
                                       if (info != null)
@@ -690,7 +696,11 @@ namespace InBound.Business
                                   }
                                   dataEntity.SaveChanges();
                                   ts.Complete();
-
+                              }
+                              catch (Exception ex)
+                              {
+                                  WriteLog.GetLog().Write("错误信息:" + ex.Message);
+                              }
                               }
                         
                       }
