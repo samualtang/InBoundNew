@@ -595,7 +595,7 @@ namespace SortingControlSys.SortingControl
                         {
 
 
-                            updateListBox("读到标志位2");
+                            updateListBox("读到第" + ((groupNo - 1) * 22 + Group) + "号机械手写入标志位2");
                             writeLog.Write("读到第" + ((groupNo - 1) * 22 + Group) + "号机械手写入标志位2");
                             while (!isInit)
                             {

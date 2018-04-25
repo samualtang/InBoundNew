@@ -105,21 +105,7 @@ namespace highSpeed.orderHandle
 
          }
         private void btnSort_Click(object sender, EventArgs e)
-        {
-            if (rdbUnionDan.Checked)//合单
-            {
-
-
-            }
-            else if (rdbUnUnionDan.Checked)//不合单
-            {
-
-
-            }
-            else
-            {
-                MessageBox.Show("请选择合单或者不合单");
-            }
+        { 
             this.btnSort.Enabled = false;//防止点击多下
             panel2.Visible = true;
             label2.Visible = true;
@@ -134,14 +120,27 @@ namespace highSpeed.orderHandle
         {
             int rcounts = 1000;//大约十秒 
             OracleParameter[] sqlpara;
-            sqlpara = new OracleParameter[2];
+            sqlpara = new OracleParameter[3];
             sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
             sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
+            sqlpara[2] = new OracleParameter("UnionStates", OracleType.VarChar, 100);
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
+            sqlpara[2].Direction = ParameterDirection.Input; 
+            if (rdbUnionDan.Checked)//合单
+            {
+                sqlpara[2].Value = 1; 
+            }
+            else if (rdbUnUnionDan.Checked)//不合单
+            {
+                sqlpara[2].Value = 2; 
+            }
+            else
+            {
+                MessageBox.Show("请选择合单或者不合单");
+            }
             Db.Open();
             Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
-
             for (int i = 0; i < rcounts; i++)
             {
                 if (progressBar1.Maximum > progressBar1.Value)
