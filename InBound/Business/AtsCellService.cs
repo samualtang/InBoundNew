@@ -29,6 +29,19 @@ namespace InBound.Business
               return query.ToList();
           }
       }
+      public static void UpdateAtsCell(String cellno, decimal status,Entities data)
+      {
+          
+              var query = (from item in data.T_WMS_ATSCELL where item.CELLNO == cellno select item).FirstOrDefault();
+              if (query != null)
+              {
+                  query.WORKSTATUS = status;
+
+                 // data.SaveChanges();
+                  WriteLog.GetLog().Write("修改储位工作状态:" + cellno + ":" + status);
+              }
+         
+      }
       public static void UpdateAtsCell(String cellno,decimal status)
       {
           using(Entities data=new Entities())
