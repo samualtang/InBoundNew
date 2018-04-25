@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "WebService\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialShapeSmoke", "SpecialShapeSmoke\SpecialShapeSmoke\SpecialShapeSmoke.csproj", "{52DAB296-629E-47D6-9708-01D63C6BE47F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FollowTask", "FollowTask\FollowTask.csproj", "{8ADA3544-103E-4645-8F3F-E67937346E02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,16 @@ Global
 		{52DAB296-629E-47D6-9708-01D63C6BE47F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{52DAB296-629E-47D6-9708-01D63C6BE47F}.Release|x86.ActiveCfg = Release|x86
 		{52DAB296-629E-47D6-9708-01D63C6BE47F}.Release|x86.Build.0 = Release|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Debug|x86.ActiveCfg = Debug|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Debug|x86.Build.0 = Debug|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Release|Any CPU.ActiveCfg = Release|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Release|Mixed Platforms.Build.0 = Release|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Release|x86.ActiveCfg = Release|x86
+		{8ADA3544-103E-4645-8F3F-E67937346E02}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
