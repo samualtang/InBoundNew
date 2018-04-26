@@ -367,8 +367,8 @@ namespace SortingControlSys.SortingControl
                 if (flag == 2)
                 {
                     decimal packageNum = 0;
-                    string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, linenum, out listSix, out packageNum);
+                 //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix, out packageNum);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");

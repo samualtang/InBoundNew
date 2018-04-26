@@ -15316,30 +15316,6 @@ namespace InBound
         private Nullable<global::System.Decimal> _GROUPNO;
         partial void OnGROUPNOChanging(Nullable<global::System.Decimal> value);
         partial void OnGROUPNOChanged();
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String BILLCODE
-        {
-            get
-            {
-                return _BILLCODE;
-            }
-            set
-            {
-                OnBILLCODEChanging(value);
-                ReportPropertyChanging("BILLCODE");
-                _BILLCODE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("BILLCODE");
-                OnBILLCODEChanged();
-            }
-        }
-        private global::System.String _BILLCODE;
-        partial void OnBILLCODEChanging(global::System.String value);
-        partial void OnBILLCODEChanged();
 
         #endregion
 

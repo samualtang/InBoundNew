@@ -92,7 +92,7 @@ namespace InBound
             Type lvType = lv.GetType();
             PropertyInfo pi = lvType.GetProperty("DoubleBuffered",  BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(lv, flag, null);
-        } 
+        }
 
     }
 }
