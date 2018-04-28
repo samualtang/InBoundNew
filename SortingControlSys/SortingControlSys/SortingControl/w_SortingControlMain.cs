@@ -644,7 +644,7 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList.Count > 0)
+                            if (tempList.Count > 0)//问题所在 count = 0
                             {
 
                                 TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
@@ -670,8 +670,8 @@ namespace SortingControlSys.SortingControl
                     if (tempvalue >= 1)//分拣完成
                     {
                         statusGroup1.Write(1, clientId[i] - 1);
-                        if (getKey(tempList, clientId[i]) != -1)
-                        {
+                        //if (getKey(tempList, clientId[i]) != -1)
+                        //{
                             // int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno1);
@@ -686,7 +686,7 @@ namespace SortingControlSys.SortingControl
                             removeKey(tempList, clientId[i]);
                             this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
 
-                        }
+                        //}
                     }
                     else
                     {
@@ -731,8 +731,8 @@ namespace SortingControlSys.SortingControl
                     if (tempvalue >= 1)//分拣完成
                     {
                         statusGroup4.Write(1, clientId[i] - 1);
-                        if (getKey(tempList1, clientId[i]) != -1)
-                        {
+                        //if (getKey(tempList1, clientId[i]) != -1)
+                        //{
                             // int taskno = getKey(tempList1, clientId[i]);
                             writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             InBoundService.UpdateInOut(tempvalue, sortgroupno2);
@@ -747,7 +747,7 @@ namespace SortingControlSys.SortingControl
 
                             removeKey(tempList1, clientId[i]);
                             this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
-                        } 
+                        //} 
                     }
                     else
                     {
@@ -850,11 +850,11 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList.Count > 0)
+                            if (tempList1.Count > 0)
                             {
-                                TaskService.UpdateStatus(sortgroupno2, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                                updateListBox("组" + sortgroupno2 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                writeLog.Write(sortgroupno2 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
+                                TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
+                                updateListBox("组" + sortgroupno2 + "---任务:" + tempList1.ElementAt(tempList1.Count - 1).Value + "已接收");
+                                writeLog.Write(sortgroupno2 + "组:" + tempList1.ElementAt(tempList1.Count - 1).Value + "号任务已接收");
                             } 
                             sendTask1();
                         }

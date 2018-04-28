@@ -66,7 +66,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB101,W" + i);
             }
-           list.Add(OpcPresortServer+"DB101,W0"); 
+             list.Add(OpcPresortServer+"DB101,W0"); 
             return list;
         }
         public static List<string> GetTaskStatusItem1()
@@ -90,7 +90,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB30,W" + i);
             }
-            list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
+          //  list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
             return list;
         }
         public static List<string> GetTaskStatusItem3()//A01-A27
@@ -175,7 +175,7 @@ namespace SortingControlSys.Model
             {
                 list.Add(OpcPresortServer+"DB130,W" + i);
             }
-            list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
+           // list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
             return list;
         }
 

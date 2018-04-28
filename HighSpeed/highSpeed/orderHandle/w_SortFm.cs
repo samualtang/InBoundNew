@@ -105,25 +105,36 @@ namespace highSpeed.orderHandle
 
          }
         private void btnSort_Click(object sender, EventArgs e)
-        { 
+        {
+            int rcounts = 5000;//大约十5秒 
             this.btnSort.Enabled = false;//防止点击多下
             panel2.Visible = true;
             label2.Visible = true;
             progressBar1.Visible = true;
             progressBar1.Value = 0;
             label2.Text = "正在对分拣车组任务数据进重新排序";
-            Thread thread = new Thread(new ThreadStart(Sort));
+            for (int i = 0; i < rcounts; i++)
+            {
+                if (progressBar1.Maximum > progressBar1.Value)
+                {
+                    Application.DoEvents();
+                    progressBar1.Value = ((i + 1) * 100 / rcounts);
+                    progressBar1.Refresh();
+                    label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                    label2.Refresh();
+                }
+            } 
+            Thread thread = new Thread(new ThreadStart(Sort)); 
             thread.Start();
         }
 
         void Sort()
-        {
-            int rcounts = 1000;//大约十秒 
+        { 
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[3];
             sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
             sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
-            sqlpara[2] = new OracleParameter("UnionStates", OracleType.VarChar, 100);
+            sqlpara[2] = new OracleParameter("UnionStates", OracleType.VarChar, 100);//合单标志位
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
             sqlpara[2].Direction = ParameterDirection.Input; 
@@ -141,17 +152,7 @@ namespace highSpeed.orderHandle
             }
             Db.Open();
             Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
-            for (int i = 0; i < rcounts; i++)
-            {
-                if (progressBar1.Maximum > progressBar1.Value)
-                {
-                    Application.DoEvents();
-                    progressBar1.Value = ((i + 1) * 100 / rcounts);
-                    progressBar1.Refresh();
-                    label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
-                    label2.Refresh();
-                }
-            } 
+          
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             String errcode = sqlpara[0].Value.ToString();
@@ -166,8 +167,7 @@ namespace highSpeed.orderHandle
             {
                 panel2.Visible = false;
                 MessageBox.Show(errmsg);
-            }
-             
+            } 
             updateControl(btnSort, true, true);
             //  panel2.Visible = false;
             updateControl(panel2, false, true);

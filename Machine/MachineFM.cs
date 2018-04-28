@@ -453,9 +453,7 @@ namespace SortingControlSys.SortingControl
         }
         delegate void delSendTask();
         void sendTask(String exportnum, Group group)
-        {
-
-
+        { 
             try
             {
                 int flag = group.Read(4).CastTo<int>(-1);

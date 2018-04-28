@@ -144,7 +144,7 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 var query = from item in data.T_UN_POKE 
-                            where item.STATUS == 10  && item.CTYPE ==2  && item.LINENUM == lineNum
+                            where item.STATUS == 10  && item.CTYPE ==2  
                             orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item; 
                 packageNum = getPackageNum(2, lineNum);
                 if (query != null)
