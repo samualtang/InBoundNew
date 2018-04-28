@@ -15,7 +15,7 @@ namespace FollowTask
     {
         public BitmapRegion()
         { }
-
+         //
         /// <summary> 
         /// Create and apply the region on the supplied control
         /// 创建支持位图区域的控件（目前有button和form）
