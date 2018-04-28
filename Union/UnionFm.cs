@@ -145,7 +145,7 @@ namespace SortingControlSys.SortingControl
             //TaskService.GetUnionTask();
             Connect();
         }
-        Group taskgroup,statusGroup1,statusGroup2,statusGroup3,statusGroup4,statusGroup5,errorGroup,SendTaskStatesGroup;
+        Group taskgroup1, taskgroup2, taskgroup3, taskgroup4, statusGroup1, statusGroup2, statusGroup3, statusGroup4, statusGroup5, errorGroup, SendTaskStatesGroup;
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -184,20 +184,29 @@ namespace SortingControlSys.SortingControl
             {
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-                taskgroup = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);
+                taskgroup1 = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);//第一根
                 statusGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
                 errorGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+                SendTaskStatesGroup = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//监控标志位   2 为可接收  
+                //原来协议是一个交互区,现在每根皮带一个交互区 增加三个
+                taskgroup2 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//第二根
+                taskgroup3 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);//第三根
+                taskgroup4 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);//第四根
 
-                SendTaskStatesGroup = new Group(pIOPCServer,7, "group7", 1, LOCALE_ID);//监控标志位   2 为可接收  
+                //原来协议是一个交互区,现在每根皮带一个交互区 增加三个
+                taskgroup1.addItem(ItemCollection.GetTaskGroupItem1());//第一根主皮带
+                taskgroup2.addItem(ItemCollection.GetTaskGroupItem2());//第二根主皮带
+                taskgroup3.addItem(ItemCollection.GetTaskGroupItem3());//第三根主皮带
+                taskgroup4.addItem(ItemCollection.GetTaskGroupItem4());//第四根主皮带
+               ///////////////////////////////////
+                 
                 SendTaskStatesGroup.addItem(ItemCollection.GetSendTaskStatesItem());
 
                 errorGroup.addItem(ItemCollection.GetTaskErrStatusItem());
-              
-                taskgroup.addItem(ItemCollection.GetTaskStatusItem10());
-               
+
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem11());
              
                 statusGroup2.addItem(ItemCollection.GetTaskStatusItem12());
@@ -233,10 +242,10 @@ namespace SortingControlSys.SortingControl
         {
             string log = ""; 
             object[] datas = TaskService.FristTime();
-            taskgroup.SyncWrite(datas[0],17);//给PLC写入 主皮带 初始值
-            taskgroup.SyncWrite(datas[1], 18);
-            taskgroup.SyncWrite(datas[2], 19);
-            taskgroup.SyncWrite(datas[3], 20);
+            taskgroup1.SyncWrite(datas[0],17);//给PLC写入 主皮带 初始值
+            taskgroup1.SyncWrite(datas[1], 18);
+            taskgroup1.SyncWrite(datas[2], 19);
+            taskgroup1.SyncWrite(datas[3], 20);
             for (int i = 0; i < 4; i++)
             {
                 log += i + "号" + datas[i] + " 状态 ,";
@@ -247,18 +256,28 @@ namespace SortingControlSys.SortingControl
         {
           
             int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
-            if (flag == 0 || flag == 2)
-            {
-                FristTimeToPLC();//初始值在跳变之前
-                SendTaskStatesGroup.Write(5, 0);//先写5,为了产生跳变
-                SendTaskStatesGroup.Write(2,0);//初始化状态为可接收状态 
-            }
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
-            }
-            else
-            {
+            } 
+            else  
+            { 
+                if (SendTaskStatesGroup.Read(0).ToString() != "1")
+                {
+                    SendTaskStatesGroup.Write(2, 0);
+                }
+                if (SendTaskStatesGroup.Read(1).ToString() != "1")
+                {
+                    SendTaskStatesGroup.Write(2, 1);
+                }
+                if (SendTaskStatesGroup.Read(2).ToString() != "1")
+                {
+                    SendTaskStatesGroup.Write(2, 2);
+                }
+                if (SendTaskStatesGroup.Read(3).ToString() != "1")
+                {
+                    SendTaskStatesGroup.Write(2, 3);
+                }
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
                
@@ -327,55 +346,73 @@ namespace SortingControlSys.SortingControl
         }
         delegate void delSendTask();
         int count =1;//记数
-        /// <summary>
-        /// 合流数据
-        /// </summary>
-        void sendTask()
+       /// <summary>
+       /// 发送合流数据
+       /// </summary>
+       /// <param name="mainbelt">主皮带号</param>
+        void sendTask(int mainbelt)
         {
             try
-            {  
-                int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
+            {
+                int flag = SendTaskStatesGroup.Read(mainbelt-1).CastTo<int>(-1);
                 
                 if (flag == -1)
                 {
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                int mainbelt = 0;
-                int tempmainbelte =0;
+            
                 if (flag == 2)//接收信号   现在改为 2 
                 {
-                    /////////////////////////////////////////////////////////////////////////
-                    //先找出上位禁用的主皮带
-                    //找到哪根主皮带可以接收任务,为0表示可以接收任务
-                    string banbelte = TaskService.GetBanMainBelt();//  任务为0被禁用主皮带 和 已禁用主皮带 
-                    for (int i = 1; i < 5; i++)
-                    {
-                        if (banbelte.Contains(i.ToString())) //123
-                        {
-                            continue;
-                        }
-                        tempmainbelte = taskgroup.Read(12 + i).CastTo<int>(-1);
-                        if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
-                        {
-                            mainbelt = i;//4
-                            break;
-                        }
-                    }
-                    object[] datas = TaskService.GetUnionTask(mainbelt, banbelte);
-                    /////////////////////////////////////////////// 
+                    #region 
+                    //  int mainbelt = 1;
+                    //int tempmainbelte =0;
+                    ///////////////////////////////////////////////////////////////////////////
+                    ////先找出上位禁用的主皮带
+                    ////找到哪根主皮带可以接收任务,为0表示可以接收任务
+                    //string banbelte = TaskService.GetBanMainBelt();//  任务为0被禁用主皮带 和 已禁用主皮带 
+                    //for (int i = 1; i < 5; i++)
+                    //{
+                    //    if (banbelte.Contains(i.ToString())) //123
+                    //    {
+                    //        continue;
+                    //    }
+                    //    tempmainbelte = taskgroup1.Read(12 + i).CastTo<int>(-1);
+                    //    if (tempmainbelte == 1)//1 为主皮带启用  0 为为主皮带禁止
+                    //    {
+                    //        mainbelt = i;//4
+                    //        break;
+                    //    }
+                    //}
+                    #endregion
+                    object[] datas = TaskService.GetUnionTask(mainbelt);//获取合流数据
+                   
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("合流数据发送完毕");
-                        writeLog.Write("合流数据发送完毕");
-
+                        updateListBox("第"+ mainbelt+  "根,合流数据发送完毕");
+                        writeLog.Write("第"+ mainbelt + "根,合流数据发送完毕"); 
                         return;
                     }
                     int export = int.Parse(datas[1].ToString());
                     //if (CheckCanSend(export))
                     //{
-
-                    taskgroup.SyncWrite(datas);
+                    if (mainbelt == 1)//一号主皮带
+                    {
+                        taskgroup1.SyncWrite(datas);
+                    }
+                    if (mainbelt == 2)//二号主皮带
+                    {
+                        taskgroup2.SyncWrite(datas);
+                    }
+                    if (mainbelt == 3)//三号主皮带
+                    {
+                        taskgroup3.SyncWrite(datas);
+                    }
+                    if (mainbelt == 4)//四号主皮带
+                    {
+                        taskgroup4.SyncWrite(datas);
+                    }
+                    
                     string logstr = "任务信息：" + count++;
                     string f = "";
                     for (int i = 0; i < datas.Length; i++)
@@ -393,18 +430,10 @@ namespace SortingControlSys.SortingControl
                         else if (i == 10) f = "7号机械手抓烟数";
                         else if (i == 11) f = "8号机械手抓烟数";
                         else if (i == 12) f = "标志位";
-                        else if (i == 13) f = "电控一号主皮带是否可接受任务状态";
-                        else if (i == 14) f = "电控二号主皮带是否可接受任务状态";
-                        else if (i == 15) f = "电控三号主皮带是否可接受任务状态";
-                        else if (i == 16) f = "电控四号主皮带是否可接受任务状态";
-                        else if (i == 17) f = "上位一号主皮带禁用状态";
-                        else if (i == 18) f = "上位二号主皮带禁用状态";
-                        else if (i == 19) f = "上位三号主皮带禁用状态";
-                        else if (i == 20) f = "上位四号主皮带禁用状态";
                         logstr += f + ":" + datas[i] + ";";
                     }
-                    writeLog.Write(logstr);
-                    updateListBox(logstr);
+                    writeLog.Write("第 " + mainbelt + " 根主皮带:" + logstr);
+                    updateListBox("第 " + mainbelt + " 根主皮带:" + logstr);
                     removeKey(export);
                     tempList.Add(new KeyValuePair<int, int>(export, int.Parse(datas[0].ToString())));
                     //}
@@ -425,7 +454,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write(ex.InnerException.Message);
                     updateListBox(ex.InnerException.Message);
                 }
-                sendTask();//异常后重新发送
+                sendTask(mainbelt);//异常后重新发送
             }
         }
         public static Object lockFlag = new Object();
@@ -463,29 +492,30 @@ namespace SortingControlSys.SortingControl
         }
         public void OnDataChange(int group,int[] clientId, object[] values)
         {
-            if (group == 1)//暂时没用
-            {
-                for (int i = 0; i < clientId.Length; i++)
-                {
-                    if (clientId[i] == 13)
-                    {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-                        {
+            //if (group == 1)//暂时没用
+            //{
+            //    for (int i = 0; i < clientId.Length; i++)
+            //    {
+            //        if (clientId[i] == 13)
+            //        {
+            //            if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+            //            {
                             
-                            if (tempList.Count > 0)
-                            {                                                               
-                                TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
-                                updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                            }
+            //                if (tempList.Count > 0)
+            //                {                                                               
+            //                    TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
+            //                    updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+            //                    writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+            //                }
                             
-                            sendTask();
-                        }
-                        break;
-                    }
-                }
-            }
-            else if (group == 2)
+            //                sendTask();
+            //            }
+            //            break;
+            //        }
+            //    }
+            //}
+            //else 
+            if (group == 2)
             { 
 
             }
@@ -568,7 +598,20 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    if (clientId[i] == 1)
+                    if (clientId[i] == 1)//一号主皮带
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
+                        { 
+                            if (tempList.Count > 0)
+                            {
+                                TaskService.UpdateUnionStatus(15, tempList.ElementAt(tempList.Count - 1).Value);
+                                updateListBox("一号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("一号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                            } 
+                            sendTask(1);
+                        } 
+                    }
+                    if (clientId[i] == 2)//二号主皮带
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
@@ -576,11 +619,38 @@ namespace SortingControlSys.SortingControl
                             if (tempList.Count > 0)
                             {
                                 TaskService.UpdateUnionStatus(15, tempList.ElementAt(tempList.Count - 1).Value);
-                                updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                            } 
-                            sendTask();
-                        } 
+                                updateListBox("二号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("二号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                            }
+                            sendTask(2);
+                        }
+                    }
+                    if (clientId[i] == 3)//三号主皮带
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
+                        {
+
+                            if (tempList.Count > 0)
+                            {
+                                TaskService.UpdateUnionStatus(15, tempList.ElementAt(tempList.Count - 1).Value);
+                                updateListBox("三号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("三号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                            }
+                            sendTask(3);
+                        }
+                    }
+                    if (clientId[i] == 4)//四号主皮带
+                    {
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
+                        { 
+                            if (tempList.Count > 0)
+                            {
+                                TaskService.UpdateUnionStatus(15, tempList.ElementAt(tempList.Count - 1).Value);
+                                updateListBox("四号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                                writeLog.Write("四号主皮带任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
+                            }
+                            sendTask(4);
+                        }
                     }
                 }
             }
@@ -593,9 +663,9 @@ namespace SortingControlSys.SortingControl
                 Marshal.ReleaseComObject(pIOPCServer);
                 pIOPCServer = null;
             }
-            if (taskgroup != null)
+            if (taskgroup1 != null)
             {
-                taskgroup.Release();
+                taskgroup1.Release();
             }
             if (statusGroup1 != null)
             {

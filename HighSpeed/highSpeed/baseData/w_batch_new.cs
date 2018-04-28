@@ -98,7 +98,7 @@ namespace highSpeed.baseData
                 {
                     db.Open();
                     db.ExecuteNonQuery(insertsql);
-                    MessageBox.Show("批次创建成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("批次创建成功,开始历史数据处理,请稍候...!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //win_batch.
 
                     this.panel1.Visible = true;

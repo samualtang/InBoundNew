@@ -2853,11 +2853,10 @@ namespace InBound.Business
         /// 合流任务
         /// </summary>
         /// <param name="mainbelt">主皮带</param>
-        /// <param name="noTaskBelt">无任务皮带</param>
         /// <returns></returns>  
-        public static object[] GetUnionTask(int mainbelt,string noTaskBelt)//合流任务
+        public static object[] GetUnionTask(int mainbelt )//合流任务
         {
-            object[] values = new object[21];//13+4=17+4= [21]
+            object[] values = new object[13]; 
             //int fg = 1;
             for (int i = 0; i < values.Length; i++)
             {
@@ -2870,13 +2869,11 @@ namespace InBound.Business
                 if (query != null)
                 { 
                     var query2 = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == query.SORTNUM select item).ToList();
-                    //主皮带状态
-                    var query3 = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 30 orderby item.MACHINESEQ select item).ToList();
-
+                   
                     if (query2 != null && query2.Count > 0)
                     {
                         values[0] = query.SORTNUM;//递增
-                        values[1] = query.UNIONEXPORTNUM ;
+                        values[1] = query.UNIONEXPORTNUM ;//出口号
                         values[2] = query.PACKAGEMACHINE;//包装机号
                         values[3] = query2.Sum(x => x.POKENUM);
                         values[4] = query2.Where(x => x.GROUPNO == 1).Sum(x => x.POKENUM);
@@ -2891,44 +2888,7 @@ namespace InBound.Business
                         values[11] = query2.Where(x => x.GROUPNO == 7).Sum(x => x.POKENUM);
                         values[12] = 1;//标志位
 
-                        //电控的值 
-                        values[13] = 2;//1为可用状态 0为禁止 2 为上位重置
-                        values[14] = 2; 
-                        values[15] = 2;
-                        values[16] = 2;
-                        //查询禁用主皮带 
-                        //如果没有任务数 则发送给电控 主皮带号 禁用
-                        for (int beltNo = 1; beltNo < 5; beltNo++)
-                        { 
-                            if (!noTaskBelt.Contains(beltNo.ToString()))
-                            { 
-                                values[16 + beltNo] = 1;//启用
-                            }
-                            else
-                            {
-                                values[16 + beltNo] = 0; //禁用
-                            }
-                        }
-                        #region
-                        //写给电控哪条主皮带禁用  启用为1  禁用 0 
-                        //foreach (var item in query3)
-                        //{
-                        //    if (fg < 5)
-                        //    {
-                        //        int BeltState;//主皮带状态 
-                        //        if (item.STATE == "10")//如果为启用 置为1 则为 0
-                        //        {
-                        //            BeltState = 1;// 皮带为启用   投入 
-                        //        }
-                        //        else
-                        //        {
-                        //            BeltState = 0;//皮带为禁用   挂起
-                        //        }
-                        //        values[16 + fg] = BeltState;
-                        //        fg++;
-                        //    }
-                        //}  
-                        #endregion
+                       
                     }
                 }
             }
