@@ -14,11 +14,13 @@ namespace FormUI
     public partial class QueryForm : Form
     {
         int[] types = { -1,10, 20, 30, 40, 42, 50, 52, 55, 60, 70, 80, 90, 97, 100 };
+        int[] statustypes = { -1, 1, 99, 97 };
         public QueryForm()
         {
 
             InitializeComponent();
             cbtype.SelectedIndex = 0;
+            cbstatus.SelectedIndex = 0;
         }
         public void search()
         {
@@ -30,16 +32,11 @@ namespace FormUI
                 MessageBox.Show("结束时间不能小于开始时间");
                 return;
             }
-            if (cbtype.SelectedIndex == 0)
-            {
-                dataGridView1.DataSource = InfJobDownLoadService.Query(-1, begin,end, txtCode.Text, txtCellNO.Text, txtPlace.Text);
-            }
-            else
-            {
+           
                 int type = types[cbtype.SelectedIndex];
-                
-                dataGridView1.DataSource = InfJobDownLoadService.Query(type, begin,end, txtCode.Text, txtCellNO.Text, txtPlace.Text);
-            }
+                decimal statustype = statustypes[cbstatus.SelectedIndex];
+                dataGridView1.DataSource = InfJobDownLoadService.Query(type, begin, end, txtCode.Text, txtCellNO.Text, txtPlace.Text, statustype);
+            
         }
         private void QueryForm_Load(object sender, EventArgs e)
         {
@@ -127,9 +124,22 @@ namespace FormUI
                }
                else
                {
-                   e.Value = "未完成";
+                   INF_JOBFEEDBACK feedError= InfFeedBackService.GetFeedBack(e.Value.ToString(),97);
+                   if (feedError != null)
+                   {
+                       e.Value = "wcs取消";
+                   }
+                   else
+                   {
+                       e.Value = "未完成";
+                   }
                }
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
         }
 
 

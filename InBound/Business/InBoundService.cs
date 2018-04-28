@@ -361,7 +361,7 @@ namespace InBound.Business
                                                 }
                                                 if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
                                                 {
-                                                    planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                                    planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).PlanQty;
                                                 }
                                                 if (tempPlanQty >= FullCount - planQty)
                                                 {
@@ -508,7 +508,7 @@ namespace InBound.Business
                                                     }
                                                     if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
                                                     {
-                                                        planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                                        planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).PlanQty;
                                                     }
                                                     if (tempPlanQty >= FullCount - planQty)
                                                     {
@@ -712,7 +712,7 @@ namespace InBound.Business
                                         }
                                         if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
                                         {
-                                            planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                            planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).PlanQty;
                                         }
                                         if (tempPlanQty >= FullCount - planQty)
                                         {
@@ -860,7 +860,7 @@ namespace InBound.Business
                                             }
                                             if (search != null && search.Find(x => x.CELLNO + "" == item.TROUGHNUM) != null)
                                             {
-                                                planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).QTY;
+                                                planQty += search.Find(x => x.CELLNO + "" == item.TROUGHNUM).PlanQty;
                                             }
                                             if (tempPlanQty >= FullCount - planQty)
                                             {
@@ -900,7 +900,8 @@ namespace InBound.Business
                                     
                                 }
                             }
-                            entity.SaveChanges();
+                            entity.SaveChanges(System.Data.Objects.SaveOptions.AcceptAllChangesAfterSave);
+                              
                         } 
                         catch(Exception ex)
                         {

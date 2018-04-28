@@ -87,6 +87,43 @@ namespace InBound.Business
               dataEntity.SaveChanges();
           }
       }
+      public static List<INF_JOBDOWNLOAD> Query(int jobtype, DateTime begin, DateTime end, String code, String cellno, String place,decimal status)
+      {
+          using (Entities dataEntity = new Entities())
+          {
+              
+                  var query = (from item in dataEntity.INF_JOBDOWNLOAD
+                              where item.CREATEDATE >= begin && item.CREATEDATE <= end && item.BRANDID.Contains(code) && (item.SOURCE.Contains(cellno) || item.TARGET.Contains(cellno))
+                                  && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
+                              orderby item.SOURCE
+                              select item).ToList();
+                  var query2 = from item in dataEntity.INF_JOBFEEDBACK
+                               where (item.FEEDBACKSTATUS == 97 || item.FEEDBACKSTATUS == 99)
+                               select item;
+                  if (jobtype != -1)
+                  {
+                      query = query.Where(x => x.JOBTYPE == jobtype).ToList();
+                  }
+                  if (status ==1)
+                  {
+                      var tempjobid = query2.Select(x => x.JOBID);
+                      query = query.Where(x => !tempjobid.Contains(x.JOBID)).ToList();
+                  }
+                  else if (status == 97)
+                  {
+                      var tempjobid = query2.Where(x=>x.FEEDBACKSTATUS==97).Select(x => x.JOBID);
+                      query = query.Where(x => tempjobid.Contains(x.JOBID)).ToList();
+                  }
+                  else if (status == 99)
+                  {
+                      var tempjobid = query2.Where(x => x.FEEDBACKSTATUS == 99).Select(x => x.JOBID);
+                      query = query.Where(x => tempjobid.Contains(x.JOBID)).ToList();
+                  }
+                  return query;
+          }
+
+      }
+
       public static List<INF_JOBDOWNLOAD> Query(int jobtype, DateTime begin, DateTime end, String code, String cellno, String place)
       {
           using (Entities dataEntity = new Entities())
@@ -398,7 +435,7 @@ namespace InBound.Business
       {
           using (Entities entity = new Entities())
           {
-              var query = (from item in entity.INF_JOBDOWNLOAD where item.INBOUNDNO == inboundNO select item).FirstOrDefault();
+              var query = (from item in entity.INF_JOBDOWNLOAD where item.INBOUNDNO == inboundNO  && item.JOBTYPE==10 select item).FirstOrDefault();
               if (query != null && query.INBOUNDNO == inboundNO)
               {
                   var query2 = (from item in entity.INF_JOBDOWNLOAD where item.JOBID == query.JOBID && item.JOBTYPE == 97 select item).FirstOrDefault();
