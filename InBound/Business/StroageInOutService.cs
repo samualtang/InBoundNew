@@ -25,6 +25,14 @@ namespace InBound.Business
             }
        }
 
+
+       public static void Del(String taskno,Entities dataEntity)
+       {
+           var query = (from item in dataEntity.T_WMS_STORAGEAREA_INOUT where item.TASKNO == taskno select item).FirstOrDefault();
+          if(query!=null)
+           dataEntity.T_WMS_STORAGEAREA_INOUT.DeleteObject(query);
+           
+       }
        public static void UpdateInOut(String taskno, decimal qty, Entities dataEntity)
        {
           

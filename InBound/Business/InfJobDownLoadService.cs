@@ -97,27 +97,27 @@ namespace InBound.Business
                                   && (item.SOURCE.Contains(place) || item.TARGET.Contains(place))
                               orderby item.SOURCE
                               select item).ToList();
-                  var query2 = from item in dataEntity.INF_JOBFEEDBACK
-                               where (item.FEEDBACKSTATUS == 97 || item.FEEDBACKSTATUS == 99)
-                               select item;
+                  //var query2 = from item in dataEntity.INF_JOBFEEDBACK
+                  //             where (item.FEEDBACKSTATUS == 97 || item.FEEDBACKSTATUS == 99)
+                  //             select item;
                   if (jobtype != -1)
                   {
                       query = query.Where(x => x.JOBTYPE == jobtype).ToList();
                   }
                   if (status ==1)
                   {
-                      var tempjobid = query2.Select(x => x.JOBID);
-                      query = query.Where(x => !tempjobid.Contains(x.JOBID)).ToList();
+                      //var tempjobid = query2.Select(x => x.JOBID);
+                      query = query.Where(x => x.STATUS<=2).ToList();
                   }
                   else if (status == 97)
                   {
-                      var tempjobid = query2.Where(x=>x.FEEDBACKSTATUS==97).Select(x => x.JOBID);
-                      query = query.Where(x => tempjobid.Contains(x.JOBID)).ToList();
+                   
+                      query = query.Where(x =>x.STATUS==97).ToList();
                   }
                   else if (status == 99)
                   {
-                      var tempjobid = query2.Where(x => x.FEEDBACKSTATUS == 99).Select(x => x.JOBID);
-                      query = query.Where(x => tempjobid.Contains(x.JOBID)).ToList();
+                      //var tempjobid = query2.Where(x => x.FEEDBACKSTATUS == 99).Select(x => x.JOBID);
+                      query = query.Where(x => x.STATUS>2 && x.STATUS!=97).ToList();
                   }
                   return query;
           }

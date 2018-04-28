@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbstatus = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -55,9 +57,6 @@
             this.垛型 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.状态 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbstatus = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -67,7 +66,6 @@
             // 
             this.groupBox1.Controls.Add(this.cbstatus);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.btnCancel);
             this.groupBox1.Controls.Add(this.dateTimePicker2);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.label6);
@@ -89,6 +87,28 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
+            // 
+            // cbstatus
+            // 
+            this.cbstatus.FormattingEnabled = true;
+            this.cbstatus.Items.AddRange(new object[] {
+            "所有",
+            "未完成",
+            "已完成",
+            "已取消"});
+            this.cbstatus.Location = new System.Drawing.Point(495, 58);
+            this.cbstatus.Name = "cbstatus";
+            this.cbstatus.Size = new System.Drawing.Size(121, 20);
+            this.cbstatus.TabIndex = 16;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(430, 61);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 12);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "状态:";
             // 
             // dateTimePicker2
             // 
@@ -313,42 +333,9 @@
             // 
             // 状态
             // 
-            this.状态.DataPropertyName = "jobid";
+            this.状态.DataPropertyName = "status";
             this.状态.HeaderText = "状态";
             this.状态.Name = "状态";
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(884, 36);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(79, 23);
-            this.btnCancel.TabIndex = 14;
-            this.btnCancel.Text = "取消任务";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(430, 61);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 12);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "状态:";
-            // 
-            // cbstatus
-            // 
-            this.cbstatus.FormattingEnabled = true;
-            this.cbstatus.Items.AddRange(new object[] {
-            "所有",
-            "未完成",
-            "已完成",
-            "已取消"});
-            this.cbstatus.Location = new System.Drawing.Point(495, 58);
-            this.cbstatus.Name = "cbstatus";
-            this.cbstatus.Size = new System.Drawing.Size(121, 20);
-            this.cbstatus.TabIndex = 16;
             // 
             // QueryForm
             // 
@@ -387,6 +374,8 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbstatus;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridViewTextBoxColumn 任务编号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 任务类型;
         private System.Windows.Forms.DataGridViewTextBoxColumn 源地址;
@@ -398,8 +387,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 垛型;
         private System.Windows.Forms.DataGridViewTextBoxColumn 时间;
         private System.Windows.Forms.DataGridViewTextBoxColumn 状态;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ComboBox cbstatus;
-        private System.Windows.Forms.Label label7;
     }
 }

@@ -116,24 +116,39 @@ namespace FormUI
             }
             if (e.ColumnIndex == 10)
             {
-               INF_JOBFEEDBACK feed= InfFeedBackService.GetFeedBack(e.Value.ToString());
-               if (feed != null)
-               {
-                   e.Value = "已完成";
+                if (int.Parse(e.Value.ToString()) > 2)
+                {
+                    if (e.Value.ToString() == "97")
+                    {
+                        e.Value = "已取消";
+                    }
+                    else
+                    {
+                        e.Value = "完成";
+                    }
+                }
+                else
+                {
+                    e.Value = "未完成";
+                }
+               //INF_JOBFEEDBACK feed= InfFeedBackService.GetFeedBack(e.Value.ToString());
+               //if (feed != null)
+               //{
+               //    e.Value = "已完成";
 
-               }
-               else
-               {
-                   INF_JOBFEEDBACK feedError= InfFeedBackService.GetFeedBack(e.Value.ToString(),97);
-                   if (feedError != null)
-                   {
-                       e.Value = "wcs取消";
-                   }
-                   else
-                   {
-                       e.Value = "未完成";
-                   }
-               }
+               //}
+               //else
+               //{
+               //    INF_JOBFEEDBACK feedError= InfFeedBackService.GetFeedBack(e.Value.ToString(),97);
+               //    if (feedError != null)
+               //    {
+               //        e.Value = "wcs取消";
+               //    }
+               //    else
+               //    {
+               //        e.Value = "未完成";
+               //    }
+               //}
             }
         }
 

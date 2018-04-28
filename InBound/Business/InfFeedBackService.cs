@@ -91,6 +91,81 @@ namespace InBound.Business
                                  where (item.JOBTYPE == 80)
                                  && item2.FEEDBACKSTATUS == 100 && item.STATUS==1//出重力式货架完成
                                  select item).ToList();
+
+                   var query5 = (from item in dataEntity.INF_JOBDOWNLOAD
+                                 join item2 in dataEntity.INF_JOBFEEDBACK
+                                 on item.JOBID equals item2.JOBID
+                                 where  item2.FEEDBACKSTATUS == 97 && item.STATUS == 1//wcs 任务取消
+                                 select item).ToList();
+                   if (query5 != null)
+                   {
+                       foreach (var item in query5)
+                       {
+                           try
+                           {
+                               if (item.JOBTYPE == 20 || item.JOBTYPE == 30 || item.JOBTYPE == 40 || item.JOBTYPE == 42)//42的返库后续有可能要特殊处理
+                               {
+                                   using (TransactionScope ts = new TransactionScope())
+                                   {
+                                       item.STATUS = 97;
+                                       AtsCellInfoService.delete(item.TARGET);
+                                       AtsCellInfoDetailService.delete(item.TARGET);
+                                       AtsCellService.UpdateAtsCell(item.TARGET, 10);//更新为空闲
+                                       if (item.JOBTYPE == 20)
+                                       {
+                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == item.BRANDID select line).FirstOrDefault();
+                                           if (inboundLine == null)
+                                           {
+                                               WriteLog.GetLog().Write("找不到入库单号:" + item.INBOUNDNO);
+                                               continue;
+                                           }
+                                           else
+                                           {
+                                               inboundLine.LOCKQTY -= item.PLANQTY;
+                                           }
+                                       }
+                                       dataEntity.SaveChanges();
+                                       ts.Complete();
+                                   }
+                               }
+                               else if (item.JOBTYPE == 50 || item.JOBTYPE == 52 || item.JOBTYPE == 55)
+                               {
+                                   using (TransactionScope ts = new TransactionScope())
+                                   {
+                                       item.STATUS = 97;
+                                       AtsCellInfoService.GetCellInfo(item.SOURCE, dataEntity).STATUS = 30;//
+                                       AtsCellService.UpdateAtsCell(item.SOURCE, 10);
+                                       AtsCellInfoDetailService.GetDetail(item.SOURCE, dataEntity).REQUESTQTY = 0;
+                                       if (item.JOBTYPE == 55)
+                                       {
+                                           var cd = (from cditem in dataEntity.INF_JOBDOWNLOAD where cditem.EXTATTR2 == item.JOBID select cditem).ToList();
+                                           if (cd != null)
+                                           {
+                                               foreach (var v in cd)
+                                               {
+                                                   v.STATUS = 97;//取消
+                                                   StroageInOutService.Del(v.JOBID + "", dataEntity);
+                                               }
+                                           }
+                                       }
+                                       dataEntity.SaveChanges();
+                                       ts.Complete();
+                                   }
+
+                               }
+                               else if (item.JOBTYPE == 80)
+                               {
+                                   item.STATUS = 97;
+                                   StroageInOutService.Del(item.JOBID + "", dataEntity);
+                                   dataEntity.SaveChanges();
+                               }
+                           }
+                           catch (Exception e)
+                           {
+                               log.Write("错误信息:" + e.Message);
+                           }
+                       }
+                   }
                    if (query4 != null)
                    {
                        foreach (var task in query4)
@@ -614,7 +689,7 @@ namespace InBound.Business
                                       //}
                                       //if (detail != null && load.BRANDID==detail.BARCODE)
                                       //{
-
+                                      InfJobDownLoadService.UpdateJopDownLoad(item.JOBID, 10,dataEntity);
 
                                           var report = (from reportitem in dataEntity.T_WMS_STORAGEAREA_INOUT where reportitem.TASKNO == item.JOBID select reportitem).ToList();
                                           if (report != null && report.Count > 0)

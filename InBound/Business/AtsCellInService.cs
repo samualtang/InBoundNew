@@ -94,7 +94,7 @@ namespace InBound.Business
                                  && item5.EQUIPMENTSTATUS=="1" //堆垛机正常
                                  && list.Contains(item4.LANEWAYNO) orderby item.LANEWAYNO descending
                                  select item.LANEWAYNO).Distinct().ToList();
-                    if (query != null)
+                    if (query != null && query.Count>0)
                     {
                         var query1 = (from item in et.T_WMS_ATSCELLINFO_DETAIL
                                       join item2 in et.T_WMS_ATSCELL
@@ -122,6 +122,7 @@ namespace InBound.Business
                             }
                         }
                         var query3 = (from item in et.T_WMS_ATSCELL where item.LANEWAYNO == tempno && (item.STATUS == 10 || item.STATUS == 30) && item.WORKSTATUS == 10 orderby item.DISTANCE select item).FirstOrDefault();
+                        
                         query3.WORKSTATUS = 30;
                         var query4 = (from item in et.T_WMS_ATSCELLINFO_DETAIL where item.CELLNO == query3.CELLNO select item).FirstOrDefault();
                         et.SaveChanges();
@@ -130,6 +131,7 @@ namespace InBound.Business
                     }
                     else
                     {
+                        WriteLog.GetLog().Write("没有可用的堆垛机");
                         return "";
 
                     }

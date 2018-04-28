@@ -170,6 +170,7 @@
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TooL\Constant.cs" />
+    <Compile Include="TooL\TaskType.cs" />
     <Compile Include="w_user.cs">
       <SubType>Form</SubType>
     </Compile>
