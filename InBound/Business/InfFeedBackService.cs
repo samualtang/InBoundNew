@@ -35,7 +35,16 @@ namespace InBound.Business
               return query;
           }
       }
+      public static INF_JOBFEEDBACK GetFeedBack(String jobid,decimal status)
+      {
 
+          using (Entities dataEntity = new Entities())
+          {
+
+              var query = (from item in dataEntity.INF_JOBFEEDBACK where item.JOBID == jobid && item.FEEDBACKSTATUS == status select item).FirstOrDefault();
+              return query;
+          }
+      }
       public static void UpdateErrorJob(String jobid)
       {
 
@@ -72,9 +81,9 @@ namespace InBound.Business
 
                    var query3 =( from item in dataEntity.INF_JOBDOWNLOAD
                                 join item2 in dataEntity.INF_JOBFEEDBACK
-                                on item.JOBID equals item2.JOBID
+                                on item.JOBID equals item2.JOBID 
                                 where (item.JOBTYPE == 60 || item.JOBTYPE == 70)
-                                && item2.FEEDBACKSTATUS == 1
+                                && item2.FEEDBACKSTATUS == 1 && item2.STATUS==0
                                  select item2).ToList();
                    var query4 = (from item in dataEntity.INF_JOBDOWNLOAD
                                  join item2 in dataEntity.INF_JOBFEEDBACK
