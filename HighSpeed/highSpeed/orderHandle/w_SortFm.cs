@@ -63,8 +63,7 @@ namespace highSpeed.orderHandle
         }
          void DgvBind(string sql)
          {
-             ds.Clear();
-
+             ds.Clear(); 
              ds = Db.QueryDs(sql); 
              panel2.Visible = true;
              label2.Visible = true;
@@ -85,6 +84,7 @@ namespace highSpeed.orderHandle
 
              this.dgvSortInfo.DataSource = ds.Tables[0];
              this.dgvSortInfo.AutoGenerateColumns = false;
+             
 
              string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
              if (columnwidths != "")
@@ -112,6 +112,8 @@ namespace highSpeed.orderHandle
             label2.Visible = true;
             progressBar1.Visible = true;
             progressBar1.Value = 0;
+            Thread thread = new Thread(new ThreadStart(Sort));
+            thread.Start();
             label2.Text = "正在对分拣车组任务数据进重新排序";
             for (int i = 0; i < rcounts; i++)
             {
@@ -123,9 +125,8 @@ namespace highSpeed.orderHandle
                     label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
                     label2.Refresh();
                 }
-            } 
-            Thread thread = new Thread(new ThreadStart(Sort)); 
-            thread.Start();
+            }  
+            DgvBind(sql);//排程成后刷新
         }
 
         void Sort()
@@ -134,7 +135,7 @@ namespace highSpeed.orderHandle
             sqlpara = new OracleParameter[3];
             sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
             sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
-            sqlpara[2] = new OracleParameter("UnionStates", OracleType.VarChar, 100);//合单标志位
+            sqlpara[2] = new OracleParameter("p_UnionStates", OracleType.VarChar, 100);//合单标志位
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
             sqlpara[2].Direction = ParameterDirection.Input; 
@@ -161,11 +162,11 @@ namespace highSpeed.orderHandle
             {
                 panel2.Visible = false;
                 MessageBox.Show("分拣车组任务排序成功！");
-            }
-
+               
+            } 
             else
             {
-                panel2.Visible = false;
+               // panel2.Visible = false;
                 MessageBox.Show(errmsg);
             } 
             updateControl(btnSort, true, true);
@@ -174,7 +175,7 @@ namespace highSpeed.orderHandle
             //  label2.Visible = false;
             updateControl(label2, false, true);
             //  progressBar1.Visible = false;
-           //updateControl(progressBar1, true, true);
+           updateControl(progressBar1, false, true);
         }
         private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
 
@@ -191,6 +192,37 @@ namespace highSpeed.orderHandle
             {
                 control.Visible = isvisible;
                 control.Enabled = isenable;
+            }
+        }
+
+        private void dgvSortInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 2)
+            {
+                String statusText = "";
+                switch (e.Value.ToString())
+                { 
+                    case "0":
+                        statusText = "新增";
+                        break;
+
+                }
+                e.Value = statusText;
+            }
+        }
+
+        private void btnRef_Click(object sender, EventArgs e)
+        {
+            seek();
+            
+        }
+
+        private void dgvSortInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                Dgvcheck.Selected = true;
+              
             }
         }
 

@@ -12,6 +12,7 @@ namespace FollowTask
 {
     public partial class fm_Machine : Form
     {
+        
         public fm_Machine()
         {
             InitializeComponent();
@@ -26,11 +27,26 @@ namespace FollowTask
         }
 
         private void fm_Machine_Load(object sender, EventArgs e)
-        {
-           // BtnText(this.Text);
+        {  
             lblFormText.Text = this.Text +"烟柜";
+            BtnText(this.Text); 
+           
         }
-        void BtnText(string groupText)
+ 
+
+        private void Machine1_Click(object sender, EventArgs e)
+        {
+            Button name = ((Button)sender);
+            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text+ name.Text);
+            ftmd.Show();
+            gbMachine.Text = name.Text+"机械手信息";
+        }
+
+        /// <summary>
+        /// 机械手根据组变更
+        /// </summary>
+        /// <param name="groupText">组名 </param>
+        public void BtnText(string groupText)
         {
             int group = 0;
             if (groupText.Contains("一") || groupText.Contains("三") || groupText.Contains("五") || groupText.Contains("七"))
@@ -43,59 +59,27 @@ namespace FollowTask
             }
             if (group == 1)
             {
-                for (int i = 1; i < 12; i++)
+                int j = 1;
+                for (int i = 1; i < 13; i++)
                 {
-
-                    foreach (Control control in this.Controls)
-                    {
-                        if (control.Text != btnBelt.Text.Replace(" ", ""))
-                        {
-                            if (control is Button)
-                            {
-                                //遍历后的操作...
-                                control.Text = i.ToString() + "号";
-                            }
-                        }
-                    }
+                    string btnNmae = "Machine" + j;
+                    Control control = Controls.Find(btnNmae, true)[0];
+                    control.Text = j + "号";
+                    j++;
                 }
-              
-               //for(int i=0;i<this.Controls.Count;i++)
-               // {
-               //    if(this.Controls[i] is Button)
-               //    {
-               //      this.Controls[i] as Button).Text = i.ToString();    //是要将按钮标签设为0-9数字么？
-               //    }
-               //}
-                 
             }
-            else
+            else if (group == 2)
             {
-              
+                int j = 1;
                 for (int i = 12; i < 23; i++)
-                { 
-                    foreach (Control control in this.Controls)
-                    {
-                       
-                        if (control is Button)
-                        {
-                            if (control.Text.Replace(" ", "") != "皮带")
-                            {
-                                MessageBox.Show(control.Text);
-                                //遍历后的操作...
-                                control.Text = i.ToString() + "号";
-                            }
-                        } 
-                    }
+                {
+                    string btnNmae = "Machine" + j;
+                    Control control = Controls.Find(btnNmae, true)[0];
+                    control.Text = i + "号";
+                    j++;
                 }
-              
             }
 
-        }
-
-        private void Machine1_Click(object sender, EventArgs e)
-        {
-            Button name = ((Button)sender);
-            gbMachine.Text = name.Text+"机械手信息";
         }
     }
 }

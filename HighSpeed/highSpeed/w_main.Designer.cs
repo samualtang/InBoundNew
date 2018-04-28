@@ -54,16 +54,16 @@
             this.系统管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.数据库设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.文本导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.任务查看ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.机械手ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.预分拣ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.分流ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.异形烟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.机械手ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.预分拣ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.分流ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.异形烟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.任务查看ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -101,56 +101,56 @@
             // 订单信息ToolStripMenuItem
             // 
             this.订单信息ToolStripMenuItem.Name = "订单信息ToolStripMenuItem";
-            this.订单信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.订单信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.订单信息ToolStripMenuItem.Text = "卷烟信息";
             this.订单信息ToolStripMenuItem.Click += new System.EventHandler(this.订单信息ToolStripMenuItem_Click);
             // 
             // 零售户信息ToolStripMenuItem
             // 
             this.零售户信息ToolStripMenuItem.Name = "零售户信息ToolStripMenuItem";
-            this.零售户信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.零售户信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.零售户信息ToolStripMenuItem.Text = "零售户信息";
             this.零售户信息ToolStripMenuItem.Click += new System.EventHandler(this.零售户信息ToolStripMenuItem_Click);
             // 
             // 车组信息ToolStripMenuItem
             // 
             this.车组信息ToolStripMenuItem.Name = "车组信息ToolStripMenuItem";
-            this.车组信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.车组信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.车组信息ToolStripMenuItem.Text = "车组信息";
             this.车组信息ToolStripMenuItem.Click += new System.EventHandler(this.车组信息ToolStripMenuItem_Click);
             // 
             // 分拣批次管理ToolStripMenuItem
             // 
             this.分拣批次管理ToolStripMenuItem.Name = "分拣批次管理ToolStripMenuItem";
-            this.分拣批次管理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.分拣批次管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.分拣批次管理ToolStripMenuItem.Text = "分拣批次管理";
             this.分拣批次管理ToolStripMenuItem.Click += new System.EventHandler(this.分拣批次管理ToolStripMenuItem_Click);
             // 
             // 品牌条码信息ToolStripMenuItem
             // 
             this.品牌条码信息ToolStripMenuItem.Name = "品牌条码信息ToolStripMenuItem";
-            this.品牌条码信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.品牌条码信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.品牌条码信息ToolStripMenuItem.Text = "品牌条码信息";
             this.品牌条码信息ToolStripMenuItem.Click += new System.EventHandler(this.品牌条码信息ToolStripMenuItem_Click);
             // 
             // 品牌尾数维护ToolStripMenuItem
             // 
             this.品牌尾数维护ToolStripMenuItem.Name = "品牌尾数维护ToolStripMenuItem";
-            this.品牌尾数维护ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.品牌尾数维护ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.品牌尾数维护ToolStripMenuItem.Text = "品牌尾数维护";
             this.品牌尾数维护ToolStripMenuItem.Click += new System.EventHandler(this.品牌尾数维护ToolStripMenuItem_Click);
             // 
             // 分拣通道管理ToolStripMenuItem
             // 
             this.分拣通道管理ToolStripMenuItem.Name = "分拣通道管理ToolStripMenuItem";
-            this.分拣通道管理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.分拣通道管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.分拣通道管理ToolStripMenuItem.Text = "分拣通道管理";
             this.分拣通道管理ToolStripMenuItem.Click += new System.EventHandler(this.分拣通道管理ToolStripMenuItem_Click);
             // 
             // 通道转移ToolStripMenuItem
             // 
             this.通道转移ToolStripMenuItem.Name = "通道转移ToolStripMenuItem";
-            this.通道转移ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.通道转移ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.通道转移ToolStripMenuItem.Text = "通道转移";
             this.通道转移ToolStripMenuItem.Click += new System.EventHandler(this.通道转移ToolStripMenuItem_Click);
             // 
@@ -277,45 +277,6 @@
             this.文本导出ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.文本导出ToolStripMenuItem.Text = "文本导出";
             // 
-            // 任务查看ToolStripMenuItem
-            // 
-            this.任务查看ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.机械手ToolStripMenuItem,
-            this.预分拣ToolStripMenuItem,
-            this.分流ToolStripMenuItem,
-            this.异形烟ToolStripMenuItem});
-            this.任务查看ToolStripMenuItem.Name = "任务查看ToolStripMenuItem";
-            this.任务查看ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.任务查看ToolStripMenuItem.Text = "追踪任务";
-            // 
-            // 机械手ToolStripMenuItem
-            // 
-            this.机械手ToolStripMenuItem.Name = "机械手ToolStripMenuItem";
-            this.机械手ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.机械手ToolStripMenuItem.Text = "机械手";
-            this.机械手ToolStripMenuItem.Click += new System.EventHandler(this.机械手ToolStripMenuItem_Click);
-            // 
-            // 预分拣ToolStripMenuItem
-            // 
-            this.预分拣ToolStripMenuItem.Name = "预分拣ToolStripMenuItem";
-            this.预分拣ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.预分拣ToolStripMenuItem.Text = "预分拣";
-            this.预分拣ToolStripMenuItem.Click += new System.EventHandler(this.预分拣ToolStripMenuItem_Click);
-            // 
-            // 分流ToolStripMenuItem
-            // 
-            this.分流ToolStripMenuItem.Name = "分流ToolStripMenuItem";
-            this.分流ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.分流ToolStripMenuItem.Text = "合流";
-            this.分流ToolStripMenuItem.Click += new System.EventHandler(this.合流ToolStripMenuItem_Click);
-            // 
-            // 异形烟ToolStripMenuItem
-            // 
-            this.异形烟ToolStripMenuItem.Name = "异形烟ToolStripMenuItem";
-            this.异形烟ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.异形烟ToolStripMenuItem.Text = "异形烟";
-            this.异形烟ToolStripMenuItem.Click += new System.EventHandler(this.异形烟ToolStripMenuItem_Click);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -359,6 +320,45 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(231, 17);
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // 机械手ToolStripMenuItem
+            // 
+            this.机械手ToolStripMenuItem.Name = "机械手ToolStripMenuItem";
+            this.机械手ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.机械手ToolStripMenuItem.Text = "机械手(&M)";
+            this.机械手ToolStripMenuItem.Click += new System.EventHandler(this.机械手ToolStripMenuItem_Click);
+            // 
+            // 预分拣ToolStripMenuItem
+            // 
+            this.预分拣ToolStripMenuItem.Name = "预分拣ToolStripMenuItem";
+            this.预分拣ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.预分拣ToolStripMenuItem.Text = "预分拣(&F)";
+            this.预分拣ToolStripMenuItem.Click += new System.EventHandler(this.预分拣ToolStripMenuItem_Click);
+            // 
+            // 分流ToolStripMenuItem
+            // 
+            this.分流ToolStripMenuItem.Name = "分流ToolStripMenuItem";
+            this.分流ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.分流ToolStripMenuItem.Text = "合流(&U)";
+            this.分流ToolStripMenuItem.Click += new System.EventHandler(this.合流ToolStripMenuItem_Click);
+            // 
+            // 异形烟ToolStripMenuItem
+            // 
+            this.异形烟ToolStripMenuItem.Name = "异形烟ToolStripMenuItem";
+            this.异形烟ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.异形烟ToolStripMenuItem.Text = "异形烟(&N)";
+            this.异形烟ToolStripMenuItem.Click += new System.EventHandler(this.异形烟ToolStripMenuItem_Click);
+            // 
+            // 任务查看ToolStripMenuItem
+            // 
+            this.任务查看ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.机械手ToolStripMenuItem,
+            this.预分拣ToolStripMenuItem,
+            this.分流ToolStripMenuItem,
+            this.异形烟ToolStripMenuItem});
+            this.任务查看ToolStripMenuItem.Name = "任务查看ToolStripMenuItem";
+            this.任务查看ToolStripMenuItem.Size = new System.Drawing.Size(83, 21);
+            this.任务查看ToolStripMenuItem.Text = "查询任务(&S)";
             // 
             // w_main
             // 
@@ -413,11 +413,11 @@
         private System.Windows.Forms.ToolStripMenuItem tsmi_enablestandby;
         private System.Windows.Forms.ToolStripMenuItem 排程报表ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 混合道补烟顺序ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 任务排程ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 任务查看ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 机械手ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 预分拣ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 分流ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 异形烟ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 任务排程ToolStripMenuItem1;
     }
 }

@@ -644,7 +644,7 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList.Count > 0)//问题所在 count = 0
+                            if (tempList.Count > 0)
                             {
 
                                 TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送

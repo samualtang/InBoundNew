@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
+            this.rdbUnionDan = new System.Windows.Forms.RadioButton();
             this.lblInFO = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -36,8 +38,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.pager1 = new WHC.Pager.WinControl.Pager();
-            this.rdbUnionDan = new System.Windows.Forms.RadioButton();
-            this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
+            this.btnRef = new System.Windows.Forms.Button();
+            this.Dgvcheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -45,6 +47,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.rdbUnUnionDan);
             this.panel1.Controls.Add(this.rdbUnionDan);
             this.panel1.Controls.Add(this.lblInFO);
@@ -54,6 +57,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(921, 48);
             this.panel1.TabIndex = 0;
+            // 
+            // rdbUnUnionDan
+            // 
+            this.rdbUnUnionDan.AutoSize = true;
+            this.rdbUnUnionDan.Location = new System.Drawing.Point(484, 15);
+            this.rdbUnUnionDan.Name = "rdbUnUnionDan";
+            this.rdbUnUnionDan.Size = new System.Drawing.Size(59, 16);
+            this.rdbUnUnionDan.TabIndex = 2;
+            this.rdbUnUnionDan.TabStop = true;
+            this.rdbUnUnionDan.Text = "不合单";
+            this.rdbUnUnionDan.UseVisualStyleBackColor = true;
+            // 
+            // rdbUnionDan
+            // 
+            this.rdbUnionDan.AutoSize = true;
+            this.rdbUnionDan.Location = new System.Drawing.Point(394, 15);
+            this.rdbUnionDan.Name = "rdbUnionDan";
+            this.rdbUnionDan.Size = new System.Drawing.Size(47, 16);
+            this.rdbUnionDan.TabIndex = 2;
+            this.rdbUnionDan.TabStop = true;
+            this.rdbUnionDan.Text = "合单";
+            this.rdbUnionDan.UseVisualStyleBackColor = true;
             // 
             // lblInFO
             // 
@@ -68,7 +93,7 @@
             // btnSort
             // 
             this.btnSort.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnSort.Location = new System.Drawing.Point(724, 11);
+            this.btnSort.Location = new System.Drawing.Point(661, 12);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(75, 23);
             this.btnSort.TabIndex = 0;
@@ -111,6 +136,8 @@
             this.dgvSortInfo.AllowUserToResizeRows = false;
             this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSortInfo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Dgvcheck});
             this.dgvSortInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 48);
             this.dgvSortInfo.MultiSelect = false;
@@ -120,6 +147,8 @@
             this.dgvSortInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSortInfo.Size = new System.Drawing.Size(921, 618);
             this.dgvSortInfo.TabIndex = 5;
+            this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
+            this.dgvSortInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortInfo_CellFormatting);
             // 
             // pager1
             // 
@@ -133,27 +162,22 @@
             this.pager1.TabIndex = 6;
             this.pager1.Visible = false;
             // 
-            // rdbUnionDan
+            // btnRef
             // 
-            this.rdbUnionDan.AutoSize = true;
-            this.rdbUnionDan.Location = new System.Drawing.Point(537, 14);
-            this.rdbUnionDan.Name = "rdbUnionDan";
-            this.rdbUnionDan.Size = new System.Drawing.Size(47, 16);
-            this.rdbUnionDan.TabIndex = 2;
-            this.rdbUnionDan.TabStop = true;
-            this.rdbUnionDan.Text = "合单";
-            this.rdbUnionDan.UseVisualStyleBackColor = true;
+            this.btnRef.Location = new System.Drawing.Point(561, 12);
+            this.btnRef.Name = "btnRef";
+            this.btnRef.Size = new System.Drawing.Size(75, 23);
+            this.btnRef.TabIndex = 3;
+            this.btnRef.Text = "刷 新";
+            this.btnRef.UseVisualStyleBackColor = true;
+            this.btnRef.Click += new System.EventHandler(this.btnRef_Click);
             // 
-            // rdbUnUnionDan
+            // Dgvcheck
             // 
-            this.rdbUnUnionDan.AutoSize = true;
-            this.rdbUnUnionDan.Location = new System.Drawing.Point(627, 14);
-            this.rdbUnUnionDan.Name = "rdbUnUnionDan";
-            this.rdbUnUnionDan.Size = new System.Drawing.Size(59, 16);
-            this.rdbUnUnionDan.TabIndex = 2;
-            this.rdbUnUnionDan.TabStop = true;
-            this.rdbUnUnionDan.Text = "不合单";
-            this.rdbUnUnionDan.UseVisualStyleBackColor = true;
+            this.Dgvcheck.HeaderText = "选择";
+            this.Dgvcheck.Name = "Dgvcheck";
+            this.Dgvcheck.ReadOnly = true;
+            this.Dgvcheck.Width = 50;
             // 
             // w_SortFm
             // 
@@ -189,5 +213,7 @@
         private WHC.Pager.WinControl.Pager pager1;
         private System.Windows.Forms.RadioButton rdbUnUnionDan;
         private System.Windows.Forms.RadioButton rdbUnionDan;
+        private System.Windows.Forms.Button btnRef;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Dgvcheck;
     }
 }

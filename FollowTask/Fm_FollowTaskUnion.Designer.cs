@@ -29,24 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.gbMachine = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dgvMachineTaks = new System.Windows.Forms.DataGridView();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dgvBetlTaskInfo = new System.Windows.Forms.DataGridView();
-            this.btnMainBelt = new System.Windows.Forms.Button();
             this.btnhuancun8 = new System.Windows.Forms.Button();
             this.btnhuancun7 = new System.Windows.Forms.Button();
             this.btnhuancun6 = new System.Windows.Forms.Button();
@@ -63,12 +45,70 @@
             this.Machine5 = new System.Windows.Forms.Button();
             this.Machine2 = new System.Windows.Forms.Button();
             this.Machine1 = new System.Windows.Forms.Button();
+            this.gbMachine = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dgvMachineTaks = new System.Windows.Forms.DataGridView();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pictureBox20 = new System.Windows.Forms.PictureBox();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox18 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox16 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox15 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvBetlTaskInfo = new System.Windows.Forms.DataGridView();
+            this.btnMainBelt = new System.Windows.Forms.Button();
             this.lblGourpText = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.gbMachine.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachineTaks)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBetlTaskInfo)).BeginInit();
             this.SuspendLayout();
@@ -99,18 +139,179 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "主 皮 带 :";
             // 
+            // btnhuancun8
+            // 
+            this.btnhuancun8.Location = new System.Drawing.Point(1038, 36);
+            this.btnhuancun8.Name = "btnhuancun8";
+            this.btnhuancun8.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun8.TabIndex = 60;
+            this.btnhuancun8.Text = "缓存区";
+            this.btnhuancun8.UseVisualStyleBackColor = true;
+            this.btnhuancun8.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun7
+            // 
+            this.btnhuancun7.Location = new System.Drawing.Point(917, 36);
+            this.btnhuancun7.Name = "btnhuancun7";
+            this.btnhuancun7.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun7.TabIndex = 63;
+            this.btnhuancun7.Text = "缓存区";
+            this.btnhuancun7.UseVisualStyleBackColor = true;
+            this.btnhuancun7.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun6
+            // 
+            this.btnhuancun6.Location = new System.Drawing.Point(764, 36);
+            this.btnhuancun6.Name = "btnhuancun6";
+            this.btnhuancun6.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun6.TabIndex = 62;
+            this.btnhuancun6.Text = "缓存区";
+            this.btnhuancun6.UseVisualStyleBackColor = true;
+            this.btnhuancun6.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun5
+            // 
+            this.btnhuancun5.Location = new System.Drawing.Point(598, 36);
+            this.btnhuancun5.Name = "btnhuancun5";
+            this.btnhuancun5.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun5.TabIndex = 61;
+            this.btnhuancun5.Text = "缓存区";
+            this.btnhuancun5.UseVisualStyleBackColor = true;
+            this.btnhuancun5.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun4
+            // 
+            this.btnhuancun4.Location = new System.Drawing.Point(441, 36);
+            this.btnhuancun4.Name = "btnhuancun4";
+            this.btnhuancun4.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun4.TabIndex = 64;
+            this.btnhuancun4.Text = "缓存区";
+            this.btnhuancun4.UseVisualStyleBackColor = true;
+            this.btnhuancun4.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun3
+            // 
+            this.btnhuancun3.Location = new System.Drawing.Point(285, 36);
+            this.btnhuancun3.Name = "btnhuancun3";
+            this.btnhuancun3.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun3.TabIndex = 67;
+            this.btnhuancun3.Text = "缓存区";
+            this.btnhuancun3.UseVisualStyleBackColor = true;
+            this.btnhuancun3.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun2
+            // 
+            this.btnhuancun2.Location = new System.Drawing.Point(143, 36);
+            this.btnhuancun2.Name = "btnhuancun2";
+            this.btnhuancun2.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun2.TabIndex = 66;
+            this.btnhuancun2.Text = "缓存区";
+            this.btnhuancun2.UseVisualStyleBackColor = true;
+            this.btnhuancun2.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // btnhuancun1
+            // 
+            this.btnhuancun1.Location = new System.Drawing.Point(22, 36);
+            this.btnhuancun1.Name = "btnhuancun1";
+            this.btnhuancun1.Size = new System.Drawing.Size(41, 65);
+            this.btnhuancun1.TabIndex = 65;
+            this.btnhuancun1.Text = "缓存区";
+            this.btnhuancun1.UseVisualStyleBackColor = true;
+            this.btnhuancun1.Click += new System.EventHandler(this.btnhuancun1_Click);
+            // 
+            // Machine8
+            // 
+            this.Machine8.Location = new System.Drawing.Point(1038, 107);
+            this.Machine8.Name = "Machine8";
+            this.Machine8.Size = new System.Drawing.Size(41, 50);
+            this.Machine8.TabIndex = 57;
+            this.Machine8.Text = "8号";
+            this.Machine8.UseVisualStyleBackColor = true;
+            this.Machine8.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine4
+            // 
+            this.Machine4.Location = new System.Drawing.Point(441, 107);
+            this.Machine4.Name = "Machine4";
+            this.Machine4.Size = new System.Drawing.Size(41, 50);
+            this.Machine4.TabIndex = 58;
+            this.Machine4.Text = "4号";
+            this.Machine4.UseVisualStyleBackColor = true;
+            this.Machine4.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine7
+            // 
+            this.Machine7.Location = new System.Drawing.Point(917, 107);
+            this.Machine7.Name = "Machine7";
+            this.Machine7.Size = new System.Drawing.Size(41, 50);
+            this.Machine7.TabIndex = 59;
+            this.Machine7.Text = "7号";
+            this.Machine7.UseVisualStyleBackColor = true;
+            this.Machine7.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine6
+            // 
+            this.Machine6.Location = new System.Drawing.Point(764, 107);
+            this.Machine6.Name = "Machine6";
+            this.Machine6.Size = new System.Drawing.Size(41, 50);
+            this.Machine6.TabIndex = 52;
+            this.Machine6.Text = "6号";
+            this.Machine6.UseVisualStyleBackColor = true;
+            this.Machine6.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine3
+            // 
+            this.Machine3.Location = new System.Drawing.Point(286, 107);
+            this.Machine3.Name = "Machine3";
+            this.Machine3.Size = new System.Drawing.Size(41, 50);
+            this.Machine3.TabIndex = 53;
+            this.Machine3.Text = "3号";
+            this.Machine3.UseVisualStyleBackColor = true;
+            this.Machine3.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine5
+            // 
+            this.Machine5.Location = new System.Drawing.Point(598, 107);
+            this.Machine5.Name = "Machine5";
+            this.Machine5.Size = new System.Drawing.Size(41, 50);
+            this.Machine5.TabIndex = 55;
+            this.Machine5.Text = "5号";
+            this.Machine5.UseVisualStyleBackColor = true;
+            this.Machine5.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine2
+            // 
+            this.Machine2.Location = new System.Drawing.Point(143, 107);
+            this.Machine2.Name = "Machine2";
+            this.Machine2.Size = new System.Drawing.Size(41, 50);
+            this.Machine2.TabIndex = 54;
+            this.Machine2.Text = "2号";
+            this.Machine2.UseVisualStyleBackColor = true;
+            this.Machine2.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // Machine1
+            // 
+            this.Machine1.Location = new System.Drawing.Point(22, 107);
+            this.Machine1.Name = "Machine1";
+            this.Machine1.Size = new System.Drawing.Size(41, 50);
+            this.Machine1.TabIndex = 56;
+            this.Machine1.Text = "1号";
+            this.Machine1.UseVisualStyleBackColor = true;
+            this.Machine1.Click += new System.EventHandler(this.Machine1_Click);
+            // 
             // gbMachine
             // 
             this.gbMachine.Controls.Add(this.textBox1);
             this.gbMachine.Controls.Add(this.groupBox3);
             this.gbMachine.Controls.Add(this.groupBox5);
             this.gbMachine.Font = new System.Drawing.Font("宋体", 13F);
-            this.gbMachine.Location = new System.Drawing.Point(482, 312);
+            this.gbMachine.Location = new System.Drawing.Point(456, 273);
             this.gbMachine.Name = "gbMachine";
-            this.gbMachine.Size = new System.Drawing.Size(646, 400);
+            this.gbMachine.Size = new System.Drawing.Size(672, 400);
             this.gbMachine.TabIndex = 50;
             this.gbMachine.TabStop = false;
             this.gbMachine.Text = "机械手信息";
+            this.gbMachine.Visible = false;
             // 
             // textBox1
             // 
@@ -143,6 +344,26 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.pictureBox20);
+            this.groupBox5.Controls.Add(this.pictureBox19);
+            this.groupBox5.Controls.Add(this.pictureBox10);
+            this.groupBox5.Controls.Add(this.pictureBox18);
+            this.groupBox5.Controls.Add(this.pictureBox8);
+            this.groupBox5.Controls.Add(this.pictureBox17);
+            this.groupBox5.Controls.Add(this.pictureBox7);
+            this.groupBox5.Controls.Add(this.pictureBox16);
+            this.groupBox5.Controls.Add(this.pictureBox9);
+            this.groupBox5.Controls.Add(this.pictureBox15);
+            this.groupBox5.Controls.Add(this.pictureBox4);
+            this.groupBox5.Controls.Add(this.pictureBox14);
+            this.groupBox5.Controls.Add(this.pictureBox6);
+            this.groupBox5.Controls.Add(this.pictureBox13);
+            this.groupBox5.Controls.Add(this.pictureBox2);
+            this.groupBox5.Controls.Add(this.pictureBox12);
+            this.groupBox5.Controls.Add(this.pictureBox5);
+            this.groupBox5.Controls.Add(this.pictureBox11);
+            this.groupBox5.Controls.Add(this.pictureBox3);
+            this.groupBox5.Controls.Add(this.pictureBox1);
             this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.label10);
@@ -156,10 +377,170 @@
             this.groupBox5.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBox5.Location = new System.Drawing.Point(370, 59);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(265, 325);
+            this.groupBox5.Size = new System.Drawing.Size(296, 325);
             this.groupBox5.TabIndex = 47;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "吸盘信息";
+            // 
+            // pictureBox20
+            // 
+            this.pictureBox20.Location = new System.Drawing.Point(229, 282);
+            this.pictureBox20.Name = "pictureBox20";
+            this.pictureBox20.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox20.TabIndex = 1;
+            this.pictureBox20.TabStop = false;
+            // 
+            // pictureBox19
+            // 
+            this.pictureBox19.Location = new System.Drawing.Point(227, 220);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox19.TabIndex = 1;
+            this.pictureBox19.TabStop = false;
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Location = new System.Drawing.Point(94, 282);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox10.TabIndex = 1;
+            this.pictureBox10.TabStop = false;
+            // 
+            // pictureBox18
+            // 
+            this.pictureBox18.Location = new System.Drawing.Point(227, 147);
+            this.pictureBox18.Name = "pictureBox18";
+            this.pictureBox18.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox18.TabIndex = 1;
+            this.pictureBox18.TabStop = false;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Location = new System.Drawing.Point(94, 220);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox8.TabIndex = 1;
+            this.pictureBox8.TabStop = false;
+            // 
+            // pictureBox17
+            // 
+            this.pictureBox17.Location = new System.Drawing.Point(178, 282);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox17.TabIndex = 1;
+            this.pictureBox17.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Location = new System.Drawing.Point(94, 147);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox7.TabIndex = 1;
+            this.pictureBox7.TabStop = false;
+            // 
+            // pictureBox16
+            // 
+            this.pictureBox16.Location = new System.Drawing.Point(227, 88);
+            this.pictureBox16.Name = "pictureBox16";
+            this.pictureBox16.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox16.TabIndex = 1;
+            this.pictureBox16.TabStop = false;
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Location = new System.Drawing.Point(43, 282);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox9.TabIndex = 1;
+            this.pictureBox9.TabStop = false;
+            // 
+            // pictureBox15
+            // 
+            this.pictureBox15.Location = new System.Drawing.Point(176, 220);
+            this.pictureBox15.Name = "pictureBox15";
+            this.pictureBox15.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox15.TabIndex = 1;
+            this.pictureBox15.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(94, 88);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox4.TabIndex = 1;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.Location = new System.Drawing.Point(227, 26);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox14.TabIndex = 1;
+            this.pictureBox14.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Location = new System.Drawing.Point(43, 220);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox6.TabIndex = 1;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Location = new System.Drawing.Point(176, 147);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox13.TabIndex = 1;
+            this.pictureBox13.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(94, 26);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Location = new System.Drawing.Point(176, 88);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox12.TabIndex = 1;
+            this.pictureBox12.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(43, 147);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Location = new System.Drawing.Point(176, 26);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox11.TabIndex = 1;
+            this.pictureBox11.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(43, 88);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(43, 26);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(49, 28);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // label11
             // 
@@ -265,7 +646,7 @@
             // 
             this.groupBox1.Controls.Add(this.dgvBetlTaskInfo);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 13F);
-            this.groupBox1.Location = new System.Drawing.Point(23, 312);
+            this.groupBox1.Location = new System.Drawing.Point(23, 273);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(267, 400);
             this.groupBox1.TabIndex = 51;
@@ -292,158 +673,6 @@
             this.btnMainBelt.TabIndex = 52;
             this.btnMainBelt.Text = "皮             带";
             this.btnMainBelt.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun8
-            // 
-            this.btnhuancun8.Location = new System.Drawing.Point(1038, 36);
-            this.btnhuancun8.Name = "btnhuancun8";
-            this.btnhuancun8.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun8.TabIndex = 60;
-            this.btnhuancun8.Text = "缓存区";
-            this.btnhuancun8.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun7
-            // 
-            this.btnhuancun7.Location = new System.Drawing.Point(921, 36);
-            this.btnhuancun7.Name = "btnhuancun7";
-            this.btnhuancun7.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun7.TabIndex = 63;
-            this.btnhuancun7.Text = "缓存区";
-            this.btnhuancun7.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun6
-            // 
-            this.btnhuancun6.Location = new System.Drawing.Point(764, 36);
-            this.btnhuancun6.Name = "btnhuancun6";
-            this.btnhuancun6.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun6.TabIndex = 62;
-            this.btnhuancun6.Text = "缓存区";
-            this.btnhuancun6.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun5
-            // 
-            this.btnhuancun5.Location = new System.Drawing.Point(591, 36);
-            this.btnhuancun5.Name = "btnhuancun5";
-            this.btnhuancun5.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun5.TabIndex = 61;
-            this.btnhuancun5.Text = "缓存区";
-            this.btnhuancun5.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun4
-            // 
-            this.btnhuancun4.Location = new System.Drawing.Point(435, 36);
-            this.btnhuancun4.Name = "btnhuancun4";
-            this.btnhuancun4.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun4.TabIndex = 64;
-            this.btnhuancun4.Text = "缓存区";
-            this.btnhuancun4.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun3
-            // 
-            this.btnhuancun3.Location = new System.Drawing.Point(282, 36);
-            this.btnhuancun3.Name = "btnhuancun3";
-            this.btnhuancun3.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun3.TabIndex = 67;
-            this.btnhuancun3.Text = "缓存区";
-            this.btnhuancun3.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun2
-            // 
-            this.btnhuancun2.Location = new System.Drawing.Point(126, 36);
-            this.btnhuancun2.Name = "btnhuancun2";
-            this.btnhuancun2.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun2.TabIndex = 66;
-            this.btnhuancun2.Text = "缓存区";
-            this.btnhuancun2.UseVisualStyleBackColor = true;
-            // 
-            // btnhuancun1
-            // 
-            this.btnhuancun1.Location = new System.Drawing.Point(14, 36);
-            this.btnhuancun1.Name = "btnhuancun1";
-            this.btnhuancun1.Size = new System.Drawing.Size(41, 65);
-            this.btnhuancun1.TabIndex = 65;
-            this.btnhuancun1.Text = "缓存区";
-            this.btnhuancun1.UseVisualStyleBackColor = true;
-            // 
-            // Machine8
-            // 
-            this.Machine8.Location = new System.Drawing.Point(1038, 107);
-            this.Machine8.Name = "Machine8";
-            this.Machine8.Size = new System.Drawing.Size(41, 50);
-            this.Machine8.TabIndex = 57;
-            this.Machine8.Text = "8号";
-            this.Machine8.UseVisualStyleBackColor = true;
-            this.Machine8.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine4
-            // 
-            this.Machine4.Location = new System.Drawing.Point(435, 107);
-            this.Machine4.Name = "Machine4";
-            this.Machine4.Size = new System.Drawing.Size(41, 50);
-            this.Machine4.TabIndex = 58;
-            this.Machine4.Text = "4号";
-            this.Machine4.UseVisualStyleBackColor = true;
-            this.Machine4.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine7
-            // 
-            this.Machine7.Location = new System.Drawing.Point(921, 107);
-            this.Machine7.Name = "Machine7";
-            this.Machine7.Size = new System.Drawing.Size(41, 50);
-            this.Machine7.TabIndex = 59;
-            this.Machine7.Text = "7号";
-            this.Machine7.UseVisualStyleBackColor = true;
-            this.Machine7.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine6
-            // 
-            this.Machine6.Location = new System.Drawing.Point(764, 107);
-            this.Machine6.Name = "Machine6";
-            this.Machine6.Size = new System.Drawing.Size(41, 50);
-            this.Machine6.TabIndex = 52;
-            this.Machine6.Text = "6号";
-            this.Machine6.UseVisualStyleBackColor = true;
-            this.Machine6.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine3
-            // 
-            this.Machine3.Location = new System.Drawing.Point(283, 107);
-            this.Machine3.Name = "Machine3";
-            this.Machine3.Size = new System.Drawing.Size(41, 50);
-            this.Machine3.TabIndex = 53;
-            this.Machine3.Text = "3号";
-            this.Machine3.UseVisualStyleBackColor = true;
-            this.Machine3.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine5
-            // 
-            this.Machine5.Location = new System.Drawing.Point(591, 107);
-            this.Machine5.Name = "Machine5";
-            this.Machine5.Size = new System.Drawing.Size(41, 50);
-            this.Machine5.TabIndex = 55;
-            this.Machine5.Text = "5号";
-            this.Machine5.UseVisualStyleBackColor = true;
-            this.Machine5.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine2
-            // 
-            this.Machine2.Location = new System.Drawing.Point(126, 107);
-            this.Machine2.Name = "Machine2";
-            this.Machine2.Size = new System.Drawing.Size(41, 50);
-            this.Machine2.TabIndex = 54;
-            this.Machine2.Text = "2号";
-            this.Machine2.UseVisualStyleBackColor = true;
-            this.Machine2.Click += new System.EventHandler(this.Machine1_Click);
-            // 
-            // Machine1
-            // 
-            this.Machine1.Location = new System.Drawing.Point(14, 107);
-            this.Machine1.Name = "Machine1";
-            this.Machine1.Size = new System.Drawing.Size(41, 50);
-            this.Machine1.TabIndex = 56;
-            this.Machine1.Text = "1号";
-            this.Machine1.UseVisualStyleBackColor = true;
-            this.Machine1.Click += new System.EventHandler(this.Machine1_Click);
             // 
             // lblGourpText
             // 
@@ -475,6 +704,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvMachineTaks)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBetlTaskInfo)).EndInit();
             this.ResumeLayout(false);
@@ -520,5 +769,25 @@
         private System.Windows.Forms.Button Machine2;
         private System.Windows.Forms.Button Machine1;
         private System.Windows.Forms.Label lblGourpText;
+        private System.Windows.Forms.PictureBox pictureBox20;
+        private System.Windows.Forms.PictureBox pictureBox19;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox pictureBox18;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.PictureBox pictureBox17;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBox16;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox15;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox14;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

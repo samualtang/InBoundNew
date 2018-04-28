@@ -419,7 +419,7 @@ namespace highSpeed.PubFunc
                 }
 
                 innerCommand.ExecuteNonQuery();
-                //this.Commit();
+               // this.Commit();
             }
             catch (Exception err)
             {
