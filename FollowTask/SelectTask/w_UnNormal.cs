@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using InBound;
 
 
-namespace highSpeed
+namespace FollowTask
 {
     public partial class w_UnNormal : Form
     {

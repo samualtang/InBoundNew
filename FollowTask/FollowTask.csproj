@@ -36,10 +36,24 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Union\Lib\opcrcw.comn.dll</HintPath>
+    </Reference>
+    <Reference Include="opcrcw.da, Version=3.0.3.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Union\Lib\opcrcw.da.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +62,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeviceState.cs" />
     <Compile Include="Fm_FollowTaskUnion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,9 +111,35 @@
       <DependentUpon>Fm_UinonCache.cs</DependentUpon>
     </Compile>
     <Compile Include="Method\BitmapRegion.cs" />
+    <Compile Include="Modle\Group.cs" />
+    <Compile Include="Modle\ItemCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Method\PubContrlFuc.cs" />
+    <Compile Include="SelectTask\W_FenJTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectTask\W_FenJTask.Designer.cs">
+      <DependentUpon>W_FenJTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectTask\w_MachineTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectTask\w_MachineTask.Designer.cs">
+      <DependentUpon>w_MachineTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectTask\w_UnionTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectTask\w_UnionTask.Designer.cs">
+      <DependentUpon>w_UnionTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectTask\w_UnNormal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectTask\w_UnNormal.Designer.cs">
+      <DependentUpon>w_UnNormal.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Fm_FollowTaskUnion.resx">
       <DependentUpon>Fm_FollowTaskUnion.cs</DependentUpon>
     </EmbeddedResource>
@@ -125,7 +169,21 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SelectTask\W_FenJTask.resx">
+      <DependentUpon>W_FenJTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectTask\w_MachineTask.resx">
+      <DependentUpon>w_MachineTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectTask\w_UnionTask.resx">
+      <DependentUpon>w_UnionTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectTask\w_UnNormal.resx">
+      <DependentUpon>w_UnNormal.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -141,27 +199,18 @@
       <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
       <Name>InBound</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Machine\Machine.csproj">
+      <Project>{EAD75420-3F6F-45E0-A92E-678BA1FD4681}</Project>
+      <Name>Machine</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Modle\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\5240\0.ico" />
-    <Content Include="Resources\5240\1.ico" />
-    <Content Include="Resources\5240\10.ico" />
-    <Content Include="Resources\5240\11.ico" />
-    <Content Include="Resources\5240\12.ico" />
-    <Content Include="Resources\5240\13.ico" />
-    <Content Include="Resources\5240\14.ico" />
-    <Content Include="Resources\5240\15.ico" />
+    <Content Include="Lib\opcrcw.comn.dll" />
+    <Content Include="Lib\opcrcw.da.dll" />
     <Content Include="Resources\5240\2.ico" />
-    <Content Include="Resources\5240\3.ico" />
+    <Content Include="Resources\5240\机械手.jpg" />
     <Content Include="Resources\5240\4.ico" />
-    <Content Include="Resources\5240\5.ico" />
-    <Content Include="Resources\5240\6.ico" />
-    <Content Include="Resources\5240\7.ico" />
-    <Content Include="Resources\5240\8.ico" />
-    <Content Include="Resources\5240\9.ico" />
     <Content Include="Resources\5255\0.ico" />
     <Content Include="Resources\5255\1.ico" />
     <Content Include="Resources\5255\10.ico" />

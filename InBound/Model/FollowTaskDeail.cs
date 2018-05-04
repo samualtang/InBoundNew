@@ -15,8 +15,7 @@ namespace InBound.Model
         decimal _THRESHOLD;
 
 
-        String _SortTroughNum;
-
+        String _SortTroughNum; 
         decimal _GroupNO;
         decimal _qty;
         public decimal MANTISSA { get; set; }
@@ -38,14 +37,14 @@ namespace InBound.Model
         public String TaskNum { get; set; }
         public Decimal DTaskNum { get; set; }
         public Decimal MERAGENUM { get; set; }
-        public String SortTroughNum
-        {
-            get;
-            set;
-
-        }
+        public String SortTroughNum {get;set;}
         public decimal tNum { get; set; }
         public decimal qty { get; set; }
         public decimal pokePlace { get; set; }
+        public decimal POKENUM  { get; set; }
+        public decimal POKEID { get; set; }
+        public decimal mainBelt { get; set; }
+
+
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRef = new System.Windows.Forms.Button();
             this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
             this.rdbUnionDan = new System.Windows.Forms.RadioButton();
             this.lblInFO = new System.Windows.Forms.Label();
@@ -38,8 +39,6 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.pager1 = new WHC.Pager.WinControl.Pager();
-            this.btnRef = new System.Windows.Forms.Button();
-            this.Dgvcheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -57,6 +56,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(921, 48);
             this.panel1.TabIndex = 0;
+            // 
+            // btnRef
+            // 
+            this.btnRef.Location = new System.Drawing.Point(561, 12);
+            this.btnRef.Name = "btnRef";
+            this.btnRef.Size = new System.Drawing.Size(75, 23);
+            this.btnRef.TabIndex = 3;
+            this.btnRef.Text = "刷 新";
+            this.btnRef.UseVisualStyleBackColor = true;
+            this.btnRef.Click += new System.EventHandler(this.btnRef_Click);
             // 
             // rdbUnUnionDan
             // 
@@ -136,8 +145,6 @@
             this.dgvSortInfo.AllowUserToResizeRows = false;
             this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSortInfo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Dgvcheck});
             this.dgvSortInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 48);
             this.dgvSortInfo.MultiSelect = false;
@@ -161,23 +168,6 @@
             this.pager1.Size = new System.Drawing.Size(921, 45);
             this.pager1.TabIndex = 6;
             this.pager1.Visible = false;
-            // 
-            // btnRef
-            // 
-            this.btnRef.Location = new System.Drawing.Point(561, 12);
-            this.btnRef.Name = "btnRef";
-            this.btnRef.Size = new System.Drawing.Size(75, 23);
-            this.btnRef.TabIndex = 3;
-            this.btnRef.Text = "刷 新";
-            this.btnRef.UseVisualStyleBackColor = true;
-            this.btnRef.Click += new System.EventHandler(this.btnRef_Click);
-            // 
-            // Dgvcheck
-            // 
-            this.Dgvcheck.HeaderText = "选择";
-            this.Dgvcheck.Name = "Dgvcheck";
-            this.Dgvcheck.ReadOnly = true;
-            this.Dgvcheck.Width = 50;
             // 
             // w_SortFm
             // 
@@ -214,6 +204,5 @@
         private System.Windows.Forms.RadioButton rdbUnUnionDan;
         private System.Windows.Forms.RadioButton rdbUnionDan;
         private System.Windows.Forms.Button btnRef;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Dgvcheck;
     }
 }

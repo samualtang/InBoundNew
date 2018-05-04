@@ -11,7 +11,7 @@ using InBound.Business;
 using InBound;
 
 
-namespace highSpeed
+namespace FollowTask
 {
     public partial class W_FenJTask : Form
     {

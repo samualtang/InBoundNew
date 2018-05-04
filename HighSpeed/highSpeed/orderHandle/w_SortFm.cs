@@ -83,6 +83,7 @@ namespace highSpeed.orderHandle
              progressBar1.Visible = false;
 
              this.dgvSortInfo.DataSource = ds.Tables[0];
+             dgvSortInfo.Sort(dgvSortInfo.Columns[1], ListSortDirection.Descending);//默认车组排序
              this.dgvSortInfo.AutoGenerateColumns = false;
              
 
@@ -219,11 +220,11 @@ namespace highSpeed.orderHandle
 
         private void dgvSortInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0)
-            {
-                Dgvcheck.Selected = true;
+            //if (e.ColumnIndex == 0)
+            //{
+            //    Dgvcheck.Selected = true;
               
-            }
+            //}
         }
 
 
