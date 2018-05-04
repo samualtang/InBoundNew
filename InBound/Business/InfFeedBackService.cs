@@ -111,7 +111,7 @@ namespace InBound.Business
                                        AtsCellInfoService.delete(item.TARGET);
                                        AtsCellInfoDetailService.delete(item.TARGET);
                                        AtsCellService.UpdateAtsCell(item.TARGET, 10);//更新为空闲
-                                       if (item.JOBTYPE == 20)
+                                       if (item.JOBTYPE == 20)//更新锁定数量
                                        {
                                            var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == item.INBOUNDNO && line.BARCODE == item.BRANDID select line).FirstOrDefault();
                                            if (inboundLine == null)

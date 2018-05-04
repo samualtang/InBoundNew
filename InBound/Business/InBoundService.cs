@@ -153,8 +153,8 @@ namespace InBound.Business
                             {
                                 totalMantissa += itemsource.MANTISSA ?? 0;
                                 var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
-                                outingCount += outquery;
-                                itemsource.LASTMANTISSA = outquery;
+                                outingCount +=Math.Abs(outquery);
+                                itemsource.LASTMANTISSA = Math.Abs(outquery);
                             }
 
                             int tempCount = 0;
@@ -365,11 +365,25 @@ namespace InBound.Business
                                                 }
                                                 if (tempPlanQty >= FullCount - planQty)
                                                 {
-                                                    load2.PLANQTY = FullCount - planQty;
+                                                    if (FullCount >= FullCount - planQty)
+                                                    {
+                                                        load2.PLANQTY = FullCount - planQty;
+                                                    }
+                                                    else
+                                                    {
+                                                        load2.PLANQTY = FullCount ;
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    load2.PLANQTY = tempPlanQty;
+                                                    if (tempPlanQty <= FullCount)
+                                                    {
+                                                        load2.PLANQTY = tempPlanQty;
+                                                    }
+                                                    else
+                                                    {
+                                                        load2.PLANQTY = FullCount;
+                                                    }
 
                                                 }
 
@@ -512,11 +526,25 @@ namespace InBound.Business
                                                     }
                                                     if (tempPlanQty >= FullCount - planQty)
                                                     {
-                                                        load2.PLANQTY = FullCount - planQty;
+                                                        if (FullCount >= FullCount - planQty)
+                                                        {
+                                                            load2.PLANQTY = FullCount - planQty;
+                                                        }
+                                                        else
+                                                        {
+                                                            load2.PLANQTY = FullCount;
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        load2.PLANQTY = tempPlanQty;
+                                                        if (tempPlanQty <= FullCount)
+                                                        {
+                                                            load2.PLANQTY = tempPlanQty;
+                                                        }
+                                                        else
+                                                        {
+                                                            load2.PLANQTY = FullCount;
+                                                        }
 
                                                     }
 
@@ -602,8 +630,8 @@ namespace InBound.Business
                             {
                                 totalMantissa += itemsource.MANTISSA ?? 0;
                                 var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
-                                outingCount += outquery;
-                                itemsource.LASTMANTISSA = outquery;
+                                outingCount += Math.Abs(outquery); 
+                                itemsource.LASTMANTISSA = Math.Abs(outquery);
 
                             }
                             var list1 = querySourcetemp.Select(x => x.TROUGHNUM).ToList();
@@ -716,11 +744,25 @@ namespace InBound.Business
                                         }
                                         if (tempPlanQty >= FullCount - planQty)
                                         {
-                                            load2.PLANQTY = FullCount - planQty;
+                                            if (FullCount >= FullCount - planQty)
+                                            {
+                                                load2.PLANQTY = FullCount - planQty;
+                                            }
+                                            else
+                                            {
+                                                load2.PLANQTY = FullCount;
+                                            }
                                         }
                                         else
                                         {
-                                            load2.PLANQTY = tempPlanQty;
+                                            if (tempPlanQty <= FullCount)
+                                            {
+                                                load2.PLANQTY = tempPlanQty;
+                                            }
+                                            else
+                                            {
+                                                load2.PLANQTY = FullCount;
+                                            }
 
                                         }
 
@@ -864,11 +906,25 @@ namespace InBound.Business
                                             }
                                             if (tempPlanQty >= FullCount - planQty)
                                             {
-                                                load2.PLANQTY = FullCount - planQty;
+                                                if (FullCount >= FullCount - planQty)
+                                                {
+                                                    load2.PLANQTY = FullCount - planQty;
+                                                }
+                                                else
+                                                {
+                                                    load2.PLANQTY = FullCount;
+                                                }
                                             }
                                             else
                                             {
-                                                load2.PLANQTY = tempPlanQty;
+                                                if (tempPlanQty <= FullCount)
+                                                {
+                                                    load2.PLANQTY = tempPlanQty;
+                                                }
+                                                else
+                                                {
+                                                    load2.PLANQTY = FullCount;
+                                                }
 
                                             }
 
