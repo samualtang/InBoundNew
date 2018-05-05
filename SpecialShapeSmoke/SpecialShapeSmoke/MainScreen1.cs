@@ -276,7 +276,7 @@ namespace SpecialShapeSmoke
                     while (true) 
                     {
                       getData();
-                      Thread.Sleep(20000);//每5秒刷新一次
+                      Thread.Sleep(20000);//每20秒刷新一次
                     }
                 }
             }
@@ -413,18 +413,8 @@ namespace SpecialShapeSmoke
                     // string[] Flag = new string[2];   
                     decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
                     string Log = "";
-                    //finishNo[0] = dbMesg;
-                    //finishNo[1] = dbMesg2;  
-                    #region
-                    //decimal packageNum = 0;
-                    //if (flag)//
-                    //{
-                    //    finishNo[0] = 0;
-                    //    finishNo[1] = 0;
-                    //    flag = false;
-                    //}
-                    //else
-                    //{
+                   
+                    #region  读取DB
                         if (dbIndex[1] == -1)//  是1061 和2061 单个通道
                         {
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
@@ -434,7 +424,7 @@ namespace SpecialShapeSmoke
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
                             finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
                         }
-                    //}
+                    
                     for (int i = 0; i < boxText.Length; i++)
                     {
                        Log  += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";

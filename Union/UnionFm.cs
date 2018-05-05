@@ -153,7 +153,7 @@ namespace SortingControlSys.SortingControl
             //TaskService.GetUnionTask();
             Connect();
         }
-        Group taskgroup1, taskgroup2, taskgroup3, taskgroup4, statusGroup1, statusGroup2, statusGroup3, statusGroup4, statusGroup5, errorGroup, SendTaskStatesGroup;
+        Group taskgroup1, taskgroup2, taskgroup3, taskgroup4, statusGroup1, FinishstatusGroup, statusGroup3, statusGroup4, statusGroup5, errorGroup, SendTaskStatesGroup;
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -194,7 +194,7 @@ namespace SortingControlSys.SortingControl
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
                 taskgroup1 = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);//第一根
                 statusGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
-                statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
+                FinishstatusGroup = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);//完成信号
                 statusGroup3 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
                 statusGroup4 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
                 errorGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
@@ -217,7 +217,7 @@ namespace SortingControlSys.SortingControl
 
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem11());
              
-                statusGroup2.addItem(ItemCollection.GetTaskStatusItem12());
+                FinishstatusGroup.addItem(ItemCollection.GetFinishStatusItem());//完成信号
               
                 statusGroup3.addItem(ItemCollection.GetTaskStatusItem3());
              
@@ -239,7 +239,7 @@ namespace SortingControlSys.SortingControl
             errorGroup.callback += OnDataChange;
             //taskgroup.callback += OnDataChange;//合流信息
             statusGroup1.callback += OnDataChange;
-            statusGroup2.callback += OnDataChange; 
+            FinishstatusGroup.callback += OnDataChange; 
             statusGroup3.callback += OnDataChange;
             statusGroup4.callback += OnDataChange;
         }
@@ -272,7 +272,7 @@ namespace SortingControlSys.SortingControl
             { 
                 if (SendTaskStatesGroup.Read(0).ToString() != "1")
                 {
-                    SendTaskStatesGroup.Write(2, 0);
+                   // SendTaskStatesGroup.Write(2, 0);
                 }
                 if (SendTaskStatesGroup.Read(1).ToString() != "1")
                 {
@@ -375,7 +375,7 @@ namespace SortingControlSys.SortingControl
             return i;
         }
         delegate void delSendTask();
-        int count =1;//记数
+       
        /// <summary>
        /// 发送合流数据
        /// </summary>
@@ -443,7 +443,7 @@ namespace SortingControlSys.SortingControl
                         taskgroup4.SyncWrite(datas);
                     }
                     
-                    string logstr = "任务信息：" + count++;
+                    string logstr = "任务信息：";
                     string f = "";
                     for (int i = 0; i < datas.Length; i++)
                     {
@@ -592,7 +592,7 @@ namespace SortingControlSys.SortingControl
                             updateListBox("任务:" + tempvalue + "数据库状态已置完成");
                             writeLog.Write("合流任务号:" + tempvalue + "数据库状态已置完成");
                         }
-                        statusGroup2.Write(0, clientId[i] - 1);
+                        FinishstatusGroup.Write(0, clientId[i] - 1);
                         try
                         {
                             writeLock.AcquireWriterLock(10000);
@@ -739,9 +739,9 @@ namespace SortingControlSys.SortingControl
             {
                 statusGroup1.Release();
             }
-            if (statusGroup2 != null)
+            if (FinishstatusGroup != null)
             {
-                statusGroup2.Release();
+                FinishstatusGroup.Release();
             }
             if (statusGroup3 != null)
             {

@@ -249,7 +249,7 @@ namespace InBound.Business
         public static List<TaskInfo> GetCustomer()
         {
             using (Entities entity = new Entities())
-            {
+            { 
                 var query = (from item in entity.T_PRODUCE_TASK//总任务数
                              group item by new { item.REGIONCODE } into g
                              select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = 0, FinishQTY = 0, QTY = g.Sum(t => t.TASKQUANTITY) ?? 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
@@ -274,6 +274,36 @@ namespace InBound.Business
                 //UnionList(query, query4, 3);
                 CaldList(query);
                 return query;
+            }
+        }
+        /// <summary>
+        /// 用于机械手发送任务刷新
+        /// </summary>
+        /// <returns></returns>
+        public static List<TaskInfo> GetMachineProgramress(int  groupno1, int groupno2)
+        { 
+            using (Entities entity = new Entities())
+            {
+                //总量
+                var query1 = (from item in entity.T_PRODUCE_POKE
+                              where item.GROUPNO == groupno1 || item.GROUPNO == groupno2
+                              group item by new { item.MACHINESEQ, item.GROUPNO } into g
+                              orderby g.Key.MACHINESEQ
+                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, MACHINESEQ = g.Key.MACHINESEQ ?? 0,FinishCount =0, Count = g.Sum(c => c.POKENUM ?? 0), UNIONTASKNUM = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList();
+                 //完成
+                var query2 = (from item in entity.T_PRODUCE_POKE
+                              where (item.MACHINESEQ == groupno1 || item.MACHINESEQ == groupno2) && item.MACHINESTATE == 20
+                              orderby item.MACHINESEQ
+                              group item by new { item.MACHINESEQ, item.GROUPNO, item.POKENUM } into g
+                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, MACHINESEQ= g.Key.MACHINESEQ ?? 0, FinishCount = g.Select(t => new { pokenum = t.POKENUM }).Count() }).ToList();
+
+                if (query1 != null)
+                {
+                    UnionList(query1, query2, 4);
+                    CaldList(query1);
+                    return query1 ; 
+                }
+                else { return null; }
             }
         }
         public static List<KeyValuePair<int, int>> initTask1()
@@ -448,28 +478,42 @@ namespace InBound.Business
         }
         public static void UnionList(List<TaskInfo> info, List<TaskInfo> info2, int type)
         {
+             
             if (info2 == null || info2.Count == 0)
                 return;
             else
             {
-                foreach (var item in info2)
-                {
-                    var entity = info.Find(s => s.REGIONCODE == item.REGIONCODE);
-                    if (entity != null)
+                if (type == 4)//机械手
+                { 
+                    foreach (var item in info2)
                     {
-                        if (type == 1)
-                        {
-                            entity.QTY = item.QTY;
-                        }
-                        else if (type == 2)
-                        {
+                        var entity = info.Find(s => s.MACHINESEQ == item.MACHINESEQ); 
+                        entity.FinishCount = item.FinishCount;
+                    }
+                }
+                else
+                {
+                    foreach (var item in info2)
+                    {
 
-                            entity.FinishCount = item.FinishCount;
-                            entity.FinishQTY = item.FinishQTY;
-                        }
-                        else
+                        var entity = info.Find(s => s.REGIONCODE == item.REGIONCODE);
+
+                        if (entity != null)
                         {
-                            entity.FinishQTY = item.FinishQTY;
+                            if (type == 1)
+                            {
+                                entity.QTY = item.QTY;
+                            }
+                            else if (type == 2)
+                            {
+
+                                entity.FinishCount = item.FinishCount;
+                                entity.FinishQTY = item.FinishQTY;
+                            } 
+                            else
+                            {
+                                entity.FinishQTY = item.FinishQTY;
+                            }
                         }
                     }
                 }

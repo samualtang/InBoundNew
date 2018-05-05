@@ -131,6 +131,7 @@
             this.Name = "Fm_SortDetails";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "预分拣信息";
+            this.Load += new System.EventHandler(this.Fm_SortDetails_Load);
             this.groupBoxYaobaiDetails.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

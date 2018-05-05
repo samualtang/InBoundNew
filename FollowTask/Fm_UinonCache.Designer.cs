@@ -36,6 +36,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.dgvUnionCache = new System.Windows.Forms.DataGridView();
@@ -44,7 +45,11 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnPokeTime = new System.Windows.Forms.Button();
+            this.txtPokenum = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnionCache)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +58,7 @@
             // 
             this.lblCacheText.AutoSize = true;
             this.lblCacheText.Font = new System.Drawing.Font("宋体", 25F);
-            this.lblCacheText.Location = new System.Drawing.Point(12, 9);
+            this.lblCacheText.Location = new System.Drawing.Point(20, 9);
             this.lblCacheText.Name = "lblCacheText";
             this.lblCacheText.Size = new System.Drawing.Size(83, 34);
             this.lblCacheText.TabIndex = 0;
@@ -68,11 +73,12 @@
             this.columnHeader4,
             this.columnHeader5,
             this.columnHeader6});
+            this.listViewUnionCache.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewUnionCache.FullRowSelect = true;
             this.listViewUnionCache.GridLines = true;
-            this.listViewUnionCache.Location = new System.Drawing.Point(30, 36);
+            this.listViewUnionCache.Location = new System.Drawing.Point(3, 20);
             this.listViewUnionCache.Name = "listViewUnionCache";
-            this.listViewUnionCache.Size = new System.Drawing.Size(519, 320);
+            this.listViewUnionCache.Size = new System.Drawing.Size(549, 333);
             this.listViewUnionCache.TabIndex = 2;
             this.listViewUnionCache.UseCompatibleStateImageBehavior = false;
             this.listViewUnionCache.View = System.Windows.Forms.View.Details;
@@ -85,7 +91,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "香烟品牌";
-            this.columnHeader2.Width = 121;
+            this.columnHeader2.Width = 145;
             // 
             // columnHeader3
             // 
@@ -102,11 +108,16 @@
             this.columnHeader5.Text = "皮带";
             this.columnHeader5.Width = 45;
             // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "通道编号";
+            this.columnHeader6.Width = 97;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listViewUnionCache);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBox1.Location = new System.Drawing.Point(12, 66);
+            this.groupBox1.Location = new System.Drawing.Point(26, 110);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(555, 356);
             this.groupBox1.TabIndex = 3;
@@ -115,7 +126,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(492, 37);
+            this.btnRefresh.Location = new System.Drawing.Point(492, 61);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 4;
@@ -179,16 +190,59 @@
             this.Column5.ReadOnly = true;
             this.Column5.Width = 93;
             // 
-            // columnHeader6
+            // btnPokeTime
             // 
-            this.columnHeader6.Text = "通道编号";
-            this.columnHeader6.Width = 97;
+            this.btnPokeTime.Location = new System.Drawing.Point(388, 61);
+            this.btnPokeTime.Name = "btnPokeTime";
+            this.btnPokeTime.Size = new System.Drawing.Size(75, 23);
+            this.btnPokeTime.TabIndex = 5;
+            this.btnPokeTime.Text = "抓";
+            this.btnPokeTime.UseVisualStyleBackColor = true;
+            this.btnPokeTime.Click += new System.EventHandler(this.btnPokeTime_Click);
+            this.btnPokeTime.MouseEnter += new System.EventHandler(this.btnPokeTime_MouseEnter);
+            // 
+            // txtPokenum
+            // 
+            this.txtPokenum.Location = new System.Drawing.Point(264, 63);
+            this.txtPokenum.Name = "txtPokenum";
+            this.txtPokenum.Size = new System.Drawing.Size(100, 21);
+            this.txtPokenum.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(205, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "抓数:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(99, 63);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(24, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 12);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "当前任务号:";
             // 
             // Fm_UinonCache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 478);
+            this.ClientSize = new System.Drawing.Size(595, 478);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtPokenum);
+            this.Controls.Add(this.btnPokeTime);
             this.Controls.Add(this.dgvUnionCache);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.groupBox1);
@@ -225,5 +279,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Button btnPokeTime;
+        private System.Windows.Forms.TextBox txtPokenum;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

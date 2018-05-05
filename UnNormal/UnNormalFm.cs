@@ -51,6 +51,7 @@ namespace SortingControlSys.SortingControl
             {
                 MessageBox.Show("请检查一下数据网络,在重新打开系统");
                 writeLog.Write("请检查一下数据网络,在重新打开系统");
+                writeLog.Write(e.Message);
                 this.Close();
             }
          }

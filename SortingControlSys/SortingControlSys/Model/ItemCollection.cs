@@ -10,40 +10,89 @@ namespace SortingControlSys.Model
         public static String OpcPresortServer = "S7:[FJConnectionGroup1]";
 
         /// <summary>
-        /// 获取任务item
+        /// 获取任务item 第一组任务
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetTaskItem()
+        public static List<string> GetGroup1TaskItem()
         {
             List<string> list = new List<string>();
-            for (var i = 2; i <= 52; i++, i++)
-            {
-                list.Add(OpcPresortServer+"DB1,W" + i);
-            }
-            //list.Add(OpcPresortServer+"DB1,W54");
-            //list.Add(OpcPresortServer+"DB1,W56");
-            //list.Add(OpcPresortServer+"DB1,W58");
-            //list.Add(OpcPresortServer+"DB1,W60");
-            //list.Add(OpcPresortServer+"DB1,W62");
-            //list.Add(OpcPresortServer+"DB1,W64");
-            //list.Add(OpcPresortServer+"DB1,W66");
-            //list.Add(OpcPresortServer+"DB1,W68");
-            //list.Add(OpcPresortServer+"DB1,W70");
-            //list.Add(OpcPresortServer+"DB1,W72");
-            //list.Add(OpcPresortServer+"DB1,W74");
-            //list.Add(OpcPresortServer+"DB1,W76");
-            //list.Add(OpcPresortServer+"DB1,W78");
-            //list.Add(OpcPresortServer+"DB1,W80");
-            //list.Add(OpcPresortServer+"DB1,W82");
-            //list.Add(OpcPresortServer+"DB1,W84");
-            //list.Add(OpcPresortServer"+DB1,W86");
-            //list.Add(OpcPresortServer+"DB1,W88");
-            //list.Add(OpcPresortServer+"DB1,W90");
-            //list.Add(OpcPresortServer+"DB1,W92");
-            //list.Add(OpcPresortServer+"DB1,W94");
-            list.Add(OpcPresortServer+"DB1,W0"); 
+            //for (var i = 2; i <= 52; i++, i++)
+            //{
+            //    list.Add(OpcPresortServer+"DB1,W" + i);
+            //}
+            list.Add(OpcPresortServer + "DB1,DWORD2");//任务号 0
+            list.Add(OpcPresortServer + "DB1,W6");//虚拟出口号 1
+            list.Add(OpcPresortServer + "DB1,W8");//主皮带号 2
+            list.Add(OpcPresortServer + "DB1,W10");//条烟总数 3
+            list.Add(OpcPresortServer + "DB1,W12");//烟柜1条数 4
+            list.Add(OpcPresortServer + "DB1,W14");//起始位置 5
+            list.Add(OpcPresortServer + "DB1,W16");//烟柜2条数 6 
+            list.Add(OpcPresortServer + "DB1,W18");//起始位置 7
+            list.Add(OpcPresortServer + "DB1,W20");//烟柜3条数 8
+            list.Add(OpcPresortServer + "DB1,W22");//起始位置 9
+            list.Add(OpcPresortServer + "DB1,W24");//烟柜4条数 10
+            list.Add(OpcPresortServer + "DB1,W26");//起始位置 11
+            list.Add(OpcPresortServer + "DB1,W28");//烟柜5条数 12
+            list.Add(OpcPresortServer + "DB1,W30");//起始位置 13
+            list.Add(OpcPresortServer + "DB1,W32");//烟柜6条数 14
+            list.Add(OpcPresortServer + "DB1,W34");//起始位置 15
+            list.Add(OpcPresortServer + "DB1,W36");//烟柜7条数 16
+            list.Add(OpcPresortServer + "DB1,W38");//起始位置 17
+            list.Add(OpcPresortServer + "DB1,W40");//烟柜8条数 18
+            list.Add(OpcPresortServer + "DB1,W42");//起始位置 19
+            list.Add(OpcPresortServer + "DB1,W44");//烟柜9条数 20
+            list.Add(OpcPresortServer + "DB1,W46");//起始位置 21
+            list.Add(OpcPresortServer + "DB1,W48");//烟柜10条数 22 
+            list.Add(OpcPresortServer + "DB1,W50");//起始位置 23
+            list.Add(OpcPresortServer + "DB1,W52");//烟柜11条数 24
+            list.Add(OpcPresortServer + "DB1,W54");//起始位置 25 
+
+            list.Add(OpcPresortServer + "DB1,W0");//标志位 26
             return list;
         }
+
+        /// <summary>
+        /// 第二组任务
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetGroup2TaskItem()
+        {
+            List<string> list = new List<string>();
+            //for (var i = 2; i <= 52; i++, i++)
+            //{
+            //    list.Add(OpcPresortServer + "DB101,W" + i);
+            //}
+            list.Add(OpcPresortServer + "DB101,DWORD2");//任务号 0
+            list.Add(OpcPresortServer + "DB101,W6");//虚拟出口号 1
+            list.Add(OpcPresortServer + "DB101,W8");//主皮带号 2
+            list.Add(OpcPresortServer + "DB101,W10");//条烟总数 3
+            list.Add(OpcPresortServer + "DB101,W12");//烟柜1条数 4
+            list.Add(OpcPresortServer + "DB101,W14");//起始位置 5
+            list.Add(OpcPresortServer + "DB101,W16");//烟柜2条数 6 
+            list.Add(OpcPresortServer + "DB101,W18");//起始位置 7
+            list.Add(OpcPresortServer + "DB101,W20");//烟柜3条数 8
+            list.Add(OpcPresortServer + "DB101,W22");//起始位置 9
+            list.Add(OpcPresortServer + "DB101,W24");//烟柜4条数 10
+            list.Add(OpcPresortServer + "DB101,W26");//起始位置 11
+            list.Add(OpcPresortServer + "DB101,W28");//烟柜5条数 12
+            list.Add(OpcPresortServer + "DB101,W30");//起始位置 13
+            list.Add(OpcPresortServer + "DB101,W32");//烟柜6条数 14
+            list.Add(OpcPresortServer + "DB101,W34");//起始位置 15
+            list.Add(OpcPresortServer + "DB101,W36");//烟柜7条数 16
+            list.Add(OpcPresortServer + "DB101,W38");//起始位置 17
+            list.Add(OpcPresortServer + "DB101,W40");//烟柜8条数 18
+            list.Add(OpcPresortServer + "DB101,W42");//起始位置 19
+            list.Add(OpcPresortServer + "DB101,W44");//烟柜9条数 20
+            list.Add(OpcPresortServer + "DB101,W46");//起始位置 21
+            list.Add(OpcPresortServer + "DB101,W48");//烟柜10条数 22 
+            list.Add(OpcPresortServer + "DB101,W50");//起始位置 23
+            list.Add(OpcPresortServer + "DB101,W52");//烟柜11条数 24
+            list.Add(OpcPresortServer + "DB101,W54");//起始位置 25 
+
+            list.Add(OpcPresortServer + "DB101,W0");//标志位 26
+            return list;
+        }
+
         /// <summary>
         /// 监控标志位
         /// </summary>
@@ -55,20 +104,8 @@ namespace SortingControlSys.Model
             list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
             return list;
         }
-        /// <summary>
-        /// 第二组任务
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetTaskStausItemGroup()
-        {
-            List<string> list = new List<string>();
-            for (var i = 2; i <= 52; i++, i++)
-            {
-                list.Add(OpcPresortServer+"DB101,W" + i);
-            }
-             list.Add(OpcPresortServer+"DB101,W0"); 
-            return list;
-        }
+
+
         public static List<string> GetTaskStatusItem1()
         {
             List<string> list = new List<string>();
@@ -83,14 +120,34 @@ namespace SortingControlSys.Model
         /// 第一组完成信息
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetTaskStatusItem2()
+        public static List<string> GetFinishTaskStatusItem1()
         {
             List<string> list = new List<string>();
-            for (int i = 100; i <= 178; i++, i++)
+            for (int i = 100; i <= 256; i = i + 4) 
             {
-                list.Add(OpcPresortServer+"DB30,W" + i);
+                list.Add(OpcPresortServer + "DB30,DWORD" + i);
             }
-          //  list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
+            //list.Add(OpcPresortServer + "DB30,DWORD100");
+            //list.Add(OpcPresortServer + "DB30,DWORD104");
+            //list.Add(OpcPresortServer + "DB30,DWORD108");
+            //list.Add(OpcPresortServer + "DB30,DWORD112");
+            //list.Add(OpcPresortServer + "DB30,DWORD116");
+            //list.Add(OpcPresortServer + "DB30,DWORD124");
+            //list.Add(OpcPresortServer + "DB30,DWORD128");
+            //list.Add(OpcPresortServer + "DB30,DWORD132");
+            //list.Add(OpcPresortServer + "DB30,DWORD136");
+            //list.Add(OpcPresortServer + "DB30,DWORD140");
+            //list.Add(OpcPresortServer + "DB30,DWORD144");
+            //list.Add(OpcPresortServer + "DB30,DWORD148");
+            //list.Add(OpcPresortServer + "DB30,DWORD152");
+            //list.Add(OpcPresortServer + "DB30,DWORD156");
+            //list.Add(OpcPresortServer + "DB30,DWORD160");
+            //list.Add(OpcPresortServer + "DB30,DWORD164");
+            //list.Add(OpcPresortServer + "DB30,DWORD168");
+            //list.Add(OpcPresortServer + "DB30,DWORD172");
+            //list.Add(OpcPresortServer + "DB30,DWORD176");
+            //list.Add(OpcPresortServer + "DB30,DWORD178");
+         
             return list;
         }
         public static List<string> GetTaskStatusItem3()//A01-A27
@@ -168,14 +225,34 @@ namespace SortingControlSys.Model
         /// 第二组完成信息
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetTaskStatusSECItem2()
+        public static List<string> GetFinishTaskStatusItem2()
         {
             List<string> list = new List<string>();
-            for (int i = 100; i <= 178; i++, i++)
+            for (int i = 100; i <= 256; i = i + 4) 
             {
-                list.Add(OpcPresortServer+"DB130,W" + i);
+                list.Add(OpcPresortServer + "DB130,DWORD" + i);
             }
-           // list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
+            //list.Add(OpcPresortServer + "DB130,DWORD100");
+            //list.Add(OpcPresortServer + "DB130,DWORD104");
+            //list.Add(OpcPresortServer + "DB130,DWORD108");
+            //list.Add(OpcPresortServer + "DB130,DWORD112");
+            //list.Add(OpcPresortServer + "DB130,DWORD116");
+            //list.Add(OpcPresortServer + "DB130,DWORD124");
+            //list.Add(OpcPresortServer + "DB130,DWORD128");
+            //list.Add(OpcPresortServer + "DB130,DWORD132");
+            //list.Add(OpcPresortServer + "DB130,DWORD136");
+            //list.Add(OpcPresortServer + "DB130,DWORD140");
+            //list.Add(OpcPresortServer + "DB130,DWORD144");
+            //list.Add(OpcPresortServer + "DB130,DWORD148");
+            //list.Add(OpcPresortServer + "DB130,DWORD152");
+            //list.Add(OpcPresortServer + "DB130,DWORD156");
+            //list.Add(OpcPresortServer + "DB130,DWORD160");
+            //list.Add(OpcPresortServer + "DB130,DWORD164");
+            //list.Add(OpcPresortServer + "DB130,DWORD168");
+            //list.Add(OpcPresortServer + "DB130,DWORD172");
+            //list.Add(OpcPresortServer + "DB130,DWORD176");
+            //list.Add(OpcPresortServer + "DB130,DWORD178");
+          
             return list;
         }
 

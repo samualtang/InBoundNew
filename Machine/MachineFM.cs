@@ -47,6 +47,7 @@ namespace SortingControlSys.SortingControl
         public MachineFM()
         {
             InitializeComponent();
+            task_data.DoubleBufferedDataGirdView(true);
             alarms.DowntimeHandler = OnDowntime;
             initCB();
             alarms.AlarmsHandler += (obj) =>
@@ -86,7 +87,7 @@ namespace SortingControlSys.SortingControl
            //alarms.WriteErrWithCheck(10, 9, "111010101010", 2);
 
 
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+           this.task_data.BeginInvoke(new Action(() => { initdata(); })); 
             if (tempList == null)
                 tempList = new List<KeyValuePair<String, List<String>>>();
 
@@ -737,26 +738,62 @@ namespace SortingControlSys.SortingControl
         int i = 1;
         public void initdata()
         {
+            int groupno1 = 0;//1小组
+            int groupno2 = 0;//2小组
             //writeLog.Write("启动程序。。。。。。");
             task_data.Rows.Clear();
             try
             {
                 //String regioncode = "", cuscount = "", qty = "", finishcuscount = "", finishqty="",percent="";
-                List<TaskInfo> list = TaskService.GetCustomer();
+               // List<TaskInfo> list = TaskService.GetCustomer();
+                if (groupNo == 1)
+                { 
+                    groupno1 = 1;
+                    groupno2 = 2;
+                }
+                if (groupNo ==2)
+                {
+                    groupno1 = 3;
+                    groupno2 = 4;
+                }
+                if (groupNo == 3)
+                {
+                    groupno1 = 5;
+                    groupno2 = 6;
+                }
+                if (groupNo == 4)
+                {
+                    groupno1 = 7;
+                    groupno2 = 8;
+                }
+               
+
+                List<TaskInfo> list = TaskService.GetMachineProgramress(groupno1, groupno2);
                 if (list != null)
                 {
-
                     foreach (var row in list)
                     {
                         int index = this.task_data.Rows.Add();
 
-                        this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
-                        this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
-                        this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                        this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
-                        this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
-                        this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                        this.task_data.Rows[index].Cells[0].Value = row.GROUPNO;//组号
+                        this.task_data.Rows[index].Cells[1].Value = row.MACHINESEQ;//机械手号 
+                        this.task_data.Rows[index].Cells[2].Value = row.UNIONTASKNUM;//任务数
+                        this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;//任务量
+                        this.task_data.Rows[index].Cells[4].Value = row.Rate; //完成百分比
+                       // this.task_data.Rows[index].Cells[5].Value = row.Rate;
                     }
+
+                    //foreach (var row in list)
+                    //{
+                    //    int index = this.task_data.Rows.Add();
+
+                    //    this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
+                    //    this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
+                    //    this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
+                    //    this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
+                    //    this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
+                    //    this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                    //}
                     //}
                 }
 
@@ -886,7 +923,7 @@ namespace SortingControlSys.SortingControl
         }
         private void button11_Click(object sender, EventArgs e)
         {
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//改为
         }
 
 
@@ -937,6 +974,15 @@ namespace SortingControlSys.SortingControl
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void timerinitdata_Tick(object sender, EventArgs e)
+        {
+            //timerinitdata.Enabled = true;
+            //timerinitdata.Start();
+            
+           
+            //initdata();
         }
 
 

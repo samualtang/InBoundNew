@@ -137,7 +137,7 @@ namespace SortingControlSys.SortingControl
 
             Connect();
         }
-        Group taskgroup, statusGroup1, statusGroup2, statusGroup3, statusGroup4, statusGroup5;
+        Group taskgroup1, statusGroup1, FinishStateGroup1, taskgroup2, statusGroup4, FinishStateGroup2;
         Group errGroup1, errGroup2, errGroup3, errGroup4;
 
         Group ClearCacheGroup;
@@ -154,12 +154,12 @@ namespace SortingControlSys.SortingControl
             {
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-                taskgroup = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);//组号由这里定义 //第一组数据
+                taskgroup1 = new Group(pIOPCServer, 1, "group", 1, LOCALE_ID);//组号由这里定义 //第一组数据
                 statusGroup1 = new Group(pIOPCServer, 2, "group1", 1, LOCALE_ID);
-                statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);//第一组完成信息
-                statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);//第二组数据
+                FinishStateGroup1 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);//第一组完成信息
+                taskgroup2 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);//第二组数据
                 statusGroup4 = new Group(pIOPCServer, 5, "group4", 1, LOCALE_ID);
-                statusGroup5 = new Group(pIOPCServer, 6, "group5", 1, LOCALE_ID);//第二组完成信息
+                FinishStateGroup2 = new Group(pIOPCServer, 6, "group5", 1, LOCALE_ID);//第二组完成信息
                 errGroup1 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
                 errGroup2 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);
                 errGroup3 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);
@@ -168,18 +168,18 @@ namespace SortingControlSys.SortingControl
 
                 SendTaskStatesGroup =new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//监控标志位
 
-                taskgroup.addItem(ItemCollection.GetTaskItem());//第一组数据
+                taskgroup1.addItem(ItemCollection.GetGroup1TaskItem());//第一组数据
               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
 
-                statusGroup2.addItem(ItemCollection.GetTaskStatusItem2());//第一组完成信息
+                FinishStateGroup1.addItem(ItemCollection.GetFinishTaskStatusItem1());//第一组完成信息
              
-                statusGroup3.addItem(ItemCollection.GetTaskStausItemGroup());
+                taskgroup2.addItem(ItemCollection.GetGroup2TaskItem());//第二组数据
               
 
                 statusGroup4.addItem(ItemCollection.GetTaskStatusSECItem1());
 
-                statusGroup5.addItem(ItemCollection.GetTaskStatusSECItem2());//第二组完成信息
+                FinishStateGroup2.addItem(ItemCollection.GetFinishTaskStatusItem2());//第二组完成信息
 
                 SendTaskStatesGroup.addItem(ItemCollection.GetSendTaskStateItem());//监控标志位
                
@@ -210,10 +210,10 @@ namespace SortingControlSys.SortingControl
         {
             //taskgroup.callback += OnDataChange;//第一组数据 //被监控标志取代
             //statusGroup1.callback += OnDataChange;
-            statusGroup2.callback += OnDataChange;//第一组完成信息
+            FinishStateGroup1.callback += OnDataChange;//第一组完成信息
             //statusGroup3.callback += OnDataChange;//第二组数据//被监控标志取代
             //statusGroup4.callback += OnDataChange;
-            statusGroup5.callback += OnDataChange;//第二组完成信息
+            FinishStateGroup2.callback += OnDataChange;//第二组完成信息
             SendTaskStatesGroup.callback += OnDataChange;//监控第一组和第二组标志位
             errGroup1.callback += OnDataChange;
             errGroup2.callback += OnDataChange;
@@ -254,7 +254,7 @@ namespace SortingControlSys.SortingControl
         }
         Boolean CheckCanSend(int targetPort)
         {
-            int value = statusGroup3.Read(targetPort - 1).CastTo<int>(-1);
+            int value = taskgroup2.Read(targetPort - 1).CastTo<int>(-1);
             writeLog.Write("出口号：" + targetPort+" 值：" + value);
             if (value == 1)
             {
@@ -339,7 +339,7 @@ namespace SortingControlSys.SortingControl
                     //if (CheckCanSend(export))//和电控交互该出口号是否能用
                     //{
 
-                    statusGroup3.SyncWrite(datas);//写任务
+                    taskgroup2.SyncWrite(datas);//写任务
                     string logstr = "";
                     string logcolumnname = "";
                     for (int i = 0; i < datas.Length; i++)
@@ -430,7 +430,7 @@ namespace SortingControlSys.SortingControl
                     //if (CheckCanSend(export))//和电控交互该出口号是否能用
                     //{
 
-                    taskgroup.SyncWrite(datas);//写任务
+                    taskgroup1.SyncWrite(datas);//写任务
 
                     //String p2 = taskgroup.Read(1).ToString();
                     //String p3 = taskgroup.Read(2).ToString();
@@ -679,7 +679,7 @@ namespace SortingControlSys.SortingControl
 
                             if (tempvalue != 0)
                             {
-                                updateListBox("任务:" + tempvalue + "已完成");
+                                updateListBox(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                             }
 
@@ -869,29 +869,29 @@ namespace SortingControlSys.SortingControl
                 Marshal.ReleaseComObject(pIOPCServer);
                 pIOPCServer = null;
             }
-            if (taskgroup != null)
+            if (taskgroup1 != null)
             {
-                taskgroup.Release();
+                taskgroup1.Release();
             }
             if (statusGroup1 != null)
             {
                 statusGroup1.Release();
             }
-            if (statusGroup2 != null)
+            if (FinishStateGroup1 != null)
             {
-                statusGroup2.Release();
+                FinishStateGroup1.Release();
             }
-            if (statusGroup3 != null)
+            if (taskgroup2 != null)
             {
-                statusGroup3.Release();
+                taskgroup2.Release();
             }
             if (statusGroup4 != null)
             {
                 statusGroup4.Release();
             }
-            if (statusGroup5 != null)
+            if (FinishStateGroup2 != null)
             {
-                statusGroup5.Release();
+                FinishStateGroup2.Release();
             }
             if (SendTaskStatesGroup != null)
             {

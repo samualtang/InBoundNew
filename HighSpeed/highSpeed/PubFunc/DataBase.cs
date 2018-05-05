@@ -423,9 +423,11 @@ namespace highSpeed.PubFunc
             }
             catch (Exception err)
             {
+                SaveErrLog(" [" + sqlSpName.ToString() + "] " + err.ToString());//保存错误日志
+                throw err;//向上抛错误
                 //throw err;
                 //this.Rollback();
-                SaveErrLog(" [" + sqlSpName.ToString() + "] " + err.ToString());//保存错误日志
+              
             }
         }
 

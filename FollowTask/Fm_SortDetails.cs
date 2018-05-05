@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using InBound;
+using InBound.Business;
 
 namespace FollowTask
 {
@@ -23,6 +24,11 @@ namespace FollowTask
         {
             InitializeComponent();
             Text = storText+"区域";
+        }
+
+        private void Fm_SortDetails_Load(object sender, EventArgs e)
+        {
+          
         }
     }
 }
