@@ -34,7 +34,7 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
 
-            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from t_produce_task t group BY t.batchcode,t.synseq order by synseq ";
+            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from t_produce_task t where t.state=15 group BY t.batchcode,t.synseq order by synseq ";
             //MessageBox.Show(strsql);
             Bind(strsql);
         }
@@ -103,24 +103,16 @@ namespace highSpeed.orderHandle
                          "FROM highspeed.t_produce_task a,highspeed.t_produce_taskline b,dbm.twms_excpo c WHERE a.tasknum=b.tasknum " +
                          " and a.billcode=c.extnum and a.synseq='" + synseq + "' and a.exportnum='" + "" + "' ORDER BY a.tasknum";
             */
-            String sql = "select p.sortnum ,t.customercode,t.customername,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
+            String sql = "select * from ("+
+                        " select p.sortnum ,t.customercode,t.customername,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
                         " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r " +
-                        " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.state=10 and r.groupno=p.groupno and r.ctype=1 and t.synseq="+synseq+
-                        " order by p.sortnum,p.groupno ";
-           /**
-            String sql = SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,c.pokenum,a.regioncode,to_char(a.orderdate,'yyyy-mm-dd') AS enterdate 
-                         FROM t_produce_task a,t_produce_sorttrough b,t_produce_poke c 
-                         WHERE a.tasknum=c.tasknum  and b.machineseq=c.machineseq and b.troughtype=10 and b.cigarettetype=20 and b.state='10' 
-                         and a.synseq='1' and c.groupno=1 ORDER BY c.sortnum;
-            
-            string unsqlk=    
-                            SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,c.pokenum,a.regioncode,to_char(a.orderdate,'yyyy-mm-dd') AS enterdate 
-                         FROM t_un_task a,t_produce_sorttrough b,t_un_poke c 
-                         WHERE a.tasknum=c.tasknum  and b.troughnum=c.troughnum and b.troughtype=10 and b.cigarettetype in (30,40) and b.state='10' 
-                         and a.synseq='1' and c.linenum=2 
-                         ORDER BY c.sortnum,c.secsortnum;
-            * **/
-
+                        " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq=" + synseq +
+                        " union all "+
+                        " SELECT aa.sortnum,aa.customercode,aa.customername,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname " +
+                        " FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr "+
+                        " WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
+                        " and aa.synseq=" + synseq +" and rr.ctype=2 )"+
+                        " order by sortnum,sortname ";
 
             //取批次号
             String batchcodesql = "select SEQ_ONEHAOGONGCHENG.Nextval from dual";

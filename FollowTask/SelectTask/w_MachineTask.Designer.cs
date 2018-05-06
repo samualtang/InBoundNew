@@ -1,4 +1,4 @@
-﻿namespace highSpeed
+﻿namespace FollowTask
 {
     partial class w_MachineTask
     {

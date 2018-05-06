@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.OracleClient;
 using System.Threading;
 using highSpeed.PubFunc;
+using InBound;
 
 namespace highSpeed.orderHandle
 {
@@ -18,7 +19,7 @@ namespace highSpeed.orderHandle
         DataSet ds = new DataSet();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
-
+        public WriteLog writeLog = WriteLog.GetLog();
         static string sqlhwere = "where state = " + 0;
         static string sql = "select  REGIONCODE 车组号,Sum(TASKQUANTITY)  任务数 ,STATE 状态,MAINBELT 主皮带,ORDERDATE 订单日期 from t_produce_task " + sqlhwere + " group by REGIONCODE,STATE,MAINBELT,ORDERDATE  order by REGIONCODE";
 
@@ -83,6 +84,7 @@ namespace highSpeed.orderHandle
              progressBar1.Visible = false;
 
              this.dgvSortInfo.DataSource = ds.Tables[0];
+             dgvSortInfo.Sort(dgvSortInfo.Columns[1], ListSortDirection.Descending);//默认车组排序
              this.dgvSortInfo.AutoGenerateColumns = false;
              
 
@@ -106,7 +108,7 @@ namespace highSpeed.orderHandle
          }
         private void btnSort_Click(object sender, EventArgs e)
         {
-            int rcounts = 5000;//大约十5秒 
+           // int rcounts = 5000;//大约十5秒 
             this.btnSort.Enabled = false;//防止点击多下
             panel2.Visible = true;
             label2.Visible = true;
@@ -115,67 +117,77 @@ namespace highSpeed.orderHandle
             Thread thread = new Thread(new ThreadStart(Sort));
             thread.Start();
             label2.Text = "正在对分拣车组任务数据进重新排序";
-            for (int i = 0; i < rcounts; i++)
-            {
-                if (progressBar1.Maximum > progressBar1.Value)
-                {
-                    Application.DoEvents();
-                    progressBar1.Value = ((i + 1) * 100 / rcounts);
-                    progressBar1.Refresh();
-                    label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
-                    label2.Refresh();
-                }
-            }  
+            //for (int i = 0; i < rcounts; i++)
+            //{
+            //    if (progressBar1.Maximum > progressBar1.Value)
+            //    {
+            //        Application.DoEvents();
+            //        progressBar1.Value = ((i + 1) * 100 / rcounts);
+            //        progressBar1.Refresh();
+            //        label2.Text = "正在排程....." + ((i + 1) * 100 / rcounts).ToString() + "%";
+            //        label2.Refresh();
+            //    }
+            //}  
             DgvBind(sql);//排程成后刷新
         }
 
         void Sort()
-        { 
-            OracleParameter[] sqlpara;
-            sqlpara = new OracleParameter[3];
-            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
-            sqlpara[2] = new OracleParameter("p_UnionStates", OracleType.VarChar, 100);//合单标志位
-            sqlpara[0].Direction = ParameterDirection.Output;
-            sqlpara[1].Direction = ParameterDirection.Output;
-            sqlpara[2].Direction = ParameterDirection.Input; 
-            if (rdbUnionDan.Checked)//合单
+        {
+            try
             {
-                sqlpara[2].Value = 1; 
+
+
+                OracleParameter[] sqlpara;
+                sqlpara = new OracleParameter[3];
+                sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
+                sqlpara[2] = new OracleParameter("p_UnionStates", OracleType.VarChar, 100);//合单标志位
+                sqlpara[0].Direction = ParameterDirection.Output;
+                sqlpara[1].Direction = ParameterDirection.Output;
+                sqlpara[2].Direction = ParameterDirection.Input;
+                if (rdbUnionDan.Checked)//合单
+                {
+                    sqlpara[2].Value = 1;
+                }
+                else if (rdbUnUnionDan.Checked)//不合单
+                {
+                    sqlpara[2].Value = 2;
+                }
+                else
+                {
+                    MessageBox.Show("请选择合单或者不合单");
+                }
+                Db.Open();
+                Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
+
+                //MessageBox.Show(date);
+                //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                String errcode = sqlpara[0].Value.ToString();
+                String errmsg = sqlpara[1].Value.ToString();
+                if (errcode == "1")
+                {
+                    panel2.Visible = false;
+                    MessageBox.Show("分拣车组任务排序成功！"); 
+                }
+                else
+                {
+                    // panel2.Visible = false;
+                    MessageBox.Show(errmsg);
+                }
+                updateControl(btnSort, true, true);
+                //  panel2.Visible = false;
+                updateControl(panel2, false, true);
+                //  label2.Visible = false;
+                updateControl(label2, false, true);
+                //  progressBar1.Visible = false;
+                updateControl(progressBar1, false, true);
             }
-            else if (rdbUnUnionDan.Checked)//不合单
+            catch (Exception e)
             {
-                sqlpara[2].Value = 2; 
+                MessageBox.Show("排程存储过程异常:" + e.Message);
+                writeLog.Write("排程存储过程异常:" + e.Message); 
+
             }
-            else
-            {
-                MessageBox.Show("请选择合单或者不合单");
-            }
-            Db.Open();
-            Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
-          
-            //MessageBox.Show(date);
-            //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            String errcode = sqlpara[0].Value.ToString();
-            String errmsg = sqlpara[1].Value.ToString();
-            if (errcode == "1")
-            {
-                panel2.Visible = false;
-                MessageBox.Show("分拣车组任务排序成功！");
-               
-            } 
-            else
-            {
-               // panel2.Visible = false;
-                MessageBox.Show(errmsg);
-            } 
-            updateControl(btnSort, true, true);
-            //  panel2.Visible = false;
-            updateControl(panel2, false, true);
-            //  label2.Visible = false;
-            updateControl(label2, false, true);
-            //  progressBar1.Visible = false;
-           updateControl(progressBar1, false, true);
         }
         private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
 
@@ -219,11 +231,11 @@ namespace highSpeed.orderHandle
 
         private void dgvSortInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0)
-            {
-                Dgvcheck.Selected = true;
+            //if (e.ColumnIndex == 0)
+            //{
+            //    Dgvcheck.Selected = true;
               
-            }
+            //}
         }
 
 

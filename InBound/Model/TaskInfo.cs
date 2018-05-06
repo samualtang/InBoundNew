@@ -20,6 +20,12 @@ namespace InBound.Model
         public decimal Count { get; set; }
         public decimal FinishCount { get; set; }
         public String Rate { get; set; }
-       
+
+        
+        /////////////////////////////////
+        public decimal MACHINESEQ { get; set; }
+        public decimal GROUPNO { get; set; }
+        public decimal POKENUM { get; set; }
+        public decimal UNIONTASKNUM { get; set; }
     }
 }

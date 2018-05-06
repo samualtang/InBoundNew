@@ -33,8 +33,18 @@
             this.gbMachine = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dgvMachineTaks = new System.Windows.Forms.DataGridView();
             this.groupBoxXiPanInfo = new System.Windows.Forms.GroupBox();
+            this.lblCig10 = new System.Windows.Forms.Label();
+            this.lblCig5 = new System.Windows.Forms.Label();
+            this.lblCig8 = new System.Windows.Forms.Label();
+            this.lblCig9 = new System.Windows.Forms.Label();
+            this.lblCig3 = new System.Windows.Forms.Label();
+            this.lblCig4 = new System.Windows.Forms.Label();
+            this.lblCig7 = new System.Windows.Forms.Label();
+            this.lblCig2 = new System.Windows.Forms.Label();
+            this.lblCig6 = new System.Windows.Forms.Label();
+            this.lblCig1 = new System.Windows.Forms.Label();
+            this.lblCigreName = new System.Windows.Forms.Label();
             this.pbSokme10 = new System.Windows.Forms.PictureBox();
             this.pbSokme9 = new System.Windows.Forms.PictureBox();
             this.pbSokme5 = new System.Windows.Forms.PictureBox();
@@ -65,20 +75,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lblCigreName = new System.Windows.Forms.Label();
-            this.lblCig1 = new System.Windows.Forms.Label();
-            this.lblCig6 = new System.Windows.Forms.Label();
-            this.lblCig2 = new System.Windows.Forms.Label();
-            this.lblCig7 = new System.Windows.Forms.Label();
-            this.lblCig3 = new System.Windows.Forms.Label();
-            this.lblCig8 = new System.Windows.Forms.Label();
-            this.lblCig4 = new System.Windows.Forms.Label();
-            this.lblCig9 = new System.Windows.Forms.Label();
-            this.lblCig5 = new System.Windows.Forms.Label();
-            this.lblCig10 = new System.Windows.Forms.Label();
+            this.listViewMachineDetails = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.gbMachine.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMachineTaks)).BeginInit();
             this.groupBoxXiPanInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSokme10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSokme9)).BeginInit();
@@ -135,7 +137,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dgvMachineTaks);
+            this.groupBox3.Controls.Add(this.listViewMachineDetails);
             this.groupBox3.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBox3.Location = new System.Drawing.Point(17, 59);
             this.groupBox3.Name = "groupBox3";
@@ -143,17 +145,6 @@
             this.groupBox3.TabIndex = 48;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "任务信息";
-            // 
-            // dgvMachineTaks
-            // 
-            this.dgvMachineTaks.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvMachineTaks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMachineTaks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMachineTaks.Location = new System.Drawing.Point(3, 23);
-            this.dgvMachineTaks.Name = "dgvMachineTaks";
-            this.dgvMachineTaks.RowTemplate.Height = 23;
-            this.dgvMachineTaks.Size = new System.Drawing.Size(230, 344);
-            this.dgvMachineTaks.TabIndex = 0;
             // 
             // groupBoxXiPanInfo
             // 
@@ -205,6 +196,106 @@
             this.groupBoxXiPanInfo.TabIndex = 47;
             this.groupBoxXiPanInfo.TabStop = false;
             this.groupBoxXiPanInfo.Text = "吸盘信息";
+            // 
+            // lblCig10
+            // 
+            this.lblCig10.AutoSize = true;
+            this.lblCig10.Location = new System.Drawing.Point(364, 317);
+            this.lblCig10.Name = "lblCig10";
+            this.lblCig10.Size = new System.Drawing.Size(44, 18);
+            this.lblCig10.TabIndex = 53;
+            this.lblCig10.Text = "香烟";
+            // 
+            // lblCig5
+            // 
+            this.lblCig5.AutoSize = true;
+            this.lblCig5.Location = new System.Drawing.Point(296, 317);
+            this.lblCig5.Name = "lblCig5";
+            this.lblCig5.Size = new System.Drawing.Size(44, 18);
+            this.lblCig5.TabIndex = 53;
+            this.lblCig5.Text = "香烟";
+            // 
+            // lblCig8
+            // 
+            this.lblCig8.AutoSize = true;
+            this.lblCig8.Location = new System.Drawing.Point(364, 198);
+            this.lblCig8.Name = "lblCig8";
+            this.lblCig8.Size = new System.Drawing.Size(44, 18);
+            this.lblCig8.TabIndex = 53;
+            this.lblCig8.Text = "香烟";
+            // 
+            // lblCig9
+            // 
+            this.lblCig9.AutoSize = true;
+            this.lblCig9.Location = new System.Drawing.Point(364, 255);
+            this.lblCig9.Name = "lblCig9";
+            this.lblCig9.Size = new System.Drawing.Size(44, 18);
+            this.lblCig9.TabIndex = 53;
+            this.lblCig9.Text = "香烟";
+            // 
+            // lblCig3
+            // 
+            this.lblCig3.AutoSize = true;
+            this.lblCig3.Location = new System.Drawing.Point(296, 198);
+            this.lblCig3.Name = "lblCig3";
+            this.lblCig3.Size = new System.Drawing.Size(44, 18);
+            this.lblCig3.TabIndex = 53;
+            this.lblCig3.Text = "香烟";
+            // 
+            // lblCig4
+            // 
+            this.lblCig4.AutoSize = true;
+            this.lblCig4.Location = new System.Drawing.Point(296, 255);
+            this.lblCig4.Name = "lblCig4";
+            this.lblCig4.Size = new System.Drawing.Size(44, 18);
+            this.lblCig4.TabIndex = 53;
+            this.lblCig4.Text = "香烟";
+            // 
+            // lblCig7
+            // 
+            this.lblCig7.AutoSize = true;
+            this.lblCig7.Location = new System.Drawing.Point(364, 137);
+            this.lblCig7.Name = "lblCig7";
+            this.lblCig7.Size = new System.Drawing.Size(44, 18);
+            this.lblCig7.TabIndex = 53;
+            this.lblCig7.Text = "香烟";
+            // 
+            // lblCig2
+            // 
+            this.lblCig2.AutoSize = true;
+            this.lblCig2.Location = new System.Drawing.Point(296, 137);
+            this.lblCig2.Name = "lblCig2";
+            this.lblCig2.Size = new System.Drawing.Size(44, 18);
+            this.lblCig2.TabIndex = 53;
+            this.lblCig2.Text = "香烟";
+            // 
+            // lblCig6
+            // 
+            this.lblCig6.AutoSize = true;
+            this.lblCig6.Location = new System.Drawing.Point(364, 76);
+            this.lblCig6.Name = "lblCig6";
+            this.lblCig6.Size = new System.Drawing.Size(44, 18);
+            this.lblCig6.TabIndex = 53;
+            this.lblCig6.Text = "香烟";
+            // 
+            // lblCig1
+            // 
+            this.lblCig1.AutoSize = true;
+            this.lblCig1.Location = new System.Drawing.Point(296, 76);
+            this.lblCig1.Name = "lblCig1";
+            this.lblCig1.Size = new System.Drawing.Size(44, 18);
+            this.lblCig1.TabIndex = 53;
+            this.lblCig1.Text = "香烟";
+            // 
+            // lblCigreName
+            // 
+            this.lblCigreName.AutoSize = true;
+            this.lblCigreName.Font = new System.Drawing.Font("宋体", 18F);
+            this.lblCigreName.Location = new System.Drawing.Point(116, 23);
+            this.lblCigreName.Name = "lblCigreName";
+            this.lblCigreName.Size = new System.Drawing.Size(82, 24);
+            this.lblCigreName.TabIndex = 52;
+            this.lblCigreName.Text = "label1";
             // 
             // pbSokme10
             // 
@@ -466,111 +557,45 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "#1";
             // 
-            // lblCigreName
+            // listViewMachineDetails
             // 
-            this.lblCigreName.AutoSize = true;
-            this.lblCigreName.Font = new System.Drawing.Font("宋体", 18F);
-            this.lblCigreName.Location = new System.Drawing.Point(116, 23);
-            this.lblCigreName.Name = "lblCigreName";
-            this.lblCigreName.Size = new System.Drawing.Size(82, 24);
-            this.lblCigreName.TabIndex = 52;
-            this.lblCigreName.Text = "label1";
+            this.listViewMachineDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewMachineDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewMachineDetails.GridLines = true;
+            this.listViewMachineDetails.Location = new System.Drawing.Point(3, 23);
+            this.listViewMachineDetails.Name = "listViewMachineDetails";
+            this.listViewMachineDetails.Size = new System.Drawing.Size(230, 344);
+            this.listViewMachineDetails.TabIndex = 1;
+            this.listViewMachineDetails.UseCompatibleStateImageBehavior = false;
+            this.listViewMachineDetails.View = System.Windows.Forms.View.Details;
             // 
-            // lblCig1
+            // columnHeader1
             // 
-            this.lblCig1.AutoSize = true;
-            this.lblCig1.Location = new System.Drawing.Point(296, 76);
-            this.lblCig1.Name = "lblCig1";
-            this.lblCig1.Size = new System.Drawing.Size(44, 18);
-            this.lblCig1.TabIndex = 53;
-            this.lblCig1.Text = "香烟";
+            this.columnHeader1.Text = "任务编号";
+            this.columnHeader1.Width = 119;
             // 
-            // lblCig6
+            // columnHeader2
             // 
-            this.lblCig6.AutoSize = true;
-            this.lblCig6.Location = new System.Drawing.Point(364, 76);
-            this.lblCig6.Name = "lblCig6";
-            this.lblCig6.Size = new System.Drawing.Size(44, 18);
-            this.lblCig6.TabIndex = 53;
-            this.lblCig6.Text = "香烟";
+            this.columnHeader2.Text = "抓取数量";
+            this.columnHeader2.Width = 107;
             // 
-            // lblCig2
+            // btnRefresh
             // 
-            this.lblCig2.AutoSize = true;
-            this.lblCig2.Location = new System.Drawing.Point(296, 137);
-            this.lblCig2.Name = "lblCig2";
-            this.lblCig2.Size = new System.Drawing.Size(44, 18);
-            this.lblCig2.TabIndex = 53;
-            this.lblCig2.Text = "香烟";
-            // 
-            // lblCig7
-            // 
-            this.lblCig7.AutoSize = true;
-            this.lblCig7.Location = new System.Drawing.Point(364, 137);
-            this.lblCig7.Name = "lblCig7";
-            this.lblCig7.Size = new System.Drawing.Size(44, 18);
-            this.lblCig7.TabIndex = 53;
-            this.lblCig7.Text = "香烟";
-            // 
-            // lblCig3
-            // 
-            this.lblCig3.AutoSize = true;
-            this.lblCig3.Location = new System.Drawing.Point(296, 198);
-            this.lblCig3.Name = "lblCig3";
-            this.lblCig3.Size = new System.Drawing.Size(44, 18);
-            this.lblCig3.TabIndex = 53;
-            this.lblCig3.Text = "香烟";
-            // 
-            // lblCig8
-            // 
-            this.lblCig8.AutoSize = true;
-            this.lblCig8.Location = new System.Drawing.Point(364, 198);
-            this.lblCig8.Name = "lblCig8";
-            this.lblCig8.Size = new System.Drawing.Size(44, 18);
-            this.lblCig8.TabIndex = 53;
-            this.lblCig8.Text = "香烟";
-            // 
-            // lblCig4
-            // 
-            this.lblCig4.AutoSize = true;
-            this.lblCig4.Location = new System.Drawing.Point(296, 255);
-            this.lblCig4.Name = "lblCig4";
-            this.lblCig4.Size = new System.Drawing.Size(44, 18);
-            this.lblCig4.TabIndex = 53;
-            this.lblCig4.Text = "香烟";
-            // 
-            // lblCig9
-            // 
-            this.lblCig9.AutoSize = true;
-            this.lblCig9.Location = new System.Drawing.Point(364, 255);
-            this.lblCig9.Name = "lblCig9";
-            this.lblCig9.Size = new System.Drawing.Size(44, 18);
-            this.lblCig9.TabIndex = 53;
-            this.lblCig9.Text = "香烟";
-            // 
-            // lblCig5
-            // 
-            this.lblCig5.AutoSize = true;
-            this.lblCig5.Location = new System.Drawing.Point(296, 317);
-            this.lblCig5.Name = "lblCig5";
-            this.lblCig5.Size = new System.Drawing.Size(44, 18);
-            this.lblCig5.TabIndex = 53;
-            this.lblCig5.Text = "香烟";
-            // 
-            // lblCig10
-            // 
-            this.lblCig10.AutoSize = true;
-            this.lblCig10.Location = new System.Drawing.Point(364, 317);
-            this.lblCig10.Name = "lblCig10";
-            this.lblCig10.Size = new System.Drawing.Size(44, 18);
-            this.lblCig10.TabIndex = 53;
-            this.lblCig10.Text = "香烟";
+            this.btnRefresh.Location = new System.Drawing.Point(666, 42);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 52;
+            this.btnRefresh.Text = "刷新";
+            this.btnRefresh.UseVisualStyleBackColor = true;
             // 
             // Fm_FollowTaskMachineDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 551);
+            this.ClientSize = new System.Drawing.Size(753, 530);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.gbMachine);
             this.Controls.Add(this.lblMachineNo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -583,7 +608,6 @@
             this.gbMachine.ResumeLayout(false);
             this.gbMachine.PerformLayout();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMachineTaks)).EndInit();
             this.groupBoxXiPanInfo.ResumeLayout(false);
             this.groupBoxXiPanInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSokme10)).EndInit();
@@ -617,7 +641,6 @@
         private System.Windows.Forms.GroupBox gbMachine;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView dgvMachineTaks;
         private System.Windows.Forms.GroupBox groupBoxXiPanInfo;
         private System.Windows.Forms.PictureBox pbSokme10;
         private System.Windows.Forms.PictureBox pbSokme9;
@@ -660,5 +683,9 @@
         private System.Windows.Forms.Label lblCig2;
         private System.Windows.Forms.Label lblCig6;
         private System.Windows.Forms.Label lblCig1;
+        private System.Windows.Forms.ListView listViewMachineDetails;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

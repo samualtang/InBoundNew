@@ -10,7 +10,7 @@ using InBound;
 using InBound.Business;
 using System.Reflection;
 
-namespace highSpeed
+namespace FollowTask
 {
     public partial class w_MachineTask : Form
     {
@@ -18,7 +18,7 @@ namespace highSpeed
         {
             InitializeComponent();
         }
-        List<T_PRODUCE_TASK> list = TaskService.getAllTask();
+        List<T_PRODUCE_TASK> list =FolloTaskService.getAllTask();
         public w_MachineTask(string HeadText )
         {  
             InitializeComponent();

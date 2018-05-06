@@ -110,7 +110,8 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = customercode;//客户号
+                        //values[j * 9 + 3] = customercode;//客户号
+                        values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = pNum;//包装号
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
@@ -168,7 +169,7 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = customercode;//客户号
+                        values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = packageNum;//包装号
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号

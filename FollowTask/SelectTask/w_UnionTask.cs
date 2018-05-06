@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using InBound.Business;
 using InBound;
 
-namespace highSpeed
+namespace FollowTask
 {
     public partial class w_UnionTask : Form
     {

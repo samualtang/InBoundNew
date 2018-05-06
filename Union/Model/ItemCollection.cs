@@ -45,19 +45,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskGroupItem1()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W54");  //任务号 0
-           list.Add(OpcUnionServer + "DB1,W56");   //出口号 1
-           list.Add(OpcUnionServer + "DB1,W58");   //包装机号 2
-           list.Add(OpcUnionServer + "DB1,W60");   //总条数 3
-           list.Add(OpcUnionServer + "DB1,W62");   //1号机械手抓烟数 4
-           list.Add(OpcUnionServer + "DB1,W64");   //2号机械手抓烟数 5
-           list.Add(OpcUnionServer + "DB1,W66");   //3号机械手抓烟数 6 
-           list.Add(OpcUnionServer + "DB1,W68");   //4号机械手抓烟数 7 
-           list.Add(OpcUnionServer + "DB1,W70");   //5号机械手抓烟数 8
-           list.Add(OpcUnionServer + "DB1,W72");   //6号机械手抓烟数 9
-           list.Add(OpcUnionServer + "DB1,W74");   //7号机械手抓烟数 10
-           list.Add(OpcUnionServer + "DB1,W76");   //8号机械手抓烟数  11 
-           list.Add(OpcUnionServer + "DB1,W52");//状态,1为上位写,2为电控接收12
+           list.Add(OpcUnionServer + "DB1,DWORD58");  //任务号 0 d58 4位
+           list.Add(OpcUnionServer + "DB1,W62");   //出口号 1
+           list.Add(OpcUnionServer + "DB1,W64");   //包装机号 2
+           list.Add(OpcUnionServer + "DB1,W66");   //总条数 3
+           list.Add(OpcUnionServer + "DB1,W68");   //1号机械手抓烟数 4
+           list.Add(OpcUnionServer + "DB1,W70");   //2号机械手抓烟数 5
+           list.Add(OpcUnionServer + "DB1,W72");   //3号机械手抓烟数 6 
+           list.Add(OpcUnionServer + "DB1,W74");   //4号机械手抓烟数 7 
+           list.Add(OpcUnionServer + "DB1,W76");   //5号机械手抓烟数 8
+           list.Add(OpcUnionServer + "DB1,W78");   //6号机械手抓烟数 9
+           list.Add(OpcUnionServer + "DB1,W80");   //7号机械手抓烟数 10
+           list.Add(OpcUnionServer + "DB1,W82");   //8号机械手抓烟数  11 
+           list.Add(OpcUnionServer + "DB1,W56");//状态,1为上位写,2为电控接收12
            return list;
        }
 
@@ -68,19 +68,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskGroupItem2()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W80");  //任务号 0
-           list.Add(OpcUnionServer + "DB1,W82");   //出口号 1
-           list.Add(OpcUnionServer + "DB1,W84");   //包装机号 2
-           list.Add(OpcUnionServer + "DB1,W86");   //总条数 3
-           list.Add(OpcUnionServer + "DB1,W88");   //1号机械手抓烟数 4
-           list.Add(OpcUnionServer + "DB1,W90");   //2号机械手抓烟数 5
-           list.Add(OpcUnionServer + "DB1,W92");   //3号机械手抓烟数 6 
-           list.Add(OpcUnionServer + "DB1,W94");   //4号机械手抓烟数 7 
-           list.Add(OpcUnionServer + "DB1,W96");   //5号机械手抓烟数 8
-           list.Add(OpcUnionServer + "DB1,W98");   //6号机械手抓烟数 9
-           list.Add(OpcUnionServer + "DB1,W100");   //7号机械手抓烟数 10
-           list.Add(OpcUnionServer + "DB1,W102");   //8号机械手抓烟数  11
-           list.Add(OpcUnionServer + "DB1,W78");//状态,1为上位写,2为电控接收12
+           list.Add(OpcUnionServer + "DB1,DWORD86");  //任务号 0
+           list.Add(OpcUnionServer + "DB1,W90");   //出口号 1
+           list.Add(OpcUnionServer + "DB1,W92");   //包装机号 2
+           list.Add(OpcUnionServer + "DB1,W94");   //总条数 3
+           list.Add(OpcUnionServer + "DB1,W96");   //1号机械手抓烟数 4
+           list.Add(OpcUnionServer + "DB1,W98");   //2号机械手抓烟数 5
+           list.Add(OpcUnionServer + "DB1,W100");   //3号机械手抓烟数 6 
+           list.Add(OpcUnionServer + "DB1,W102");   //4号机械手抓烟数 7 
+           list.Add(OpcUnionServer + "DB1,W104");   //5号机械手抓烟数 8
+           list.Add(OpcUnionServer + "DB1,W106");   //6号机械手抓烟数 9
+           list.Add(OpcUnionServer + "DB1,W108");   //7号机械手抓烟数 10
+           list.Add(OpcUnionServer + "DB1,W110");   //8号机械手抓烟数  11
+           list.Add(OpcUnionServer + "DB1,W84");//状态,1为上位写,2为电控接收12
            return list;
        }
 
@@ -91,19 +91,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskGroupItem3()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W106");  //任务号 0
-           list.Add(OpcUnionServer + "DB1,W108");   //出口号 1
-           list.Add(OpcUnionServer + "DB1,W110");   //包装机号 2
-           list.Add(OpcUnionServer + "DB1,W112");   //总条数 3
-           list.Add(OpcUnionServer + "DB1,W114");   //1号机械手抓烟数 4
-           list.Add(OpcUnionServer + "DB1,W116");   //2号机械手抓烟数 5
-           list.Add(OpcUnionServer + "DB1,W118");   //3号机械手抓烟数 6 
-           list.Add(OpcUnionServer + "DB1,W120");   //4号机械手抓烟数 7 
-           list.Add(OpcUnionServer + "DB1,W122");   //5号机械手抓烟数 8
-           list.Add(OpcUnionServer + "DB1,W124");   //6号机械手抓烟数 9
-           list.Add(OpcUnionServer + "DB1,W126");   //7号机械手抓烟数 10
-           list.Add(OpcUnionServer + "DB1,W128");   //8号机械手抓烟数  11
-           list.Add(OpcUnionServer + "DB1,W104");//状态,1为上位写,2为电控接收12
+           list.Add(OpcUnionServer + "DB1,DWORD114");  //任务号 0
+           list.Add(OpcUnionServer + "DB1,W118");   //出口号 1
+           list.Add(OpcUnionServer + "DB1,W120");   //包装机号 2
+           list.Add(OpcUnionServer + "DB1,W122");   //总条数 3
+           list.Add(OpcUnionServer + "DB1,W124");   //1号机械手抓烟数 4
+           list.Add(OpcUnionServer + "DB1,W126");   //2号机械手抓烟数 5
+           list.Add(OpcUnionServer + "DB1,W128");   //3号机械手抓烟数 6 
+           list.Add(OpcUnionServer + "DB1,W130");   //4号机械手抓烟数 7 
+           list.Add(OpcUnionServer + "DB1,W132");   //5号机械手抓烟数 8
+           list.Add(OpcUnionServer + "DB1,W134");   //6号机械手抓烟数 9
+           list.Add(OpcUnionServer + "DB1,W136");   //7号机械手抓烟数 10
+           list.Add(OpcUnionServer + "DB1,W138");   //8号机械手抓烟数  11
+           list.Add(OpcUnionServer + "DB1,W112");//状态,1为上位写,2为电控接收12
            return list;
        }
 
@@ -114,19 +114,19 @@ namespace SortingControlSys.Model
        public static List<string> GetTaskGroupItem4()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W132");  //任务号 0
-           list.Add(OpcUnionServer + "DB1,W134");   //出口号 1
-           list.Add(OpcUnionServer + "DB1,W136");   //包装机号 2
-           list.Add(OpcUnionServer + "DB1,W138");   //总条数 3
-           list.Add(OpcUnionServer + "DB1,W140");   //1号机械手抓烟数 4
-           list.Add(OpcUnionServer + "DB1,W142");   //2号机械手抓烟数 5
-           list.Add(OpcUnionServer + "DB1,W144");   //3号机械手抓烟数 6 
-           list.Add(OpcUnionServer + "DB1,W146");   //4号机械手抓烟数 7 
-           list.Add(OpcUnionServer + "DB1,W148");   //5号机械手抓烟数 8
-           list.Add(OpcUnionServer + "DB1,W150");   //6号机械手抓烟数 9
-           list.Add(OpcUnionServer + "DB1,W152");   //7号机械手抓烟数 10
-           list.Add(OpcUnionServer + "DB1,W154");   //8号机械手抓烟数  11
-           list.Add(OpcUnionServer + "DB1,W130");//状态,1为上位写,2为电控接收12
+           list.Add(OpcUnionServer + "DB1,DWORD142");  //任务号 0
+           list.Add(OpcUnionServer + "DB1,W146");   //出口号 1
+           list.Add(OpcUnionServer + "DB1,W148");   //包装机号 2
+           list.Add(OpcUnionServer + "DB1,W150");   //总条数 3
+           list.Add(OpcUnionServer + "DB1,W152");   //1号机械手抓烟数 4
+           list.Add(OpcUnionServer + "DB1,W154");   //2号机械手抓烟数 5
+           list.Add(OpcUnionServer + "DB1,W156");   //3号机械手抓烟数 6 
+           list.Add(OpcUnionServer + "DB1,W158");   //4号机械手抓烟数 7 
+           list.Add(OpcUnionServer + "DB1,W160");   //5号机械手抓烟数 8
+           list.Add(OpcUnionServer + "DB1,W162");   //6号机械手抓烟数 9
+           list.Add(OpcUnionServer + "DB1,W164");   //7号机械手抓烟数 10
+           list.Add(OpcUnionServer + "DB1,W166");   //8号机械手抓烟数  11
+           list.Add(OpcUnionServer + "DB1,W140");//状态,1为上位写,2为电控接收12
            return list;
        }
        /// <summary>
@@ -136,10 +136,10 @@ namespace SortingControlSys.Model
        public static List<string> GetSendTaskStatesItem()//合流机械手信息采集
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer + "DB1,W52");   //任务接收标志位,1为上位发送,2为电控接收 //2  一号主皮带标示位
-           list.Add(OpcUnionServer + "DB1,W78");   //任务接收标志位,1为上位发送,2为电控接收 //2 二号主皮带标示位
-           list.Add(OpcUnionServer + "DB1,W104");   //任务接收标志位,1为上位发送,2为电控接收 //2 三号主皮带标示位
-           list.Add(OpcUnionServer + "DB1,W130");   //任务接收标志位,1为上位发送,2为电控接收 //2 四号主皮带标示位
+           list.Add(OpcUnionServer + "DB1,W56");   //任务接收标志位,1为上位发送,2为电控接收 //2  一号主皮带标示位
+           list.Add(OpcUnionServer + "DB1,W84");   //任务接收标志位,1为上位发送,2为电控接收 //2 二号主皮带标示位
+           list.Add(OpcUnionServer + "DB1,W112");   //任务接收标志位,1为上位发送,2为电控接收 //2 三号主皮带标示位
+           list.Add(OpcUnionServer + "DB1,W140");   //任务接收标志位,1为上位发送,2为电控接收 //2 四号主皮带标示位
            return list;
        }
        public static List<string> GetTaskStatusItem11()
@@ -228,89 +228,100 @@ namespace SortingControlSys.Model
           
            return list;
        }
-       public static List<string> GetTaskStatusItem12()
+       /// <summary>
+       /// 获取合流完成信号
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetFinishStatusItem()
        {
            List<string> list = new List<string>();
-           list.Add(OpcUnionServer+"DB30,W200");
-           list.Add(OpcUnionServer+"DB30,W202");
-           list.Add(OpcUnionServer+"DB30,W204");
-           list.Add(OpcUnionServer+"DB30,W206");
-           list.Add(OpcUnionServer+"DB30,W208");
-           list.Add(OpcUnionServer+"DB30,W210");
-           list.Add(OpcUnionServer+"DB30,W212");
-           list.Add(OpcUnionServer+"DB30,W214");
-           list.Add(OpcUnionServer+"DB30,W216");
-           list.Add(OpcUnionServer+"DB30,W218");
-           list.Add(OpcUnionServer+"DB30,W220");
-           list.Add(OpcUnionServer+"DB30,W222");
-           list.Add(OpcUnionServer+"DB30,W224");
-           list.Add(OpcUnionServer+"DB30,W226");
-           list.Add(OpcUnionServer+"DB30,W228");
-           list.Add(OpcUnionServer+"DB30,W230");
-           list.Add(OpcUnionServer+"DB30,W232");
-           list.Add(OpcUnionServer+"DB30,W234");
-           list.Add(OpcUnionServer+"DB30,W236");
-           list.Add(OpcUnionServer+"DB30,W238");
-           list.Add(OpcUnionServer+"DB30,W240");
-           list.Add(OpcUnionServer+"DB30,W242");
-           list.Add(OpcUnionServer+"DB30,W244");
-           list.Add(OpcUnionServer+"DB30,W246");
-           list.Add(OpcUnionServer+"DB30,W248");
-           list.Add(OpcUnionServer+"DB30,W250");
-           list.Add(OpcUnionServer+"DB30,W252");
-           list.Add(OpcUnionServer+"DB30,W254");
-           list.Add(OpcUnionServer+"DB30,W256");
-           list.Add(OpcUnionServer+"DB30,W258");
-           list.Add(OpcUnionServer+"DB30,W260");
-           list.Add(OpcUnionServer+"DB30,W262");
-           list.Add(OpcUnionServer+"DB30,W264");
-           list.Add(OpcUnionServer+"DB30,W266");
-           list.Add(OpcUnionServer+"DB30,W268");
-           list.Add(OpcUnionServer+"DB30,W270");
-           list.Add(OpcUnionServer+"DB30,W272");
-           list.Add(OpcUnionServer+"DB30,W274");
-           list.Add(OpcUnionServer+"DB30,W276");
-           list.Add(OpcUnionServer+"DB30,W278");
-           list.Add(OpcUnionServer+"DB30,W280");
-           list.Add(OpcUnionServer+"DB30,W282");
-           list.Add(OpcUnionServer+"DB30,W284");
-           list.Add(OpcUnionServer+"DB30,W286");
-           list.Add(OpcUnionServer+"DB30,W288");
-           list.Add(OpcUnionServer+"DB30,W290");
-           list.Add(OpcUnionServer+"DB30,W292");
-           list.Add(OpcUnionServer+"DB30,W294");
-           list.Add(OpcUnionServer+"DB30,W296");
-           list.Add(OpcUnionServer+"DB30,W298");
-           list.Add(OpcUnionServer+"DB30,W300");
-           list.Add(OpcUnionServer+"DB30,W302");
-           list.Add(OpcUnionServer+"DB30,W304");
-           list.Add(OpcUnionServer+"DB30,W306");
-           list.Add(OpcUnionServer+"DB30,W308");
-           list.Add(OpcUnionServer+"DB30,W310");
-           list.Add(OpcUnionServer+"DB30,W312");
-           list.Add(OpcUnionServer+"DB30,W314");
-           list.Add(OpcUnionServer+"DB30,W316");
-           list.Add(OpcUnionServer+"DB30,W318");
-           list.Add(OpcUnionServer+"DB30,W320");
-           list.Add(OpcUnionServer+"DB30,W322");
-           list.Add(OpcUnionServer+"DB30,W324");
-           list.Add(OpcUnionServer+"DB30,W326");
-           list.Add(OpcUnionServer+"DB30,W328");
-           list.Add(OpcUnionServer+"DB30,W330");
-           list.Add(OpcUnionServer+"DB30,W332");
-           list.Add(OpcUnionServer+"DB30,W334");
-           list.Add(OpcUnionServer+"DB30,W336");
-           list.Add(OpcUnionServer+"DB30,W338");
-           list.Add(OpcUnionServer+"DB30,W340");
-           list.Add(OpcUnionServer+"DB30,W342");
-           list.Add(OpcUnionServer+"DB30,W344");
-           list.Add(OpcUnionServer+"DB30,W346");
-           list.Add(OpcUnionServer+"DB30,W348");
-           list.Add(OpcUnionServer+"DB30,W350");
-           list.Add(OpcUnionServer+"DB30,W352");
-           list.Add(OpcUnionServer+"DB30,W354");
-           list.Add(OpcUnionServer+"DB30,W356");
-           list.Add(OpcUnionServer+"DB30,W358");
+           //list.Add(OpcUnionServer+"DB30,W200");
+           //list.Add(OpcUnionServer+"DB30,W202");
+           //list.Add(OpcUnionServer+"DB30,W204");
+           //list.Add(OpcUnionServer+"DB30,W206");
+           //list.Add(OpcUnionServer+"DB30,W208");
+           //list.Add(OpcUnionServer+"DB30,W210");
+           //list.Add(OpcUnionServer+"DB30,W212");
+           //list.Add(OpcUnionServer+"DB30,W214");
+           //list.Add(OpcUnionServer+"DB30,W216");
+           //list.Add(OpcUnionServer+"DB30,W218");
+           //list.Add(OpcUnionServer+"DB30,W220");
+           //list.Add(OpcUnionServer+"DB30,W222");
+           //list.Add(OpcUnionServer+"DB30,W224");
+           //list.Add(OpcUnionServer+"DB30,W226");
+           //list.Add(OpcUnionServer+"DB30,W228");
+           //list.Add(OpcUnionServer+"DB30,W230");
+           //list.Add(OpcUnionServer+"DB30,W232");
+           //list.Add(OpcUnionServer+"DB30,W234");
+           //list.Add(OpcUnionServer+"DB30,W236");
+           //list.Add(OpcUnionServer+"DB30,W238");
+           //list.Add(OpcUnionServer+"DB30,W240");
+           //list.Add(OpcUnionServer+"DB30,W242");
+           //list.Add(OpcUnionServer+"DB30,W244");
+           //list.Add(OpcUnionServer+"DB30,W246");
+           //list.Add(OpcUnionServer+"DB30,W248");
+           //list.Add(OpcUnionServer+"DB30,W250");
+           //list.Add(OpcUnionServer+"DB30,W252");
+           //list.Add(OpcUnionServer+"DB30,W254");
+           //list.Add(OpcUnionServer+"DB30,W256");
+           //list.Add(OpcUnionServer+"DB30,W258");
+           //list.Add(OpcUnionServer+"DB30,W260");
+           //list.Add(OpcUnionServer+"DB30,W262");
+           //list.Add(OpcUnionServer+"DB30,W264");
+           //list.Add(OpcUnionServer+"DB30,W266");
+           //list.Add(OpcUnionServer+"DB30,W268");
+           //list.Add(OpcUnionServer+"DB30,W270");
+           //list.Add(OpcUnionServer+"DB30,W272");
+           //list.Add(OpcUnionServer+"DB30,W274");
+           //list.Add(OpcUnionServer+"DB30,W276");
+           //list.Add(OpcUnionServer+"DB30,W278");
+           //list.Add(OpcUnionServer+"DB30,W280");
+           //list.Add(OpcUnionServer+"DB30,W282");
+           //list.Add(OpcUnionServer+"DB30,W284");
+           //list.Add(OpcUnionServer+"DB30,W286");
+           //list.Add(OpcUnionServer+"DB30,W288");
+           //list.Add(OpcUnionServer+"DB30,W290");
+           //list.Add(OpcUnionServer+"DB30,W292");
+           //list.Add(OpcUnionServer+"DB30,W294");
+           //list.Add(OpcUnionServer+"DB30,W296");
+           //list.Add(OpcUnionServer+"DB30,W298");
+           //list.Add(OpcUnionServer+"DB30,W300");
+           //list.Add(OpcUnionServer+"DB30,W302");
+           //list.Add(OpcUnionServer+"DB30,W304");
+           //list.Add(OpcUnionServer+"DB30,W306");
+           //list.Add(OpcUnionServer+"DB30,W308");
+           //list.Add(OpcUnionServer+"DB30,W310");
+           //list.Add(OpcUnionServer+"DB30,W312");
+           //list.Add(OpcUnionServer+"DB30,W314");
+           //list.Add(OpcUnionServer+"DB30,W316");
+           //list.Add(OpcUnionServer+"DB30,W318");
+           //list.Add(OpcUnionServer+"DB30,W320");
+           //list.Add(OpcUnionServer+"DB30,W322");
+           //list.Add(OpcUnionServer+"DB30,W324");
+           //list.Add(OpcUnionServer+"DB30,W326");
+           //list.Add(OpcUnionServer+"DB30,W328");
+           //list.Add(OpcUnionServer+"DB30,W330");
+           //list.Add(OpcUnionServer+"DB30,W332");
+           //list.Add(OpcUnionServer+"DB30,W334");
+           //list.Add(OpcUnionServer+"DB30,W336");
+           //list.Add(OpcUnionServer+"DB30,W338");
+           //list.Add(OpcUnionServer+"DB30,W340");
+           //list.Add(OpcUnionServer+"DB30,W342");
+           //list.Add(OpcUnionServer+"DB30,W344");
+           //list.Add(OpcUnionServer+"DB30,W346");
+           //list.Add(OpcUnionServer+"DB30,W348");
+           //list.Add(OpcUnionServer+"DB30,W350");
+           //list.Add(OpcUnionServer+"DB30,W352");
+           //list.Add(OpcUnionServer+"DB30,W354");
+           //list.Add(OpcUnionServer+"DB30,W356");
+           //list.Add(OpcUnionServer+"DB30,W358");
+
+           for (int i = 200; i < 836; i = i + 4)
+           {
+               list.Add(OpcUnionServer + "DB30,DWORD" + i );
+           }
+           
+           
            return list;
        }
     }

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using InBound;
 
 namespace FollowTask
 {
@@ -14,6 +15,7 @@ namespace FollowTask
         public Fm_FollowTaskMachineDetail()
         {
             InitializeComponent();
+            this.listViewMachineDetails.DoubleBufferedListView(true);
         }
         #region 图片路径
         const string imgZhuaQu = @"D:\InBoundNew\FollowTask\Resources\抓取.bmp";
@@ -57,9 +59,6 @@ namespace FollowTask
             for (int i = 0; i < 10; i++)
             {
                 state[i] = rd.Next(0, 2);
-            }
-            for (int i = 0; i < 10; i++)
-            {
                 zhua[i] = rd.Next(0, 2);
             } 
             pbBind(pan, state, zhua);

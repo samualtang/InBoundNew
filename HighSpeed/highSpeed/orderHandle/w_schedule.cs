@@ -76,6 +76,7 @@ namespace highSpeed.orderHandle
                 progressBar1.Visible = false;
 
                 this.orderdata.DataSource = ds.Tables[0];
+                orderdata.Sort(orderdata.Columns[1], ListSortDirection.Descending);//默认车组排序
                 this.orderdata.AutoGenerateColumns = false;
 
                 string columnwidths = pub.IniReadValue(this.Name, this.orderdata.Name);

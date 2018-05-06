@@ -660,55 +660,23 @@ namespace highSpeed
 
         private void 机械手ToolStripMenuItem_Click(object sender, EventArgs e)
         { 
-            w_MachineTask fm = new w_MachineTask("机械手");
-            if (CheckExist(fm) == true)
-            {
-                fm.Dispose();
-                fm = null;
-                return;
-            }
-            fm.MdiParent = this;
-            fm.Show(); 
+             
         }
 
         private void 预分拣ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           W_FenJTask fm = new W_FenJTask(); 
-            if (CheckExist(fm) == true)
-            {
-                fm.Dispose();
-                fm = null;
-                return;
-            }
-            fm.MdiParent = this;
-            fm.Show(); 
+           
         }
 
         private void 合流ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            w_UnionTask fm = new w_UnionTask();
-            if (CheckExist(fm) == true)
-            {
-                fm.Dispose();
-                fm = null;
-                return;
-            }
-            fm.MdiParent = this;
-            fm.Show();
+           
 
         }
 
         private void 异形烟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            w_UnNormal fm = new w_UnNormal();
-            if (CheckExist(fm) == true)
-            {
-                fm.Dispose();
-                fm = null;
-                return;
-            }
-            fm.MdiParent = this;
-            fm.Show();
+            
         }
 
 
