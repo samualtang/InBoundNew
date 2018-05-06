@@ -46,7 +46,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 25F);
-            this.label1.Location = new System.Drawing.Point(155, 18);
+            this.label1.Location = new System.Drawing.Point(197, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(253, 34);
             this.label1.TabIndex = 0;
@@ -58,7 +58,7 @@
             this.groupBoxYaobaiDetails.Font = new System.Drawing.Font("宋体", 11F);
             this.groupBoxYaobaiDetails.Location = new System.Drawing.Point(28, 85);
             this.groupBoxYaobaiDetails.Name = "groupBoxYaobaiDetails";
-            this.groupBoxYaobaiDetails.Size = new System.Drawing.Size(539, 385);
+            this.groupBoxYaobaiDetails.Size = new System.Drawing.Size(613, 385);
             this.groupBoxYaobaiDetails.TabIndex = 1;
             this.groupBoxYaobaiDetails.TabStop = false;
             this.groupBoxYaobaiDetails.Text = "摇摆详细信息";
@@ -70,13 +70,13 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader6,
+            this.columnHeader5});
             this.listViewYaobaiDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewYaobaiDetails.GridLines = true;
             this.listViewYaobaiDetails.Location = new System.Drawing.Point(3, 20);
             this.listViewYaobaiDetails.Name = "listViewYaobaiDetails";
-            this.listViewYaobaiDetails.Size = new System.Drawing.Size(533, 362);
+            this.listViewYaobaiDetails.Size = new System.Drawing.Size(607, 362);
             this.listViewYaobaiDetails.TabIndex = 0;
             this.listViewYaobaiDetails.UseCompatibleStateImageBehavior = false;
             this.listViewYaobaiDetails.View = System.Windows.Forms.View.Details;
@@ -84,6 +84,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "订单号";
+            this.columnHeader1.Width = 124;
             // 
             // columnHeader2
             // 
@@ -100,28 +101,31 @@
             // 
             // columnHeader5
             // 
+            this.columnHeader5.DisplayIndex = 4;
             this.columnHeader5.Text = "香烟编号";
             this.columnHeader5.Width = 142;
             // 
             // columnHeader6
             // 
+            this.columnHeader6.DisplayIndex = 5;
             this.columnHeader6.Text = "香烟名称";
             this.columnHeader6.Width = 133;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(492, 56);
+            this.btnRefresh.Location = new System.Drawing.Point(563, 56);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Text = "刷新";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // Fm_SortDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(606, 504);
+            this.ClientSize = new System.Drawing.Size(678, 504);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.groupBoxYaobaiDetails);
             this.Controls.Add(this.label1);

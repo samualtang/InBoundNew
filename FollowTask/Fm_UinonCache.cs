@@ -18,9 +18,7 @@ namespace FollowTask
     {
         public Fm_UinonCache()
         {
-            InitializeComponent();
-            
-            
+            InitializeComponent(); 
         }
         decimal groupno, mainbelt;//组号和主皮带号
 
@@ -31,7 +29,7 @@ namespace FollowTask
         public Fm_UinonCache(string machineText,string machineno) 
         {
             InitializeComponent();
-            mainbelt = Convert.ToDecimal( machineText.Substring(4,1)).CastTo(-1);//获取主皮带号
+            mainbelt = Convert.ToDecimal(machineText.Substring(4,1)).CastTo(-1);//获取主皮带号
             groupno = GetGroupNo(Convert.ToInt32(machineno));//获取组号
             MessageBox.Show(machineno + "    " + groupno);
             this.listViewUnionCache.DoubleBufferedListView(true); 
@@ -67,23 +65,23 @@ namespace FollowTask
             }
             return groupno; 
         }
-  
+        List<FollowTaskDeail> list1;
         private void btnPokeTime_Click(object sender, EventArgs e)
         {
             try
             { 
                 listViewUnionCache.Items.Clear();
-                var data = FolloTaskService.getUnionCache(groupno, mainbelt, machineTaskExcuting, machinePokeNum).Select(a => new FollowTaskDeail
+                var list1 = FolloTaskService.getUnionCache(groupno, mainbelt, machineTaskExcuting, machinePokeNum).Select(a => new FollowTaskDeail
                 {
                     CIGARETTDECODE = a.CIGARETTDECODE,
                     CIGARETTDENAME = a.CIGARETTDENAME,
                     POKENUM = a.POKENUM,
                     SortNum = a.SortNum,
-                    mainBelt = a.mainBelt,
+                    MainBelt = a.MainBelt,
                     Machineseq = a.Machineseq,
                     POKEID = a.POKEID
                 }).ToList();
-                ListViewBind(data);
+                ListViewBind(list1);
             }
             catch (Exception ex)
             { 
@@ -104,7 +102,7 @@ namespace FollowTask
                 lv.SubItems.Add(mod.CIGARETTDENAME);
                 lv.SubItems.Add(mod.SortNum.ToString());
                 lv.SubItems.Add(mod.POKENUM.ToString());
-                lv.SubItems.Add(mod.mainBelt.ToString());
+                lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.Machineseq.ToString());
                 listViewUnionCache.Items.Add(lv);
             }
@@ -120,6 +118,11 @@ namespace FollowTask
                 btnPokeTime.Text = "第" + machinePokeNum + "抓";
             }
 
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            ListViewBind(list1);
         }
 
          

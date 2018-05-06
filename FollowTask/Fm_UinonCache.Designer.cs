@@ -132,6 +132,7 @@
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "刷新";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // dgvUnionCache
             // 

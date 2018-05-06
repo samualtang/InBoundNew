@@ -145,13 +145,14 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_PRODUCE_POKE
+            var query = from item in dataentity.T_PRODUCE_POKE
                             where item.SORTNUM == sortnum
                             orderby item.SORTNUM
                             group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE } into g
                             select new FollowTaskDeail() { SortNum = g.Key.SORTNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, UnionState = g.Key.UNIONSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
+                  
                 else return null;
             }
         }
@@ -185,7 +186,7 @@ namespace InBound.Business
                                     MainBelt = p.MAINBELT ?? 0,
                                     SortNum = p.SORTNUM ?? 0,
                                     GroupNO = t.GROUPNO ?? 0,
-                                    mainBelt = p.MAINBELT ?? 0
+                                    
                                 };
                     if (query != null)
                     {
@@ -207,9 +208,10 @@ namespace InBound.Business
         /// <summary>
         /// 合流缓存区算法
         /// </summary>
-        /// <param name="list"></param>
+        /// <param name="list">当前任务集合</param>
         /// <param name="machineTaskExcuting">当前抓取排序号(sortnum)</param>
         /// <param name="machinePokeNum">当前抓数</param>
+        ///  <param name="pokenumTotail">抓烟总数</param>
         /// <returns></returns>
         private static List<FollowTaskDeail> GetUnionCacheByPokenum(List<FollowTaskDeail> list, decimal machineTaskExcuting, decimal machinePokeNum, decimal pokenumTotail)
         {
@@ -223,9 +225,9 @@ namespace InBound.Business
                 for (int Count = 1; Count <= machinePokeNum; Count++)//根据当前抓数抓数
                 { 
                     var pokenum = list.Where(c=> c.POKEID == list[0].POKEID).Select(a => new { pokeid = a.POKEID, pokenum = a.POKENUM }).FirstOrDefault();//获取当前任务抓烟数  
-                    if (pokenum.pokenum == 10)//如果有一抓等于10  直接去掉  pokenum.pokenum == 10 * machinePokeNum ||
+                    if (pokenum.pokenum == 10)//如果有一抓等于10  直接去掉 
                     {
-                        list.RemoveAll(a => a.SortNum == machineTaskExcuting && a.POKEID == list[0].POKEID);//347 
+                        list.RemoveAll(a => a.SortNum == machineTaskExcuting && a.POKEID == list[0].POKEID);//
                     }
                     else if (pokenum.pokenum < 10)//当第一个任务pokenum小于10 就和下一个任务的pokenum相加 直到大于等于10
                     {
@@ -258,20 +260,79 @@ namespace InBound.Business
                     }
                 }
             } 
-            return list;
-            //    //先算合流机械手正在执行的任务有多少条 ( 有几抓  >  machinePokeNum * 10   ) % 10 
-
-            //    //再算第几抓   
-            //    //几种情况:
-            //    //  抓烟数量 小于十   去掉当前条数  
-            //    // 
-
+            return list; 
         }
 
-
-        //public static List<FollowTaskDeail> GetSortingTask()
-        //{
-            
-        //}
+        /// <summary>
+        /// 获取摇摆前任务信息
+        /// </summary>
+        /// <param name="mainbelt">主皮带通道</param>
+        /// <param name="groupno">组号</param>
+        /// <returns></returns>
+        public static List<FollowTaskDeail> GetSortingBeltTask(decimal mainbelt,decimal groupno)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                if (mainbelt != 5)
+                {
+                    var query1 = (from p in dataentity.T_PRODUCE_POKE
+                                  join t in dataentity.T_PRODUCE_SORTTROUGH
+                                  on p.MACHINESEQ equals t.MACHINESEQ
+                                  where p.MAINBELT == mainbelt &&  t.GROUPNO == groupno &&p.SORTSTATE == 15  && t.TROUGHTYPE == 10 && t.CIGARETTETYPE == 20
+                                  orderby p.SORTNUM, p.MACHINESEQ
+                                  select new FollowTaskDeail
+                                  {
+                                      CIGARETTDECODE = t.CIGARETTECODE,
+                                      CIGARETTDENAME = t.CIGARETTENAME,
+                                      POKENUM = p.POKENUM ?? 0,
+                                      Machineseq = p.MACHINESEQ ?? 0,
+                                      POKEID = p.POKEID,
+                                      MainBelt = p.MAINBELT ?? 0,
+                                      UnionTasknum = p.UNIONTASKNUM ?? 0,
+                                      SortNum = p.SORTNUM ?? 0,
+                                      GroupNO = t.GROUPNO ?? 0,
+                                      Billcode = p.BILLCODE
+                                  }).ToList();
+                    if (query1.Count() != 0)
+                    {
+                        return query1;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    var query1 = (from p in dataentity.T_PRODUCE_POKE
+                                  join t in dataentity.T_PRODUCE_SORTTROUGH
+                                  on p.MACHINESEQ equals t.MACHINESEQ
+                                  where t.GROUPNO == groupno && p.SORTSTATE == 10  && t.TROUGHTYPE == 10 && t.CIGARETTETYPE == 20
+                                  orderby p.SORTNUM, p.MACHINESEQ
+                                  select new FollowTaskDeail
+                                  {
+                                      CIGARETTDECODE = t.CIGARETTECODE,
+                                      CIGARETTDENAME = t.CIGARETTENAME,
+                                      POKENUM = p.POKENUM ?? 0,
+                                      Machineseq = p.MACHINESEQ ?? 0,
+                                      POKEID = p.POKEID,
+                                      MainBelt = p.MAINBELT ?? 0,
+                                      UnionTasknum = p.UNIONTASKNUM ?? 0,
+                                      SortNum = p.SORTNUM ?? 0,
+                                      GroupNO = t.GROUPNO ?? 0,
+                                      Billcode = p.BILLCODE
+                                  }).ToList();
+                    if (query1.Count() != 0)
+                    {
+                        return query1;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+               
+            }
+        }
     }
 }

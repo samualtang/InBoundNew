@@ -34,7 +34,7 @@ namespace FollowTask
         DeviceStateManager stateManager = new DeviceStateManager();
         Alarms alarms = new Alarms();
       //  Fm_Mian fm = new Fm_Mian();
-    
+        decimal MainBeltNo = 0;
         public Fm_FollowTaskSorting(string text)
         { 
             InitializeComponent(); 
@@ -92,7 +92,57 @@ namespace FollowTask
         private void button1_Click(object sender, EventArgs e)
         {
             Button btn = ((Button)sender);//获取当前单击按钮的所有实例
-            Fm_SortDetails fs = new Fm_SortDetails(btn.Text); 
+            #region 区域转换皮带号
+            if (btn.Text.Substring(0, 1) == "A")
+            {
+                switch (btn.Text)
+                {
+                    case "A04":
+                        MainBeltNo = 1;//一号主皮带
+                        break;
+                    case "A07":
+                        MainBeltNo = 2;//二号主皮带
+                        break;
+                    case "A10":
+                        MainBeltNo = 3;//三号主皮带
+                        break;
+                    case "A11":
+                        MainBeltNo = 4;//四号主皮带
+                        break;
+                    case "A01":
+                        MainBeltNo = 5;//所有主皮带
+                        break;
+                    case "A02":
+                        MainBeltNo = 5;//所有主皮带
+                        break; 
+                } 
+            }
+            else if (btn.Text.Substring(0, 1) == "B")
+            {
+                switch (btn.Text)
+                {
+                    case "B05":
+                        MainBeltNo = 1;//一号主皮带
+                        break;
+                    case "B12":
+                        MainBeltNo = 2;//二号主皮带
+                        break;
+                    case "B18":
+                        MainBeltNo = 3;//三号主皮带
+                        break;
+                    case "B23":
+                        MainBeltNo = 4;//四号主皮带
+                        break;
+                    case"B03":
+                        MainBeltNo = 5;//所有主皮带
+                        break;  
+                    case "B01":
+                        MainBeltNo = 5;//所有主皮带
+                        break;
+                }
+            }
+            #endregion
+            Fm_SortDetails fs = new Fm_SortDetails( Text + btn.Text, MainBeltNo); 
             fs.Show();
         }
 

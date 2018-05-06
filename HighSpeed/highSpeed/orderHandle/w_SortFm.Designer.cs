@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRef = new System.Windows.Forms.Button();
             this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
@@ -39,6 +40,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.TimerByTime = new System.Windows.Forms.Timer(this.components);
+            this.lblTime = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -112,6 +115,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.lblTime);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.progressBar1);
             this.panel2.Location = new System.Drawing.Point(12, 115);
@@ -123,7 +127,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 15);
+            this.label2.Location = new System.Drawing.Point(147, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 1;
@@ -169,6 +173,20 @@
             this.pager1.TabIndex = 6;
             this.pager1.Visible = false;
             // 
+            // TimerByTime
+            // 
+            this.TimerByTime.Interval = 1000;
+            this.TimerByTime.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Location = new System.Drawing.Point(31, 14);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(59, 12);
+            this.lblTime.TabIndex = 2;
+            this.lblTime.Text = "已用时间:";
+            // 
             // w_SortFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -204,5 +222,7 @@
         private System.Windows.Forms.RadioButton rdbUnUnionDan;
         private System.Windows.Forms.RadioButton rdbUnionDan;
         private System.Windows.Forms.Button btnRef;
+        private System.Windows.Forms.Timer TimerByTime;
+        private System.Windows.Forms.Label lblTime;
     }
 }
