@@ -769,6 +769,7 @@ namespace InBound.Business
                                       if (report != null && report.Count > 0)
                                       {
                                           report.ForEach(x => x.STATUS = 20);
+                                          report.ForEach(x => x.FINISHTIME = DateTime.Now);
                                       }
 
                                       INF_JOBDOWNLOAD kxLoad = InfJobDownLoadService.GetDetail(item.JOBID, dataEntity);
