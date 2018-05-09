@@ -41,8 +41,7 @@ namespace FollowTask
             }
             catch (Exception ex)
             {
-                
-                throw ;
+                MessageBox.Show("异常信息:" + "\r\n" + ex.Message);
             }
         }
         /// <summary>
@@ -50,19 +49,22 @@ namespace FollowTask
         /// </summary>
         void ListViewBind(List<FollowTaskDeail> list)
         {
-            for (int i = 0; i < list.Count; i++)
+            if ( list != null)
             {
-                ListViewItem lv = new ListViewItem();
-                var mod = list[i];
-                lv.SubItems[0].Text = mod.Billcode;
-                lv.SubItems.Add(mod.SortNum.ToString());
-                lv.SubItems.Add(mod.UnionTasknum.ToString());
-                lv.SubItems.Add(mod.MainBelt.ToString());
-                lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
-                lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
-                listViewYaobaiDetails.Items.Add(lv);
-            }
 
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ListViewItem lv = new ListViewItem();
+                    var mod = list[i];
+                    lv.SubItems[0].Text = mod.Billcode;
+                    lv.SubItems.Add(mod.SortNum.ToString());
+                    lv.SubItems.Add(mod.UnionTasknum.ToString());
+                    lv.SubItems.Add(mod.MainBelt.ToString());
+                    lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
+                    lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
+                    listViewYaobaiDetails.Items.Add(lv);
+                }
+            }
 
         }
 

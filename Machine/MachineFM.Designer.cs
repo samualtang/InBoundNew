@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MachineFM));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,16 +50,20 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
+            this.nums = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calnetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MachineState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaxNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
-            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timerinitdata = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -233,45 +237,102 @@
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.task_data.ColumnHeadersHeight = 35;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nums,
             this.regioncode,
             this.regiondesc,
+            this.calnetNo,
+            this.MachineState,
+            this.MaxNum,
             this.boxcount,
             this.cuscount,
             this.percent});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.task_data.DefaultCellStyle = dataGridViewCellStyle5;
-            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.task_data.DefaultCellStyle = dataGridViewCellStyle2;
             this.task_data.Location = new System.Drawing.Point(0, 43);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.task_data.RowTemplate.Height = 23;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(1038, 376);
+            this.task_data.Size = new System.Drawing.Size(706, 245);
             this.task_data.TabIndex = 30;
+            // 
+            // nums
+            // 
+            this.nums.HeaderText = "序号";
+            this.nums.Name = "nums";
+            this.nums.ReadOnly = true;
+            // 
+            // regioncode
+            // 
+            this.regioncode.HeaderText = "组号";
+            this.regioncode.Name = "regioncode";
+            this.regioncode.ReadOnly = true;
+            // 
+            // regiondesc
+            // 
+            this.regiondesc.HeaderText = "机械手号";
+            this.regiondesc.Name = "regiondesc";
+            this.regiondesc.ReadOnly = true;
+            // 
+            // calnetNo
+            // 
+            this.calnetNo.HeaderText = "烟柜号";
+            this.calnetNo.Name = "calnetNo";
+            this.calnetNo.ReadOnly = true;
+            // 
+            // MachineState
+            // 
+            this.MachineState.HeaderText = "状态";
+            this.MachineState.Name = "MachineState";
+            this.MachineState.ReadOnly = true;
+            // 
+            // MaxNum
+            // 
+            this.MaxNum.HeaderText = "最大数量";
+            this.MaxNum.Name = "MaxNum";
+            this.MaxNum.ReadOnly = true;
+            // 
+            // boxcount
+            // 
+            this.boxcount.HeaderText = "任务数";
+            this.boxcount.Name = "boxcount";
+            this.boxcount.ReadOnly = true;
+            // 
+            // cuscount
+            // 
+            this.cuscount.HeaderText = "任务量";
+            this.cuscount.Name = "cuscount";
+            this.cuscount.ReadOnly = true;
+            // 
+            // percent
+            // 
+            this.percent.HeaderText = "完成百分比";
+            this.percent.Name = "percent";
+            this.percent.ReadOnly = true;
             // 
             // panel2
             // 
@@ -315,40 +376,10 @@
             this.listError.Dock = System.Windows.Forms.DockStyle.Right;
             this.listError.FormattingEnabled = true;
             this.listError.ItemHeight = 12;
-            this.listError.Location = new System.Drawing.Point(594, 43);
+            this.listError.Location = new System.Drawing.Point(706, 43);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(444, 245);
+            this.listError.Size = new System.Drawing.Size(332, 245);
             this.listError.TabIndex = 40;
-            // 
-            // regioncode
-            // 
-            this.regioncode.HeaderText = "组号";
-            this.regioncode.Name = "regioncode";
-            this.regioncode.ReadOnly = true;
-            // 
-            // regiondesc
-            // 
-            this.regiondesc.HeaderText = "机械手号";
-            this.regiondesc.Name = "regiondesc";
-            this.regiondesc.ReadOnly = true;
-            // 
-            // boxcount
-            // 
-            this.boxcount.HeaderText = "任务数";
-            this.boxcount.Name = "boxcount";
-            this.boxcount.ReadOnly = true;
-            // 
-            // cuscount
-            // 
-            this.cuscount.HeaderText = "任务量";
-            this.cuscount.Name = "cuscount";
-            this.cuscount.ReadOnly = true;
-            // 
-            // percent
-            // 
-            this.percent.HeaderText = "完成百分比";
-            this.percent.Name = "percent";
-            this.percent.ReadOnly = true;
             // 
             // timerinitdata
             // 
@@ -359,16 +390,17 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
+            this.Controls.Add(this.task_data);
             this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.task_data);
             this.Controls.Add(this.panel1);
             this.Name = "MachineFM";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "卷烟信息";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_SortingControlMain_FormClosing);
+            this.SizeChanged += new System.EventHandler(this.MachineFM_SizeChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -404,11 +436,15 @@
         private System.Windows.Forms.ComboBox cmbMachines;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listError;
+        private System.Windows.Forms.Timer timerinitdata;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nums;
         private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
         private System.Windows.Forms.DataGridViewTextBoxColumn regiondesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn calnetNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MachineState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaxNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn boxcount;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
-        private System.Windows.Forms.Timer timerinitdata;
     }
 }

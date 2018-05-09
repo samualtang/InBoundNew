@@ -27,7 +27,7 @@ namespace FollowTask
 
         internal const string GROUP_NAME = "grp1";                  // Group name
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-
+        //AutoSizeFormClass asc = new AutoSizeFormClass();
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
@@ -37,7 +37,8 @@ namespace FollowTask
         decimal MainBeltNo = 0;
         public Fm_FollowTaskSorting(string text)
         { 
-            InitializeComponent(); 
+            InitializeComponent();
+           // asc.controllInitializeSize(this);
             this.Text = text;
             updateListBox(text + "应用程序启动");
             writeLog.Write(text + "应用程序启动");
@@ -167,6 +168,19 @@ namespace FollowTask
         private void btnRefreshA_Click(object sender, EventArgs e)
         {
             MessageBox.Show("这是A区的刷新");
+        }
+
+        private void Fm_FollowTaskSorting_SizeChanged(object sender, EventArgs e)
+        {
+            //asc.controlAutoSize(this);
+            //Control cont = new Control();
+            // cont.Name =    lineShape1.Name ;
+            //for (int i = 1; i <= 38; i++)
+            //{
+            //    cont.Name   = cont.Name.Substring(0, 8) + i;
+            //    asc.controlAutoSize(cont);
+            //}
+        
         }
 
 

@@ -69,19 +69,16 @@ namespace FollowTask
         private void btnPokeTime_Click(object sender, EventArgs e)
         {
             try
-            { 
-                listViewUnionCache.Items.Clear();
-                var list1 = FolloTaskService.getUnionCache(groupno, mainbelt, machineTaskExcuting, machinePokeNum).Select(a => new FollowTaskDeail
+            {
+                if (!string.IsNullOrWhiteSpace(txtPokenum.Text) && !string.IsNullOrWhiteSpace(textBox1.Text))
                 {
-                    CIGARETTDECODE = a.CIGARETTDECODE,
-                    CIGARETTDENAME = a.CIGARETTDENAME,
-                    POKENUM = a.POKENUM,
-                    SortNum = a.SortNum,
-                    MainBelt = a.MainBelt,
-                    Machineseq = a.Machineseq,
-                    POKEID = a.POKEID
-                }).ToList();
-                ListViewBind(list1);
+                    machinePokeNum = Convert.ToDecimal(txtPokenum.Text);
+                    machineTaskExcuting = Convert.ToDecimal(textBox1.Text);
+                    btnPokeTime.Text = "第" + machinePokeNum + "抓";
+                    listViewUnionCache.Items.Clear();
+                    list1 = FolloTaskService.getUnionCache(groupno, mainbelt, machineTaskExcuting, machinePokeNum);
+                    ListViewBind(list1);
+                }
             }
             catch (Exception ex)
             { 
@@ -94,29 +91,28 @@ namespace FollowTask
         /// <param name="list"></param>
         private void ListViewBind(List<FollowTaskDeail> list)
         {
-            for (int i = 0; i < list.Count; i++)
+            if (list != null)
             {
-                ListViewItem lv = new ListViewItem();
-                var mod = list[i];
-                lv.SubItems[0].Text = mod.CIGARETTDECODE;
-                lv.SubItems.Add(mod.CIGARETTDENAME);
-                lv.SubItems.Add(mod.SortNum.ToString());
-                lv.SubItems.Add(mod.POKENUM.ToString());
-                lv.SubItems.Add(mod.MainBelt.ToString());
-                lv.SubItems.Add(mod.Machineseq.ToString());
-                listViewUnionCache.Items.Add(lv);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ListViewItem lv = new ListViewItem();
+                    var mod = list[i];
+                    lv.SubItems[0].Text = mod.CIGARETTDECODE;
+                    lv.SubItems.Add(mod.CIGARETTDENAME);
+                    lv.SubItems.Add(mod.SortNum.ToString());
+                    lv.SubItems.Add(mod.POKENUM.ToString());
+                    lv.SubItems.Add(mod.MainBelt.ToString());
+                    lv.SubItems.Add(mod.Machineseq.ToString());
+                    listViewUnionCache.Items.Add(lv);
+                }
             }
-
         }
 
         private void btnPokeTime_MouseEnter(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtPokenum.Text)&&!string.IsNullOrWhiteSpace( textBox1.Text))
-            {
-                machinePokeNum = Convert.ToDecimal(txtPokenum.Text);
-                machineTaskExcuting = Convert.ToDecimal(textBox1.Text);
-                btnPokeTime.Text = "第" + machinePokeNum + "抓";
-            }
+          
+         
+           
 
         }
 

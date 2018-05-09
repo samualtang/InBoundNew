@@ -78,9 +78,14 @@ namespace SortingControlSys.SortingControl
             };
             tempList = TaskService.initTask1();
 
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+            //this.task_data.BeginInvoke(new Action(() => { ; }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
+            AutoSizeColumn(task_data);//DataGridView自适应
+            initdata();
+            Timerinitdata.Start();//10秒刷新
+         
+
 
         }
         private delegate void HandleDelegate1(string info, Label label);
@@ -684,7 +689,7 @@ namespace SortingControlSys.SortingControl
                             }
 
                             removeKey(tempList, clientId[i]);
-                            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
+                           // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
 
                         //}
                     }
@@ -735,7 +740,7 @@ namespace SortingControlSys.SortingControl
                         //{
                             // int taskno = getKey(tempList1, clientId[i]);
                             writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(tempvalue, sortgroupno2);
+                            InBoundService.UpdateInOut(tempvalue, sortgroupno2); 
                             TaskService.UpdateStatus(sortgroupno2, 20, tempvalue);//将第一组分拣任务改为完成完成
 
 
@@ -746,7 +751,7 @@ namespace SortingControlSys.SortingControl
                             }
 
                             removeKey(tempList1, clientId[i]);
-                            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+                            //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
                         //} 
                     }
                     else
@@ -942,33 +947,56 @@ namespace SortingControlSys.SortingControl
             }
             else
             {
+               
                 list.Items.Insert(0, time + "    " + info);
 
             }
         }
-        int i = 1;
+
         public void initdata()
         {//刷新分拣进度等
             //writeLog.Write("启动程序。。。。。。");
 
             task_data.Rows.Clear();
             try
-            {
-
-                List<TaskInfo> list = TaskService.GetCustomer();
+            { 
+            //writeLog.Write("启动程序。。。。。。");
+               task_data.Rows.Clear();
+            
+              
+               
+                 
+                DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
+                dgvStyle.BackColor = Color.LightGreen;
+                int Nums = 1;//序号
+                List<TaskInfo> list = TaskService.GetSortingCustomer((int)sortgroupno1,(int) sortgroupno2);
                 if (list != null)
                 {
-
+                     
                     foreach (var row in list)
                     {
                         int index = this.task_data.Rows.Add();
 
-                        this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
-                        this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
-                        this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                        this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
-                        this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
-                        this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                        this.task_data.Rows[index].Cells[0].Value = Nums++; //序号
+                        this.task_data.Rows[index].Cells[1].Value ="第"+ row.GROUPNO+"组";//组号
+                        this.task_data.Rows[index].Cells[2].Value = 11;//机械手
+                        this.task_data.Rows[index].Cells[3].Value = 40;//出口号
+                        this.task_data.Rows[index].Cells[4].Value ="主皮带"+ row.MIANBELT+"号";//主皮带
+                        this.task_data.Rows[index].Cells[5].Value = "包装机"+row.PACKAGEMACHINE +"号";//包装机
+                        this.task_data.Rows[index].Cells[6].Value = row.FinishQTY + "/" + row.UNIONTASKNUM;//客户数
+                        this.task_data.Rows[index].Cells[7].Value = row.FinishCount +"/"+ row.Count;//完成量
+                        this.task_data.Rows[index].Cells[8].Value = row.Rate;//完成百分比
+                        if (row.Rate == "100%")
+                        {
+                            this.task_data.Rows[index].Cells[8].Style = dgvStyle;
+                        }
+                        //this.task_data.Rows[index].Cells[0].Value = Nums ++; //序号
+                        //this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
+                        //this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
+                        //this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
+                        //this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
+                        //this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                        //this.task_data.Rows[index].Cells[6].Value = row.Rate;
                     }
 
                 }
@@ -1089,7 +1117,8 @@ namespace SortingControlSys.SortingControl
         }
         private void button11_Click(object sender, EventArgs e)
         {
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+            initdata();
+            //this.task_data.BeginInvoke(new Action(() => { initdata(); }));
         }
 
 
@@ -1174,6 +1203,79 @@ namespace SortingControlSys.SortingControl
         private void w_SortingControlMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             //MessageBox.Show("close.....");
+        }
+
+        private void w_SortingControlMain_SizeChanged(object sender, EventArgs e)
+        {
+            task_data.Height = this.Size.Height - list_data.Size.Height ;
+            task_data.Width = this.Size.Width - groupBox1.Size.Width-20; // listError.Size.Width -15;
+        }
+        /// <summary>
+        /// 使DataGridView的列自适应宽度
+        /// </summary>
+        /// <param name="dgViewFiles"></param>
+        private void AutoSizeColumn(DataGridView dgViewFiles)
+        {
+            int width = 0;
+            //使列自使用宽度
+            //对于DataGridView的每一个列都调整
+            for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+            {
+
+                //将每一列都调整为自动适应模式
+                dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+                //记录整个DataGridView的宽度
+                width += dgViewFiles.Columns[i].Width;
+
+            }
+            //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+            //则将DataGridView的列自动调整模式设置为显示的列即可，
+            //如果是小于原来设定的宽度，将模式改为填充。
+            if (width > dgViewFiles.Size.Width)
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            }
+            else
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            //冻结某列 从左开始 0，1，2
+            dgViewFiles.Columns[0].Width = 45;
+            dgViewFiles.Columns[1].Frozen = true;
+        }
+
+        private void Timerinitdata_Tick(object sender, EventArgs e)
+        {
+            initdata();
+            Timerinitdata.Interval = 20000;//10秒刷新
+        }
+
+        private void listError_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.FillRectangle(new SolidBrush(e.BackColor), e.Bounds);
+            if (e.Index >= 0)
+            {
+                StringFormat sStringFormat = new StringFormat();
+                sStringFormat.LineAlignment = StringAlignment.Center;
+                e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds, sStringFormat);
+                StringFormat strFmt = new System.Drawing.StringFormat();
+                strFmt.Alignment = StringAlignment.Center; //文本垂直居中
+                strFmt.LineAlignment = StringAlignment.Center; //文本水平居中
+            }
+            e.DrawFocusRectangle();
+        }
+
+        private void listError_MeasureItem(object sender, MeasureItemEventArgs e)
+        {
+            ListBox lb = ((ListBox)sender);
+            if (lb.Items[e.Index].ToString().Contains("-"))
+            { 
+                e.ItemHeight = e.ItemHeight + 13;
+            }
+            else
+            {
+                e.ItemHeight = e.ItemHeight + (lb.Items[e.Index].ToString().Length);//行间距
+            }
         }
 
 

@@ -25,7 +25,7 @@ using Machine;
 
 namespace SortingControlSys.SortingControl
 {
-    public partial class UnionFm : Form
+    public partial class UnionFm : Form 
     {
 
        
@@ -45,6 +45,7 @@ namespace SortingControlSys.SortingControl
         public UnionFm()
         {
             InitializeComponent();
+            
             updateListBox("应用程序启动");
             writeLog.Write("应用程序启动");
            // TaskService.GetUnionTask();
@@ -72,7 +73,7 @@ namespace SortingControlSys.SortingControl
             {
                 return getErrMsg(i);
             };
-            
+           
         }
         private delegate void HandleDelegateError(string strshow, ListBox list);
         public void updateListBox(string info, ListBox list)
@@ -95,7 +96,7 @@ namespace SortingControlSys.SortingControl
             base.OnLoad(e);
            // tempList = TaskService.initunionTask();
            // TaskService.GetUnionTask(0);
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+          //  this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             //if (tempList == null)
             //    tempList = new List<KeyValuePair<int, int>>();
             if (UnionList == null || UnionList.Count == 0)
@@ -105,6 +106,10 @@ namespace SortingControlSys.SortingControl
                 UnionList.Add( new List<KeyValuePair<int, int>>());
                 UnionList.Add(  new List<KeyValuePair<int, int>>()); 
             }
+            AutoSizeColumn(task_data);//DataGridView自动适应
+            initdata();
+            timerinitdata.Start();//间隔刷新
+            
         }
         private delegate void HandleDelegate1(string info, Label label);
         public void updateLabel(string info,Label label)
@@ -272,7 +277,7 @@ namespace SortingControlSys.SortingControl
             { 
                 if (SendTaskStatesGroup.Read(0).ToString() != "1")
                 {
-                   // SendTaskStatesGroup.Write(2, 0);
+                    SendTaskStatesGroup.Write(2, 0);
                 }
                 if (SendTaskStatesGroup.Read(1).ToString() != "1")
                 {
@@ -615,7 +620,7 @@ namespace SortingControlSys.SortingControl
                             writeLock.ReleaseWriterLock();
                         }
                        
-                        this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+                        //this.task_data.BeginInvoke(new Action(() => { initdata(); }));
 
                         //}
 
@@ -791,28 +796,46 @@ namespace SortingControlSys.SortingControl
 
            }
        }
-       int i = 1;
+    
        public void initdata() {
            //writeLog.Write("启动程序。。。。。。");
            task_data.Rows.Clear();
            try
            {
+               int nums = 1;//序号
               List<TaskInfo> list = TaskService.GetCustomer();
                if (list != null)
                {
-
+                   DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
+                   dgvStyle.BackColor = Color.LightGreen;
                    foreach (var row in list)
                    {
                        int index = this.task_data.Rows.Add();
 
-                       this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
-                       this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                       this.task_data.Rows[index].Cells[0].Value = nums++;//序号
+                       this.task_data.Rows[index].Cells[1].Value = "长沙市烟草公司";//货主
+                       this.task_data.Rows[index].Cells[2].Value = row.ORDERDATE.Value.Date.ToString("D");//订单日期
+                       this.task_data.Rows[index].Cells[3].Value = "批次"+ row.SYNSEQ;//批次 
+                       this.task_data.Rows[index].Cells[4].Value ="主皮带"+ row.MIANBELT+"号";//主皮带号 
+                       this.task_data.Rows[index].Cells[5].Value = row.REGIONCODE;//车组编号
+                       this.task_data.Rows[index].Cells[6].Value = row.REGIONCODE;//车组名称 
+                       this.task_data.Rows[index].Cells[7].Value = row.FinishCount + "/" + row.Count;//   客户数    
+                       this.task_data.Rows[index].Cells[8].Value = row.FinishQTY + "/" + row.QTY;//     完成量 
+                       this.task_data.Rows[index].Cells[9].Value = row.Rate;//    完成百分比 
+
+                       if (row.Rate == "100%")
+                       {
+                           this.task_data.Rows[index].Cells[8].Style = dgvStyle;
+                       }
                    }
-                 
+              
+
+                    //this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
+                    //   this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
+                    //   this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
+                    //   this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
+                    //   this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
+                    //   this.task_data.Rows[index].Cells[5].Value = row.Rate;
                }
 
            }
@@ -883,7 +906,8 @@ namespace SortingControlSys.SortingControl
       
        private void button11_Click(object sender, EventArgs e)
        {
-           this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+           timerinitdata.Start();
+          // this.task_data.BeginInvoke(new Action(() => { initdata(); }));
        }
        private void button12_Click(object sender, EventArgs e)
        {
@@ -903,7 +927,57 @@ namespace SortingControlSys.SortingControl
 
            pass.Show();
        }
+
+       /// <summary>
+       /// 使DataGridView的列自适应宽度
+       /// </summary>
+       /// <param name="dgViewFiles"></param>
+       private void AutoSizeColumn(DataGridView dgViewFiles)
+       {
+           int width = 0;
+           //使列自使用宽度
+           //对于DataGridView的每一个列都调整
+           for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+           {
+
+               //将每一列都调整为自动适应模式
+               dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+               //记录整个DataGridView的宽度
+               width += dgViewFiles.Columns[i].Width;
+
+           }
+           //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+           //则将DataGridView的列自动调整模式设置为显示的列即可，
+           //如果是小于原来设定的宽度，将模式改为填充。
+           if (width > dgViewFiles.Size.Width)
+           {
+               dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+           }
+           else
+           {
+               dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+           }
+           //冻结某列 从左开始 0，1，2
+           dgViewFiles.Columns[0].Width = 45;
+           dgViewFiles.Columns[1].Frozen = true;
+       }
+
+       private void UnionFm_SizeChanged(object sender, EventArgs e)
+       {
+           task_data.Height = this.Size.Height - list_data.Size.Height;
+           task_data.Width = this.Size.Width - listError.Size.Width;
+       }
+
+       private void timerinitdata_Tick(object sender, EventArgs e)
+       {
+           initdata();
+           timerinitdata.Interval = 20000;//十秒刷新 
+            
+       }
+      
        
      
     }
+
+   
 }

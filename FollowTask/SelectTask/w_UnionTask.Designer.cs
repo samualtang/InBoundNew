@@ -132,6 +132,7 @@
             this.Name = "w_UnionTask";
             this.Text = "w_UnionTask";
             this.Load += new System.EventHandler(this.w_UnionTask_Load);
+            this.SizeChanged += new System.EventHandler(this.w_UnionTask_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTask)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

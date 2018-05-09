@@ -327,6 +327,7 @@
             this.Name = "fm_Machine";
             this.Text = "机械手";
             this.Load += new System.EventHandler(this.fm_Machine_Load);
+            this.SizeChanged += new System.EventHandler(this.fm_Machine_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

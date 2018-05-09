@@ -157,6 +157,36 @@ namespace InBound.Business
             }
         }
         /// <summary>
+        /// 获取机械手前皮带信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<FollowTaskDeail> GetMachineBeltInfp()
+        { 
+            using (Entities dataentity = new Entities())
+            {
+
+
+            }
+
+        }
+        /// <summary>
+        /// 查询机械手任务
+        /// </summary>
+        /// <param name="groupno">组号</param>
+        /// <param name="machineno">机械手号</param>
+        /// <param name="uniontasknum">合单任务号</param>
+        /// <returns></returns>
+        //public static List<FollowTaskDeail> GetMachineTask(decimal groupno, decimal machineseq, decimal uniontasknum)
+        //{
+        //    using (Entities dataentity = new Entities())
+        //    {
+        //        var query = from item in dataentity.T_PRODUCE_POKE
+        //                    where item.GROUPNO == groupno && item.MACHINESEQ == machineseq && item.UNIONTASKNUM  == uniontasknum
+        //                    orderby item.SORTNUM
+        //    }
+        //}
+     
+        /// <summary>
         /// 获取缓存区 包括正在执行抓条烟数量
         /// </summary>
         /// <param name="groupno">组号</param>
@@ -171,23 +201,12 @@ namespace InBound.Business
                 using (Entities dataentity = new Entities())
                 {
 
-                    var query = from p in dataentity.T_PRODUCE_POKE
+                    var query =( from p in dataentity.T_PRODUCE_POKE
                                 join t in dataentity.T_PRODUCE_SORTTROUGH
                                 on p.MACHINESEQ equals t.MACHINESEQ
                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting
                                 orderby p.SORTNUM, p.MACHINESEQ
-                                select new FollowTaskDeail()
-                                {
-                                    CIGARETTDECODE = t.CIGARETTECODE,
-                                    CIGARETTDENAME = t.CIGARETTENAME,
-                                    POKENUM = p.POKENUM ?? 0,
-                                    Machineseq = p.MACHINESEQ ?? 0,
-                                    POKEID = p.POKEID,
-                                    MainBelt = p.MAINBELT ?? 0,
-                                    SortNum = p.SORTNUM ?? 0,
-                                    GroupNO = t.GROUPNO ?? 0,
-                                    
-                                };
+                                select new FollowTaskDeail(){CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME,POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0,POKEID = p.POKEID,MainBelt = p.MAINBELT ?? 0,SortNum = p.SORTNUM ?? 0,GroupNO = t.GROUPNO ?? 0}).ToList();
                     if (query != null)
                     {
                         //获取当前抓烟任务的订单总烟数
@@ -235,15 +254,19 @@ namespace InBound.Business
                         decimal sum = 0;//和 
                         decimal lastNum = 0;//上一次 
                         decimal endNum = 0;//最后一次
-                        for (int i = 0; i <= Listmachineseq.Length; i++)//0 1 2
+                        for (int i = 0; i <= Listmachineseq.Length; i++) 
                         {
-                            sum += list[i].POKENUM;//4 + 4 = 8 + 5 =13 
+                            sum += list[i].POKENUM; 
                             if (sum == 10)
                             {
                                 Listmachineseq[i] = list[i].POKEID;
+                                for (int j = i; j >= 0; j--)
+                                {
+                                    list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
+                                }
                                 break;
                             }
-                            else if (sum > 10)//true 15
+                            else if (sum > 10) 
                             {
                                 endNum = list.Find(x => x.POKEID == list[i - 1].POKEID).POKENUM -= (list[i - 1].POKENUM - (10 - lastNum)); //对相加大于10最后一个pokenum的值 所取的数量 相减
                                 list.Find(z => z.POKEID == list[i].POKEID).POKENUM -= endNum;
@@ -254,7 +277,7 @@ namespace InBound.Business
                                 //return list;
                                  break;
                             }
-                            lastNum = sum;//5
+                            lastNum = sum; 
                             Listmachineseq[i] = list[i].POKEID;//存入当前pokeid
                         } 
                     }
@@ -293,7 +316,7 @@ namespace InBound.Business
                                       GroupNO = t.GROUPNO ?? 0,
                                       Billcode = p.BILLCODE
                                   }).ToList();
-                    if (query1.Count() != 0)
+                    if (query1 != null)
                     {
                         return query1;
                     }
@@ -322,7 +345,7 @@ namespace InBound.Business
                                       GroupNO = t.GROUPNO ?? 0,
                                       Billcode = p.BILLCODE
                                   }).ToList();
-                    if (query1.Count() != 0)
+                    if (query1 != null)
                     {
                         return query1;
                     }

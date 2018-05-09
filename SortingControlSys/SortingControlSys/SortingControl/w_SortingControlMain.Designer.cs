@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(w_SortingControlMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnClearB = new System.Windows.Forms.Button();
@@ -48,21 +49,27 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
+            this.Timerinitdata = new System.Windows.Forms.Timer(this.components);
+            this.nums = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.machine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.exponum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainbelt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pagemachine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.panel2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -221,87 +228,48 @@
             // 
             this.task_data.AllowUserToAddRows = false;
             this.task_data.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.task_data.ColumnHeadersHeight = 35;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.regioncode,
-            this.regiondesc,
-            this.boxcount,
+            this.nums,
+            this.groupno,
+            this.machine,
+            this.exponum,
+            this.mainbelt,
+            this.pagemachine,
             this.cuscount,
             this.finishqty,
             this.percent});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.task_data.DefaultCellStyle = dataGridViewCellStyle2;
-            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.task_data.DefaultCellStyle = dataGridViewCellStyle8;
             this.task_data.Location = new System.Drawing.Point(0, 48);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.task_data.RowTemplate.Height = 23;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.task_data.RowTemplate.Height = 40;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(1038, 371);
+            this.task_data.Size = new System.Drawing.Size(592, 237);
             this.task_data.TabIndex = 30;
-            // 
-            // regioncode
-            // 
-            this.regioncode.HeaderText = "线路编号";
-            this.regioncode.Name = "regioncode";
-            this.regioncode.ReadOnly = true;
-            // 
-            // regiondesc
-            // 
-            this.regiondesc.HeaderText = "线路名称";
-            this.regiondesc.Name = "regiondesc";
-            this.regiondesc.ReadOnly = true;
-            this.regiondesc.Width = 200;
-            // 
-            // boxcount
-            // 
-            this.boxcount.HeaderText = "箱数";
-            this.boxcount.Name = "boxcount";
-            this.boxcount.ReadOnly = true;
-            this.boxcount.Visible = false;
-            this.boxcount.Width = 200;
-            // 
-            // cuscount
-            // 
-            this.cuscount.HeaderText = "客户数";
-            this.cuscount.Name = "cuscount";
-            this.cuscount.ReadOnly = true;
-            this.cuscount.Width = 200;
-            // 
-            // finishqty
-            // 
-            this.finishqty.HeaderText = "完成量";
-            this.finishqty.Name = "finishqty";
-            this.finishqty.ReadOnly = true;
-            this.finishqty.Width = 200;
-            // 
-            // percent
-            // 
-            this.percent.HeaderText = "完成百分比";
-            this.percent.Name = "percent";
-            this.percent.ReadOnly = true;
             // 
             // panel2
             // 
@@ -343,19 +311,94 @@
             // listError
             // 
             this.listError.BackColor = System.Drawing.SystemColors.Window;
-            this.listError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.listError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listError.FormattingEnabled = true;
-            this.listError.ItemHeight = 12;
-            this.listError.Location = new System.Drawing.Point(598, 48);
+            this.listError.ItemHeight = 15;
+            this.listError.Location = new System.Drawing.Point(3, 20);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(440, 243);
+            this.listError.Size = new System.Drawing.Size(434, 220);
             this.listError.TabIndex = 40;
+            this.listError.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listError_DrawItem);
+            this.listError.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listError_MeasureItem);
+            // 
+            // Timerinitdata
+            // 
+            this.Timerinitdata.Interval = 1000;
+            this.Timerinitdata.Tick += new System.EventHandler(this.Timerinitdata_Tick);
+            // 
+            // nums
+            // 
+            this.nums.HeaderText = "序号";
+            this.nums.Name = "nums";
+            this.nums.ReadOnly = true;
+            // 
+            // groupno
+            // 
+            this.groupno.HeaderText = "组号";
+            this.groupno.Name = "groupno";
+            this.groupno.ReadOnly = true;
+            // 
+            // machine
+            // 
+            this.machine.HeaderText = "烟柜数";
+            this.machine.Name = "machine";
+            this.machine.ReadOnly = true;
+            // 
+            // exponum
+            // 
+            this.exponum.HeaderText = "出口号";
+            this.exponum.Name = "exponum";
+            this.exponum.ReadOnly = true;
+            // 
+            // mainbelt
+            // 
+            this.mainbelt.HeaderText = "主皮带";
+            this.mainbelt.Name = "mainbelt";
+            this.mainbelt.ReadOnly = true;
+            // 
+            // pagemachine
+            // 
+            this.pagemachine.HeaderText = "包装机";
+            this.pagemachine.Name = "pagemachine";
+            this.pagemachine.ReadOnly = true;
+            // 
+            // cuscount
+            // 
+            this.cuscount.HeaderText = "客户数";
+            this.cuscount.Name = "cuscount";
+            this.cuscount.ReadOnly = true;
+            this.cuscount.Width = 200;
+            // 
+            // finishqty
+            // 
+            this.finishqty.HeaderText = "完成量";
+            this.finishqty.Name = "finishqty";
+            this.finishqty.ReadOnly = true;
+            this.finishqty.Width = 200;
+            // 
+            // percent
+            // 
+            this.percent.HeaderText = "完成百分比";
+            this.percent.Name = "percent";
+            this.percent.ReadOnly = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listError);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox1.Font = new System.Drawing.Font("宋体", 11F);
+            this.groupBox1.Location = new System.Drawing.Point(598, 48);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(440, 243);
+            this.groupBox1.TabIndex = 41;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "故障信息";
             // 
             // w_SortingControlMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.Controls.Add(this.listError);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.task_data);
@@ -366,12 +409,14 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_SortingControlMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.w_SortingControlMain_FormClosed);
+            this.SizeChanged += new System.EventHandler(this.w_SortingControlMain_SizeChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -399,11 +444,16 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnClearB;
         private System.Windows.Forms.ListBox listError;
-        private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn regiondesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn boxcount;
+        private System.Windows.Forms.Timer Timerinitdata;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nums;
+        private System.Windows.Forms.DataGridViewTextBoxColumn groupno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn machine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn exponum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mainbelt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pagemachine;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

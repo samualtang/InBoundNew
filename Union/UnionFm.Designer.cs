@@ -28,19 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnionFm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nums = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.master = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pici = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mianbelt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.region = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.boxcount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,11 +61,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.timerinitdata = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -88,6 +96,46 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
+            // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::Union.Properties.Resources.edit;
+            this.button6.Location = new System.Drawing.Point(292, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(101, 43);
+            this.button6.TabIndex = 9;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button12
+            // 
+            this.button12.BackgroundImage = global::Union.Properties.Resources.stop;
+            this.button12.Location = new System.Drawing.Point(97, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(99, 43);
+            this.button12.TabIndex = 8;
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button11
+            // 
+            this.button11.BackgroundImage = global::Union.Properties.Resources.rfresh;
+            this.button11.Location = new System.Drawing.Point(194, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 43);
+            this.button11.TabIndex = 7;
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 43);
+            this.button10.TabIndex = 0;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button5
             // 
@@ -141,45 +189,95 @@
             this.button2.Text = "关闭";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 43);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
-            this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.task_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.task_data.ColumnHeadersHeight = 35;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.regioncode,
+            this.nums,
+            this.master,
+            this.Bday,
+            this.pici,
+            this.mianbelt,
+            this.region,
             this.regiondesc,
-            this.boxcount,
             this.cuscount,
             this.finishqty,
             this.percent});
-            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 11F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.task_data.DefaultCellStyle = dataGridViewCellStyle8;
             this.task_data.Location = new System.Drawing.Point(0, 43);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
-            this.task_data.RowTemplate.Height = 23;
+            this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(1038, 376);
+            this.task_data.Size = new System.Drawing.Size(686, 239);
             this.task_data.TabIndex = 30;
             // 
-            // regioncode
+            // nums
             // 
-            this.regioncode.HeaderText = "线路编号";
-            this.regioncode.Name = "regioncode";
-            this.regioncode.ReadOnly = true;
+            this.nums.HeaderText = "序号";
+            this.nums.Name = "nums";
+            this.nums.ReadOnly = true;
+            // 
+            // master
+            // 
+            this.master.HeaderText = "货主";
+            this.master.Name = "master";
+            this.master.ReadOnly = true;
+            // 
+            // Bday
+            // 
+            this.Bday.HeaderText = "订单日期";
+            this.Bday.Name = "Bday";
+            this.Bday.ReadOnly = true;
+            // 
+            // pici
+            // 
+            this.pici.HeaderText = "批次";
+            this.pici.Name = "pici";
+            this.pici.ReadOnly = true;
+            // 
+            // mianbelt
+            // 
+            this.mianbelt.HeaderText = "主皮带号";
+            this.mianbelt.Name = "mianbelt";
+            this.mianbelt.ReadOnly = true;
+            // 
+            // region
+            // 
+            this.region.HeaderText = "车组编号";
+            this.region.Name = "region";
+            this.region.ReadOnly = true;
             // 
             // regiondesc
             // 
-            this.regiondesc.HeaderText = "线路名称";
+            this.regiondesc.HeaderText = "车组名称";
             this.regiondesc.Name = "regiondesc";
             this.regiondesc.ReadOnly = true;
-            // 
-            // boxcount
-            // 
-            this.boxcount.HeaderText = "箱数";
-            this.boxcount.Name = "boxcount";
-            this.boxcount.ReadOnly = true;
-            this.boxcount.Visible = false;
-            this.boxcount.Width = 200;
             // 
             // cuscount
             // 
@@ -248,54 +346,10 @@
             this.listError.Size = new System.Drawing.Size(346, 245);
             this.listError.TabIndex = 40;
             // 
-            // button6
+            // timerinitdata
             // 
-            this.button6.BackgroundImage = global::Union.Properties.Resources.edit;
-            this.button6.Location = new System.Drawing.Point(292, 0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 43);
-            this.button6.TabIndex = 9;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button12
-            // 
-            this.button12.BackgroundImage = global::Union.Properties.Resources.stop;
-            this.button12.Location = new System.Drawing.Point(97, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(99, 43);
-            this.button12.TabIndex = 8;
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.BackgroundImage = global::Union.Properties.Resources.rfresh;
-            this.button11.Location = new System.Drawing.Point(194, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 43);
-            this.button11.TabIndex = 7;
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button10
-            // 
-            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
-            this.button10.Location = new System.Drawing.Point(0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 43);
-            this.button10.TabIndex = 0;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 43);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
+            this.timerinitdata.Interval = 1000;
+            this.timerinitdata.Tick += new System.EventHandler(this.timerinitdata_Tick);
             // 
             // UnionFm
             // 
@@ -310,6 +364,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "合流信息系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.SizeChanged += new System.EventHandler(this.UnionFm_SizeChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -340,12 +395,17 @@
         private System.Windows.Forms.ListBox list_data;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
+        private System.Windows.Forms.ListBox listError;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nums;
+        private System.Windows.Forms.DataGridViewTextBoxColumn master;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pici;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mianbelt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn region;
         private System.Windows.Forms.DataGridViewTextBoxColumn regiondesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn boxcount;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
-        private System.Windows.Forms.ListBox listError;
+        private System.Windows.Forms.Timer timerinitdata;
     }
 }

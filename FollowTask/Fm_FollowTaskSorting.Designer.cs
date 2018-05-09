@@ -779,6 +779,7 @@
             this.Name = "Fm_FollowTaskSorting";
             this.Text = "Fm_Sorting";
             this.Load += new System.EventHandler(this.Fm_FollowTaskSorting_Load);
+            this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskSorting_SizeChanged);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Fm_FollowTaskSorting_MouseMove);
             this.GroupBoxB.ResumeLayout(false);
             this.GroupBoxB.PerformLayout();

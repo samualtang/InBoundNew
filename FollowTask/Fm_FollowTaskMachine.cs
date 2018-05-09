@@ -24,7 +24,7 @@ namespace FollowTask
 
         internal const string GROUP_NAME = "grp1";                  // Group name
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-
+        AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
@@ -34,7 +34,8 @@ namespace FollowTask
 
         public fm_Machine(string text)//窗体初始化
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            asc.controllInitializeSize(this);
             this.listViewMchineBelt.DoubleBufferedListView(true); //双缓存 减少闪烁
             listViewMchineBelt.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             this.Text = text;
@@ -70,10 +71,9 @@ namespace FollowTask
 
         private void fm_Machine_Load(object sender, EventArgs e)
         {  
-            lblFormText.Text = this.Text +"烟柜";
-            BtnText(this.Text);
             
-           
+            lblFormText.Text = this.Text +"烟柜";
+            BtnText(this.Text); 
         }
    
 
@@ -139,6 +139,11 @@ namespace FollowTask
         {
             Button name = ((Button)sender);//获取当前单击按钮的所有实例
             updateListBox("查看" + Text.Substring(4) + "的皮带");
+        }
+
+        private void fm_Machine_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
     }
 }

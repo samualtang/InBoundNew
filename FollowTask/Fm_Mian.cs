@@ -25,6 +25,7 @@ namespace FollowTask
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
+            btnLeft.Location = new Point(166, this.Size.Height / 2);
             BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));//创建Button图片
         }
 
