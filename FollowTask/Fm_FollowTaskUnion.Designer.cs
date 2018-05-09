@@ -388,6 +388,7 @@
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "Fm_FollowTaskUnion";
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
+            this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
             this.groupBox4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

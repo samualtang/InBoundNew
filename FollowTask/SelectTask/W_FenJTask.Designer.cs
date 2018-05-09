@@ -154,6 +154,7 @@
             this.Name = "W_FenJTask";
             this.Text = "W_FenJTask";
             this.Load += new System.EventHandler(this.W_FenJTask_Load);
+            this.SizeChanged += new System.EventHandler(this.W_FenJTask_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTask)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

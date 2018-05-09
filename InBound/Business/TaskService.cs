@@ -251,8 +251,8 @@ namespace InBound.Business
             using (Entities entity = new Entities())
             { 
                 var query = (from item in entity.T_PRODUCE_TASK//总任务数
-                             group item by new { item.REGIONCODE } into g
-                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, FinishCount = 0, FinishQTY = 0, QTY = g.Sum(t => t.TASKQUANTITY) ?? 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
+                             group item by new { item.REGIONCODE , item.SYNSEQ,item.ORDERDATE,item.MAINBELT } into g
+                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE,MIANBELT = g.Key.MAINBELT, ORDERDATE = g.Key.ORDERDATE , FinishCount = 0, FinishQTY = 0, SYNSEQ = g.Key.SYNSEQ ?? 0, QTY = g.Sum(t => t.TASKQUANTITY) ?? 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
                 //var query2 = (from item in entity.T_PRODUCE_TASKLINE
                 //              join item2 in entity.T_PRODUCE_TASK//总量
                 //              on item.TASKNUM equals item2.TASKNUM
@@ -277,6 +277,38 @@ namespace InBound.Business
             }
         }
         /// <summary>
+        /// 预分拣界面数据
+        /// </summary>
+        /// <returns></returns>
+        public static List<TaskInfo> GetSortingCustomer(int groupno1, int groupno2)
+        {
+ 
+            using (Entities entity = new Entities())
+            {
+                //总量
+                var query =(from item in entity.T_PRODUCE_POKE
+                            where item.GROUPNO == groupno1 || item.GROUPNO == groupno2
+                            group item by new { item.GROUPNO, item.PACKAGEMACHINE, item.MAINBELT } into g
+                            orderby g.Key.GROUPNO, g.Key.PACKAGEMACHINE
+                            select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0,FinishCount = 0,FinishQTY =0,Count=g.Sum(c=>c.POKENUM ?? 0), MIANBELT = g.Key.MAINBELT, UNIONTASKNUM = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList();
+                //完成
+                var query2 = (from item in entity.T_PRODUCE_POKE
+                             where (item.GROUPNO == groupno1 || item.GROUPNO == groupno2) && item.SORTSTATE == 20
+                             group item by new { item.GROUPNO, item.PACKAGEMACHINE, item.MAINBELT } into g
+                             orderby g.Key.GROUPNO, g.Key.PACKAGEMACHINE
+                             select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0, FinishCount  = g.Sum(c => c.POKENUM ?? 0), MIANBELT = g.Key.MAINBELT, FinishQTY = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList();
+
+               UnionList(query, query2, 5);
+              
+                CaldList(query);
+                return query;
+            }
+        }
+
+
+
+
+        /// <summary>
         /// 用于机械手发送任务刷新
         /// </summary>
         /// <returns></returns>
@@ -287,15 +319,17 @@ namespace InBound.Business
                 //总量
                 var query1 = (from item in entity.T_PRODUCE_POKE
                               where item.GROUPNO == groupno1 || item.GROUPNO == groupno2
-                              group item by new { item.MACHINESEQ, item.GROUPNO } into g
+                              group item by new { item.MACHINESEQ, item.GROUPNO ,item.TROUGHNUM} into g
                               orderby g.Key.MACHINESEQ
-                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, MACHINESEQ = g.Key.MACHINESEQ ?? 0,FinishCount =0, Count = g.Sum(c => c.POKENUM ?? 0), UNIONTASKNUM = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList();
+                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, TROUGHNUM = g.Key.TROUGHNUM, MACHINESEQ = g.Key.MACHINESEQ ?? 0, FinishCount = 0, FinishQTY = 0, Count = g.Sum(c => c.POKENUM ?? 0), UNIONTASKNUM = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList();
                  //完成
                 var query2 = (from item in entity.T_PRODUCE_POKE
-                              where (item.MACHINESEQ == groupno1 || item.MACHINESEQ == groupno2) && item.MACHINESTATE == 20
+                              where (item.GROUPNO == groupno1 || item.GROUPNO == groupno2) && item.MACHINESTATE == 20
                               orderby item.MACHINESEQ
-                              group item by new { item.MACHINESEQ, item.GROUPNO, item.POKENUM } into g
-                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, MACHINESEQ= g.Key.MACHINESEQ ?? 0, FinishCount = g.Select(t => new { pokenum = t.POKENUM }).Count() }).ToList();
+                              group item by new { item.MACHINESEQ, item.GROUPNO } into g
+                              select new TaskInfo() { GROUPNO = g.Key.GROUPNO ?? 0, MACHINESEQ = g.Key.MACHINESEQ ?? 0, FinishCount = g.Sum(a => a.POKENUM ?? 0), FinishQTY = g.Select(x => new { UNIONTASKNUM = x.UNIONTASKNUM }).Count() }).ToList(); // g.Select(t => new { pokenum = t.POKENUM }).Count()
+
+                
 
                 if (query1 != null)
                 {
@@ -472,6 +506,7 @@ namespace InBound.Business
             {
                 foreach (var item in info)
                 {
+                    //item.Rate = Math.Round((item.FinishCount / item.QTY) * 100, 2) + "%"; 
                     item.Rate = Math.Round((item.FinishCount / item.Count) * 100, 2) + "%";
                 }
             }
@@ -489,6 +524,16 @@ namespace InBound.Business
                     {
                         var entity = info.Find(s => s.MACHINESEQ == item.MACHINESEQ); 
                         entity.FinishCount = item.FinishCount;
+                        entity.FinishQTY = item.FinishQTY;
+                    }
+                }
+                else if (type == 5)//预分拣
+                {
+                    foreach (var item in info2)
+                    {
+                        var entity = info.Find(s => s.GROUPNO == item.GROUPNO && s.PACKAGEMACHINE  == item.PACKAGEMACHINE);
+                        entity.FinishCount = item.FinishCount;
+                        entity.FinishQTY = item.FinishQTY;
                     }
                 }
                 else
@@ -509,7 +554,7 @@ namespace InBound.Business
 
                                 entity.FinishCount = item.FinishCount;
                                 entity.FinishQTY = item.FinishQTY;
-                            } 
+                            }
                             else
                             {
                                 entity.FinishQTY = item.FinishQTY;
@@ -1177,7 +1222,7 @@ namespace InBound.Business
                     //如果是合流完成,则将task表状态置为完成
                     if (stage == 20)
                     {
-                        entity.ExecuteStoreCommand("update t_produce_task set state=30 where  sortnum=" + sortnum);
+                        entity.ExecuteStoreCommand("update t_produce_task set state=30,finishtime=sysdate where  sortnum=" + sortnum);
                     }
                     entity.SaveChanges();
                 }

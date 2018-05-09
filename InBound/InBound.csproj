@@ -99,6 +99,7 @@
     <Compile Include="Model\UseRate.cs" />
     <Compile Include="OPC\PlcGroup.cs" />
     <Compile Include="OPC\PlcItemCollection.cs" />
+    <Compile Include="Pub\AutoSizeFormClass.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />
     <Compile Include="Pub\Security.cs" />
     <Compile Include="Pub\WriteLog.cs" />

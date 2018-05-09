@@ -139,6 +139,7 @@
     <Content Include="Resources\outstylegray.jpg" />
     <Content Include="Resources\outstylegreen.jpg" />
     <Content Include="Resources\stop.jpg" />
+    <Content Include="Resources\u=271876227,2757256114&amp;fm=200&amp;gp=0.jpg" />
     <Content Include="Resources\复件 login2.bmp" />
     <None Include="Resources\rfresh.jpg" />
   </ItemGroup>

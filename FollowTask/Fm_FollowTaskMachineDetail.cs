@@ -26,7 +26,7 @@ namespace FollowTask
         public Fm_FollowTaskMachineDetail(string machineNo)
         {
             InitializeComponent();
-            if (machineNo.Substring(0,3) =="机械手")//
+            if (machineNo.Substring(0,3) =="机械手")//烟柜机械手
             {
                 lblCigreName.Text = "香烟";//预分拣机械手
                 for (int i = 1; i <= 10; i++)

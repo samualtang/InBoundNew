@@ -25,7 +25,7 @@ namespace FollowTask
             this.Text = HeadText;
             dgvTask.DoubleBufferedDataGirdView(true);
         }
-        
+        AutoSizeFormClass asc = new AutoSizeFormClass();
 
         decimal TsakNum  ;//任务号
         decimal Machineseq;//设备号
@@ -35,6 +35,7 @@ namespace FollowTask
         decimal SortNum;//排序号
         private void w_FollowTask_Load(object sender, EventArgs e)
         {
+            asc.controllInitializeSize(this);
             BindSelectCmb(); 
             dgvTask.DataSource = list;
         }
@@ -188,6 +189,11 @@ namespace FollowTask
                 lblVisbleFalseOrTrue(1);
             }
         
+        }
+
+        private void w_MachineTask_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
       
     }

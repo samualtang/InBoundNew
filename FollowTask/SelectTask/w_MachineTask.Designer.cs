@@ -131,6 +131,7 @@
             this.Controls.Add(this.cmbSelectC);
             this.Name = "w_MachineTask";
             this.Load += new System.EventHandler(this.w_FollowTask_Load);
+            this.SizeChanged += new System.EventHandler(this.w_MachineTask_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTask)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -23,7 +23,7 @@ namespace FollowTask
 
         internal const string GROUP_NAME = "grp1";                  // Group name
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-
+        AutoSizeFormClass asc = new AutoSizeFormClass();
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
@@ -32,8 +32,8 @@ namespace FollowTask
         public Fm_FollowTaskUnion(string text)
         {
             InitializeComponent();
-            this.listViewUnion.DoubleBufferedListView(true);
-          
+            asc.controllInitializeSize(this);
+            this.listViewUnion.DoubleBufferedListView(true); 
             this.Text = text;
             updateListBox(text + "主皮带,应用程序启动");
             writeLog.Write(text + "主皮带,应用程序启动");
@@ -153,6 +153,11 @@ namespace FollowTask
             ToolTip p = new ToolTip();
             p.ShowAlways = true;
             p.SetToolTip(btn, btn.Text + "缓存详细信息");
+        }
+
+        private void Fm_FollowTaskUnion_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
     }
 }

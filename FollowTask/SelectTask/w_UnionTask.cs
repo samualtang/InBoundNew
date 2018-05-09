@@ -22,7 +22,7 @@ namespace FollowTask
         decimal sortnum;//排序号
         private void w_UnionTask_Load(object sender, EventArgs e)
         {
-      
+            asc.controllInitializeSize(this);
             BindSelectCmb();
             dgvTask.DataSource = FolloTaskService.getUnionDataAll(); 
         }
@@ -138,6 +138,11 @@ namespace FollowTask
                   
                     break;
             }
+        }
+        AutoSizeFormClass asc = new AutoSizeFormClass();
+        private void w_UnionTask_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
     }
 }

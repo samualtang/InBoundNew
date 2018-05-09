@@ -21,12 +21,13 @@ namespace FollowTask
             dgvTask.DoubleBufferedDataGirdView(true);
             this.Text = "分拣";
         }
-
+        AutoSizeFormClass asc = new AutoSizeFormClass();
         decimal groupNo1;//组1
         decimal groupNo2;//组2 
         decimal SortNum;//排序号
         private void W_FenJTask_Load(object sender, EventArgs e)
         {
+            asc.controllInitializeSize(this);
             dgvTask.DataSource = FolloTaskService.getFJDataAll(1, 1);
              
             BindSelectCmb();
@@ -170,6 +171,11 @@ namespace FollowTask
                     break;
 
             }
+        }
+
+        private void W_FenJTask_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
 
 

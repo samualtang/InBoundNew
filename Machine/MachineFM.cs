@@ -39,7 +39,7 @@ namespace SortingControlSys.SortingControl
 
         String serverIp = "";
         int writeCount = 2;
-
+        
         decimal groupNo = 1;
         public WriteLog writeLog =  WriteLog.GetLog();
         Dictionary<string, string> dicList = new Dictionary<string, string>();
@@ -87,9 +87,15 @@ namespace SortingControlSys.SortingControl
            //alarms.WriteErrWithCheck(10, 9, "111010101010", 2);
 
 
-           this.task_data.BeginInvoke(new Action(() => { initdata(); })); 
+        //   this.task_data.BeginInvoke(new Action(() => { initdata(); })); 
             if (tempList == null)
-                tempList = new List<KeyValuePair<String, List<String>>>();
+            { tempList = new List<KeyValuePair<String, List<String>>>(); }
+            AutoSizeColumn(task_data);//dgv 自适应宽度
+            initdata();
+            timerinitdata.Start();//定时刷新
+            
+          
+        
 
         }
         private delegate void HandleDelegateError(string strshow, ListBox list);
@@ -744,8 +750,7 @@ namespace SortingControlSys.SortingControl
             task_data.Rows.Clear();
             try
             {
-                //String regioncode = "", cuscount = "", qty = "", finishcuscount = "", finishqty="",percent="";
-               // List<TaskInfo> list = TaskService.GetCustomer();
+              
                 if (groupNo == 1)
                 { 
                     groupno1 = 1;
@@ -766,23 +771,35 @@ namespace SortingControlSys.SortingControl
                     groupno1 = 7;
                     groupno2 = 8;
                 }
-               
-
+                 
+                DataGridViewCellStyle dgvStyle =  new DataGridViewCellStyle ();
+                dgvStyle.BackColor = Color.LightGreen;
                 List<TaskInfo> list = TaskService.GetMachineProgramress(groupno1, groupno2);
+                int nums = 1;//序号
                 if (list != null)
                 {
                     foreach (var row in list)
                     {
                         int index = this.task_data.Rows.Add();
-
-                        this.task_data.Rows[index].Cells[0].Value = row.GROUPNO;//组号
-                        this.task_data.Rows[index].Cells[1].Value = row.MACHINESEQ;//机械手号 
-                        this.task_data.Rows[index].Cells[2].Value = row.UNIONTASKNUM;//任务数
-                        this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;//任务量
-                        this.task_data.Rows[index].Cells[4].Value = row.Rate; //完成百分比
-                       // this.task_data.Rows[index].Cells[5].Value = row.Rate;
+                          
+                        this.task_data.Rows[index].Cells[0].Value = nums++;//序号
+                        this.task_data.Rows[index].Cells[1].Value = row.GROUPNO;//组号
+                        this.task_data.Rows[index].Cells[2].Value = row.MACHINESEQ;//机械手号
+                        this.task_data.Rows[index].Cells[3].Value  = row.TROUGHNUM;//烟柜号
+                        this.task_data.Rows[index].Cells[4].Value  = "可用";//状态
+                        this.task_data.Rows[index].Cells[5].Value = 10;//最大数量
+                        this.task_data.Rows[index].Cells[6].Value = row.FinishQTY + "/" + row.UNIONTASKNUM;//任务数
+                        this.task_data.Rows[index].Cells[7].Value = row.FinishCount + "/" + row.Count;//任务量
+                        this.task_data.Rows[index].Cells[8].Value = row.Rate; //完成百分比 
+                        if (row.Rate == "100%")
+                        {
+                            this.task_data.Rows[index].Cells[8].Style = dgvStyle ;
+                        }
+                        
+                        
                     }
-
+                    //String regioncode = "", cuscount = "", qty = "", finishcuscount = "", finishqty="",percent="";
+                    // List<TaskInfo> list = TaskService.GetCustomer();
                     //foreach (var row in list)
                     //{
                     //    int index = this.task_data.Rows.Add();
@@ -923,7 +940,7 @@ namespace SortingControlSys.SortingControl
         }
         private void button11_Click(object sender, EventArgs e)
         {
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));//改为
+            this.task_data.BeginInvoke(new Action(() => { initdata(); })); 
         }
 
 
@@ -978,12 +995,52 @@ namespace SortingControlSys.SortingControl
 
         private void timerinitdata_Tick(object sender, EventArgs e)
         {
-            //timerinitdata.Enabled = true;
-            //timerinitdata.Start();
-            
-           
-            //initdata();
+             
+            initdata();
+            timerinitdata.Interval = 10000;//十秒刷新 
         }
+        
+         /// <summary>
+        /// 使DataGridView的列自适应宽度
+         /// </summary>
+         /// <param name="dgViewFiles"></param>
+         private void AutoSizeColumn(DataGridView dgViewFiles)
+        {
+             int width = 0;
+            //使列自使用宽度
+            //对于DataGridView的每一个列都调整
+             for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+            {
+                
+                    //将每一列都调整为自动适应模式
+                    dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+                    //记录整个DataGridView的宽度
+                    width += dgViewFiles.Columns[i].Width;
+                 
+             }
+             //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+             //则将DataGridView的列自动调整模式设置为显示的列即可，
+             //如果是小于原来设定的宽度，将模式改为填充。
+            if (width > dgViewFiles.Size.Width)
+             {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+             }
+            else
+             {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+             }
+            //冻结某列 从左开始 0，1，2
+            dgViewFiles.Columns[0].Width = 45;
+             dgViewFiles.Columns[1].Frozen = true;
+        }
+
+        private void MachineFM_SizeChanged(object sender, EventArgs e)
+        {
+            task_data.Width = (this.Size.Width - listError.Width) -15 ;
+            task_data.Height = this.Size.Height - list_data.Height - 103;
+        }
+
+
 
 
     }
