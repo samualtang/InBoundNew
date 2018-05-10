@@ -140,6 +140,15 @@ namespace InBound.Business
 
                 //获取最近完成的该通道任务
                 var task = query.Where(w => w.SORTSTATE == 20 && w.TROUGHNUM==troughNo).OrderByDescending(w=>w.SORTNUM).FirstOrDefault();
+                var query1 = (from poke in entity.T_PRODUCE_POKE
+                             where poke.TROUGHNUM == troughNo && poke.SORTNUM<=task.SORTNUM
+                             select poke).ToList();
+    
+                query1.ForEach(f =>
+                {
+                   // f.TROUGHNUM = standbyNo;
+                    f.MACHINESTATE = 20;//更新预分拣已完成的订单对应机械手的状态为已完成
+                });
                 if (task != null)
                 {
                  var queryList=(from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM==task.UNIONTASKNUM select item).ToList();

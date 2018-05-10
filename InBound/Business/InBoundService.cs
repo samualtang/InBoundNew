@@ -117,7 +117,7 @@ namespace InBound.Business
                        // Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
                         //if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
                        
-                        if (query + task.MANTISSA < THRESHOLD)//烟柜需要补货 暂时屏蔽
+                        if (query + task.MANTISSA < THRESHOLD)
                         {
                             //decimal groupno = 1;
                             //if (task.GROUPNO <= 2)
