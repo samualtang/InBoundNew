@@ -1152,7 +1152,7 @@ namespace SortingControlSys.SortingControl
         {
             w_pass pass = new w_pass();
 
-
+            pass.StartPosition = FormStartPosition.CenterScreen;
             pass.Show();
 
 
@@ -1276,6 +1276,13 @@ namespace SortingControlSys.SortingControl
             {
                 e.ItemHeight = e.ItemHeight + (lb.Items[e.Index].ToString().Length);//行间距
             }
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            Fm_SelectedInfoEX fs = new Fm_SelectedInfoEX();
+            fs.StartPosition = FormStartPosition.CenterScreen;
+            fs.Show();
         }
 
 

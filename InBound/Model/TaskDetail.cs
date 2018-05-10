@@ -44,6 +44,11 @@ namespace InBound.Model
        }
        public decimal tNum { get; set; }
        public decimal qty { get; set; }
-       public decimal pokePlace { get; set; }
+       public decimal POCKPLACE { get; set; }//放烟位置
+
+       public decimal PACKAGEMACHINE { get; set; }//包装机号
+       public decimal POCKNUM { get; set; }//吸烟数量
+
+        
     }
 }

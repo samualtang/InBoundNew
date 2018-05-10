@@ -19,18 +19,30 @@ namespace SortingControlSys.SortingControl
     {
         decimal sortgroupno1;
         decimal sortgroupno2;
+        AutoSizeFormClass asc = new AutoSizeFormClass();
         public StatusManager()
         {
             InitializeComponent();
              sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
              sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+             task_data.DoubleBufferedDataGirdView(true);
             button1_Click(null, null);
+             CmbBind();
+            AutoSizeColumn(task_data);
+          
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            Bind();
+            try
+            {
+                Bind();
+            }
+            catch (Exception ex )
+            { 
+                MessageBox.Show("错误信息:" + ex.Message);
+            }
 
         }
 
@@ -38,10 +50,17 @@ namespace SortingControlSys.SortingControl
         {
 
             List<TaskDetail> list;
-            if (!textBox3.Text.Equals(""))
+            if (!string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 0)//任务号
+            { 
+               list = TaskService.getFJData(decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2); 
+            }
+            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && cmbSelect.SelectedIndex == 1)//机械手号
             {
-             
-                list = TaskService.getFJData(decimal.Parse(textBox3.Text), sortgroupno1, sortgroupno2);
+                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), sortgroupno1, sortgroupno2); 
+            }
+            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 2 )//任务号 机械手号
+            {
+                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2); 
             }
             else
             {
@@ -55,14 +74,16 @@ namespace SortingControlSys.SortingControl
                 {
                     
                     status =item.SortState+"";
-
+                    DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
+                    dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;
-                    this.task_data.Rows[index].Cells[2].Value = item.CIGARETTDECODE;
-                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDENAME;
-                    this.task_data.Rows[index].Cells[4].Value = item.Machineseq;
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;
+                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号
+                    this.task_data.Rows[index].Cells[2].Value = item.CIGARETTDECODE;//香烟编号
+                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDENAME;//香烟名称
+                    this.task_data.Rows[index].Cells[4].Value = item.Machineseq;//机械手号
+                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//抓烟数量
+                    this.task_data.Rows[index].Cells[6].Value = item.POCKPLACE;//放烟位置
                    
                     if (status == "10")
                     {
@@ -76,8 +97,11 @@ namespace SortingControlSys.SortingControl
                     {
                         status="完成";
                     }
-                    this.task_data.Rows[index].Cells[6].Value = status;
-
+                    this.task_data.Rows[index].Cells[7].Value = status;//状态位
+                    if (status == "完成")
+                    {
+                        this.task_data.Rows[index].Cells[7].Style = dgvStyle;
+                    }
                 }
            
 
@@ -88,69 +112,183 @@ namespace SortingControlSys.SortingControl
             }
 
         }
+        void CmbBind()
+        {
+            cmbSelect.Items.Add("任务号");
+            cmbSelect.Items.Add("设备号");
+            cmbSelect.Items.Add("任务号设备号");
+            cmbSelect.SelectedIndex = 0;
 
+        }
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
-                                                            "操作提示",//对话框的标题 
-                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-
-        
-             if (MsgBoxResult == DialogResult.Yes)
+            try
             {
-                if (textBox1.Text.Equals(""))
+
+
+                DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
+                                                                "操作提示",//对话框的标题 
+                                                                MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                                MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+
+
+                if (MsgBoxResult == DialogResult.Yes)
                 {
-                    MessageBox.Show("请输入任务号");
-                    return;
-                }
-                else
-                {
-                    String from = textBox1.Text;
-                    String to = textBox2.Text;
-                    int taskState = 10;
-                    if (textBox2.Text == "")
+                    if (textBox1.Text.Equals(""))
                     {
-                        to = from;
+                        MessageBox.Show("请输入任务号");
+                        return;
                     }
-                     if (radioButton2.Checked)
+                    else
                     {
-                        taskState =15;
+                        String from = textBox1.Text;
+                        String to = textBox2.Text;
+                        int taskState = 10;
+                        if (textBox2.Text == "")
+                        {
+                            to = from;
+                        }
+                        if (radioButton2.Checked)
+                        {
+                            taskState = 15;
+
+                        }
+                        else if (radioButton3.Checked)
+                        {
+
+                            taskState = 20;
+                        }
+                        TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
+                        decimal dFrom = decimal.Parse(from);
+                        decimal tFrom = decimal.Parse(to);
+                        for (decimal i = dFrom; i <= tFrom; i++)
+                        {
+                            if (cbLineA.Checked)
+                            {
+                                if (taskState == 20)
+                                {
+                                    InBoundService.UpdateInOut(i, sortgroupno1);
+                                }
+                                TaskService.UpdateStatus(sortgroupno1, taskState, i);
+                            }
+                            if (cbLineB.Checked)
+                            {
+                                if (taskState == 20)
+                                {
+                                    InBoundService.UpdateInOut(i, sortgroupno2);
+                                }
+                                TaskService.UpdateStatus(sortgroupno2, taskState, i);
+                            }
+                        }
+                        button1_Click(null, null);
 
                     }
-                     else if (radioButton3.Checked)
-                     {
-                   
-                         taskState = 20;
-                     }
-                     TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
-                    decimal dFrom=decimal.Parse(from);
-                    decimal tFrom=decimal.Parse(to);
-                    for (decimal i = dFrom; i <= tFrom; i++)
-                    {
-                        if (cbLineA.Checked)
-                        {
-                            if (taskState == 20)
-                            {
-                                InBoundService.UpdateInOut(i, sortgroupno1);
-                            }
-                            TaskService.UpdateStatus(sortgroupno1, taskState, i);
-                        }
-                        if (cbLineB.Checked)
-                        {
-                            if (taskState == 20)
-                            {
-                                InBoundService.UpdateInOut(i, sortgroupno2);
-                            }
-                            TaskService.UpdateStatus(sortgroupno2, taskState, i);
-                        }
-                    }
-                     button1_Click(null, null);
-                 
-                }
-             
 
+
+                }
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("错误信息:" + ex.Message);
+            }
+        }
+
+        private void 退出EToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                          "操作提示",//对话框的标题  
+                                                          MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                          MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                          MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+
+                this.Close();
+                //System.Environment.Exit(System.Environment.ExitCode);
+            }
+            else
+            {
+                return;
+            }
+        }
+        /// <summary>
+        /// 使DataGridView的列自适应宽度
+        /// </summary>
+        /// <param name="dgViewFiles"></param>
+        private void AutoSizeColumn(DataGridView dgViewFiles)
+        {
+            int width = 0;
+            //使列自使用宽度
+            //对于DataGridView的每一个列都调整
+            for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+            {
+
+                //将每一列都调整为自动适应模式
+                dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+                //记录整个DataGridView的宽度
+                width += dgViewFiles.Columns[i].Width;
+
+            }
+            //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+            //则将DataGridView的列自动调整模式设置为显示的列即可，
+            //如果是小于原来设定的宽度，将模式改为填充。
+            if (width > dgViewFiles.Size.Width)
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            }
+            else
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            //冻结某列 从左开始 0，1，2
+            //dgViewFiles.Columns[0].Width = 50;
+            dgViewFiles.Columns[1].Frozen = true;
+        }
+        private void StatusManager_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            asc.controllInitializeSize(this);
+        }
+
+        private void StatusManager_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
+        }
+
+        private void cmbSelect_SelectedIndexChanged(object sender, EventArgs e)
+        { 
+            switch (cmbSelect.SelectedIndex )
+            {
+                case 0:
+                    lblsortnum.Visible = true;
+                    txtsortnum.Visible = true;
+                    txtsortnum.Focus();
+                    lblsortnum.Location = new Point(600, 29);
+                    txtsortnum.Location = new Point(749, 24);
+                    lblmachine.Visible = false;
+                    txtMachine.Visible = false;
+                    txtMachine.Text = "";
+                    break; 
+                case 1:
+                    lblmachine.Visible = true;
+                    txtMachine.Visible = true;
+                    txtMachine.Focus();
+                    lblsortnum.Visible = false;
+                    txtsortnum.Visible = false;
+                    txtsortnum.Text = "";
+                    break;
+                case 2:
+                    lblmachine.Visible = true;
+                    txtMachine.Visible = true;
+                    lblsortnum.Location = new Point(348, 29);
+                    txtsortnum.Location = new Point(486, 24);
+                    lblsortnum.Visible = true;
+                    txtsortnum.Visible = true;
+                    txtsortnum.Focus();
+                    break;
             }
         }
     }

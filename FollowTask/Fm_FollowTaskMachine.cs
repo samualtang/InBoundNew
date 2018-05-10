@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound;
 using OpcRcw.Da;
 using Machine;
+using InBound.Business;
 
 namespace FollowTask
 {
@@ -71,7 +72,7 @@ namespace FollowTask
 
         private void fm_Machine_Load(object sender, EventArgs e)
         {  
-            
+           
             lblFormText.Text = this.Text +"烟柜";
             BtnText(this.Text); 
         }

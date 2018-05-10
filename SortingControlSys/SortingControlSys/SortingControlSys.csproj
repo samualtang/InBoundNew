@@ -85,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClearCmd.cs" />
+    <Compile Include="Fm_SelectedInfoEX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fm_SelectedInfoEX.Designer.cs">
+      <DependentUpon>Fm_SelectedInfoEX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\ItemCollection.cs" />
     <Compile Include="orderHandle\w_order_recieve.cs">
@@ -160,6 +166,9 @@
     <Compile Include="w_main.designer.cs">
       <DependentUpon>w_main.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Fm_SelectedInfoEX.resx">
+      <DependentUpon>Fm_SelectedInfoEX.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_order_recieve.resx">
       <DependentUpon>w_order_recieve.cs</DependentUpon>
     </EmbeddedResource>

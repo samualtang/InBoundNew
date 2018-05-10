@@ -17,6 +17,7 @@ namespace SortingControlSys.SortingControl
         public w_pass()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,7 +25,7 @@ namespace SortingControlSys.SortingControl
             if (textBox1.Text.Equals(secCode))
             {
                 StatusManager form = new StatusManager();
-                form.WindowState = FormWindowState.Maximized;
+                //form.WindowState = FormWindowState.Maximized;
                 form.Show();
                 this.Close();
             }

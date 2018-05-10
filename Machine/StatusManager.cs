@@ -21,14 +21,22 @@ namespace SortingControlSys.SortingControl
             InitializeComponent();
             groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
             initTroughnum();
+            Text ="第"+ groupNo +"组机械手管理";
             cbTroughNum.SelectedIndex = 0;
             button1_Click(null, null);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            Bind();
+            try
+            {
+                Bind();
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("错误信息:" + ex.Message);
+            }
+           
 
         }
         public void initTroughnum()
@@ -43,10 +51,10 @@ namespace SortingControlSys.SortingControl
         {
 
             List<TaskDetail> list;
-            if (!textBox3.Text.Equals(""))
+            if (!string.IsNullOrWhiteSpace(txtmachine.Text))
             {
-                list = TaskService.getMachineTask((groupNo-1)*22+cbTroughNum.SelectedIndex+1,decimal.Parse(textBox3.Text));
-            }
+                list = TaskService.getMachineTask((groupNo-1)*22+cbTroughNum.SelectedIndex+1,decimal.Parse(txtUnionTasknum.Text));
+            } 
             else
             {
                 list = TaskService.getAllMachineTask((groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
@@ -94,56 +102,67 @@ namespace SortingControlSys.SortingControl
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
-                                                            "操作提示",//对话框的标题 
-                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-
-          //decimal  sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
-          //decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
-             if (MsgBoxResult == DialogResult.Yes)
+            try
             {
-                if (textBox1.Text.Equals(""))
-                {
-                    MessageBox.Show("请输入任务号");
-                    return;
-                }
-                else
-                {
-                    String from = textBox1.Text;
-                    String to = textBox2.Text;
-                    decimal taskState = 10;
-                    if (textBox2.Text == "")
-                    {
-                        to = from;
-                    }
-                     if (radioButton2.Checked)
-                    {
-                        taskState =15;
 
-                    }
-                     else if (radioButton3.Checked)
-                     {
-                   
-                         taskState = 20;
-                     }
-                    
-                    decimal dFrom=decimal.Parse(from);
-                    decimal tFrom=decimal.Parse(to);
-                    for (decimal i = dFrom; i <= tFrom; i++)
-                    {
-                        
-                            
-                            TaskService.UpdateMachine(  i,(groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1,taskState);
-                       
-                    }
-                     button1_Click(null, null);
-                 
-                }
-             
 
+                DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
+                                                                "操作提示",//对话框的标题 
+                                                                MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                                MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+
+                //decimal  sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
+                //decimal sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
+                if (MsgBoxResult == DialogResult.Yes)
+                {
+                    if (textBox1.Text.Equals(""))
+                    {
+                        MessageBox.Show("请输入任务号");
+                        return;
+                    }
+                    else
+                    {
+                        String from = textBox1.Text;
+                        String to = textBox2.Text;
+                        decimal taskState = 10;
+                        if (textBox2.Text == "")
+                        {
+                            to = from;
+                        }
+                        if (radioButton2.Checked)
+                        {
+                            taskState = 15;
+
+                        }
+                        else if (radioButton3.Checked)
+                        {
+
+                            taskState = 20;
+                        }
+
+                        decimal dFrom = decimal.Parse(from);
+                        decimal tFrom = decimal.Parse(to);
+                        for (decimal i = dFrom; i <= tFrom; i++)
+                        {
+
+
+                            TaskService.UpdateMachine(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1, taskState);
+
+                        }
+                        button1_Click(null, null);
+
+                    } 
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("错误信息:" + ex.Message);
             }
         }
+           
+
+ 
     }
 }

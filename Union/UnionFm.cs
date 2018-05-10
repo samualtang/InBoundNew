@@ -825,7 +825,7 @@ namespace SortingControlSys.SortingControl
 
                        if (row.Rate == "100%")
                        {
-                           this.task_data.Rows[index].Cells[8].Style = dgvStyle;
+                           this.task_data.Rows[index].Cells[9].Style = dgvStyle;
                        }
                    }
               
@@ -924,7 +924,7 @@ namespace SortingControlSys.SortingControl
        {
            w_pass pass = new w_pass();
 
-
+       
            pass.Show();
        }
 

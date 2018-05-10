@@ -843,15 +843,24 @@ namespace InBound.Business
         // 根据异形烟整包任务号更新poke表中状态
         public static void UpdateunTask(decimal sendtasknum, int status)
         {
+            
             using (Entities data = new Entities())
-            {    
-                var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList(); 
-                foreach (var item in query)
+            {
+                try
+                { 
+                    var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList();
+                    foreach (var item in query)
+                    {
+                        item.STATUS = status;
+                    }
+                    data.ExecuteStoreCommand("update t_un_task set state=20 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                    data.SaveChanges();
+                }
+                catch (Exception e)
                 {
-                    item.STATUS = status;
-                }   
-                data.ExecuteStoreCommand("update t_un_task set state=20 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
-                data.SaveChanges();
+
+                    throw e;
+                }
                 
             }
         }

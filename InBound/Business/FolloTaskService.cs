@@ -156,15 +156,31 @@ namespace InBound.Business
                 else return null;
             }
         }
-        /// <summary>
-        /// 获取机械手前皮带信息
+     
+        /// <summary> 
+        /// 获取机械手前皮带信息 
         /// </summary>
+        /// <param name="group1">组1</param>
+        /// <param name="group2">组2</param>
         /// <returns></returns>
-        public static List<FollowTaskDeail> GetMachineBeltInfp()
+        public static List<FollowTaskDeail> GetMachineBeltInfp(decimal group1,decimal group2)
         { 
             using (Entities dataentity = new Entities())
             {
+                var query = (from item in dataentity.T_PRODUCE_POKE
+                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                              on item.TROUGHNUM equals item2.TROUGHNUM
+                             where item.MACHINESTATE == 20 && item.SORTSTATE == 15 && item.UNIONSTATE == 15 && (item.GROUPNO == group1 || item.GROUPNO == group2)
+                             orderby item.SORTNUM
+                             select new FollowTaskDeail() { Machineseq = item.MACHINESEQ  ??0, }).ToList();
 
+                if (query != null)
+                {
+                    return query;
+                }
+                else
+                    return null;
+                
 
             }
 
