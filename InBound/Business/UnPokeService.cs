@@ -19,56 +19,62 @@ namespace InBound.Business
             }
         }
 
-        public static void UpdateTaskNum(List<T_UN_POKE> task, decimal sendtaskNum)
-        {
-            using (Entities data = new Entities())
-            {
-                if (task != null)
-                {
-                    foreach (var item in task)
-                    {
-                        var query = (from items in data.T_UN_POKE where items.POKEID == item.POKEID select items).FirstOrDefault();
-                        query.SENDTASKNUM = sendtaskNum;
-                    }
-                }
-                data.SaveChanges();
-            }
-        }
+        //public static void UpdateTaskNum(List<T_UN_POKE> task, decimal sendtaskNum)
+        //{
+        //    using (Entities data = new Entities())
+        //    {
+        //        if (task != null)
+        //        {
+        //            foreach (var item in task)
+        //            {
+        //                var query = (from items in data.T_UN_POKE where items.POKEID == item.POKEID select items).FirstOrDefault();
+        //                query.SENDTASKNUM = sendtaskNum;
+        //            }
+        //        }
+        //        data.SaveChanges();
+        //    }
+        //}
         //在原来的包号上加1
-        public static decimal getPackageNum(decimal ctype, String lineNum)
-        {
+        //public static decimal getPackageNum(decimal ctype, String lineNum)
+        //{
 
-            decimal packgenum = BaseService.GetSeq("select s_produce_un_sendtasknum.nextval from dual");//1423 1424+1
+        //    decimal packgenum = BaseService.GetSeq("select s_produce_un_sendtasknum.nextval from dual");//1423 1424+1
 
-            return packgenum;
-            //using (Entities data = new Entities())
-            //{
-            //    if (lineNum != null)
-            //    {
-            //        //item.LINENUM == lineNum && item.CTYPE == ctype descending 
-            //        var query = (from item in data.T_UN_POKE    orderby item.SENDTASKNUM select item.SENDTASKNUM).FirstOrDefault();
-            //        if (query != null)
-            //        {
-            //            return (query ?? 0)+1;
-            //         }
-            //        else
-            //            return 1; 
-            //    }
-            //    else
-            //    {
-            //        var query = (from item in data.T_UN_POKE where item.CTYPE == ctype orderby item.SENDTASKNUM  select item.SENDTASKNUM).FirstOrDefault();
-            //        if (query != null)
-            //        {
-            //            return (query ?? 0) + 1;
-            //        }
-            //        else
-            //            return 1;
+        //    return packgenum;
+        //    //using (Entities data = new Entities())
+        //    //{
+        //    //    if (lineNum != null)
+        //    //    {
+        //    //        //item.LINENUM == lineNum && item.CTYPE == ctype descending 
+        //    //        var query = (from item in data.T_UN_POKE    orderby item.SENDTASKNUM select item.SENDTASKNUM).FirstOrDefault();
+        //    //        if (query != null)
+        //    //        {
+        //    //            return (query ?? 0)+1;
+        //    //         }
+        //    //        else
+        //    //            return 1; 
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        var query = (from item in data.T_UN_POKE where item.CTYPE == ctype orderby item.SENDTASKNUM  select item.SENDTASKNUM).FirstOrDefault();
+        //    //        if (query != null)
+        //    //        {
+        //    //            return (query ?? 0) + 1;
+        //    //        }
+        //    //        else
+        //    //            return 1;
 
-            //    }
-            //}
-        }
-
-        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out decimal pNum)
+        //    //    }
+        //    //}
+        //}
+        /// <summary>
+        /// 烟道
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <returns></returns>
+        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
         {
             object[] values = new object[227];
             for (int i = 0; i < values.Length; i++)
@@ -78,26 +84,35 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE where item.LINENUM == lineNum && item.STATUS == 10 && item.CTYPE==1  orderby item.SORTNUM, item.SECSORTNUM,item.MACHINESEQ,item.TROUGHNUM select item;
-                if (query != null)
-                    list = query.Take(takeSize).ToList();
+                var query = (from item in data.T_UN_POKE 
+                            where item.LINENUM == lineNum  && item.STATUS == 10 && item.CTYPE==1
+                             orderby item.SENDTASKNUM
+                             select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
+
+                var query1 = (from item in data.T_UN_POKE
+                              where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1 && item.LINENUM == lineNum
+                              orderby item.MACHINESEQ, item.TROUGHNUM
+                              select item).ToList();
+                if (query1 != null)
+                    //list = query1.Take(takeSize).ToList();
+                    list = query1;
                 outlist = list;
-                decimal packageNum = getPackageNum(1, lineNum);
-                pNum = packageNum;
+               // decimal packageNum = getPackageNum(1, lineNum);
+               // pNum = packageNum;
                 decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
                     decimal machineseq = 0;
-                    String customercode = "";
+                    //String customercode = "";
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
-                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
-                        if (customercode.Length > 9)
-                        {
-                            customercode = customercode.Substring(customercode.Length - 9, 9);
-                        }
+                        //customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        //if (customercode.Length > 9)
+                        //{
+                        //    customercode = customercode.Substring(customercode.Length - 9, 9);
+                        //}
                         machineseq = (item.MACHINESEQ??0);
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
                         {
@@ -112,7 +127,7 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         //values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = pNum;//包装号
+                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
@@ -134,8 +149,9 @@ namespace InBound.Business
         /// <param name="lineNum"></param>
         /// <param name="outlist"></param>
         /// <returns></returns>
-        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist, out decimal packageNum)
-        { 
+        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        {
+           
             object[] values = new object[227];//一个任务
             for (int i = 0; i < values.Length; i++)
             {
@@ -144,33 +160,39 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE 
+                var query =( from item in data.T_UN_POKE 
                             where item.STATUS == 10  && item.CTYPE ==2  
-                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM select item; 
-                packageNum = getPackageNum(2, lineNum);
-                if (query != null)
-                    list = query.Take(takeSize).ToList();
+                            orderby  item.SENDTASKNUM select item).FirstOrDefault(); //取出第一行的sendtasknum
+
+               // packageNum = getPackageNum(2, lineNum);//取包号 前期需要 
+                var query1 = (from  item in data.T_UN_POKE
+                             where item.SENDTASKNUM == query.SENDTASKNUM  && item.STATUS  ==  10  && item.CTYPE == 2
+                               orderby item.MACHINESEQ,item.TROUGHNUM
+                                  select item).ToList();
+                              
+                if (query1 != null)
+                    list = query1;
                 outlist = list;
                 decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
                     decimal machineseq = 0;//物理通道号
-                    String customercode = "";
+                    //String customercode = "";
                     
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
                         machineseq = (item.MACHINESEQ ?? 0);
-                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
-                        if (customercode.Length>9) {
-                            customercode = customercode.Substring(customercode.Length-9  ,9);
-                        }
+                        //customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        //if (customercode.Length>9) {
+                        //    customercode = customercode.Substring(customercode.Length-9  ,9);
+                        //}
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = packageNum;//包装号 item.SENDTASKNUM
+                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号 item.SENDTASKNUM 取最新一个客户
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
@@ -185,6 +207,7 @@ namespace InBound.Business
                 return values;
             }
         }
+
         /// <summary>
         /// 获取烟柜分拣线
         /// </summary>
@@ -219,7 +242,7 @@ namespace InBound.Business
         /// <param name="outlist"></param>
         /// <param name="packageNum"></param>
         /// <returns></returns>
-        public static object[] getShapeSmokeTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist, out decimal packageNum)
+        public static object[] getShapeSmokeTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
         {
             object[] values = new object[227];//一个任务
             for (int i = 0; i < values.Length; i++)
@@ -229,35 +252,39 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE
+                var query = (from item in data.T_UN_POKE
                             where item.STATUS == 10 && item.CTYPE == 1
-                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
-                            select item;
+                            orderby item.SENDTASKNUM
+                            select item).FirstOrDefault();
 
-                packageNum = getPackageNum(2, null);
-                if (query != null)
-                    list = query.Take(takeSize).ToList();
+                var query1 = (from item in data.T_UN_POKE
+                              where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1
+                              orderby item.MACHINESEQ, item.TROUGHNUM
+                              select item).ToList();
+                //packageNum = getPackageNum(2, null);
+                if (query1 != null)
+                    list = query1.ToList();
                 outlist = list;
                 decimal checkcode = 0;//校验码,为流水号之和
                 if (list != null)
                 {
                     int j = 0;
                     decimal machineseq = 0;//物理通道号
-                    String customercode = "";
+                    //String customercode = "";
 
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
                         machineseq = (item.MACHINESEQ ?? 0);
-                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
-                        if (customercode.Length > 9)
-                        {
-                            customercode = customercode.Substring(customercode.Length - 9, 9);
-                        } 
+                        //customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
+                        //if (customercode.Length > 9)
+                        //{
+                        //    customercode = customercode.Substring(customercode.Length - 9, 9);
+                        //} 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = customercode;//客户号
-                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 3] = item.SORTNUM;//客户号
+                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号

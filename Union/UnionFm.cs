@@ -678,7 +678,7 @@ namespace SortingControlSys.SortingControl
                             //if (UnionList[0].Count > 0)
                             //{
                                 //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                                TaskService.UpdateUnionStatus(15, sortnum);
+                            TaskService.UpdateUnionStatus(15,sortnum);
                                 updateListBox("一号主皮带任务:" + sortnum + "已接收");
                                 writeLog.Write("一号主皮带任务:" + sortnum + "已接收");
                             //} 

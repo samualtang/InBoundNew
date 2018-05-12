@@ -181,15 +181,15 @@ namespace SortingControlSys.SortingControl
                 //{
                 //    SixCabinetGroup.Write(2, 225);
                 //}
-                if (SendTaskStatesGroup.Read(0).ToString() != "1")
+                if (SendTaskStatesGroup.Read(0).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 0);
                 }
-                if (SendTaskStatesGroup.Read(1).ToString() != "1")
+                if (SendTaskStatesGroup.Read(1).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 1);
                 }
-                if (SendTaskStatesGroup.Read(2).ToString() != "1")
+                if (SendTaskStatesGroup.Read(2).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 2);
                 }
@@ -265,8 +265,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    decimal packageNum = 0;
-                    object[] datas = UnPokeService.getTask(25, "2", out list1,out packageNum);
+                   // decimal packageNum = 0;
+                    object[] datas = UnPokeService.getTask(25, "2", out list1);
                     if (int.Parse(datas[0].ToString())== 0)
                     {
                         updateListBox("二线分拣数据发送完毕");
@@ -288,7 +288,7 @@ namespace SortingControlSys.SortingControl
                         p1 += taskGroup2.Read(i).ToString() + ";";//pokeid  
                     }
                     writeLog.Write("读出第二组电控写入值:" + p1);
-                    UnPokeService.UpdateTaskNum(list1, packageNum);
+                    
                 }
             }
             catch (Exception ex)
@@ -316,8 +316,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    decimal packageNum=0;
-                    object[] datas = UnPokeService.getTask(25, "1", out list,out packageNum);
+                   
+                    object[] datas = UnPokeService.getTask(25, "1", out list);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("一线分拣数据发送完毕");
@@ -340,7 +340,7 @@ namespace SortingControlSys.SortingControl
                         p1 += taskgroup1.Read(i).ToString() + ";";//pokeid   
                     }
                     writeLog.Write("读出第一组电控写入值:" + p1);
-                    UnPokeService.UpdateTaskNum(list, packageNum); 
+                    
                 }
             }
             catch(Exception ex)
@@ -368,9 +368,9 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                    decimal packageNum = 0;
+                   
                  //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix, out packageNum);
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");
@@ -392,7 +392,7 @@ namespace SortingControlSys.SortingControl
                         p1 += SixCabinetGroup.Read(i).ToString()+";";//pokeid  
                     }
                     writeLog.Write("读出烟柜电控写入值:" + p1);
-                    UnPokeService.UpdateTaskNum(listSix, packageNum);
+                  
                 }
             }
             catch (Exception ex)

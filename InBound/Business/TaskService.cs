@@ -1359,9 +1359,7 @@ namespace InBound.Business
 
             using (Entities entity = new Entities())
             {
-                decimal machineseq = decimal.Parse(troughno);
-
-                
+                decimal machineseq = decimal.Parse(troughno);              
                 var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.MACHINESEQ == machineseq select item).ToList();
                 if (query != null && query.Count > 0)
                 {
@@ -1492,7 +1490,29 @@ namespace InBound.Business
             }
 
         }
+        public static void UpdateUnionSendStatus( int sortnum)//更新合流状态
+        {
+            using (Entities entity = new Entities())
+            {
+                var query1 = (from item in entity.T_PRODUCE_POKE where item.SORTNUM< sortnum && item.UNIONSTATE==10 select item).ToList();
+                if (query1 != null && query1.Count > 0)
+                {
+                    return;
+                }
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        item.UNIONSTATE = 15;
+                    }
+                    //如果是合流完成,则将task表状态置为完成
+                  
+                    entity.SaveChanges();
+                }
+            }
 
+        }
         public static void UpdateUnionFinishedStatus( int sortnum)//更新合流状态
         {
             using (Entities entity = new Entities())

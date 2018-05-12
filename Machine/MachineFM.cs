@@ -625,7 +625,7 @@ namespace SortingControlSys.SortingControl
 
                                     updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                     writeLog.Write(((groupNo - 1) * 22 + Group) + "号机械手已接收:" + item + "号任务");
-
+                                    //InBoundService.UpdateMachineInOut(decimal.Parse(item), ((groupNo - 1) * 22 + Group));
                                     TaskService.UpdateMachineSec(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "");
                                     removeKey(((groupNo - 1) * 22 + Group) + "");
                                 }
