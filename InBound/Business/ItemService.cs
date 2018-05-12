@@ -32,5 +32,20 @@ namespace InBound.Business
               return query;
           }
       }
+      public static int GetItemCountByBarCode(String barcode)
+      {
+          using (Entities entity = new Entities())
+          {
+              var query = (from item in entity.T_WMS_ITEM where item.BIGBOX_BAR == barcode && item.ITEMNO.Length == 7 select item).ToList();
+              if (query != null)
+              {
+                  return query.Count();
+              }
+              else
+              {
+                  return 0;
+              }
+          }
+      }
     }
 }

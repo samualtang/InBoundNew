@@ -597,7 +597,9 @@ namespace MainUI
 
         private void 入库ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FormUI.InBoundReturnFM rkfm = new FormUI.InBoundReturnFM();
+            rkfm.StartPosition = FormStartPosition.CenterScreen;
+            rkfm.Show();
         }
 
         private void 单据查询ToolStripMenuItem_Click(object sender, EventArgs e)

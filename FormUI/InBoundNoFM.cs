@@ -204,7 +204,13 @@ namespace FormUI
                 MessageBox.Show("任务数量超出入库单数量,请修正.");
                 return;
             }
-            
+            int itemCount = ItemService.GetItemCountByBarCode(((List<String>)tbChooseName.Tag)[1].ToString());
+            if (itemCount > 1)
+            {
+                MessageBox.Show("存在重复的件码,请联系管理员!");
+                return;
+            }
+
             INF_JOBDOWNLOAD job = new INF_JOBDOWNLOAD();
             T_WMS_ITEM item=ItemService.GetItemByBarCode(((List<String>)tbChooseName.Tag)[1].ToString());
             CBAddress.BeginInvoke(new getIndex(getCBSelectIndex));

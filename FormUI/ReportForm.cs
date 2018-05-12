@@ -20,7 +20,7 @@ namespace FormUI
         {
             dataGridView1.AutoGenerateColumns = false;
 
-            dataGridView1.DataSource = AtsCellInfoDetailService.GetReport();
+            dataGridView1.DataSource = AtsCellInfoDetailService.GetReport(tbName.Text.Trim(), tbCode.Text.Trim());
            
         }
         public void searchQuery()

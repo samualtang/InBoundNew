@@ -82,7 +82,7 @@ namespace FormUI
             //List<T_PRODUCE_POKE> list= TaskService.getList(1, 1);
          //  String list= AtsCellInService.getCellNoCode("1111111");
           
-            //String str = "12";
+          //  String str = "1203".Substring(0,2);
             try
             {
               // throw(new Exception());

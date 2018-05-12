@@ -183,7 +183,6 @@
     <EmbeddedResource Include="SelectTask\w_UnNormal.resx">
       <DependentUpon>w_UnNormal.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

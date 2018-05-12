@@ -81,11 +81,13 @@ namespace InBound.Business
                 return "1355";
             }
         }
-
+        public static int orderCount = 100;
+       static List<T_PRODUCE_SORTTROUGH> listNormal = SortTroughService.GetTrough(10, 20);//分拣通道
+       static List<T_PRODUCE_SORTTROUGH> listHj = SortTroughService.GetTrough(20, 20);//重力式货架
         public static void PreUpdateInOut(bool unFullFirst,PlcGroup group)
         {
-            List<T_PRODUCE_SORTTROUGH> listNormal = SortTroughService.GetTrough(10, 20);//分拣通道
-            List<T_PRODUCE_SORTTROUGH> listHj = SortTroughService.GetTrough(20, 20);//重力式货架
+           
+            listNormal = listNormal.OrderByDescending(s => s.ACTCOUNT).ThenBy(x=>x.SEQ).ToList();
             try
             {
                 //using (TransactionScope ts = new TransactionScope())
@@ -116,7 +118,17 @@ namespace InBound.Business
                         }
                        // Decimal itemCount =Decimal.Parse(group.Read(((Int32)task.MACHINESEQ) - 1).ToString());
                         //if (itemCount < THRESHOLD)//烟柜需要补货 暂时屏蔽
-                       
+                        decimal nextOrderQty = ProducePokeService.GetTroughNextUnFinished(task.TROUGHNUM, orderCount);
+                        if (query + task.MANTISSA < nextOrderQty)
+                        {
+                            task.ACTCOUNT = 2;
+                            WriteLog.GetLog().Write("品牌:" + task.CIGARETTENAME + "补货优先级提高");
+
+                        }
+                        else
+                        {
+                            task.ACTCOUNT = 1;
+                        }
                         if (query + task.MANTISSA < THRESHOLD)
                         {
                             //decimal groupno = 1;
@@ -576,9 +588,23 @@ namespace InBound.Business
                                             // entity.SaveChanges();
                                         }
                                     }
-
+                                    if (totalCount + totalMantissa <= 0)
+                                    {
+                                        task.ACTCOUNT = 1;
+                                    }
                                     if (totalCount + totalMantissa > 0 && AtsCellOutService.checkCanSendTaskCount(task.TROUGHNUM))//重力式货架没有库存 不下任务 可以改成从db块读取
                                     {
+                                        if (task.ACTCOUNT != 2)
+                                        {
+                                            int count=listNormal.Where(x => x.TROUGHNUM.Contains(task.TROUGHNUM.Substring(0,2))).Where(x=>x.ACTCOUNT==2).Count();
+                                            if (count > 0)
+                                            {
+                                                WriteLog.GetLog().Write("有品牌优先级高 品牌:" + task.CIGARETTENAME + "暂缓补货");
+                                                entity.SaveChanges();
+                                                break;
+                                            }
+                                        }
+
                                         entity.INF_JOBDOWNLOAD.AddObject(load);
                                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask1);
                                         totalCount -= 1;
@@ -610,6 +636,7 @@ namespace InBound.Business
                        
                         else
                         {
+                            task.ACTCOUNT = 1;
                             String cellno = "";
                             try
                             {
