@@ -151,7 +151,23 @@ namespace SpecialShapeSmoke
             search.Location = new Point(p.Width - 4*topHeight, 0);
             p.Controls.Add(search);
 
-           
+
+            ComboBox cmbtime = new ComboBox();
+            cmbtime.Width = 4 * topHeight;
+            cmbtime.Height = topHeight;
+            cmbtime.BackColor = Color.Silver;
+            cmbtime.Font = new Font("宋体", 25, FontStyle.Bold);
+            //cmbtime.Text = "刷新";
+            cmbtime.SelectedIndexChanged +=new EventHandler(cmbtime_SelectedIndexChanged);
+            cmbtime.Location = new Point(p.Width - 8 * topHeight, 7);
+            cmbtime.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbtime.Items.Add("5秒刷新");
+            cmbtime.Items.Add("10秒刷新");
+            cmbtime.Items.Add("15秒刷新");
+            cmbtime.Items.Add("20秒刷新");
+            cmbtime.SelectedIndex = 3;
+            p.Controls.Add(cmbtime);
+         
 
             //Button refresh = new Button();
             //refresh.Width = 2 * topHeight;
@@ -167,7 +183,28 @@ namespace SpecialShapeSmoke
             Thread thread = new Thread(ConnectServer);
             thread.Start(); 
         }
-      
+
+        public void cmbtime_SelectedIndexChanged(object sender, EventArgs e)//刷新
+        {
+
+            ComboBox cmb = ((ComboBox)sender);
+            switch (cmb.SelectedIndex)
+            {
+                case 0:
+                    RefreshTime = 5;
+                    break;
+                case 1:
+                    RefreshTime = 10;
+                    break;
+                case 2:
+                    RefreshTime = 15;
+                    break;
+                case 3:
+                    RefreshTime = 20;
+                    break;
+
+            }
+        }
 
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
@@ -255,7 +292,7 @@ namespace SpecialShapeSmoke
             } 
             return positiong; 
         }
-
+        int RefreshTime = 20;
         void ConnectServer()
         {
             try
@@ -264,7 +301,7 @@ namespace SpecialShapeSmoke
                 Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
                 svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME); 
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-
+                
               
 
                 ShapeGroup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
@@ -276,7 +313,7 @@ namespace SpecialShapeSmoke
                     while (true) 
                     {
                       getData();
-                      Thread.Sleep(20000);//每20秒刷新一次
+                      Thread.Sleep(RefreshTime *1000);//每20秒刷新一次
                     }
                 }
             }
@@ -323,14 +360,24 @@ namespace SpecialShapeSmoke
             //    trouglength = 2;
             //}
             // 数据清空
-            throughList = new List<HUNHEVIEW>[2];
-            for (int i = 0; i < throughList.Length; i++)
+            try
             {
-                for (int j = 0; j < panelList[i].Controls.Count; j++)
+
+
+                throughList = new List<HUNHEVIEW>[boxText.Length];
+                for (int i = 0; i < throughList.Length; i++)
                 {
-                    Label lbl = (Label)panelList[i].Controls[j];
-                    updateLabel("", lbl);
+                    for (int j = 0; j < panelList[i].Controls.Count; j++)
+                    {
+                        Label lbl = (Label)panelList[i].Controls[j];
+                        updateLabel("", lbl);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+
+                writeLog.Write("clearAllText():" + e.Message + "/r/n" + e.Source);
             }
 
         }
@@ -412,6 +459,8 @@ namespace SpecialShapeSmoke
                     int countnum = 0;
                     // string[] Flag = new string[2];   
                     decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
+                    finishNo[0] = -1;
+                    finishNo[1] = -1;
                     string Log = "";
                    
                     #region  读取DB
@@ -425,10 +474,10 @@ namespace SpecialShapeSmoke
                             finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
                         }
                     
-                    for (int i = 0; i < boxText.Length; i++)
-                    {
-                       Log  += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
-                    }
+                        for (int i = 0; i < boxText.Length; i++)
+                        {
+                           Log  += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
+                        }
                   
                      #endregion
                     if (finishNo[0] != -1 || finishNo[1] != -1)
@@ -440,19 +489,25 @@ namespace SpecialShapeSmoke
                             initText(panelList[j], throughList[j]);
                         }
                         writeLog.Write(Log);
-                        if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
+                        for (int k = 0; k < boxText.Length; k++)
                         {
-                            Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                            Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
                             updateLabel("分拣任务完成!分拣结束!", lbl2);
                         }
-                        if(boxText.Length ==2)
-                        {
-                            if (throughList[1].Count <= 0&&!CheckTrough())
-                            {
-                                Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
-                                updateLabel("分拣任务完成!分拣结束!", lbl2);
-                            } 
-                        }
+                        //if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
+                        //{
+                        //    Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                        //    updateLabel("分拣任务完成!分拣结束!", lbl2);
+
+                        //}
+                        //if(boxText.Length ==2)
+                        //{
+                        //    if (throughList[1].Count <= 0&&!CheckTrough())
+                        //    {
+                        //        Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                        //        updateLabel("分拣任务完成!分拣结束!", lbl2);
+                        //    } 
+                        //}
                     }
                     else
                     {
@@ -460,7 +515,7 @@ namespace SpecialShapeSmoke
                         for (int k = 0; k < boxText.Length; k++)
                         {
                             Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
-                            updateLabel("请等待分拣任务!", lbl2);
+                            updateLabel("服务器断开连接,请重新连接!", lbl2);
                         }
                     }
 
@@ -473,11 +528,13 @@ namespace SpecialShapeSmoke
                 }
                 catch (Exception e)
                 {
-                    writeLog.Write("GetData():" + e.Message);
+                    writeLog.Write("GetData():" + e.Message + "\r\n"+"错误源:" + e.Source);
                 }
                 //MessageBox.Show(data);
 
         }
+
+      
 
         public void Refresh(object sender, EventArgs e)//刷新
         { 

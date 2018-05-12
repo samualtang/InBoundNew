@@ -38,7 +38,7 @@ namespace InBound.Business
         public static decimal getPackageNum(decimal ctype, String lineNum)
         {
 
-            decimal packgenum = BaseService.GetSeq("select s_produce_un_sendtasknum.nextval from dual");
+            decimal packgenum = BaseService.GetSeq("select s_produce_un_sendtasknum.nextval from dual");//1423 1424+1
 
             return packgenum;
             //using (Entities data = new Entities())
@@ -170,7 +170,7 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = packageNum;//包装号
+                        values[j * 9 + 4] = packageNum;//包装号 item.SENDTASKNUM
                         values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号

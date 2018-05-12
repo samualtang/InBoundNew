@@ -37,7 +37,7 @@ namespace SortingControlSys.SortingControl
             { 
                 if (string.IsNullOrWhiteSpace(txtMachineseq.Text) && string.IsNullOrWhiteSpace(textSortNum.Text))
                 {
-                    MessageBox.Show("请输入查询条件");
+                    Bind();
                     return;
                 }
                 if (!string.IsNullOrWhiteSpace(txtMachineseq.Text) && !string.IsNullOrWhiteSpace(textSortNum.Text))
@@ -47,12 +47,13 @@ namespace SortingControlSys.SortingControl
                 }
                 if (string.IsNullOrWhiteSpace(txtMachineseq.Text))
                 {
-                    Bind();
+                    BindMachine();
+                  
                     return;
                 }
                 if (string.IsNullOrWhiteSpace(textSortNum.Text))
                 {
-                    BindMachine();
+                    Bind();
                     return;
                 }
 
@@ -88,8 +89,13 @@ namespace SortingControlSys.SortingControl
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号 
+                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
+
+                    this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
+                    this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
+                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
+                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量 
                     if (status == "10")
                     {
                         status = "新增";
@@ -101,16 +107,10 @@ namespace SortingControlSys.SortingControl
                     else
                     {
                         status = "完成";
-                    }
-                    this.task_data.Rows[index].Cells[2].Value = item.Machineseq;//机械手号
-                    this.task_data.Rows[index].Cells[3].Value = item.MainBelt;//主皮带
-                    this.task_data.Rows[index].Cells[4].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
-                    if (status == "完成")
-                    {
                         this.task_data.Rows[index].Cells[6].Style = dgvStyle;
                     }
+                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
+               
                 }
 
 
@@ -146,8 +146,14 @@ namespace SortingControlSys.SortingControl
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号 
+                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
+
+                    this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
+                    this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
+                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
+                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量
+                   
                     if (status == "10")
                     {
                         status = "新增";
@@ -159,16 +165,9 @@ namespace SortingControlSys.SortingControl
                     else
                     {
                         status = "完成";
-                    }
-                    this.task_data.Rows[index].Cells[2].Value = item.Machineseq;//机械手号
-                    this.task_data.Rows[index].Cells[3].Value = item.MainBelt;//主皮带
-                    this.task_data.Rows[index].Cells[4].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
-                    if (status == "完成")
-                    {
                         this.task_data.Rows[index].Cells[6].Style = dgvStyle;
                     }
+                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
                 }
 
 
@@ -201,8 +200,13 @@ namespace SortingControlSys.SortingControl
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号 
+                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
+
+                    this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
+                    this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
+                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
+                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量 
                     if (status == "10")
                     {
                         status = "新增";
@@ -213,17 +217,10 @@ namespace SortingControlSys.SortingControl
                     }
                     else
                     {
-                        status="完成";
-                    }
-                    this.task_data.Rows[index].Cells[2].Value = item.Machineseq;//机械手号
-                    this.task_data.Rows[index].Cells[3].Value = item.MainBelt;//主皮带
-                    this.task_data.Rows[index].Cells[4].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
-                    if (status == "完成")
-                    {
+                        status = "完成";
                         this.task_data.Rows[index].Cells[6].Style = dgvStyle;
                     }
+                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
                 }
            
 

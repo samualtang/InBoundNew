@@ -29,6 +29,7 @@ namespace SortingControlSys.SortingControl
             button1_Click(null, null);
              CmbBind();
             AutoSizeColumn(task_data);
+            Text = "第" + sortgroupno1 + "组和第" + sortgroupno2 + "组,预分拣状态管理";
           
            
         }
@@ -50,18 +51,22 @@ namespace SortingControlSys.SortingControl
         {
 
             List<TaskDetail> list;
-            if (!string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 0)//任务号
+            if (!string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 0)//分拣任务号
             { 
                list = TaskService.getFJData(decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2); 
             }
             else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && cmbSelect.SelectedIndex == 1)//机械手号
             {
                 list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), sortgroupno1, sortgroupno2); 
-            }
-            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 2 )//任务号 机械手号
+            } 
+            //else if (!string.IsNullOrWhiteSpace(txtTasknum.Text) && cmbSelect.SelectedIndex == 2)//任务号
+            //{
+            //    list = TaskService.getFJDataByTasknum(Convert.ToInt32(txtTasknum.Text), sortgroupno1, sortgroupno2);
+            //}
+            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 2)//分拣任务号 机械手号
             {
-                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2); 
-            }
+                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2);
+            } 
             else
             {
                 list = TaskService.getFJDataAll(sortgroupno1, sortgroupno2);
@@ -77,13 +82,14 @@ namespace SortingControlSys.SortingControl
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号
-                    this.task_data.Rows[index].Cells[2].Value = item.CIGARETTDECODE;//香烟编号
-                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDENAME;//香烟名称
-                    this.task_data.Rows[index].Cells[4].Value = item.Machineseq;//机械手号
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//抓烟数量
-                    this.task_data.Rows[index].Cells[6].Value = item.POCKPLACE;//放烟位置
+                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//预分拣任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.UnionTasknum;//机械手任务号
+                    this.task_data.Rows[index].Cells[2].Value = item.Billcode;//订单号
+                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDECODE;//香烟编号
+                    this.task_data.Rows[index].Cells[4].Value = item.CIGARETTDENAME;//香烟名称
+                    this.task_data.Rows[index].Cells[5].Value = item.Machineseq;//机械手号
+                    this.task_data.Rows[index].Cells[6].Value = item.POKENUM;//抓烟数量
+                    this.task_data.Rows[index].Cells[7].Value = item.POCKPLACE;//放烟位置
                    
                     if (status == "10")
                     {
@@ -97,7 +103,7 @@ namespace SortingControlSys.SortingControl
                     {
                         status="完成";
                     }
-                    this.task_data.Rows[index].Cells[7].Value = status;//状态位
+                    this.task_data.Rows[index].Cells[8].Value = status;//状态位
                     if (status == "完成")
                     {
                         this.task_data.Rows[index].Cells[7].Style = dgvStyle;
@@ -114,9 +120,10 @@ namespace SortingControlSys.SortingControl
         }
         void CmbBind()
         {
-            cmbSelect.Items.Add("任务号");
+            cmbSelect.Items.Add("分拣任务号");
             cmbSelect.Items.Add("设备号");
-            cmbSelect.Items.Add("任务号设备号");
+            //cmbSelect.Items.Add("任务号");
+            cmbSelect.Items.Add("分拣任务号设备号");
             cmbSelect.SelectedIndex = 0;
 
         }
@@ -265,12 +272,13 @@ namespace SortingControlSys.SortingControl
                 case 0:
                     lblsortnum.Visible = true;
                     txtsortnum.Visible = true;
-                    txtsortnum.Focus();
-                    lblsortnum.Location = new Point(600, 29);
-                    txtsortnum.Location = new Point(749, 24);
+                    txtsortnum.Focus(); 
                     lblmachine.Visible = false;
                     txtMachine.Visible = false;
+                    //lbltasknum.Visible = false;
+                    //txtTasknum.Visible = false;
                     txtMachine.Text = "";
+                    //txtTasknum.Text = "";
                     break; 
                 case 1:
                     lblmachine.Visible = true;
@@ -278,15 +286,29 @@ namespace SortingControlSys.SortingControl
                     txtMachine.Focus();
                     lblsortnum.Visible = false;
                     txtsortnum.Visible = false;
+                   // lbltasknum.Visible = false;
+                   // txtTasknum.Visible = false;
                     txtsortnum.Text = "";
+                   // txtTasknum.Text = "";
                     break;
+                //case 2:
+                //    lblmachine.Visible = false;
+                //    txtMachine.Visible = false;
+                //    lblsortnum.Visible = false;
+                //    txtsortnum.Visible = false;
+                //    txtMachine.Text = "";
+                //    txtsortnum.Text = "";
+                //    lbltasknum.Visible = true;
+                //    txtTasknum.Visible = true;
+                //    txtTasknum.Focus();
+                //    break;
                 case 2:
                     lblmachine.Visible = true;
-                    txtMachine.Visible = true;
-                    lblsortnum.Location = new Point(348, 29);
-                    txtsortnum.Location = new Point(486, 24);
+                    txtMachine.Visible = true; 
                     lblsortnum.Visible = true;
                     txtsortnum.Visible = true;
+                    //lbltasknum.Visible = false;
+                   // txtTasknum.Visible = false;
                     txtsortnum.Focus();
                     break;
             }

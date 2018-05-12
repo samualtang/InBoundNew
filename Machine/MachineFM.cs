@@ -966,7 +966,7 @@ namespace SortingControlSys.SortingControl
         private void button6_Click_1(object sender, EventArgs e)
         {
             w_pass pass = new w_pass();
-
+            pass.StartPosition = FormStartPosition.CenterScreen;
 
             pass.Show();
 

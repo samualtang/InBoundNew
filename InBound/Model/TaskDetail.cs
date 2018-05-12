@@ -34,7 +34,7 @@ namespace InBound.Model
        public decimal SecSortNum { get; set; }
        public String Billcode { get; set; }
        public String ExportNum { get; set; }
-       public String TaskNum { get; set; }
+       public Decimal TaskNum { get; set; }
        public Decimal DTaskNum { get; set; }
        public String SortTroughNum
        {
@@ -47,7 +47,7 @@ namespace InBound.Model
        public decimal POCKPLACE { get; set; }//放烟位置
 
        public decimal PACKAGEMACHINE { get; set; }//包装机号
-       public decimal POCKNUM { get; set; }//吸烟数量
+       public decimal POKENUM { get; set; }//吸烟数量
 
         
     }

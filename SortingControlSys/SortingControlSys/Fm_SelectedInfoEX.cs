@@ -55,11 +55,11 @@ namespace SortingControlSys
             switch (cmbSelect.SelectedIndex)
             {
                 case 0:
-                    lblsortnum.Visible = true;
-                    txtsortnum.Visible = true;
-                    txtsortnum.Focus();
-                    lblsortnum.Location = new Point(600, 29);
-                    txtsortnum.Location = new Point(749, 24);
+                    lblSortNum.Visible = true;
+                    txtSortNum.Visible = true;
+                    txtSortNum.Focus();
+                    lblSortNum.Location = new Point(600, 29);
+                    txtSortNum.Location = new Point(749, 24);
                     lblmachine.Visible = false;
                     txtMachine.Visible = false;
                     txtMachine.Text = "";
@@ -68,30 +68,33 @@ namespace SortingControlSys
                     lblmachine.Visible = true;
                     txtMachine.Visible = true;
                     txtMachine.Focus();
-                    lblsortnum.Visible = false;
-                    txtsortnum.Visible = false;
-                    txtsortnum.Text = "";
+                    lblSortNum.Visible = false;
+                    txtSortNum.Visible = false;
+                    txtSortNum.Text = "";
                     break;
                 case 2:
                     lblmachine.Visible = true;
                     txtMachine.Visible = true;
-                    lblsortnum.Location = new Point(348, 29);
-                    txtsortnum.Location = new Point(486, 24);
-                    lblsortnum.Visible = true;
-                    txtsortnum.Visible = true;
-                    txtsortnum.Focus();
+                    lblSortNum.Location = new Point(348, 29);
+                    txtSortNum.Location = new Point(486, 24);
+                    lblSortNum.Visible = true;
+                    txtSortNum.Visible = true;
+                    txtSortNum.Focus();
                     break;
                 case 3://新增
                     lblAndTextVisible();
                     sortsate = 10;
+                    button1_Click(null,null);
                     break; 
                 case 4://已发送
                     lblAndTextVisible();
                     sortsate = 15;
+                    button1_Click(null, null);
                     break;
                 case 5://完成
                     lblAndTextVisible();
                     sortsate = 20;
+                    button1_Click(null, null);
                     break;
             }
         }
@@ -99,24 +102,24 @@ namespace SortingControlSys
         {
             lblmachine.Visible = false;
             txtMachine.Visible = false;
-            lblsortnum.Visible = false;
-            txtsortnum.Visible = false;
+            lblSortNum.Visible = false;
+            txtSortNum.Visible = false;
         }
         private void Bind()
         {
 
             List<TaskDetail> list;
-            if (!string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 0)//任务号
+            if (!string.IsNullOrWhiteSpace(txtSortNum.Text) && cmbSelect.SelectedIndex == 0)//分拣任务号
             {
-                list = TaskService.getFJData(decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2);
+                list = TaskService.getFJDataByTasknum(decimal.Parse(txtSortNum.Text), sortgroupno1, sortgroupno2);
             }
             else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && cmbSelect.SelectedIndex == 1)//机械手号
             {
                 list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), sortgroupno1, sortgroupno2);
             }
-            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtsortnum.Text) && cmbSelect.SelectedIndex == 2)//任务号 机械手号
+            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtSortNum.Text) && cmbSelect.SelectedIndex == 2)//分拣任务号 机械手号
             {
-                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2);
+                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtSortNum.Text), sortgroupno1, sortgroupno2);
             }
             else if (cmbSelect.SelectedIndex == 3 || cmbSelect.SelectedIndex == 4 || cmbSelect.SelectedIndex == 5)
             {
@@ -137,14 +140,14 @@ namespace SortingControlSys
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号
-                    this.task_data.Rows[index].Cells[2].Value = item.CIGARETTDECODE;//香烟编号
-                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDENAME;//香烟名称
-                    this.task_data.Rows[index].Cells[4].Value = item.Machineseq;//机械手号
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//抓烟数量
-                    this.task_data.Rows[index].Cells[6].Value = item.POCKPLACE;//放烟位置
-
+                    this.task_data.Rows[index].Cells[0].Value = item.TaskNum;//任务号
+                    this.task_data.Rows[index].Cells[1].Value = item.SortNum;//排序号
+                    this.task_data.Rows[index].Cells[2].Value = item.Billcode;//订单号
+                    this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDECODE;//香烟编号
+                    this.task_data.Rows[index].Cells[4].Value = item.CIGARETTDENAME;//香烟名称
+                    this.task_data.Rows[index].Cells[5].Value = item.Machineseq;//机械手号
+                    this.task_data.Rows[index].Cells[6].Value = item.tNum;//抓烟数量
+                    this.task_data.Rows[index].Cells[7].Value = item.POCKPLACE;//放烟位置
                     if (status == "10")
                     {
                         status = "新增";
@@ -158,7 +161,7 @@ namespace SortingControlSys
                         status = "完成";
                         this.task_data.Rows[index].Cells[7].Style = dgvStyle;
                     }
-                    this.task_data.Rows[index].Cells[7].Value = status;//状态位
+                    this.task_data.Rows[index].Cells[8].Value = status;//状态位
                   
                 }
 

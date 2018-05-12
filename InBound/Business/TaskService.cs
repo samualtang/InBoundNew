@@ -49,7 +49,7 @@ namespace InBound.Business
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq orderby item.UNIONTASKNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, SortNum = item.SORTNUM ?? 0, POCKPLACE = item.POKEPLACE ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
                 if (query != null)
                     return query.Distinct().OrderBy(x => x.UnionTasknum).ToList();
                 else return null;
@@ -70,7 +70,7 @@ namespace InBound.Business
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq && item.UNIONTASKNUM==uniontaskNum
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, SortNum = item.SORTNUM ?? 0,POCKPLACE =item.POKEPLACE ??0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
                 if (query != null)
                     return query.Distinct().OrderBy(x => x.UnionTasknum).ToList();
                 else return null;
@@ -80,7 +80,7 @@ namespace InBound.Business
         /// <summary>
         /// 查询机械手任务
         /// </summary>
-        /// <param name="sortnum">排序号</param>
+        /// <param name="sortnum">分拣任务号</param>
         /// <returns></returns>
         public static List<TaskDetail> getMachineTask(int sortnum )
         {
@@ -89,15 +89,21 @@ namespace InBound.Business
                 var query = from item in dataentity.T_PRODUCE_POKE
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
-                            where item.SORTNUM == sortnum  
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
+                            where item.SORTNUM == sortnum
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, SortNum = item.SORTNUM ?? 0, POCKPLACE = item.POKEPLACE ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
                 if (query != null)
                     return query.Distinct().OrderBy(x => x.UnionTasknum).ToList();
                 else return null;
 
             }
         }
-
+        /// <summary>
+        /// 分拣任务号 合流任务号 查询机械手
+        /// </summary>
+        /// <param name="sortnum">分拣任务号</param>
+        /// <param name="machineseq">设备号</param>
+        /// <param name="uniontaskNum">合流任务号</param>
+        /// <returns></returns>
         public static List<TaskDetail> getMachineTask(decimal sortnum, decimal machineseq, decimal uniontaskNum)
         {
             using (Entities dataentity = new Entities())
@@ -106,15 +112,15 @@ namespace InBound.Business
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.SORTNUM == sortnum && item.MACHINESEQ == machineseq && item.UNIONTASKNUM == uniontaskNum
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, SortNum = item.SORTNUM ?? 0, POCKPLACE = item.POKEPLACE ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, tNum = item.MERAGENUM ?? 0, Billcode = item.BILLCODE, MachineState = item.MACHINESTATE ?? 0 };
                 if (query != null)
                     return query.Distinct().OrderBy(x => x.UnionTasknum).ToList();
                 else return null;
 
             }
-        }
-
+        } 
         #endregion
+
         #region 预分拣查询
         public static List<TaskDetail> getFJDataAll(decimal groupNo1, decimal groupNo2)
         {
@@ -123,7 +129,7 @@ namespace InBound.Business
                 var query = from item in dataentity.T_PRODUCE_POKE join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where   (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE==10 && item2.CIGARETTETYPE==20 orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE,POCKPLACE=item.POKEPLACE ?? 0,   CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -139,14 +145,14 @@ namespace InBound.Business
                                 on item.TROUGHNUM equals item2.TROUGHNUM
                             where (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20 && item.SORTSTATE == state 
                             orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
             }
         }
         /// <summary>
-        /// 任务号获取预分拣任务
+        /// 排序号获取预分拣任务
         /// </summary>
         /// <param name="sortnum">任务号</param>
         /// <param name="groupNo1">A组</param>
@@ -161,12 +167,35 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.SORTNUM == sortnum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE,POCKPLACE=item.POKEPLACE ?? 0,  CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ??0 ,UnionTasknum = item.UNIONTASKNUM ??0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE,POCKPLACE=item.POKEPLACE ?? 0,  CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
             }
         }
+        /// <summary>
+        /// 任务号获取分拣任务
+        /// </summary>
+        /// <param name="tasknum">任务号</param>
+        /// <param name="groupNo1">A组</param>
+        /// <param name="groupNo2">B组</param>
+        /// <returns></returns>
+        public static List<TaskDetail> getFJDataByTasknum(decimal tasknum, decimal groupNo1, decimal groupNo2)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query = from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            where item.TASKNUM == tasknum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+                            orderby item.SORTNUM
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                if (query != null)
+                    return query.OrderBy(x => x.SortNum).ToList();
+                else return null;
+            }
+        }
+        
         
         /// <summary>
         /// 机械手号获取分拣任务
@@ -184,7 +213,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -208,7 +237,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq && item.SORTNUM == sortnum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -216,6 +245,7 @@ namespace InBound.Business
         }
         #endregion
 
+        #region  合流任务
         /// <summary>
         /// 获取合流任务
         /// </summary>
@@ -226,17 +256,15 @@ namespace InBound.Business
             {
                 var query = from item in dataentity.T_PRODUCE_POKE
                              orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE ,item.MACHINESEQ,item.MAINBELT,item.PACKAGEMACHINE,item.POKENUM } into g
+                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE ,item.MAINBELT,item.PACKAGEMACHINE,item.GROUPNO } into g
                             select new TaskDetail() { 
                                 SortNum = g.Key.SORTNUM ?? 0,
                                 tNum = g.Sum(x => x.POKENUM ?? 0), 
-                                POCKNUM = g.Key.POKENUM ?? 0,
                                 Billcode = g.Key.BILLCODE, 
                                 UnionState = g.Key.UNIONSTATE ?? 0 ,
-                                Machineseq = g.Key.MACHINESEQ  ?? 0,
                                 MainBelt = g.Key.MAINBELT ?? 0,
                                 PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0, 
-
+                                GroupNO = g.Key.GROUPNO ??0
                             };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
@@ -255,17 +283,16 @@ namespace InBound.Business
                 var query = from item in dataentity.T_PRODUCE_POKE
                             where item.SORTNUM == sortnum  
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE, item.MACHINESEQ, item.MAINBELT, item.PACKAGEMACHINE, item.POKENUM } into g
+                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE,  item.MAINBELT, item.PACKAGEMACHINE, item.GROUPNO } into g
                             select new TaskDetail()
                             {
                                 SortNum = g.Key.SORTNUM ?? 0,
                                 tNum = g.Sum(x => x.POKENUM ?? 0),
-                                POCKNUM = g.Key.POKENUM ?? 0,
                                 Billcode = g.Key.BILLCODE,
                                 UnionState = g.Key.UNIONSTATE ?? 0,
-                                Machineseq = g.Key.MACHINESEQ ?? 0,
                                 MainBelt = g.Key.MAINBELT ?? 0,
-                                PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0, 
+                                PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0,
+                                GroupNO = g.Key.GROUPNO ?? 0
                             };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
@@ -276,26 +303,27 @@ namespace InBound.Business
        /// <summary>
        /// 获取合流任务
        /// </summary>
-       /// <param name="machineseq">机械手号</param>
+       /// <param name="groupno">机械手号</param>
        /// <returns></returns>
-        public static List<TaskDetail> getUnionData(int machineseq)
+        public static List<TaskDetail> getUnionData(int groupno)
         {
             using (Entities dataentity = new Entities())
             {
                 var query = from item in dataentity.T_PRODUCE_POKE
-                            where item.MACHINESEQ == machineseq
+                            where item.GROUPNO == groupno
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE, item.MACHINESEQ, item.MAINBELT, item.PACKAGEMACHINE, item.POKENUM } into g
+                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE,  item.MAINBELT, item.PACKAGEMACHINE, item.GROUPNO} into g
                             select new TaskDetail()
                             {
                                 SortNum = g.Key.SORTNUM ?? 0,
                                 tNum = g.Sum(x => x.POKENUM ?? 0),
-                                POCKNUM = g.Key.POKENUM ?? 0,
+                               
                                 Billcode = g.Key.BILLCODE,
                                 UnionState = g.Key.UNIONSTATE ?? 0,
-                                Machineseq = g.Key.MACHINESEQ ?? 0,
+                               
                                 MainBelt = g.Key.MAINBELT ?? 0,
                                 PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0,
+                                GroupNO = g.Key.GROUPNO ?? 0
                             };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
@@ -309,30 +337,32 @@ namespace InBound.Business
        /// <param name="sortnum">任务号</param>
        /// <param name="machineseq">机械手号</param>
        /// <returns></returns>
-        public static List<TaskDetail> getUnionData(decimal sortnum, decimal machineseq)
+        public static List<TaskDetail> getUnionData(decimal sortnum, decimal groupno)
         {
             using (Entities dataentity = new Entities())
             {
                 var query = from item in dataentity.T_PRODUCE_POKE
-                            where item.SORTNUM == sortnum && item.MACHINESEQ == machineseq
+                            where item.SORTNUM == sortnum && item.GROUPNO == groupno
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE, item.MACHINESEQ, item.MAINBELT, item.PACKAGEMACHINE, item.POKENUM } into g
+                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE,  item.MAINBELT, item.PACKAGEMACHINE, item.GROUPNO } into g
                             select new TaskDetail()
                             {
                                 SortNum = g.Key.SORTNUM ?? 0,
                                 tNum = g.Sum(x => x.POKENUM ?? 0),
-                                POCKNUM = g.Key.POKENUM ?? 0,
+                                
                                 Billcode = g.Key.BILLCODE,
                                 UnionState = g.Key.UNIONSTATE ?? 0,
-                                Machineseq = g.Key.MACHINESEQ ?? 0,
+                               
                                 MainBelt = g.Key.MAINBELT ?? 0,
                                 PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0,
+                                GroupNO = g.Key.GROUPNO ?? 0
                             };
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList();
+                    return query.OrderBy(x => x.SortNum  ).ToList();
                 else return null;
             }
         }
+        #endregion
         public static void updateTask(decimal fromtasknum, decimal totasknum, decimal state)
         {
             

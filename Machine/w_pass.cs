@@ -24,7 +24,8 @@ namespace SortingControlSys.SortingControl
             if (textBox1.Text.Equals(secCode))
             {
                 StatusManager form = new StatusManager();
-                form.WindowState = FormWindowState.Maximized;
+                //form.WindowState = FormWindowState.Maximized;
+                form.StartPosition = FormStartPosition.CenterScreen;
                 form.Show();
                 this.Close();
             }
