@@ -1242,6 +1242,44 @@ namespace InBound.Business
                 }
             }
         }
+
+        public static void UpdateMachineInOut(decimal uniontasknum, decimal machineseq)
+        {
+            using (TransactionScope ts = new TransactionScope())
+            {
+                using (Entities entity = new Entities())
+                {
+                    var taskList = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == uniontasknum && item.MACHINESEQ == machineseq select item).ToList();
+                    foreach (var task in taskList)
+                    {
+                        var query = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.BILLCODE == task.BILLCODE && item.CELLNO==task.TROUGHNUM && item.QTY < 0 && item.GROUPNO == task.GROUPNO select item).FirstOrDefault();
+                        if (query != null)
+                            break;
+                        T_WMS_STORAGEAREA_INOUT outTask = new T_WMS_STORAGEAREA_INOUT();
+                        decimal id = entity.ExecuteStoreQuery<decimal>("select S_wms_storagearea_inout.nextval from dual").First();
+                        outTask.ID = id;
+                        outTask.AREAID = 3;//
+                        outTask.CELLNO = task.TROUGHNUM;
+                        T_PRODUCE_SORTTROUGH s = SortTroughService.GetFJTroughInfo(10, task.TROUGHNUM, 20);
+                        outTask.CIGARETTECODE = s.CIGARETTECODE;
+                        //实际情况不会有卷烟代码位空的情况   这样写防止程序报错
+                        outTask.BARCODE = string.IsNullOrEmpty(outTask.CIGARETTECODE) ? "" : ItemService.GetItemByCode(outTask.CIGARETTECODE).BIGBOX_BAR;
+                        outTask.INOUTTYPE = 10;//出
+                        outTask.QTY = -task.POKENUM;
+                        outTask.STATUS = 20;
+                        outTask.CIGARETTENAME = s.CIGARETTENAME;
+                        outTask.CREATETIME = DateTime.Now;
+                       // outTask.TASKNO = task.BILLCODE;
+                        outTask.BILLCODE = task.BILLCODE;
+                        outTask.GROUPNO = task.GROUPNO;
+                        entity.AddToT_WMS_STORAGEAREA_INOUT(outTask);
+                    }
+                    entity.SaveChanges();
+                    ts.Complete();
+                }
+            }
+ 
+        }
         public static void UpdateInOut(decimal sortNo, decimal groupno)
         {
 

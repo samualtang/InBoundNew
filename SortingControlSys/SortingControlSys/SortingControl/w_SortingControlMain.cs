@@ -679,8 +679,8 @@ namespace SortingControlSys.SortingControl
                         //{
                             // int taskno = getKey(tempList, clientId[i]);
                             writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(tempvalue, sortgroupno1);
-                            TaskService.UpdateStatus(sortgroupno1, 20, tempvalue);//将第一组分拣任务改为完成完成
+                            //InBoundService.UpdateInOut(tempvalue, sortgroupno1);
+                            TaskService.UpdateFJFinishStatus(sortgroupno1,  tempvalue);//将第一组分拣任务改为完成完成
 
                             if (tempvalue != 0)
                             {
@@ -740,8 +740,8 @@ namespace SortingControlSys.SortingControl
                         //{
                             // int taskno = getKey(tempList1, clientId[i]);
                             writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            InBoundService.UpdateInOut(tempvalue, sortgroupno2); 
-                            TaskService.UpdateStatus(sortgroupno2, 20, tempvalue);//将第一组分拣任务改为完成完成
+                            //InBoundService.UpdateInOut(tempvalue, sortgroupno2); 
+                            TaskService.UpdateFJFinishStatus(sortgroupno2, tempvalue);//将第一组分拣任务改为完成完成
 
 
                             if (tempvalue != 0)
@@ -837,12 +837,15 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList.Count > 0)
-                            {
-                                TaskService.UpdateStatus(sortgroupno1, 15, tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                                updateListBox("组" + sortgroupno1 + "---任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-                                writeLog.Write(sortgroupno1 + "组:" + tempList.ElementAt(tempList.Count - 1).Value + "号任务已接收");
-                            }
+                          decimal tasknum=  decimal.Parse(taskgroup1.Read(0).ToString());
+                            //if (tempList.Count > 0)
+                            //{
+                               // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                          TaskService.UpdateFJSendStatus(sortgroupno1, tasknum);//状态改为已发送
+
+                          updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
+                          writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                           // }
                             sendTask();
                         }
 
@@ -855,12 +858,19 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                            if (tempList1.Count > 0)
-                            {
-                                TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
-                                updateListBox("组" + sortgroupno2 + "---任务:" + tempList1.ElementAt(tempList1.Count - 1).Value + "已接收");
-                                writeLog.Write(sortgroupno2 + "组:" + tempList1.ElementAt(tempList1.Count - 1).Value + "号任务已接收");
-                            } 
+                            //if (tempList1.Count > 0)
+                            //{
+                                //TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
+                            decimal tasknum = decimal.Parse(taskgroup2.Read(0).ToString());
+                            //if (tempList.Count > 0)
+                            //{
+                            // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                            TaskService.UpdateFJSendStatus(sortgroupno2, tasknum);//状态改为已发送
+
+                            
+                            updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
+                                writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
+                            //} 
                             sendTask1();
                         }
                     }

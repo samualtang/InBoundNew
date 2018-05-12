@@ -626,7 +626,7 @@ namespace SortingControlSys.SortingControl
                                     updateListBox(item + ":" + ((groupNo - 1) * 22 + Group) + " 已接收");
                                     writeLog.Write(((groupNo - 1) * 22 + Group) + "号机械手已接收:" + item + "号任务");
 
-                                    TaskService.UpdateMachine(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "", 15);
+                                    TaskService.UpdateMachineSec(decimal.Parse(item), ((groupNo - 1) * 22 + Group) + "");
                                     removeKey(((groupNo - 1) * 22 + Group) + "");
                                 }
                                    // }
@@ -645,7 +645,8 @@ namespace SortingControlSys.SortingControl
                         {
                             writeLog.Write((((groupNo - 1) * 22 + Group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
                             updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + Group) + " 已完成任务"));
-                            TaskService.UpdateMachine(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
+                            InBoundService.UpdateMachineInOut(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) );
+                            TaskService.UpdateMachineFinished(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + Group) + "");
                          
                         }
                     }

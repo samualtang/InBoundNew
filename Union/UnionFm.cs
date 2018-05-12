@@ -584,7 +584,7 @@ namespace SortingControlSys.SortingControl
                         writeLog.Write("从电控出口号：" + clientId[i] + "获取到任务号:" + tempvalue + "完成信号 ");
                         try
                         {
-                            TaskService.UpdateUnionStatus(20, tempvalue);
+                            TaskService.UpdateUnionFinishedStatus( tempvalue);
                         }
                         catch (Exception ex)
                         {
@@ -674,12 +674,14 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-                            if (UnionList[0].Count > 0)
-                            {
-                                TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                                updateListBox("一号主皮带任务:" + UnionList[0].ElementAt(UnionList[0].Count - 1).Value + "已接收");
-                                writeLog.Write("一号主皮带任务:" + UnionList[0].ElementAt(UnionList[0].Count - 1).Value + "已接收");
-                            } 
+                            int sortnum = int.Parse(taskgroup1.Read(0).ToString());
+                            //if (UnionList[0].Count > 0)
+                            //{
+                                //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
+                                TaskService.UpdateUnionStatus(15, sortnum);
+                                updateListBox("一号主皮带任务:" + sortnum + "已接收");
+                                writeLog.Write("一号主皮带任务:" + sortnum + "已接收");
+                            //} 
                             sendTask(1);
                         } 
                     }
@@ -687,13 +689,14 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-
-                            if (UnionList[1].Count > 0)
-                            {
-                                TaskService.UpdateUnionStatus(15, UnionList[1].ElementAt(UnionList[1].Count - 1).Value);
-                                updateListBox("二号主皮带任务:" + UnionList[1].ElementAt(UnionList[1].Count - 1).Value + "已接收");
-                                writeLog.Write("二号主皮带任务:" + UnionList[1].ElementAt(UnionList[1].Count - 1).Value + "已接收");
-                            }
+                            int sortnum = int.Parse(taskgroup2.Read(0).ToString());
+                            //if (UnionList[1].Count > 0)
+                            //{
+                            //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
+                            TaskService.UpdateUnionStatus(15, sortnum);
+                            updateListBox("二号主皮带任务:" + sortnum + "已接收");
+                            writeLog.Write("二号主皮带任务:" + sortnum + "已接收");
+                            //} 
                             sendTask(2);
                         }
                     }
@@ -702,12 +705,14 @@ namespace SortingControlSys.SortingControl
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
 
-                            if (UnionList[2].Count > 0)
-                            {
-                                TaskService.UpdateUnionStatus(15, UnionList[2].ElementAt(UnionList[2].Count - 1).Value);
-                                updateListBox("三号主皮带任务:" + UnionList[2].ElementAt(UnionList[2].Count - 1).Value + "已接收");
-                                writeLog.Write("三号主皮带任务:" + UnionList[2].ElementAt(UnionList[2].Count - 1).Value + "已接收");
-                            }
+                            int sortnum = int.Parse(taskgroup3.Read(0).ToString());
+                            //if (UnionList[2].Count > 0)
+                            //{
+                            //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
+                            TaskService.UpdateUnionStatus(15, sortnum);
+                            updateListBox("三号主皮带任务:" + sortnum + "已接收");
+                            writeLog.Write("三号主皮带任务:" + sortnum + "已接收");
+                            //} 
                             sendTask(3);
                         }
                     }
@@ -715,12 +720,14 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-                            if (UnionList[3].Count > 0)
-                            {
-                                TaskService.UpdateUnionStatus(15, UnionList[3].ElementAt(UnionList[3].Count - 1).Value);
-                                updateListBox("四号主皮带任务:" + UnionList[3].ElementAt(UnionList[3].Count - 1).Value + "已接收");
-                                writeLog.Write("四号主皮带任务:" + UnionList[3].ElementAt(UnionList[3].Count - 1).Value + "已接收");
-                            }
+                            int sortnum = int.Parse(taskgroup4.Read(0).ToString());
+                            //if (UnionList[3].Count > 0)
+                            //{
+                            //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
+                            TaskService.UpdateUnionStatus(15, sortnum);
+                            updateListBox("三号主皮带任务:" + sortnum + "已接收");
+                            writeLog.Write("三号主皮带任务:" + sortnum + "已接收");
+                            //} 
                             sendTask(4);
                             
                         }

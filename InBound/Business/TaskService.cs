@@ -1354,6 +1354,30 @@ namespace InBound.Business
 
             }
         }
+        public static void UpdateMachineFinished(decimal tasknum, string troughno)
+        {
+
+            using (Entities entity = new Entities())
+            {
+                decimal machineseq = decimal.Parse(troughno);
+
+                
+                var query = (from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM == tasknum && item.MACHINESEQ == machineseq select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        if (item.MACHINESTATE == 15)
+                        {
+                            item.MACHINESTATE = 20;
+                        }
+
+                    }
+                    entity.SaveChanges();
+                }
+
+            }
+        }
         public static void UpdateMachine(decimal tasknum, decimal machineseq,decimal stage)
         {
 
@@ -1469,12 +1493,89 @@ namespace InBound.Business
 
         }
 
+        public static void UpdateUnionFinishedStatus( int sortnum)//更新合流状态
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        if (item.UNIONSTATE == 15)
+                        {
+                            item.UNIONSTATE = 20;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    //如果是合流完成,则将task表状态置为完成
+                   
+                        entity.ExecuteStoreCommand("update t_produce_task set state=30,finishtime=sysdate where  sortnum=" + sortnum);
+                   
+                    entity.SaveChanges();
+                }
+            }
+
+        }
+
         public static List<T_PRODUCE_POKE> getList(decimal groupno, decimal sortnum)
         {
             using (Entities entity = new Entities())
             {
                 var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
                 return query;
+            }
+        }
+        public static void UpdateFJSendStatus(decimal groupno,  decimal sortnum)//更新预分拣任务状态
+        {
+
+
+            using (Entities entity = new Entities())
+            {
+                var query1 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM < sortnum && item.SORTSTATE == 10 select item).ToList();
+                if (query1 != null && query1.Count > 0)
+                {
+                    return;
+                }
+                var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+                
+                if (query != null && query.Count > 0)
+                {
+
+                    foreach (var item in query)
+                    {
+                        item.SORTSTATE = 15;
+                    }
+                    //entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=20)");
+                    entity.SaveChanges();
+                }
+            }
+        }
+
+        public static void UpdateFJFinishStatus(decimal groupno, decimal sortnum)//更新预分拣任务状态
+        {
+
+
+            using (Entities entity = new Entities())
+            {
+             
+                var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+
+                if (query != null && query.Count > 0)
+                {
+
+                    foreach (var item in query)
+                    {
+                        if (item.SORTSTATE == 15)//必须等于15才能更新已完成
+                        {
+                            item.SORTSTATE = 20;
+                        }
+                    }
+                    entity.SaveChanges();
+                }
             }
         }
         public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
@@ -1494,63 +1595,7 @@ namespace InBound.Business
                     entity.SaveChanges();
                 }
             }
-            //using (Entities entity = new Entities())
-            //{
-            //    var query = (from item in entity.T_PRODUCE_TASK where item.TASKNUM == tasknum select item).FirstOrDefault();
-            //    if (query != null)
-            //    {
-            //        if (group == 1)
-            //        {
-            //            query.GROUP1STATE = stage;
-            //        }
-            //        else if (group == 2)
-            //        {
-            //            query.GROUP2STATE = stage;
-            //        } 
-            //        else if (group == 3)
-            //        {
-            //            query.GROUP3STATE = stage;
-            //        } 
-            //        else if (group == 4)
-            //        {
-            //            query.GROUP4STATE = stage;
-            //        }
-            //        else if (group == 5)
-            //        {
-            //            query.GROUP5STATE = stage;
-            //        }
-            //        else if (group == 6)
-            //        {
-            //            query.GROUP6STATE = stage;
-            //        }
-            //        else if (group == 7)
-            //        {
-            //            query.GROUP7STATE = stage;
-            //        }
-            //        else if (group == 8)
-            //        {
-            //            query.GROUP8STATE = stage;
-            //        }
-            //        else if (group == 9)
-            //        {
-            //            query.UNIONSTATE = stage;
-
-            //            if (stage == 30)
-            //            {
-            //                    query.STATE = "30";
-            //            }
-            //        }
-            //        //if (stage == 30)
-            //        //{
-            //        //    if (query.GROUP1STATE == 30 && query.GROUP2STATE == 30 && query.GROUP3STATE == 30 && query.GROUP4STATE == 30)
-            //        //    {
-            //        //        query.STATE = "30";
-            //        //    }
-            //        //}
-            //        entity.SaveChanges();
-            //    }
-            //}
-
+            
         }
         public static List<TaskDetail> GetCigarette4(int begin, int end, decimal troughtype, decimal cigarettetype)
         {

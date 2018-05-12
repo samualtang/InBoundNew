@@ -753,7 +753,7 @@
           <Property Name="INOUTTYPE" Type="number" />
           <Property Name="TASKNO" Type="varchar2" MaxLength="50" />
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
-          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
           <Property Name="CREATETIME" Type="date" />
           <Property Name="FINISHTIME" Type="date" />
           <Property Name="STATUS" Type="number" />
@@ -762,6 +762,7 @@
           <Property Name="CREATENAME" Type="nvarchar2" MaxLength="20" />
           <Property Name="BARCODE" Type="varchar2" MaxLength="30" />
           <Property Name="GROUPNO" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="50" />
         </EntityType>
         <Function Name="PROC_IN_CELLNO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="ZOOMTEL">
           <Parameter Name="P_CODE" Type="varchar2" Mode="In" />
@@ -1549,7 +1550,7 @@
           <Property Type="Decimal" Name="INOUTTYPE" Precision="38" Scale="0" />
           <Property Type="String" Name="TASKNO" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CIGARETTECODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CREATETIME" />
           <Property Type="DateTime" Name="FINISHTIME" />
           <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
@@ -1558,6 +1559,7 @@
           <Property Type="String" Name="CREATENAME" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2303,6 +2305,7 @@
           <EntitySetMapping Name="T_WMS_STORAGEAREA_INOUT">
             <EntityTypeMapping TypeName="Model.T_WMS_STORAGEAREA_INOUT">
               <MappingFragment StoreEntitySet="T_WMS_STORAGEAREA_INOUT">
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
                 <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
                 <ScalarProperty Name="BARCODE" ColumnName="BARCODE" />
                 <ScalarProperty Name="CREATENAME" ColumnName="CREATENAME" />
@@ -2376,7 +2379,7 @@
         <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="12.375" PointY="3.75" Height="2.4746101888020746" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="17.375" PointY="3.75" Height="4.0712491861979174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.4746101888020746" />
-        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="6.75" Height="4.0712491861979174" />
+        <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="6.75" Height="4.1377571614583246" />
       </Diagram>
     </Diagrams>
   </Designer>
