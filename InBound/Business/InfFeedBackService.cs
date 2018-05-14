@@ -171,11 +171,11 @@ namespace InBound.Business
                        foreach (var task in query4)
                        {
                            InfJobDownLoadService.UpdateJopDownLoad(task.JOBID, 10,dataEntity);
-                           var report = (from reportitem in dataEntity.T_WMS_STORAGEAREA_INOUT where reportitem.TASKNO == task.JOBID select reportitem).ToList();
-                           if (report != null && report.Count > 0)
-                           {
-                               report.ForEach(x => x.STATUS = 20);
-                           }
+                           //var report = (from reportitem in dataEntity.T_WMS_STORAGEAREA_INOUT where reportitem.TASKNO == task.JOBID select reportitem).ToList();
+                           //if (report != null && report.Count > 0)
+                           //{
+                           //    report.ForEach(x => x.STATUS = 20);
+                           //}
                        }
                    }
                    if (query3 != null)
