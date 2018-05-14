@@ -489,25 +489,35 @@ namespace SpecialShapeSmoke
                             initText(panelList[j], throughList[j]);
                         }
                         writeLog.Write(Log);
-                        for (int k = 0; k < boxText.Length; k++)
-                        {
-                            Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
-                            updateLabel("分拣任务完成!分拣结束!", lbl2);
-                        }
+
                         //if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
                         //{
-                        //    Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
-                        //    updateLabel("分拣任务完成!分拣结束!", lbl2);
-
-                        //}
-                        //if(boxText.Length ==2)
-                        //{
-                        //    if (throughList[1].Count <= 0&&!CheckTrough())
-                        //    {
-                        //        Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                            
+                        //        Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
                         //        updateLabel("分拣任务完成!分拣结束!", lbl2);
-                        //    } 
+                            
                         //}
+
+                        //if (throughList[1].Count <= 0 && !CheckTrough()) //根据不同通道完成来显示完成任务 
+                        //{ 
+                        //    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                        //    updateLabel("分拣任务完成!分拣结束!", lbl2);
+                            
+                        //}
+                        if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
+                        {
+                            Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                            updateLabel("分拣任务完成!分拣结束!", lbl2);
+
+                        }
+                        if (boxText.Length == 2)
+                        {
+                            if (throughList[1].Count <= 0 && !CheckTrough())
+                            {
+                                Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                                updateLabel("分拣任务完成!分拣结束!", lbl2);
+                            }
+                        }
                     }
                     else
                     {

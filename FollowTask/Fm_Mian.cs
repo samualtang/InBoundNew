@@ -20,8 +20,7 @@ namespace FollowTask
         public Fm_Mian()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
-         
+            this.StartPosition = FormStartPosition.CenterScreen; 
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {

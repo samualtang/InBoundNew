@@ -459,9 +459,10 @@ namespace InBound.Business
                              group item by new
                              {
                                  item.REGIONCODE,
-                                 item.LINENUM
+                                 item.LINENUM ,
+                                 item.ORDERDATE
                              } into g
-                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE, LineNum = g.Key.LINENUM, FinishCount = 0, FinishQTY = 0, QTY = 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
+                             select new TaskInfo() { REGIONCODE = g.Key.REGIONCODE  ,ORDERDATE = g.Key.ORDERDATE,  LineNum = g.Key.LINENUM, FinishCount = 0,  FinishQTY = 0, QTY = 0, Count = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE) }).ToList();
                 var query2 = (from item in entity.T_UN_TASKLINE
                               join item2 in entity.T_UN_TASK
                               on item.TASKNUM equals item2.TASKNUM
@@ -484,6 +485,18 @@ namespace InBound.Business
                 CaldList(query);
                 return query;
             }
+        }
+        public static List<TaskInfo> GetUnCutomer(decimal sortnum)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_UN_POKE
+                             where item.SORTNUM == sortnum
+                             orderby item.SORTNUM
+                             select new TaskInfo() { MACHINESEQ = item.MACHINESEQ ?? 0, POKENUM = item.POKENUM ??0}).ToList();
+                return null;
+            }
+
         }
         public static List<TaskInfo> GetCustomer()
         {

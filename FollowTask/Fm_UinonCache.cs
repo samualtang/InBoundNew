@@ -31,7 +31,7 @@ namespace FollowTask
             InitializeComponent();
             mainbelt = Convert.ToDecimal(machineText.Substring(4,1)).CastTo(-1);//获取主皮带号
             groupno = GetGroupNo(Convert.ToInt32(machineno));//获取组号
-            MessageBox.Show(machineno + "    " + groupno);
+         //   MessageBox.Show(machineno + "    " + groupno);
             this.listViewUnionCache.DoubleBufferedListView(true); 
             Text = machineText;
             this.StartPosition = FormStartPosition.CenterScreen;

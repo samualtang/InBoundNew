@@ -75,14 +75,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtMainInfo = new System.Windows.Forms.TextBox();
-            this.treeV = new System.Windows.Forms.TreeView();
-            this.btnLeft = new System.Windows.Forms.Button();
             this.查询任务sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.机械手MToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.预分拣YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.合流UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异形烟NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtMainInfo = new System.Windows.Forms.TextBox();
+            this.treeV = new System.Windows.Forms.TreeView();
+            this.btnLeft = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +93,7 @@
             this.查询任务sToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(881, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1181, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -108,9 +108,48 @@
             // 退出EToolStripMenuItem
             // 
             this.退出EToolStripMenuItem.Name = "退出EToolStripMenuItem";
-            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.退出EToolStripMenuItem.Text = "退出(&E)";
             this.退出EToolStripMenuItem.Click += new System.EventHandler(this.退出EToolStripMenuItem_Click);
+            // 
+            // 查询任务sToolStripMenuItem
+            // 
+            this.查询任务sToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.机械手MToolStripMenuItem,
+            this.预分拣YToolStripMenuItem,
+            this.合流UToolStripMenuItem,
+            this.异形烟NToolStripMenuItem});
+            this.查询任务sToolStripMenuItem.Name = "查询任务sToolStripMenuItem";
+            this.查询任务sToolStripMenuItem.Size = new System.Drawing.Size(82, 21);
+            this.查询任务sToolStripMenuItem.Text = "查询任务(&F)";
+            // 
+            // 机械手MToolStripMenuItem
+            // 
+            this.机械手MToolStripMenuItem.Name = "机械手MToolStripMenuItem";
+            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.机械手MToolStripMenuItem.Text = "机械手(&M)";
+            this.机械手MToolStripMenuItem.Click += new System.EventHandler(this.机械手MToolStripMenuItem_Click);
+            // 
+            // 预分拣YToolStripMenuItem
+            // 
+            this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
+            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
+            this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
+            // 
+            // 合流UToolStripMenuItem
+            // 
+            this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
+            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.合流UToolStripMenuItem.Text = "合流(&U)";
+            this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
+            // 
+            // 异形烟NToolStripMenuItem
+            // 
+            this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
+            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
+            this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
             // 
             // txtMainInfo
             // 
@@ -118,10 +157,10 @@
             this.txtMainInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtMainInfo.Enabled = false;
             this.txtMainInfo.Font = new System.Drawing.Font("宋体", 11F);
-            this.txtMainInfo.Location = new System.Drawing.Point(0, 621);
+            this.txtMainInfo.Location = new System.Drawing.Point(0, 676);
             this.txtMainInfo.Name = "txtMainInfo";
             this.txtMainInfo.ReadOnly = true;
-            this.txtMainInfo.Size = new System.Drawing.Size(881, 24);
+            this.txtMainInfo.Size = new System.Drawing.Size(1181, 24);
             this.txtMainInfo.TabIndex = 3;
             this.txtMainInfo.Text = "信息:";
             this.txtMainInfo.TextChanged += new System.EventHandler(this.txtMainInfo_TextChanged);
@@ -187,7 +226,7 @@
             treeNode18,
             treeNode23});
             this.treeV.ShowNodeToolTips = true;
-            this.treeV.Size = new System.Drawing.Size(174, 596);
+            this.treeV.Size = new System.Drawing.Size(174, 651);
             this.treeV.TabIndex = 6;
             this.treeV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeV_AfterSelect);
             // 
@@ -203,50 +242,11 @@
             this.btnLeft.MouseLeave += new System.EventHandler(this.btnLeft_MouseLeave);
             this.btnLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnLeft_MouseMove);
             // 
-            // 查询任务sToolStripMenuItem
-            // 
-            this.查询任务sToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.机械手MToolStripMenuItem,
-            this.预分拣YToolStripMenuItem,
-            this.合流UToolStripMenuItem,
-            this.异形烟NToolStripMenuItem});
-            this.查询任务sToolStripMenuItem.Name = "查询任务sToolStripMenuItem";
-            this.查询任务sToolStripMenuItem.Size = new System.Drawing.Size(82, 21);
-            this.查询任务sToolStripMenuItem.Text = "查询任务(&F)";
-            // 
-            // 机械手MToolStripMenuItem
-            // 
-            this.机械手MToolStripMenuItem.Name = "机械手MToolStripMenuItem";
-            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.机械手MToolStripMenuItem.Text = "机械手(&M)";
-            this.机械手MToolStripMenuItem.Click += new System.EventHandler(this.机械手MToolStripMenuItem_Click);
-            // 
-            // 预分拣YToolStripMenuItem
-            // 
-            this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
-            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
-            this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
-            // 
-            // 合流UToolStripMenuItem
-            // 
-            this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
-            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.合流UToolStripMenuItem.Text = "合流(&U)";
-            this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
-            // 
-            // 异形烟NToolStripMenuItem
-            // 
-            this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
-            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
-            this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
-            // 
             // Fm_Mian
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 645);
+            this.ClientSize = new System.Drawing.Size(1181, 700);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.treeV);
             this.Controls.Add(this.txtMainInfo);

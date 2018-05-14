@@ -216,7 +216,10 @@ namespace InBound.Business
             {
                 using (Entities dataentity = new Entities())
                 {
-
+                    //由于机械手第三组分出来的烟对应的是合流第四组机械手，这里3和4组对应有个对调
+                    if (groupno == 4){ groupno = 3; } else if (groupno == 3) { groupno = 4; }
+                    //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
+                    if (groupno == 8) { groupno = 7; } else if (groupno == 7) { groupno = 8; }
                     var query =( from p in dataentity.T_PRODUCE_POKE
                                 join t in dataentity.T_PRODUCE_SORTTROUGH
                                 on p.MACHINESEQ equals t.MACHINESEQ
@@ -241,7 +244,7 @@ namespace InBound.Business
         }
        
         /// <summary>
-        /// 合流缓存区算法
+        /// 合流缓存区
         /// </summary>
         /// <param name="list">当前任务集合</param>
         /// <param name="machineTaskExcuting">当前抓取排序号(sortnum)</param>

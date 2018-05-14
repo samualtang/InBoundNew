@@ -47,6 +47,7 @@ namespace SortingControlSys.SortingControl
                 lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
                // UnPokeService.getTask(25, lineNum, out list);
                initdata();
+           
             }
             catch (Exception e)
             {
@@ -696,26 +697,28 @@ namespace SortingControlSys.SortingControl
        }
        public void initdata() {
            writeLog.Write("initdata");
-           task_data.Rows.Clear();
+           task_data.Rows.Clear(); 
            try
            {
                List<TaskInfo> list =  TaskService.GetUNCustomer();
                if (list != null)
                {
-
+                   int i =1;
                    foreach (var row in list)
                    {
                        int index = this.task_data.Rows.Add();
-
-                       this.task_data.Rows[index].Cells[0].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[1].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[3].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[4].Value = row.FinishQTY + "/" + row.QTY;
-                       this.task_data.Rows[index].Cells[5].Value = row.Rate;
-                       this.task_data.Rows[index].Cells[6].Value = row.LineNum;
+                       this.task_data.Rows[index].Cells[0].Value = i++;//序号
+                       this.task_data.Rows[index].Cells[1].Value = "长沙市烟草公司";//货主
+                       this.task_data.Rows[index].Cells[2].Value = row.ORDERDATE.Value.Date.ToString("D"); //订单日期
+                       this.task_data.Rows[index].Cells[3].Value = row.REGIONCODE;
+                       this.task_data.Rows[index].Cells[4].Value = row.REGIONCODE;
+                       //this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
+                       this.task_data.Rows[index].Cells[5].Value = row.FinishCount + "/" + row.Count;
+                       this.task_data.Rows[index].Cells[6].Value = row.FinishQTY + "/" + row.QTY; 
+                       this.task_data.Rows[index].Cells[7].Value ="分拣"+ row.LineNum+"线";
+                       this.task_data.Rows[index].Cells[8].Value = row.Rate;
                    }
-                 
+                   task_data.Sort(task_data.Columns[0], ListSortDirection.Ascending); 
                }
 
            }
@@ -840,9 +843,54 @@ namespace SortingControlSys.SortingControl
 
        private void UnNormalFm_Load(object sender, EventArgs e)
        {
-
+           AutoSizeColumn(task_data);
+           this.task_data.DoubleBufferedDataGirdView(true);
        }
 
+       private void UnNormalFm_SizeChanged(object sender, EventArgs e)
+       {
+           task_data.Height = this.Size.Height - list_data.Size.Height;
+           task_data.Width = this.Size.Width - groupboxRegion.Width;
+        
+       }
+       /// <summary>
+       /// 使DataGridView的列自适应宽度
+       /// </summary>
+       /// <param name="dgViewFiles"></param>
+       private void AutoSizeColumn(DataGridView dgViewFiles)
+       {
+           int width = 0;
+           //使列自使用宽度
+           //对于DataGridView的每一个列都调整
+           for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+           {
+
+               //将每一列都调整为自动适应模式
+               dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+               //记录整个DataGridView的宽度
+               width += dgViewFiles.Columns[i].Width;
+
+           }
+           //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+           //则将DataGridView的列自动调整模式设置为显示的列即可，
+           //如果是小于原来设定的宽度，将模式改为填充。
+           if (width > dgViewFiles.Size.Width)
+           {
+               dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+           }
+           else
+           {
+               dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+           }
+           //冻结某列 从左开始 0，1，2
+           dgViewFiles.Columns[0].Width = 45;
+           dgViewFiles.Columns[1].Frozen = true;
+       }
+
+       private void task_data_CellClick(object sender, DataGridViewCellEventArgs e)
+       {
+           MessageBox.Show(e.RowIndex + "");
+       }
  
       
      
