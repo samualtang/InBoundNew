@@ -608,6 +608,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_STORAGEAREA_INOUT> _T_WMS_STORAGEAREA_INOUT;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_PRESORTINFO> T_PRODUCE_PRESORTINFO
+        {
+            get
+            {
+                if ((_T_PRODUCE_PRESORTINFO == null))
+                {
+                    _T_PRODUCE_PRESORTINFO = base.CreateObjectSet<T_PRODUCE_PRESORTINFO>("T_PRODUCE_PRESORTINFO");
+                }
+                return _T_PRODUCE_PRESORTINFO;
+            }
+        }
+        private ObjectSet<T_PRODUCE_PRESORTINFO> _T_PRODUCE_PRESORTINFO;
 
         #endregion
 
@@ -883,6 +899,14 @@ namespace InBound
         public void AddToT_WMS_STORAGEAREA_INOUT(T_WMS_STORAGEAREA_INOUT t_WMS_STORAGEAREA_INOUT)
         {
             base.AddObject("T_WMS_STORAGEAREA_INOUT", t_WMS_STORAGEAREA_INOUT);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_PRESORTINFO EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_PRESORTINFO(T_PRODUCE_PRESORTINFO t_PRODUCE_PRESORTINFO)
+        {
+            base.AddObject("T_PRODUCE_PRESORTINFO", t_PRODUCE_PRESORTINFO);
         }
 
         #endregion
@@ -2878,6 +2902,207 @@ namespace InBound
         private Nullable<global::System.Decimal> _UNIONTASKNUM;
         partial void OnUNIONTASKNUMChanging(Nullable<global::System.Decimal> value);
         partial void OnUNIONTASKNUMChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_PRODUCE_PRESORTINFO")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_PRODUCE_PRESORTINFO : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_PRODUCE_PRESORTINFO 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_PRODUCE_PRESORTINFO CreateT_PRODUCE_PRESORTINFO(global::System.Decimal id)
+        {
+            T_PRODUCE_PRESORTINFO t_PRODUCE_PRESORTINFO = new T_PRODUCE_PRESORTINFO();
+            t_PRODUCE_PRESORTINFO.ID = id;
+            return t_PRODUCE_PRESORTINFO;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SORTNUM
+        {
+            get
+            {
+                return _SORTNUM;
+            }
+            set
+            {
+                OnSORTNUMChanging(value);
+                ReportPropertyChanging("SORTNUM");
+                _SORTNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORTNUM");
+                OnSORTNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SORTNUM;
+        partial void OnSORTNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSORTNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String BILLCODE
+        {
+            get
+            {
+                return _BILLCODE;
+            }
+            set
+            {
+                OnBILLCODEChanging(value);
+                ReportPropertyChanging("BILLCODE");
+                _BILLCODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BILLCODE");
+                OnBILLCODEChanged();
+            }
+        }
+        private global::System.String _BILLCODE;
+        partial void OnBILLCODEChanging(global::System.String value);
+        partial void OnBILLCODEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> GROUPNO
+        {
+            get
+            {
+                return _GROUPNO;
+            }
+            set
+            {
+                OnGROUPNOChanging(value);
+                ReportPropertyChanging("GROUPNO");
+                _GROUPNO = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GROUPNO");
+                OnGROUPNOChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _GROUPNO;
+        partial void OnGROUPNOChanging(Nullable<global::System.Decimal> value);
+        partial void OnGROUPNOChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FINISHTIME
+        {
+            get
+            {
+                return _FINISHTIME;
+            }
+            set
+            {
+                OnFINISHTIMEChanging(value);
+                ReportPropertyChanging("FINISHTIME");
+                _FINISHTIME = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FINISHTIME");
+                OnFINISHTIMEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FINISHTIME;
+        partial void OnFINISHTIMEChanging(Nullable<global::System.DateTime> value);
+        partial void OnFINISHTIMEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CTYPE
+        {
+            get
+            {
+                return _CTYPE;
+            }
+            set
+            {
+                OnCTYPEChanging(value);
+                ReportPropertyChanging("CTYPE");
+                _CTYPE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CTYPE");
+                OnCTYPEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CTYPE;
+        partial void OnCTYPEChanging(Nullable<global::System.Decimal> value);
+        partial void OnCTYPEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> POKENUM
+        {
+            get
+            {
+                return _POKENUM;
+            }
+            set
+            {
+                OnPOKENUMChanging(value);
+                ReportPropertyChanging("POKENUM");
+                _POKENUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POKENUM");
+                OnPOKENUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _POKENUM;
+        partial void OnPOKENUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnPOKENUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _ID;
+        partial void OnIDChanging(global::System.Decimal value);
+        partial void OnIDChanged();
 
         #endregion
 

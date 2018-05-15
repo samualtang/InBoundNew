@@ -12,6 +12,7 @@
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.Store.INF_JOBDOWNLOAD" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.Store.T_PRODUCE_POKE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.Store.T_PRODUCE_PRESORTINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
@@ -141,6 +142,18 @@
           <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
           <Property Name="UNIONEXPORTNUM" Type="varchar2" MaxLength="10" />
           <Property Name="UNIONTASKNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_PRESORTINFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="GROUPNO" Type="number" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="CTYPE" Type="number" />
+          <Property Name="POKENUM" Type="number" />
+          <Property Name="ID" Type="number" Nullable="false" />
         </EntityType>
         <EntityType Name="T_PRODUCE_SORTTROUGH">
           <Key>
@@ -837,6 +850,7 @@
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
           <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
+          <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.T_PRODUCE_PRESORTINFO" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1560,6 +1574,18 @@
           <Property Type="String" Name="BARCODE" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
           <Property Type="String" Name="BILLCODE" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_PRESORTINFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2325,6 +2351,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_PRESORTINFO">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_PRESORTINFO">
+              <MappingFragment StoreEntitySet="T_PRODUCE_PRESORTINFO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="CTYPE" ColumnName="CTYPE" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2380,6 +2419,7 @@
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="17.375" PointY="3.75" Height="4.0712491861979174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.4746101888020746" />
         <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="6.75" Height="4.1377571614583246" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_PRESORTINFO" Width="1.5" PointX="5.375" PointY="19.75" Height="2.2898160807291674" />
       </Diagram>
     </Diagrams>
   </Designer>

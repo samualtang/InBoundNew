@@ -681,9 +681,15 @@ namespace SortingControlSys.SortingControl
                             writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
                             //InBoundService.UpdateInOut(tempvalue, sortgroupno1);
                             TaskService.UpdateFJFinishStatus(sortgroupno1,  tempvalue);//将第一组分拣任务改为完成完成
-
+                            
                             if (tempvalue != 0)
                             {
+                                try
+                                {
+                                    PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+                                }
+                                catch (Exception ex)
+                                { }
                                 updateListBox(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                             }
@@ -746,6 +752,12 @@ namespace SortingControlSys.SortingControl
 
                             if (tempvalue != 0)
                             {
+                                try
+                                {
+                                    PreSortInfoService.Add((decimal)tempvalue, sortgroupno2);
+                                }
+                                catch (Exception ex)
+                                { }
                                 updateListBox(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                             }

@@ -92,6 +92,7 @@
     <Compile Include="Business\SysUserService.cs" />
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\ErrListService.cs" />
+    <Compile Include="Business\PreSortInfoService.cs" />
     <Compile Include="Model\FollowTaskDeail.cs" />
     <Compile Include="Model\HUNHEVIEW.cs" />
     <Compile Include="Model\LaneWayTaskCount.cs" />
