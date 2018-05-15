@@ -31,6 +31,7 @@ namespace InBound.Business
                   info.POKENUM = query.Sum(x => x.POKENUM);
                   info.FINISHTIME = DateTime.Now;
                   info.GROUPNO = groupNo;
+                  info.CTYPE = 1;
                   dataentity.T_PRODUCE_PRESORTINFO.AddObject(info);
                   dataentity.SaveChanges();
               }
