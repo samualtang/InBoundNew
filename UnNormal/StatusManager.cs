@@ -114,7 +114,7 @@ namespace SortingControlSys.SortingControl
                      else if (radioButton3.Checked)
                      {
                    
-                         taskState = 15;
+                         taskState = 20;
                      }
                 if(taskState!=10)
                 {

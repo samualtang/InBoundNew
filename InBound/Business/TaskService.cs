@@ -1868,7 +1868,7 @@ namespace InBound.Business
                             troughQty = querySourcetemp.Count;
                             foreach (var itemsource in querySourcetemp)
                             {
-                                totalMantissa += itemsource.MANTISSA ?? 0;
+                                totalMantissa += (itemsource.MANTISSA ?? 0);
                             }
 
                             int tempCount = 0;
@@ -1967,7 +1967,7 @@ namespace InBound.Business
                                         load1.BARCODE = AtsCellInfoDetailService.GetDetail(load1.SOURCE).BARCODE;
                                         entity.INF_JOBDOWNLOAD.AddObject(load1);
                                     }
-                                    totalCount += detail.QTY ?? 0;
+                                    totalCount += (detail.QTY ?? 0);
                                     //下达重力式货架补货计划
                                     decimal tempPlanQty = detail.QTY ?? 0;
                                     foreach (var item in querySourcetemp)
@@ -2024,7 +2024,7 @@ namespace InBound.Business
                                         outTask4.STATUS = 10;
                                         outTask4.CREATETIME = DateTime.Now;
                                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                        tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                        tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                         entity.SaveChanges();
                                     }
                                 }
@@ -2058,7 +2058,7 @@ namespace InBound.Business
                                             entity.INF_JOBDOWNLOAD.AddObject(load1);
                                         }
 
-                                        totalCount += load1.PLANQTY ?? 0;
+                                        totalCount += (load1.PLANQTY ?? 0);
                                         decimal tempPlanQty = load1.PLANQTY ?? 0;
 
 
@@ -2117,7 +2117,7 @@ namespace InBound.Business
                                             outTask4.STATUS = 10;
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                            tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                            tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                             entity.SaveChanges();
                                         }
 
@@ -2416,7 +2416,7 @@ namespace InBound.Business
                                 troughQty = querySourcetemp.Count;
                                 foreach (var itemsource in querySourcetemp)
                                 {
-                                    totalMantissa += itemsource.MANTISSA ?? 0;
+                                    totalMantissa += (itemsource.MANTISSA ?? 0);
                                 }
 
 
@@ -2514,7 +2514,7 @@ namespace InBound.Business
                                         load1.TARGET = InfJobDownLoadService.GetTargetOutAddress(load1.SOURCE, load1.PLANQTY ?? 0);
                                         load1.STATUS = 0;
                                         entity.INF_JOBDOWNLOAD.AddObject(load1);
-                                        totalCount += load1.PLANQTY ?? 0;
+                                        totalCount += (load1.PLANQTY ?? 0);
                                         decimal tempPlanQty = detail.QTY ?? 0;
                                         //下达重力式货架补货计划
                                         foreach (var item in querySourcetemp)
@@ -2570,7 +2570,7 @@ namespace InBound.Business
                                             outTask4.STATUS = 10;
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                            tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                            tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                             entity.SaveChanges();
                                         }
                                     }
@@ -2600,7 +2600,7 @@ namespace InBound.Business
                                             load1.STATUS = 0;
                                             entity.INF_JOBDOWNLOAD.AddObject(load1);
 
-                                            totalCount += load1.PLANQTY ?? 0;
+                                            totalCount += (load1.PLANQTY ?? 0);
                                             decimal tempPlanQty = load1.PLANQTY ?? 0;
                                             //下达重力式货架补货计划
                                             foreach (var item in querySourcetemp)
@@ -2657,7 +2657,7 @@ namespace InBound.Business
                                                 outTask4.STATUS = 10;
                                                 outTask4.CREATETIME = DateTime.Now;
                                                 entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                                tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                                tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                                 entity.SaveChanges();
                                             }
                                             //反库 wcs生成 
@@ -3566,7 +3566,7 @@ namespace InBound.Business
                     {
                         //统计有几个道能用，平均出来，这里没有考虑坏道后平均值的计算不同了。
                         var avgquery = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == 10 && item.CIGARETTETYPE == 20 && item.GROUPNO == 1 && item.CIGARETTECODE == cigarettecode orderby item.TROUGHNUM select item).ToList();
-                        var avgCount = Math.Ceiling(fCount ?? 0 / avgquery.Count);
+                        var avgCount = Math.Ceiling((fCount ?? 0) / avgquery.Count);
                         foreach (var item in avgquery)
                         {
                             if (item.TROUGHNUM == troughnum)
@@ -3649,7 +3649,7 @@ namespace InBound.Business
                                     }
                                     else
                                     {
-                                        needCount = needCount - fCount ?? 0;//算出精白沙的需要量
+                                        needCount = needCount - (fCount ?? 0);//算出精白沙的需要量
                                         decimal groupCount = 0;
                                         if (jCount > needCount)//完全满足
                                         {
@@ -3691,7 +3691,7 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    needCount -= fCount ?? 0;
+                                    needCount -= (fCount ?? 0);
                                     fCount = 0;
                                     if (jCount > needCount)
                                     {

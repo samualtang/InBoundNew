@@ -95,7 +95,7 @@ namespace FollowTask
         public void BtnText(string groupText)
         {
             int group = 0;
-            if (groupText.Contains("1") || groupText.Contains("2") || groupText.Contains("5") || groupText.Contains("7"))
+            if (groupText.Contains("1") || groupText.Contains("3") || groupText.Contains("5") || groupText.Contains("7"))
             {
                 group = 1;//1-11
             }
@@ -106,7 +106,7 @@ namespace FollowTask
             if (group == 1)
             {
                 int j = 1;
-                for (int i = 1; i < 13; i++)
+                for (int i = 1; i < 12; i++)
                 {
                     string btnNmae = "Machine" + j;
                     Control control = Controls.Find(btnNmae, true)[0];

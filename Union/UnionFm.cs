@@ -674,7 +674,7 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-                            int sortnum = int.Parse(taskgroup1.Read(0).ToString());
+                            int sortnum = int.Parse(taskgroup1.ReadD(0).ToString());
                             //if (UnionList[0].Count > 0)
                             //{
                                 //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
@@ -689,7 +689,7 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-                            int sortnum = int.Parse(taskgroup2.Read(0).ToString());
+                            int sortnum = int.Parse(taskgroup2.ReadD(0).ToString());
                             //if (UnionList[1].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
@@ -705,7 +705,7 @@ namespace SortingControlSys.SortingControl
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
 
-                            int sortnum = int.Parse(taskgroup3.Read(0).ToString());
+                            int sortnum = int.Parse(taskgroup3.ReadD(0).ToString());
                             //if (UnionList[2].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
@@ -720,7 +720,7 @@ namespace SortingControlSys.SortingControl
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
-                            int sortnum = int.Parse(taskgroup4.Read(0).ToString());
+                            int sortnum = int.Parse(taskgroup4.ReadD(0).ToString());
                             //if (UnionList[3].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);

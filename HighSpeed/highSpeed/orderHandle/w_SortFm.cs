@@ -87,6 +87,7 @@ namespace highSpeed.orderHandle
              progressBar1.Visible = false;
              lblTime.Visible = false;//时间
 
+             dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
              this.dgvSortInfo.DataSource = ds.Tables[0];
              dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
              this.dgvSortInfo.AutoGenerateColumns = false;

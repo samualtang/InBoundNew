@@ -163,7 +163,7 @@ namespace InBound.Business
 
                             foreach (var itemsource in querySourcetemp)
                             {
-                                totalMantissa += itemsource.MANTISSA ?? 0;
+                                totalMantissa +=( itemsource.MANTISSA ?? 0);
                                 var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
                                 outingCount +=Math.Abs(outquery);
                                 itemsource.LASTMANTISSA = Math.Abs(outquery);
@@ -661,7 +661,7 @@ namespace InBound.Business
 
                             foreach (var itemsource in querySourcetemp)
                             {
-                                totalMantissa += itemsource.MANTISSA ?? 0;
+                                totalMantissa += (itemsource.MANTISSA ?? 0);
                                 var outquery = (from item in entity.T_WMS_STORAGEAREA_INOUT where item.AREAID == 2 && item.INOUTTYPE == 10 && item.STATUS == 10 && item.CELLNO == itemsource.TROUGHNUM select item).Sum(x => x.QTY) ?? 0;
                                 outingCount += Math.Abs(outquery); 
                                 itemsource.LASTMANTISSA = Math.Abs(outquery);

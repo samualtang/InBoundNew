@@ -849,7 +849,7 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                          decimal tasknum=  decimal.Parse(taskgroup1.Read(0).ToString());
+                          decimal tasknum=  decimal.Parse(taskgroup1.ReadD(0).ToString());
                             //if (tempList.Count > 0)
                             //{
                                // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
@@ -873,7 +873,7 @@ namespace SortingControlSys.SortingControl
                             //if (tempList1.Count > 0)
                             //{
                                 //TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
-                            decimal tasknum = decimal.Parse(taskgroup2.Read(0).ToString());
+                            decimal tasknum = decimal.Parse(taskgroup2.ReadD(0).ToString());
                             //if (tempList.Count > 0)
                             //{
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
