@@ -398,7 +398,10 @@ namespace InBound.Business
                                                     }
 
                                                 }
-
+                                                if (load2.PLANQTY == 0)
+                                                {
+                                                    break;
+                                                }
                                                 load2.PRIORITY = 50;
                                                 load2.SOURCE = load1.TARGET;//out cell立库出口
                                                 load2.TARGET = item.TROUGHNUM;
@@ -559,7 +562,10 @@ namespace InBound.Business
                                                         }
 
                                                     }
-
+                                                    if (load2.PLANQTY == 0)
+                                                    {
+                                                        break;
+                                                    }
                                                     load2.PRIORITY = 50;
                                                     load2.SOURCE = load1.TARGET;//out cell立库出口
                                                     load2.TARGET = item.TROUGHNUM;
@@ -581,7 +587,7 @@ namespace InBound.Business
                                                     outTask4.GROUPNO = item.GROUPNO;
                                                     outTask4.CREATETIME = DateTime.Now;
                                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                                    tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                                    tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                                     //entity.SaveChanges();
                                                 }
                                             }
@@ -792,7 +798,10 @@ namespace InBound.Business
                                             }
 
                                         }
-
+                                        if (load2.PLANQTY == 0)
+                                        {
+                                            break;
+                                        }
                                         load2.PRIORITY = 50;
                                         load2.SOURCE = load1.TARGET;//out cell立库出口
                                         load2.TARGET = item.TROUGHNUM;
@@ -954,7 +963,10 @@ namespace InBound.Business
                                                 }
 
                                             }
-
+                                            if (load2.PLANQTY == 0)
+                                            {
+                                                break;
+                                            }
                                             load2.PRIORITY = 50;
                                             load2.SOURCE = load1.TARGET;//out cell立库出口
                                             load2.TARGET = item.TROUGHNUM;
@@ -976,7 +988,7 @@ namespace InBound.Business
                                             outTask4.GROUPNO = item.GROUPNO;
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
-                                            tempPlanQty = tempPlanQty - load2.PLANQTY ?? 0;
+                                            tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                             
                                         }
                                     }
