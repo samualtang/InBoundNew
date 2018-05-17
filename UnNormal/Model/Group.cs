@@ -263,6 +263,57 @@ namespace SortingControlSys.Model
                 }
             }
         }
+
+        public object ReadD(int index)
+        {
+            // Access unmanaged COM memory
+            IntPtr pItemValues = IntPtr.Zero;
+            IntPtr pErrors = IntPtr.Zero;
+            try
+            {
+                // Sync read from device
+                pIOPCSyncIO.Read(OPCDATASOURCE.OPC_DS_DEVICE, 4, new Int32[] { ItemSvrHandleArray[index] }, out pItemValues, out pErrors);
+                // Unmarshal the returned memory to get the item state out fom the ppItemValues
+                // after checking errors
+                int[] errors = new int[1];
+                Marshal.Copy(pErrors, errors, 0, 1);
+                //if (errors[0] == 0)
+                //{
+                OPCITEMSTATE pItemState = (OPCITEMSTATE)Marshal.PtrToStructure(pItemValues, typeof(OPCITEMSTATE));
+
+
+                // Free indirect variant element, other indirect elements are freed by Marshal.DestroyStructure(...)
+                //DUMMY_VARIANT.VariantClear((IntPtr)((int)pItemValues + 0));
+                return pItemState.vDataValue;
+                //}
+                //else
+                //{
+                //    return -1;
+                //}
+
+                // Free indirect structure elements
+                Marshal.DestroyStructure(pItemValues, typeof(OPCITEMSTATE));
+            }
+            catch (System.Exception error)
+            {
+                return -1;
+            }
+            finally
+            {
+                // Free the unmanaged COM memory
+                if (pItemValues != IntPtr.Zero)
+                {
+                    Marshal.FreeCoTaskMem(pItemValues);
+                    pItemValues = IntPtr.Zero;
+                }
+                if (pErrors != IntPtr.Zero)
+                {
+                    Marshal.FreeCoTaskMem(pErrors);
+                    pErrors = IntPtr.Zero;
+                }
+            }
+            return "";
+        }
         public void Write(object value, int index)
         {
             // Access unmanaged COM memory

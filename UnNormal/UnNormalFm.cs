@@ -162,7 +162,7 @@ namespace SortingControlSys.SortingControl
         }
         public void checkConnection()
         {
-            int flag = taskgroup1.Read(225).CastTo<int>(-1);
+            int flag = taskgroup1.ReadD(225).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
@@ -182,15 +182,15 @@ namespace SortingControlSys.SortingControl
                 //{
                 //    SixCabinetGroup.Write(2, 225);
                 //}
-                if (SendTaskStatesGroup.Read(0).ToString() == "0")
+                if (SendTaskStatesGroup.ReadD(0).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 0);
                 }
-                if (SendTaskStatesGroup.Read(1).ToString() == "0")
+                if (SendTaskStatesGroup.ReadD(1).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 1);
                 }
-                if (SendTaskStatesGroup.Read(2).ToString() == "0")
+                if (SendTaskStatesGroup.ReadD(2).ToString() == "0")
                 {
                     SendTaskStatesGroup.Write(2, 2);
                 }
@@ -262,7 +262,7 @@ namespace SortingControlSys.SortingControl
         { 
             try
             {
-                int flag = SendTaskStatesGroup.Read(1).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.ReadD(1).CastTo<int>(-1);
                 writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -286,7 +286,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += taskGroup2.Read(i).ToString() + ";";//pokeid  
+                        p1 += taskGroup2.ReadD(i).ToString() + ";";//pokeid  
                     }
                     writeLog.Write("读出第二组电控写入值:" + p1);
                     
@@ -313,7 +313,7 @@ namespace SortingControlSys.SortingControl
             
             try
             {
-                int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.ReadD(0).CastTo<int>(-1);
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -338,7 +338,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += taskgroup1.Read(i).ToString() + ";";//pokeid   
+                        p1 += taskgroup1.ReadD(i).ToString() + ";";//pokeid   
                     }
                     writeLog.Write("读出第一组电控写入值:" + p1);
                     
@@ -365,7 +365,7 @@ namespace SortingControlSys.SortingControl
         { 
             try
             {
-                int flag = SendTaskStatesGroup.Read(2).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.ReadD(2).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
@@ -390,7 +390,7 @@ namespace SortingControlSys.SortingControl
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += SixCabinetGroup.Read(i).ToString()+";";//pokeid  
+                        p1 += SixCabinetGroup.ReadD(i).ToString()+";";//pokeid  
                     }
                     writeLog.Write("读出烟柜电控写入值:" + p1);
                   
