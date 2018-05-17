@@ -72,5 +72,16 @@ namespace FollowTask
         {
             ListViewBind(list1);
         }
+
+        private void listViewYaobaiDetails_SizeChanged(object sender, EventArgs e)
+        {
+
+            int _Count = listViewYaobaiDetails.Columns.Count;
+            int _Width = listViewYaobaiDetails.Width;
+            foreach (ColumnHeader ch in listViewYaobaiDetails.Columns)
+            {
+                ch.Width = _Width / _Count - 1;
+            }
+        }
     }
 }

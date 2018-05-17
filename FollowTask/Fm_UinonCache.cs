@@ -107,18 +107,26 @@ namespace FollowTask
                 }
             }
         }
-
+        
         private void btnPokeTime_MouseEnter(object sender, EventArgs e)
         {
-          
          
-           
-
-        }
-
+        } 
+     
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             ListViewBind(list1);
+        }
+
+        private void listViewUnionCache_SizeChanged(object sender, EventArgs e)
+        {
+
+            int _Count = listViewUnionCache.Columns.Count;
+            int _Width = listViewUnionCache.Width;
+            foreach (ColumnHeader ch in listViewUnionCache.Columns)
+            {
+                ch.Width = _Width / _Count - 1;
+            }
         }
 
          

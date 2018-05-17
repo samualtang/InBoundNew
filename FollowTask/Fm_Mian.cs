@@ -5,7 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
+ 
 
 namespace FollowTask
 {
@@ -15,8 +17,9 @@ namespace FollowTask
         /// treeV隐藏标志
         /// </summary>
         bool click = true;
-        const string btmpathLeft = @" D:\InBoundNew\FollowTask\Resources\5255\4.ico";
-        const string btmpathRight = @" D:\InBoundNew\FollowTask\Resources\5255\7.ico";
+        string btmpathLeft = Application.StartupPath + @" \Resources\5255\4.ico";
+
+         string btmpathRight = Application.StartupPath + @" \Resources\5255\7.ico";
         public Fm_Mian()
         {
             InitializeComponent();
@@ -24,7 +27,9 @@ namespace FollowTask
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
-            btnLeft.Location = new Point(166, this.Size.Height / 2);
+           
+           
+            btnLeft.Location = new Point(166,  Height / 2);
             BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));//创建Button图片
         }
 
@@ -224,7 +229,7 @@ namespace FollowTask
             {
                 treeV.Visible = true;
                 btnLeft.Dock = DockStyle.None;
-                btnLeft.Location = new Point(166, this.Size.Height / 2); 
+                btnLeft.Location = new Point(166, this.Size.Height / 2);
                 BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));
                 click = true;
             }
@@ -348,5 +353,7 @@ namespace FollowTask
             fm.MdiParent = this;
             fm.Show();
         }
+
+      
     }
 }

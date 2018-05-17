@@ -159,5 +159,16 @@ namespace FollowTask
         {
             asc.controlAutoSize(this);
         }
+
+        private void listViewUnion_SizeChanged(object sender, EventArgs e)
+        {
+
+            int _Count = listViewUnion.Columns.Count;
+            int _Width = listViewUnion.Width;
+            foreach (ColumnHeader ch in listViewUnion.Columns)
+            {
+                ch.Width = _Width / _Count - 1;
+            }
+        }
     }
 }

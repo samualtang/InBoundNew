@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fm_Machine));
             this.btnBelt = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -38,6 +39,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFormText = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Machine8 = new System.Windows.Forms.Button();
@@ -54,6 +56,8 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.list_data = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.txtTimes = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -88,7 +92,8 @@
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader6,
+            this.columnHeader7});
             this.listViewMchineBelt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewMchineBelt.GridLines = true;
             this.listViewMchineBelt.Location = new System.Drawing.Point(3, 23);
@@ -97,11 +102,12 @@
             this.listViewMchineBelt.TabIndex = 0;
             this.listViewMchineBelt.UseCompatibleStateImageBehavior = false;
             this.listViewMchineBelt.View = System.Windows.Forms.View.Details;
+            this.listViewMchineBelt.SizeChanged += new System.EventHandler(this.listViewMchineBelt_SizeChanged);
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "订单号";
-            this.columnHeader1.Width = 110;
+            this.columnHeader1.Width = 85;
             // 
             // columnHeader2
             // 
@@ -111,22 +117,27 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "香烟名称";
-            this.columnHeader3.Width = 129;
+            this.columnHeader3.Width = 96;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "香烟编号";
-            this.columnHeader4.Width = 157;
+            this.columnHeader4.Width = 85;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "排序号";
-            this.columnHeader5.Width = 66;
+            this.columnHeader5.Width = 71;
             // 
             // columnHeader6
             // 
             this.columnHeader6.Text = "合流号";
-            this.columnHeader6.Width = 65;
+            this.columnHeader6.Width = 69;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "机械手号";
+            this.columnHeader7.Width = 79;
             // 
             // lblFormText
             // 
@@ -289,6 +300,7 @@
             this.btnRefresh.TabIndex = 49;
             this.btnRefresh.Text = "刷新";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // list_data
             // 
@@ -311,12 +323,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "程序状态";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // txtTimes
+            // 
+            this.txtTimes.Location = new System.Drawing.Point(820, 40);
+            this.txtTimes.Name = "txtTimes";
+            this.txtTimes.Size = new System.Drawing.Size(100, 21);
+            this.txtTimes.TabIndex = 52;
+            // 
             // fm_Machine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1098, 652);
+            this.Controls.Add(this.txtTimes);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.groupBox4);
@@ -363,6 +388,9 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ListBox list_data;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.TextBox txtTimes;
 
 
 

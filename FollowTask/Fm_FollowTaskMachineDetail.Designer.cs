@@ -33,6 +33,9 @@
             this.gbMachine = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listViewMachineDetails = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxXiPanInfo = new System.Windows.Forms.GroupBox();
             this.lblCig10 = new System.Windows.Forms.Label();
             this.lblCig5 = new System.Windows.Forms.Label();
@@ -75,9 +78,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.listViewMachineDetails = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRefresh = new System.Windows.Forms.Button();
             this.gbMachine.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -145,6 +145,31 @@
             this.groupBox3.TabIndex = 48;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "任务信息";
+            // 
+            // listViewMachineDetails
+            // 
+            this.listViewMachineDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewMachineDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewMachineDetails.GridLines = true;
+            this.listViewMachineDetails.Location = new System.Drawing.Point(3, 23);
+            this.listViewMachineDetails.Name = "listViewMachineDetails";
+            this.listViewMachineDetails.Size = new System.Drawing.Size(230, 344);
+            this.listViewMachineDetails.TabIndex = 1;
+            this.listViewMachineDetails.UseCompatibleStateImageBehavior = false;
+            this.listViewMachineDetails.View = System.Windows.Forms.View.Details;
+            this.listViewMachineDetails.SizeChanged += new System.EventHandler(this.listViewMachineDetails_SizeChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "任务编号";
+            this.columnHeader1.Width = 119;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "抓取数量";
+            this.columnHeader2.Width = 107;
             // 
             // groupBoxXiPanInfo
             // 
@@ -556,30 +581,6 @@
             this.label2.Size = new System.Drawing.Size(23, 15);
             this.label2.TabIndex = 0;
             this.label2.Text = "#1";
-            // 
-            // listViewMachineDetails
-            // 
-            this.listViewMachineDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listViewMachineDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewMachineDetails.GridLines = true;
-            this.listViewMachineDetails.Location = new System.Drawing.Point(3, 23);
-            this.listViewMachineDetails.Name = "listViewMachineDetails";
-            this.listViewMachineDetails.Size = new System.Drawing.Size(230, 344);
-            this.listViewMachineDetails.TabIndex = 1;
-            this.listViewMachineDetails.UseCompatibleStateImageBehavior = false;
-            this.listViewMachineDetails.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "任务编号";
-            this.columnHeader1.Width = 119;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "抓取数量";
-            this.columnHeader2.Width = 107;
             // 
             // btnRefresh
             // 

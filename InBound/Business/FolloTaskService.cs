@@ -157,34 +157,7 @@ namespace InBound.Business
             }
         }
      
-        /// <summary> 
-        /// 获取机械手前皮带信息 
-        /// </summary>
-        /// <param name="group1">组1</param>
-        /// <param name="group2">组2</param>
-        /// <returns></returns>
-        public static List<FollowTaskDeail> GetMachineBeltInfp(decimal group1,decimal group2)
-        { 
-            using (Entities dataentity = new Entities())
-            {
-                var query = (from item in dataentity.T_PRODUCE_POKE
-                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
-                              on item.TROUGHNUM equals item2.TROUGHNUM
-                             where item.MACHINESTATE == 20 && item.SORTSTATE == 15 && item.UNIONSTATE == 15 && (item.GROUPNO == group1 || item.GROUPNO == group2)
-                             orderby item.SORTNUM
-                             select new FollowTaskDeail() { Machineseq = item.MACHINESEQ  ??0, }).ToList();
-
-                if (query != null)
-                {
-                    return query;
-                }
-                else
-                    return null;
-                
-
-            }
-
-        }
+      
         /// <summary>
         /// 查询机械手任务
         /// </summary>
@@ -222,7 +195,7 @@ namespace InBound.Business
                     if (groupno == 8) { groupno = 7; } else if (groupno == 7) { groupno = 8; }
                     var query =( from p in dataentity.T_PRODUCE_POKE
                                 join t in dataentity.T_PRODUCE_SORTTROUGH
-                                on p.MACHINESEQ equals t.MACHINESEQ
+                                on p.TROUGHNUM equals t.TROUGHNUM
                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting
                                 orderby p.SORTNUM, p.MACHINESEQ
                                 select new FollowTaskDeail(){CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME,POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0,POKEID = p.POKEID,MainBelt = p.MAINBELT ?? 0,SortNum = p.SORTNUM ?? 0,GroupNO = t.GROUPNO ?? 0}).ToList();
@@ -304,6 +277,39 @@ namespace InBound.Business
             } 
             return list; 
         }
+        /// <summary>
+        /// 获取机械手皮带信息
+        /// </summary>
+        /// <param name="groupNo">组号</param>
+        /// <returns></returns>
+        public static List<FollowTaskDeail> GetMachineBeltInfo(decimal groupNo)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query1 = (from t in dataentity.T_PRODUCE_POKE
+                              join p in dataentity.T_PRODUCE_SORTTROUGH
+                              on t.TROUGHNUM equals p.TROUGHNUM
+                              where t.MACHINESTATE == 20 && t.SORTSTATE == 15   && t.GROUPNO == groupNo
+                              orderby t.SORTNUM
+                              select new FollowTaskDeail
+                              {
+                                  Billcode = t.BILLCODE,
+                                  MainBelt = t.MAINBELT ?? 0,
+                                  CIGARETTDENAME = p.CIGARETTENAME,
+                                  CIGARETTDECODE = p.CIGARETTECODE,
+                                  SortNum = t.SORTNUM ?? 0,
+                                  UnionTasknum = t.UNIONTASKNUM ?? 0,
+                                  Machineseq = t.MACHINESEQ ?? 0,
+                              }).ToList();
+                if (query1 != null)
+                {
+                    return query1;
+                }
+                else
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// 获取摇摆前任务信息
@@ -315,12 +321,12 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                if (mainbelt != 5)
+                if (mainbelt != 5)//不同区域
                 {
                     var query1 = (from p in dataentity.T_PRODUCE_POKE
                                   join t in dataentity.T_PRODUCE_SORTTROUGH
-                                  on p.MACHINESEQ equals t.MACHINESEQ
-                                  where p.MAINBELT == mainbelt &&  t.GROUPNO == groupno &&p.SORTSTATE == 15  && t.TROUGHTYPE == 10 && t.CIGARETTETYPE == 20
+                                  on p.TROUGHNUM equals t.TROUGHNUM
+                                  where p.MAINBELT == mainbelt &&  t.GROUPNO == groupno &&p.SORTSTATE == 15  && p.MACHINESTATE == 20
                                   orderby p.SORTNUM, p.MACHINESEQ
                                   select new FollowTaskDeail
                                   {
@@ -344,12 +350,12 @@ namespace InBound.Business
                         return null;
                     }
                 }
-                else
+                else//查出所有
                 {
-                    var query1 = (from p in dataentity.T_PRODUCE_POKE
+                    var query1 = (from p in dataentity.T_PRODUCE_POKE 
                                   join t in dataentity.T_PRODUCE_SORTTROUGH
-                                  on p.MACHINESEQ equals t.MACHINESEQ
-                                  where t.GROUPNO == groupno && p.SORTSTATE == 10  && t.TROUGHTYPE == 10 && t.CIGARETTETYPE == 20
+                                  on p.TROUGHNUM equals t.TROUGHNUM
+                                  where t.GROUPNO == groupno && p.SORTSTATE == 15 && p.MACHINESTATE == 20
                                   orderby p.SORTNUM, p.MACHINESEQ
                                   select new FollowTaskDeail
                                   {

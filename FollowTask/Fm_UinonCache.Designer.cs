@@ -82,6 +82,7 @@
             this.listViewUnionCache.TabIndex = 2;
             this.listViewUnionCache.UseCompatibleStateImageBehavior = false;
             this.listViewUnionCache.View = System.Windows.Forms.View.Details;
+            this.listViewUnionCache.SizeChanged += new System.EventHandler(this.listViewUnionCache_SizeChanged);
             // 
             // columnHeader1
             // 

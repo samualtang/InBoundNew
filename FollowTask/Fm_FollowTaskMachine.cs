@@ -10,6 +10,7 @@ using InBound;
 using OpcRcw.Da;
 using Machine;
 using InBound.Business;
+using InBound.Model;
 
 namespace FollowTask
 {
@@ -21,18 +22,8 @@ namespace FollowTask
             InitializeComponent();
         }
 
-        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
-
-        internal const string GROUP_NAME = "grp1";                  // Group name
-        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-        AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
-        /* Global variables */
-        IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
-        DeviceStateManager stateManager = new DeviceStateManager();
-        Alarms alarms = new Alarms();
-
-
+        AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
         public fm_Machine(string text)//窗体初始化
         {
             InitializeComponent();
@@ -40,6 +31,7 @@ namespace FollowTask
             this.listViewMchineBelt.DoubleBufferedListView(true); //双缓存 减少闪烁
             listViewMchineBelt.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             this.Text = text;
+          
             updateListBox(text+"应用程序启动");
             writeLog.Write(text+"应用程序启动");
         }
@@ -77,6 +69,7 @@ namespace FollowTask
             BtnText(this.Text); 
         }
    
+
 
         private void Machine1_Click(object sender, EventArgs e)//机械手单击事件
         {
@@ -127,7 +120,7 @@ namespace FollowTask
             }
 
         }
-
+        
         private void Machine1_MouseEnter(object sender, EventArgs e)
         {
             Button btn = ((Button)sender);
@@ -139,12 +132,64 @@ namespace FollowTask
         private void btnBelt_Click(object sender, EventArgs e)//皮带单击事件
         {
             Button name = ((Button)sender);//获取当前单击按钮的所有实例
-            updateListBox("查看" + Text.Substring(4) + "的皮带");
+            updateListBox("查看" + Text.Substring(4 ) + "的皮带");
+            ListViewBind(FolloTaskService.GetMachineBeltInfo(Convert.ToDecimal(Text.Substring(5, 1))));
         }
+        /// <summary>
+        /// lv绑定
+        /// </summary>
+        void ListViewBind(List<FollowTaskDeail> list)
+        {
+            if (list != null)
+            {
 
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ListViewItem lv = new ListViewItem();
+                    var mod = list[i];
+                    lv.SubItems[0].Text = mod.Billcode;
+                    lv.SubItems.Add(mod.MainBelt.ToString());
+                    lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
+                    lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
+                    lv.SubItems.Add(mod.SortNum.ToString());
+                    lv.SubItems.Add(mod.UnionTasknum.ToString());
+                    lv.SubItems.Add(mod.Machineseq.ToString());
+                     listViewMchineBelt  .Items.Add(lv);
+                } 
+            }
+
+        }
         private void fm_Machine_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
+        }
+        int times;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            listViewMchineBelt.Items.Clear();
+            ListViewBind(FolloTaskService.GetMachineBeltInfo(Convert.ToDecimal(Text.Substring(5, 1))));
+            timer1.Interval = (times * 1000);
+        }
+
+
+       
+     
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            times =Convert.ToInt32( txtTimes.Text);
+            timer1.Start();
+        }
+
+        private void listViewMchineBelt_SizeChanged(object sender, EventArgs e)
+        {
+
+            int _Count = listViewMchineBelt.Columns.Count;
+            int _Width = listViewMchineBelt.Width;
+            foreach (ColumnHeader ch in listViewMchineBelt.Columns)
+            {
+                ch.Width = _Width / _Count -1;
+            }
         }
     }
 }

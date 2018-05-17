@@ -144,6 +144,7 @@
     <Compile Include="SelectTask\w_UnNormal.Designer.cs">
       <DependentUpon>w_UnNormal.cs</DependentUpon>
     </Compile>
+    <Compile Include="XmlAndBitmapRW.cs" />
     <EmbeddedResource Include="Fm_FollowTaskUnion.resx">
       <DependentUpon>Fm_FollowTaskUnion.cs</DependentUpon>
     </EmbeddedResource>

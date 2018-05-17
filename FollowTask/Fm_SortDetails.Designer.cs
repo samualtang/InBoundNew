@@ -36,8 +36,8 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBoxYaobaiDetails.SuspendLayout();
             this.SuspendLayout();
@@ -80,6 +80,7 @@
             this.listViewYaobaiDetails.TabIndex = 0;
             this.listViewYaobaiDetails.UseCompatibleStateImageBehavior = false;
             this.listViewYaobaiDetails.View = System.Windows.Forms.View.Details;
+            this.listViewYaobaiDetails.SizeChanged += new System.EventHandler(this.listViewYaobaiDetails_SizeChanged);
             // 
             // columnHeader1
             // 
@@ -99,17 +100,17 @@
             this.columnHeader4.Text = "主皮带号";
             this.columnHeader4.Width = 73;
             // 
-            // columnHeader5
-            // 
-            this.columnHeader5.DisplayIndex = 4;
-            this.columnHeader5.Text = "香烟编号";
-            this.columnHeader5.Width = 142;
-            // 
             // columnHeader6
             // 
             this.columnHeader6.DisplayIndex = 5;
             this.columnHeader6.Text = "香烟名称";
             this.columnHeader6.Width = 133;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.DisplayIndex = 4;
+            this.columnHeader5.Text = "香烟编号";
+            this.columnHeader5.Width = 142;
             // 
             // btnRefresh
             // 
