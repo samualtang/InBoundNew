@@ -73,10 +73,19 @@
     </Compile>
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\ItemCollection.cs" />
+    <Compile Include="NowView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NowView.Designer.cs">
+      <DependentUpon>NowView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainScreen1.resx">
       <DependentUpon>MainScreen1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NowView.resx">
+      <DependentUpon>NowView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

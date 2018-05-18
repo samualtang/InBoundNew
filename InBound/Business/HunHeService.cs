@@ -43,5 +43,31 @@ namespace InBound.Business
 
 
        }
+
+       public List<HUNHENOWVIEW> GetALLCigarette(decimal seq )
+       {
+
+           using (Entities entity = new Entities())
+           { 
+               try
+               { 
+                   var query = (from item in entity.T_UN_POKE
+                                join item2 in entity.T_PRODUCE_SORTTROUGH
+                                on item.TROUGHNUM equals item2.TROUGHNUM
+                                join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
+                                where  item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq
+                                orderby item.SORTNUM, item.POKEID
+                                select new HUNHENOWVIEW() { tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.TROUGHNUM, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
+ 
+                   return query; 
+               }
+               catch (Exception e)
+               {
+                   throw e;
+               }
+           }
+
+
+       }
     }
 }
