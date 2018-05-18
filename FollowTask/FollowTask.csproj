@@ -120,6 +120,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Method\PubContrlFuc.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SelectTask\W_FenJTask.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,14 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="SelectTask\W_FenJTask.resx">
       <DependentUpon>W_FenJTask.cs</DependentUpon>
     </EmbeddedResource>
@@ -212,20 +212,8 @@
   <ItemGroup>
     <Content Include="Lib\opcrcw.comn.dll" />
     <Content Include="Lib\opcrcw.da.dll" />
-    <Content Include="Resources\5240\2.ico" />
-    <Content Include="Resources\5240\机械手.jpg" />
-    <Content Include="Resources\5240\4.ico" />
-    <Content Include="Resources\5255\0.ico" />
-    <Content Include="Resources\5255\1.ico" />
-    <Content Include="Resources\5255\10.ico" />
-    <Content Include="Resources\5255\2.ico" />
-    <Content Include="Resources\5255\3.ico" />
-    <Content Include="Resources\5255\4.ico" />
-    <Content Include="Resources\5255\5.ico" />
-    <Content Include="Resources\5255\6.ico" />
-    <Content Include="Resources\5255\7.ico" />
-    <Content Include="Resources\5255\8.ico" />
-    <Content Include="Resources\5255\9.ico" />
+    <Content Include="Resources\4.ico" />
+    <Content Include="Resources\7.ico" />
     <Content Include="Resources\抓取.bmp" />
     <Content Include="Resources\故障.bmp" />
     <Content Include="Resources\无烟.bmp" />
