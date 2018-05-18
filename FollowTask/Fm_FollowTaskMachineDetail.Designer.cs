@@ -159,7 +159,7 @@
             this.listViewMachineDetails.TabIndex = 1;
             this.listViewMachineDetails.UseCompatibleStateImageBehavior = false;
             this.listViewMachineDetails.View = System.Windows.Forms.View.Details;
-            this.listViewMachineDetails.SizeChanged += new System.EventHandler(this.listViewMachineDetails_SizeChanged);
+           // this.listViewMachineDetails.SizeChanged += new System.EventHandler(this.listViewMachineDetails_SizeChanged);
             // 
             // columnHeader1
             // 
