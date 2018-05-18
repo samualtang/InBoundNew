@@ -512,8 +512,6 @@ namespace SpecialShapeSmoke
                 //MessageBox.Show(data);
            
         }
-        System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
-        System.Windows.Forms.Timer t2 = new System.Windows.Forms.Timer(); 
         public void GetNowView(object sender, EventArgs e)//获取当前混合道
         { 
             int machineseq1 = Convert.ToInt32(boxText[0]);
@@ -541,30 +539,7 @@ namespace SpecialShapeSmoke
             fNowView.Show();
             fNowView.Activate();
 
-            t1.Tick += new EventHandler(t1_Tick);
-            t2.Tick += new EventHandler(t2_Tick);
-            t1.Stop();
-            t2.Stop();
-            t1.Interval = 5000;
-            t1.Start();
-
-           
         }
-        public void t1_Tick(object sender, EventArgs e) 
-        {
-            finishNo[0] = 115;
-            finishNo[1] = 1011;
-            t1.Stop();
-            t2.Interval = 5000;
-            t2.Start();
-        }
-        public void t2_Tick(object sender, EventArgs e)
-        {
-            finishNo[0] = 205;
-            finishNo[1] = 2301;
-            t2.Stop();
-        }
-
 
         public void Refresh(object sender, EventArgs e)//刷新
         { 
