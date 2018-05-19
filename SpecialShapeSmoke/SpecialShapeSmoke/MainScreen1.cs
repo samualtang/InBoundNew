@@ -20,6 +20,7 @@ namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
     {
+       
         WriteLog writeLog =  WriteLog.GetLog();
         List<GroupBox> panelList = new List<GroupBox>();
         List<T_UN_POKE> listShape = new List<T_UN_POKE>();
@@ -151,60 +152,19 @@ namespace SpecialShapeSmoke
             search.Location = new Point(p.Width - 4*topHeight, 0);
             p.Controls.Add(search);
 
-
-            ComboBox cmbtime = new ComboBox();
-            cmbtime.Width = 4 * topHeight;
-            cmbtime.Height = topHeight;
-            cmbtime.BackColor = Color.Silver;
-            cmbtime.Font = new Font("宋体", 25, FontStyle.Bold);
-            //cmbtime.Text = "刷新";
-            cmbtime.SelectedIndexChanged +=new EventHandler(cmbtime_SelectedIndexChanged);
-            cmbtime.Location = new Point(p.Width - 8 * topHeight, 7);
-            cmbtime.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbtime.Items.Add("5秒刷新");
-            cmbtime.Items.Add("10秒刷新");
-            cmbtime.Items.Add("15秒刷新");
-            cmbtime.Items.Add("20秒刷新");
-            cmbtime.SelectedIndex = 3;
-            p.Controls.Add(cmbtime);
-         
-
-            //Button refresh = new Button();
-            //refresh.Width = 2 * topHeight;
-            //refresh.Height = topHeight;
-            //refresh.BackColor = Color.Silver;
-            //refresh.Font = new Font("宋体", 25, FontStyle.Bold);
-            //refresh.Text = "刷新";
-            //refresh.Click += Refresh;
-            //refresh.Location = new Point(p.Width - 7 * topHeight, 0);
-            //p.Controls.Add(refresh);
-
-            //ConnectServer();
+            Button btnView = new Button();
+            btnView.Width = 4 * topHeight;
+            btnView.Height = topHeight;
+            btnView.BackColor = Color.Silver;
+            btnView.Font = new Font("宋体", 25, FontStyle.Bold);
+            btnView.Text = "进度查看";
+            btnView.Click += GetNowView;
+            btnView.Location = new Point(p.Width - 8 * topHeight, 0);
+            p.Controls.Add(btnView);
+             
             Thread thread = new Thread(ConnectServer);
             thread.Start(); 
-        }
-
-        public void cmbtime_SelectedIndexChanged(object sender, EventArgs e)//刷新
-        {
-
-            ComboBox cmb = ((ComboBox)sender);
-            switch (cmb.SelectedIndex)
-            {
-                case 0:
-                    RefreshTime = 5;
-                    break;
-                case 1:
-                    RefreshTime = 10;
-                    break;
-                case 2:
-                    RefreshTime = 15;
-                    break;
-                case 3:
-                    RefreshTime = 20;
-                    break;
-
-            }
-        }
+        } 
 
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
@@ -381,6 +341,7 @@ namespace SpecialShapeSmoke
             }
 
         }
+        #region
         //public void OnDataChange(int group, int[] clientId, object[] values )//DB块的值发生变化
         //{
 
@@ -445,12 +406,20 @@ namespace SpecialShapeSmoke
             //    }
             //}
         //}
+#endregion
         bool flag = true;//初始化
+
+        static decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
+          
         /// <summary>
         /// 获取数据
         /// </summary>  
+        /// 
         public void getData()
         {
+           
+
+            
                // writeLog.Write("Receive Resend Data:"+data);
                 clearAllText();
                 try
@@ -458,7 +427,7 @@ namespace SpecialShapeSmoke
                     int countGroupBox = 0;//groupBox总数
                     int countnum = 0;
                     // string[] Flag = new string[2];   
-                    decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
+                    //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
                     finishNo[0] = -1;
                     finishNo[1] = -1;
                     string Log = "";
@@ -541,10 +510,36 @@ namespace SpecialShapeSmoke
                     writeLog.Write("GetData():" + e.Message + "\r\n"+"错误源:" + e.Source);
                 }
                 //MessageBox.Show(data);
+           
+        }
+        public void GetNowView(object sender, EventArgs e)//获取当前混合道
+        { 
+            int machineseq1 = Convert.ToInt32(boxText[0]);
+            int machineseq2;
+            if (boxText.Length > 1)
+            {
+                machineseq2 = Convert.ToInt32(boxText[1]);
+            }
+            else 
+            {
+                machineseq2 = machineseq1;
+            }
+           
+            NowView fNowView = new NowView(machineseq1, machineseq2, finishNo);
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is NowView)
+                {
+                    fNowView.TopMost = true;
+                    fNowView.Activate();
+                     
+                    return;
+                }
+            }
+            fNowView.Show();
+            fNowView.Activate();
 
         }
-
-      
 
         public void Refresh(object sender, EventArgs e)//刷新
         { 
@@ -622,11 +617,11 @@ namespace SpecialShapeSmoke
                              MessageBoxDefaultButton.Button2);
             //继续尝试链接
             if (MsgBoxResult == DialogResult.Yes)
-            {
-                //System.Environment.Exit(System.Environment.ExitCode);
-                System.Environment.Exit(0);
+            { 
+                //System.Environment.Exit(0); 
                 this.Dispose();
                 this.Close();
+                System.Environment.Exit(System.Environment.ExitCode);
             }
            
             

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using InBound;
+using Machine;
+using OpcRcw.Da;
 
 namespace FollowTask
 {
@@ -17,12 +19,31 @@ namespace FollowTask
             InitializeComponent();
             this.listViewMachineDetails.DoubleBufferedListView(true);
         }
-        #region 图片路径
-        const string imgZhuaQu = @"D:\InBoundNew\FollowTask\Resources\抓取.bmp";
-        const string imgYouYan = @" D:\InBoundNew\FollowTask\Resources\有烟.bmp";
-        const string imgWuYan = @"D:\InBoundNew\FollowTask\Resources\无烟.bmp";
-        const string imgGuZhang = @"D:\InBoundNew\FollowTask\Resources\故障.bmp";
+        #region 图片 
+          //string imgZhuaQu = Application.StartupPath + @" \Resources\抓取.bmp";
+          //string imgYouYan = Application.StartupPath + @"  \Resources\有烟.bmp";
+          //string imgWuYan = Application.StartupPath + @" \Resources\无烟.bmp";
+          //string imgGuZhang = Application.StartupPath + @" \Resources\故障.bmp";
+          Bitmap imgZhuaQu = (Bitmap)Properties.Resources.ResourceManager.GetObject("抓取1");
+          Bitmap imgYouYan = (Bitmap)Properties.Resources.ResourceManager.GetObject("有烟1");
+          Bitmap imgWuYan = (Bitmap)Properties.Resources.ResourceManager.GetObject("无烟1");
+          Bitmap imgGuZhang = (Bitmap)Properties.Resources.ResourceManager.GetObject("故障1");
+
         #endregion
+
+
+
+          internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
+
+          internal const string GROUP_NAME = "grp1";                  // Group name
+          internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
+          AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
+          /* Global variables */
+          IOPCServer pIOPCServer;  //定义opcServer对象
+          public WriteLog writeLog = WriteLog.GetLog();
+          DeviceStateManager stateManager = new DeviceStateManager();
+          Alarms alarms = new Alarms();
+
         public Fm_FollowTaskMachineDetail(string machineNo)
         {
             InitializeComponent();
@@ -102,12 +123,12 @@ namespace FollowTask
         /// 吸盘抓烟信息图片显示
         /// </summary>
         /// <param name="index">索引(多少号图片)</param>
-        /// <param name="imgpath">显示信息(图片路径)</param>
-        void pbSomkeBind(int index, string imgpath)
+        /// <param name="imgpath"> 图片路径 </param>
+        void pbSomkeBind(int index, Bitmap bitmap)
         {
             string btnName = "pbSokme" + (index+1);
             Control contrl = (PictureBox)Controls.Find(btnName, true)[0];
-            contrl.BackgroundImage = new Bitmap(imgpath);
+            contrl.BackgroundImage = bitmap;
             contrl.BackgroundImageLayout = ImageLayout.Stretch;
 
         }
@@ -116,15 +137,26 @@ namespace FollowTask
         /// 吸盘状态信息图片显示
         /// </summary>
         /// <param name="index">索引(多少号图片)</param>
-        /// <param name="imgpath">显示信息(图片路径)</param>
-        void pbStateBind(int index, string imgpath)
+        /// <param name="imgpath"> 图片路径 </param>
+        void pbStateBind(int index, Bitmap bitmap)
         {
 
             string btnName = "pbState" + (index+1);
             Control contrl = (PictureBox)Controls.Find(btnName, true)[0];
-            contrl.BackgroundImage = new Bitmap(imgpath);
+            contrl.BackgroundImage = bitmap;
             contrl.BackgroundImageLayout = ImageLayout.Stretch;
         }
         #endregion
+
+        private void listViewMachineDetails_SizeChanged(object sender, EventArgs e)
+        {
+
+            int _Count = listViewMachineDetails.Columns.Count;
+            int _Width = listViewMachineDetails.Width;
+            foreach (ColumnHeader ch in listViewMachineDetails.Columns)
+            {
+                ch.Width = _Width / _Count - 1;
+            }
+        }
     }
 }

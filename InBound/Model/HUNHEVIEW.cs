@@ -11,6 +11,6 @@ namespace InBound.Model
        public decimal? QUANTITY { get; set; }
        public string CIGARETTECODE { get; set; }
        public string TROUGHNUM { get; set; }
-       
     }
+ 
 }

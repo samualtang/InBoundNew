@@ -61,6 +61,7 @@
     <Compile Include="Business\AtsCellInService.cs" />
     <Compile Include="Business\BaseService.cs" />
     <Compile Include="Business\FolloTaskService.cs" />
+    <Compile Include="Business\HUNHENOWVIEW.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />
     <Compile Include="Business\InOutStrategy.cs" />

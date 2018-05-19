@@ -17,9 +17,12 @@ namespace FollowTask
         /// treeV隐藏标志
         /// </summary>
         bool click = true;
-        string btmpathLeft = Application.StartupPath + @" \Resources\5255\4.ico";
+        System.Resources.ResourceManager rm ;
+        //string btmpathLeft = Application.StartupPath + @" \Resources\5255\4.ico";
 
-         string btmpathRight = Application.StartupPath + @" \Resources\5255\7.ico";
+        // string btmpathRight = Application.StartupPath + @" \Resources\5255\7.ico";
+         Bitmap btmpathLeft = (Bitmap)Properties.Resources.ResourceManager.GetObject("41");
+         Bitmap btmpathRight = (Bitmap)Properties.Resources.ResourceManager.GetObject("71");
         public Fm_Mian()
         {
             InitializeComponent();
@@ -27,10 +30,10 @@ namespace FollowTask
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
-           
-           
+
+          
             btnLeft.Location = new Point(166,  Height / 2);
-            BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));//创建Button图片
+            BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
         }
 
 
