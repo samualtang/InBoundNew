@@ -400,7 +400,7 @@ namespace InBound.Business
                                                 }
                                                 if (load2.PLANQTY == 0)
                                                 {
-                                                    break;
+                                                    continue;
                                                 }
                                                 load2.PRIORITY = 50;
                                                 load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -564,7 +564,7 @@ namespace InBound.Business
                                                     }
                                                     if (load2.PLANQTY == 0)
                                                     {
-                                                        break;
+                                                        continue;
                                                     }
                                                     load2.PRIORITY = 50;
                                                     load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -800,7 +800,7 @@ namespace InBound.Business
                                         }
                                         if (load2.PLANQTY == 0)
                                         {
-                                            break;
+                                            continue;
                                         }
                                         load2.PRIORITY = 50;
                                         load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -965,7 +965,7 @@ namespace InBound.Business
                                             }
                                             if (load2.PLANQTY == 0)
                                             {
-                                                break;
+                                                continue;
                                             }
                                             load2.PRIORITY = 50;
                                             load2.SOURCE = load1.TARGET;//out cell立库出口
