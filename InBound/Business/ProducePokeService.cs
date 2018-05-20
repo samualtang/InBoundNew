@@ -143,7 +143,249 @@ namespace InBound.Business
                 return query.ToList();
             }
         }
+        public static decimal LeftCount(decimal groupno, int mainbelt, decimal sortnum, decimal zycount,decimal maxCount)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE
+                             where item.SORTNUM >= sortnum && item.SORTSTATE >= 15 && item.GROUPNO == groupno
+                                 && item.MAINBELT == mainbelt
+                             select item).Sum(x => x.POKENUM??0);
+                if (query != null)
+                {
+                    return maxCount - query - zycount;
+                }
+                else
+                {
+                    return maxCount;
+                }
+            }
+        }
+        public static Boolean CheckExistPreSendTask(decimal groupno,decimal state)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == state && item.GROUPNO==groupno select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+ 
+        }
+        static Object lockFlag = new Object();
+        public static List<TaskDetail> GetCigaretteSendTask(decimal troughtype, decimal cigarettetype, decimal groupno)
+        {
+            using (Entities entity = new Entities())
+            {   //找出待发送给plc的订单
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == 12 && item.GROUPNO == groupno orderby item.SORTNUM select item).FirstOrDefault();
+                if (query != null)
+                {   //该订单的烟柜等分布情况
+                    var query2 = (from item in entity.T_PRODUCE_POKE
+                                  where item.SORTNUM == query.SORTNUM && item.GROUPNO == groupno && item.SORTSTATE == 10 
+                                  orderby item.TROUGHNUM
+                                  select new TaskDetail
+                                  {
+                                      MainBelt = item.MAINBELT ?? 0,
+                                      tNum = item.SORTNUM ?? 0,
+                                      qty = item.POKENUM ?? 0,
+                                      Machineseq = item.MACHINESEQ ?? 0,  //烟柜通道                                      
+                                      ExportNum = item.EXPORTNUM,//分拣出口号
+                                      GroupNO = item.GROUPNO ?? 0,     //组号
+                                      POCKPLACE = item.POKEPLACE.Value,   //放烟位置
+                                      meragenum= item.MERAGENUM??0,
+                                      UnionTasknum=item.UNIONTASKNUM??0,
 
+                                  }
+                             ).ToList();
+
+                    if (query2 != null && query2.Count > 0)
+                    {
+                        return query2;
+                    }
+                    else//没找到数据,理论上不会有这种情况
+                    {
+                        return null;
+
+                    }
+                }
+                else//已经没有分拣任务了
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static object[] GetSortTask(decimal sortgroupno)
+        {
+            WriteLog writeLog = WriteLog.GetLog();
+
+            object[] values = new object[48];
+            for (int i = 0; i < values.Length; i++)//初始化一个数组
+            {
+                values[i] = 0;
+            }
+            List<TaskDetail> list;
+            lock (lockFlag)
+            {
+                list = GetCigaretteSendTask(10, 20, sortgroupno);
+            }
+            if (list != null)
+            {
+                int i = 0;
+                int totalCount = 0;
+                foreach (var item in list)//组装所需要的信息
+                {
+                    if (item.qty != 0)
+                    {
+                        if (i == 0)
+                        {
+                            values[0] = item.tNum;
+                            values[1] = int.Parse(item.ExportNum);//虚拟出口号
+                            values[2] = item.MainBelt;
+                            values[3] = 0;
+                            values[47] = 1;//标志位  ||
+                        }
+                        using (Entities entity = new Entities())
+                        {
+                            var query = (from record in entity.T_PRODUCE_POKE
+                                         where record.UNIONTASKNUM == item.UnionTasknum && record.TROUGHNUM == item.SortTroughNum
+                                             && record.SORTNUM < item.SortNum
+                                         select record).ToList();
+                            if (query == null || query.Count==0)
+                            {
+                                values[(int)((item.Machineseq - (sortgroupno - 1) * 11 - 1) * 2 + 26)] = item.UnionTasknum;
+                                values[(int)((item.Machineseq - (sortgroupno - 1) * 11 - 1) * 2 + 27)] = item.meragenum;
+
+                            }
+                        }
+                        //if(item.UnionTasknum)
+                        item.SortTroughNum = item.Machineseq + "";
+                        double tempNum = double.Parse(item.SortTroughNum);
+                        double ws = Math.Ceiling((tempNum) / 11) - 1;
+                        tempNum = tempNum - (ws * 11);
+                        item.SortTroughNum = tempNum + "";
+                        values[4 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = int.Parse(item.qty + "");
+                        //如果机械手吸烟需要多个订单一起吸，则需要计算放烟位置，目前先不考虑这么复杂，一次吸一个订单
+                        //values[4 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = getPlace(item.CIGARETTDECODE, item.SortTroughNum, item.tNum);
+                        values[5 + 2 * (int.Parse(item.SortTroughNum + "") - 1)] = item.POCKPLACE;
+                        totalCount += int.Parse(item.qty + "");
+                        i++;
+                    }
+                }
+                values[3] = totalCount;
+            }
+
+            return values;
+        }
+        
+        public static void UpdatePokeByGroupNo(decimal groupno, int orderAmount,int mainbelt)
+        {
+            using (Entities entity = new Entities())
+            {
+               // int count = 0;
+                decimal beginSortnum = 0;
+                decimal totalCount = 0;
+                List<Decimal> sortnum = new List<decimal>();
+                while (totalCount < orderAmount)
+                {
+                    var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.MAINBELT==mainbelt && item.SORTNUM > beginSortnum orderby item.SORTNUM select item).FirstOrDefault();
+                    if (query != null)
+                    {
+                        var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM select item).Sum(x => x.POKENUM ?? 0);
+                        totalCount += query2;
+                        if (totalCount <= orderAmount)
+                        {
+                            sortnum.Add(query.SORTNUM ?? 0);
+                            beginSortnum = query.SORTNUM ?? 0;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                   
+                }
+                //开始算合单 生成合单号
+                var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM??0) select item1).ToList();
+                var troughnums = query3.Select(x => x.TROUGHNUM).Distinct().ToList();
+                var uniontasknum = (from task in entity.T_PRODUCE_POKE  where task.GROUPNO==groupno select task).Max(x => x.UNIONTASKNUM)+1;
+                foreach (var troughnum in troughnums)
+                {
+                    var templist = query3.Where(x => x.TROUGHNUM == troughnum).OrderBy(x=>x.SORTNUM).ToList();
+                    decimal tempCount = 0;
+                    int size = 0;
+
+                    foreach (var record in templist)
+                    {
+                        size++;
+                        record.SORTSTATE = 12;
+                        if (tempCount + record.POKENUM < 10)
+                        {
+                            record.POKEPLACE = 10-(tempCount + 1);
+                            tempCount += (record.POKENUM ?? 0);
+                            if (size == templist.Count)
+                            {
+                                templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).ToList().ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
+                                uniontasknum += 1;
+                            }
+                        }
+                        else
+                        {
+                            if (tempCount == 0)
+                            {
+                                tempCount = record.POKENUM ?? 0;
+                                if (tempCount <= 10)
+                                {
+                                    record.POKEPLACE = 10;
+                                }
+                                else
+                                {
+                                    record.POKEPLACE = 10 - (tempCount % 10);
+                                }
+                                record.MERAGENUM = tempCount;
+                                record.UNIONTASKNUM = uniontasknum;
+                                uniontasknum += 1;
+                            }
+                            else
+                            {
+                               var temp= templist.Where(x => x.SORTNUM < record.SORTNUM && x.UNIONTASKNUM==0 ).ToList();
+                                temp.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
+                                uniontasknum += 1;
+                                
+                                tempCount = record.POKENUM??0;
+                                if (tempCount <= 10)
+                                {
+                                    record.POKEPLACE = 10;
+                                }
+                                else
+                                {
+                                    record.POKEPLACE =10-( tempCount%10);
+                                }
+                                
+                            }
+
+                            if (size == templist.Count)
+                            {
+                                templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).ToList().ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
+                                uniontasknum += 1;
+                            }
+                          
+                        }
+                    }
+                    entity.SaveChanges();
+                }
+
+            }
+        }
         public static void FetchTaskByTroughNo(string troughNo, string standbyNo)
         {
             using (Entities entity = new Entities())
