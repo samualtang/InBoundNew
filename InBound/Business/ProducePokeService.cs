@@ -351,7 +351,7 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    record.POKEPLACE = 10 - (tempCount % 10);
+                                    record.POKEPLACE = tempCount % 10;
                                 }
                                 record.MERAGENUM = tempCount;
                                 record.UNIONTASKNUM = uniontasknum;
@@ -370,7 +370,7 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    record.POKEPLACE =10-( tempCount%10);
+                                    record.POKEPLACE =tempCount%10;
                                 }
                                 
                             }
