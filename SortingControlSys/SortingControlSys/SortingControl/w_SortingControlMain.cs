@@ -145,7 +145,7 @@ namespace SortingControlSys.SortingControl
         Group taskgroup1, statusGroup1, FinishStateGroup1, taskgroup2, statusGroup4, FinishStateGroup2;
         Group errGroup1, errGroup2, errGroup3, errGroup4;
 
-        Group ClearCacheGroup;
+        Group ClearCacheGroup, UnionGroup;
         /// <summary>
         /// 监控标志位
         /// </summary>
@@ -172,7 +172,8 @@ namespace SortingControlSys.SortingControl
                 ClearCacheGroup = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);
 
                 SendTaskStatesGroup =new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//监控标志位
-
+                UnionGroup = new Group(pIOPCServer, 13, "group13", 1, LOCALE_ID);
+                UnionGroup.addItem(ItemCollection.getUnionTaskItem());
                 taskgroup1.addItem(ItemCollection.GetGroup1TaskItem());//第一组数据
               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
@@ -406,6 +407,7 @@ namespace SortingControlSys.SortingControl
                 sendTask1();//异常后重新发送
             }
         }
+        int mainbelt=1;
         /// <summary>
         /// 第一组数据
         /// </summary>
@@ -929,7 +931,7 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)
         {
             //TaskService.GetSortTask(1);
-
+       
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
