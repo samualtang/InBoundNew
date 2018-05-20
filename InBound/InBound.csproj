@@ -68,7 +68,6 @@
     <Compile Include="Business\ItemService.cs" />
     <Compile Include="Business\LaneWayService.cs" />
     <Compile Include="Business\MachineService.cs" />
-    <Compile Include="Business\ProduceCacheService.cs" />
     <Compile Include="Business\ProducePokeService.cs" />
     <Compile Include="Business\ProduceTaskService.cs" />
     <Compile Include="Business\SortTroughService.cs" />
@@ -95,6 +94,7 @@
     <Compile Include="Business\WmsType.cs" />
     <Compile Include="Business\ErrListService.cs" />
     <Compile Include="Business\PreSortInfoService.cs" />
+    <Compile Include="Business\ProduceCacheService.cs" />
     <Compile Include="Model\FollowTaskDeail.cs" />
     <Compile Include="Model\HUNHEVIEW.cs" />
     <Compile Include="Model\LaneWayTaskCount.cs" />

@@ -331,8 +331,9 @@ namespace InBound.Business
                         record.SORTSTATE = 12;
                         if (tempCount + record.POKENUM < 10)
                         {
-                            record.POKEPLACE = 10-(tempCount + 1);
+                           
                             tempCount += (record.POKENUM ?? 0);
+                            record.POKEPLACE =tempCount;
                             if (size == templist.Count)
                             {
                                 templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).ToList().ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
@@ -346,7 +347,7 @@ namespace InBound.Business
                                 tempCount = record.POKENUM ?? 0;
                                 if (tempCount <= 10)
                                 {
-                                    record.POKEPLACE = 10 - tempCount;
+                                    record.POKEPLACE =  tempCount;
                                 }
                                 else
                                 {
@@ -365,7 +366,7 @@ namespace InBound.Business
                                 tempCount = record.POKENUM??0;
                                 if (tempCount <= 10)
                                 {
-                                    record.POKEPLACE = 10-tempCount;
+                                    record.POKEPLACE = tempCount;
                                 }
                                 else
                                 {
