@@ -8,7 +8,7 @@ namespace SortingControlSys.Model
     public static class ItemCollection
     {
         public static String OpcPresortServer = "S7:[FJConnectionGroup1]";
-
+        public static String UnionOpcServer = "S7:[UnionConnection]";
         /// <summary>
         /// 获取任务item 第一组任务
         /// </summary>
@@ -46,11 +46,44 @@ namespace SortingControlSys.Model
             list.Add(OpcPresortServer + "DB1,W50");//起始位置 23
             list.Add(OpcPresortServer + "DB1,W52");//烟柜11条数 24
             list.Add(OpcPresortServer + "DB1,W54");//起始位置 25 
-
-            list.Add(OpcPresortServer + "DB1,W0");//标志位 26
+            list.Add(OpcPresortServer + "DB1,DINT56");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT60");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT62");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT66");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT68");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT72");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT74");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT78");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT80");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT84");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT86");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT90");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT92");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT96");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT98");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT102");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT104");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT108");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT110");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT114");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,DINT116");//机械手任务号 
+            list.Add(OpcPresortServer + "DB1,INT120");//机械手吸烟数量
+         //   list.Add(OpcPresortServer + "DB1,DWORD122");//第二排序号 0
+            list.Add(OpcPresortServer + "DB1,w0");//机械手吸烟数量
             return list;
         }
 
+
+        public static List<string> getUnionTaskItem()
+        {
+             List<string> list = new List<string>();
+             for (int i = 0; i < 32; i++)
+             {
+                 list.Add(UnionOpcServer + "DB30,DINT"+(i)*6);//标志位 26
+                 list.Add(UnionOpcServer + "DB30,INT" +(4+ (i) * 6));//标志位 26
+             }
+            return list;
+        }
         /// <summary>
         /// 第二组任务
         /// </summary>
@@ -88,7 +121,29 @@ namespace SortingControlSys.Model
             list.Add(OpcPresortServer + "DB101,W50");//起始位置 23
             list.Add(OpcPresortServer + "DB101,W52");//烟柜11条数 24
             list.Add(OpcPresortServer + "DB101,W54");//起始位置 25 
-
+            list.Add(OpcPresortServer + "DB101,DINT56");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT60");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT62");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT66");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT68");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT72");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT74");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT78");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT80");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT84");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT86");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT90");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT92");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT96");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT98");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT102");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT104");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT108");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT110");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT114");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB101,DINT116");//机械手任务号 
+            list.Add(OpcPresortServer + "DB101,INT120");//机械手吸烟数量
+           // list.Add(OpcPresortServer + "DB101,DWORD122");//第二排序号 0
             list.Add(OpcPresortServer + "DB101,W0");//标志位 26
             return list;
         }

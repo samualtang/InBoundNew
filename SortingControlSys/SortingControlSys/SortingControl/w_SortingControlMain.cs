@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using SortingControlSys.Model;
 using InBound.Model;
 using InBound.Business;
+using InBound;
 
 
 namespace SortingControlSys.SortingControl
@@ -36,7 +37,7 @@ namespace SortingControlSys.SortingControl
 
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
-
+        decimal groupNo = 1;
         Decimal sortgroupno1 = 1;//定义组次
         Decimal sortgroupno2 = 2;
         public WriteLog writeLog = new WriteLog();
@@ -48,6 +49,7 @@ namespace SortingControlSys.SortingControl
             InitializeComponent();
             updateListBox("应用程序启动");
             writeLog.Write(" 应用程序启动");
+            groupNo = decimal.Parse(ConfigurationManager.AppSettings["GroupNO"].ToString());
              sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
              this.Text = "长株潭烟草公司分拣系统-组" + sortgroupno2 / 2 + "      Version:" + ConfigurationManager.AppSettings["Version"].ToString();
             try
@@ -55,7 +57,8 @@ namespace SortingControlSys.SortingControl
                 sortgroupno1 = decimal.Parse(ConfigurationManager.AppSettings["Group1"].ToString());
                 sortgroupno2 = decimal.Parse(ConfigurationManager.AppSettings["Group2"].ToString());
                 ItemCollection.OpcPresortServer = ConfigurationManager.AppSettings["OpcPresortServer"].ToString();
-
+                ItemCollection.UnionOpcServer = ConfigurationManager.AppSettings["UnionOpcServer"].ToString();
+                MachineItemCollection.OpcMachineServer = ItemCollection.OpcPresortServer;
             }
             catch (Exception e)
             {
@@ -145,7 +148,12 @@ namespace SortingControlSys.SortingControl
         Group taskgroup1, statusGroup1, FinishStateGroup1, taskgroup2, statusGroup4, FinishStateGroup2;
         Group errGroup1, errGroup2, errGroup3, errGroup4;
 
-        Group ClearCacheGroup;
+        Group ClearCacheGroup,UnionGroup;
+
+
+        Group taskMachineGroup1, taskMachineGroup2, taskMachineGroup3, taskMachineGroup4, taskMachineGroup5, taskMachineGroup6, taskMachineGroup7, taskMachineGroup8, taskMachineGroup9, taskMachineGroup10;
+        Group taskMachineGroup11, taskMachineGroup12, taskMachineGroup13, taskMachineGroup14, taskMachineGroup15, taskMachineGroup16, taskMachineGroup17, taskMachineGroup18, taskMachineGroup19, taskMachineGroup20;
+        Group taskMachineGroup21, taskMachineGroup22;
         /// <summary>
         /// 监控标志位
         /// </summary>
@@ -164,6 +172,7 @@ namespace SortingControlSys.SortingControl
                 FinishStateGroup1 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);//第一组完成信息
                 taskgroup2 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);//第二组数据
                 statusGroup4 = new Group(pIOPCServer, 5, "group4", 1, LOCALE_ID);
+                UnionGroup = new Group(pIOPCServer, 13, "group13", 1, LOCALE_ID);
                 FinishStateGroup2 = new Group(pIOPCServer, 6, "group5", 1, LOCALE_ID);//第二组完成信息
                 errGroup1 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
                 errGroup2 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);
@@ -171,12 +180,59 @@ namespace SortingControlSys.SortingControl
                 errGroup4 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);
                 ClearCacheGroup = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);
 
+
+                taskMachineGroup1 = new Group(pIOPCServer, 100, "group100", 1, LOCALE_ID);
+                taskMachineGroup2 = new Group(pIOPCServer, 101, "group101", 1, LOCALE_ID);
+                taskMachineGroup3 = new Group(pIOPCServer, 102, "group102", 1, LOCALE_ID);
+                taskMachineGroup4 = new Group(pIOPCServer, 103, "group103", 1, LOCALE_ID);
+                taskMachineGroup5 = new Group(pIOPCServer, 104, "group104", 1, LOCALE_ID);
+                taskMachineGroup6 = new Group(pIOPCServer, 105, "group105", 1, LOCALE_ID);
+                taskMachineGroup7 = new Group(pIOPCServer, 106, "group106", 1, LOCALE_ID);
+                taskMachineGroup8 = new Group(pIOPCServer, 107, "group107", 1, LOCALE_ID);
+                taskMachineGroup9 = new Group(pIOPCServer, 108, "group108", 1, LOCALE_ID);
+                taskMachineGroup10 = new Group(pIOPCServer, 109, "group109", 1, LOCALE_ID);
+                taskMachineGroup11 = new Group(pIOPCServer, 110, "group110", 1, LOCALE_ID);
+                taskMachineGroup12 = new Group(pIOPCServer, 111, "group111", 1, LOCALE_ID);
+                taskMachineGroup13 = new Group(pIOPCServer, 112, "group112", 1, LOCALE_ID);
+                taskMachineGroup14 = new Group(pIOPCServer, 113, "group113", 1, LOCALE_ID);
+                taskMachineGroup15 = new Group(pIOPCServer, 114, "group114", 1, LOCALE_ID);
+                taskMachineGroup16 = new Group(pIOPCServer, 115, "group115", 1, LOCALE_ID);
+                taskMachineGroup17 = new Group(pIOPCServer, 116, "group116", 1, LOCALE_ID);
+                taskMachineGroup18 = new Group(pIOPCServer, 117, "group117", 1, LOCALE_ID);
+                taskMachineGroup19 = new Group(pIOPCServer, 118, "group118", 1, LOCALE_ID);
+                taskMachineGroup20 = new Group(pIOPCServer, 119, "group119", 1, LOCALE_ID);
+                taskMachineGroup21 = new Group(pIOPCServer, 120, "group120", 1, LOCALE_ID);
+                taskMachineGroup22 = new Group(pIOPCServer, 121, "group121", 1, LOCALE_ID);
+
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem1());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem2());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem3());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem4());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem5());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem6());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem7());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem8());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem9());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem10());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem11());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem12());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem13());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem14());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem15());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem16());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem17());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem18());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem19());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem20());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem21());
+                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem22());
+
                 SendTaskStatesGroup =new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//监控标志位
 
                 taskgroup1.addItem(ItemCollection.GetGroup1TaskItem());//第一组数据
               
                 statusGroup1.addItem(ItemCollection.GetTaskStatusItem1());
-
+                UnionGroup.addItem(ItemCollection.getUnionTaskItem());
                 FinishStateGroup1.addItem(ItemCollection.GetFinishTaskStatusItem1());//第一组完成信息
              
                 taskgroup2.addItem(ItemCollection.GetGroup2TaskItem());//第二组数据
@@ -223,6 +279,31 @@ namespace SortingControlSys.SortingControl
             errGroup1.callback += OnDataChange;
             errGroup2.callback += OnDataChange;
             errGroup3.callback += OnDataChange;
+
+
+            taskMachineGroup1.callback += OnDataChange;
+            taskMachineGroup2.callback += OnDataChange;
+            taskMachineGroup3.callback += OnDataChange;
+            taskMachineGroup4.callback += OnDataChange;
+            taskMachineGroup5.callback += OnDataChange;
+            taskMachineGroup6.callback += OnDataChange;
+            taskMachineGroup7.callback += OnDataChange;
+            taskMachineGroup8.callback += OnDataChange;
+            taskMachineGroup9.callback += OnDataChange;
+            taskMachineGroup10.callback += OnDataChange;
+            taskMachineGroup11.callback += OnDataChange;
+            taskMachineGroup12.callback += OnDataChange;
+            taskMachineGroup13.callback += OnDataChange;
+            taskMachineGroup14.callback += OnDataChange;
+            taskMachineGroup15.callback += OnDataChange;
+            taskMachineGroup16.callback += OnDataChange;
+            taskMachineGroup17.callback += OnDataChange;
+            taskMachineGroup18.callback += OnDataChange;
+            taskMachineGroup19.callback += OnDataChange;
+            taskMachineGroup20.callback += OnDataChange;
+            taskMachineGroup21.callback += OnDataChange;
+            taskMachineGroup22.callback += OnDataChange;
+          
         }
         public void checkConnection()
         {
@@ -331,8 +412,27 @@ namespace SortingControlSys.SortingControl
                 }
                 if (flag == 2)//0：已取走， 1：已写入
                 {
+                    while (!ProducePokeService.CheckExistPreSendTask(sortgroupno2, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno2, 10))
+                    {
+                        decimal taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno2 - 1)).ToString());
+                        decimal zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno2)).ToString());
+                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum);
+                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum, taskno, zqqty, cache.CACHESIZE ?? 0);
+                        if (currentNum >= (cache.DISPATCHENUM??0))
+                        {
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, minCahceNum, mainbeltNum);
+                        }
+                        if (mainbeltNum + 1 <= 4)
+                        {
+                            mainbeltNum += 1;
+                        }
+                        else
+                        {
+                            mainbeltNum = 1;
+                        }
+                    }
 
-                    object[] datas = TaskService.GetSortTask(sortgroupno2);//数据
+                    object[] datas = ProducePokeService.GetSortTask(sortgroupno2);//数据
 
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
@@ -376,7 +476,7 @@ namespace SortingControlSys.SortingControl
                         else if (i == 24) logcolumnname = "烟柜11条数";
                         else if (i == 25) logcolumnname = "起始位置";                      
                         
-                        else if (i==26) logcolumnname = "写入标志位";
+                        else if (i==47) logcolumnname = "写入标志位";
 
                         logstr += logcolumnname + ":" + datas[i] + ";";
                         //logstr += i + ":" + datas[i] + ";";
@@ -406,6 +506,9 @@ namespace SortingControlSys.SortingControl
                 sendTask1();//异常后重新发送
             }
         }
+        int mainbeltNum = 1;
+        int maxCacheNum = 160;
+        int minCahceNum =50;
         /// <summary>
         /// 第一组数据
         /// </summary>
@@ -423,7 +526,27 @@ namespace SortingControlSys.SortingControl
                 if (flag == 2)//0：已取走， 1：已写入
                 {
 
-                    object[] datas = TaskService.GetSortTask(sortgroupno1);//数据
+                    while (!ProducePokeService.CheckExistPreSendTask(sortgroupno1, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno1, 10))
+                    {
+                        decimal taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno1-1)).ToString());
+                        decimal zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno1)).ToString());
+                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno1, mainbeltNum);
+                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno1, mainbeltNum, taskno, zqqty, cache.CACHESIZE??0);
+                        if (currentNum >= (cache.DISPATCHENUM??0))
+                        {
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, minCahceNum, mainbeltNum);
+                        }
+                        if (mainbeltNum + 1 <= 4)
+                        {
+                            mainbeltNum += 1;
+                        }
+                        else
+                        {
+                            mainbeltNum = 1;
+                        }
+                    }
+
+                    object[] datas = ProducePokeService.GetSortTask(sortgroupno1);//数据
 
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
@@ -478,7 +601,7 @@ namespace SortingControlSys.SortingControl
                         else if (i == 24) logcolumnname = "烟柜11条数";
                         else if (i == 25) logcolumnname = "起始位置";
 
-                        else if (i == 26) logcolumnname = "写入标志位";
+                        else if (i == 47) logcolumnname = "写入标志位";
 
                         logstr += logcolumnname + ":" + datas[i] + ";";
                        // logstr += i + ":" + datas[i] + ";";
@@ -853,7 +976,7 @@ namespace SortingControlSys.SortingControl
                             //if (tempList.Count > 0)
                             //{
                                // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                          TaskService.UpdateFJSendStatus(sortgroupno1, tasknum);//状态改为已发送
+                          TaskService.UpdateStatus(sortgroupno1,15, tasknum);//状态改为已发送
 
                           updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                           writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
@@ -877,13 +1000,31 @@ namespace SortingControlSys.SortingControl
                             //if (tempList.Count > 0)
                             //{
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                            TaskService.UpdateFJSendStatus(sortgroupno2, tasknum);//状态改为已发送
+                            TaskService.UpdateStatus(sortgroupno1, 15, tasknum);//状态改为已发送
 
                             
                             updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                             //} 
                             sendTask1();
+                        }
+                    }
+                }
+            }
+            else if (group > 99)
+            {
+                group = group - 99;
+                for (int i = 0; i < clientId.Length; i++)
+                {
+                    if (clientId[i] == 1)//第一位：任务完成标志位
+                    {
+                        if (decimal.Parse(values[i].ToString()) != 0)
+                        {
+                            writeLog.Write((((groupNo - 1) * 22 + group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
+                            updateListBox((decimal.Parse(values[i].ToString()) + ":" + ((groupNo - 1) * 22 + group) + " 已完成任务"));
+                            InBoundService.UpdateMachineInOut(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + group));
+                            TaskService.UpdateMachineFinished(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + group) + "");
+
                         }
                     }
                 }

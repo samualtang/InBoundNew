@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\ItemCollection.cs" />
+    <Compile Include="Model\MachineItemCollection.cs" />
     <Compile Include="orderHandle\w_order_recieve.cs">
       <SubType>Form</SubType>
     </Compile>

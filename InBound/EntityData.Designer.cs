@@ -516,22 +516,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
-        {
-            get
-            {
-                if ((_T_PRODUCE_POKE == null))
-                {
-                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
-                }
-                return _T_PRODUCE_POKE;
-            }
-        }
-        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_PRODUCE_SORTTROUGH> T_PRODUCE_SORTTROUGH
         {
             get
@@ -624,6 +608,38 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRODUCE_PRESORTINFO> _T_PRODUCE_PRESORTINFO;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_POKE> T_PRODUCE_POKE
+        {
+            get
+            {
+                if ((_T_PRODUCE_POKE == null))
+                {
+                    _T_PRODUCE_POKE = base.CreateObjectSet<T_PRODUCE_POKE>("T_PRODUCE_POKE");
+                }
+                return _T_PRODUCE_POKE;
+            }
+        }
+        private ObjectSet<T_PRODUCE_POKE> _T_PRODUCE_POKE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_CACHE> T_PRODUCE_CACHE
+        {
+            get
+            {
+                if ((_T_PRODUCE_CACHE == null))
+                {
+                    _T_PRODUCE_CACHE = base.CreateObjectSet<T_PRODUCE_CACHE>("T_PRODUCE_CACHE");
+                }
+                return _T_PRODUCE_CACHE;
+            }
+        }
+        private ObjectSet<T_PRODUCE_CACHE> _T_PRODUCE_CACHE;
 
         #endregion
 
@@ -854,14 +870,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
-        {
-            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
-        }
-    
-        /// <summary>
         /// 用于向 T_PRODUCE_SORTTROUGH EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_PRODUCE_SORTTROUGH(T_PRODUCE_SORTTROUGH t_PRODUCE_SORTTROUGH)
@@ -907,6 +915,22 @@ namespace InBound
         public void AddToT_PRODUCE_PRESORTINFO(T_PRODUCE_PRESORTINFO t_PRODUCE_PRESORTINFO)
         {
             base.AddObject("T_PRODUCE_PRESORTINFO", t_PRODUCE_PRESORTINFO);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_POKE(T_PRODUCE_POKE t_PRODUCE_POKE)
+        {
+            base.AddObject("T_PRODUCE_POKE", t_PRODUCE_POKE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_CACHE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_CACHE(T_PRODUCE_CACHE t_PRODUCE_CACHE)
+        {
+            base.AddObject("T_PRODUCE_CACHE", t_PRODUCE_CACHE);
         }
 
         #endregion
@@ -2422,6 +2446,303 @@ namespace InBound
     /// <summary>
     /// 没有元数据文档可用。
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_PRODUCE_CACHE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_PRODUCE_CACHE : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_PRODUCE_CACHE 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_PRODUCE_CACHE CreateT_PRODUCE_CACHE(global::System.Decimal id)
+        {
+            T_PRODUCE_CACHE t_PRODUCE_CACHE = new T_PRODUCE_CACHE();
+            t_PRODUCE_CACHE.ID = id;
+            return t_PRODUCE_CACHE;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _ID;
+        partial void OnIDChanging(global::System.Decimal value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CODE
+        {
+            get
+            {
+                return _CODE;
+            }
+            set
+            {
+                OnCODEChanging(value);
+                ReportPropertyChanging("CODE");
+                _CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CODE");
+                OnCODEChanged();
+            }
+        }
+        private global::System.String _CODE;
+        partial void OnCODEChanging(global::System.String value);
+        partial void OnCODEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CACHESIZE
+        {
+            get
+            {
+                return _CACHESIZE;
+            }
+            set
+            {
+                OnCACHESIZEChanging(value);
+                ReportPropertyChanging("CACHESIZE");
+                _CACHESIZE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CACHESIZE");
+                OnCACHESIZEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CACHESIZE;
+        partial void OnCACHESIZEChanging(Nullable<global::System.Decimal> value);
+        partial void OnCACHESIZEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DBPOSITION
+        {
+            get
+            {
+                return _DBPOSITION;
+            }
+            set
+            {
+                OnDBPOSITIONChanging(value);
+                ReportPropertyChanging("DBPOSITION");
+                _DBPOSITION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DBPOSITION");
+                OnDBPOSITIONChanged();
+            }
+        }
+        private global::System.String _DBPOSITION;
+        partial void OnDBPOSITIONChanging(global::System.String value);
+        partial void OnDBPOSITIONChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DISPATCHESIZE
+        {
+            get
+            {
+                return _DISPATCHESIZE;
+            }
+            set
+            {
+                OnDISPATCHESIZEChanging(value);
+                ReportPropertyChanging("DISPATCHESIZE");
+                _DISPATCHESIZE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DISPATCHESIZE");
+                OnDISPATCHESIZEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DISPATCHESIZE;
+        partial void OnDISPATCHESIZEChanging(Nullable<global::System.Decimal> value);
+        partial void OnDISPATCHESIZEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DISPATCHENUM
+        {
+            get
+            {
+                return _DISPATCHENUM;
+            }
+            set
+            {
+                OnDISPATCHENUMChanging(value);
+                ReportPropertyChanging("DISPATCHENUM");
+                _DISPATCHENUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DISPATCHENUM");
+                OnDISPATCHENUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DISPATCHENUM;
+        partial void OnDISPATCHENUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnDISPATCHENUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MAILBELT
+        {
+            get
+            {
+                return _MAILBELT;
+            }
+            set
+            {
+                OnMAILBELTChanging(value);
+                ReportPropertyChanging("MAILBELT");
+                _MAILBELT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MAILBELT");
+                OnMAILBELTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MAILBELT;
+        partial void OnMAILBELTChanging(Nullable<global::System.Decimal> value);
+        partial void OnMAILBELTChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> STATE
+        {
+            get
+            {
+                return _STATE;
+            }
+            set
+            {
+                OnSTATEChanging(value);
+                ReportPropertyChanging("STATE");
+                _STATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("STATE");
+                OnSTATEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _STATE;
+        partial void OnSTATEChanging(Nullable<global::System.Decimal> value);
+        partial void OnSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> GROUPNO
+        {
+            get
+            {
+                return _GROUPNO;
+            }
+            set
+            {
+                OnGROUPNOChanging(value);
+                ReportPropertyChanging("GROUPNO");
+                _GROUPNO = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GROUPNO");
+                OnGROUPNOChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _GROUPNO;
+        partial void OnGROUPNOChanging(Nullable<global::System.Decimal> value);
+        partial void OnGROUPNOChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PACKAGEMACHINE
+        {
+            get
+            {
+                return _PACKAGEMACHINE;
+            }
+            set
+            {
+                OnPACKAGEMACHINEChanging(value);
+                ReportPropertyChanging("PACKAGEMACHINE");
+                _PACKAGEMACHINE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PACKAGEMACHINE");
+                OnPACKAGEMACHINEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PACKAGEMACHINE;
+        partial void OnPACKAGEMACHINEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPACKAGEMACHINEChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_PRODUCE_POKE")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -2902,6 +3223,30 @@ namespace InBound
         private Nullable<global::System.Decimal> _UNIONTASKNUM;
         partial void OnUNIONTASKNUMChanging(Nullable<global::System.Decimal> value);
         partial void OnUNIONTASKNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SECSORTNUM
+        {
+            get
+            {
+                return _SECSORTNUM;
+            }
+            set
+            {
+                OnSECSORTNUMChanging(value);
+                ReportPropertyChanging("SECSORTNUM");
+                _SECSORTNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SECSORTNUM");
+                OnSECSORTNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SECSORTNUM;
+        partial void OnSECSORTNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSECSORTNUMChanged();
 
         #endregion
 

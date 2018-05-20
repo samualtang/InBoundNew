@@ -128,16 +128,18 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="App.Config" />
     <None Include="Properties\DataSources\Entities.datasource" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\InBound.dll" />
+    <Content Include="bin\Debug\InBound.pdb" />
     <Content Include="lib\opcrcw.comn.dll" />
     <Content Include="lib\opcrcw.da.dll" />
     <Content Include="lib\System.Data.OracleClient.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

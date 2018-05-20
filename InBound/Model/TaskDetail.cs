@@ -36,6 +36,8 @@ namespace InBound.Model
        public String ExportNum { get; set; }
        public Decimal TaskNum { get; set; }
        public Decimal DTaskNum { get; set; }
+       public decimal meragenum { get; set; }
+       public decimal uniontasknum { get; set; }
        public String SortTroughNum
        {
            get;

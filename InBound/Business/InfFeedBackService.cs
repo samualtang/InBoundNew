@@ -381,8 +381,20 @@ namespace InBound.Business
                                       {
                                           task.BARCODE = RefRFIDPalletService.GetSeq() + "";
                                           var inboundLine = (from line in dataEntity.T_WMS_INBOUND_LINE where line.INBOUNDDETAILID == task.INBOUNDNO select line).FirstOrDefault();
+                                          
                                           if (inboundLine != null)
                                           {
+                                              var tq = (from record in dataEntity.T_WMS_INBOUND_LINE where record.INBOUNDID == inboundLine.INBOUNDID select record).Sum(x => x.LOCKQTY) ?? 0;
+                                              var inbound = (from record in dataEntity.T_WMS_INBOUND where record.INBOUNDID == inboundLine.INBOUNDID select record).FirstOrDefault();
+
+                                              if (tq < task.PLANQTY)
+                                              {
+                                                  inbound.STARTTIME = DateTime.Now;
+                                              }
+                                              //else if (tq + task.PLANQTY == inbound.QTY)
+                                              //{
+                                              //    inbound.FINISHTIME = DateTime.Now;
+                                              //}
                                               inboundLine.LOCKQTY += task.PLANQTY;
                                           }
                                           if (temptask.TUTYPE == 3 || temptask.TUTYPE == 2)//空托盘、空托盘组
@@ -409,7 +421,7 @@ namespace InBound.Business
 
                                           T_WMS_ATSCELLINFO_DETAIL detail = new T_WMS_ATSCELLINFO_DETAIL();
                                           detail.BARCODE = task.BRANDID + "";
-                                          T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
+                                         T_WMS_ITEM item = ItemService.GetItemByBarCode(detail.BARCODE);
 
                                           detail.CIGARETTECODE = item.ITEMNO;
                                           detail.CIGARETTENAME = item.ITEMNAME;
@@ -630,6 +642,9 @@ namespace InBound.Business
                                           if (needUpdate)
                                           {
                                               inbound.STATUS = "30"; //入库完成
+                                              inbound.ENDTIME = DateTime.Now;
+                                              inbound.FINISHTIME = DateTime.Now;
+                                              
                                           }
                                       }
                                       if (item.JOBTYPE == 42)//抽检入库、盘点入库、补货入库、调拨返库、其它
