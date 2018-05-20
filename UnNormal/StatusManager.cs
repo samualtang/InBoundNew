@@ -34,7 +34,7 @@ namespace SortingControlSys.SortingControl
         {
 
             List<TaskDetail> list;
-            if (!textBox3.Text.Equals(""))
+            if (!string .IsNullOrWhiteSpace( textBox3.Text))
             {
              
                 list = UnPokeService.getData(decimal.Parse(textBox3.Text));
@@ -50,24 +50,22 @@ namespace SortingControlSys.SortingControl
                 foreach (var item in list)
                 {
                     
-                    status =item.CIGARETTDECODE+"";//CIGARETTDECODE 存了状态值  
+                    // 存了状态值  
 
                     int index = this.task_data.Rows.Add();
                     this.task_data.Rows[index].Cells[0].Value = item.SortNum;
-                    this.task_data.Rows[index].Cells[1].Value = item.SecSortNum;
+                    this.task_data.Rows[index].Cells[1].Value = item.SENDTASKNUM;
                  
                     this.task_data.Rows[index].Cells[2].Value = item.Billcode;
-                    this.task_data.Rows[index].Cells[3].Value = item.tNum;
-                   
-                   
-                    if (status == "20")
+                    this.task_data.Rows[index].Cells[3].Value = item.tNum; 
+                    if (item.STATUS == 10)
                     {
                         status = "新增";
                     }
-                    //else if (status == "30")
-                    //{
-                    //    status = "";
-                    //}
+                    else if (item.STATUS ==  15)
+                    {
+                        status = "以发送";
+                    }
                     else
                     {
                         status="完成";

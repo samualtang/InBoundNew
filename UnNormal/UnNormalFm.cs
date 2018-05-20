@@ -37,6 +37,7 @@ namespace SortingControlSys.SortingControl
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog =  WriteLog.GetLog();
+        public DeviceStateManager stateManager = new DeviceStateManager();
         public UnNormalFm()
         {
             InitializeComponent();
@@ -57,14 +58,19 @@ namespace SortingControlSys.SortingControl
                 this.Close();
             }
          }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-         
+            stateManager.AlarmsHandler += (obj) =>
+            {
+                updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
+            };
+
             this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
-           
+
         }
         private delegate void HandleDelegate1(string info, Label label);
         public void updateLabel(string info,Label label)
@@ -637,7 +643,7 @@ namespace SortingControlSys.SortingControl
         }
 
 
-        public DeviceStateManager stateManager = new DeviceStateManager();
+
         public void Disconnect()
         {
            
@@ -695,6 +701,21 @@ namespace SortingControlSys.SortingControl
 
            }
        }
+
+       public void updateListBox(string info,ListBox list)
+       {
+           String time = DateTime.Now.ToLongTimeString();
+           if (this.list_data.InvokeRequired)
+           {
+
+               this.list_data.Invoke(new HandleDelegate(updateListBox), info,list);
+           }
+           else
+           {
+               this.list_data.Items.Insert(0, time + "    " + info);
+
+           }
+       }
        public void initdata() {
            writeLog.Write("initdata");
            task_data.Rows.Clear(); 
@@ -703,6 +724,8 @@ namespace SortingControlSys.SortingControl
                List<TaskInfo> list =  TaskService.GetUNCustomer();
                if (list != null)
                {
+                   DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
+                   dgvStyle.BackColor = Color.LightGreen;
                    int i =1;
                    foreach (var row in list)
                    {
@@ -710,13 +733,19 @@ namespace SortingControlSys.SortingControl
                        this.task_data.Rows[index].Cells[0].Value = i++;//序号
                        this.task_data.Rows[index].Cells[1].Value = "长沙市烟草公司";//货主
                        this.task_data.Rows[index].Cells[2].Value = row.ORDERDATE.Value.Date.ToString("D"); //订单日期
-                       this.task_data.Rows[index].Cells[3].Value = row.REGIONCODE;
-                       this.task_data.Rows[index].Cells[4].Value = row.REGIONCODE;
+                       this.task_data.Rows[index].Cells[3].Value = "批次" + row.SYNSEQ;//批次
+                       this.task_data.Rows[index].Cells[4].Value = row.REGIONCODE;//线路编号
+                       this.task_data.Rows[index].Cells[5].Value = row.REGIONCODE;//线路名称
                        //this.task_data.Rows[index].Cells[2].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[5].Value = row.FinishCount + "/" + row.Count;
-                       this.task_data.Rows[index].Cells[6].Value = row.FinishQTY + "/" + row.QTY; 
-                       this.task_data.Rows[index].Cells[7].Value ="分拣"+ row.LineNum+"线";
-                       this.task_data.Rows[index].Cells[8].Value = row.Rate;
+                       this.task_data.Rows[index].Cells[6].Value = row.FinishCount + "/" + row.Count;
+                       this.task_data.Rows[index].Cells[7].Value = row.FinishQTY + "/" + row.QTY; 
+                       this.task_data.Rows[index].Cells[8].Value ="分拣"+ row.LineNum+"线";
+                       this.task_data.Rows[index].Cells[9].Value = row.Rate;
+
+                       if (row.Rate == "100%")
+                       {
+                           this.task_data.Rows[index].Cells[8].Style = dgvStyle;
+                       }
                    }
                    task_data.Sort(task_data.Columns[0], ListSortDirection.Ascending); 
                }
@@ -850,7 +879,7 @@ namespace SortingControlSys.SortingControl
        private void UnNormalFm_SizeChanged(object sender, EventArgs e)
        {
            task_data.Height = this.Size.Height - list_data.Size.Height;
-           task_data.Width = this.Size.Width - groupboxRegion.Width;
+           task_data.Width = this.Size.Width - groupboxErr.Width;
         
        }
        /// <summary>
@@ -884,7 +913,7 @@ namespace SortingControlSys.SortingControl
            }
            //冻结某列 从左开始 0，1，2
            dgViewFiles.Columns[0].Width = 45;
-           dgViewFiles.Columns[1].Frozen = true;
+           dgViewFiles.Columns[0].Frozen = true;
        }
 
        private void task_data_CellClick(object sender, DataGridViewCellEventArgs e)

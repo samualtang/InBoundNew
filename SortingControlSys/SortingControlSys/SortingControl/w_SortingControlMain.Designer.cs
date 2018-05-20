@@ -65,12 +65,12 @@
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
             this.Timerinitdata = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxErr = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.panel2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxErr.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -294,6 +294,7 @@
             this.groupno.HeaderText = "组号";
             this.groupno.Name = "groupno";
             this.groupno.ReadOnly = true;
+            this.groupno.Width = 50;
             // 
             // machine
             // 
@@ -324,14 +325,12 @@
             this.cuscount.HeaderText = "客户数";
             this.cuscount.Name = "cuscount";
             this.cuscount.ReadOnly = true;
-            this.cuscount.Width = 200;
             // 
             // finishqty
             // 
             this.finishqty.HeaderText = "完成量";
             this.finishqty.Name = "finishqty";
             this.finishqty.ReadOnly = true;
-            this.finishqty.Width = 200;
             // 
             // percent
             // 
@@ -394,23 +393,23 @@
             this.Timerinitdata.Interval = 1000;
             this.Timerinitdata.Tick += new System.EventHandler(this.Timerinitdata_Tick);
             // 
-            // groupBox1
+            // groupBoxErr
             // 
-            this.groupBox1.Controls.Add(this.listError);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox1.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBox1.Location = new System.Drawing.Point(598, 48);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(440, 243);
-            this.groupBox1.TabIndex = 41;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "故障信息";
+            this.groupBoxErr.Controls.Add(this.listError);
+            this.groupBoxErr.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBoxErr.Font = new System.Drawing.Font("宋体", 11F);
+            this.groupBoxErr.Location = new System.Drawing.Point(598, 48);
+            this.groupBoxErr.Name = "groupBoxErr";
+            this.groupBoxErr.Size = new System.Drawing.Size(440, 243);
+            this.groupBoxErr.TabIndex = 41;
+            this.groupBoxErr.TabStop = false;
+            this.groupBoxErr.Text = "故障信息";
             // 
             // w_SortingControlMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxErr);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.task_data);
@@ -428,7 +427,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.groupBoxErr.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -457,6 +456,8 @@
         private System.Windows.Forms.Button btnClearB;
         private System.Windows.Forms.ListBox listError;
         private System.Windows.Forms.Timer Timerinitdata;
+        private System.Windows.Forms.GroupBox groupBoxErr;
+        private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn nums;
         private System.Windows.Forms.DataGridViewTextBoxColumn groupno;
         private System.Windows.Forms.DataGridViewTextBoxColumn machine;
@@ -466,7 +467,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnSelect;
     }
 }
