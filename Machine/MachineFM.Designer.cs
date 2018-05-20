@@ -65,10 +65,12 @@
             this.list_data = new System.Windows.Forms.ListBox();
             this.listError = new System.Windows.Forms.ListBox();
             this.timerinitdata = new System.Windows.Forms.Timer(this.components);
+            this.groupBoxErr = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.panel2.SuspendLayout();
+            this.groupBoxErr.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -277,7 +279,7 @@
             this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(706, 245);
+            this.task_data.Size = new System.Drawing.Size(595, 245);
             this.task_data.TabIndex = 30;
             // 
             // nums
@@ -373,12 +375,12 @@
             // 
             // listError
             // 
-            this.listError.Dock = System.Windows.Forms.DockStyle.Right;
+            this.listError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listError.FormattingEnabled = true;
-            this.listError.ItemHeight = 12;
-            this.listError.Location = new System.Drawing.Point(706, 43);
+            this.listError.ItemHeight = 15;
+            this.listError.Location = new System.Drawing.Point(3, 20);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(332, 245);
+            this.listError.Size = new System.Drawing.Size(434, 222);
             this.listError.TabIndex = 40;
             // 
             // timerinitdata
@@ -386,12 +388,24 @@
             this.timerinitdata.Interval = 1000;
             this.timerinitdata.Tick += new System.EventHandler(this.timerinitdata_Tick);
             // 
+            // groupBoxErr
+            // 
+            this.groupBoxErr.Controls.Add(this.listError);
+            this.groupBoxErr.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBoxErr.Font = new System.Drawing.Font("宋体", 11F);
+            this.groupBoxErr.Location = new System.Drawing.Point(598, 43);
+            this.groupBoxErr.Name = "groupBoxErr";
+            this.groupBoxErr.Size = new System.Drawing.Size(440, 245);
+            this.groupBoxErr.TabIndex = 41;
+            this.groupBoxErr.TabStop = false;
+            this.groupBoxErr.Text = "故障信息";
+            // 
             // MachineFM
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
+            this.Controls.Add(this.groupBoxErr);
             this.Controls.Add(this.task_data);
-            this.Controls.Add(this.listError);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -408,6 +422,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.groupBoxErr.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -446,5 +461,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn boxcount;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.GroupBox groupBoxErr;
     }
 }

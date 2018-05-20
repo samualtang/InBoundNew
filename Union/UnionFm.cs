@@ -981,6 +981,7 @@ namespace SortingControlSys.SortingControl
            timerinitdata.Interval = 20000;//十秒刷新 
             
        }
+ 
       
        
      

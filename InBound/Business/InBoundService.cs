@@ -345,6 +345,7 @@ namespace InBound.Business
                                         TotalplanQty += (detail.QTY ?? 0);
                                         //下达重力式货架补货计划
                                         decimal tempPlanQty = detail.QTY ?? 0;
+                                        int needrollback = 0;
                                         if (load1.SOURCE != "")
                                         {
                                             foreach (var item in querySourcetemp)
@@ -400,7 +401,7 @@ namespace InBound.Business
                                                 }
                                                 if (load2.PLANQTY == 0)
                                                 {
-                                                    break;
+                                                    continue;
                                                 }
                                                 load2.PRIORITY = 50;
                                                 load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -424,7 +425,13 @@ namespace InBound.Business
                                                 outTask4.CREATETIME = DateTime.Now;
                                                 entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                                 tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
+                                                needrollback = 1;
                                                 //  entity.SaveChanges();
+                                            }
+                                            if (needrollback == 0)
+                                            {
+                                                RollBack(load1.SOURCE);
+                                                continue;
                                             }
                                         }
 
@@ -506,7 +513,7 @@ namespace InBound.Business
 
                                             TotalplanQty += (load1.PLANQTY ?? 0);
                                             decimal tempPlanQty = load1.PLANQTY ?? 0;
-
+                                            int needrollback = 0;
                                             if (load1.SOURCE != "")
                                             {
 
@@ -564,7 +571,7 @@ namespace InBound.Business
                                                     }
                                                     if (load2.PLANQTY == 0)
                                                     {
-                                                        break;
+                                                        continue;
                                                     }
                                                     load2.PRIORITY = 50;
                                                     load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -589,6 +596,13 @@ namespace InBound.Business
                                                     entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                                     tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
                                                     //entity.SaveChanges();
+                                                    needrollback = 1;
+                                                    //  entity.SaveChanges();
+                                                }
+                                                if (needrollback == 0)
+                                                {
+                                                    RollBack(load1.SOURCE);
+                                                    continue;
                                                 }
                                             }
                                             // entity.SaveChanges();
@@ -745,6 +759,7 @@ namespace InBound.Business
                                 TotalplanQty += (detail.QTY ?? 0);
                                 //下达重力式货架补货计划
                                 decimal tempPlanQty = detail.QTY ?? 0;
+                                int needrollback = 0;
                                 if (load1.SOURCE != "")
                                 {
                                     foreach (var item in querySourcetemp)
@@ -800,7 +815,7 @@ namespace InBound.Business
                                         }
                                         if (load2.PLANQTY == 0)
                                         {
-                                            break;
+                                            continue;
                                         }
                                         load2.PRIORITY = 50;
                                         load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -824,7 +839,13 @@ namespace InBound.Business
                                         outTask4.CREATETIME = DateTime.Now;
                                         entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                         tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
+                                        needrollback = 1;
                                         //  entity.SaveChanges();
+                                    }
+                                    if (needrollback == 0)
+                                    {
+                                        RollBack(load1.SOURCE);
+                                        continue;
                                     }
                                 }
 
@@ -907,7 +928,7 @@ namespace InBound.Business
 
                                     TotalplanQty += (load1.PLANQTY ?? 0);
                                     decimal tempPlanQty = load1.PLANQTY ?? 0;
-
+                                    int needrollback = 0;
                                     if (load1.SOURCE != "")
                                     {
 
@@ -965,7 +986,7 @@ namespace InBound.Business
                                             }
                                             if (load2.PLANQTY == 0)
                                             {
-                                                break;
+                                                continue;
                                             }
                                             load2.PRIORITY = 50;
                                             load2.SOURCE = load1.TARGET;//out cell立库出口
@@ -989,7 +1010,14 @@ namespace InBound.Business
                                             outTask4.CREATETIME = DateTime.Now;
                                             entity.AddToT_WMS_STORAGEAREA_INOUT(outTask4);
                                             tempPlanQty = tempPlanQty - (load2.PLANQTY ?? 0);
-                                            
+
+                                            needrollback = 1;
+                                            //  entity.SaveChanges();
+                                        }
+                                        if (needrollback == 0)
+                                        {
+                                            RollBack(load1.SOURCE);
+                                            continue;
                                         }
                                     }
                                     

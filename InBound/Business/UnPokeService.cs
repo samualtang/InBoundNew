@@ -930,11 +930,16 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_UN_TASK
+                //var query = from item in dataentity.T_UN_TASK
+                //            where item.SORTNUM == sortnum
+                //            orderby item.SORTNUM
+                //            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM,item.STATE } into g
+                //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE, CIGARETTDECODE = g.Key.STATE };
+                var query = from item in dataentity.T_UN_POKE
                             where item.SORTNUM == sortnum
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM,item.STATE } into g
-                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE, CIGARETTDECODE = g.Key.STATE };
+                            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS ,item.SENDTASKNUM} into g
+                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0,SENDTASKNUM = g.Key.SENDTASKNUM ??0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -944,10 +949,16 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_UN_TASK
+                //var query = from item in dataentity.T_UN_TASK
+                //            orderby item.SORTNUM
+                //            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM, item.STATE } into g
+                //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE,   CIGARETTDECODE = g.Key.STATE };
+
+                var query = from item in dataentity.T_UN_POKE
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM, item.STATE } into g
-                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE,   CIGARETTDECODE = g.Key.STATE };
+                            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS, item.SENDTASKNUM } into g
+                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SENDTASKNUM = g.Key.SENDTASKNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
+
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;

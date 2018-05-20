@@ -53,13 +53,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
-            this.groupboxRegion = new System.Windows.Forms.GroupBox();
-            this.dgvSortnum = new System.Windows.Forms.DataGridView();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.lblSortnum = new System.Windows.Forms.Label();
+            this.groupboxErr = new System.Windows.Forms.GroupBox();
+            this.listError = new System.Windows.Forms.ListBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regiondesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,8 +69,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.panel2.SuspendLayout();
-            this.groupboxRegion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortnum)).BeginInit();
+            this.groupboxErr.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -231,6 +229,7 @@
             this.Column1,
             this.Column2,
             this.Column3,
+            this.Column4,
             this.regioncode,
             this.regiondesc,
             this.cuscount,
@@ -261,7 +260,7 @@
             this.task_data.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(421, 239);
+            this.task_data.Size = new System.Drawing.Size(579, 239);
             this.task_data.TabIndex = 30;
             // 
             // panel2
@@ -301,46 +300,27 @@
             this.list_data.Size = new System.Drawing.Size(1038, 112);
             this.list_data.TabIndex = 39;
             // 
-            // groupboxRegion
+            // groupboxErr
             // 
-            this.groupboxRegion.Controls.Add(this.lblSortnum);
-            this.groupboxRegion.Controls.Add(this.textBox2);
-            this.groupboxRegion.Controls.Add(this.dgvSortnum);
-            this.groupboxRegion.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupboxRegion.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupboxRegion.Location = new System.Drawing.Point(427, 43);
-            this.groupboxRegion.Name = "groupboxRegion";
-            this.groupboxRegion.Size = new System.Drawing.Size(611, 245);
-            this.groupboxRegion.TabIndex = 40;
-            this.groupboxRegion.TabStop = false;
-            this.groupboxRegion.Text = "任务号查询";
-            this.groupboxRegion.Visible = false;
+            this.groupboxErr.Controls.Add(this.listError);
+            this.groupboxErr.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupboxErr.Font = new System.Drawing.Font("宋体", 11F);
+            this.groupboxErr.Location = new System.Drawing.Point(598, 43);
+            this.groupboxErr.Name = "groupboxErr";
+            this.groupboxErr.Size = new System.Drawing.Size(440, 245);
+            this.groupboxErr.TabIndex = 40;
+            this.groupboxErr.TabStop = false;
+            this.groupboxErr.Text = "故障信息";
             // 
-            // dgvSortnum
+            // listError
             // 
-            this.dgvSortnum.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSortnum.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvSortnum.Location = new System.Drawing.Point(3, 53);
-            this.dgvSortnum.Name = "dgvSortnum";
-            this.dgvSortnum.RowTemplate.Height = 23;
-            this.dgvSortnum.Size = new System.Drawing.Size(605, 189);
-            this.dgvSortnum.TabIndex = 0;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(70, 23);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 24);
-            this.textBox2.TabIndex = 1;
-            // 
-            // lblSortnum
-            // 
-            this.lblSortnum.AutoSize = true;
-            this.lblSortnum.Location = new System.Drawing.Point(9, 26);
-            this.lblSortnum.Name = "lblSortnum";
-            this.lblSortnum.Size = new System.Drawing.Size(60, 15);
-            this.lblSortnum.TabIndex = 2;
-            this.lblSortnum.Text = "任务号:";
+            this.listError.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listError.FormattingEnabled = true;
+            this.listError.ItemHeight = 15;
+            this.listError.Location = new System.Drawing.Point(3, 20);
+            this.listError.Name = "listError";
+            this.listError.Size = new System.Drawing.Size(434, 222);
+            this.listError.TabIndex = 0;
             // 
             // Column1
             // 
@@ -359,6 +339,12 @@
             this.Column3.HeaderText = "订单日期";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "批次";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // regioncode
             // 
@@ -401,7 +387,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.Controls.Add(this.groupboxRegion);
+            this.Controls.Add(this.groupboxErr);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.task_data);
@@ -418,9 +404,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupboxRegion.ResumeLayout(false);
-            this.groupboxRegion.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortnum)).EndInit();
+            this.groupboxErr.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -446,13 +430,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.GroupBox groupboxRegion;
-        private System.Windows.Forms.DataGridView dgvSortnum;
-        private System.Windows.Forms.Label lblSortnum;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.GroupBox groupboxErr;
+        private System.Windows.Forms.ListBox listError;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
         private System.Windows.Forms.DataGridViewTextBoxColumn regiondesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;

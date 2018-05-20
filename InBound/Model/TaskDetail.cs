@@ -49,6 +49,9 @@ namespace InBound.Model
        public decimal PACKAGEMACHINE { get; set; }//包装机号
        public decimal POKENUM { get; set; }//吸烟数量
 
+       public decimal STATUS { get; set; }//异形烟状态
+       public decimal SENDTASKNUM { get; set; }//异形烟包号
+
         
     }
 }

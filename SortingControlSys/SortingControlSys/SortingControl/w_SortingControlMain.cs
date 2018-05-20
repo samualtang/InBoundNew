@@ -1232,7 +1232,7 @@ namespace SortingControlSys.SortingControl
         private void w_SortingControlMain_SizeChanged(object sender, EventArgs e)
         {
             task_data.Height = this.Size.Height - list_data.Size.Height ;
-            task_data.Width = this.Size.Width - groupBox1.Size.Width-20; // listError.Size.Width -15;
+            task_data.Width = this.Size.Width - groupBoxErr.Size.Width-20; // listError.Size.Width -15;
         }
         /// <summary>
         /// 使DataGridView的列自适应宽度

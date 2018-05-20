@@ -79,8 +79,7 @@ namespace FollowTask
             Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text+ name.Text);
             ftmd.Show();
              
-        }
-
+        } 
         /// <summary>
         /// 机械手根据组变更
         /// </summary>
