@@ -9,6 +9,7 @@ namespace InBound.Business
 {
     public class ProduceCacheService
     {
+
         public static T_PRODUCE_CACHE GetCache(decimal groupno, int mainbelt)
         {
             using (Entities entity = new Entities())
