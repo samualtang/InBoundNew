@@ -45,9 +45,6 @@
             this.txtUnionTasknum = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtmachine = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +55,9 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtmachine = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -107,6 +107,7 @@
             this.button2.TabIndex = 22;
             this.button2.Text = "更新";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox2
             // 
@@ -197,6 +198,7 @@
             this.cbTroughNum2.Name = "cbTroughNum2";
             this.cbTroughNum2.Size = new System.Drawing.Size(121, 20);
             this.cbTroughNum2.TabIndex = 26;
+            this.cbTroughNum2.SelectedIndexChanged += new System.EventHandler(this.cbTroughNum2_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -242,34 +244,6 @@
             this.task_data.RowTemplate.Height = 23;
             this.task_data.Size = new System.Drawing.Size(1046, 553);
             this.task_data.TabIndex = 16;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(941, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "查询";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // txtmachine
-            // 
-            this.txtmachine.Location = new System.Drawing.Point(483, 21);
-            this.txtmachine.Name = "txtmachine";
-            this.txtmachine.Size = new System.Drawing.Size(100, 21);
-            this.txtmachine.TabIndex = 14;
-            this.txtmachine.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(346, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 12);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "请输入设备号进行查询:";
-            this.label3.Visible = false;
             // 
             // Column1
             // 
@@ -324,6 +298,34 @@
             this.Column4.DataPropertyName = "sortstate";
             this.Column4.HeaderText = "状态位";
             this.Column4.Name = "Column4";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(941, 20);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "查询";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // txtmachine
+            // 
+            this.txtmachine.Location = new System.Drawing.Point(483, 21);
+            this.txtmachine.Name = "txtmachine";
+            this.txtmachine.Size = new System.Drawing.Size(100, 21);
+            this.txtmachine.TabIndex = 14;
+            this.txtmachine.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(346, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(131, 12);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "请输入设备号进行查询:";
+            this.label3.Visible = false;
             // 
             // StatusManager
             // 

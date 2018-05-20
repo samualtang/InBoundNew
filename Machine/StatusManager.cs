@@ -224,6 +224,19 @@ namespace SortingControlSys.SortingControl
             //dgViewFiles.Columns[0].Width = 50;
             dgViewFiles.Columns[1].Frozen = true;
         }
+
+        private void cbTroughNum2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            try
+            {
+                Bind();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("错误信息:" + ex.Message + "\r\n" + "请输入正确的任务号");
+            }
+        }
            
 
  
