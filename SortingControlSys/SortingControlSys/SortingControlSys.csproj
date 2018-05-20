@@ -110,7 +110,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubFunc\DataBase.cs" />
     <Compile Include="PubFunc\DataPublic.cs" />
-    <Compile Include="PubFunc\ObjectExtensions.cs" />
     <Compile Include="PubFunc\PrintDataGridView.cs" />
     <Compile Include="PubFunc\ProxyServer.cs" />
     <Compile Include="PubFunc\PublicFun.cs" />

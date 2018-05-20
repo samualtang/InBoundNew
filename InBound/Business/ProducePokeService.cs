@@ -150,7 +150,7 @@ namespace InBound.Business
                 var query = (from item in entity.T_PRODUCE_POKE
                              where item.SORTNUM >= sortnum && item.SORTSTATE >= 15 && item.GROUPNO == groupno
                                  && item.MAINBELT == mainbelt
-                             select item).Sum(x => x.POKENUM??0);
+                             select item).Sum(x => x.POKENUM)??0;
                 if (query != null)
                 {
                     return maxCount - query - zycount;
@@ -186,7 +186,7 @@ namespace InBound.Business
                 if (query != null)
                 {   //该订单的烟柜等分布情况
                     var query2 = (from item in entity.T_PRODUCE_POKE
-                                  where item.SORTNUM == query.SORTNUM && item.GROUPNO == groupno && item.SORTSTATE == 10 
+                                  where item.SORTNUM == query.SORTNUM && item.GROUPNO == groupno && item.SORTSTATE == 12
                                   orderby item.TROUGHNUM
                                   select new TaskDetail
                                   {
@@ -199,6 +199,7 @@ namespace InBound.Business
                                       POCKPLACE = item.POKEPLACE.Value,   //放烟位置
                                       meragenum= item.MERAGENUM??0,
                                       UnionTasknum=item.UNIONTASKNUM??0,
+                                       SortTroughNum=item.TROUGHNUM
 
                                   }
                              ).ToList();
@@ -345,7 +346,7 @@ namespace InBound.Business
                                 tempCount = record.POKENUM ?? 0;
                                 if (tempCount <= 10)
                                 {
-                                    record.POKEPLACE = 10;
+                                    record.POKEPLACE = 10 - tempCount;
                                 }
                                 else
                                 {
@@ -364,7 +365,7 @@ namespace InBound.Business
                                 tempCount = record.POKENUM??0;
                                 if (tempCount <= 10)
                                 {
-                                    record.POKEPLACE = 10;
+                                    record.POKEPLACE = 10-tempCount;
                                 }
                                 else
                                 {

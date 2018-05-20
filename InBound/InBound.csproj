@@ -68,6 +68,7 @@
     <Compile Include="Business\ItemService.cs" />
     <Compile Include="Business\LaneWayService.cs" />
     <Compile Include="Business\MachineService.cs" />
+    <Compile Include="Business\ProduceCacheService.cs" />
     <Compile Include="Business\ProducePokeService.cs" />
     <Compile Include="Business\ProduceTaskService.cs" />
     <Compile Include="Business\SortTroughService.cs" />

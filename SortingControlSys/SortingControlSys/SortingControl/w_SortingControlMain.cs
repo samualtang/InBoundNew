@@ -40,7 +40,7 @@ namespace SortingControlSys.SortingControl
         decimal groupNo = 1;
         Decimal sortgroupno1 = 1;//定义组次
         Decimal sortgroupno2 = 2;
-        public WriteLog writeLog = new WriteLog();
+        public InBound.WriteLog writeLog = InBound.WriteLog.GetLog();
         //ClearCmd clearACmd, clearBCmd;
         private bool AlineStopFlag, BlineStopFlag = false;
         DeviceStateManager stateManager = new DeviceStateManager();
