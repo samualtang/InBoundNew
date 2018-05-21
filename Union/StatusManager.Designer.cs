@@ -43,6 +43,13 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.task_data = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sorting = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.txtMachineseq = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,13 +58,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sorting = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -79,7 +79,7 @@
             this.groupBox1.Size = new System.Drawing.Size(961, 53);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "属性更改";
+            this.groupBox1.Text = "状态管理";
             // 
             // button2
             // 
@@ -215,6 +215,45 @@
             this.task_data.Size = new System.Drawing.Size(955, 506);
             this.task_data.TabIndex = 16;
             // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "SortNum";
+            this.Column1.HeaderText = "分拣任务号";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "billcode";
+            this.Column2.HeaderText = "订单号";
+            this.Column2.Name = "Column2";
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "主皮带";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "包装机";
+            this.Column6.Name = "Column6";
+            // 
+            // sorting
+            // 
+            this.sorting.HeaderText = "机械手号";
+            this.sorting.Name = "sorting";
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "pokenum";
+            this.Column3.HeaderText = "吸烟数量";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "sortstate";
+            this.Column4.HeaderText = "状态位";
+            this.Column4.Name = "Column4";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(861, 17);
@@ -283,45 +322,6 @@
             this.退出EToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.退出EToolStripMenuItem.Text = "退出(&E)";
             this.退出EToolStripMenuItem.Click += new System.EventHandler(this.退出EToolStripMenuItem_Click);
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "SortNum";
-            this.Column1.HeaderText = "分拣任务号";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "billcode";
-            this.Column2.HeaderText = "订单号";
-            this.Column2.Name = "Column2";
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "主皮带";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "包装机";
-            this.Column6.Name = "Column6";
-            // 
-            // sorting
-            // 
-            this.sorting.HeaderText = "机械手号";
-            this.sorting.Name = "sorting";
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "pokenum";
-            this.Column3.HeaderText = "吸烟数量";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "sortstate";
-            this.Column4.HeaderText = "状态位";
-            this.Column4.Name = "Column4";
             // 
             // StatusManager
             // 

@@ -493,6 +493,10 @@ namespace SortingControlSys.SortingControl
                         if (values[i] != null)
                         {
                             stateManager.WriteErrWithCheck(Math.Abs(int.Parse(values[i].ToString())).ToString(), clientId[i].ToString(), lineNum);
+                            stateManager.AlarmsHandler += (obj) =>
+                            {
+                                updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
+                            };
                         }
                     }
 
@@ -865,7 +869,7 @@ namespace SortingControlSys.SortingControl
        private void button6_Click_1(object sender, EventArgs e)
        {
            w_pass pass = new w_pass();
-
+           pass.StartPosition = FormStartPosition.CenterScreen;
 
            pass.Show();
        }

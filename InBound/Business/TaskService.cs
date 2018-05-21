@@ -129,7 +129,7 @@ namespace InBound.Business
                 var query = from item in dataentity.T_PRODUCE_POKE join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where   (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE==10 && item2.CIGARETTETYPE==20 orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -145,7 +145,7 @@ namespace InBound.Business
                                 on item.TROUGHNUM equals item2.TROUGHNUM
                             where (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20 && item.SORTSTATE == state 
                             orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -167,7 +167,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.SORTNUM == sortnum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ??0 ,UnionTasknum = item.UNIONTASKNUM ??0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE,POCKPLACE=item.POKEPLACE ?? 0,  CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -189,7 +189,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.TASKNUM == tasknum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -213,7 +213,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -237,7 +237,7 @@ namespace InBound.Business
                             on item.TROUGHNUM equals item2.TROUGHNUM
                             where item.MACHINESEQ == machineseq && item.SORTNUM == sortnum && (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new TaskDetail() { TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
+                            select new TaskDetail() { GroupNO = item.GROUPNO ??0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;

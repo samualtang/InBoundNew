@@ -88,7 +88,11 @@ namespace InBound.Business
                             where item.LINENUM == lineNum  && item.STATUS == 10 && item.CTYPE==1
                              orderby item.SENDTASKNUM
                              select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-
+                if (query == null)
+                {
+                    outlist = new List<T_UN_POKE>();
+                    return values;
+                }
                 var query1 = (from item in data.T_UN_POKE
                               where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1 && item.LINENUM == lineNum
                               orderby item.MACHINESEQ, item.TROUGHNUM
@@ -901,16 +905,31 @@ namespace InBound.Business
                 return query;
             }
         }
+        /// <summary>
+        /// 任务号区间查询
+        /// </summary>
+        /// <param name="sortnumFrom">起始任务号</param>
+        /// <param name="sortnumTo">结束任务号</param>
+        /// <returns></returns>
+        public static List<T_UN_POKE> GetListByBillCode(decimal sortnumFrom,decimal sortnumTo)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_UN_POKE where items.SORTNUM >= sortnumFrom && items.SORTNUM <= sortnumTo select items).ToList();
+
+                return query;
+            }
+        }
         public static void UpdateTask(String billcode,decimal status)
         {
             using (Entities data = new Entities())
             {
                 var query = (from items in data.T_UN_POKE where items.BILLCODE == billcode select items).ToList();
-              
+
                 foreach (var item in query)
-                    {
-                        item.STATUS = status;
-                    }
+                {
+                    item.STATUS = status;
+                }
                 var query2 = (from item in data.T_UN_TASK where item.BILLCODE == billcode select item).FirstOrDefault();
                 if (status == 15)
                 {
@@ -925,6 +944,36 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
+        /// <summary>
+        /// 更新任务(任务号区间查询) 
+        /// </summary>
+        /// <param name="sortnumFrom">起始任务号</param>
+        /// <param name="sortnumTo">结束任务号</param>
+        /// <param name="status"></param>
+        public static void UpdateTask(decimal sortnumFrom, decimal sortnumTo, decimal status)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_UN_POKE where items.SORTNUM >= sortnumFrom && items.SORTNUM <= sortnumTo select items).ToList();
+
+                foreach (var item in query)
+                {
+                    item.STATUS = status;
+                }
+                var query2 = (from item in data.T_UN_TASK where item.SORTNUM >= sortnumFrom && item.SORTNUM <= sortnumTo select item).FirstOrDefault();
+                if (status == 15)
+                {
+                    query2.STATE = "30";
+                }
+                else
+                {
+                    query2.STATE = "20";
+                }
+
+                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=15)");
+                data.SaveChanges();
+            }
+        }
 
         public static List<TaskDetail> getData(decimal sortnum)
         {
@@ -936,10 +985,12 @@ namespace InBound.Business
                 //            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM,item.STATE } into g
                 //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE, CIGARETTDECODE = g.Key.STATE };
                 var query = from item in dataentity.T_UN_POKE
-                            where item.SORTNUM == sortnum
-                            orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS ,item.SENDTASKNUM} into g
-                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0,SENDTASKNUM = g.Key.SENDTASKNUM ??0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10&& item.SORTNUM == sortnum
+                            orderby item.SORTNUM, item2.SEQ, item.MACHINESEQ, item.SENDTASKNUM
+                            select new TaskDetail() { POKENUM = item.POKENUM ?? 0, STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, Billcode = item.BILLCODE, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, LINENUM = item.LINENUM, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0 };
+
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -953,11 +1004,18 @@ namespace InBound.Business
                 //            orderby item.SORTNUM
                 //            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM, item.STATE } into g
                 //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE,   CIGARETTDECODE = g.Key.STATE };
+                
 
+                //var query = from item in dataentity.T_UN_POKE
+                //            orderby item.SORTNUM
+                //            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS, item.SENDTASKNUM } into g
+                //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SENDTASKNUM = g.Key.SENDTASKNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
                 var query = from item in dataentity.T_UN_POKE
-                            orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS, item.SENDTASKNUM } into g
-                            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SENDTASKNUM = g.Key.SENDTASKNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10
+                            orderby item.SORTNUM, item2.SEQ, item.MACHINESEQ, item.SENDTASKNUM
+                            select new TaskDetail() {POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 };
 
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();

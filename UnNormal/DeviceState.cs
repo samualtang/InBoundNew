@@ -46,9 +46,9 @@ namespace SortingControlSys.SortingControl
                 }
                 else
                 {
-                    errMsg = "消除将来从数据库获取";
+                    errMsg = "消除将来从数据库获取another one";
                 }
-                ErrListService.Add(deviceNo, decimal.Parse(lineNum), 40, errMsg, val);
+                ErrListService.Add(deviceNo, decimal.Parse(lineNum), 50, errMsg, val);
             }
                 
             fileOper.write(new DeviceStateInfoModel

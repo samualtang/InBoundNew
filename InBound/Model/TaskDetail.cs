@@ -53,6 +53,7 @@ namespace InBound.Model
 
        public decimal STATUS { get; set; }//异形烟状态
        public decimal SENDTASKNUM { get; set; }//异形烟包号
+       public string LINENUM { get; set; }//异形烟分拣线
 
         
     }

@@ -75,12 +75,12 @@
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(21, 19);
+            this.groupBox1.Location = new System.Drawing.Point(21, 26);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1046, 65);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "状态更改";
+            this.groupBox1.Text = "状态管理";
             // 
             // cbTroughNum
             // 
@@ -128,11 +128,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(310, 29);
+            this.label1.Location = new System.Drawing.Point(270, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 19;
-            this.label1.Text = "更新任务从";
+            this.label1.Text = "更新机械手任务从";
             // 
             // textBox1
             // 
@@ -194,7 +194,7 @@
             // cbTroughNum2
             // 
             this.cbTroughNum2.FormattingEnabled = true;
-            this.cbTroughNum2.Location = new System.Drawing.Point(110, 20);
+            this.cbTroughNum2.Location = new System.Drawing.Point(116, 24);
             this.cbTroughNum2.Name = "cbTroughNum2";
             this.cbTroughNum2.Size = new System.Drawing.Size(121, 20);
             this.cbTroughNum2.TabIndex = 26;
@@ -203,7 +203,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 24);
+            this.label6.Location = new System.Drawing.Point(15, 28);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(95, 12);
             this.label6.TabIndex = 25;
@@ -211,7 +211,7 @@
             // 
             // txtUnionTasknum
             // 
-            this.txtUnionTasknum.Location = new System.Drawing.Point(752, 20);
+            this.txtUnionTasknum.Location = new System.Drawing.Point(758, 24);
             this.txtUnionTasknum.Name = "txtUnionTasknum";
             this.txtUnionTasknum.Size = new System.Drawing.Size(123, 21);
             this.txtUnionTasknum.TabIndex = 18;
@@ -219,14 +219,16 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(593, 25);
+            this.label5.Location = new System.Drawing.Point(599, 29);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(155, 12);
+            this.label5.Size = new System.Drawing.Size(167, 12);
             this.label5.TabIndex = 17;
-            this.label5.Text = "请输入分拣任务号进行查询:";
+            this.label5.Text = "请输入机械手任务号进行查询:";
             // 
             // task_data
             // 
+            this.task_data.AllowUserToAddRows = false;
+            this.task_data.AllowUserToDeleteRows = false;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -239,10 +241,11 @@
             this.Column6,
             this.Column7,
             this.Column4});
-            this.task_data.Location = new System.Drawing.Point(0, 49);
+            this.task_data.Location = new System.Drawing.Point(0, 64);
             this.task_data.Name = "task_data";
+            this.task_data.ReadOnly = true;
             this.task_data.RowTemplate.Height = 23;
-            this.task_data.Size = new System.Drawing.Size(1046, 553);
+            this.task_data.Size = new System.Drawing.Size(1046, 511);
             this.task_data.TabIndex = 16;
             // 
             // Column1
@@ -250,58 +253,68 @@
             this.Column1.DataPropertyName = "SortNum";
             this.Column1.HeaderText = "预分拣任务号";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
             // Column5
             // 
             this.Column5.HeaderText = "机械手任务号";
             this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
             // 
             // Column2
             // 
             this.Column2.DataPropertyName = "billcode";
             this.Column2.HeaderText = "订单号";
             this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
             // 卷烟代码
             // 
             this.卷烟代码.HeaderText = "卷烟编码";
             this.卷烟代码.Name = "卷烟代码";
+            this.卷烟代码.ReadOnly = true;
             // 
             // 卷烟名称
             // 
             this.卷烟名称.HeaderText = "卷烟名称";
             this.卷烟名称.Name = "卷烟名称";
+            this.卷烟名称.ReadOnly = true;
             // 
             // machiseq
             // 
             this.machiseq.HeaderText = "机械手号";
             this.machiseq.Name = "machiseq";
+            this.machiseq.ReadOnly = true;
             // 
             // Column3
             // 
             this.Column3.DataPropertyName = "pokenum";
             this.Column3.HeaderText = "吸烟数量";
             this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
             // Column6
             // 
             this.Column6.HeaderText = "放烟数量";
             this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
             // 
             // Column7
             // 
             this.Column7.HeaderText = "放烟位置";
             this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
             // 
             // Column4
             // 
             this.Column4.DataPropertyName = "sortstate";
             this.Column4.HeaderText = "状态位";
             this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(941, 20);
+            this.button1.Location = new System.Drawing.Point(949, 24);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -311,7 +324,7 @@
             // 
             // txtmachine
             // 
-            this.txtmachine.Location = new System.Drawing.Point(483, 21);
+            this.txtmachine.Location = new System.Drawing.Point(489, 25);
             this.txtmachine.Name = "txtmachine";
             this.txtmachine.Size = new System.Drawing.Size(100, 21);
             this.txtmachine.TabIndex = 14;
@@ -320,7 +333,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(346, 24);
+            this.label3.Location = new System.Drawing.Point(352, 28);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 12);
             this.label3.TabIndex = 13;
@@ -331,7 +344,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1096, 729);
+            this.ClientSize = new System.Drawing.Size(1096, 702);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "StatusManager";

@@ -137,7 +137,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (textBox1.Text.Equals(""))
                     {
-                        MessageBox.Show("请输入任务号");
+                        MessageBox.Show("请输入机械手任务号");
                         return;
                     }
                     else
@@ -162,9 +162,12 @@ namespace SortingControlSys.SortingControl
 
                         decimal dFrom = decimal.Parse(from);
                         decimal tFrom = decimal.Parse(to);
-                        for (decimal i = dFrom; i <= tFrom; i++)
+                        for (decimal i = dFrom; i <= tFrom; i++)//i 机械手任务号
                         {
-
+                            if (taskState == 20)
+                            {
+                                InBoundService.UpdateMachineInOut(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
+                            }
 
                             TaskService.UpdateMachine(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1, taskState);
 
