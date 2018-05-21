@@ -167,7 +167,11 @@ namespace InBound.Business
                 var query =( from item in data.T_UN_POKE 
                             where item.STATUS == 10  && item.CTYPE ==2  
                             orderby  item.SENDTASKNUM select item).FirstOrDefault(); //取出第一行的sendtasknum
-
+                if (query == null)
+                {
+                    outlist = new List<T_UN_POKE>();
+                    return values;
+                }
                // packageNum = getPackageNum(2, lineNum);//取包号 前期需要 
                 var query1 = (from  item in data.T_UN_POKE
                              where item.SENDTASKNUM == query.SENDTASKNUM  && item.STATUS  ==  10  && item.CTYPE == 2
