@@ -29,6 +29,21 @@ namespace InBound.Business
             }
             return list;
         }
+        public static Boolean CheckExistTaskNo(decimal taskno)
+        {
+            using (Entities entity = new Entities())
+            {
+                  var query =( from item in entity.T_PRODUCE_POKE where item.SORTNUM==taskno select item).FirstOrDefault();
+                if(query!=null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         public static decimal GetTroughUnFinished(string throughno)
         {
             decimal total = 0;
@@ -148,12 +163,12 @@ namespace InBound.Business
             using (Entities entity = new Entities())
             {
                 var query = (from item in entity.T_PRODUCE_POKE
-                             where item.SORTNUM >= sortnum && item.SORTSTATE >= 15 && item.GROUPNO == groupno
+                             where item.SORTNUM >= sortnum && item.SORTSTATE >= 15 && item.UNIONSTATE!=20 && item.GROUPNO == groupno
                                  && item.MAINBELT == mainbelt
                              select item).Sum(x => x.POKENUM)??0;
                 if (query != null)
                 {
-                    return maxCount - query - zycount;
+                    return maxCount - query + zycount;
                 }
                 else
                 {
@@ -199,7 +214,7 @@ namespace InBound.Business
                                       POCKPLACE = item.POKEPLACE.Value,   //放烟位置
                                       meragenum= item.MERAGENUM??0,
                                       UnionTasknum=item.UNIONTASKNUM??0,
-                                       SortTroughNum=item.TROUGHNUM
+                                      SortTroughNum=item.TROUGHNUM
 
                                   }
                              ).ToList();
@@ -225,7 +240,7 @@ namespace InBound.Business
         {
             WriteLog writeLog = WriteLog.GetLog();
 
-            object[] values = new object[48];
+            object[] values = new object[49];
             for (int i = 0; i < values.Length; i++)//初始化一个数组
             {
                 values[i] = 0;
@@ -249,7 +264,7 @@ namespace InBound.Business
                             values[1] = int.Parse(item.ExportNum);//虚拟出口号
                             values[2] = item.MainBelt;
                             values[3] = 0;
-                            values[47] = 1;//标志位  ||
+                            values[48] = 1;//标志位  ||
                         }
                         using (Entities entity = new Entities())
                         {
@@ -283,12 +298,14 @@ namespace InBound.Business
 
             return values;
         }
-        
+         
         public static void UpdatePokeByGroupNo(decimal groupno, int orderAmount,int mainbelt)
         {
             using (Entities entity = new Entities())
             {
                // int count = 0;
+
+                
                 decimal beginSortnum = 0;
                 decimal totalCount = 0;
                 List<Decimal> sortnum = new List<decimal>();
@@ -297,7 +314,7 @@ namespace InBound.Business
                     var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.MAINBELT==mainbelt && item.SORTNUM > beginSortnum orderby item.SORTNUM select item).FirstOrDefault();
                     if (query != null)
                     {
-                        var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM select item).Sum(x => x.POKENUM ?? 0);
+                        var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM  && item.MAINBELT==mainbelt select item).Sum(x => x.POKENUM )??0;
                         totalCount += query2;
                         if (totalCount <= orderAmount)
                         {
@@ -318,7 +335,7 @@ namespace InBound.Business
                 //开始算合单 生成合单号
                 var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM??0) select item1).ToList();
                 var troughnums = query3.Select(x => x.TROUGHNUM).Distinct().ToList();
-                var uniontasknum = (from task in entity.T_PRODUCE_POKE  where task.GROUPNO==groupno select task).Max(x => x.UNIONTASKNUM)+1;
+                //var uniontasknum = (from task in entity.T_PRODUCE_POKE  where task.GROUPNO==groupno select task).Max(x => x.UNIONTASKNUM)+1;
                 foreach (var troughnum in troughnums)
                 {
                     var templist = query3.Where(x => x.TROUGHNUM == troughnum).OrderBy(x=>x.SORTNUM).ToList();
@@ -336,8 +353,17 @@ namespace InBound.Business
                             record.POKEPLACE =tempCount;
                             if (size == templist.Count)
                             {
-                                templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).ToList().ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
-                                uniontasknum += 1;
+                                var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                              var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                                var pnum=tempCount;
+                               foreach (var t in temp)
+                              {
+                                  t.MERAGENUM = tempCount;
+                                  t.UNIONTASKNUM = unionnum;
+                                  t.POKEPLACE = pnum;
+                                  pnum -= (t.POKENUM??0);
+                              }
+                                //uniontasknum += 1;
                             }
                         }
                         else
@@ -354,14 +380,23 @@ namespace InBound.Business
                                     record.POKEPLACE = tempCount % 10;
                                 }
                                 record.MERAGENUM = tempCount;
-                                record.UNIONTASKNUM = uniontasknum;
-                                uniontasknum += 1;
+                                record.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum.Nextval from dual"); 
+                               // uniontasknum += 1;
                             }
                             else
                             {
-                               var temp= templist.Where(x => x.SORTNUM < record.SORTNUM && x.UNIONTASKNUM==0 ).ToList();
-                                temp.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
-                                uniontasknum += 1;
+                               var temp= templist.Where(x => x.SORTNUM < record.SORTNUM && x.UNIONTASKNUM==0 ).OrderBy(x=>x.SORTNUM).ToList();
+                              // temp.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                                //uniontasknum += 1;
+                               var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                               var pnum = tempCount;
+                               foreach (var t in temp)
+                               {
+                                   t.MERAGENUM = tempCount;
+                                   t.UNIONTASKNUM = unionnum;
+                                   t.POKEPLACE = pnum;
+                                   pnum -= (t.POKENUM ?? 0);
+                               }
                                 
                                 tempCount = record.POKENUM??0;
                                 if (tempCount <= 10)
@@ -377,8 +412,17 @@ namespace InBound.Business
 
                             if (size == templist.Count)
                             {
-                                templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).ToList().ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = uniontasknum; });
-                                uniontasknum += 1;
+                                var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount;  x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                               var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                               var pnum = tempCount;
+                               foreach (var t in temp)
+                               {
+                                   t.MERAGENUM = tempCount;
+                                   t.UNIONTASKNUM = unionnum;
+                                   t.POKEPLACE = pnum;
+                                   pnum -= (t.POKENUM ?? 0);
+                               }
+                                // uniontasknum += 1;
                             }
                           
                         }

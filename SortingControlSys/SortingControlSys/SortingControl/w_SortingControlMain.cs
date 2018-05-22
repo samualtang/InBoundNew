@@ -91,6 +91,7 @@ namespace SortingControlSys.SortingControl
 
 
         }
+        private delegate void SendTaskDelegate();
         private delegate void HandleDelegate1(string info, Label label);
         public void updateLabel(string info, Label label)
         {
@@ -396,6 +397,7 @@ namespace SortingControlSys.SortingControl
             return i;
         }
         delegate void delSendTask();
+        int mainbeltNum2 = 4;
         /// <summary>
         /// 第二组数据
         /// </summary>
@@ -414,21 +416,40 @@ namespace SortingControlSys.SortingControl
                 {
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno2, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno2, 10))
                     {
-                        decimal taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno2 - 1)).ToString());
-                        decimal zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno2)).ToString());
-                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum);
-                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum, taskno, zqqty, cache.CACHESIZE ?? 0);
+                        decimal taskno, zqqty;
+                        try
+                        {
+                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1 - 1)).ToString());
+
+                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1)).ToString());
+                        }
+                        catch
+                        {
+                            taskno = 0;
+                            zqqty = 0;
+                        }
+                        writeLog.Write("读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        updateListBox("读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        if (!ProducePokeService.CheckExistTaskNo(taskno))
+                        {
+                            zqqty = 0;
+                        }
+                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum2);
+                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum2, taskno, zqqty, cache.CACHESIZE ?? 0);
+                        writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
+                        updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
+                       
                         if (currentNum >= (cache.DISPATCHENUM??0))
                         {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, minCahceNum, mainbeltNum);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, (int)(cache.DISPATCHENUM ?? 0), mainbeltNum2);
                         }
-                        if (mainbeltNum + 1 <= 4)
+                        if (mainbeltNum2 - 1 > 0)
                         {
-                            mainbeltNum += 1;
+                            mainbeltNum2 -= 1;
                         }
                         else
                         {
-                            mainbeltNum = 1;
+                            mainbeltNum2 = 4;
                         }
                     }
 
@@ -506,7 +527,7 @@ namespace SortingControlSys.SortingControl
                 sendTask1();//异常后重新发送
             }
         }
-        int mainbeltNum = 1;
+        int mainbeltNum = 4;
         int maxCacheNum = 160;
         int minCahceNum =50;
         /// <summary>
@@ -528,21 +549,39 @@ namespace SortingControlSys.SortingControl
 
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno1, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno1, 10))
                     {
-                        decimal taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno1-1)).ToString());
-                        decimal zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 8 + sortgroupno1)).ToString());
+                        decimal taskno, zqqty;
+                        try
+                        {
+                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1 - 1)).ToString());
+
+                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1)).ToString());
+                        }
+                        catch
+                        {
+                            taskno = 0;
+                            zqqty = 0;
+                        }
+                        writeLog.Write("读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        updateListBox("读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        if (!ProducePokeService.CheckExistTaskNo(taskno))
+                        {
+                            zqqty = 0;
+                        }
                         T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno1, mainbeltNum);
                         decimal currentNum = ProducePokeService.LeftCount(sortgroupno1, mainbeltNum, taskno, zqqty, cache.CACHESIZE??0);
-                        if (currentNum >= (cache.DISPATCHENUM??0))
+                        writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 +" 主皮带:"+mainbeltNum);
+                        updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 + " 主皮带:" + mainbeltNum);
+                        if (currentNum>= (cache.DISPATCHENUM??0))
                         {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, minCahceNum, mainbeltNum);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, (int)(cache.DISPATCHENUM ?? 0), mainbeltNum);
                         }
-                        if (mainbeltNum + 1 <= 4)
+                        if (mainbeltNum - 1 > 0)
                         {
-                            mainbeltNum += 1;
+                            mainbeltNum -= 1;
                         }
                         else
                         {
-                            mainbeltNum = 1;
+                            mainbeltNum = 4;
                         }
                     }
 
@@ -973,15 +1012,22 @@ namespace SortingControlSys.SortingControl
                                 Thread.Sleep(100);
                             }
                           decimal tasknum=  decimal.Parse(taskgroup1.ReadD(0).ToString());
+
                             //if (tempList.Count > 0)
                             //{
                                // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                          TaskService.UpdateStatus(sortgroupno1,15, tasknum);//状态改为已发送
+                          if (tasknum != 0)
+                          {
+                              TaskService.UpdateStatus(sortgroupno1, 15, tasknum);//状态改为已发送
 
-                          updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
-                          writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                              updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
+                              writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                          }
                            // }
-                            sendTask();
+                            delSendTask task=sendTask;
+
+                            task.BeginInvoke( null, null);
+                          //  this.BeginInvoke( new delSendTask(sendTask));
                         }
 
                     }
@@ -1000,13 +1046,18 @@ namespace SortingControlSys.SortingControl
                             //if (tempList.Count > 0)
                             //{
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                            TaskService.UpdateStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                            if (tasknum != 0)
+                            {
+                                TaskService.UpdateStatus(sortgroupno2, 15, tasknum);//状态改为已发送
 
-                            
-                            updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
+
+                                updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
+                            }
                             //} 
-                            sendTask1();
+                            delSendTask task = sendTask1;
+
+                            task.BeginInvoke(null, null);
                         }
                     }
                 }
@@ -1018,7 +1069,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 1)//第一位：任务完成标志位
                     {
-                        if (decimal.Parse(values[i].ToString()) != 0)
+                        if (values[i]!=null && decimal.Parse(values[i].ToString()) != 0)
                         {
                             writeLog.Write((((groupNo - 1) * 22 + group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
                             updateListBox((((groupNo - 1) * 22 + group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
@@ -1070,7 +1121,7 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)
         {
             //TaskService.GetSortTask(1);
-
+         
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
