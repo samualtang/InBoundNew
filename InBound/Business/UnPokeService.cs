@@ -964,15 +964,19 @@ namespace InBound.Business
                 {
                     item.STATUS = status;
                 }
-                var query2 = (from item in data.T_UN_TASK where item.SORTNUM >= sortnumFrom && item.SORTNUM <= sortnumTo select item).FirstOrDefault();
-                if (status == 15)
+                var query2 = (from item in data.T_UN_TASK where item.SORTNUM >= sortnumFrom && item.SORTNUM <= sortnumTo select item).ToList() ;
+                foreach (var item in query2)
                 {
-                    query2.STATE = "30";
+                    if (status == 20)
+                    {
+                        item.STATE = "30";
+                    }
+                    else
+                    {
+                        item.STATE = "20";
+                    }
                 }
-                else
-                {
-                    query2.STATE = "20";
-                }
+             
 
                  data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=15)");
                 data.SaveChanges();

@@ -43,12 +43,13 @@ namespace SortingControlSys.SortingControl
             InitializeComponent();
             updateListBox("应用程序启动");
             writeLog.Write("应用程序启动");
+            t1.Tick += new EventHandler(t1_Tick);
             try
             {
                 lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
                // UnPokeService.getTask(25, lineNum, out list);
                initdata();
-           
+               t1.Start();//定时刷新
             }
             catch (Exception e)
             {
@@ -57,8 +58,15 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write(e.Message);
                 this.Close();
             }
+            
          }
 
+        void t1_Tick(object sender, EventArgs e)
+        {
+            initdata();
+            t1.Interval = 20000;//二十秒刷新
+        }
+       System.Windows.Forms. Timer t1 = new System.Windows.Forms.Timer();
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -67,7 +75,7 @@ namespace SortingControlSys.SortingControl
                 updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
             };
 
-            this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+           // this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
                 tempList = new List<KeyValuePair<int, int>>();
 
@@ -557,7 +565,7 @@ namespace SortingControlSys.SortingControl
                         }
                         FinishSignalGroup.Write(0, clientId[i] - 1);
                         //removeKey(clientId[i]);
-                        this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+                     //   this.task_data.BeginInvoke(new Action(() => { initdata(); }));
 
                         //}
 
@@ -838,7 +846,8 @@ namespace SortingControlSys.SortingControl
        }
        private void button11_Click(object sender, EventArgs e)
        {
-           this.task_data.BeginInvoke(new Action(() => { initdata(); }));
+           initdata();
+         //  this.task_data.BeginInvoke(new Action(() => { initdata(); }));
        }
        private void button12_Click(object sender, EventArgs e)
        {
