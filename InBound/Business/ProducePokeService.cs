@@ -427,9 +427,9 @@ namespace InBound.Business
                           
                         }
                     }
-                    entity.SaveChanges();
+                    
                 }
-
+                entity.SaveChanges();
             }
         }
         public static void FetchTaskByTroughNo(string troughNo, string standbyNo)

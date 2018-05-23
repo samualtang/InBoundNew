@@ -206,27 +206,27 @@ namespace SortingControlSys.SortingControl
                 taskMachineGroup22 = new Group(pIOPCServer, 121, "group121", 1, LOCALE_ID);
 
                 taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem1());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem2());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem3());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem4());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem5());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem6());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem7());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem8());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem9());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem10());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem11());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem12());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem13());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem14());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem15());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem16());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem17());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem18());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem19());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem20());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem21());
-                taskMachineGroup1.addItem(MachineItemCollection.GetTaskStatusItem22());
+                taskMachineGroup2.addItem(MachineItemCollection.GetTaskStatusItem2());
+                taskMachineGroup3.addItem(MachineItemCollection.GetTaskStatusItem3());
+                taskMachineGroup4.addItem(MachineItemCollection.GetTaskStatusItem4());
+                taskMachineGroup5.addItem(MachineItemCollection.GetTaskStatusItem5());
+                taskMachineGroup6.addItem(MachineItemCollection.GetTaskStatusItem6());
+                taskMachineGroup7.addItem(MachineItemCollection.GetTaskStatusItem7());
+                taskMachineGroup8.addItem(MachineItemCollection.GetTaskStatusItem8());
+                taskMachineGroup9.addItem(MachineItemCollection.GetTaskStatusItem9());
+                taskMachineGroup10.addItem(MachineItemCollection.GetTaskStatusItem10());
+                taskMachineGroup11.addItem(MachineItemCollection.GetTaskStatusItem11());
+                taskMachineGroup12.addItem(MachineItemCollection.GetTaskStatusItem12());
+                taskMachineGroup13.addItem(MachineItemCollection.GetTaskStatusItem13());
+                taskMachineGroup14.addItem(MachineItemCollection.GetTaskStatusItem14());
+                taskMachineGroup15.addItem(MachineItemCollection.GetTaskStatusItem15());
+                taskMachineGroup16.addItem(MachineItemCollection.GetTaskStatusItem16());
+                taskMachineGroup17.addItem(MachineItemCollection.GetTaskStatusItem17());
+                taskMachineGroup18.addItem(MachineItemCollection.GetTaskStatusItem18());
+                taskMachineGroup19.addItem(MachineItemCollection.GetTaskStatusItem19());
+                taskMachineGroup20.addItem(MachineItemCollection.GetTaskStatusItem20());
+                taskMachineGroup21.addItem(MachineItemCollection.GetTaskStatusItem21());
+                taskMachineGroup22.addItem(MachineItemCollection.GetTaskStatusItem22());
 
                 SendTaskStatesGroup =new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//监控标志位
 
@@ -326,10 +326,34 @@ namespace SortingControlSys.SortingControl
                 //}
                 if (SendTaskStatesGroup.Read(0).ToString() != "1")//监控标志位第一组 产生跳变
                 {
+                    decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
+
+                    //if (tempList.Count > 0)
+                    //{
+                    // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                    if (tasknum != 0)
+                    {
+                        TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+
+                        updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
+                        writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                    }
                     SendTaskStatesGroup.Write(2, 0);
                 }
                 if (SendTaskStatesGroup.Read(1).ToString() != "1")//监控标志位第二组 
                 {
+                    decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
+
+                    //if (tempList.Count > 0)
+                    //{
+                    // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                    if (tasknum != 0)
+                    {
+                        TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+
+                        updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
+                        writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                    }
                     SendTaskStatesGroup.Write(2, 1);
                 }
                 updateListBox("连接服务器成功......");
@@ -417,19 +441,29 @@ namespace SortingControlSys.SortingControl
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno2, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno2, 10))
                     {
                         decimal taskno, zqqty;
+                        decimal sortgroup = sortgroupno2;
+                        if (sortgroup == 4)
+                        {
+                            sortgroup = 3;
+                        }
+                        else if (sortgroup == 8)
+                        {
+                            sortgroup = 7;
+                        }
+
                         try
                         {
-                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1 - 1)).ToString());
+                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))).ToString());
 
-                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1)).ToString());
+                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1) - 1)).ToString());
                         }
                         catch
                         {
                             taskno = 0;
                             zqqty = 0;
                         }
-                        writeLog.Write("读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        updateListBox("读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        writeLog.Write("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        updateListBox("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
                         if (!ProducePokeService.CheckExistTaskNo(taskno))
                         {
                             zqqty = 0;
@@ -451,6 +485,7 @@ namespace SortingControlSys.SortingControl
                         {
                             mainbeltNum2 = 4;
                         }
+                        Thread.Sleep(1000);
                     }
 
                     object[] datas = ProducePokeService.GetSortTask(sortgroupno2);//数据
@@ -530,6 +565,7 @@ namespace SortingControlSys.SortingControl
         int mainbeltNum = 4;
         int maxCacheNum = 160;
         int minCahceNum =50;
+        List<string> plclist = ItemCollection.getUnionTaskItem();
         /// <summary>
         /// 第一组数据
         /// </summary>
@@ -550,19 +586,28 @@ namespace SortingControlSys.SortingControl
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno1, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno1, 10))
                     {
                         decimal taskno, zqqty;
+                        decimal sortgroup = sortgroupno1;
+                        if (sortgroup == 3)
+                        {
+                            sortgroup = 4;
+                        }
+                        else if (sortgroup == 7)
+                        {
+                            sortgroup = 8;
+                        }
                         try
                         {
-                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1 - 1)).ToString());
+                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))).ToString());
 
-                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + sortgroupno1)).ToString());
+                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup) - 1)).ToString());
                         }
                         catch
                         {
                             taskno = 0;
                             zqqty = 0;
                         }
-                        writeLog.Write("读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        updateListBox("读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        writeLog.Write("plc地址:"+plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))]+"读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                        updateListBox("plc地址:" + plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
                         if (!ProducePokeService.CheckExistTaskNo(taskno))
                         {
                             zqqty = 0;
@@ -583,6 +628,7 @@ namespace SortingControlSys.SortingControl
                         {
                             mainbeltNum = 4;
                         }
+                        Thread.Sleep(1000);
                     }
 
                     object[] datas = ProducePokeService.GetSortTask(sortgroupno1);//数据
@@ -1018,8 +1064,7 @@ namespace SortingControlSys.SortingControl
                                // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                           if (tasknum != 0)
                           {
-                              TaskService.UpdateStatus(sortgroupno1, 15, tasknum);//状态改为已发送
-
+                              TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
                               updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                               writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                           }
@@ -1048,9 +1093,7 @@ namespace SortingControlSys.SortingControl
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                             if (tasknum != 0)
                             {
-                                TaskService.UpdateStatus(sortgroupno2, 15, tasknum);//状态改为已发送
-
-
+                                TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
                                 updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                             }
@@ -1121,7 +1164,7 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)
         {
             //TaskService.GetSortTask(1);
-         
+           // List<String> list = ItemCollection.getUnionTaskItem();
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 

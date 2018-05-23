@@ -97,6 +97,8 @@ namespace InBound.Business
 
             }
         }
+
+      
         /// <summary>
         /// 分拣任务号 合流任务号 查询机械手
         /// </summary>
@@ -1648,6 +1650,26 @@ namespace InBound.Business
                     entity.SaveChanges();
                 }
             }
+        }
+
+         public static void UpdateTaskStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
+        {
+
+
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where  item.SORTSTATE==12 && item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        item.SORTSTATE = stage;
+                    }
+                    //entity.ExecuteStoreCommand("update t_produce_task set state=30 where  tasknum not in (select distinct a.tasknum from t_produce_poke a,t_produce_task b where  a.tasknum=b.tasknum and sortstate!=20)");
+                    entity.SaveChanges();
+                }
+            }
+            
         }
         public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
         {
