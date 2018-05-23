@@ -886,7 +886,10 @@ namespace InBound.Business
                     var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList();
                     foreach (var item in query)
                     {
-                        item.STATUS = status;
+                        if (item.STATUS == 15)//必须等于15才能更新已完成
+                        {
+                            item.STATUS = status;
+                        }
                     }
                     data.ExecuteStoreCommand("update t_un_task set state=20 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                     data.SaveChanges();

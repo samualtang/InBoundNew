@@ -365,6 +365,22 @@ namespace InBound.Business
             }
         }
         #endregion
+
+        /// <summary>
+        /// 查询预分拣任务号到预分拣任务号的区间
+        /// </summary>
+        /// <param name="SortTaskNumFrom">起始预分拣任务号</param>
+        /// <param name="SortTaskNumTo">结束预分拣任务号</param>
+        /// <returns></returns>
+        public static List<T_PRODUCE_POKE> GetListBySortTaskNumToSortTaskNum(decimal SortTaskNumFrom, decimal SortTaskNumTo)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_PRODUCE_POKE where items.SORTNUM >= SortTaskNumFrom && items.SORTNUM <= SortTaskNumFrom select items).ToList();
+
+                return query;
+            }
+        }
         public static void updateTask(decimal fromtasknum, decimal totasknum, decimal state)
         {
             

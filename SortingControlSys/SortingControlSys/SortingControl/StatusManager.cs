@@ -152,7 +152,7 @@ namespace SortingControlSys.SortingControl
 
                 if (MsgBoxResult == DialogResult.Yes)
                 {
-                    if (textBox1.Text.Equals(""))
+                    if (string.IsNullOrWhiteSpace(textBox1.Text)) 
                     {
                         MessageBox.Show("请输入任务号");
                         return;
@@ -162,9 +162,13 @@ namespace SortingControlSys.SortingControl
                         String from = textBox1.Text;
                         String to = textBox2.Text;
                         int taskState = 10;
-                        if (textBox2.Text == "")
+                        if (string.IsNullOrWhiteSpace(textBox2.Text))
                         {
                             to = from;
+                        }
+                        if (Convert.ToDecimal(textBox1.Text) > Convert.ToDecimal(textBox2.Text)) //防止任务号输反
+                        {
+                            from = to;
                         }
                         if (radioButton2.Checked)
                         {
@@ -176,18 +180,21 @@ namespace SortingControlSys.SortingControl
 
                             taskState = 20;
                         }
-                        TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
                         decimal dFrom = decimal.Parse(from);
                         decimal tFrom = decimal.Parse(to);
-                        for (decimal i = dFrom; i <= tFrom; i++)
-                        {
+                        TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
+                        var listSortNum = TaskService.GetListBySortTaskNumToSortTaskNum(dFrom,  tFrom);
+                       
+
+                        foreach (var item in listSortNum)
+	                    {
                             if (cbLineA.Checked)
                             {
                                 //if (taskState == 20)//转到机械手负责
                                 //{
                                 //    InBoundService.UpdateInOut(i, sortgroupno1);
                                 //}
-                                TaskService.UpdateStatus(sortgroupno1, taskState, i);
+                                TaskService.UpdateStatus(sortgroupno1, taskState, item.SORTNUM ?? 0);
                             }
                             if (cbLineB.Checked)
                             {
@@ -195,9 +202,30 @@ namespace SortingControlSys.SortingControl
                                 //{
                                 //    InBoundService.UpdateInOut(i, sortgroupno2);
                                 //}
-                                TaskService.UpdateStatus(sortgroupno2, taskState, i);
+                                TaskService.UpdateStatus(sortgroupno2, taskState,  item.SORTNUM ?? 0);
                             }
                         }
+                        ////////////////////////////////////////////////////////////////////之前机制
+                        //for (decimal i = dFrom; i <= tFrom; i++)
+                        //{
+                        //    if (cbLineA.Checked)
+                        //    {
+                        //        //if (taskState == 20)//转到机械手负责
+                        //        //{
+                        //        //    InBoundService.UpdateInOut(i, sortgroupno1);
+                        //        //}
+                        //        TaskService.UpdateStatus(sortgroupno1, taskState, i);
+                        //    }
+                        //    if (cbLineB.Checked)
+                        //    {
+                        //        //if (taskState == 20)
+                        //        //{
+                        //        //    InBoundService.UpdateInOut(i, sortgroupno2);
+                        //        //}
+                        //        TaskService.UpdateStatus(sortgroupno2, taskState, i);
+                        //    }
+                        //}
+                        ////////////////////////////////////////////////////////////////////////
                         button1_Click(null, null);
 
                     }

@@ -253,9 +253,13 @@ namespace SortingControlSys.SortingControl
                         String from = textBox1.Text;
                         String to = textBox2.Text;
                         int taskState = 10;
-                        if (textBox2.Text == "")
+                        if (string.IsNullOrWhiteSpace(textBox2.Text) )
                         {
                             to = from;
+                        }
+                        if (Convert.ToDecimal(textBox1.Text) > Convert.ToDecimal(textBox2.Text)) //防止任务号输反
+                        {
+                            from = to;
                         }
                         if (radioButton2.Checked)
                         {
