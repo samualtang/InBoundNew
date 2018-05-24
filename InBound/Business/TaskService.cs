@@ -477,7 +477,7 @@ namespace InBound.Business
                               {
                                   REGIONCODE = g.Key.REGIONCODE,
                                   FinishCount = g.Count(t => t.REGIONCODE == g.Key.REGIONCODE),
-                                  FinishQTY = g.Sum(t => t.TASKQUANTITY) ?? 0
+                                  FinishQTY = g.Sum(t => t.TASKQUANTITY ?? 0)
                               }).ToList();
 
 
