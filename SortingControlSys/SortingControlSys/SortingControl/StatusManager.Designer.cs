@@ -47,11 +47,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbSelect = new System.Windows.Forms.ComboBox();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtMachine = new System.Windows.Forms.TextBox();
-            this.lblmachine = new System.Windows.Forms.Label();
-            this.txtsortnum = new System.Windows.Forms.TextBox();
-            this.lblsortnum = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,6 +57,11 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtMachine = new System.Windows.Forms.TextBox();
+            this.lblmachine = new System.Windows.Forms.Label();
+            this.txtsortnum = new System.Windows.Forms.TextBox();
+            this.lblsortnum = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -135,11 +135,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(358, 28);
+            this.label1.Location = new System.Drawing.Point(318, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 19;
-            this.label1.Text = "更新任务从";
+            this.label1.Text = "更新预分拣任务从";
             // 
             // textBox1
             // 
@@ -262,48 +262,6 @@
             this.task_data.Size = new System.Drawing.Size(1054, 505);
             this.task_data.TabIndex = 16;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(953, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "查询";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // txtMachine
-            // 
-            this.txtMachine.Location = new System.Drawing.Point(847, 24);
-            this.txtMachine.Name = "txtMachine";
-            this.txtMachine.Size = new System.Drawing.Size(86, 21);
-            this.txtMachine.TabIndex = 14;
-            // 
-            // lblmachine
-            // 
-            this.lblmachine.AutoSize = true;
-            this.lblmachine.Location = new System.Drawing.Point(698, 29);
-            this.lblmachine.Name = "lblmachine";
-            this.lblmachine.Size = new System.Drawing.Size(143, 12);
-            this.lblmachine.TabIndex = 13;
-            this.lblmachine.Text = "请输入机械手号进行查询:";
-            // 
-            // txtsortnum
-            // 
-            this.txtsortnum.Location = new System.Drawing.Point(589, 24);
-            this.txtsortnum.Name = "txtsortnum";
-            this.txtsortnum.Size = new System.Drawing.Size(86, 21);
-            this.txtsortnum.TabIndex = 14;
-            // 
-            // lblsortnum
-            // 
-            this.lblsortnum.AutoSize = true;
-            this.lblsortnum.Location = new System.Drawing.Point(428, 29);
-            this.lblsortnum.Name = "lblsortnum";
-            this.lblsortnum.Size = new System.Drawing.Size(155, 12);
-            this.lblsortnum.TabIndex = 13;
-            this.lblsortnum.Text = "请输入分拣任务号进行查询:";
-            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "SortNum";
@@ -368,6 +326,48 @@
             this.Column4.HeaderText = "状态位";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(953, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "查询";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // txtMachine
+            // 
+            this.txtMachine.Location = new System.Drawing.Point(847, 24);
+            this.txtMachine.Name = "txtMachine";
+            this.txtMachine.Size = new System.Drawing.Size(86, 21);
+            this.txtMachine.TabIndex = 14;
+            // 
+            // lblmachine
+            // 
+            this.lblmachine.AutoSize = true;
+            this.lblmachine.Location = new System.Drawing.Point(698, 29);
+            this.lblmachine.Name = "lblmachine";
+            this.lblmachine.Size = new System.Drawing.Size(143, 12);
+            this.lblmachine.TabIndex = 13;
+            this.lblmachine.Text = "请输入机械手号进行查询:";
+            // 
+            // txtsortnum
+            // 
+            this.txtsortnum.Location = new System.Drawing.Point(589, 24);
+            this.txtsortnum.Name = "txtsortnum";
+            this.txtsortnum.Size = new System.Drawing.Size(86, 21);
+            this.txtsortnum.TabIndex = 14;
+            // 
+            // lblsortnum
+            // 
+            this.lblsortnum.AutoSize = true;
+            this.lblsortnum.Location = new System.Drawing.Point(428, 29);
+            this.lblsortnum.Name = "lblsortnum";
+            this.lblsortnum.Size = new System.Drawing.Size(155, 12);
+            this.lblsortnum.TabIndex = 13;
+            this.lblsortnum.Text = "请输入分拣任务号进行查询:";
             // 
             // StatusManager
             // 

@@ -118,6 +118,10 @@ namespace SortingControlSys.SortingControl
                     {
                         to = from;
                     }
+                    if (Convert.ToDecimal(txtFrom.Text) < Convert.ToDecimal(txtTo.Text)) //防止任务号输反
+                    {
+                        from = to;
+                    }
                     if (radioButton2.Checked)//已发送
                     {
                         status = 15;

@@ -149,6 +149,10 @@ namespace SortingControlSys.SortingControl
                         {
                             to = from;
                         }
+                        if (Convert.ToDecimal(textBox1.Text) > Convert.ToDecimal(textBox2.Text)) //防止任务号输反
+                        {
+                            from = to;
+                        }
                         if (radioButton2.Checked)
                         {
                             taskState = 15;
@@ -162,19 +166,30 @@ namespace SortingControlSys.SortingControl
 
                         decimal dFrom = decimal.Parse(from);
                         decimal tFrom = decimal.Parse(to);
-                        for (decimal i = dFrom; i <= tFrom; i++)//i 机械手任务号
+                        //////////////////////////////////////////////////////////////////////////////////
+                        var machineList = InBoundService.GetListByUtasknumTotasknum(dFrom, tFrom);
+                        foreach (var item in machineList)
                         {
                             if (taskState == 20)
                             {
-                                InBoundService.UpdateMachineInOut(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
+                                InBoundService.UpdateMachineInOut(item.UNIONTASKNUM ?? 0, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
                             }
-
-                            TaskService.UpdateMachine(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1, taskState);
-
+                            TaskService.UpdateMachine(item.UNIONTASKNUM ?? 0, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1, taskState);
                         }
+                        ////////////////////////////////////////////////////////////////////////////////之前机制
+                        //for (decimal i = dFrom; i <= tFrom; i++)//i 机械手任务号
+                        //{
+                        //    if (taskState == 20)
+                        //    {
+                        //        InBoundService.UpdateMachineInOut(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1);
+                        //    }
+
+                        //    TaskService.UpdateMachine(i, (groupNo - 1) * 22 + cbTroughNum.SelectedIndex + 1, taskState);
+
+                        //}
                         button1_Click(null, null);
 
-                    } 
+                    }
                 }
             }
             catch (Exception ex)

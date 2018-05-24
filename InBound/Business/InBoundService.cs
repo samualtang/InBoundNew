@@ -1320,6 +1320,21 @@ namespace InBound.Business
             }
  
         }
+        /// <summary>
+        /// 查询机械手任务号到任务号区间的集合
+        /// </summary>
+        /// <param name="uniontasknumFrom">起始任务号</param>
+        /// <param name="uniontasknumTo">结束任务号</param>
+        /// <returns></returns>
+        public static List<T_PRODUCE_POKE> GetListByUtasknumTotasknum(decimal uniontasknumFrom, decimal uniontasknumTo)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_PRODUCE_POKE where items.UNIONTASKNUM >= uniontasknumFrom && items.UNIONTASKNUM <= uniontasknumTo select items).ToList();
+
+                return query;
+            }
+        }
         public static void UpdateInOut(decimal sortNo, decimal groupno)
         {
 
