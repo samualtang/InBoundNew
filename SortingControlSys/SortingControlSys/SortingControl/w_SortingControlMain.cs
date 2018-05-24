@@ -475,7 +475,7 @@ namespace SortingControlSys.SortingControl
                        
                         if (currentNum >= (cache.DISPATCHENUM??0))
                         {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, (int)(cache.DISPATCHENUM ?? 0), mainbeltNum2);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, (int)(cache.DISPATCHESIZE ?? 0), mainbeltNum2);
                         }
                         if (mainbeltNum2 - 1 > 0)
                         {
@@ -618,7 +618,7 @@ namespace SortingControlSys.SortingControl
                         updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 + " 主皮带:" + mainbeltNum);
                         if (currentNum>= (cache.DISPATCHENUM??0))
                         {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, (int)(cache.DISPATCHENUM ?? 0), mainbeltNum);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, (int)(cache.DISPATCHESIZE ?? 0), mainbeltNum);
                         }
                         if (mainbeltNum - 1 > 0)
                         {

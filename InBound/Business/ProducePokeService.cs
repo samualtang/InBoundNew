@@ -335,7 +335,7 @@ namespace InBound.Business
                 //开始算合单 生成合单号
                 var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM??0) select item1).ToList();
                 var troughnums = query3.Select(x => x.TROUGHNUM).Distinct().ToList();
-                //var uniontasknum = (from task in entity.T_PRODUCE_POKE  where task.GROUPNO==groupno select task).Max(x => x.UNIONTASKNUM)+1;
+                var sendOrder = ((from task in entity.T_PRODUCE_POKE  select task ).Max(x => x.SECSORTNUM)??0)+1;
                 foreach (var troughnum in troughnums)
                 {
                     var templist = query3.Where(x => x.TROUGHNUM == troughnum).OrderBy(x=>x.SORTNUM).ToList();
@@ -351,6 +351,8 @@ namespace InBound.Business
                            
                             tempCount += (record.POKENUM ?? 0);
                             record.POKEPLACE =tempCount;
+                            record.SECSORTNUM = sendOrder;
+                            sendOrder += 1;
                             if (size == templist.Count)
                             {
                                 var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
@@ -379,6 +381,8 @@ namespace InBound.Business
                                 {
                                     record.POKEPLACE = tempCount % 10;
                                 }
+                                record.SECSORTNUM = sendOrder;
+                                sendOrder += 1;
                                 record.MERAGENUM = tempCount;
                                 record.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum.Nextval from dual"); 
                                // uniontasknum += 1;
@@ -399,6 +403,8 @@ namespace InBound.Business
                                }
                                 
                                 tempCount = record.POKENUM??0;
+                                record.SECSORTNUM = sendOrder;
+                                sendOrder += 1;
                                 if (tempCount <= 10)
                                 {
                                     record.POKEPLACE = tempCount;
