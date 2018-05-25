@@ -1434,10 +1434,10 @@ namespace InBound.Business
                 {
                     foreach (var item in query)
                     {
-                        if (item.MACHINESTATE == 15)
-                        {
+                        //if (item.MACHINESTATE == 15)
+                        //{
                             item.MACHINESTATE = 20;
-                        }
+                        //}
 
                     }
                     entity.SaveChanges();
