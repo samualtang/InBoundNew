@@ -512,7 +512,8 @@ namespace SpecialShapeSmoke
                 //MessageBox.Show(data);
            
         }
-        //System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
+        NowView fNowView;
+        System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         //System.Windows.Forms.Timer t2 = new System.Windows.Forms.Timer(); 
         public void GetNowView(object sender, EventArgs e)//获取当前混合道
         { 
@@ -526,37 +527,44 @@ namespace SpecialShapeSmoke
             {
                 machineseq2 = machineseq1;
             }
-           
-            NowView fNowView = new NowView(machineseq1, machineseq2, finishNo);
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm is NowView)
-                {
-                    fNowView.TopMost = true;
-                    fNowView.Activate();
-                     
-                    return;
-                }
-            }
+            fNowView = new NowView(machineseq1, machineseq2, finishNo);
+ 
             fNowView.Show();
             fNowView.Activate();
- 
-            //finishNo[0] = 1516;
+
+            SearchWinForm(fNowView);
+            //finishNo[0] = 244;
             //t1.Tick += new EventHandler(t1_Tick);
-            //t2.Tick += new EventHandler(t2_Tick);
+            ////t2.Tick += new EventHandler(t2_Tick);
             //t1.Stop();
             //t2.Stop();
             //t1.Interval = 10000;
             //t1.Start();
  
         }
-        //public void t1_Tick(object sender, EventArgs e) 
+        public void SearchWinForm(Form fname) 
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is Form)
+                {
+                    fname.TopMost = true;
+                    fname.Activate();
+
+                    return;
+                }
+            }
+            fname.Show();
+            fname.Activate();
+        }
+
+        //public void t1_Tick(object sender, EventArgs e)
         //{
-        //    finishNo[0] = 115;
-        //    finishNo[1] = 33;
+        //    finishNo[0] = 244;
+        //    finishNo[1] = 0;
         //    t1.Stop();
-        //    t2.Interval = 10000;
-        //    t2.Start();
+        //    //t2.Interval = 10000;
+        //    //t2.Start();
         //}
         //public void t2_Tick(object sender, EventArgs e)
         //{

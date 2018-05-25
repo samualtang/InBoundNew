@@ -17,112 +17,112 @@ namespace FollowTask
         /// treeV隐藏标志
         /// </summary>
         bool click = true;
-        System.Resources.ResourceManager rm ;
+        System.Resources.ResourceManager rm;
         //string btmpathLeft = Application.StartupPath + @" \Resources\5255\4.ico";
 
         // string btmpathRight = Application.StartupPath + @" \Resources\5255\7.ico";
-         Bitmap btmpathLeft = (Bitmap)Properties.Resources.ResourceManager.GetObject("41");
-         Bitmap btmpathRight = (Bitmap)Properties.Resources.ResourceManager.GetObject("71");
+        Bitmap btmpathLeft = (Bitmap)Properties.Resources.ResourceManager.GetObject("41");
+        Bitmap btmpathRight = (Bitmap)Properties.Resources.ResourceManager.GetObject("71");
         public Fm_Mian()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen; 
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
 
-          
-            btnLeft.Location = new Point(166,  Height / 2);
+
+            btnLeft.Location = new Point(166, Height / 2);
             BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
         }
 
 
         private void treeV_AfterSelect(object sender, TreeViewEventArgs e)
-        { 
+        {
             string nodeselect = treeV.SelectedNode.Name;//获取选择name 
             switch (nodeselect)
             {
-                #region 机械手  
+                #region 机械手
                 case "MachineGroup1":
                     ShowMchineForm("机械手,第1组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第1组的机械手信息"; 
+                    txtMainInfo.Text = "第1组的机械手信息";
                     break;
                 case "MachineGroup2":
                     ShowMchineForm("机械手,第2组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第2组的机械手信息"; 
+                    txtMainInfo.Text = "第2组的机械手信息";
                     break;
                 case "MachineGroup3":
                     ShowMchineForm("机械手,第3组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第3组的机械手信息"; 
+                    txtMainInfo.Text = "第3组的机械手信息";
                     break;
                 case "MachineGroup4":
                     ShowMchineForm("机械手,第4组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第4组的机械手信息"; 
+                    txtMainInfo.Text = "第4组的机械手信息";
                     break;
                 case "MachineGroup5":
                     ShowMchineForm("机械手,第5组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第5组的机械手信息"; 
+                    txtMainInfo.Text = "第5组的机械手信息";
                     break;
                 case "MachineGroup6":
                     ShowMchineForm("机械手,第6组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第6组的机械手信息"; 
+                    txtMainInfo.Text = "第6组的机械手信息";
                     break;
                 case "MachineGroup7":
                     ShowMchineForm("机械手,第7组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第7组的机械手信息"; 
+                    txtMainInfo.Text = "第7组的机械手信息";
                     break;
                 case "MachineGroup8":
                     ShowMchineForm("机械手,第8组");
                     txtMainInfo.Clear();
-                    txtMainInfo.Text  = "第8组的机械手信息"; 
+                    txtMainInfo.Text = "第8组的机械手信息";
                     break;
-                #endregion 
+                #endregion
                 #region 预分拣
                 case "fjBigGroup1":
-                 ShowSortingForm("预分拣,第1组");
-                 break;
+                    ShowSortingForm("预分拣,第1组");
+                    break;
                 case "fjBigGroup2":
-                 ShowSortingForm("预分拣,第2组");
-                 break;
+                    ShowSortingForm("预分拣,第2组");
+                    break;
                 case "fjBigGroup3":
-                 ShowSortingForm("预分拣,第3组");
-                 break;
+                    ShowSortingForm("预分拣,第3组");
+                    break;
                 case "fjBigGroup4":
-                 ShowSortingForm("预分拣,第4组");
-                 break;
+                    ShowSortingForm("预分拣,第4组");
+                    break;
                 case "fjBigGroup5":
-                 ShowSortingForm("预分拣,第5组");
-                 break;
+                    ShowSortingForm("预分拣,第5组");
+                    break;
                 case "fjBigGroup6":
-                 ShowSortingForm("预分拣,第6组");
-                 break;
+                    ShowSortingForm("预分拣,第6组");
+                    break;
                 case "fjBigGroup7":
-                 ShowSortingForm("预分拣,第7组");
-                 break;
+                    ShowSortingForm("预分拣,第7组");
+                    break;
                 case "fjBigGroup8":
-                 ShowSortingForm("预分拣,第8组");
-                 break;
-                #endregion 
+                    ShowSortingForm("预分拣,第8组");
+                    break;
+                #endregion
                 #region 合流
                 case "UinonBelt1":
-                 ShowUinionFrom("合流,第1根");
-                 break;
+                    ShowUinionFrom("合流,第1根");
+                    break;
                 case "UinonBelt2":
-                 ShowUinionFrom("合流,第2根");
-                 break;
+                    ShowUinionFrom("合流,第2根");
+                    break;
                 case "UinonBelt3":
-                 ShowUinionFrom("合流,第3根");
-                 break;
+                    ShowUinionFrom("合流,第3根");
+                    break;
                 case "UinonBelt4":
-                 ShowUinionFrom("合流,第4根");
-                 break;
+                    ShowUinionFrom("合流,第4根");
+                    break;
                 #endregion
 
             }
@@ -224,7 +224,7 @@ namespace FollowTask
             if (click)
             {
                 treeV.Visible = false;//隐藏
-                btnLeft.Location = new Point(0, this.Size.Height / 2); 
+                btnLeft.Location = new Point(0, this.Size.Height / 2);
                 BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathRight));
                 click = false;
             }
@@ -236,7 +236,7 @@ namespace FollowTask
                 BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));
                 click = true;
             }
-          
+
 
         }
 
@@ -256,17 +256,17 @@ namespace FollowTask
         {
             if (click)
             {
-                TxtBoxMianInFo( "隐藏树状菜单"); 
+                TxtBoxMianInFo("隐藏树状菜单");
             }
             else
             {
-                TxtBoxMianInFo( "还原树状菜单"); 
+                TxtBoxMianInFo("还原树状菜单");
             }
         }
 
         private void btnLeft_MouseLeave(object sender, EventArgs e)
         {
-            TxtBoxMianInFo( "信息:");   
+            TxtBoxMianInFo("信息:");
         }
         private void 退出EToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -302,7 +302,7 @@ namespace FollowTask
 
         private void txtMainInfo_TextChanged(object sender, EventArgs e)
         {
-        
+
         }
 
         private void 机械手MToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,7 +328,7 @@ namespace FollowTask
                 return;
             }
             fm.MdiParent = this;
-            fm.Show(); 
+            fm.Show();
         }
 
         private void 合流UToolStripMenuItem_Click(object sender, EventArgs e)
@@ -357,6 +357,17 @@ namespace FollowTask
             fm.Show();
         }
 
-      
+        private void 查询任务sToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        Restocking rt;
+        private void 补货任务ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rt = new Restocking();
+            rt.ShowDialog();
+
+
+        }
     }
 }

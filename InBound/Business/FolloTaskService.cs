@@ -382,5 +382,69 @@ namespace InBound.Business
                
             }
         }
+
+        public static List<RestockingData> Restocking(string str)
+        {
+            using (Entities et = new Entities())
+            {
+                var query = et.T_WMS_ITEM.Where(i => i.BIGBOX_BAR != "222222" && i.BIGBOX_BAR != "111111" && (i.ITEMNAME.StartsWith(str) || i.ITEMNO.StartsWith(str))).Select(x => new RestockingData { cid = x.ITEMNO, cname = x.ITEMNAME, bigbox_bar = x.BIGBOX_BAR, dxtype = x.DXTYPE }).ToList();
+                return query;
+            }
+        }
+
+        public static List<TroughNumList> GetYGTroughNum()
+        {
+            using (Entities et = new Entities())
+            {
+                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 10 && i.CIGARETTETYPE == 20).OrderBy(t=>t.TROUGHNUM).Select(x => new TroughNumList { cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
+                return query;
+            }
+        }
+        public static List<TroughNumList> GetHJTroughNum()
+        {
+            using (Entities et = new Entities())
+            {
+                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 20 && i.CIGARETTETYPE == 20).OrderBy(t=>t.TROUGHNUM).Select(x => new TroughNumList { cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
+                return query;
+            }
+        }
+        public static bool InsertRestocking(string startNum,string endNum,string bigbox_Bar, string cid,int num,decimal dxtype)
+        {
+            using (Entities et = new Entities())
+            {
+                try 
+	            {
+                    //var i= et.INF_JOBDOWNLOAD.Count();
+                    INF_JOBDOWNLOAD inf_iobdownload = new INF_JOBDOWNLOAD();
+                    string id = BaseService.GetSeq("select S_INF_JOBDOWNLOAD.nextval from dual").ToString();
+
+                    inf_iobdownload.ID = id;
+                    inf_iobdownload.JOBID = id;
+                    inf_iobdownload.JOBTYPE = 80;
+                    inf_iobdownload.SOURCE = startNum;
+                    inf_iobdownload.TARGET = endNum;
+                    inf_iobdownload.BRANDID = bigbox_Bar;
+                    inf_iobdownload.PLANQTY = num;
+                    inf_iobdownload.PILETYPE = dxtype;
+                    inf_iobdownload.PRIORITY = 50;
+                    inf_iobdownload.BARCODE = cid;
+                    inf_iobdownload.TUTYPE = 1;
+                    inf_iobdownload.CREATEDATE = DateTime.Now;
+                    inf_iobdownload.STATUS = 0;
+
+                    et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
+                    et.SaveChanges();
+                    return true;
+	                
+                }
+	            catch (Exception)
+	            {
+                    return false;
+	            }
+                
+            }
+        }
+
+     
     }
 }

@@ -50,9 +50,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\Union\Lib\opcrcw.da.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Messaging" />
@@ -125,6 +127,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Restocking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Restocking.Designer.cs">
+      <DependentUpon>Restocking.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectTask\W_FenJTask.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +182,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Restocking.resx">
+      <DependentUpon>Restocking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectTask\W_FenJTask.resx">
       <DependentUpon>W_FenJTask.cs</DependentUpon>
