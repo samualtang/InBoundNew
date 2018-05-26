@@ -88,14 +88,16 @@ namespace InBound.Business
                                 on item.TROUGHNUM equals item2.TROUGHNUM
                             where (item.GROUPNO == groupNo1 || item.GROUPNO == groupNo2) && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
                             orderby item.SORTNUM
-                            select new FollowTaskDeail() { 
+                            select new FollowTaskDeail()
+                            {
                                 CIGARETTDECODE = item2.CIGARETTECODE,
                                 CIGARETTDENAME = item2.CIGARETTENAME,
-                                Machineseq = item.MACHINESEQ ?? 0, 
-                                SortNum = item.SORTNUM ?? 0, 
-                                tNum = item.POKENUM ?? 0, 
-                                Billcode = item.BILLCODE, 
-                                SortState = item.SORTSTATE ?? 0 };
+                                Machineseq = item.MACHINESEQ ?? 0,
+                                SortNum = item.SORTNUM ?? 0,
+                                tNum = item.POKENUM ?? 0,
+                                Billcode = item.BILLCODE,
+                                SortState = item.SORTSTATE ?? 0
+                            };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
@@ -119,7 +121,7 @@ namespace InBound.Business
                             orderby item.SORTNUM
                             select new FollowTaskDeail() { CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0 };
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList() ;
+                    return query.OrderBy(x => x.SortNum).ToList();
                 else return null;
             }
         }
@@ -145,19 +147,19 @@ namespace InBound.Business
         {
             using (Entities dataentity = new Entities())
             {
-            var query = from item in dataentity.T_PRODUCE_POKE
+                var query = from item in dataentity.T_PRODUCE_POKE
                             where item.SORTNUM == sortnum
                             orderby item.SORTNUM
                             group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE } into g
                             select new FollowTaskDeail() { SortNum = g.Key.SORTNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, UnionState = g.Key.UNIONSTATE ?? 0 };
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
-                  
+
                 else return null;
             }
         }
-     
-      
+
+
         /// <summary>
         /// 查询机械手任务
         /// </summary>
@@ -174,7 +176,7 @@ namespace InBound.Business
         //                    orderby item.SORTNUM
         //    }
         //}
-     
+
         /// <summary>
         /// 获取缓存区 包括正在执行抓条烟数量
         /// </summary>
@@ -184,38 +186,38 @@ namespace InBound.Business
         ///   <param name="machinePokeNum">合流机械手当前执行抓数 </param>
         /// <returns></returns>
         public static List<FollowTaskDeail> getUnionCache(decimal groupno, decimal mainbelt, decimal machineTaskExcuting, decimal machinePokeNum)
-        { 
+        {
             try
             {
                 using (Entities dataentity = new Entities())
                 {
                     //由于机械手第三组分出来的烟对应的是合流第四组机械手，这里3和4组对应有个对调
-                    if (groupno == 4){ groupno = 3; } else if (groupno == 3) { groupno = 4; }
+                    if (groupno == 4) { groupno = 3; } else if (groupno == 3) { groupno = 4; }
                     //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
                     if (groupno == 8) { groupno = 7; } else if (groupno == 7) { groupno = 8; }
-                    var query =( from p in dataentity.T_PRODUCE_POKE
-                                join t in dataentity.T_PRODUCE_SORTTROUGH
-                                on p.TROUGHNUM equals t.TROUGHNUM
-                                where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting
-                                orderby p.SORTNUM, p.MACHINESEQ
-                                select new FollowTaskDeail(){CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME,POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0,POKEID = p.POKEID,MainBelt = p.MAINBELT ?? 0,SortNum = p.SORTNUM ?? 0,GroupNO = t.GROUPNO ?? 0}).ToList();
+                    var query = (from p in dataentity.T_PRODUCE_POKE
+                                 join t in dataentity.T_PRODUCE_SORTTROUGH
+                                 on p.TROUGHNUM equals t.TROUGHNUM
+                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting
+                                 orderby p.SORTNUM, p.MACHINESEQ
+                                 select new FollowTaskDeail() { CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME, POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0, POKEID = p.POKEID, MainBelt = p.MAINBELT ?? 0, SortNum = p.SORTNUM ?? 0, GroupNO = t.GROUPNO ?? 0 }).ToList();
                     if (query != null)
                     {
                         //获取当前抓烟任务的订单总烟数
-                            decimal pokenumTotail = query.Where(a => a.SortNum == machineTaskExcuting && a.GroupNO == groupno && a.MainBelt == mainbelt).Select(z => z.POKENUM).Sum();//注意:数量可能为空(null) 原因:订单数据异常
+                        decimal pokenumTotail = query.Where(a => a.SortNum == machineTaskExcuting && a.GroupNO == groupno && a.MainBelt == mainbelt).Select(z => z.POKENUM).Sum();//注意:数量可能为空(null) 原因:订单数据异常
 
-                            return GetUnionCacheByPokenum(query.ToList(), machineTaskExcuting, machinePokeNum, pokenumTotail);
+                        return GetUnionCacheByPokenum(query.ToList(), machineTaskExcuting, machinePokeNum, pokenumTotail);
                     }
                     else { return null; }
 
                 }
             }
             catch (Exception e)
-            { 
+            {
                 throw e;
             }
         }
-       
+
         /// <summary>
         /// 合流缓存区
         /// </summary>
@@ -227,15 +229,15 @@ namespace InBound.Business
         private static List<FollowTaskDeail> GetUnionCacheByPokenum(List<FollowTaskDeail> list, decimal machineTaskExcuting, decimal machinePokeNum, decimal pokenumTotail)
         {
             decimal TotailmachinePokeNum = Math.Ceiling(pokenumTotail / 10);//总数抓数 
-            if (pokenumTotail < 10 * machinePokeNum || TotailmachinePokeNum == machinePokeNum )//如果当前抓烟任务的订单总烟数 小于十   去掉前抓烟任务 (包括最后一个任务)
+            if (pokenumTotail < 10 * machinePokeNum || TotailmachinePokeNum == machinePokeNum)//如果当前抓烟任务的订单总烟数 小于十   去掉前抓烟任务 (包括最后一个任务)
             {
-                   list.RemoveAll(a => a.SortNum == machineTaskExcuting); 
+                list.RemoveAll(a => a.SortNum == machineTaskExcuting);
             }
             else
             {
                 for (int Count = 1; Count <= machinePokeNum; Count++)//根据当前抓数抓数
-                { 
-                    var pokenum = list.Where(c=> c.POKEID == list[0].POKEID).Select(a => new { pokeid = a.POKEID, pokenum = a.POKENUM }).FirstOrDefault();//获取当前任务抓烟数  
+                {
+                    var pokenum = list.Where(c => c.POKEID == list[0].POKEID).Select(a => new { pokeid = a.POKEID, pokenum = a.POKENUM }).FirstOrDefault();//获取当前任务抓烟数  
                     if (pokenum.pokenum == 10)//如果有一抓等于10  直接去掉 
                     {
                         list.RemoveAll(a => a.SortNum == machineTaskExcuting && a.POKEID == list[0].POKEID);//
@@ -246,9 +248,9 @@ namespace InBound.Business
                         decimal sum = 0;//和 
                         decimal lastNum = 0;//上一次 
                         decimal endNum = 0;//最后一次
-                        for (int i = 0; i <= Listmachineseq.Length; i++) 
+                        for (int i = 0; i <= Listmachineseq.Length; i++)
                         {
-                            sum += list[i].POKENUM; 
+                            sum += list[i].POKENUM;
                             if (sum == 10)
                             {
                                 Listmachineseq[i] = list[i].POKEID;
@@ -258,7 +260,7 @@ namespace InBound.Business
                                 }
                                 break;
                             }
-                            else if (sum > 10) 
+                            else if (sum > 10)
                             {
                                 endNum = list.Find(x => x.POKEID == list[i - 1].POKEID).POKENUM -= (list[i - 1].POKENUM - (10 - lastNum)); //对相加大于10最后一个pokenum的值 所取的数量 相减
                                 list.Find(z => z.POKEID == list[i].POKEID).POKENUM -= endNum;
@@ -267,15 +269,15 @@ namespace InBound.Business
                                     list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
                                 }
                                 //return list;
-                                 break;
+                                break;
                             }
-                            lastNum = sum; 
+                            lastNum = sum;
                             Listmachineseq[i] = list[i].POKEID;//存入当前pokeid
-                        } 
+                        }
                     }
                 }
-            } 
-            return list; 
+            }
+            return list;
         }
         /// <summary>
         /// 获取机械手皮带信息
@@ -289,7 +291,7 @@ namespace InBound.Business
                 var query1 = (from t in dataentity.T_PRODUCE_POKE
                               join p in dataentity.T_PRODUCE_SORTTROUGH
                               on t.TROUGHNUM equals p.TROUGHNUM
-                              where t.MACHINESTATE == 20 && t.SORTSTATE == 15   && t.GROUPNO == groupNo
+                              where t.MACHINESTATE == 20 && t.SORTSTATE == 15 && t.GROUPNO == groupNo
                               orderby t.SORTNUM
                               select new FollowTaskDeail
                               {
@@ -306,7 +308,7 @@ namespace InBound.Business
                     return query1;
                 }
                 else
-                return null;
+                    return null;
             }
         }
 
@@ -317,7 +319,7 @@ namespace InBound.Business
         /// <param name="mainbelt">主皮带通道</param>
         /// <param name="groupno">组号</param>
         /// <returns></returns>
-        public static List<FollowTaskDeail> GetSortingBeltTask(decimal mainbelt,decimal groupno)
+        public static List<FollowTaskDeail> GetSortingBeltTask(decimal mainbelt, decimal groupno)
         {
             using (Entities dataentity = new Entities())
             {
@@ -326,7 +328,7 @@ namespace InBound.Business
                     var query1 = (from p in dataentity.T_PRODUCE_POKE
                                   join t in dataentity.T_PRODUCE_SORTTROUGH
                                   on p.TROUGHNUM equals t.TROUGHNUM
-                                  where p.MAINBELT == mainbelt &&  t.GROUPNO == groupno &&p.SORTSTATE == 15  && p.MACHINESTATE == 20
+                                  where p.MAINBELT == mainbelt && t.GROUPNO == groupno && p.SORTSTATE == 15 && p.MACHINESTATE == 20
                                   orderby p.SORTNUM, p.MACHINESEQ
                                   select new FollowTaskDeail
                                   {
@@ -352,7 +354,7 @@ namespace InBound.Business
                 }
                 else//查出所有
                 {
-                    var query1 = (from p in dataentity.T_PRODUCE_POKE 
+                    var query1 = (from p in dataentity.T_PRODUCE_POKE
                                   join t in dataentity.T_PRODUCE_SORTTROUGH
                                   on p.TROUGHNUM equals t.TROUGHNUM
                                   where t.GROUPNO == groupno && p.SORTSTATE == 15 && p.MACHINESTATE == 20
@@ -379,7 +381,7 @@ namespace InBound.Business
                         return null;
                     }
                 }
-               
+
             }
         }
 
@@ -396,7 +398,20 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 10 && i.CIGARETTETYPE == 20).OrderBy(t=>t.TROUGHNUM).Select(x => new TroughNumList { cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
+                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 10 && i.CIGARETTETYPE == 20).OrderBy(t => t.TROUGHNUM).Select(x => new TroughNumList { Cid = x.CIGARETTECODE, cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
+                return query;
+            }
+        }
+        public static RestockingData RestockingOrDefult(string str)
+        {
+            using (Entities et = new Entities())
+            {
+                if (str == null)
+                {
+                    return null;
+
+                }
+                var query = et.T_WMS_ITEM.Where(i => i.ITEMNO == str).Select(x => new RestockingData { cid = x.ITEMNO, cname = x.ITEMNAME, bigbox_bar = x.BIGBOX_BAR, dxtype = x.DXTYPE }).FirstOrDefault();
                 return query;
             }
         }
@@ -404,47 +419,70 @@ namespace InBound.Business
         {
             using (Entities et = new Entities())
             {
-                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 20 && i.CIGARETTETYPE == 20).OrderBy(t=>t.TROUGHNUM).Select(x => new TroughNumList { cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
+                var query = et.T_PRODUCE_SORTTROUGH.Where(i => i.TROUGHTYPE == 20 && i.CIGARETTETYPE == 20).OrderBy(t => t.TROUGHNUM).Select(x => new TroughNumList { Cid = x.CIGARETTECODE, cname = x.CIGARETTENAME, troughnun = x.TROUGHNUM }).ToList();
                 return query;
             }
         }
-        public static bool InsertRestocking(string startNum,string endNum,string bigbox_Bar, string cid,int num,decimal dxtype)
+        public static bool InsertRestocking(string startNum, string endNum, string bigbox_Bar, string cid, int num, decimal dxtype)
         {
             using (Entities et = new Entities())
             {
-                try 
-	            {
-                    //var i= et.INF_JOBDOWNLOAD.Count();
-                    INF_JOBDOWNLOAD inf_iobdownload = new INF_JOBDOWNLOAD();
-                    string id = BaseService.GetSeq("select S_INF_JOBDOWNLOAD.nextval from dual").ToString();
+                try
+                {
+                    for (int i = num; i > 0; i--)
+                    {
+                        INF_JOBDOWNLOAD inf_iobdownload = new INF_JOBDOWNLOAD();
+                        string id = BaseService.GetSeq("select S_INF_JOBDOWNLOAD.nextval from dual").ToString();
 
-                    inf_iobdownload.ID = id;
-                    inf_iobdownload.JOBID = id;
-                    inf_iobdownload.JOBTYPE = 80;
-                    inf_iobdownload.SOURCE = startNum;
-                    inf_iobdownload.TARGET = endNum;
-                    inf_iobdownload.BRANDID = bigbox_Bar;
-                    inf_iobdownload.PLANQTY = num;
-                    inf_iobdownload.PILETYPE = dxtype;
-                    inf_iobdownload.PRIORITY = 50;
-                    inf_iobdownload.BARCODE = cid;
-                    inf_iobdownload.TUTYPE = 1;
-                    inf_iobdownload.CREATEDATE = DateTime.Now;
-                    inf_iobdownload.STATUS = 0;
+                        inf_iobdownload.ID = id;
+                        inf_iobdownload.JOBID = id;
+                        inf_iobdownload.JOBTYPE = 80;
+                        inf_iobdownload.SOURCE = startNum;
+                        inf_iobdownload.TARGET = endNum;
+                        inf_iobdownload.BRANDID = bigbox_Bar;
+                        inf_iobdownload.PLANQTY = 1;
+                        inf_iobdownload.PILETYPE = dxtype;
+                        inf_iobdownload.PRIORITY = 50;
+                        inf_iobdownload.BARCODE = cid;
+                        inf_iobdownload.TUTYPE = 1;
+                        inf_iobdownload.CREATEDATE = DateTime.Now;
+                        inf_iobdownload.STATUS = 0;
 
-                    et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
-                    et.SaveChanges();
+                        et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
+                        et.SaveChanges();
+                    }
+
+                    //INF_JOBDOWNLOAD inf_iobdownload = new INF_JOBDOWNLOAD();
+                    //string id = BaseService.GetSeq("select S_INF_JOBDOWNLOAD.nextval from dual").ToString();
+
+                    //inf_iobdownload.ID = id;
+                    //inf_iobdownload.JOBID = id;
+                    //inf_iobdownload.JOBTYPE = 80;
+                    //inf_iobdownload.SOURCE = startNum;
+                    //inf_iobdownload.TARGET = endNum;
+                    //inf_iobdownload.BRANDID = bigbox_Bar;
+                    //inf_iobdownload.PLANQTY = num;
+                    //inf_iobdownload.PILETYPE = dxtype;
+                    //inf_iobdownload.PRIORITY = 50;
+                    //inf_iobdownload.BARCODE = cid;
+                    //inf_iobdownload.TUTYPE = 1;
+                    //inf_iobdownload.CREATEDATE = DateTime.Now;
+                    //inf_iobdownload.STATUS = 0;
+
+                    //et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
+                    //et.SaveChanges();
                     return true;
-	                
-                }
-	            catch (Exception)
-	            {
-                    return false;
-	            }
-                
-            }
-        }
 
-     
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+            }
+
+
+
+        }
     }
 }
