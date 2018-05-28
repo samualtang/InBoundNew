@@ -70,6 +70,7 @@
     <Compile Include="Business\MachineService.cs" />
     <Compile Include="Business\ProducePokeService.cs" />
     <Compile Include="Business\ProduceTaskService.cs" />
+    <Compile Include="Business\RestockingData.cs" />
     <Compile Include="Business\SortTroughService.cs" />
     <Compile Include="Business\StroageInOutService.cs" />
     <Compile Include="Business\RouteInfoService.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Business\AtsCellInfoDetailService.cs" />
     <Compile Include="Business\TaskService.cs" />
     <Compile Include="Business\AtsCellOutService.cs" />
+    <Compile Include="Business\TroughNumList.cs" />
     <Compile Include="Business\UnTaskService.cs" />
     <Compile Include="Business\WmsService.cs" />
     <Compile Include="Business\UnPokeService.cs" />

@@ -8,6 +8,91 @@ namespace InBound.Business
 {
     public class ProducePokeService : BaseService
     {
+
+
+        public static bool CheckExistCanSendBelt(int mainBelt, decimal groupno)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.MAINBELT == mainBelt && item.GROUPNO == groupno && item.SORTSTATE == 10 select item).FirstOrDefault();
+                if (query != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static int GetSendMainbelt(decimal groupno, List<decimal> sortNum, List<decimal> xynum, out decimal DISPATCHESIZE)
+        {
+            int Mainbeltno = 0;
+            int maxOrder = 100;
+            DISPATCHESIZE = 0;
+            decimal leftnum = 0;
+            for (int i = 1; i <= 4; i++)
+            {
+                if (!CheckExistCanSendBelt(i, groupno))
+                {
+                    continue;
+                   
+                }
+                T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(groupno, i);
+                decimal currentNum = ProducePokeService.LeftCount(groupno, i, sortNum[i - 1], xynum[i-1], cache.CACHESIZE ?? 0);
+                if (currentNum == (cache.CACHESIZE ?? 0))//如果缓层是空的
+                {
+                    return i;
+                                     
+                }
+                if (currentNum >= (cache.DISPATCHENUM ?? 0))
+                {
+                    //if (CheckExistCanSendBelt(i, groupno))
+                    //{
+                        int tempOrderCount = getUnionOrderCount(groupno, sortNum[i - 1],  i);
+                        if (tempOrderCount <= maxOrder)
+                        {
+                            if (tempOrderCount < maxOrder)
+                            {
+                                maxOrder = tempOrderCount;
+                                Mainbeltno = i;
+                                DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                            }
+                            else
+                            {
+                                if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                                {
+                                    Mainbeltno = i;
+                                    DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                    leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                                }
+                            }
+                        }
+                   // }
+                }
+            }
+            return Mainbeltno;
+        }
+
+        public static int getUnionOrderCount(decimal groupno,decimal beginnum,int mainbelt)
+        {
+            List<decimal> listsortNum = new List<decimal>();
+            decimal beginsortNum=beginnum;
+            int orderCount=0;
+           // decimal orderNum=0;
+            using (Entities entity = new Entities())
+            {
+
+                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE >= 15 && item.SORTNUM >= beginsortNum && item.GROUPNO == groupno && item.MAINBELT == mainbelt select item.SORTNUM).ToList();
+                 if (query != null)
+                 {
+                     orderCount = query.Distinct().Count();
+                 }
+                
+            }
+            return orderCount;
+        }
         public static List<T_PRODUCE_POKE> GetGroupNo()
         {
 
@@ -308,6 +393,7 @@ namespace InBound.Business
                 
                 decimal beginSortnum = 0;
                 decimal totalCount = 0;
+                int j = 0;
                 List<Decimal> sortnum = new List<decimal>();
                 while (totalCount < orderAmount)
                 {
@@ -316,13 +402,18 @@ namespace InBound.Business
                     {
                         var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM  && item.MAINBELT==mainbelt select item).Sum(x => x.POKENUM )??0;
                         totalCount += query2;
-                        if (totalCount <= orderAmount)
+                        if (totalCount <= orderAmount )
                         {
                             sortnum.Add(query.SORTNUM ?? 0);
                             beginSortnum = query.SORTNUM ?? 0;
                         }
                         else
                         {
+                            if (j == 0)
+                            {
+                                sortnum.Add(query.SORTNUM ?? 0);
+                                beginSortnum = query.SORTNUM ?? 0;
+                            }
                             break;
                         }
                     }
@@ -330,7 +421,7 @@ namespace InBound.Business
                     {
                         break;
                     }
-                   
+                    j++;
                 }
                 //开始算合单 生成合单号
                 var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM??0) select item1).ToList();

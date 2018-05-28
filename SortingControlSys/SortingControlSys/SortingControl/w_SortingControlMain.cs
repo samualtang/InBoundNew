@@ -427,6 +427,8 @@ namespace SortingControlSys.SortingControl
         /// </summary>
         void sendTask1()
         {
+            sortNumListS.Clear();
+            zqNumListS.Clear();
             try
             {
                 int flag = SendTaskStatesGroup.Read(1).CastTo<int>(-1);//读任务写入标志
@@ -451,31 +453,38 @@ namespace SortingControlSys.SortingControl
                             sortgroup = 7;
                         }
 
-                        try
+                        for (int i = 1; i <= 4; i++)
                         {
-                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))).ToString());
+                            try
+                            {
+                                taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))).ToString());
 
-                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1) - 1)).ToString());
+                                zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1) - 1)).ToString());
+                            }
+                            catch
+                            {
+                                taskno = 0;
+                                zqqty = 0;
+                            }
+                            writeLog.Write("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                            updateListBox("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                            if (!ProducePokeService.CheckExistTaskNo(taskno))
+                            {
+                                zqqty = 0;
+                            }
+                            sortNumList.Add(taskno);
+                            zqNumList.Add(zqqty);
                         }
-                        catch
+                        decimal DISPATCHESIZE = 0;
+                        mainbeltNum2 = ProducePokeService.GetSendMainbelt(sortgroup, sortNumListS, zqNumListS, out DISPATCHESIZE);
+                        //T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum2);
+                        //decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum2, taskno, zqqty, cache.CACHESIZE ?? 0);
+                        //writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
+                        //updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
+
+                        if (mainbeltNum >0)
                         {
-                            taskno = 0;
-                            zqqty = 0;
-                        }
-                        writeLog.Write("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        updateListBox("plc地址:" + plclist[(int)((mainbeltNum2 - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno2 + " 主皮带:" + mainbeltNum2 + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        if (!ProducePokeService.CheckExistTaskNo(taskno))
-                        {
-                            zqqty = 0;
-                        }
-                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum2);
-                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum2, taskno, zqqty, cache.CACHESIZE ?? 0);
-                        writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
-                        updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
-                       
-                        if (currentNum >= (cache.DISPATCHENUM??0))
-                        {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, (int)(cache.DISPATCHESIZE ?? 0), mainbeltNum2);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno2, (int)DISPATCHESIZE, mainbeltNum2);
                         }
                         if (mainbeltNum2 - 1 > 0)
                         {
@@ -566,11 +575,18 @@ namespace SortingControlSys.SortingControl
         int maxCacheNum = 160;
         int minCahceNum =50;
         List<string> plclist = ItemCollection.getUnionTaskItem();
+
+        List<decimal> sortNumList = new List<decimal>();
+        List<decimal> sortNumListS = new List<decimal>();
+        List<decimal> zqNumList = new List<decimal>();
+        List<decimal> zqNumListS = new List<decimal>();
         /// <summary>
         /// 第一组数据
         /// </summary>
         void sendTask()
         {
+            sortNumList.Clear();
+            zqNumList.Clear();
             try
             {
                 int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);//读任务写入标志 第一组
@@ -595,30 +611,48 @@ namespace SortingControlSys.SortingControl
                         {
                             sortgroup = 8;
                         }
-                        try
-                        {
-                            taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))).ToString());
 
-                            zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup) - 1)).ToString());
-                        }
-                        catch
+                        for (int i = 1; i <= 4; i++)
                         {
-                            taskno = 0;
-                            zqqty = 0;
+                            try
+                            {
+
+
+
+
+                                //taskno = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))).ToString());
+
+                                //zqqty = decimal.Parse(UnionGroup.ReadD((int)((mainbeltNum - 1) * 16 + 2 * (sortgroup) - 1)).ToString());
+
+                                taskno = decimal.Parse(UnionGroup.ReadD((int)((i - 1) * 16 + 2 * (sortgroup - 1))).ToString());
+
+                                zqqty = decimal.Parse(UnionGroup.ReadD((int)((i - 1) * 16 + 2 * (sortgroup) - 1)).ToString());
+
+
+                            }
+                            catch
+                            {
+                                taskno = 0;
+                                zqqty = 0;
+                            }
+                            writeLog.Write("plc地址:" + plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                            updateListBox("plc地址:" + plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
+                            if (!ProducePokeService.CheckExistTaskNo(taskno))
+                            {
+                                zqqty = 0;
+                            }
+                            sortNumList.Add(taskno);
+                            zqNumList.Add(zqqty);
                         }
-                        writeLog.Write("plc地址:"+plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))]+"读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        updateListBox("plc地址:" + plclist[(int)((mainbeltNum - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + mainbeltNum + " 合流任务号:" + taskno + " 抓取数量:" + zqqty);
-                        if (!ProducePokeService.CheckExistTaskNo(taskno))
+                        decimal DISPATCHESIZE = 0;
+                      mainbeltNum=  ProducePokeService.GetSendMainbelt(sortgroup, sortNumList, zqNumList, out DISPATCHESIZE);
+                        //T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno1, mainbeltNum);
+                        //decimal currentNum = ProducePokeService.LeftCount(sortgroupno1, mainbeltNum, taskno, zqqty, cache.CACHESIZE??0);
+                        //writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 +" 主皮带:"+mainbeltNum);
+                        //updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 + " 主皮带:" + mainbeltNum);
+                        if (mainbeltNum >0)
                         {
-                            zqqty = 0;
-                        }
-                        T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno1, mainbeltNum);
-                        decimal currentNum = ProducePokeService.LeftCount(sortgroupno1, mainbeltNum, taskno, zqqty, cache.CACHESIZE??0);
-                        writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 +" 主皮带:"+mainbeltNum);
-                        updateListBox("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 + " 主皮带:" + mainbeltNum);
-                        if (currentNum>= (cache.DISPATCHENUM??0))
-                        {
-                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, (int)(cache.DISPATCHESIZE ?? 0), mainbeltNum);
+                            ProducePokeService.UpdatePokeByGroupNo(sortgroupno1, (int)DISPATCHESIZE, mainbeltNum);
                         }
                         if (mainbeltNum - 1 > 0)
                         {

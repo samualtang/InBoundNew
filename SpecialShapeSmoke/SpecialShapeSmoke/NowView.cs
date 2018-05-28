@@ -36,11 +36,21 @@ namespace SpecialShapeSmoke
             {
                 btnMachineSeq2.Visible = false;
             }
+            if (labMachineSeq.Text == machineseq1.ToString())
+            {
+                nowpokeid = nowpokeids[0]; 
+            }
+            else
+            {
+                nowpokeid = nowpokeids[1]; 
+            }
             NowPoke(nowpokeids,true);
             NowMachineseq = machineseq1;
             t1.Tick  +=new EventHandler(t1_Tick);
-            t1.Interval = 5000;
+            t1.Interval = 500;
             t1.Start();
+          
+             
         }
 
 
@@ -52,6 +62,7 @@ namespace SpecialShapeSmoke
         private void NowView_Load(object sender, EventArgs e)
         {
             DateBind(machineseq1, nowpokeids[0].ToString());
+            NowPoke(nowpokeids, true);
         }
 
         //通道1
@@ -193,7 +204,7 @@ namespace SpecialShapeSmoke
                         Status = "正在分拣";
                         foreach (DataGridViewRow item in DgvNowView.Rows)
                         {
-                            if (Convert.ToDecimal(item.Cells[8].Value) < nowpokeid)
+                            if (Convert.ToDecimal(item.Cells[8].Value) < Convert.ToDecimal(Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString()))
                             {
                                 Status = "分拣完成";
                             }

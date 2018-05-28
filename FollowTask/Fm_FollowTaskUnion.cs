@@ -107,7 +107,7 @@ namespace FollowTask
             if (groupText.Contains("3"))
             {
                 int j = 1;
-                for (int i = 17; i <= 25; i++)
+                for (int i = 17; i <= 24; i++)
                 {
                     string btnNmae = "Machine" + j;
                     Control control = Controls.Find(btnNmae, true)[0];
