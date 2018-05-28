@@ -480,9 +480,35 @@ namespace InBound.Business
                 }
 
             }
+        }
+        /// <summary>
+        /// 手动下开箱机任务重力式货架通道位数减少
+        /// </summary>
+        /// <param name="torughnum">重力式货架通道号</param>
+        /// <param name="mantissanum">开箱任务数</param>
+        /// <returns></returns>
+        public static bool TroughMantissaChange(string torughnum, decimal mantissanum)
+        {
 
+            using (Entities et = new Entities())
+            {
+                var query = (from item in et.T_PRODUCE_SORTTROUGH
+                             where item.CIGARETTETYPE == 20 && item.TROUGHTYPE == 20 && item.TROUGHNUM == torughnum
+                             select item).FirstOrDefault();
+                if (query != null)
+                {
+                    query.MANTISSA = query.MANTISSA - mantissanum;
+                    et.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
-
+                
+            }
+           
         }
     }
 }
