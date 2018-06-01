@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox1_zlhj = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.textBox_jym = new System.Windows.Forms.TextBox();
+            this.comboBox2_yg = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.labelcmb1 = new System.Windows.Forms.Label();
-            this.labelcmb2 = new System.Windows.Forms.Label();
+            this.btn_ok = new System.Windows.Forms.Button();
+            this.labelcmb1_jymc = new System.Windows.Forms.Label();
+            this.labelcmb2_jymc = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox_jybm = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_num = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox_dx = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox_jymc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -56,15 +56,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // comboBox1_zlhj
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(175, 82);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
+            this.comboBox1_zlhj.FormattingEnabled = true;
+            this.comboBox1_zlhj.Location = new System.Drawing.Point(175, 82);
+            this.comboBox1_zlhj.Name = "comboBox1_zlhj";
+            this.comboBox1_zlhj.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1_zlhj.TabIndex = 1;
+            this.comboBox1_zlhj.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1_zlhj.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             // 
             // label1
             // 
@@ -84,23 +84,23 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "终点位置（烟柜）";
             // 
-            // textBox2
+            // textBox_jym
             // 
-            this.textBox2.Location = new System.Drawing.Point(628, 28);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(74, 21);
-            this.textBox2.TabIndex = 8;
+            this.textBox_jym.Location = new System.Drawing.Point(628, 28);
+            this.textBox_jym.Name = "textBox_jym";
+            this.textBox_jym.Size = new System.Drawing.Size(74, 21);
+            this.textBox_jym.TabIndex = 8;
+            this.textBox_jym.TextChanged += new System.EventHandler(this.textBox_jym_TextChanged);
             // 
-            // comboBox2
+            // comboBox2_yg
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(175, 130);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
-            this.comboBox2.TabIndex = 2;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            this.comboBox2.TextChanged += new System.EventHandler(this.comboBox2_TextChanged);
+            this.comboBox2_yg.FormattingEnabled = true;
+            this.comboBox2_yg.Location = new System.Drawing.Point(175, 130);
+            this.comboBox2_yg.Name = "comboBox2_yg";
+            this.comboBox2_yg.Size = new System.Drawing.Size(121, 20);
+            this.comboBox2_yg.TabIndex = 2;
+            this.comboBox2_yg.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.comboBox2_yg.TextChanged += new System.EventHandler(this.comboBox2_TextChanged);
             // 
             // label3
             // 
@@ -111,33 +111,33 @@
             this.label3.TabIndex = 9;
             this.label3.Text = " 件烟码";
             // 
-            // button2
+            // btn_ok
             // 
-            this.button2.Location = new System.Drawing.Point(612, 122);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "确认下达";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_ok.Location = new System.Drawing.Point(612, 122);
+            this.btn_ok.Name = "btn_ok";
+            this.btn_ok.Size = new System.Drawing.Size(75, 23);
+            this.btn_ok.TabIndex = 4;
+            this.btn_ok.Text = "确认下达";
+            this.btn_ok.UseVisualStyleBackColor = true;
+            this.btn_ok.Click += new System.EventHandler(this.button2_Click);
             // 
-            // labelcmb1
+            // labelcmb1_jymc
             // 
-            this.labelcmb1.AutoSize = true;
-            this.labelcmb1.Location = new System.Drawing.Point(297, 85);
-            this.labelcmb1.Name = "labelcmb1";
-            this.labelcmb1.Size = new System.Drawing.Size(41, 12);
-            this.labelcmb1.TabIndex = 13;
-            this.labelcmb1.Text = "品牌名";
+            this.labelcmb1_jymc.AutoSize = true;
+            this.labelcmb1_jymc.Location = new System.Drawing.Point(297, 85);
+            this.labelcmb1_jymc.Name = "labelcmb1_jymc";
+            this.labelcmb1_jymc.Size = new System.Drawing.Size(41, 12);
+            this.labelcmb1_jymc.TabIndex = 13;
+            this.labelcmb1_jymc.Text = "品牌名";
             // 
-            // labelcmb2
+            // labelcmb2_jymc
             // 
-            this.labelcmb2.AutoSize = true;
-            this.labelcmb2.Location = new System.Drawing.Point(297, 133);
-            this.labelcmb2.Name = "labelcmb2";
-            this.labelcmb2.Size = new System.Drawing.Size(41, 12);
-            this.labelcmb2.TabIndex = 14;
-            this.labelcmb2.Text = "品牌名";
+            this.labelcmb2_jymc.AutoSize = true;
+            this.labelcmb2_jymc.Location = new System.Drawing.Point(297, 133);
+            this.labelcmb2_jymc.Name = "labelcmb2_jymc";
+            this.labelcmb2_jymc.Size = new System.Drawing.Size(41, 12);
+            this.labelcmb2_jymc.TabIndex = 14;
+            this.labelcmb2_jymc.Text = "品牌名";
             // 
             // label7
             // 
@@ -148,13 +148,13 @@
             this.label7.TabIndex = 16;
             this.label7.Text = "卷烟名称";
             // 
-            // textBox3
+            // textBox_jybm
             // 
-            this.textBox3.Location = new System.Drawing.Point(91, 28);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(65, 21);
-            this.textBox3.TabIndex = 5;
+            this.textBox_jybm.Location = new System.Drawing.Point(91, 28);
+            this.textBox_jybm.Name = "textBox_jybm";
+            this.textBox_jybm.ReadOnly = true;
+            this.textBox_jybm.Size = new System.Drawing.Size(65, 21);
+            this.textBox_jybm.TabIndex = 5;
             // 
             // label9
             // 
@@ -182,13 +182,13 @@
             this.label5.TabIndex = 22;
             this.label5.Text = "垛形";
             // 
-            // textBox5
+            // textBox_dx
             // 
-            this.textBox5.Location = new System.Drawing.Point(196, 28);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(84, 21);
-            this.textBox5.TabIndex = 6;
+            this.textBox_dx.Location = new System.Drawing.Point(196, 28);
+            this.textBox_dx.Name = "textBox_dx";
+            this.textBox_dx.ReadOnly = true;
+            this.textBox_dx.Size = new System.Drawing.Size(84, 21);
+            this.textBox_dx.TabIndex = 6;
             // 
             // label8
             // 
@@ -199,18 +199,18 @@
             this.label8.TabIndex = 24;
             this.label8.Text = "卷烟编码";
             // 
-            // textBox4
+            // textBox_jymc
             // 
-            this.textBox4.Location = new System.Drawing.Point(380, 28);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(175, 21);
-            this.textBox4.TabIndex = 7;
+            this.textBox_jymc.Location = new System.Drawing.Point(380, 28);
+            this.textBox_jymc.Name = "textBox_jymc";
+            this.textBox_jymc.ReadOnly = true;
+            this.textBox_jymc.Size = new System.Drawing.Size(175, 21);
+            this.textBox_jymc.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(254, 178);
+            this.label4.Location = new System.Drawing.Point(254, 208);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 12);
             this.label4.TabIndex = 28;
@@ -218,7 +218,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(343, 173);
+            this.textBox1.Location = new System.Drawing.Point(343, 203);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(142, 21);
             this.textBox1.TabIndex = 27;
@@ -233,13 +233,14 @@
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dataGridView1.Location = new System.Drawing.Point(30, 202);
+            this.dataGridView1.Location = new System.Drawing.Point(30, 232);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(672, 254);
             this.dataGridView1.TabIndex = 26;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // Column1
             // 
@@ -275,42 +276,44 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(503, 171);
+            this.button1.Location = new System.Drawing.Point(503, 201);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 25;
             this.button1.Text = "查询品牌";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Restocking
             // 
-            this.AcceptButton = this.button2;
+            this.AcceptButton = this.btn_ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 167);
+            this.ClientSize = new System.Drawing.Size(730, 173);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.textBox_jymc);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBox_dx);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox_num);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.labelcmb2);
-            this.Controls.Add(this.labelcmb1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.textBox_jybm);
+            this.Controls.Add(this.labelcmb2_jymc);
+            this.Controls.Add(this.labelcmb1_jymc);
+            this.Controls.Add(this.btn_ok);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.comboBox2_yg);
+            this.Controls.Add(this.textBox_jym);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBox1_zlhj);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Restocking";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "烟柜补货任务";
             this.Load += new System.EventHandler(this.Restocking_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -321,23 +324,23 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox1_zlhj;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox textBox_jym;
+        private System.Windows.Forms.ComboBox comboBox2_yg;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label labelcmb1;
-        private System.Windows.Forms.Label labelcmb2;
+        private System.Windows.Forms.Button btn_ok;
+        private System.Windows.Forms.Label labelcmb1_jymc;
+        private System.Windows.Forms.Label labelcmb2_jymc;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox_jybm;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox_num;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox_dx;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox_jymc;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;

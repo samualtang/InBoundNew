@@ -18,6 +18,7 @@ namespace FollowTask
         {
             InitializeComponent();
         }
+        public InBound.WriteLog writeLog = InBound.WriteLog.GetLog();
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -26,11 +27,7 @@ namespace FollowTask
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBox2.Text = dataGridView1.SelectedCells[2].Value.ToString();
-            textBox3.Text = dataGridView1.SelectedCells[0].Value.ToString();
-            textBox4.Text = dataGridView1.SelectedCells[1].Value.ToString();
-            textBox5.Text = dataGridView1.SelectedCells[3].Value.ToString();
-
+            textBox_jym.Text = dataGridView1.SelectedCells[2].Value.ToString(); 
         }
 
         List<InBound.Business.TroughNumList> cmb1;
@@ -38,19 +35,20 @@ namespace FollowTask
         bool falg = false;
         private void Restocking_Load(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = -1;
+            writeLog.Write("手动补货数据录入界面打开！");
+            comboBox1_zlhj.SelectedIndex = -1;
             cmb1 = FolloTaskService.GetHJTroughNum();
-            comboBox1.DataSource = cmb1;
-            comboBox1.DisplayMember = "troughnun";
-            comboBox1.ValueMember = "troughnun";
-            comboBox1.SelectedIndex = 0;
+            comboBox1_zlhj.DataSource = cmb1;
+            comboBox1_zlhj.DisplayMember = "troughnun";
+            comboBox1_zlhj.ValueMember = "troughnun";
+            comboBox1_zlhj.SelectedIndex = 0;
 
-            comboBox2.SelectedIndex = -1;
+            comboBox2_yg.SelectedIndex = -1;
             cmb2 = FolloTaskService.GetYGTroughNum();
-            comboBox2.DataSource = cmb2;
-            comboBox2.DisplayMember = "troughnun";
-            comboBox2.ValueMember = "troughnun";
-            comboBox2.SelectedIndex = 0;
+            comboBox2_yg.DataSource = cmb2;
+            comboBox2_yg.DisplayMember = "troughnun";
+            comboBox2_yg.ValueMember = "troughnun";
+            comboBox2_yg.SelectedIndex = 0;
 
 
             falg = true;
@@ -61,14 +59,14 @@ namespace FollowTask
             int tip2 = 0;
             foreach (var item in cmb1)
             {
-                if (item.troughnun == comboBox1.Text)
+                if (item.troughnun == comboBox1_zlhj.Text)
                 {
                     tip1 = 1;
                 } 
             }
             foreach (var item in cmb2)
             {
-                if (item.troughnun == comboBox2.Text)
+                if (item.troughnun == comboBox2_yg.Text)
                 {
                     tip2 = 2;
                 }
@@ -93,7 +91,7 @@ namespace FollowTask
 
                 foreach (var item in cmb1)
                 {
-                    if (item.troughnun == comboBox1.SelectedValue.ToString())
+                    if (item.troughnun == comboBox1_zlhj.SelectedValue.ToString())
                     {
                         cid1 = item.Cid;
 
@@ -101,7 +99,7 @@ namespace FollowTask
                 }
                 foreach (var item in cmb2)
                 {
-                    if (item.troughnun == comboBox2.SelectedValue.ToString())
+                    if (item.troughnun == comboBox2_yg.SelectedValue.ToString())
                     {
                         cid2 = item.Cid;
                     }
@@ -114,21 +112,20 @@ namespace FollowTask
                 {
                     return false;
                 }
-            } 
- 
+            }
+
         private void button2_Click(object sender, EventArgs e)
         {
             try
             {
                 if (Convert.ToInt32(textBox_num.Text) <= 0)
                 {
-                    MessageBox.Show("数量不能为0!");
+                    MessageBox.Show("数量不能小于0!");
                     return;
                 }
             }
             catch (Exception)
-            {
-
+            { 
                 MessageBox.Show("数量格式有误！");
                 return;
             }
@@ -147,27 +144,35 @@ namespace FollowTask
                 }
             }
 
-            DialogResult re = MessageBox.Show("确认下达补货任务？\r\n" + comboBox1.SelectedValue + " " + labelcmb1.Text + " 到 " + comboBox2.SelectedValue + " " + labelcmb2.Text + "\r\n烟件数为：" + textBox_num.Text + "\r\n垛形为：" + textBox5.Text + "\r\n件烟码为：" + textBox2.Text, "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            DialogResult re = MessageBox.Show("确认下达补货任务？\r\n \r\n" + comboBox1_zlhj.SelectedValue + " " + labelcmb1_jymc.Text + " 到 " + comboBox2_yg.SelectedValue + " " + labelcmb2_jymc.Text + "\r\n烟件数为：" + textBox_num.Text + "\r\n垛形为：" + textBox_dx.Text + "\r\n件烟码为：" + textBox_jym.Text + "\r\n实物品牌为：" + textBox_jymc.Text, "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (re == DialogResult.OK)
             {
+
+                string str = "";
                 try
                 {
-                    bool falg = FolloTaskService.InsertRestocking(comboBox1.SelectedValue.ToString(), comboBox2.SelectedValue.ToString(), textBox2.Text, textBox3.Text, Convert.ToInt32(textBox_num.Text), Convert.ToDecimal(textBox5.Text));
+                    bool falg = FolloTaskService.InsertRestocking(comboBox1_zlhj.SelectedValue.ToString(), comboBox2_yg.SelectedValue.ToString(), textBox_jym.Text, textBox_jybm.Text, Convert.ToInt32(textBox_num.Text), Convert.ToDecimal(textBox_dx.Text));
+                    //bool troughfalg = FolloTaskService.TroughMantissaChange(comboBox1.Text, Convert.ToDecimal(textBox_num.Text));
                     if (falg)
                     {
                         MessageBox.Show("任务下达成功！");
+                        str = "下达成功";
                     }
                     else
                     {
                         MessageBox.Show("任务下达失败！");
-
+                        str = "下达成功";
                     }
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("输入数据有误！");
+                    str = "数据有误,下达失败！";
                 }
-
+                finally
+                {
+                    writeLog.Write("下达补货任务：" + comboBox1_zlhj.SelectedValue + " " + labelcmb1_jymc.Text + " 到 " + comboBox2_yg.SelectedValue + " " + labelcmb2_jymc.Text + "  ,烟件数为：" + textBox_num.Text + "  ,垛形为：" + textBox_dx.Text + "  ,件烟码为：" + textBox_jym.Text + "  ,实物品牌为：" + textBox_jymc.Text);
+                }
             }
         }
     
@@ -175,42 +180,42 @@ namespace FollowTask
         {
             foreach (var item in cmb1)
             {
-                if (item == comboBox1.SelectedValue)
+                if (item == comboBox1_zlhj.SelectedValue)
                 {
-                    labelcmb1.Text = item.cname;
+                    labelcmb1_jymc.Text = item.cname;
                     bindtext(item); 
                 }
-                else if (item.troughnun == comboBox1.SelectedValue.ToString())
+                else if (item.troughnun == comboBox1_zlhj.SelectedValue.ToString())
                 {
                     if (item.cname == null)
                     {
-                        labelcmb1.Text = "暂无品牌！！！";
+                        labelcmb1_jymc.Text = "暂无品牌！！！";
                     }
                     else
                     {
-                        labelcmb1.Text = item.cname;
+                        labelcmb1_jymc.Text = item.cname;
                     }
                     bindtext(item); 
                 }
             }
-            comboBox1.SelectAll();
+            comboBox1_zlhj.SelectAll();
         }
         public void bindtext(TroughNumList list)
         {
             RestockingData rt = FolloTaskService.RestockingOrDefult(list.Cid);
             if (rt != null)
             {
-                textBox2.Text = rt.bigbox_bar;
-                textBox3.Text = rt.cid;
-                textBox4.Text = rt.cname;
-                textBox5.Text = rt.dxtype;
+                textBox_jym.Text = rt.bigbox_bar;
+                textBox_jybm.Text = rt.cid;
+                textBox_jymc.Text = rt.cname;
+                textBox_dx.Text = rt.dxtype;
             }
             else
             {
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
+                textBox_jym.Text = "";
+                textBox_jybm.Text = "";
+                textBox_jymc.Text = "";
+                textBox_dx.Text = "";
             }
         }
 
@@ -218,16 +223,16 @@ namespace FollowTask
         {
             foreach (var item in cmb2)
             {
-                if (item == comboBox2.SelectedValue)
+                if (item == comboBox2_yg.SelectedValue)
                 {
-                    labelcmb2.Text = item.cname;
+                    labelcmb2_jymc.Text = item.cname;
                 }
-                else if (item.troughnun == comboBox2.SelectedValue.ToString())
+                else if (item.troughnun == comboBox2_yg.SelectedValue.ToString())
                 {
-                    labelcmb2.Text = item.cname;
+                    labelcmb2_jymc.Text = item.cname;
                 }
             }
-            comboBox2.SelectAll();
+            comboBox2_yg.SelectAll();
 
         }
  
@@ -237,12 +242,11 @@ namespace FollowTask
             {
                 foreach (var item in cmb1)
                 {
-                    labelcmb1.Text = "";                    
-                    if (item.troughnun == comboBox1.Text)
+                    labelcmb1_jymc.Text = "";                    
+                    if (item.troughnun == comboBox1_zlhj.Text)
                     {
-                        comboBox1.SelectedIndex = comboBox1.Items.IndexOf(item);
-                        //MessageBox.Show("当前文本：" + item.cname + "     " + item.Cid + "\r\n comboBox1选择值为：" + comboBox1.SelectedValue.ToString());
-                        labelcmb1.Text = item.cname;
+                        comboBox1_zlhj.SelectedIndex = comboBox1_zlhj.Items.IndexOf(item);
+                        labelcmb1_jymc.Text = item.cname;
                         return;
                     }
                   
@@ -257,16 +261,33 @@ namespace FollowTask
             {
                 foreach (var item in cmb2)
                 {
-                    labelcmb2.Text = "";
-                    if (item.troughnun == comboBox2.Text)
+                    labelcmb2_jymc.Text = "";
+                    if (item.troughnun == comboBox2_yg.Text)
                     {
-                        comboBox2.SelectedIndex = comboBox2.Items.IndexOf(item);
-                        //MessageBox.Show("当前文本：" + item.cname + "     " + item.Cid + "\r\n comboBox1选择值为：" + comboBox1.SelectedValue.ToString());
-                        labelcmb2.Text = item.cname;
+                        comboBox2_yg.SelectedIndex = comboBox2_yg.Items.IndexOf(item);
+                        labelcmb2_jymc.Text = item.cname;
                         return;
                     }
                 }
-            } 
+            }
+        }
+
+        private void textBox_jym_TextChanged(object sender, EventArgs e)
+        {
+            RestockingData rt = FolloTaskService.RestockingByDx(textBox_jym.Text);
+            if (rt != null)
+            {
+                textBox_jym.Text = rt.bigbox_bar;
+                textBox_jybm.Text = rt.cid;
+                textBox_jymc.Text = rt.cname;
+                textBox_dx.Text = rt.dxtype; 
+            }
+            else
+            {
+                textBox_jybm.Text = "";
+                textBox_jymc.Text = "";
+                textBox_dx.Text = "";
+            }
         }
 
      

@@ -384,7 +384,11 @@ namespace InBound.Business
 
             }
         }
-
+        /// <summary>
+        /// 查询件烟信息
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static List<RestockingData> Restocking(string str)
         {
             using (Entities et = new Entities())
@@ -393,7 +397,10 @@ namespace InBound.Business
                 return query;
             }
         }
-
+        /// <summary>
+        /// 获取烟柜列表
+        /// </summary>
+        /// <returns></returns>
         public static List<TroughNumList> GetYGTroughNum()
         {
             using (Entities et = new Entities())
@@ -402,6 +409,11 @@ namespace InBound.Business
                 return query;
             }
         }
+        /// <summary>
+        /// 根据品牌编码查询件烟码垛形等数据
+        /// </summary>
+        /// <param name="str">卷烟编码</param>
+        /// <returns></returns>
         public static RestockingData RestockingOrDefult(string str)
         {
             using (Entities et = new Entities())
@@ -415,6 +427,24 @@ namespace InBound.Business
                 return query;
             }
         }
+        /// <summary>
+        /// 根据卷烟件码查询烟垛形等信息
+        /// </summary>
+        /// <param name="str">件烟码</param>
+        /// <returns></returns>
+        public static RestockingData RestockingByDx(string str)
+        {
+            using (Entities et = new Entities())
+            {
+                if (str == null)
+                {
+                    return null;
+
+                }
+                var query = et.T_WMS_ITEM.Where(i => i.BIGBOX_BAR == str).Select(x => new RestockingData { cid = x.ITEMNO, cname = x.ITEMNAME, bigbox_bar = x.BIGBOX_BAR, dxtype = x.DXTYPE }).FirstOrDefault();
+                return query;
+            }
+        }
         public static List<TroughNumList> GetHJTroughNum()
         {
             using (Entities et = new Entities())
@@ -423,6 +453,16 @@ namespace InBound.Business
                 return query;
             }
         }
+        /// <summary>
+        /// 插入补货任务并减少重力式货架的尾数
+        /// </summary>
+        /// <param name="startNum">重力式货架编号</param>
+        /// <param name="endNum">烟柜编号</param>
+        /// <param name="bigbox_Bar">件烟码</param>
+        /// <param name="cid">卷烟编码</param>
+        /// <param name="num">任务数量</param>
+        /// <param name="dxtype">垛形</param>
+        /// <returns>成功/失败</returns>
         public static bool InsertRestocking(string startNum, string endNum, string bigbox_Bar, string cid, int num, decimal dxtype)
         {
             using (Entities et = new Entities())
@@ -448,30 +488,23 @@ namespace InBound.Business
                         inf_iobdownload.CREATEDATE = DateTime.Now;
                         inf_iobdownload.STATUS = 0;
 
-                        et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
-                        et.SaveChanges();
+                        et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload); 
                     }
-
-                    //INF_JOBDOWNLOAD inf_iobdownload = new INF_JOBDOWNLOAD();
-                    //string id = BaseService.GetSeq("select S_INF_JOBDOWNLOAD.nextval from dual").ToString();
-
-                    //inf_iobdownload.ID = id;
-                    //inf_iobdownload.JOBID = id;
-                    //inf_iobdownload.JOBTYPE = 80;
-                    //inf_iobdownload.SOURCE = startNum;
-                    //inf_iobdownload.TARGET = endNum;
-                    //inf_iobdownload.BRANDID = bigbox_Bar;
-                    //inf_iobdownload.PLANQTY = num;
-                    //inf_iobdownload.PILETYPE = dxtype;
-                    //inf_iobdownload.PRIORITY = 50;
-                    //inf_iobdownload.BARCODE = cid;
-                    //inf_iobdownload.TUTYPE = 1;
-                    //inf_iobdownload.CREATEDATE = DateTime.Now;
-                    //inf_iobdownload.STATUS = 0;
-
-                    //et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload);
-                    //et.SaveChanges();
-                    return true;
+                     
+                    var query = (from item in et.T_PRODUCE_SORTTROUGH
+                                 where item.CIGARETTETYPE == 20 && item.TROUGHTYPE == 20 && item.TROUGHNUM == startNum
+                                 select item).FirstOrDefault();
+                    if (query == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        query.MANTISSA = query.MANTISSA - num;
+                        et.SaveChanges();
+                        return true;
+                    }
+                   
 
                 }
                 catch (Exception)
