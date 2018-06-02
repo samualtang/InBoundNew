@@ -530,9 +530,32 @@ namespace SortingControlSys.SortingControl
                         else if (i == 22) logcolumnname = "烟柜10条数";
                         else if (i == 23) logcolumnname = "起始位置";
                         else if (i == 24) logcolumnname = "烟柜11条数";
-                        else if (i == 25) logcolumnname = "起始位置";                      
-                        
-                        else if (i==47) logcolumnname = "写入标志位";
+                        else if (i == 25) logcolumnname = "起始位置";
+
+                        else if (i == 26) logcolumnname = "1号机械手任务号";
+                        else if (i == 27) logcolumnname = "抓烟数";
+                        else if (i == 28) logcolumnname = "2号机械手任务号";
+                        else if (i == 29) logcolumnname = "抓烟数";
+                        else if (i == 30) logcolumnname = "3号机械手任务号";
+                        else if (i == 31) logcolumnname = "抓烟数";
+                        else if (i == 32) logcolumnname = "4号机械手任务号";
+                        else if (i == 33) logcolumnname = "抓烟数";
+                        else if (i == 34) logcolumnname = "5号机械手任务号";
+                        else if (i == 35) logcolumnname = "抓烟数";
+                        else if (i == 36) logcolumnname = "6号机械手任务号";
+                        else if (i == 37) logcolumnname = "抓烟数";
+                        else if (i == 38) logcolumnname = "7号机械手任务号";
+                        else if (i == 39) logcolumnname = "抓烟数";
+                        else if (i == 40) logcolumnname = "8号机械手任务号";
+                        else if (i == 41) logcolumnname = "抓烟数";
+                        else if (i == 42) logcolumnname = "9号机械手任务号";
+                        else if (i == 43) logcolumnname = "抓烟数";
+                        else if (i == 44) logcolumnname = "10号机械手任务号";
+                        else if (i == 45) logcolumnname = "抓烟数";
+                        else if (i == 46) logcolumnname = "11号机械手任务号";
+                        else if (i == 47) logcolumnname = "抓烟数";
+                     
+                        else if (i == 48) logcolumnname = "写入标志位";
 
                         logstr += logcolumnname + ":" + datas[i] + ";";
                         //logstr += i + ":" + datas[i] + ";";
@@ -1498,7 +1521,7 @@ namespace SortingControlSys.SortingControl
             }
             //冻结某列 从左开始 0，1，2
             dgViewFiles.Columns[0].Width = 45;
-            dgViewFiles.Columns[1].Frozen = true;
+            dgViewFiles.Columns[0].Frozen = true;
         }
 
         private void Timerinitdata_Tick(object sender, EventArgs e)
