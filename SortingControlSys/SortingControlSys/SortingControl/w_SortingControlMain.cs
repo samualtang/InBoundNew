@@ -732,7 +732,7 @@ namespace SortingControlSys.SortingControl
                         else if (i == 46) logcolumnname = "11号机械手任务号";
                         else if (i == 47) logcolumnname = "抓烟数";
 
-                        else if (i == 47) logcolumnname = "写入标志位";
+                        else if (i == 48) logcolumnname = "写入标志位";
 
                         logstr += logcolumnname + ":" + datas[i] + ";";
                        // logstr += i + ":" + datas[i] + ";";
