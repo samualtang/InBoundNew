@@ -51,12 +51,7 @@ namespace SpecialShapeSmoke
             t1.Start();
           
              
-        }
-
-
-       
-   
-        
+        } 
 
 
         private void NowView_Load(object sender, EventArgs e)
