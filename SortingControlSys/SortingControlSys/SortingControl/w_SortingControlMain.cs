@@ -1588,6 +1588,13 @@ namespace SortingControlSys.SortingControl
             fs.Show();
         }
 
+        private void btn_Mainbelt_Click(object sender, EventArgs e)
+        {
+            FM_MainCaChe fm = new FM_MainCaChe();
+            fm.Show();
+            fm.StartPosition = FormStartPosition.CenterScreen;
+        }
+
 
     }
 }

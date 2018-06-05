@@ -1898,7 +1898,6 @@ namespace InBound.Business
                     entity.ExecuteStoreCommand("update t_produce_taskline  line set sortnum= (select distinct task.sortnum from t_produce_task task where line.tasknum=task.tasknum )");
                     entity.SaveChanges();
                 }
-
             }
         }
         public static void PreUpdateInOut(bool unFullFirst)
