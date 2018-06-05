@@ -491,21 +491,16 @@ namespace InBound.Business
                         et.INF_JOBDOWNLOAD.AddObject(inf_iobdownload); 
                     }
                      
-                    var queryhj = (from item in et.T_PRODUCE_SORTTROUGH
+                    var query = (from item in et.T_PRODUCE_SORTTROUGH
                                  where item.CIGARETTETYPE == 20 && item.TROUGHTYPE == 20 && item.TROUGHNUM == startNum
                                  select item).FirstOrDefault();
-                    var queryyg = (from item in et.T_PRODUCE_SORTTROUGH
-                                   where item.CIGARETTETYPE == 20 && item.TROUGHTYPE == 10 && item.TROUGHNUM == endNum
-                                   select item).FirstOrDefault();
-
-                    if (queryhj == null && queryyg==null)
+                    if (query == null)
                     {
                         return false;
-                    } 
+                    }
                     else
                     {
-                        queryhj.MANTISSA = queryhj.MANTISSA - num;
-                        queryyg.MANTISSA = queryyg.MANTISSA + (num * 50);
+                        query.MANTISSA = query.MANTISSA - num;
                         et.SaveChanges();
                         return true;
                     }

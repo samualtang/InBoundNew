@@ -214,8 +214,7 @@ namespace InBound.Business
                                       POCKPLACE = item.POKEPLACE.Value,   //放烟位置
                                       meragenum= item.MERAGENUM??0,
                                       UnionTasknum=item.UNIONTASKNUM??0,
-                                      SortTroughNum=item.TROUGHNUM,
-                                      SortNum=item.SORTNUM??0
+                                      SortTroughNum=item.TROUGHNUM
 
                                   }
                              ).ToList();

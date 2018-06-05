@@ -86,7 +86,6 @@
     <Compile Include="Business\TaskService.cs" />
     <Compile Include="Business\AtsCellOutService.cs" />
     <Compile Include="Business\TroughNumList.cs" />
-    <Compile Include="Business\UnionCache.cs" />
     <Compile Include="Business\UnTaskService.cs" />
     <Compile Include="Business\WmsService.cs" />
     <Compile Include="Business\UnPokeService.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Model\HUNHEVIEW.cs" />
     <Compile Include="Model\LaneWayTaskCount.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />
-    <Compile Include="Model\UnionCaChe.cs" />
     <Compile Include="Model\UseRate.cs" />
     <Compile Include="OPC\PlcGroup.cs" />
     <Compile Include="OPC\PlcItemCollection.cs" />
