@@ -6,7 +6,7 @@
         using OpcRcw.Comn;
         using System.Runtime.InteropServices;
 
-namespace SortingControlSys.Model
+namespace FollowTask.Modle
 {
     public class Group : IOPCDataCallback
         {

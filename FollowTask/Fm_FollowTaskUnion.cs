@@ -10,6 +10,9 @@ using InBound;
 using OpcRcw.Da;
 using Machine;
 
+using FollowTask.Modle;
+ 
+
 namespace FollowTask
 {
     public partial class Fm_FollowTaskUnion : Form
@@ -29,6 +32,9 @@ namespace FollowTask
         public WriteLog writeLog = WriteLog.GetLog();
         DeviceStateManager stateManager = new DeviceStateManager();
         Alarms alarms = new Alarms();
+
+        Group machineGroup1, machineGroup2, machineGroup3, machineGroup4, machineGroup5, machineGroup6 , machineGroup7, machineGroup8;//合流一条皮带上的机械手
+        List<Group> listgroup = new List<Group>();
         public Fm_FollowTaskUnion(string text)
         {
             InitializeComponent();
@@ -72,10 +78,57 @@ namespace FollowTask
         private void Machine1_Click(object sender, EventArgs e)
         {
             Button btn = ((Button)sender);//获取当前单击按钮的所有实例
-            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail("第"+Text+"皮带"+btn.Text);
+            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail("第" + Text + "皮带" + btn.Text, listgroup);
             ftmd.Show();
         }
+        void GroupAdd()
+        {
+            listgroup.Add(machineGroup1);
+            listgroup.Add(machineGroup2);
+            listgroup.Add(machineGroup3);
+            listgroup.Add(machineGroup4);
+            listgroup.Add(machineGroup5);
+            listgroup.Add(machineGroup6);
+            listgroup.Add(machineGroup7);
+            listgroup.Add(machineGroup8);  
+        }
 
+        void Connction()
+        {
+            Type svrComponenttyp;
+            Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            try
+            {
+
+
+                pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);//连接本地服务器
+
+                machineGroup1  = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);//第一根
+                machineGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID); 
+                machineGroup3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID); 
+                machineGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID); 
+                machineGroup5 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID); 
+                machineGroup6 = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID); 
+                machineGroup7 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID); 
+                machineGroup8 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID); 
+
+                machineGroup1.addItem(ItemCollection.MachineItemNo1());
+                machineGroup2.addItem(ItemCollection.MachineItemNo2());
+                machineGroup3.addItem(ItemCollection.MachineItemNo3());
+                machineGroup4.addItem(ItemCollection.MachineItemNo4());
+                machineGroup5.addItem(ItemCollection.MachineItemNo5());
+                machineGroup6.addItem(ItemCollection.MachineItemNo6());
+                machineGroup7.addItem(ItemCollection.MachineItemNo7());
+                machineGroup8.addItem(ItemCollection.MachineItemNo8());
+                GroupAdd();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /// <summary>
         /// 机械手根据组变更名 
         /// </summary>

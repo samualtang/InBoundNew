@@ -159,7 +159,6 @@
             this.listViewMachineDetails.TabIndex = 1;
             this.listViewMachineDetails.UseCompatibleStateImageBehavior = false;
             this.listViewMachineDetails.View = System.Windows.Forms.View.Details;
-           // this.listViewMachineDetails.SizeChanged += new System.EventHandler(this.listViewMachineDetails_SizeChanged);
             // 
             // columnHeader1
             // 
@@ -584,7 +583,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(666, 42);
+            this.btnRefresh.Location = new System.Drawing.Point(666, 23);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 52;

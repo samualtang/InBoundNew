@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound;
 using Machine;
 using OpcRcw.Da;
+using FollowTask.Modle;
 
 namespace FollowTask
 {
@@ -29,24 +30,13 @@ namespace FollowTask
           Bitmap imgWuYan = (Bitmap)Properties.Resources.ResourceManager.GetObject("无烟1");
           Bitmap imgGuZhang = (Bitmap)Properties.Resources.ResourceManager.GetObject("故障1");
 
-        #endregion
+        #endregion 
+          
 
-
-
-          internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
-
-          internal const string GROUP_NAME = "grp1";                  // Group name
-          internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-          AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
-          /* Global variables */
-          IOPCServer pIOPCServer;  //定义opcServer对象
-          public WriteLog writeLog = WriteLog.GetLog();
-          DeviceStateManager stateManager = new DeviceStateManager();
-          Alarms alarms = new Alarms();
-
-        public Fm_FollowTaskMachineDetail(string machineNo)
+        public Fm_FollowTaskMachineDetail(string machineNo ,List<Group> listgroup)
         {
             InitializeComponent();
+            #region 初始化
             if (machineNo.Substring(0,3) =="机械手")//烟柜机械手
             {
                 lblCigreName.Text = "香烟";//预分拣机械手
@@ -70,7 +60,11 @@ namespace FollowTask
             Text = machineNo.Substring(1) + "机械手"; 
             this.StartPosition = FormStartPosition.CenterScreen;
             lblMachineNo.Text = machineNo.Substring(4) + "机械手";
-         }
+            #endregion
+
+
+
+        }
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
             Random rd = new Random();
@@ -82,8 +76,7 @@ namespace FollowTask
                 state[i] = rd.Next(0, 2);
                 zhua[i] = rd.Next(0, 2);
             } 
-            pbBind(pan, state, zhua);
-           
+            pbBind(pan, state, zhua); 
         }
         #region 吸盘
         /// <summary >

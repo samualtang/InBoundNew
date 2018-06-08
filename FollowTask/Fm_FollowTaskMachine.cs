@@ -11,6 +11,7 @@ using OpcRcw.Da;
 using Machine;
 using InBound.Business;
 using InBound.Model;
+using FollowTask.Modle;
 
 namespace FollowTask
 {
@@ -22,8 +23,20 @@ namespace FollowTask
             InitializeComponent();
         }
 
+        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
+
+        internal const string GROUP_NAME = "grp1";                  // Group name
+        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
+         
+        /* Global variables */
+        IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
+        DeviceStateManager stateManager = new DeviceStateManager();
+        Alarms alarms = new Alarms();
+
+        Group machineGroup1;
         AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
+        List<Group> listgroup = new List<Group>();
         public fm_Machine(string text)//窗体初始化
         {
             InitializeComponent();
@@ -76,7 +89,7 @@ namespace FollowTask
             Button name = ((Button)sender);//获取当前单击按钮的所有实例
             updateListBox("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
             //writeLog.Write("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
-            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text+ name.Text);
+            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text + name.Text, listgroup);
             ftmd.Show();
              
         } 
@@ -176,8 +189,11 @@ namespace FollowTask
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            times =Convert.ToInt32( txtTimes.Text);
-            timer1.Start();
+            if (!string.IsNullOrWhiteSpace(txtTimes.Text))
+            {
+                times = Convert.ToInt32(txtTimes.Text);
+                timer1.Start();
+            }
         }
 
         private void listViewMchineBelt_SizeChanged(object sender, EventArgs e)
