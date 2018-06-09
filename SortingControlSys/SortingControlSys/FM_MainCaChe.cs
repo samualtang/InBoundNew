@@ -26,7 +26,7 @@ namespace SortingControlSys
         }
         public void binding()
         {
-            dataGridView1.DataSource = UnionCache.GetAllData();
+            dataGridView1.DataSource = UnionCacheServer.GetAllData();
         }
 
         private void btn_Search_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace SortingControlSys
                 MessageBox.Show("分拣组号输入格式有误！");
                 return;
             } 
-            dataGridView1.DataSource = UnionCache.GetSearchData(mainbeltno, groupnono);
+            dataGridView1.DataSource = UnionCacheServer.GetSearchData(mainbeltno, groupnono);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -112,8 +112,6 @@ namespace SortingControlSys
 
         private void btn_update_Click(object sender, EventArgs e)
         {
-             
-
             InBound.Model.UnionCaChe ce = new InBound.Model.UnionCaChe();
             try
             {
@@ -161,17 +159,15 @@ namespace SortingControlSys
 
            if (re==DialogResult.OK)
            {
-               if (UnionCache.UpdateData(ce)) 
+               if (UnionCacheServer.UpdateData(ce))
                {
                    MessageBox.Show("修改成功！");
-                   dataGridView1.DataSource = UnionCache.GetAllData();
+                   dataGridView1.DataSource = UnionCacheServer.GetAllData();
                }
                else
                {
                    MessageBox.Show("修改失败！");
                }
-               
-              
            }
            else
            {
@@ -180,43 +176,144 @@ namespace SortingControlSys
             
         }
 
-        //private void button3_Click(object sender, EventArgs e)
-        //{
+        private void btn_up_Click(object sender, EventArgs e)
+        {
+            decimal num = 0;
+            try
+            {
+                num = Convert.ToDecimal(textBox_num.Text);
+                if (num < 0)
+                {
+                    MessageBox.Show("输入数值必须为非负数！");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("输入数量格式有误！");
+                return;
+            }
+            if (!Check(num,1))
+            {
+                return;
+            } 
+            DialogResult re = MessageBox.Show("确定增加所有合流缓存上限为：" + textBox_num.Text + "  ？", "数据修改", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (re==DialogResult.OK)
+            {
+                UnionCacheServer.dateplup(num);
+                dataGridView1.DataSource = UnionCacheServer.GetAllData();
 
-        //     InBound.Model.UnionCaChe ce = new InBound.Model.UnionCaChe();
+            }
+        }
 
-        //     ce.mainbelt = 5;
-        //     ce.groupno = 9;
-        //     ce.cachesize = Convert.ToDecimal(txt_cachesize.Text);
-        //     ce.dispatchenum = Convert.ToDecimal(txt_dispatchenum.Text);
-        //     ce.dispatchesize = Convert.ToDecimal(txt_dispatchesize.Text);
-        //     decimal states = 5;
-        //     switch (cmb_state.SelectedItem.ToString())
-        //     {
-        //         case "启用":
-        //             states = 10;
-        //             break;
-        //         case "禁用":
-        //             states = 0;
-        //             break;
-        //     }
+        private void btn_down_Click(object sender, EventArgs e)
+        {
+            decimal num = 0;
+            try
+            {
+                num = Convert.ToDecimal(textBox_num.Text);
+                if (num<0)
+                {
+                    MessageBox.Show("输入数值必须为非负数！");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("输入数量格式有误！");
+                return;
+            }
+            if (!Check(num,2))
+            {
+                return;
+            } 
+            DialogResult re = MessageBox.Show("确定减少所有合流缓存上限为：" + textBox_num.Text + "  ？", "数据修改", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (re == DialogResult.OK)
+            {
+                UnionCacheServer.datepldown(num);
+                dataGridView1.DataSource = UnionCacheServer.GetAllData();
 
+            }
+        }
 
-        //     ce.state = states;
-        //     try
-        //     {
-        //         UnionCache.ceshi(ce);
-        //         MessageBox.Show("新增成功！");
-        //         binding();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         MessageBox.Show("新增失败！！"+ex.ToString());
-                 
-        //     }
-             
-           
-               
-        //}
+        /// <summary>
+        /// 检查是否低于0或大于上限
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="type">1为增加 2为减少</param>
+        public bool Check (decimal num ,int type )
+        {
+            string listmax = "";
+            string listmin = "";
+            for (int i =dataGridView1.Rows.Count-1; i >= 0; i--)
+            {
+                if ( Convert.ToDecimal(dataGridView1.Rows[i].Cells[3].Value) + num>280)
+                {
+                    listmax = listmax + " " + (i + 1) + " ";
+                } 
+                if ( Convert.ToDecimal(dataGridView1.Rows[i].Cells[3].Value) - num<0)
+                {
+                    listmin = listmin + " " + (i + 1) + " ";
+                } 
+            }
+            if (listmax != "" && type == 1)
+            {
+                MessageBox.Show(listmax + "号缓存带超出上限");
+                return false;
+            }
+            if (listmin != "" && type == 2)
+            {
+                MessageBox.Show(listmax + "号缓存带低于0");
+                return false;
+            }
+            return true;
+            
+        }
+
+        private void btn_dispatchenum_Click(object sender, EventArgs e)
+        {
+            decimal num = 0;
+            try
+            {
+                num = Convert.ToDecimal(txt_dispatchenum_pl.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("输入数量格式有误！");
+            }
+            DialogResult re = MessageBox.Show("确定修改缓存每次空余量为：" + txt_dispatchenum_pl.Text + "  ？", "数据修改", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (re == DialogResult.OK)
+            {
+                UnionCacheServer.up_dispatchenum(num);
+                dataGridView1.DataSource = UnionCacheServer.GetAllData();
+
+            }
+        }
+
+        private void btn_dispatchesize_Click(object sender, EventArgs e)
+        {
+            decimal num = 0;
+            try
+            {
+                num = Convert.ToDecimal(txt_dispatchesize_pl.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("输入数量格式有误！");
+            }
+            DialogResult re = MessageBox.Show("确定修改每次缓存补烟数为：" + txt_dispatchesize_pl.Text + "  ？", "数据修改", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (re == DialogResult.OK)
+            {
+                UnionCacheServer.up_dispatchesize(num);
+                dataGridView1.DataSource = UnionCacheServer.GetAllData();
+
+            }
+        }
+
+       
+
+     
+
+     
     }
 }

@@ -45,7 +45,6 @@
             this.txt_mainbelt = new System.Windows.Forms.TextBox();
             this.btn_update = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.txt_cachesize = new System.Windows.Forms.TextBox();
             this.txt_dispatchesize = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,9 +53,17 @@
             this.cmb_state = new System.Windows.Forms.ComboBox();
             this.txt_mainbeltno = new System.Windows.Forms.TextBox();
             this.txt_groupnono = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_down = new System.Windows.Forms.Button();
+            this.btn_up = new System.Windows.Forms.Button();
             this.textBox_num = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txt_dispatchenum_pl = new System.Windows.Forms.TextBox();
+            this.btn_dispatchenum = new System.Windows.Forms.Button();
+            this.btn_dispatchesize = new System.Windows.Forms.Button();
+            this.txt_dispatchesize_pl = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -150,7 +157,7 @@
             // Column5
             // 
             this.Column5.DataPropertyName = "dispatchesize";
-            this.Column5.HeaderText = "每次订单量上限";
+            this.Column5.HeaderText = "每次缓存补烟数";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
             this.Column5.Width = 130;
@@ -209,24 +216,15 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(242, 350);
+            this.label5.Location = new System.Drawing.Point(268, 350);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 15;
             this.label5.Text = "缓存量上限";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(464, 350);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 12);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "每次订单量上限";
-            // 
             // txt_cachesize
             // 
-            this.txt_cachesize.Location = new System.Drawing.Point(313, 343);
+            this.txt_cachesize.Location = new System.Drawing.Point(339, 343);
             this.txt_cachesize.Name = "txt_cachesize";
             this.txt_cachesize.Size = new System.Drawing.Size(100, 21);
             this.txt_cachesize.TabIndex = 13;
@@ -241,15 +239,15 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(242, 382);
+            this.label7.Location = new System.Drawing.Point(244, 382);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 12);
+            this.label7.Size = new System.Drawing.Size(89, 12);
             this.label7.TabIndex = 17;
-            this.label7.Text = "缓存空余量";
+            this.label7.Text = "缓存每次空余量";
             // 
             // txt_dispatchenum
             // 
-            this.txt_dispatchenum.Location = new System.Drawing.Point(313, 379);
+            this.txt_dispatchenum.Location = new System.Drawing.Point(339, 379);
             this.txt_dispatchenum.Name = "txt_dispatchenum";
             this.txt_dispatchenum.Size = new System.Drawing.Size(100, 21);
             this.txt_dispatchenum.TabIndex = 16;
@@ -289,40 +287,122 @@
             this.txt_groupnono.Size = new System.Drawing.Size(100, 21);
             this.txt_groupnono.TabIndex = 24;
             // 
-            // button1
+            // btn_down
             // 
-            this.button1.Location = new System.Drawing.Point(879, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 116);
-            this.button1.TabIndex = 25;
-            this.button1.Text = "全   部   减 ";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_down.Location = new System.Drawing.Point(25, 209);
+            this.btn_down.Name = "btn_down";
+            this.btn_down.Size = new System.Drawing.Size(30, 116);
+            this.btn_down.TabIndex = 25;
+            this.btn_down.Text = "全   部   减 ";
+            this.btn_down.UseVisualStyleBackColor = true;
+            this.btn_down.Click += new System.EventHandler(this.btn_down_Click);
             // 
-            // button2
+            // btn_up
             // 
-            this.button2.Location = new System.Drawing.Point(879, 209);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 116);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "全   部   加";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_up.Location = new System.Drawing.Point(25, 39);
+            this.btn_up.Name = "btn_up";
+            this.btn_up.Size = new System.Drawing.Size(30, 116);
+            this.btn_up.TabIndex = 26;
+            this.btn_up.Text = "全   部   加";
+            this.btn_up.UseVisualStyleBackColor = true;
+            this.btn_up.Click += new System.EventHandler(this.btn_up_Click);
             // 
             // textBox_num
             // 
-            this.textBox_num.Location = new System.Drawing.Point(869, 171);
+            this.textBox_num.Location = new System.Drawing.Point(25, 171);
             this.textBox_num.Name = "textBox_num";
-            this.textBox_num.ReadOnly = true;
-            this.textBox_num.Size = new System.Drawing.Size(43, 21);
+            this.textBox_num.Size = new System.Drawing.Size(30, 21);
             this.textBox_num.TabIndex = 27;
+            this.textBox_num.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 24);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "缓存上限";
+            // 
+            // txt_dispatchenum_pl
+            // 
+            this.txt_dispatchenum_pl.Location = new System.Drawing.Point(840, 105);
+            this.txt_dispatchenum_pl.Name = "txt_dispatchenum_pl";
+            this.txt_dispatchenum_pl.Size = new System.Drawing.Size(30, 21);
+            this.txt_dispatchenum_pl.TabIndex = 29;
+            this.txt_dispatchenum_pl.Text = "0";
+            // 
+            // btn_dispatchenum
+            // 
+            this.btn_dispatchenum.Location = new System.Drawing.Point(840, 132);
+            this.btn_dispatchenum.Name = "btn_dispatchenum";
+            this.btn_dispatchenum.Size = new System.Drawing.Size(88, 26);
+            this.btn_dispatchenum.TabIndex = 30;
+            this.btn_dispatchenum.Text = "修  改";
+            this.btn_dispatchenum.UseVisualStyleBackColor = true;
+            this.btn_dispatchenum.Click += new System.EventHandler(this.btn_dispatchenum_Click);
+            // 
+            // btn_dispatchesize
+            // 
+            this.btn_dispatchesize.Location = new System.Drawing.Point(840, 268);
+            this.btn_dispatchesize.Name = "btn_dispatchesize";
+            this.btn_dispatchesize.Size = new System.Drawing.Size(88, 26);
+            this.btn_dispatchesize.TabIndex = 32;
+            this.btn_dispatchesize.Text = "修  改";
+            this.btn_dispatchesize.UseVisualStyleBackColor = true;
+            this.btn_dispatchesize.Click += new System.EventHandler(this.btn_dispatchesize_Click);
+            // 
+            // txt_dispatchesize_pl
+            // 
+            this.txt_dispatchesize_pl.Location = new System.Drawing.Point(840, 241);
+            this.txt_dispatchesize_pl.Name = "txt_dispatchesize_pl";
+            this.txt_dispatchesize_pl.Size = new System.Drawing.Size(30, 21);
+            this.txt_dispatchesize_pl.TabIndex = 31;
+            this.txt_dispatchesize_pl.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(839, 90);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(89, 12);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "缓存每次空余量";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(838, 223);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 12);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "每次缓存补烟数";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(464, 346);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(89, 12);
+            this.label12.TabIndex = 35;
+            this.label12.Text = "每次缓存补烟数";
             // 
             // FM_MainCaChe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 415);
+            this.ClientSize = new System.Drawing.Size(949, 415);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.btn_dispatchesize);
+            this.Controls.Add(this.txt_dispatchesize_pl);
+            this.Controls.Add(this.btn_dispatchenum);
+            this.Controls.Add(this.txt_dispatchenum_pl);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox_num);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_up);
+            this.Controls.Add(this.btn_down);
             this.Controls.Add(this.txt_groupnono);
             this.Controls.Add(this.txt_mainbeltno);
             this.Controls.Add(this.cmb_state);
@@ -330,7 +410,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txt_dispatchenum);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.txt_cachesize);
             this.Controls.Add(this.txt_dispatchesize);
             this.Controls.Add(this.label3);
@@ -365,7 +444,6 @@
         private System.Windows.Forms.TextBox txt_mainbelt;
         private System.Windows.Forms.Button btn_update;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txt_cachesize;
         private System.Windows.Forms.TextBox txt_dispatchesize;
         private System.Windows.Forms.Label label7;
@@ -374,6 +452,17 @@
         private System.Windows.Forms.ComboBox cmb_state;
         private System.Windows.Forms.TextBox txt_mainbeltno;
         private System.Windows.Forms.TextBox txt_groupnono;
+        private System.Windows.Forms.Button btn_down;
+        private System.Windows.Forms.Button btn_up;
+        private System.Windows.Forms.TextBox textBox_num;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txt_dispatchenum_pl;
+        private System.Windows.Forms.Button btn_dispatchenum;
+        private System.Windows.Forms.Button btn_dispatchesize;
+        private System.Windows.Forms.TextBox txt_dispatchesize_pl;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
@@ -381,8 +470,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox_num;
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using InBound.Business;
 using System.Threading;
+using InBound.Model;
 
 namespace SpecialShapeSmoke
 {

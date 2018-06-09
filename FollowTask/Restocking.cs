@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using System.Configuration;
 using InBound.Business;
+using InBound.Model;
 
 namespace FollowTask
 {
@@ -30,8 +31,8 @@ namespace FollowTask
             textBox_jym.Text = dataGridView1.SelectedCells[2].Value.ToString(); 
         }
 
-        List<InBound.Business.TroughNumList> cmb1;
-        List<InBound.Business.TroughNumList> cmb2;
+        List<InBound.Model.TroughNumList> cmb1;
+        List<InBound.Model.TroughNumList> cmb2;
         bool falg = false;
         private void Restocking_Load(object sender, EventArgs e)
         {

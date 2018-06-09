@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Windows.Forms;
 using highSpeed.PubFunc;
 
 namespace highSpeed.statement
@@ -105,7 +104,8 @@ namespace highSpeed.statement
 
                 ds = Db.QueryDs(sql);
                 
-                    //进度条显示
+                    //进度条显示
+
 
                     panel2.Visible = true;
                     label2.Visible = true;
