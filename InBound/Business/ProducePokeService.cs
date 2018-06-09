@@ -29,6 +29,93 @@ namespace InBound.Business
             }
             return list;
         }
+        public static bool CheckExistCanSendBelt(int mainBelt, decimal groupno)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.MAINBELT == mainBelt && item.GROUPNO == groupno && item.SORTSTATE == 10 select item).FirstOrDefault();
+                if (query != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static int GetSendMainbelt(decimal groupno, List<decimal> sortNum, List<decimal> xynum, out decimal DISPATCHESIZE)
+        {
+            int Mainbeltno = 0;
+            int maxOrder = 100;
+            DISPATCHESIZE = 0;
+            decimal leftnum = 0;
+            for (int i = 1; i <= 4; i++)
+            {
+                if (!CheckExistCanSendBelt(i, groupno))
+                {
+                    continue;
+
+                }
+                T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(groupno, i);
+                decimal currentNum = ProducePokeService.LeftCount(groupno, i, sortNum[i - 1], xynum[i - 1], cache.CACHESIZE ?? 0);
+                WriteLog.GetLog().Write("主皮带:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[i - 1]+" 已抓烟数量:"+xynum[i-1]);
+                if ((cache.CACHESIZE??0)-currentNum<10)//如果缓层小于10
+                {
+                    DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                    return i;
+
+                }
+               
+                if (currentNum >= (cache.DISPATCHENUM ?? 0))
+                {
+                    //if (CheckExistCanSendBelt(i, groupno))
+                    //{
+                    int tempOrderCount = getUnionOrderCount(groupno, sortNum[i - 1], i);
+                    WriteLog.GetLog().Write("主皮带:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[i - 1] + " 已抓烟数量:" + xynum[i - 1] + " 可支撑订单数:" + tempOrderCount);
+                    if (tempOrderCount <= maxOrder)
+                    {
+                        if (tempOrderCount < maxOrder)
+                        {
+                            maxOrder = tempOrderCount;
+                            Mainbeltno = i;
+                            DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                            leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                        }
+                        else
+                        {
+                            if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                            {
+                                Mainbeltno = i;
+                                DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                            }
+                        }
+                    }
+                    // }
+                }
+            }
+            WriteLog.GetLog().Write("当前发送主皮带:" + Mainbeltno);
+            return Mainbeltno;
+        }
+        public static int getUnionOrderCount(decimal groupno, decimal beginnum, int mainbelt)
+        {
+            List<decimal> listsortNum = new List<decimal>();
+            decimal beginsortNum = beginnum;
+            int orderCount = 0;
+            // decimal orderNum=0;
+            using (Entities entity = new Entities())
+            {
+
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE >= 15 && item.SORTNUM >= beginsortNum && item.GROUPNO == groupno && item.MAINBELT == mainbelt select item.SORTNUM).ToList();
+                if (query != null)
+                {
+                    orderCount = query.Distinct().Count();
+                }
+
+            }
+            return orderCount;
+        }
         public static Boolean CheckExistTaskNo(decimal taskno)
         {
             using (Entities entity = new Entities())
