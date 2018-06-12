@@ -69,7 +69,8 @@ namespace SortingControlSys.Model
             list.Add(OpcPresortServer + "DB1,DINT116");//机械手任务号 
             list.Add(OpcPresortServer + "DB1,INT120");//机械手吸烟数量
          //   list.Add(OpcPresortServer + "DB1,DWORD122");//第二排序号 0
-            list.Add(OpcPresortServer + "DB1,w0");//机械手吸烟数量
+            list.Add(OpcPresortServer + "DB1,w0");//
+            list.Add(OpcPresortServer + "DB1,w122");//标志位
             return list;
         }
 
@@ -145,6 +146,7 @@ namespace SortingControlSys.Model
             list.Add(OpcPresortServer + "DB101,INT120");//机械手吸烟数量
            // list.Add(OpcPresortServer + "DB101,DWORD122");//第二排序号 0
             list.Add(OpcPresortServer + "DB101,W0");//标志位 26
+            list.Add(OpcPresortServer + "DB101,w122");//机械手吸烟数量
             return list;
         }
 
@@ -155,8 +157,8 @@ namespace SortingControlSys.Model
         public static List<string> GetSendTaskStateItem()
         {
             List<string> list = new List<string>();
-            list.Add(OpcPresortServer + "DB1,W0");//第一组 标志位
-            list.Add(OpcPresortServer + "DB101,W0");//第二组 标志位
+            list.Add(OpcPresortServer + "DB1,W122");//第一组 标志位
+            list.Add(OpcPresortServer + "DB101,W122");//第二组 标志位
             return list;
         }
 

@@ -63,6 +63,7 @@ namespace InBound.Business
                 if ((cache.CACHESIZE??0)-currentNum<10)//如果缓层小于10
                 {
                     DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                    WriteLog.GetLog().Write("组号:" + groupno + "当前发送主皮带:" + i);
                     return i;
 
                 }
@@ -95,7 +96,7 @@ namespace InBound.Business
                     // }
                 }
             }
-            WriteLog.GetLog().Write("当前发送主皮带:" + Mainbeltno);
+            WriteLog.GetLog().Write("组号:"+groupno+ "当前发送主皮带:" + Mainbeltno);
             return Mainbeltno;
         }
         public static int getUnionOrderCount(decimal groupno, decimal beginnum, int mainbelt)
@@ -328,7 +329,7 @@ namespace InBound.Business
         {
             WriteLog writeLog = WriteLog.GetLog();
 
-            object[] values = new object[49];
+            object[] values = new object[50];
             for (int i = 0; i < values.Length; i++)//初始化一个数组
             {
                 values[i] = 0;
@@ -342,6 +343,8 @@ namespace InBound.Business
             {
                 int i = 0;
                 int totalCount = 0;
+                decimal checkNum = 0;
+               // decimal check
                 foreach (var item in list)//组装所需要的信息
                 {
                     if (item.qty != 0)
@@ -352,7 +355,7 @@ namespace InBound.Business
                             values[1] = int.Parse(item.ExportNum);//虚拟出口号
                             values[2] = item.MainBelt;
                             values[3] = 0;
-                            values[48] = 1;//标志位  ||
+                            values[49] = 1;//标志位  ||
                         }
                         using (Entities entity = new Entities())
                         {
@@ -362,6 +365,11 @@ namespace InBound.Business
                                          select record).ToList();
                             if (query == null || query.Count==0)
                             {
+                                int seq = ((int)item.Machineseq)%11;
+                                if (seq == 0)
+                                    seq = 11;
+                                seq -= 1;
+                                checkNum += (decimal)Math.Pow(2, seq);
                                 values[(int)((item.Machineseq - (sortgroupno - 1) * 11 - 1) * 2 + 26)] = item.UnionTasknum;
                                 values[(int)((item.Machineseq - (sortgroupno - 1) * 11 - 1) * 2 + 27)] = item.meragenum;
 
@@ -382,6 +390,7 @@ namespace InBound.Business
                     }
                 }
                 values[3] = totalCount;
+                values[48] = checkNum;
             }
 
             return values;

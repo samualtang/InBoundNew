@@ -479,7 +479,7 @@ namespace SortingControlSys.SortingControl
                             zqNumListS.Add(zqqty);
                         }
                         decimal DISPATCHESIZE = 0;
-                        mainbeltNum2 = ProducePokeService.GetSendMainbelt(sortgroup, sortNumListS, zqNumListS, out DISPATCHESIZE);
+                        mainbeltNum2 = ProducePokeService.GetSendMainbelt(sortgroupno2, sortNumListS, zqNumListS, out DISPATCHESIZE);
                         //T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno2, mainbeltNum2);
                         //decimal currentNum = ProducePokeService.LeftCount(sortgroupno2, mainbeltNum2, taskno, zqqty, cache.CACHESIZE ?? 0);
                         //writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno2 + " 主皮带:" + mainbeltNum2);
@@ -603,13 +603,14 @@ namespace SortingControlSys.SortingControl
         List<string> plclist = ItemCollection.getUnionTaskItem();
 
 
+
        
-   
         /// <summary>
         /// 第一组数据
         /// </summary>
         void sendTask()
         {
+            
             List<decimal> sortNumList = new List<decimal>();
             List<decimal> zqNumList = new List<decimal>();
             try
@@ -672,7 +673,7 @@ namespace SortingControlSys.SortingControl
                             zqNumList.Add(zqqty);
                         }
                         decimal DISPATCHESIZE = 0;
-                        mainbeltNum = ProducePokeService.GetSendMainbelt(sortgroup, sortNumList, zqNumList, out DISPATCHESIZE);
+                        mainbeltNum = ProducePokeService.GetSendMainbelt(sortgroupno1, sortNumList, zqNumList, out DISPATCHESIZE);
                         //T_PRODUCE_CACHE cache = ProduceCacheService.GetCache(sortgroupno1, mainbeltNum);
                         //decimal currentNum = ProducePokeService.LeftCount(sortgroupno1, mainbeltNum, taskno, zqqty, cache.CACHESIZE??0);
                         //writeLog.Write("当前剩余量:" + currentNum + " 组号:" + sortgroupno1 +" 主皮带:"+mainbeltNum);
@@ -693,7 +694,7 @@ namespace SortingControlSys.SortingControl
                     }
 
                     object[] datas = ProducePokeService.GetSortTask(sortgroupno1);//数据
-
+               
                     if (int.Parse(datas[0].ToString()) == 0)//已经没有数据可发送了，datas[0]是任务号
                     {
                         updateListBox(sortgroupno1 + "组分拣数据发送完毕");
