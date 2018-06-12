@@ -413,7 +413,7 @@ namespace InBound.Business
                                 {
                                     if (tempcount + titem.POKENUM <= 10)
                                     {
-                                        info.Insert(0, new UnionTaskInfo()
+                                        info.Add(new UnionTaskInfo()
                                         {
                                             CIGARETTDECODE = titem.CIGARETTDECODE,
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
@@ -428,7 +428,7 @@ namespace InBound.Business
                                     {
                                         if (tempcount < 10)
                                         {
-                                            info.Insert(0, new UnionTaskInfo()
+                                            info.Add(new UnionTaskInfo()
                                             {
                                                 CIGARETTDECODE = titem.CIGARETTDECODE,
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
