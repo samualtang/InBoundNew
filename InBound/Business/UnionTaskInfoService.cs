@@ -15,7 +15,8 @@ namespace InBound.Business
 
             using (Entities entity = new Entities())
             {
-                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM < sortnum orderby item.SORTNUM  descending select item).FirstOrDefault();
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM < sortnum && item.MAINBELT==mainbelt orderby item.SORTNUM  descending select item).FirstOrDefault();
+
                 if (query != null)
                 {
                     var task = (from item in entity.T_PRODUCE_POKE join item2 in entity.T_PRODUCE_SORTTROUGH
@@ -204,14 +205,250 @@ namespace InBound.Business
         }
 
 
-        public static List<UnionTaskInfo> GetUnionTaskInfoBefore(int mainbelt, int groupnoCurrent, decimal sortnumCurrent, decimal xyNum,decimal sortNumFirst,decimal xyNumFirst)
+        public static List<UnionTaskInfo> GetUnionTaskInfoBefore(int mainbelt, int groupnoCurrent, decimal sortnumCurrent, decimal xyNum)
         {
             List<UnionTaskInfo> info = new List<UnionTaskInfo>();
-            using(Entities entity=new Entities())
+            using (Entities entity = new Entities())
             {
-                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnumCurrent orderby item.MACHINESEQ select item).ToList();
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM > sortnumCurrent && item.MAINBELT == mainbelt orderby item.SORTNUM select item).FirstOrDefault();
 
                 decimal totalCount = Math.Ceiling(xyNum / 10);//当前第几波
+                //先初始化
+                
+                    var task = (from item in entity.T_PRODUCE_POKE
+                                join item2 in entity.T_PRODUCE_SORTTROUGH
+                                    on item.TROUGHNUM equals item2.TROUGHNUM
+                                where item.SORTNUM == sortnumCurrent && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+                                orderby item.MACHINESEQ
+                                select
+                                    new TaskDetail()
+                                    {
+                                        CIGARETTDECODE = item2.CIGARETTECODE,
+                                        CIGARETTDENAME = item2
+                                            .CIGARETTENAME,
+                                        GroupNO = item.GROUPNO ?? 0,
+                                        Machineseq = item.MACHINESEQ ?? 0,
+                                        MainBelt = item.MAINBELT ?? 0,
+                                        SortNum
+                                            = item.SORTNUM ?? 0,
+                                        POKENUM = item.POKENUM ?? 0,
+                                        MachineState = item.MACHINESTATE ?? 0
+                                    }).ToList();
+                    for (int i = 1; i < groupnoCurrent; i++)
+                    {
+                        int tempgroupno = i;
+                        if (i == 3)
+                        {
+                            tempgroupno = 4;
+                        }
+                        else if (i == 4)
+                        {
+                            tempgroupno = 3;
+                        }
+                        else if (i == 7)
+                        {
+                            tempgroupno = 8;
+                        }
+                        else if (i == 8)
+                        {
+                            tempgroupno = 7;
+                        }
+                        var temptask = task.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
+                        if (temptask != null && temptask.Count > 0)
+                        {
+
+                            decimal tempcount = 0;
+                            foreach (var titem in temptask)
+                            {
+                                if (tempcount + titem.POKENUM <= totalCount*10)
+                                {
+                                  
+                                    titem.MachineState = 30;
+                                    tempcount += titem.POKENUM;
+                                }
+                                else
+                                {
+                                    if (tempcount < totalCount * 10)
+                                    {
+
+                                        titem.POKENUM = titem.POKENUM - (totalCount * 10 - tempcount);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    var exitLoop = false;
+                    #region
+                    while (!exitLoop)
+                    {
+                        for (int i = 1; i < groupnoCurrent; i++)
+                        {
+                            if (i == 1)
+                            {
+                                exitLoop = true;
+                            }
+                            int tempgroupno = i;
+                            if (i == 3)
+                            {
+                                tempgroupno = 4;
+                            }
+                            else if (i == 4)
+                            {
+                                tempgroupno = 3;
+                            }
+                            else if (i == 7)
+                            {
+                                tempgroupno = 8;
+                            }
+                            else if (i == 8)
+                            {
+                                tempgroupno = 7;
+                            }
+
+                            var temptask = task.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
+                            if (temptask != null && temptask.Count > 0)
+                            {
+                                exitLoop = false;
+                                decimal tempcount = 0;
+                                foreach (var titem in temptask)
+                                {
+                                    if (tempcount + titem.POKENUM <= 10)
+                                    {
+                                        info.Insert(0, new UnionTaskInfo()
+                                        {
+                                            CIGARETTDECODE = titem.CIGARETTDECODE,
+                                            CIGARETTDENAME = titem.CIGARETTDENAME,
+                                            MainBelt = titem.MainBelt,
+                                            SortNum = titem.SortNum,
+                                            qty = titem.POKENUM
+                                        });
+                                        titem.MachineState = 30;
+                                        tempcount += titem.POKENUM;
+                                    }
+                                    else
+                                    {
+                                        if (tempcount < 10)
+                                        {
+                                            info.Insert(0, new UnionTaskInfo()
+                                            {
+                                                CIGARETTDECODE = titem.CIGARETTDECODE,
+                                                CIGARETTDENAME = titem.CIGARETTDENAME,
+                                                MainBelt = titem.MainBelt,
+                                                SortNum = titem.SortNum,
+                                                qty = 10 - tempcount
+                                            });
+                                            titem.POKENUM = titem.POKENUM - (10 - tempcount);
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+#endregion
+                    if (query != null)
+                    {
+                    var taskCurrent = (from item in entity.T_PRODUCE_POKE
+                                join item2 in entity.T_PRODUCE_SORTTROUGH
+                                    on item.TROUGHNUM equals item2.TROUGHNUM
+                                where item.SORTNUM == query.SORTNUM && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+                                orderby item.MACHINESEQ
+                                select
+                                    new TaskDetail()
+                                    {
+                                        CIGARETTDECODE = item2.CIGARETTECODE,
+                                        CIGARETTDENAME = item2
+                                            .CIGARETTENAME,
+                                        GroupNO = item.GROUPNO ?? 0,
+                                        Machineseq = item.MACHINESEQ ?? 0,
+                                        MainBelt = item.MAINBELT ?? 0,
+                                        SortNum
+                                            = item.SORTNUM ?? 0,
+                                        POKENUM = item.POKENUM ?? 0,
+                                        MachineState = item.MACHINESTATE ?? 0
+                                    }).ToList();
+
+                    var exitLoopNext = false;
+                    while (!exitLoopNext)
+                    {
+                        for (int i = 1; i <= groupnoCurrent; i++)
+                        {
+                            if (i == 1)
+                            {
+                                exitLoopNext = true;
+                            }
+                            int tempgroupno = i;
+                            if (i == 3)
+                            {
+                                tempgroupno = 4;
+                            }
+                            else if (i == 4)
+                            {
+                                tempgroupno = 3;
+                            }
+                            else if (i == 7)
+                            {
+                                tempgroupno = 8;
+                            }
+                            else if (i == 8)
+                            {
+                                tempgroupno = 7;
+                            }
+
+                            var temptask = task.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
+                            if (temptask != null && temptask.Count > 0)
+                            {
+                                exitLoopNext = false;
+                                decimal tempcount = 0;
+                                foreach (var titem in temptask)
+                                {
+                                    if (tempcount + titem.POKENUM <= 10)
+                                    {
+                                        info.Insert(0, new UnionTaskInfo()
+                                        {
+                                            CIGARETTDECODE = titem.CIGARETTDECODE,
+                                            CIGARETTDENAME = titem.CIGARETTDENAME,
+                                            MainBelt = titem.MainBelt,
+                                            SortNum = titem.SortNum,
+                                            qty = titem.POKENUM
+                                        });
+                                        titem.MachineState = 30;
+                                        tempcount += titem.POKENUM;
+                                    }
+                                    else
+                                    {
+                                        if (tempcount < 10)
+                                        {
+                                            info.Insert(0, new UnionTaskInfo()
+                                            {
+                                                CIGARETTDECODE = titem.CIGARETTDECODE,
+                                                CIGARETTDENAME = titem.CIGARETTDENAME,
+                                                MainBelt = titem.MainBelt,
+                                                SortNum = titem.SortNum,
+                                                qty = 10 - tempcount
+                                            });
+                                            titem.POKENUM = titem.POKENUM - (10 - tempcount);
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
             }
             return info;
         }
