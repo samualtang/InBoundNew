@@ -284,7 +284,7 @@ namespace InBound.Business
 
                     var exitLoop = false;
                     #region
-                    while (!exitLoop)
+                    while (!exitLoop && groupnoCurrent != 1)
                     {
                         for (int i = 1; i < groupnoCurrent; i++)
                         {

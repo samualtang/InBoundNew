@@ -116,6 +116,12 @@
     <Compile Include="Fm_UinonCache.Designer.cs">
       <DependentUpon>Fm_UinonCache.cs</DependentUpon>
     </Compile>
+    <Compile Include="Fm_UnionMainBelt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fm_UnionMainBelt.Designer.cs">
+      <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Method\BitmapRegion.cs" />
     <Compile Include="Modle\Group.cs" />
     <Compile Include="Modle\ItemCollection.cs" />
@@ -178,6 +184,9 @@
     <EmbeddedResource Include="Fm_UinonCache.resx">
       <DependentUpon>Fm_UinonCache.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fm_UnionMainBelt.resx">
+      <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -231,6 +240,7 @@
     <Content Include="Resources\故障.bmp" />
     <Content Include="Resources\无烟.bmp" />
     <Content Include="Resources\有烟.bmp" />
+    <None Include="Resources\机械手1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

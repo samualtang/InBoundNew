@@ -29,6 +29,22 @@
         private void InitializeComponent()
         {
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pbMachine8 = new System.Windows.Forms.PictureBox();
+            this.pbMachine7 = new System.Windows.Forms.PictureBox();
+            this.pbMachine6 = new System.Windows.Forms.PictureBox();
+            this.pbMachine5 = new System.Windows.Forms.PictureBox();
+            this.pbMachine4 = new System.Windows.Forms.PictureBox();
+            this.pbMachine3 = new System.Windows.Forms.PictureBox();
+            this.pbMachine2 = new System.Windows.Forms.PictureBox();
+            this.pbMachine1 = new System.Windows.Forms.PictureBox();
             this.btnhuancun8 = new System.Windows.Forms.Button();
             this.btnhuancun7 = new System.Windows.Forms.Button();
             this.btnhuancun6 = new System.Windows.Forms.Button();
@@ -52,19 +68,42 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnMainBelt = new System.Windows.Forms.Button();
             this.lblGourpText = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.list_data = new System.Windows.Forms.ListBox();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.label6);
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.pbMachine8);
+            this.groupBox4.Controls.Add(this.pbMachine7);
+            this.groupBox4.Controls.Add(this.pbMachine6);
+            this.groupBox4.Controls.Add(this.pbMachine5);
+            this.groupBox4.Controls.Add(this.pbMachine4);
+            this.groupBox4.Controls.Add(this.pbMachine3);
+            this.groupBox4.Controls.Add(this.pbMachine2);
+            this.groupBox4.Controls.Add(this.pbMachine1);
             this.groupBox4.Controls.Add(this.btnhuancun8);
             this.groupBox4.Controls.Add(this.btnhuancun7);
             this.groupBox4.Controls.Add(this.btnhuancun6);
@@ -81,6 +120,7 @@
             this.groupBox4.Controls.Add(this.Machine5);
             this.groupBox4.Controls.Add(this.Machine2);
             this.groupBox4.Controls.Add(this.Machine1);
+            this.groupBox4.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBox4.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBox4.Location = new System.Drawing.Point(23, 49);
             this.groupBox4.Name = "groupBox4";
@@ -88,6 +128,189 @@
             this.groupBox4.TabIndex = 49;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "主 皮 带 :";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(1058, 137);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(17, 18);
+            this.label8.TabIndex = 76;
+            this.label8.Text = "1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(937, 137);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(17, 18);
+            this.label7.TabIndex = 76;
+            this.label7.Text = "1";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(784, 137);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(17, 18);
+            this.label6.TabIndex = 76;
+            this.label6.Text = "1";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(618, 137);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(17, 18);
+            this.label5.TabIndex = 76;
+            this.label5.Text = "1";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(461, 137);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 18);
+            this.label4.TabIndex = 76;
+            this.label4.Text = "1";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(305, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(17, 18);
+            this.label3.TabIndex = 76;
+            this.label3.Text = "1";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(163, 137);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(17, 18);
+            this.label2.TabIndex = 76;
+            this.label2.Text = "1";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(42, 137);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 18);
+            this.label1.TabIndex = 76;
+            this.label1.Text = "1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // pbMachine8
+            // 
+            this.pbMachine8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine8.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine8.Location = new System.Drawing.Point(1029, 107);
+            this.pbMachine8.Name = "pbMachine8";
+            this.pbMachine8.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine8.TabIndex = 73;
+            this.pbMachine8.TabStop = false;
+            this.pbMachine8.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine7
+            // 
+            this.pbMachine7.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine7.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine7.Location = new System.Drawing.Point(907, 103);
+            this.pbMachine7.Name = "pbMachine7";
+            this.pbMachine7.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine7.TabIndex = 72;
+            this.pbMachine7.TabStop = false;
+            this.pbMachine7.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine6
+            // 
+            this.pbMachine6.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine6.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine6.Location = new System.Drawing.Point(754, 103);
+            this.pbMachine6.Name = "pbMachine6";
+            this.pbMachine6.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine6.TabIndex = 75;
+            this.pbMachine6.TabStop = false;
+            this.pbMachine6.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine5
+            // 
+            this.pbMachine5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine5.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine5.Location = new System.Drawing.Point(588, 103);
+            this.pbMachine5.Name = "pbMachine5";
+            this.pbMachine5.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine5.TabIndex = 74;
+            this.pbMachine5.TabStop = false;
+            this.pbMachine5.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine4
+            // 
+            this.pbMachine4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine4.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine4.Location = new System.Drawing.Point(432, 103);
+            this.pbMachine4.Name = "pbMachine4";
+            this.pbMachine4.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine4.TabIndex = 69;
+            this.pbMachine4.TabStop = false;
+            this.pbMachine4.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine3
+            // 
+            this.pbMachine3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine3.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine3.Location = new System.Drawing.Point(275, 103);
+            this.pbMachine3.Name = "pbMachine3";
+            this.pbMachine3.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine3.TabIndex = 68;
+            this.pbMachine3.TabStop = false;
+            this.pbMachine3.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine2
+            // 
+            this.pbMachine2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine2.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine2.Location = new System.Drawing.Point(134, 103);
+            this.pbMachine2.Name = "pbMachine2";
+            this.pbMachine2.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine2.TabIndex = 71;
+            this.pbMachine2.TabStop = false;
+            this.pbMachine2.Click += new System.EventHandler(this.Machine1_Click);
+            // 
+            // pbMachine1
+            // 
+            this.pbMachine1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbMachine1.Image = global::FollowTask.Properties.Resources.机械手1;
+            this.pbMachine1.Location = new System.Drawing.Point(13, 103);
+            this.pbMachine1.Name = "pbMachine1";
+            this.pbMachine1.Size = new System.Drawing.Size(57, 54);
+            this.pbMachine1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMachine1.TabIndex = 70;
+            this.pbMachine1.TabStop = false;
+            this.pbMachine1.Click += new System.EventHandler(this.Machine1_Click);
             // 
             // btnhuancun8
             // 
@@ -271,7 +494,7 @@
             this.groupBox1.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBox1.Location = new System.Drawing.Point(23, 273);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(760, 400);
+            this.groupBox1.Size = new System.Drawing.Size(760, 468);
             this.groupBox1.TabIndex = 51;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "皮带信息";
@@ -283,26 +506,26 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader5});
             this.listViewUnion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewUnion.GridLines = true;
             this.listViewUnion.Location = new System.Drawing.Point(3, 23);
             this.listViewUnion.Name = "listViewUnion";
-            this.listViewUnion.Size = new System.Drawing.Size(754, 374);
+            this.listViewUnion.Size = new System.Drawing.Size(754, 442);
             this.listViewUnion.TabIndex = 0;
             this.listViewUnion.UseCompatibleStateImageBehavior = false;
             this.listViewUnion.View = System.Windows.Forms.View.Details;
+            this.listViewUnion.SelectedIndexChanged += new System.EventHandler(this.listViewUnion_SelectedIndexChanged);
             this.listViewUnion.SizeChanged += new System.EventHandler(this.listViewUnion_SizeChanged);
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "合流号";
+            this.columnHeader1.Text = "机械手号";
             this.columnHeader1.Width = 134;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "排序号";
+            this.columnHeader2.Text = "任务号";
             this.columnHeader2.Width = 132;
             // 
             // columnHeader3
@@ -319,11 +542,6 @@
             // 
             this.columnHeader5.Text = "香烟名称";
             this.columnHeader5.Width = 145;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "订单号";
-            this.columnHeader6.Width = 135;
             // 
             // btnMainBelt
             // 
@@ -360,7 +578,7 @@
             this.groupBox2.Font = new System.Drawing.Font("宋体", 11F);
             this.groupBox2.Location = new System.Drawing.Point(801, 273);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(324, 400);
+            this.groupBox2.Size = new System.Drawing.Size(324, 468);
             this.groupBox2.TabIndex = 55;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "程序状态";
@@ -372,7 +590,7 @@
             this.list_data.ItemHeight = 15;
             this.list_data.Location = new System.Drawing.Point(3, 20);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(318, 377);
+            this.list_data.Size = new System.Drawing.Size(318, 445);
             this.list_data.TabIndex = 50;
             // 
             // Fm_FollowTaskUnion
@@ -391,6 +609,15 @@
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
             this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMachine1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -426,9 +653,24 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox list_data;
+        private System.Windows.Forms.PictureBox pbMachine8;
+        private System.Windows.Forms.PictureBox pbMachine7;
+        private System.Windows.Forms.PictureBox pbMachine6;
+        private System.Windows.Forms.PictureBox pbMachine5;
+        private System.Windows.Forms.PictureBox pbMachine4;
+        private System.Windows.Forms.PictureBox pbMachine3;
+        private System.Windows.Forms.PictureBox pbMachine2;
+        private System.Windows.Forms.PictureBox pbMachine1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
