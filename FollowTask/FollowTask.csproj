@@ -231,12 +231,57 @@
       <Name>Machine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\卷烟图片\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Lib\opcrcw.comn.dll" />
     <Content Include="Lib\opcrcw.da.dll" />
+    <None Include="Resources\1430143.jpg" />
+    <None Include="Resources\1430159.jpg" />
+    <None Include="Resources\1430161.jpg" />
+    <None Include="Resources\1430163.jpg" />
+    <None Include="Resources\1430165.jpg" />
+    <None Include="Resources\1430203.jpg" />
+    <None Include="Resources\1430238.jpg" />
+    <None Include="Resources\1430247.jpg" />
+    <None Include="Resources\1430281.jpg" />
+    <None Include="Resources\1430291.jpg" />
+    <None Include="Resources\1430302.jpg" />
+    <None Include="Resources\1440427.jpg" />
+    <None Include="Resources\1440604.jpg" />
+    <None Include="Resources\1440611.jpg" />
+    <None Include="Resources\1440615.jpg" />
+    <None Include="Resources\1440619.jpg" />
+    <None Include="Resources\1440621.jpg" />
+    <None Include="Resources\1440632.jpg" />
+    <None Include="Resources\1440645.jpg" />
+    <None Include="Resources\1450116.jpg" />
+    <None Include="Resources\1510121.jpg" />
+    <None Include="Resources\1510133.jpg" />
+    <None Include="Resources\1520433.jpg" />
+    <None Include="Resources\1530430.jpg" />
+    <None Include="Resources\1530801.jpg" />
+    <None Include="Resources\1530814.jpg" />
+    <None Include="Resources\1530827.jpg" />
+    <None Include="Resources\1531003.jpg" />
+    <None Include="Resources\1310101.jpg" />
+    <None Include="Resources\1310102.jpg" />
+    <None Include="Resources\1320122.jpg" />
+    <None Include="Resources\1320229.jpg" />
+    <None Include="Resources\1330137.jpg" />
+    <None Include="Resources\1330140.jpg" />
+    <None Include="Resources\1330144.jpg" />
+    <None Include="Resources\1330156.jpg" />
+    <None Include="Resources\1330162.jpg" />
+    <None Include="Resources\1340371.jpg" />
+    <None Include="Resources\1350106.jpg" />
+    <None Include="Resources\1360135.jpg" />
+    <None Include="Resources\1360142.jpg" />
+    <None Include="Resources\1360151.jpg" />
+    <None Include="Resources\1370221.jpg" />
+    <None Include="Resources\1410202.jpg" />
+    <None Include="Resources\1410304.jpg" />
+    <None Include="Resources\1420106.jpg" />
+    <None Include="Resources\1530825.jpg" />
     <Content Include="Resources\4.ico" />
     <Content Include="Resources\7.ico" />
     <None Include="Resources\Image1.bmp" />
@@ -245,10 +290,10 @@
     <Content Include="Resources\无烟.bmp" />
     <Content Include="Resources\有烟.bmp" />
     <None Include="Resources\默认卷烟.jpg" />
-    <None Include="Resources\白沙%28硬%29.jpg" />
-    <None Include="Resources\白沙%28软%29.jpg" />
-    <None Include="Resources\白沙%28精品%29.jpg" />
-    <None Include="Resources\芙蓉王%28硬%29.jpg" />
+    <None Include="Resources\1430104.jpg" />
+    <None Include="Resources\1430103.jpg" />
+    <None Include="Resources\1430105.jpg" />
+    <None Include="Resources\1430204.jpg" />
     <None Include="Resources\机械手1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

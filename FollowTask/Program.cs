@@ -15,7 +15,7 @@ namespace FollowTask
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Fm_UnionMainBelt());
+            Application.Run(new Fm_Mian ());
         }
     }
 }

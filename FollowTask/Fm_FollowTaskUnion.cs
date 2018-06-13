@@ -52,7 +52,7 @@ namespace FollowTask
         /// </summary>
         static decimal[] xyNum = new decimal[8];
 
-        public delegate void GetNeedInfo(int machineno,List<UnionTaskInfo> after ,List<UnionTaskInfo> before);
+        public delegate void GetNeedInfo(int machineno,List<UnionTaskInfo> after ,List<UnionTaskInfo> before,int xynum,decimal sortnum);
      
         public GetNeedInfo getInfo;
         Fm_UnionMainBelt fm_UnionDetail = new Fm_UnionMainBelt();
@@ -80,28 +80,26 @@ namespace FollowTask
         private void Fm_FollowTaskUnion_Load(object sender, EventArgs e)
         {
             try
-            {
-
-            lblGourpText.Text = this.Text+"主皮带";
-            BindLabelName();//));Invoke(new  StartBind(
-            //Invoke(new StartBind(BtnText));
-            Connction();
-            if (mainbelt == 1)
-            {
-                ReadDBInfo(UnionTaskGroup1);
-            }
-            if (mainbelt == 2)
-            {
-                ReadDBInfo(UnionTaskGroup2);
-            }
-            if (mainbelt == 3)
-            {
-                ReadDBInfo(UnionTaskGroup3);
-            }
-            if (mainbelt == 4)
-            {
-                ReadDBInfo(UnionTaskGroup4);
-            }
+            { 
+                lblGourpText.Text = this.Text + "主皮带";
+                BindLabelName();
+                Connction();
+                //if (mainbelt == 1)
+                //{
+                //    ReadDBInfo(UnionTaskGroup1);
+                //}
+                //if (mainbelt == 2)
+                //{
+                //    ReadDBInfo(UnionTaskGroup2);
+                //}
+                //if (mainbelt == 3)
+                //{
+                //    ReadDBInfo(UnionTaskGroup3);
+                //}
+                //if (mainbelt == 4)
+                //{
+                //    ReadDBInfo(UnionTaskGroup4);
+                //}
 
             }
             catch (Exception ex)
@@ -144,10 +142,25 @@ namespace FollowTask
         List<UnionTaskInfo> listbefore = new List<UnionTaskInfo>();
         private void Machine1_Click(object sender, EventArgs e)
         {
-           
+            
             PictureBox btn = ((PictureBox)sender);//获取当前单击按钮的所有实例
            //// MessageBox.Show(btn.Name);
-        
+            if (mainbelt == 1)
+            {
+                ReadDBInfo(UnionTaskGroup1);
+            }
+            if (mainbelt == 2)
+            {
+                ReadDBInfo(UnionTaskGroup2);
+            }
+            if (mainbelt == 3)
+            {
+                ReadDBInfo(UnionTaskGroup3);
+            }
+            if (mainbelt == 4)
+            {
+                ReadDBInfo(UnionTaskGroup4);
+            }
            //// listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, 42627, 10);//机械手之前
 
            //// int btnmachineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Text, @"[^0-9]+", "")); //当前选定机械手号
@@ -155,15 +168,21 @@ namespace FollowTask
          
 
             int groupno = GetGroupNo(machineno);//获取组号
-            listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
-            listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
+            if (xyNum[GetXyNumIndex(machineno)] != 0)
+            {
+                listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
+                listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
 
-            getInfo(machineno, listafter, listbefore);
-
-
-            fm_UnionDetail.Show();
-            SearchWinForm(fm_UnionDetail);
-
+                getInfo(machineno, listafter, listbefore, Convert.ToInt32(xyNum[GetXyNumIndex(machineno)]),SortNum);
+                fm_UnionDetail.Show();
+                SearchWinForm(fm_UnionDetail);
+            }
+            else
+            {
+                getInfo(machineno, listafter, listbefore, Convert.ToInt32(xyNum[GetXyNumIndex(machineno)]), SortNum);
+                fm_UnionDetail.Show();
+                SearchWinForm(fm_UnionDetail);
+            }
            // //string str ="";
            // //for (int i = 0; i < xyNum.Length; i++)
            // //{
@@ -218,7 +237,7 @@ namespace FollowTask
             }
             catch (Exception ex)
             {
-                updateListBox("未知错误：" + ex.Message);
+                updateListBox("错误异常：" + ex.Message);
             }
         }
         void CheckConnection()
@@ -551,7 +570,6 @@ namespace FollowTask
 
         private void listViewUnion_SizeChanged(object sender, EventArgs e)
         {
-
             int _Count = listViewUnion.Columns.Count;
             int _Width = listViewUnion.Width;
             foreach (ColumnHeader ch in listViewUnion.Columns)
