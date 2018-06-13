@@ -120,7 +120,10 @@ namespace InBound.Business
                                         MachineState = item.MACHINESTATE ?? 0
                                     }).ToList();
                     decimal totalCount = Math.Ceiling(xyNum / 10);
-
+                    if (totalCount == 0)
+                    {
+                        totalCount = 1;
+                    }
                     var exitLoopCurrent = false;
                     decimal currentCount = 0;
                     while (!exitLoopCurrent)
