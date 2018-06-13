@@ -32,10 +32,16 @@ namespace FollowTask
 
         #endregion 
           
-
+        /// <summary>
+        /// 预分拣机械手
+        /// </summary>
+        /// <param name="machineNo"></param>
+        /// <param name="listgroup"></param>
         public Fm_FollowTaskMachineDetail(string machineNo ,List<Group> listgroup)
         {
             InitializeComponent();
+             this.listViewMachineDetails.DoubleBufferedListView(true);
+   
             #region 初始化
             if (machineNo.Substring(0,3) =="机械手")//烟柜机械手
             {
@@ -47,25 +53,36 @@ namespace FollowTask
                     contr.Visible = false;
                 }
             }
-            else
-            {
-                lblCigreName.Visible = false;//合流机械手
-                for (int i = 1; i <= 10; i++)
-                {
-                    string lblName = "lblCig" + i;
-                    Control contr = (Label)Controls.Find(lblName, true)[0];
-                    contr.Visible = true;
-                }
-            }
+         
             string machiname = System.Text.RegularExpressions.Regex.Replace(machineNo,  @"[^0-9]+", "");
             Text =machiname +"机械手"; 
             this.StartPosition = FormStartPosition.CenterScreen;
             lblMachineNo.Text = machiname + "号机械手";
-            #endregion
-
-
-
+            #endregion 
         }
+
+        /// <summary>
+        /// 合流机械手
+        /// </summary>
+        /// <param name="machineNo"></param>
+        public Fm_FollowTaskMachineDetail(string machineNo)
+        {
+            InitializeComponent();
+            this.listViewMachineDetails.DoubleBufferedListView(true);
+            lblCigreName.Visible = false;//合流机械手
+            for (int i = 1; i <= 10; i++)
+            {
+                string lblName = "lblCig" + i;
+                Control contr = (Label)Controls.Find(lblName, true)[0];
+                contr.Visible = true;
+            } 
+            Text = machineNo + "机械手";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            lblMachineNo.Text = machineNo + "号机械手";
+        }
+
+        
+
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
             Random rd = new Random();

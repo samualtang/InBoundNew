@@ -123,6 +123,7 @@
       <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
     </Compile>
     <Compile Include="Method\BitmapRegion.cs" />
+    <Compile Include="Modle\CigaretteEnum.cs" />
     <Compile Include="Modle\Group.cs" />
     <Compile Include="Modle\ItemCollection.cs" />
     <Compile Include="Program.cs" />
@@ -230,16 +231,24 @@
       <Name>Machine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\卷烟图片\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\opcrcw.comn.dll" />
     <Content Include="Lib\opcrcw.da.dll" />
     <Content Include="Resources\4.ico" />
     <Content Include="Resources\7.ico" />
+    <None Include="Resources\Image1.bmp" />
     <Content Include="Resources\抓取.bmp" />
     <Content Include="Resources\故障.bmp" />
     <Content Include="Resources\无烟.bmp" />
     <Content Include="Resources\有烟.bmp" />
+    <None Include="Resources\默认卷烟.jpg" />
+    <None Include="Resources\白沙%28硬%29.jpg" />
+    <None Include="Resources\白沙%28软%29.jpg" />
+    <None Include="Resources\白沙%28精品%29.jpg" />
+    <None Include="Resources\芙蓉王%28硬%29.jpg" />
     <None Include="Resources\机械手1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

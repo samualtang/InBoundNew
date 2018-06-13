@@ -498,6 +498,7 @@
             this.groupBox1.TabIndex = 51;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "皮带信息";
+            this.groupBox1.Visible = false;
             // 
             // listViewUnion
             // 
@@ -552,6 +553,7 @@
             this.btnMainBelt.TabIndex = 52;
             this.btnMainBelt.Text = "皮             带";
             this.btnMainBelt.UseVisualStyleBackColor = true;
+            this.btnMainBelt.Visible = false;
             // 
             // lblGourpText
             // 
