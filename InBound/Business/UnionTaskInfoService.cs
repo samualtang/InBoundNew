@@ -599,7 +599,7 @@ namespace InBound.Business
                     var exitLoopNext = false;
                     while (!exitLoopNext)
                     {
-                        for (int i = 1; i <= groupnoCurrent; i++)
+                        for (int i = 1; i <groupnoCurrent; i++)
                         {
                             if (i == 1)
                             {
