@@ -52,7 +52,36 @@ namespace FollowTask
         /// </summary>
         static decimal[] xyNum = new decimal[8];
 
-        public delegate void GetNeedInfo(int machineno,List<UnionTaskInfo> after ,List<UnionTaskInfo> before,int xynum,decimal sortnum);
+        /// <summary>
+        /// 当前机械手之后的烟
+        /// </summary>
+        List<UnionTaskInfo> listafter = new List<UnionTaskInfo>();
+
+        /// <summary>
+        /// 当前机械手之前的烟
+        /// </summary>
+        List<UnionTaskInfo> listbefore = new List<UnionTaskInfo>();
+
+        /// <summary>
+        /// 存放参数
+        /// </summary>
+        List<object> listPrament = new List<object>();
+        #region 图片
+        /// <summary>
+        /// A线机械手
+        /// </summary>
+        Bitmap Amachine = (Bitmap)Properties.Resources.ResourceManager.GetObject("A线机械手");
+        /// <summary>
+        /// B线机械手
+        /// </summary>
+        Bitmap Bmachine = (Bitmap)Properties.Resources.ResourceManager.GetObject("B线机械手");
+        /// <summary>
+        /// 合流故障机械手
+        /// </summary>
+        Bitmap UnionErrormachine = (Bitmap)Properties.Resources.ResourceManager.GetObject("合流故障机械手");
+        #endregion
+
+        public delegate void GetNeedInfo(int machineno,List<UnionTaskInfo> after ,List<UnionTaskInfo> before,List<object> listparm);
      
         public GetNeedInfo getInfo;
         Fm_UnionMainBelt fm_UnionDetail = new Fm_UnionMainBelt();
@@ -68,39 +97,21 @@ namespace FollowTask
            
             CheckForIllegalCrossThreadCalls = false;
             asc.controllInitializeSize(this);
-            this.listViewUnion.DoubleBufferedListView(true); 
-            this.Text = text;
-            mainbelt =Convert.ToInt32( System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));//获取主皮带
+           // this.listViewUnion.DoubleBufferedListView(true); 
+            //this.Text = text;
+          
             updateListBox(text + "主皮带,应用程序启动");
             writeLog.Write(text + "主皮带,应用程序启动");
            
         }
  
-        private delegate void StartBind();
         private void Fm_FollowTaskUnion_Load(object sender, EventArgs e)
         {
             try
-            { 
+            {
                 lblGourpText.Text = this.Text + "主皮带";
                 BindLabelName();
                 Connction();
-                //if (mainbelt == 1)
-                //{
-                //    ReadDBInfo(UnionTaskGroup1);
-                //}
-                //if (mainbelt == 2)
-                //{
-                //    ReadDBInfo(UnionTaskGroup2);
-                //}
-                //if (mainbelt == 3)
-                //{
-                //    ReadDBInfo(UnionTaskGroup3);
-                //}
-                //if (mainbelt == 4)
-                //{
-                //    ReadDBInfo(UnionTaskGroup4);
-                //}
-
             }
             catch (Exception ex)
             {
@@ -131,20 +142,14 @@ namespace FollowTask
             }
         }
         #endregion
-        /// <summary>
-        /// 当前机械手之后的烟
-        /// </summary>
-        List<UnionTaskInfo> listafter = new List<UnionTaskInfo>();
-
-        /// <summary>
-        /// 当前机械手之前的烟
-        /// </summary>
-        List<UnionTaskInfo> listbefore = new List<UnionTaskInfo>();
+      
         private void Machine1_Click(object sender, EventArgs e)
         {
             
-            PictureBox btn = ((PictureBox)sender);//获取当前单击按钮的所有实例
-           //// MessageBox.Show(btn.Name);
+            PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
+            listPrament.Clear();
+            int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
+            mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
             if (mainbelt == 1)
             {
                 ReadDBInfo(UnionTaskGroup1);
@@ -161,25 +166,29 @@ namespace FollowTask
             {
                 ReadDBInfo(UnionTaskGroup4);
             }
-           //// listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, 42627, 10);//机械手之前
-
-           //// int btnmachineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Text, @"[^0-9]+", "")); //当前选定机械手号
-            int machineno =Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name , @"[^0-9]+", ""));
-         
-
-            int groupno = GetGroupNo(machineno);//获取组号
+             
+            groupno = GetGroupNo(machineno);//获取组号
             if (xyNum[GetXyNumIndex(machineno)] != 0)
             {
                 listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
                 listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
 
-                getInfo(machineno, listafter, listbefore, Convert.ToInt32(xyNum[GetXyNumIndex(machineno)]),SortNum);
+                listPrament.Add( mainbelt);//主皮带
+                listPrament.Add( groupno);//组号
+                listPrament.Add( SortNum);//任务号
+                listPrament.Add( xyNum[GetXyNumIndex(machineno)]);//吸烟数量
+
+                getInfo(machineno, listafter, listbefore,listPrament);
                 fm_UnionDetail.Show();
                 SearchWinForm(fm_UnionDetail);
             }
             else
             {
-                getInfo(machineno, listafter, listbefore, Convert.ToInt32(xyNum[GetXyNumIndex(machineno)]), SortNum);
+                listPrament.Add(-1);//主皮带
+                listPrament.Add(-1);//组号
+                listPrament.Add(-1);//任务号
+                listPrament.Add(-1);//吸烟数量
+                getInfo(machineno, listafter, listbefore, listPrament);
                 fm_UnionDetail.Show();
                 SearchWinForm(fm_UnionDetail);
             }
@@ -195,13 +204,14 @@ namespace FollowTask
             //ftmd.Show();
         }
         /// <summary>
-        /// 读取DB指定皮带DB块
+        /// 读取指定皮带DB块
         /// </summary>
         /// <param name="groupName">OPC组名</param>
         void ReadDBInfo(Group groupName)
         {
          
             SortNum = groupName.ReadD(0).CastTo<int>(-1);//当前任务号
+            //八个机械手吸烟数量
             xyNum[0] = groupName.ReadD(4).CastTo<int>(-1);
             xyNum[1] = groupName.ReadD(5).CastTo<int>(-1);
             xyNum[2] = groupName.ReadD(6).CastTo<int>(-1);
@@ -308,6 +318,8 @@ namespace FollowTask
             fname.Activate();
         }
 
+       
+
         void GroupAdd()
         {
             listgroup.Add(UnionTaskGroup1);
@@ -346,136 +358,168 @@ namespace FollowTask
        //     return groupnos; 
         // }
         #endregion
-
+        bool errorMachine = false;
         /// <summary>
-        /// 机械手根据组变更名 
+        /// 机械手根据组变更
         /// </summary>
         void BindLabelName()
-        { 
-            if (Text.Contains("1"))
+        {
+            int j = 1;
+            for (int i = 1; i <= 32; i++)
             {
-                int j = 1;
-                for (int i = 1; i <= 8; i++)
+                string labelName = "label" + j;
+                Control label = Controls.Find(labelName, true)[0];
+
+                string pbName = "pbMachine" + j;
+                Control pbox = Controls.Find(pbName, true)[0];
+                PictureBox picutB = (PictureBox)pbox;
+              
+               // label.Parent = picutB;
+                label.BackColor = Color.Transparent;
+                label.BringToFront();
+                if (Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(pbName,  @"[^0-9]+", "")) % 2 != 0)//A线
                 {
-
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    control2.Text = i + "";
-
-                    string pbName = "pbMachine" + j;
-                    Control control1 = Controls.Find(pbName, true)[0];
-                    control1.Name = "pbMachine" + i;
-                    j++;
+                    label.BackColor = Color.FromArgb(234, 255, 0);
+                    picutB.Image = Amachine;  
                 }
-                //th2.Abort();
-            }
-            if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
-            {
-                int j = 1;
-                for (int i = 9; i <= 16; i++)
+                else//B线
                 {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    control2.Text = i + "";
-
-
-                    string pbName = "pbMachine" + j;
-                    Control control1 = Controls.Find(pbName, true)[0]; 
-                    control1.Name =  "pbMachine"+i ;
-                    j++;
+                    picutB.Image = Bmachine;
+                    label.BackColor = Color.FromArgb(0, 255, 255);
                 }
-                //th2.Abort();
-            }
-            if (Text.Contains("3"))
-            {
-                int j = 1;
-                for (int i = 17; i <= 24; i++)
+                if (errorMachine)//机械手报警
                 {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    control2.Text = i + "";
-
-                    string pbName = "pbMachine" + j;
-                    Control control1 = Controls.Find(pbName, true)[0];
-                    control1.Name = "pbMachine" + i;
-                    j++;
+                    picutB.Image = UnionErrormachine;
+                    lblGourpText.BackColor = Color.FromArgb(255, 0, 0);
                 }
-                //th2.Abort();
+                j++;
             }
-            if (Text.Contains("4"))
-            {
-                int j = 1;
-                for (int i = 25; i <= 32; i++)
-                {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    control2.Text = i + "";
+            #region
+            //if (Text.Contains("1"))
+            //{
+            //    int j = 1;
+            //    for (int i = 1; i <= 8; i++)
+            //    {
 
-                    string pbName = "pbMachine" + j;
-                    Control control1 = Controls.Find(pbName, true)[0];
-                    control1.Name = "pbMachine" + i;
-                    j++;
-                }
-                //th2.Abort();
-            }
+            //        string labelName = "label" + j;
+            //        Control control2 = Controls.Find(labelName, true)[0];
+            //        control2.Text = i + "";
+
+            //        string pbName = "pbMachine" + j;
+            //        Control control1 = Controls.Find(pbName, true)[0];
+            //        control1.Name = "pbMachine" + i;
+            //        j++;
+            //    }
+            //    //th2.Abort();
+            //}
+            //if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
+            //{
+            //    int j = 1;
+            //    for (int i = 9; i <= 16; i++)
+            //    {
+            //        string labelName = "label" + j;
+            //        Control control2 = Controls.Find(labelName, true)[0];
+            //        control2.Text = i + "";
+
+
+            //        string pbName = "pbMachine" + j;
+            //        Control control1 = Controls.Find(pbName, true)[0]; 
+            //        control1.Name =  "pbMachine"+i ;
+            //        j++;
+            //    }
+            //    //th2.Abort();
+            //}
+            //if (Text.Contains("3"))
+            //{
+            //    int j = 1;
+            //    for (int i = 17; i <= 24; i++)
+            //    {
+            //        string labelName = "label" + j;
+            //        Control control2 = Controls.Find(labelName, true)[0];
+            //        control2.Text = i + "";
+
+            //        string pbName = "pbMachine" + j;
+            //        Control control1 = Controls.Find(pbName, true)[0];
+            //        control1.Name = "pbMachine" + i;
+            //        j++;
+            //    }
+            //    //th2.Abort();
+            //}
+            //if (Text.Contains("4"))
+            //{
+            //    int j = 1;
+            //    for (int i = 25; i <= 32; i++)
+            //    {
+            //        string labelName = "label" + j;
+            //        Control control2 = Controls.Find(labelName, true)[0];
+            //        control2.Text = i + "";
+
+            //        string pbName = "pbMachine" + j;
+            //        Control control1 = Controls.Find(pbName, true)[0];
+            //        control1.Name = "pbMachine" + i;
+            //        j++;
+            //    }
+            //    //th2.Abort();
+            //}
+            #endregion
         }
 
         /// <summary>
         /// 数据绑定
         /// </summary>
-        public void BtnText()
-        {
-            if (Text.Contains("1"))
-            {
-                int j = 1;
-                for (int i = 1; i <= 8; i++)
-                { 
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                  
-                    bindDate(control2,j);
-                    j++;
-                }
-               // th.Abort();
-            }
-            if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
-            {
-                int j = 1;
-                for (int i = 9; i <= 16; i++)
-                {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    bindDate(control2, j);
-                    j++;
-                }
-               //th.Abort();
-            }
-           if (Text.Contains("3"))
-            {
-                int j = 1;
-                for (int i = 17; i <= 24; i++)
-                {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    bindDate(control2, j);
-                    j++;
-                }
-               //th.Abort();
-            }
-            if (Text.Contains("4"))
-            {
-                int j = 1;
-                for (int i = 25; i <= 32; i++)
-                {
-                    string labelName = "label" + j;
-                    Control control2 = Controls.Find(labelName, true)[0];
-                    bindDate(control2, j);
-                    j++;
-                }
-              // th.Abort();
-            }
+        //public void BtnText()
+        //{
+        //    if (Text.Contains("1"))
+        //    {
+        //        int j = 1;
+        //        for (int i = 1; i <= 8; i++)
+        //        {
+        //            string labelName = "label" + j;
+        //            Control control2 = Controls.Find(labelName, true)[0];
 
-        }
+        //            bindDate(control2, j);
+        //            j++;
+        //        }
+        //        th.Abort();
+        //    }
+        //    if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
+        //    {
+        //        int j = 1;
+        //        for (int i = 9; i <= 16; i++)
+        //        {
+        //            string labelName = "label" + j;
+        //            Control control2 = Controls.Find(labelName, true)[0];
+        //            bindDate(control2, j);
+        //            j++;
+        //        }
+        //        th.Abort();
+        //    }
+        //    if (Text.Contains("3"))
+        //    {
+        //        int j = 1;
+        //        for (int i = 17; i <= 24; i++)
+        //        {
+        //            string labelName = "label" + j;
+        //            Control control2 = Controls.Find(labelName, true)[0];
+        //            bindDate(control2, j);
+        //            j++;
+        //        }
+        //        th.Abort();
+        //    }
+        //    if (Text.Contains("4"))
+        //    {
+        //        int j = 1;
+        //        for (int i = 25; i <= 32; i++)
+        //        {
+        //            string labelName = "label" + j;
+        //            Control control2 = Controls.Find(labelName, true)[0];
+        //            bindDate(control2, j);
+        //            j++;
+        //        }
+        //        th.Abort();
+        //    }
+
+        //}
 
         private void btnhuancun1_Click(object sender, EventArgs e)
         {
@@ -490,71 +534,50 @@ namespace FollowTask
         ToolTip p = new ToolTip();
         private void Machine1_MouseEnter(object sender, EventArgs e)
         {
-            //Button btn = ((Button)sender);
-            //int btnmachineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Text, @"[^0-9]+", "")); //当前选定机械手号
-            //int groupno = GetGroupNo(btnmachineno);//获取组号
-            //listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, 42588, 1);
-            ////ToolTip p = new ToolTip();
-            //p.ShowAlways = true;
-            //foreach (var item in listafter)
-            //{   
-            //    p.SetToolTip(btn, item.CIGARETTDECODE + " " + item.CIGARETTDENAME + " " + item.MainBelt + " " + item.SortNum+ " "   + item.qty +" ");
-            //}
-            //Thread.Sleep(100);
+          
         }
-       // static int index  =  -1;
-        //static string nowstr;
-       // static string laststr;
-        //static int now;
-        //static int last;
-
         List<UnionTaskInfo> listUnion = new List<UnionTaskInfo>();
         /// <summary>
         ///  数据获取
         /// </summary>
         /// <param name="control"></param>
         /// <param name="machineIndex">当前机械手</param>
-        void bindDate(Control control,int machineIndex)
-        {
-            try
-            {
-                Label btn = ((Label)control);
+        //void bindDate(Control control,int machineIndex)
+        //{
+        //    try
+        //    {
+        //        Label btn = ((Label)control);
               
 
-                int btnmachineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Text, @"[^0-9]+", "")); //当前选定机械手号
-                int groupno = GetGroupNo(btnmachineno);//获取组号
-                listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno,SortNum, xyNum[machineIndex-1]);//机械手之前
-                listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[machineIndex-1]);//机械手之后
+        //        int btnmachineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Text, @"[^0-9]+", "")); //当前选定机械手号
+        //        int groupno = GetGroupNo(btnmachineno);//获取组号
+        //        listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno,SortNum, xyNum[machineIndex-1]);//机械手之前
+        //        listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[machineIndex-1]);//机械手之后
 
-                var union = listafter.ToList();//两个list合并 //.Union(listbefore)
-
-
-                for (int i = 0; i < union.Count; i++)
-                {
-                    ListViewItem lv = new ListViewItem();
-                    var mod = union[i];
-                    lv.SubItems[0].Text = btn.Text + "机械手";
-                    lv.SubItems.Add(mod.SortNum.ToString());
-                    lv.SubItems.Add(mod.MainBelt.ToString());
-                    lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
-                    lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
-                    lv.SubItems.Add("");
-                    listViewUnion.Items.Add(lv);
-                }
+        //        var union = listafter.ToList();//两个list合并 //.Union(listbefore)
 
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("错误信息:" + ex.Message);
-            }
-        }
+        //        //for (int i = 0; i < union.Count; i++)
+        //        //{
+        //        //    ListViewItem lv = new ListViewItem();
+        //        //    var mod = union[i];
+        //        //    lv.SubItems[0].Text = btn.Text + "机械手";
+        //        //    lv.SubItems.Add(mod.SortNum.ToString());
+        //        //    lv.SubItems.Add(mod.MainBelt.ToString());
+        //        //    lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
+        //        //    lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
+        //        //    lv.SubItems.Add("");
+        //        //    listViewUnion.Items.Add(lv);
+        //        //}
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("错误信息:" + ex.Message);
+        //    }
+        //}
         
-        
-      
-      
-
-
         private void btnhuancun8_MouseEnter(object sender, EventArgs e)
         {
             Button btn = ((Button)sender);//获取当前单击按钮的所有实例
@@ -565,39 +588,34 @@ namespace FollowTask
   
         private void Fm_FollowTaskUnion_SizeChanged(object sender, EventArgs e)
         {
-            asc.controlAutoSize(this);
+           // asc.controlAutoSize(this);
         }
 
         private void listViewUnion_SizeChanged(object sender, EventArgs e)
         {
-            int _Count = listViewUnion.Columns.Count;
-            int _Width = listViewUnion.Width;
-            foreach (ColumnHeader ch in listViewUnion.Columns)
-            {
-                ch.Width = _Width / _Count - 1;
-            }
+           
         }
         #endregion
 
         private void listViewUnion_SelectedIndexChanged(object sender, EventArgs e)
         { 
-            if (listViewUnion.SelectedIndices.Count > 0)
-            {
-                ClaerColor();
-                string type = listViewUnion.SelectedItems[0].SubItems[0].Text;
+            //if (listViewUnion.SelectedIndices.Count > 0)
+            //{
+            //    ClaerColor();
+            //    string type = listViewUnion.SelectedItems[0].SubItems[0].Text;
              
-                for (int i = 0; i < listViewUnion.Items.Count; i++)
-                {
-                    ListViewItem item = listViewUnion.Items[i];
-                    for (int j = 0; j < item.SubItems.Count; j++)
-                    {
-                        if (type == item.SubItems[j].Text)
-                        { 
-                            item.ForeColor = Color.Red; 
-                        }
-                    }
-                } 
-            }
+            //    for (int i = 0; i < listViewUnion.Items.Count; i++)
+            //    {
+            //        ListViewItem item = listViewUnion.Items[i];
+            //        for (int j = 0; j < item.SubItems.Count; j++)
+            //        {
+            //            if (type == item.SubItems[j].Text)
+            //            { 
+            //                item.ForeColor = Color.Red; 
+            //            }
+            //        }
+            //    } 
+            //}
              
         }
         /// <summary>
@@ -605,14 +623,14 @@ namespace FollowTask
         /// </summary>
         void ClaerColor()
         {
-            for (int i = 0; i < listViewUnion.Items.Count; i++)
-            {
-                ListViewItem item = listViewUnion.Items[i];
-                for (int j = 0; j < item.SubItems.Count; j++)
-                { 
-                    item.ForeColor = Color.Black ; 
-                }
-            }
+            //for (int i = 0; i < listViewUnion.Items.Count; i++)
+            //{
+            //    ListViewItem item = listViewUnion.Items[i];
+            //    for (int j = 0; j < item.SubItems.Count; j++)
+            //    { 
+            //        item.ForeColor = Color.Black ; 
+            //    }
+            //}
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -649,5 +667,6 @@ namespace FollowTask
         {
 
         }
+
     }
 }

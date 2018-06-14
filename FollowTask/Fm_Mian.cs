@@ -111,18 +111,18 @@ namespace FollowTask
                     break;
                 #endregion
                 #region 合流
-                case "UinonBelt1":
-                    ShowUinionFrom("合流,第1根");
+                case "UinonTask":
+                    ShowUinionFrom("合流");
                     break;
-                case "UinonBelt2":
-                    ShowUinionFrom("合流,第2根");
-                    break;
-                case "UinonBelt3":
-                    ShowUinionFrom("合流,第3根");
-                    break;
-                case "UinonBelt4":
-                    ShowUinionFrom("合流,第4根");
-                    break;
+                //case "UinonBelt2":
+                //    ShowUinionFrom("合流,第2根");
+                //    break;
+                //case "UinonBelt3":
+                //    ShowUinionFrom("合流,第3根");
+                //    break;
+                //case "UinonBelt4":
+                //    ShowUinionFrom("合流,第4根");
+                //    break;
                 #endregion
 
             }
