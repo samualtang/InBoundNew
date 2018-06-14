@@ -623,7 +623,7 @@ namespace InBound.Business
                                 tempgroupno = 7;
                             }
 
-                            var temptask = task.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
+                            var temptask = taskCurrent.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
                             if (temptask != null && temptask.Count > 0)
                             {
                                 exitLoopNext = false;
