@@ -657,10 +657,10 @@ namespace InBound.Business
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
-                                        else
-                                        {
+                                        //else
+                                        //{
                                             break;
-                                        }
+                                        //}
                                     }
                                 }
                             }
