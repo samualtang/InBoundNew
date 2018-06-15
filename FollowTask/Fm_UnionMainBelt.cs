@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound.Model;
 using FollowTask.Modle;
 using InBound;
+using System.Threading;
 
 namespace FollowTask
 {
@@ -26,7 +27,7 @@ namespace FollowTask
 
             //addPanel(10, "1360151", "金圣(硬滕王阁)", 6, false);
 
-            fm_machinedetails = new Fm_FollowTaskMachineDetail(label1.Text);
+           
         
         }
         /// <summary>
@@ -68,14 +69,14 @@ namespace FollowTask
             if (aOrb)
             {
                 img.Location = new Point(count * img.Width + 10 * count, 0);
-                lbl.Location = new Point(img.Width / 2 - 4, 10);
+                lbl.Location = new Point(img.Width / 2 - 4, 0);
                 panelafter.Controls.Add(img);//之后
                 img.Controls.Add(lbl);
             }
             else
             {
                 img.Location = new Point(count * img.Width + 10 * count, 0);
-                lbl.Location = new Point(img.Width / 2 - 4, -2);
+                lbl.Location = new Point(img.Width / 2 - 4, 0);
                 img.Controls.Add(lbl);
                 panelbefore.Controls.Add(img);//之前
             }
@@ -96,6 +97,7 @@ namespace FollowTask
       
         void Fm_UnionMainBelt_FormClosing(object sender, FormClosingEventArgs e)
         {
+            fm_machinedetails = new Fm_FollowTaskMachineDetail();
             listViewAfter.Items.Clear();
             listViewBefore.Items.Clear();
             e.Cancel =true;
@@ -124,6 +126,7 @@ namespace FollowTask
                 listViewBefore.Items.Clear();
                 panelafter.Controls.Clear();
                 panelbefore.Controls.Clear();
+                ndOrderNum.Value = 1;
                 mainbelt = Convert.ToInt32(listparm[0]);//主皮带
                 groupno = Convert.ToDecimal(listparm[1]);//组号
                 sortnum = Convert.ToDecimal(listparm[2]);//任务号
@@ -131,8 +134,8 @@ namespace FollowTask
 
                 Text = machineno + "号机械手"; 
                 label1.Text = machineno.ToString();
-                gbpanelBefore.Text = machineno + "号机械手之前卷烟摆放";
-                gbpanelAfter.Text = machineno + "号机械手之后卷烟摆放";
+                gbpanelBefore.Text = machineno + "号机械手之前卷烟皮带摆放";
+                gbpanelAfter.Text = machineno + "号机械手之后卷烟皮带摆放";
                 groupBoxAfter.Text = machineno + "号机械手之后卷烟数据";
                 groupBoxBefore.Text = machineno + "号机械手之前卷烟数据";
 
@@ -174,14 +177,15 @@ namespace FollowTask
             {
                 ListViewItem lv = new ListViewItem();
                 var mod = after[i];
-                lv.SubItems[0].Text = label1.Text + "机械手";
+                lv.SubItems[0].Text = label1.Text + "号机械手";
                 lv.SubItems.Add(mod.SortNum.ToString());
                 lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
                 lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
                 addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.qty,true);
                 lv.SubItems.Add(mod.qty.ToString());
-                lv.SubItems.Add(xynum.ToString());
+                lv.SubItems.Add(mod.groupno.ToString());
+                lv.SubItems.Add(mod.machineseq.ToString());
                 lv.SubItems.Add("");
                 listViewAfter.Items.Add(lv);
 
@@ -200,15 +204,15 @@ namespace FollowTask
             {
                 ListViewItem lv = new ListViewItem();
                 var mod = before[i];
-                lv.SubItems[0].Text = label1.Text + "机械手";
+                lv.SubItems[0].Text = label1.Text + "号机械手";
                 lv.SubItems.Add(sortnum.ToString());
                 lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
                 lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
                 addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.qty,false);
                 lv.SubItems.Add(mod.qty.ToString());
-                lv.SubItems.Add(xynum.ToString());
-                lv.SubItems.Add("");
+                lv.SubItems.Add(mod.groupno.ToString());
+                lv.SubItems.Add(mod.machineseq.ToString());
                 listViewBefore.Items.Add(lv);
             }
 
@@ -219,9 +223,9 @@ namespace FollowTask
 
         private void pbMachine1_Click(object sender, EventArgs e)
         {
-           
+            fm_machinedetails = new Fm_FollowTaskMachineDetail(label1.Text);
             fm_machinedetails.Show();
-            fm_machinedetails.TopLevel = true;
+            fm_machinedetails.TopMost = true;
             fm_machinedetails.Activate();
          
         }
@@ -229,6 +233,8 @@ namespace FollowTask
         private void Fm_UnionMainBelt_Load(object sender, EventArgs e)
         {
             asc.controllInitializeSize(this);
+            Thread th = new Thread(TextChangedByOrderNum);
+            th.Start();
         }
 
         private void Fm_UnionMainBelt_SizeChanged(object sender, EventArgs e)
@@ -244,6 +250,52 @@ namespace FollowTask
         private void pbMachine1_MouseEnter(object sender, EventArgs e)
         {
             p.SetToolTip(pbMachine1, "机械手详细信息");
+        }
+
+        private void btnchaxun_Click(object sender, EventArgs e)
+        {
+            w_UnionTask wu = new w_UnionTask();
+            wu.TopMost = true;
+            wu.Show();
+          
+        }
+     
+        private void ndOrderNum_ValueChanged(object sender, EventArgs e)
+        {
+          
+            NumericUpDown nud = ((NumericUpDown)sender);
+            if (nud.Value != 0)
+            {
+                txtOrderNum.Text = nud.Value.ToString();
+               
+            }
+            else
+            {
+               nud.Value  = 1;
+               txtOrderNum.Text = nud.Value.ToString();
+                
+            }
+        }
+        void TextChangedByOrderNum()
+        {
+           
+            //txtOrderNum_TextChanged(null, null);
+        }
+        private void txtOrderNum_TextChanged(object sender, EventArgs e)
+        {
+
+            if (mainbelt != -1)
+            {
+                List<UnionTaskInfo> listAfterByOrderNum = InBound.Business.UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, (int)groupno, sortnum, xynum, Convert.ToInt32(txtOrderNum.Text));
+                panelafter.Controls.Clear();
+                listViewAfter.Items.Clear();
+                listAfterBind(listAfterByOrderNum);//重新绑定
+            }
+            else
+            {
+                MessageBox.Show("与服务器断开连接");
+            }
+
         }
 
      

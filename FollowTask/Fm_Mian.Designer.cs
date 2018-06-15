@@ -121,28 +121,28 @@
             // 机械手MToolStripMenuItem
             // 
             this.机械手MToolStripMenuItem.Name = "机械手MToolStripMenuItem";
-            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.机械手MToolStripMenuItem.Text = "机械手(&M)";
             this.机械手MToolStripMenuItem.Click += new System.EventHandler(this.机械手MToolStripMenuItem_Click);
             // 
             // 预分拣YToolStripMenuItem
             // 
             this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
-            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
             this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
             // 
             // 合流UToolStripMenuItem
             // 
             this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
-            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.合流UToolStripMenuItem.Text = "合流(&U)";
             this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
             // 
             // 异形烟NToolStripMenuItem
             // 
             this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
-            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
             this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
             // 
@@ -159,7 +159,7 @@
             this.txtMainInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtMainInfo.Enabled = false;
             this.txtMainInfo.Font = new System.Drawing.Font("宋体", 11F);
-            this.txtMainInfo.Location = new System.Drawing.Point(0, 676);
+            this.txtMainInfo.Location = new System.Drawing.Point(0, 722);
             this.txtMainInfo.Name = "txtMainInfo";
             this.txtMainInfo.ReadOnly = true;
             this.txtMainInfo.Size = new System.Drawing.Size(1181, 24);
@@ -220,7 +220,7 @@
             treeNode18,
             treeNode19});
             this.treeV.ShowNodeToolTips = true;
-            this.treeV.Size = new System.Drawing.Size(174, 651);
+            this.treeV.Size = new System.Drawing.Size(174, 697);
             this.treeV.TabIndex = 6;
             this.treeV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeV_AfterSelect);
             // 
@@ -240,7 +240,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 700);
+            this.ClientSize = new System.Drawing.Size(1181, 746);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.treeV);
             this.Controls.Add(this.txtMainInfo);

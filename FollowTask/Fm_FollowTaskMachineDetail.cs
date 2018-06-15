@@ -55,7 +55,7 @@ namespace FollowTask
             }
          
             string machiname = System.Text.RegularExpressions.Regex.Replace(machineNo,  @"[^0-9]+", "");
-            Text =machiname +"机械手"; 
+            Text ="预分拣("+machiname +"号机械手)"; 
             this.StartPosition = FormStartPosition.CenterScreen;
             lblMachineNo.Text = machiname + "号机械手";
             #endregion 
@@ -76,7 +76,7 @@ namespace FollowTask
                 Control contr = (Label)Controls.Find(lblName, true)[0];
                 contr.Visible = true;
             } 
-            Text = machineNo + "机械手";
+            Text ="合流("+ machineNo + "号机械手)";
             this.StartPosition = FormStartPosition.CenterScreen;
             lblMachineNo.Text = machineNo + "号机械手";
         }

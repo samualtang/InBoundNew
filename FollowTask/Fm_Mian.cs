@@ -30,7 +30,7 @@ namespace FollowTask
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
-
+            //InBound.Business.TaskService.UpdateMachineFinished(22540, "84");
 
             btnLeft.Location = new Point(166, Height / 2);
             BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
@@ -314,7 +314,7 @@ namespace FollowTask
                 fm = null;
                 return;
             }
-            fm.MdiParent = this;
+          //  fm.MdiParent = this;
             fm.Show();
         }
 
@@ -327,7 +327,7 @@ namespace FollowTask
                 fm = null;
                 return;
             }
-            fm.MdiParent = this;
+           // fm.MdiParent = this;
             fm.Show();
         }
 
@@ -340,7 +340,7 @@ namespace FollowTask
                 fm = null;
                 return;
             }
-            fm.MdiParent = this;
+           // fm.MdiParent = this;
             fm.Show();
         }
 
@@ -353,7 +353,7 @@ namespace FollowTask
                 fm = null;
                 return;
             }
-            fm.MdiParent = this;
+        //    fm.MdiParent = this;
             fm.Show();
         }
 

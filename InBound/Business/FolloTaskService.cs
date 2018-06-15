@@ -134,11 +134,21 @@ namespace InBound.Business
             using (Entities dataentity = new Entities())
             {
                 var query = from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM 
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE } into g
-                            select new FollowTaskDeail() { SortNum = g.Key.SORTNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, UnionState = g.Key.UNIONSTATE ?? 0 };
+                            select new FollowTaskDeail()
+                            {
+                                SortNum = item.SORTNUM ?? 0,
+                                MERAGENUM = item.MERAGENUM ?? 0,
+                                POKENUM = item.POKENUM ?? 0,
+                                MainBelt = item.MAINBELT ?? 0,
+                                CIGARETTDECODE = item2.CIGARETTECODE,
+                                CIGARETTDENAME = item2.CIGARETTENAME,
+                                GroupNO = item.GROUPNO ?? 0
+                            };
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList();
+                    return query .ToList();
                 else return null;
             }
         }
@@ -148,12 +158,19 @@ namespace InBound.Business
             using (Entities dataentity = new Entities())
             {
                 var query = from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM  equals item2.TROUGHNUM
                             where item.SORTNUM == sortnum
                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE } into g
-                            select new FollowTaskDeail() { SortNum = g.Key.SORTNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, UnionState = g.Key.UNIONSTATE ?? 0 };
+                            select new FollowTaskDeail() { SortNum = item.SORTNUM ?? 0, MERAGENUM = item.MERAGENUM ??0, POKENUM = item.POKENUM ??0 ,MainBelt = item.MAINBELT ??0,CIGARETTDECODE = item2.CIGARETTECODE,
+                                CIGARETTDENAME = item2.CIGARETTENAME,
+                                GroupNO = item.GROUPNO??0,
+                                Machineseq = item.MACHINESEQ ??0
+                            };
+                            //group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE } into g
+                            //select new FollowTaskDeail() { SortNum = g.Key.SORTNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, UnionState = g.Key.UNIONSTATE ?? 0 };
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList();
+                    return query .ToList();
 
                 else return null;
             }
