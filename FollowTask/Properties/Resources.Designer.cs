@@ -593,6 +593,36 @@ namespace FollowTask.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap A线机械手 {
+            get {
+                object obj = ResourceManager.GetObject("A线机械手", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap B线机械手 {
+            get {
+                object obj = ResourceManager.GetObject("B线机械手", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 合流故障机械手 {
+            get {
+                object obj = ResourceManager.GetObject("合流故障机械手", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 抓取1 {
             get {
                 object obj = ResourceManager.GetObject("抓取1", resourceCulture);

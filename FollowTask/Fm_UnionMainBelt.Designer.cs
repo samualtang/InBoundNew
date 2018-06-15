@@ -36,6 +36,7 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxBefore = new System.Windows.Forms.GroupBox();
             this.listViewBefore = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,14 +45,15 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.panelbefore = new System.Windows.Forms.Panel();
             this.panelafter = new System.Windows.Forms.Panel();
             this.gbpanelBefore = new System.Windows.Forms.GroupBox();
             this.gbpanelAfter = new System.Windows.Forms.GroupBox();
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lbldb = new System.Windows.Forms.Label();
             this.pbMachine1 = new System.Windows.Forms.PictureBox();
+            this.lblMachineDetails = new System.Windows.Forms.Label();
             this.groupBoxAfter.SuspendLayout();
             this.groupBoxBefore.SuspendLayout();
             this.gbpanelBefore.SuspendLayout();
@@ -120,6 +122,11 @@
             this.columnHeader12.Text = "条数";
             this.columnHeader12.Width = 80;
             // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "吸烟数量";
+            this.columnHeader13.Width = 97;
+            // 
             // groupBoxBefore
             // 
             this.groupBoxBefore.Controls.Add(this.listViewBefore);
@@ -181,12 +188,17 @@
             this.columnHeader11.Text = "条数";
             this.columnHeader11.Width = 58;
             // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "吸烟数量";
+            this.columnHeader14.Width = 80;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("宋体", 11F);
-            this.label1.Location = new System.Drawing.Point(627, 63);
+            this.label1.Location = new System.Drawing.Point(626, 63);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(15, 15);
             this.label1.TabIndex = 79;
@@ -195,17 +207,19 @@
             // panelbefore
             // 
             this.panelbefore.AutoScroll = true;
-            this.panelbefore.Location = new System.Drawing.Point(3, 36);
+            this.panelbefore.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelbefore.Location = new System.Drawing.Point(3, 20);
             this.panelbefore.Name = "panelbefore";
-            this.panelbefore.Size = new System.Drawing.Size(1268, 98);
+            this.panelbefore.Size = new System.Drawing.Size(1268, 114);
             this.panelbefore.TabIndex = 80;
             // 
             // panelafter
             // 
             this.panelafter.AutoScroll = true;
-            this.panelafter.Location = new System.Drawing.Point(3, 36);
+            this.panelafter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelafter.Location = new System.Drawing.Point(3, 20);
             this.panelafter.Name = "panelafter";
-            this.panelafter.Size = new System.Drawing.Size(1268, 91);
+            this.panelafter.Size = new System.Drawing.Size(1268, 107);
             this.panelafter.TabIndex = 80;
             // 
             // gbpanelBefore
@@ -230,34 +244,46 @@
             this.gbpanelAfter.TabStop = false;
             this.gbpanelAfter.Text = "机械手之后";
             // 
-            // columnHeader13
+            // lbldb
             // 
-            this.columnHeader13.Text = "吸烟数量";
-            this.columnHeader13.Width = 97;
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "吸烟数量";
-            this.columnHeader14.Width = 80;
+            this.lbldb.AutoSize = true;
+            this.lbldb.Location = new System.Drawing.Point(16, 70);
+            this.lbldb.Name = "lbldb";
+            this.lbldb.Size = new System.Drawing.Size(35, 12);
+            this.lbldb.TabIndex = 83;
+            this.lbldb.Text = "Text:";
             // 
             // pbMachine1
             // 
             this.pbMachine1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMachine1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMachine1.Image = global::FollowTask.Properties.Resources.机械手1;
-            this.pbMachine1.Location = new System.Drawing.Point(583, 12);
+            this.pbMachine1.Location = new System.Drawing.Point(582, 12);
             this.pbMachine1.Name = "pbMachine1";
             this.pbMachine1.Size = new System.Drawing.Size(73, 70);
             this.pbMachine1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbMachine1.TabIndex = 78;
             this.pbMachine1.TabStop = false;
             this.pbMachine1.Click += new System.EventHandler(this.pbMachine1_Click);
+            this.pbMachine1.MouseEnter += new System.EventHandler(this.pbMachine1_MouseEnter);
+            // 
+            // lblMachineDetails
+            // 
+            this.lblMachineDetails.AutoSize = true;
+            this.lblMachineDetails.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblMachineDetails.Location = new System.Drawing.Point(464, 24);
+            this.lblMachineDetails.Name = "lblMachineDetails";
+            this.lblMachineDetails.Size = new System.Drawing.Size(112, 15);
+            this.lblMachineDetails.TabIndex = 84;
+            this.lblMachineDetails.Text = "机械手详细信息";
             // 
             // Fm_UnionMainBelt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1298, 779);
+            this.ClientSize = new System.Drawing.Size(1295, 773);
+            this.Controls.Add(this.lblMachineDetails);
+            this.Controls.Add(this.lbldb);
             this.Controls.Add(this.gbpanelAfter);
             this.Controls.Add(this.gbpanelBefore);
             this.Controls.Add(this.label1);
@@ -305,6 +331,8 @@
         private System.Windows.Forms.GroupBox gbpanelAfter;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.Label lbldb;
+        private System.Windows.Forms.Label lblMachineDetails;
 
     }
 }

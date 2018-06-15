@@ -62,15 +62,7 @@
             treeNode15,
             treeNode16,
             treeNode17});
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("一号主皮带");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("二号主皮带");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("三号主皮带");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("四号主皮带");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("合流", new System.Windows.Forms.TreeNode[] {
-            treeNode19,
-            treeNode20,
-            treeNode21,
-            treeNode22});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("合流");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Fm_Mian));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,10 +72,10 @@
             this.预分拣YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.合流UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异形烟NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.补货任务ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMainInfo = new System.Windows.Forms.TextBox();
             this.treeV = new System.Windows.Forms.TreeView();
             this.btnLeft = new System.Windows.Forms.Button();
-            this.补货任务ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,7 +102,7 @@
             // 退出EToolStripMenuItem
             // 
             this.退出EToolStripMenuItem.Name = "退出EToolStripMenuItem";
-            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.退出EToolStripMenuItem.Text = "退出(&E)";
             this.退出EToolStripMenuItem.Click += new System.EventHandler(this.退出EToolStripMenuItem_Click);
             // 
@@ -129,30 +121,37 @@
             // 机械手MToolStripMenuItem
             // 
             this.机械手MToolStripMenuItem.Name = "机械手MToolStripMenuItem";
-            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.机械手MToolStripMenuItem.Text = "机械手(&M)";
             this.机械手MToolStripMenuItem.Click += new System.EventHandler(this.机械手MToolStripMenuItem_Click);
             // 
             // 预分拣YToolStripMenuItem
             // 
             this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
-            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
             this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
             // 
             // 合流UToolStripMenuItem
             // 
             this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
-            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.合流UToolStripMenuItem.Text = "合流(&U)";
             this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
             // 
             // 异形烟NToolStripMenuItem
             // 
             this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
-            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
             this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
+            // 
+            // 补货任务ToolStripMenuItem
+            // 
+            this.补货任务ToolStripMenuItem.Name = "补货任务ToolStripMenuItem";
+            this.补货任务ToolStripMenuItem.Size = new System.Drawing.Size(108, 21);
+            this.补货任务ToolStripMenuItem.Text = "烟柜补货任务(&X)";
+            this.补货任务ToolStripMenuItem.Click += new System.EventHandler(this.补货任务ToolStripMenuItem_Click);
             // 
             // txtMainInfo
             // 
@@ -214,20 +213,12 @@
             treeNode17.Text = "第八组";
             treeNode18.Name = "readyTASK";
             treeNode18.Text = "预分拣";
-            treeNode19.Name = "UinonBelt1";
-            treeNode19.Text = "一号主皮带";
-            treeNode20.Name = "UinonBelt2";
-            treeNode20.Text = "二号主皮带";
-            treeNode21.Name = "UinonBelt3";
-            treeNode21.Text = "三号主皮带";
-            treeNode22.Name = "UinonBelt4";
-            treeNode22.Text = "四号主皮带";
-            treeNode23.Name = "UinonTask";
-            treeNode23.Text = "合流";
+            treeNode19.Name = "UinonTask";
+            treeNode19.Text = "合流";
             this.treeV.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode9,
             treeNode18,
-            treeNode23});
+            treeNode19});
             this.treeV.ShowNodeToolTips = true;
             this.treeV.Size = new System.Drawing.Size(174, 651);
             this.treeV.TabIndex = 6;
@@ -244,13 +235,6 @@
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             this.btnLeft.MouseLeave += new System.EventHandler(this.btnLeft_MouseLeave);
             this.btnLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnLeft_MouseMove);
-            // 
-            // 补货任务ToolStripMenuItem
-            // 
-            this.补货任务ToolStripMenuItem.Name = "补货任务ToolStripMenuItem";
-            this.补货任务ToolStripMenuItem.Size = new System.Drawing.Size(108, 21);
-            this.补货任务ToolStripMenuItem.Text = "烟柜补货任务(&X)";
-            this.补货任务ToolStripMenuItem.Click += new System.EventHandler(this.补货任务ToolStripMenuItem_Click);
             // 
             // Fm_Mian
             // 

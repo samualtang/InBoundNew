@@ -21,7 +21,7 @@ namespace FollowTask
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Fm_UnionMainBelt_FormClosing);
-
+            
             //  addPanel(400, "芙蓉王(硬)",6,false); 
 
             //addPanel(10, "1360151", "金圣(硬滕王阁)", 6, false);
@@ -104,8 +104,10 @@ namespace FollowTask
             return;
 
         }
-        static int xynum = -1;//吸烟数量 来自DB块的值
-        static decimal sortnum = -1;//任务号 来自db块的值
+        int mainbelt = -1;//主皮带
+        decimal groupno = -1;//组号
+        int xynum = -1;//吸烟数量 
+        decimal sortnum = -1;//任务号  
         /// <summary>
         /// 
         /// </summary>
@@ -114,24 +116,44 @@ namespace FollowTask
         /// <param name="before">之前List</param>
         /// <param name="xyNum">吸烟数量</param>
         /// <param name="Sortnum">任务号</param>
-        public void GetNeedInfo(int machineno, List<UnionTaskInfo> after, List<UnionTaskInfo> before,int xyNum,decimal Sortnum)
+        public void GetNeedInfo(int machineno, List<UnionTaskInfo> after, List<UnionTaskInfo> before,List<object> listparm)
         {
             try
             {
                 listViewAfter.Items.Clear();
                 listViewBefore.Items.Clear();
-                label1.Text = machineno + "";
+                panelafter.Controls.Clear();
+                panelbefore.Controls.Clear();
+                mainbelt = Convert.ToInt32(listparm[0]);//主皮带
+                groupno = Convert.ToDecimal(listparm[1]);//组号
+                sortnum = Convert.ToDecimal(listparm[2]);//任务号
+                xynum = Convert.ToInt32(listparm[3]);//吸烟数量
+
+                Text = machineno + "号机械手"; 
+                label1.Text = machineno.ToString();
                 gbpanelBefore.Text = machineno + "号机械手之前卷烟摆放";
                 gbpanelAfter.Text = machineno + "号机械手之后卷烟摆放";
                 groupBoxAfter.Text = machineno + "号机械手之后卷烟数据";
                 groupBoxBefore.Text = machineno + "号机械手之前卷烟数据";
-                xynum = xyNum;
-                sortnum = Sortnum;
-                if (after != null || before != null)
-                {
-                    listAfterBind(after);
 
-                    listBeforeBind(before);
+                if (mainbelt != -1)
+                {
+                    lbldb.Text = "主皮带:" + listparm[0].ToString() + "    组号：" + listparm[1].ToString() + "     任务号:" + listparm[2].ToString() + "      吸烟数量:" + listparm[3].ToString();
+                    if (after != null || before != null)
+                    {
+                        listAfterBind(after);
+
+                        listBeforeBind(before);
+                    }
+                }
+                else
+                {
+                    mainbelt =0;//主皮带
+                    groupno = 0;//组号
+                    sortnum =0;//任务号
+                    xynum = 0;//吸烟数量 
+                    lbldb.Text = "主皮带:" + mainbelt.ToString() + "    组号：" + groupno.ToString() + "     任务号:" + sortnum.ToString() + "      吸烟数量:" + xynum.ToString();
+  
                 }
             }
             catch (Exception ex)
@@ -153,7 +175,7 @@ namespace FollowTask
                 ListViewItem lv = new ListViewItem();
                 var mod = after[i];
                 lv.SubItems[0].Text = label1.Text + "机械手";
-                lv.SubItems.Add(sortnum.ToString());
+                lv.SubItems.Add(mod.SortNum.ToString());
                 lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
                 lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
@@ -199,8 +221,9 @@ namespace FollowTask
         {
            
             fm_machinedetails.Show();
-            fm_machinedetails.Activate();
             fm_machinedetails.TopLevel = true;
+            fm_machinedetails.Activate();
+         
         }
 
         private void Fm_UnionMainBelt_Load(object sender, EventArgs e)
@@ -216,6 +239,11 @@ namespace FollowTask
         private void listViewBefore_SizeChanged(object sender, EventArgs e)
         {
              
+        }
+
+        private void pbMachine1_MouseEnter(object sender, EventArgs e)
+        {
+            p.SetToolTip(pbMachine1, "机械手详细信息");
         }
 
      
