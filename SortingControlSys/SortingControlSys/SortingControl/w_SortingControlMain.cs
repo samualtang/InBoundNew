@@ -1201,7 +1201,7 @@ namespace SortingControlSys.SortingControl
                         {
                             writeLog.Write((((groupNo - 1) * 22 + group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
                             updateListBox((((groupNo - 1) * 22 + group) + "号机械手已完成：" + decimal.Parse(values[i].ToString()) + "号任务"));
-                            InBoundService.UpdateMachineInOut(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + group));
+                           // InBoundService.UpdateMachineInOut(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + group));
                             TaskService.UpdateMachineFinished(decimal.Parse(values[i].ToString()), ((groupNo - 1) * 22 + group) + "");
 
                         }

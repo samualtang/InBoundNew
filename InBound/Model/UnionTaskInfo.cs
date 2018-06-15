@@ -12,5 +12,6 @@ namespace InBound.Model
         public decimal MainBelt { get; set; }
         public decimal SortNum { get; set; }
         public decimal qty { get; set; }
+        public decimal groupno { get; set; }
     }
 }

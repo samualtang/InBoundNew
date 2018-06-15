@@ -84,7 +84,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = titem.POKENUM
+                                                qty = titem.POKENUM,
+                                                 groupno=titem.GroupNO
                                             });
                                             titem.MachineState = 30;
                                             tempcount += titem.POKENUM;
@@ -99,7 +100,8 @@ namespace InBound.Business
                                                     CIGARETTDENAME = titem.CIGARETTDENAME,
                                                     MainBelt = titem.MainBelt,
                                                     SortNum = titem.SortNum,
-                                                    qty = 10 - tempcount
+                                                    qty = 10 - tempcount,
+                                                    groupno = titem.GroupNO
                                                 });
                                                 titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                             }
@@ -180,7 +182,8 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM
+                                            qty = titem.POKENUM,
+                                            groupno = titem.GroupNO
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -195,7 +198,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount
+                                                qty = 10 - tempcount,
+                                                groupno = titem.GroupNO
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -284,7 +288,8 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM
+                                            qty = titem.POKENUM,
+                                            groupno = titem.GroupNO
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -299,7 +304,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount
+                                                qty = 10 - tempcount,
+                                                groupno = titem.GroupNO
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -379,7 +385,8 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM
+                                            qty = titem.POKENUM,
+                                            groupno = titem.GroupNO
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -394,7 +401,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount
+                                                qty = 10 - tempcount,
+                                                groupno = titem.GroupNO
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -544,7 +552,8 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM
+                                            qty = titem.POKENUM,
+                                            groupno = titem.GroupNO
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -559,7 +568,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount
+                                                qty = 10 - tempcount,
+                                                groupno = titem.GroupNO
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -638,7 +648,8 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM
+                                            qty = titem.POKENUM,
+                                            groupno = titem.GroupNO
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -653,7 +664,8 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount
+                                                qty = 10 - tempcount,
+                                                groupno = titem.GroupNO
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
