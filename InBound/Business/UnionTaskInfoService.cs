@@ -85,7 +85,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = titem.POKENUM,
-                                                 groupno=titem.GroupNO
+                                                 groupno=titem.GroupNO,
+                                                  machineseq=titem.Machineseq
                                             });
                                             titem.MachineState = 30;
                                             tempcount += titem.POKENUM;
@@ -101,7 +102,8 @@ namespace InBound.Business
                                                     MainBelt = titem.MainBelt,
                                                     SortNum = titem.SortNum,
                                                     qty = 10 - tempcount,
-                                                    groupno = titem.GroupNO
+                                                    groupno = titem.GroupNO,
+                                                    machineseq = titem.Machineseq
                                                 });
                                                 titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                             }
@@ -183,7 +185,8 @@ namespace InBound.Business
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
                                             qty = titem.POKENUM,
-                                            groupno = titem.GroupNO
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -199,7 +202,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = 10 - tempcount,
-                                                groupno = titem.GroupNO
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -289,7 +293,8 @@ namespace InBound.Business
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
                                             qty = titem.POKENUM,
-                                            groupno = titem.GroupNO
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -305,7 +310,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = 10 - tempcount,
-                                                groupno = titem.GroupNO
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -386,7 +392,8 @@ namespace InBound.Business
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
                                             qty = titem.POKENUM,
-                                            groupno = titem.GroupNO
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -402,7 +409,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = 10 - tempcount,
-                                                groupno = titem.GroupNO
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -553,7 +561,8 @@ namespace InBound.Business
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
                                             qty = titem.POKENUM,
-                                            groupno = titem.GroupNO
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -569,7 +578,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = 10 - tempcount,
-                                                groupno = titem.GroupNO
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }
@@ -649,7 +659,8 @@ namespace InBound.Business
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
                                             qty = titem.POKENUM,
-                                            groupno = titem.GroupNO
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq
                                         });
                                         titem.MachineState = 30;
                                         tempcount += titem.POKENUM;
@@ -665,7 +676,8 @@ namespace InBound.Business
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
                                                 qty = 10 - tempcount,
-                                                groupno = titem.GroupNO
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq
                                             });
                                             titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                         }

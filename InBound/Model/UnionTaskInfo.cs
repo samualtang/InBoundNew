@@ -13,5 +13,6 @@ namespace InBound.Model
         public decimal SortNum { get; set; }
         public decimal qty { get; set; }
         public decimal groupno { get; set; }
+        public decimal machineseq { get; set; }
     }
 }
