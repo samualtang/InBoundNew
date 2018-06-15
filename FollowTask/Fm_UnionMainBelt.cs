@@ -268,7 +268,7 @@ namespace FollowTask
         {
           
             NumericUpDown nud = ((NumericUpDown)sender);
-            if (nud.Value != 0)
+            if (nud.Value != 0 && nud.Value < 60)
             {
                
                 BackBindDate((int)nud.Value);
@@ -279,20 +279,17 @@ namespace FollowTask
                BackBindDate((int)nud.Value);
                 
             }
-            
+            Thread.Sleep(500);
         }
-        int NowOrderNum = -1;
-        int LastOrderNum = -1;
 
 
 
-        void BackBindDate( int  ordernum)
+
+        void BackBindDate(int ordernum)
         {
-            NowOrderNum = ordernum;
 
-            if (NowOrderNum != LastOrderNum)
+            if (ordernum < 60)
             {
-
                 if (mainbelt != -1)
                 {
                     List<UnionTaskInfo> listAfterByOrderNum = InBound.Business.UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, (int)groupno, sortnum, xynum, ordernum);
@@ -304,18 +301,18 @@ namespace FollowTask
                 {
                     MessageBox.Show("与服务器断开连接");
                 }
-
             }
-            LastOrderNum = NowOrderNum;
+            else
+            {
+                MessageBox.Show("再多都到车上了!!");
+            }
+
+
         }
 
 
         
-
-        private void ndOrderNum_Scroll(object sender, ScrollEventArgs e)
-        {
-            Thread.Sleep(3000);
-        }
+ 
 
      
 

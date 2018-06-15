@@ -71,9 +71,9 @@
             // 
             this.groupBoxAfter.Controls.Add(this.listViewAfter);
             this.groupBoxAfter.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBoxAfter.Location = new System.Drawing.Point(649, 382);
+            this.groupBoxAfter.Location = new System.Drawing.Point(628, 386);
             this.groupBoxAfter.Name = "groupBoxAfter";
-            this.groupBoxAfter.Size = new System.Drawing.Size(637, 357);
+            this.groupBoxAfter.Size = new System.Drawing.Size(622, 357);
             this.groupBoxAfter.TabIndex = 2;
             this.groupBoxAfter.TabStop = false;
             this.groupBoxAfter.Text = "之后";
@@ -93,7 +93,7 @@
             this.listViewAfter.GridLines = true;
             this.listViewAfter.Location = new System.Drawing.Point(3, 20);
             this.listViewAfter.Name = "listViewAfter";
-            this.listViewAfter.Size = new System.Drawing.Size(631, 334);
+            this.listViewAfter.Size = new System.Drawing.Size(616, 334);
             this.listViewAfter.TabIndex = 1;
             this.listViewAfter.UseCompatibleStateImageBehavior = false;
             this.listViewAfter.View = System.Windows.Forms.View.Details;
@@ -142,7 +142,7 @@
             // 
             this.groupBoxBefore.Controls.Add(this.listViewBefore);
             this.groupBoxBefore.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBoxBefore.Location = new System.Drawing.Point(12, 382);
+            this.groupBoxBefore.Location = new System.Drawing.Point(12, 386);
             this.groupBoxBefore.Name = "groupBoxBefore";
             this.groupBoxBefore.Size = new System.Drawing.Size(585, 357);
             this.groupBoxBefore.TabIndex = 3;
@@ -215,7 +215,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("宋体", 11F);
-            this.label1.Location = new System.Drawing.Point(625, 75);
+            this.label1.Location = new System.Drawing.Point(625, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(15, 15);
             this.label1.TabIndex = 79;
@@ -227,7 +227,7 @@
             this.panelbefore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelbefore.Location = new System.Drawing.Point(3, 20);
             this.panelbefore.Name = "panelbefore";
-            this.panelbefore.Size = new System.Drawing.Size(1268, 98);
+            this.panelbefore.Size = new System.Drawing.Size(1223, 98);
             this.panelbefore.TabIndex = 80;
             // 
             // panelafter
@@ -236,7 +236,7 @@
             this.panelafter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelafter.Location = new System.Drawing.Point(3, 20);
             this.panelafter.Name = "panelafter";
-            this.panelafter.Size = new System.Drawing.Size(1268, 99);
+            this.panelafter.Size = new System.Drawing.Size(1229, 99);
             this.panelafter.TabIndex = 80;
             // 
             // gbpanelBefore
@@ -245,7 +245,7 @@
             this.gbpanelBefore.Font = new System.Drawing.Font("宋体", 11F);
             this.gbpanelBefore.Location = new System.Drawing.Point(15, 100);
             this.gbpanelBefore.Name = "gbpanelBefore";
-            this.gbpanelBefore.Size = new System.Drawing.Size(1274, 121);
+            this.gbpanelBefore.Size = new System.Drawing.Size(1229, 121);
             this.gbpanelBefore.TabIndex = 81;
             this.gbpanelBefore.TabStop = false;
             this.gbpanelBefore.Text = "机械手之前";
@@ -256,7 +256,7 @@
             this.gbpanelAfter.Font = new System.Drawing.Font("宋体", 11F);
             this.gbpanelAfter.Location = new System.Drawing.Point(12, 227);
             this.gbpanelAfter.Name = "gbpanelAfter";
-            this.gbpanelAfter.Size = new System.Drawing.Size(1274, 122);
+            this.gbpanelAfter.Size = new System.Drawing.Size(1235, 122);
             this.gbpanelAfter.TabIndex = 82;
             this.gbpanelAfter.TabStop = false;
             this.gbpanelAfter.Text = "机械手之后";
@@ -264,9 +264,10 @@
             // lbldb
             // 
             this.lbldb.AutoSize = true;
+            this.lbldb.Font = new System.Drawing.Font("宋体", 11F);
             this.lbldb.Location = new System.Drawing.Point(16, 70);
             this.lbldb.Name = "lbldb";
-            this.lbldb.Size = new System.Drawing.Size(35, 12);
+            this.lbldb.Size = new System.Drawing.Size(47, 15);
             this.lbldb.TabIndex = 83;
             this.lbldb.Text = "Text:";
             // 
@@ -275,7 +276,7 @@
             this.pbMachine1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMachine1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMachine1.Image = global::FollowTask.Properties.Resources.机械手1;
-            this.pbMachine1.Location = new System.Drawing.Point(581, 24);
+            this.pbMachine1.Location = new System.Drawing.Point(583, 20);
             this.pbMachine1.Name = "pbMachine1";
             this.pbMachine1.Size = new System.Drawing.Size(73, 70);
             this.pbMachine1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -308,7 +309,7 @@
             // 
             this.lblBYOrderNum.AutoSize = true;
             this.lblBYOrderNum.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblBYOrderNum.Location = new System.Drawing.Point(649, 360);
+            this.lblBYOrderNum.Location = new System.Drawing.Point(628, 360);
             this.lblBYOrderNum.Name = "lblBYOrderNum";
             this.lblBYOrderNum.Size = new System.Drawing.Size(150, 15);
             this.lblBYOrderNum.TabIndex = 86;
@@ -317,10 +318,14 @@
             // ndOrderNum
             // 
             this.ndOrderNum.Font = new System.Drawing.Font("宋体", 11F);
-            this.ndOrderNum.Location = new System.Drawing.Point(804, 355);
+            this.ndOrderNum.Location = new System.Drawing.Point(783, 355);
+            this.ndOrderNum.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.ndOrderNum.Name = "ndOrderNum";
-            this.ndOrderNum.ReadOnly = true;
-            this.ndOrderNum.Size = new System.Drawing.Size(64, 24);
+            this.ndOrderNum.Size = new System.Drawing.Size(51, 24);
             this.ndOrderNum.TabIndex = 87;
             this.ndOrderNum.Value = new decimal(new int[] {
             1,
@@ -328,13 +333,12 @@
             0,
             0});
             this.ndOrderNum.ValueChanged += new System.EventHandler(this.ndOrderNum_ValueChanged);
-            this.ndOrderNum.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ndOrderNum_Scroll);
             // 
             // Fm_UnionMainBelt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1295, 773);
+            this.ClientSize = new System.Drawing.Size(1262, 747);
             this.Controls.Add(this.ndOrderNum);
             this.Controls.Add(this.lblBYOrderNum);
             this.Controls.Add(this.btnchaxun);
