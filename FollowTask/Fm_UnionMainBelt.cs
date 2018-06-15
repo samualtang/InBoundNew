@@ -22,7 +22,8 @@ namespace FollowTask
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Fm_UnionMainBelt_FormClosing);
-            
+            CheckForIllegalCrossThreadCalls = false;
+         
             //  addPanel(400, "芙蓉王(硬)",6,false); 
 
             //addPanel(10, "1360151", "金圣(硬滕王阁)", 6, false);
@@ -230,12 +231,7 @@ namespace FollowTask
          
         }
 
-        private void Fm_UnionMainBelt_Load(object sender, EventArgs e)
-        {
-            asc.controllInitializeSize(this);
-            Thread th = new Thread(TextChangedByOrderNum);
-            th.Start();
-        }
+  
 
         private void Fm_UnionMainBelt_SizeChanged(object sender, EventArgs e)
         {
@@ -259,43 +255,66 @@ namespace FollowTask
             wu.Show();
           
         }
-     
+ 
+       
+
+        private void Fm_UnionMainBelt_Load(object sender, EventArgs e)
+        {
+            asc.controllInitializeSize(this);
+           
+           
+        }
         private void ndOrderNum_ValueChanged(object sender, EventArgs e)
         {
           
             NumericUpDown nud = ((NumericUpDown)sender);
             if (nud.Value != 0)
             {
-                txtOrderNum.Text = nud.Value.ToString();
                
+                BackBindDate((int)nud.Value);
             }
             else
             {
-               nud.Value  = 1;
-               txtOrderNum.Text = nud.Value.ToString();
+               nud.Value  = 1; 
+               BackBindDate((int)nud.Value);
                 
             }
+            
         }
-        void TextChangedByOrderNum()
+        int NowOrderNum = -1;
+        int LastOrderNum = -1;
+
+
+
+        void BackBindDate( int  ordernum)
         {
-           
-            //txtOrderNum_TextChanged(null, null);
+            NowOrderNum = ordernum;
+
+            if (NowOrderNum != LastOrderNum)
+            {
+
+                if (mainbelt != -1)
+                {
+                    List<UnionTaskInfo> listAfterByOrderNum = InBound.Business.UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, (int)groupno, sortnum, xynum, ordernum);
+                    panelafter.Controls.Clear();
+                    listViewAfter.Items.Clear();
+                    listAfterBind(listAfterByOrderNum);//重新绑定
+                }
+                else
+                {
+                    MessageBox.Show("与服务器断开连接");
+                }
+
+            }
+            LastOrderNum = NowOrderNum;
         }
-        private void txtOrderNum_TextChanged(object sender, EventArgs e)
+
+
+        
+
+        private void ndOrderNum_Scroll(object sender, ScrollEventArgs e)
         {
-
-            if (mainbelt != -1)
-            {
-                List<UnionTaskInfo> listAfterByOrderNum = InBound.Business.UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, (int)groupno, sortnum, xynum, Convert.ToInt32(txtOrderNum.Text));
-                panelafter.Controls.Clear();
-                listViewAfter.Items.Clear();
-                listAfterBind(listAfterByOrderNum);//重新绑定
-            }
-            else
-            {
-                MessageBox.Show("与服务器断开连接");
-            }
-
+            Thread.Sleep(3000);
         }
 
      

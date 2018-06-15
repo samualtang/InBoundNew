@@ -36,6 +36,8 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxBefore = new System.Windows.Forms.GroupBox();
             this.listViewBefore = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,6 +46,8 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.panelbefore = new System.Windows.Forms.Panel();
             this.panelafter = new System.Windows.Forms.Panel();
@@ -52,14 +56,9 @@
             this.lbldb = new System.Windows.Forms.Label();
             this.pbMachine1 = new System.Windows.Forms.PictureBox();
             this.lblMachineDetails = new System.Windows.Forms.Label();
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnchaxun = new System.Windows.Forms.Button();
             this.lblBYOrderNum = new System.Windows.Forms.Label();
             this.ndOrderNum = new System.Windows.Forms.NumericUpDown();
-            this.txtOrderNum = new System.Windows.Forms.TextBox();
             this.groupBoxAfter.SuspendLayout();
             this.groupBoxBefore.SuspendLayout();
             this.gbpanelBefore.SuspendLayout();
@@ -130,6 +129,15 @@
             this.columnHeader12.Text = "条数";
             this.columnHeader12.Width = 80;
             // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "组号";
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "烟柜号";
+            this.columnHeader16.Width = 73;
+            // 
             // groupBoxBefore
             // 
             this.groupBoxBefore.Controls.Add(this.listViewBefore);
@@ -191,6 +199,16 @@
             // 
             this.columnHeader11.Text = "条数";
             this.columnHeader11.Width = 52;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "组号";
+            this.columnHeader13.Width = 50;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "烟柜号";
+            this.columnHeader15.Width = 71;
             // 
             // label1
             // 
@@ -276,25 +294,6 @@
             this.lblMachineDetails.TabIndex = 84;
             this.lblMachineDetails.Text = "机械手详细信息";
             // 
-            // columnHeader13
-            // 
-            this.columnHeader13.Text = "组号";
-            this.columnHeader13.Width = 50;
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "组号";
-            // 
-            // columnHeader15
-            // 
-            this.columnHeader15.Text = "烟柜号";
-            this.columnHeader15.Width = 71;
-            // 
-            // columnHeader16
-            // 
-            this.columnHeader16.Text = "烟柜号";
-            this.columnHeader16.Width = 73;
-            // 
             // btnchaxun
             // 
             this.btnchaxun.Location = new System.Drawing.Point(1091, 34);
@@ -329,22 +328,13 @@
             0,
             0});
             this.ndOrderNum.ValueChanged += new System.EventHandler(this.ndOrderNum_ValueChanged);
-            // 
-            // txtOrderNum
-            // 
-            this.txtOrderNum.Location = new System.Drawing.Point(554, 745);
-            this.txtOrderNum.Name = "txtOrderNum";
-            this.txtOrderNum.Size = new System.Drawing.Size(40, 21);
-            this.txtOrderNum.TabIndex = 88;
-            this.txtOrderNum.Visible = false;
-            this.txtOrderNum.TextChanged += new System.EventHandler(this.txtOrderNum_TextChanged);
+            this.ndOrderNum.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ndOrderNum_Scroll);
             // 
             // Fm_UnionMainBelt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1295, 773);
-            this.Controls.Add(this.txtOrderNum);
             this.Controls.Add(this.ndOrderNum);
             this.Controls.Add(this.lblBYOrderNum);
             this.Controls.Add(this.btnchaxun);
@@ -405,7 +395,6 @@
         private System.Windows.Forms.Button btnchaxun;
         private System.Windows.Forms.Label lblBYOrderNum;
         private System.Windows.Forms.NumericUpDown ndOrderNum;
-        private System.Windows.Forms.TextBox txtOrderNum;
 
     }
 }
