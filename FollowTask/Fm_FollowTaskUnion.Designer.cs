@@ -1528,6 +1528,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
             this.groupBox2.ResumeLayout(false);

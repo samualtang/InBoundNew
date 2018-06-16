@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using InBound;
+using OpcRcw.Da;
+using FollowTask.Modle;
+using System.Threading;
+using System.Runtime.InteropServices;
  
 
 namespace FollowTask
@@ -18,20 +23,157 @@ namespace FollowTask
         /// </summary>
         bool click = true;
         System.Resources.ResourceManager rm;
-        //string btmpathLeft = Application.StartupPath + @" \Resources\5255\4.ico";
+        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
 
-        // string btmpathRight = Application.StartupPath + @" \Resources\5255\7.ico";
+        internal const string GROUP_NAME = "grp1";                  // Group name
+        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
+        AutoSizeFormClass asc = new AutoSizeFormClass();
+        /* Global variables */
+        IOPCServer pIOPCServer;  //定义opcServer对象
+        Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
+        fm_Machine fm_machine = new fm_Machine();//机械手
+        Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
+        
+        public WriteLog writeLog = WriteLog.GetLog();
+        /// <summary>
+        /// 合流
+        /// </summary>
+        List<Group> listUnionTaskGroup = new List<Group>();
+        /// <summary>
+        /// 机械手
+        /// </summary>
+        List<Group> listMachieTaskGroup = new List<Group>();
+        /// <summary>
+        /// 预分拣
+        /// </summary>
+        List<Group> listSortTaskGroup = new List<Group>();
+        public delegate void HandleUnion(string text, List<Group> listgroup, bool inonline);//合流委托
+        HandleUnion Union;
+
+        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4;
+
+        void Connction()
+        {
+            txtMainInfo.Text = "连接服务器中.....";
+          
+            Type svrComponenttyp;
+            Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+            try
+            {
+
+                pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);//连接本地服务器
+                AddUnionTaskGroup();
+                CheckConnection();
+               
+            }
+            catch (Exception ex)
+            {
+                txtMainInfo.Text = "错误异常:连接失败!!!";
+                writeLog.Write("错误异常：" + ex.Message);
+            }
+        }
+
+        #region 添加opc组
+        /// <summary>
+        /// 合流
+        /// </summary>
+        void AddUnionTaskGroup()
+        {
+            UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
+            UnionTaskGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);
+            UnionTaskGroup3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);
+            UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
+
+            UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
+            UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
+            UnionTaskGroup3.addItem(ItemCollection.GetTaskGroupItem3());
+            UnionTaskGroup4.addItem(ItemCollection.GetTaskGroupItem4());
+
+            listUnionTaskGroup.Add(UnionTaskGroup1);
+            listUnionTaskGroup.Add(UnionTaskGroup2);
+            listUnionTaskGroup.Add(UnionTaskGroup3);
+            listUnionTaskGroup.Add(UnionTaskGroup4);
+        }
+
+        #endregion
+        /// <summary>
+        /// 连接标识符
+        /// </summary>
+        bool IsOnLine = false;
+        /// <summary>
+        /// 检查是否断线
+        /// </summary>
+        bool CheckBrek = false;
+        /// <summary>
+        /// 检查连接
+        /// </summary>
+        void CheckConnection()
+        {
+            int flag = UnionTaskGroup1.ReadD(12).CastTo<int>(-1);
+            if (flag == -1)
+            {
+                txtMainInfo.Text = "服务器连接失败!";
+                writeLog.Write("服务器连接失败");
+                CheckBrek = true;
+                treeV.Enabled = true;
+                goto breaks;
+            }
+            else
+            {
+                txtMainInfo.Text = "服务器连接成功!";
+                treeV.Enabled = true;
+                IsOnLine = true;//连接成功
+            }
+        cheack: while (true)//检查连接是否正常
+            {
+                int flaged = UnionTaskGroup1.ReadD(12).CastTo<int>(-1);
+                if (flaged == -1)
+                {
+                    IsOnLine = false;
+                    Union("合流", null, IsOnLine);//重新绑定合流 
+                    writeLog.Write("服务器断开连接");
+                    txtMainInfo.Text = "服务器断开连接!!";
+                    CheckBrek = true;
+                    break;
+                }
+
+            }
+        breaks: while (CheckBrek)//已经断线 检查是否能重新连接
+            {
+                txtMainInfo.Text = "服务器断开连接!!正在尝试重新连接......";
+                int flaged = UnionTaskGroup1.ReadD(12).CastTo<int>(-1);
+                if (flaged != -1)
+                {
+                    IsOnLine = true;
+                    Union("合流", listUnionTaskGroup, IsOnLine);//重新绑定合流 
+                    writeLog.Write("服务器连接正常");
+                    txtMainInfo.Text = "服务器连接正常!!";
+                    CheckBrek = false;
+                    goto cheack;
+                }
+
+            }
+        }
+
+        #region 图片
         Bitmap btmpathLeft = (Bitmap)Properties.Resources.ResourceManager.GetObject("41");
         Bitmap btmpathRight = (Bitmap)Properties.Resources.ResourceManager.GetObject("71");
+        #endregion
         public Fm_Mian()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
+            CheckForIllegalCrossThreadCalls = false;
+            treeV.Enabled = false;
+            Union += fm_union.GetMainInfo;
+            this.StartPosition = FormStartPosition.CenterScreen; 
+            Thread th = new Thread(Connction);
+            th.Start();
         }
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
             //InBound.Business.TaskService.UpdateMachineFinished(22540, "84");
-
+        
             btnLeft.Location = new Point(166, Height / 2);
             BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
         }
@@ -112,7 +254,7 @@ namespace FollowTask
                 #endregion
                 #region 合流
                 case "UinonTask":
-                    ShowUinionFrom("合流");
+                    ShowUinionFrom("合流"); 
                     break;
                 //case "UinonBelt2":
                 //    ShowUinionFrom("合流,第2根");
@@ -128,7 +270,8 @@ namespace FollowTask
             }
 
         }
-
+       
+        
 
         #region 常用方法
         /// <summary>
@@ -148,16 +291,19 @@ namespace FollowTask
                     if (tmpFrm.Text == frm.Text)
                     {
                         blResult = true;
+                        tmpFrm.Show();
                         tmpFrm.Activate();
                     }
                     else if (frm.Text == "")
                     {
                         blResult = true;
+                        tmpFrm.Show();
                         tmpFrm.Activate();
                     }
                     else if (frm.GetType().Name.ToLower() == "w_export_new")
                     {
                         blResult = true;
+                        tmpFrm.Show();
                         tmpFrm.Activate();
                     }
                 }
@@ -170,50 +316,48 @@ namespace FollowTask
         /// <param text="fm">第几组</param>
         void ShowMchineForm(string text)
         {
-            fm_Machine fm = new fm_Machine(text);
-            if (CheckExist(fm) == true)
+            if (CheckExist(fm_machine) == true)
             {
-                fm.Dispose();
-                fm = null;
+                fm_machine.Dispose();
+                fm_machine = null;
                 return;
             }
-            fm.MdiParent = this;
-            fm.WindowState = FormWindowState.Maximized;
-            fm.Show();
+            fm_machine.MdiParent = this;
+            fm_machine.WindowState = FormWindowState.Maximized;
+            fm_machine.Show();
         }
         /// <summary>
         /// SortingShow方法
         /// </summary>
         /// <param name="text">第几组</param>
         void ShowSortingForm(string text)
-        {
-            Fm_FollowTaskSorting fm = new Fm_FollowTaskSorting(text);
-            if (CheckExist(fm) == true)
+        { 
+            if (CheckExist(fm_sorting) == true)
             {
-                fm.Dispose();
-                fm = null;
+                fm_sorting.Dispose();
+                fm_sorting = null;
                 return;
             }
-            fm.MdiParent = this;
-            fm.WindowState = FormWindowState.Maximized;
-            fm.Show();
+            fm_sorting.MdiParent = this;
+            fm_sorting.WindowState = FormWindowState.Maximized;
+            fm_sorting.Show();
         }
         /// <summary>
         /// UinionShow方法
         /// </summary>
         /// <param name="text">第几根</param>
         void ShowUinionFrom(string text)
-        {
-            Fm_FollowTaskUnion fm = new Fm_FollowTaskUnion(text);
-            if (CheckExist(fm) == true)
+        { 
+            Union("合流", listUnionTaskGroup, IsOnLine);
+            if (CheckExist(fm_union) == true)
             {
-                fm.Dispose();
-                fm = null;
-                return;
+                fm_union.Show();
+                //fm_union = null;
+               // return;
             }
-            fm.MdiParent = this;
-            fm.WindowState = FormWindowState.Maximized;
-            fm.Show();
+            fm_union.MdiParent = this;
+            fm_union.WindowState = FormWindowState.Maximized;
+            fm_union.Show();
 
         }
         #endregion
@@ -254,19 +398,19 @@ namespace FollowTask
 
         private void btnLeft_MouseMove(object sender, MouseEventArgs e)
         {
-            if (click)
-            {
-                TxtBoxMianInFo("隐藏树状菜单");
-            }
-            else
-            {
-                TxtBoxMianInFo("还原树状菜单");
-            }
+            //if (click)
+            //{
+            //    TxtBoxMianInFo("隐藏树状菜单");
+            //}
+            //else
+            //{
+            //    TxtBoxMianInFo("还原树状菜单");
+            //}
         }
 
         private void btnLeft_MouseLeave(object sender, EventArgs e)
         {
-            TxtBoxMianInFo("信息:");
+            //TxtBoxMianInFo("信息:");
         }
         private void 退出EToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -368,6 +512,47 @@ namespace FollowTask
             rt.ShowDialog();
 
 
+        }
+        public void Disconnect()
+        {
+            if (pIOPCServer != null)
+            {
+                Marshal.ReleaseComObject(pIOPCServer);
+                pIOPCServer = null;
+            }
+            for (int i = 0; i < listUnionTaskGroup.Count; i++)
+            {
+                if (listUnionTaskGroup[i] != null)
+                {
+                    listUnionTaskGroup[i].Release();
+                }
+            }
+        }
+        private void Fm_Mian_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                             "操作提示",//对话框的标题  
+                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+                Disconnect();
+
+
+                writeLog.Write("退出程序。。。。。。");
+                System.Environment.Exit(System.Environment.ExitCode);
+
+                this.Dispose();
+                this.Close();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+           
         }
     }
 }

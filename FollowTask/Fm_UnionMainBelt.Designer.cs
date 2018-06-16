@@ -361,7 +361,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 747);
             this.Controls.Add(this.lblGotpakege);
-            this.Controls.Add(this.lblGoto);
             this.Controls.Add(this.ndOrderNum);
             this.Controls.Add(this.lblBYOrderNum);
             this.Controls.Add(this.btnchaxun);
@@ -373,6 +372,7 @@
             this.Controls.Add(this.pbMachine1);
             this.Controls.Add(this.groupBoxBefore);
             this.Controls.Add(this.groupBoxAfter);
+            this.Controls.Add(this.lblGoto);
             this.Name = "Fm_UnionMainBelt";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ww";

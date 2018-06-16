@@ -23,15 +23,13 @@ namespace FollowTask
         public Fm_FollowTaskUnion()
         {
             InitializeComponent();
+            list_data.Items.Clear();
         }
-        #region   变量
-        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
-
-        internal const string GROUP_NAME = "grp1";                  // Group name
-        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
+      
+     
         AutoSizeFormClass asc = new AutoSizeFormClass();
-        /* Global variables */
-        IOPCServer pIOPCServer;  //定义opcServer对象
+ 
+        #region   变量
         public WriteLog writeLog = WriteLog.GetLog();
         DeviceStateManager stateManager = new DeviceStateManager();
         Alarms alarms = new Alarms();
@@ -91,22 +89,30 @@ namespace FollowTask
         Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4;//合流四条皮带
         List<Group> listgroup = new List<Group>();
         #endregion
-        public Fm_FollowTaskUnion(string text)
+    
+
+        List<Group> listuinongroup = new List<Group>();
+       
+        public void GetMainInfo(string text, List<Group> listgroup, bool isonline)
         {
-            InitializeComponent();
-            updateListBox(text + "主皮带,应用程序启动");
-            writeLog.Write(text + "主皮带,应用程序启动");
-            Thread th = new Thread(Connction);
-            th.Start();
-            getInfo += fm_UnionDetail.GetNeedInfo;
-           
-            CheckForIllegalCrossThreadCalls = false;
-            asc.controllInitializeSize(this);
-           // this.listViewUnion.DoubleBufferedListView(true); 
-            //this.Text = text;
-          
-           
-           
+
+            IsOnLine = isonline;
+            listuinongroup = listgroup;
+            if (IsOnLine)
+            {
+                updateListBox(text + "主皮带,服务器连接成功,应用程序启动");
+                writeLog.Write(text + "主皮带,服务器连接成功,应用程序启动");
+                
+                getInfo += fm_UnionDetail.GetNeedInfo;
+                CheckForIllegalCrossThreadCalls = false;
+                asc.controllInitializeSize(this); 
+
+            }
+            else
+            {
+                updateListBox(text + "主皮带,服务器连接失败,请检查网络连接");
+                writeLog.Write(text + "主皮带,服务器连接失败,请检查网络连接");
+            }
         }
  
         private void Fm_FollowTaskUnion_Load(object sender, EventArgs e)
@@ -114,8 +120,7 @@ namespace FollowTask
             try
             {
                 lblGourpText.Text = this.Text + "主皮带";
-                BindLabelName();
-            
+                BindLabelName(); 
             }
             catch (Exception ex)
             { 
@@ -145,141 +150,105 @@ namespace FollowTask
             }
         }
         #endregion
-      
+
         private void Machine1_Click(object sender, EventArgs e)
         {
             if (IsOnLine)
             {
-                PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
-                listPrament.Clear();
-                int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
-                mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
-                if (mainbelt == 1)
+                try
                 {
-                    ReadDBInfo(UnionTaskGroup1);
-                }
-                if (mainbelt == 2)
-                {
-                    ReadDBInfo(UnionTaskGroup2);
-                }
-                if (mainbelt == 3)
-                {
-                    ReadDBInfo(UnionTaskGroup3);
-                }
-                if (mainbelt == 4)
-                {
-                    ReadDBInfo(UnionTaskGroup4);
-                }
+                    PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
+                    listPrament.Clear();
+                    int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
+                    mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
+                    if (mainbelt == 1)
+                    {
+                        new Thread(() => { ReadDBInfo(listuinongroup[0]); }).Start();
+                    }
+                    if (mainbelt == 2)
+                    {
+                        new Thread(() => { ReadDBInfo(listuinongroup[1]); }).Start();
+                    }
+                    if (mainbelt == 3)
+                    {
+                        new Thread(() => { ReadDBInfo(listuinongroup[2]); }).Start();
+                    }
+                    if (mainbelt == 4)
+                    {
+                        new Thread(() => { ReadDBInfo(listuinongroup[3]); }).Start();
+                    }
+                    if (SortNum != -1)
+                    {
+                        groupno = GetGroupNo(machineno);//获取组号
+                        if (xyNum[GetXyNumIndex(machineno)] != 0)
+                        {
+                            listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
+                            listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
 
-                groupno = GetGroupNo(machineno);//获取组号
-                if (xyNum[GetXyNumIndex(machineno)] != 0)
-                {
-                    listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
-                    listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
+                            listPrament.Add(mainbelt);//主皮带
+                            listPrament.Add(groupno);//组号
+                            listPrament.Add(SortNum);//任务号
+                            listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
 
-                    listPrament.Add(mainbelt);//主皮带
-                    listPrament.Add(groupno);//组号
-                    listPrament.Add(SortNum);//任务号
-                    listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
-
-                    getInfo(machineno, listafter, listbefore, listPrament);
-                    fm_UnionDetail.Show();
-                    SearchWinForm(fm_UnionDetail);
+                            getInfo(machineno, listafter, listbefore, listPrament);
+                            fm_UnionDetail.Show();
+                            SearchWinForm(fm_UnionDetail);
+                        }
+                        else
+                        {
+                            listPrament.Add(-1);//主皮带
+                            listPrament.Add(-1);//组号
+                            listPrament.Add(-1);//任务号
+                            listPrament.Add(-1);//吸烟数量
+                            getInfo(machineno, listafter, listbefore, listPrament);
+                            fm_UnionDetail.Show();
+                            SearchWinForm(fm_UnionDetail);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("服务器连接失败!请检查网络连接!");
+                    } 
                 }
-                else
+                catch (Exception ex )
                 {
-                    listPrament.Add(-1);//主皮带
-                    listPrament.Add(-1);//组号
-                    listPrament.Add(-1);//任务号
-                    listPrament.Add(-1);//吸烟数量
-                    getInfo(machineno, listafter, listbefore, listPrament);
-                    fm_UnionDetail.Show();
-                    SearchWinForm(fm_UnionDetail);
+                     updateListBox("与服务器断开连接!");
+                     writeLog.Write("单击机械手皮带信息错误:"+ex.Message);
                 }
-                // //string str ="";
-                // //for (int i = 0; i < xyNum.Length; i++)
-                // //{
-                // //    str += xyNum[i] + "\r\n";
-                // //}
-                // //MessageBox.Show(SortNum +"\r\n"+ str);
-
-                // fm.Show();
-                //Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail("第" + Text + "皮带" + btn.Name, listgroup);
-                //ftmd.Show();
             }
             else
             {
                 MessageBox.Show("尚未连接服务器,请稍候再试！");
             }
+
+
         }
         /// <summary>
         /// 读取指定皮带DB块
         /// </summary>
-        /// <param name="groupName">OPC组名</param>
-        void ReadDBInfo(Group groupName)
+        /// <param name="group">OPC组名</param>
+        void ReadDBInfo(Group group)
         {
          
-            SortNum = groupName.ReadD(0).CastTo<int>(-1);//当前任务号
-            //八个机械手吸烟数量
-            xyNum[0] = groupName.ReadD(4).CastTo<int>(-1);
-            xyNum[1] = groupName.ReadD(5).CastTo<int>(-1);
-            xyNum[2] = groupName.ReadD(6).CastTo<int>(-1);
-            xyNum[3] = groupName.ReadD(7).CastTo<int>(-1);
-            xyNum[4] = groupName.ReadD(8).CastTo<int>(-1);
-            xyNum[5] = groupName.ReadD(9).CastTo<int>(-1);
-            xyNum[6] = groupName.ReadD(10).CastTo<int>(-1);
-            xyNum[7] = groupName.ReadD(11).CastTo<int>(-1);
-
-        }
-        void Connction()
-        {
-            updateListBox("连接服务器中.....");
-            Type svrComponenttyp;
-            Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-            svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
-            try
+            SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
+            if (SortNum != -1)
             {
- 
-                pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);//连接本地服务器
-                 
-                UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
-                UnionTaskGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);
-                UnionTaskGroup3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);
-                UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
-
-                UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
-                UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
-                UnionTaskGroup3.addItem(ItemCollection.GetTaskGroupItem3());
-                UnionTaskGroup4.addItem(ItemCollection.GetTaskGroupItem4());
-
-                CheckConnection();
-                GroupAdd();
-            }
-            catch (Exception ex)
-            { 
-                updateListBox("服务器连接失败，检查网络是否连接正常" );
-                writeLog.Write("错误异常：" + ex.Message);
+                //八个机械手吸烟数量
+                xyNum[0] = group.ReadD(4).CastTo<int>(-1);
+                xyNum[1] = group.ReadD(5).CastTo<int>(-1);
+                xyNum[2] = group.ReadD(6).CastTo<int>(-1);
+                xyNum[3] = group.ReadD(7).CastTo<int>(-1);
+                xyNum[4] = group.ReadD(8).CastTo<int>(-1);
+                xyNum[5] = group.ReadD(9).CastTo<int>(-1);
+                xyNum[6] = group.ReadD(10).CastTo<int>(-1);
+                xyNum[7] = group.ReadD(11).CastTo<int>(-1);
             }
         }
+       
         /// <summary>
         /// 连接标识符
         /// </summary>
-        bool IsOnLine = false;
-        void CheckConnection()
-        {
-            int flag = UnionTaskGroup1.ReadD(12).CastTo<int>(-1);
-            if (flag == -1)
-            {
-                updateListBox("服务器连接失败");
-                writeLog.Write("服务器连接失败");
-            }
-            else
-            {
-                updateListBox("服务器连接成功!");
-                IsOnLine = true;//连接成功
-            }
-
-        }
+        bool IsOnLine =false;
         /// <summary>
         /// 获取组号
         /// </summary>
@@ -667,6 +636,13 @@ namespace FollowTask
             p.AutoPopDelay = 24000;
             p.ShowAlways = true;
             p.SetToolTip(picBox,System.Text.RegularExpressions.Regex.Replace( picBox.Name ,@"[^0-9]+","") +"号机械手皮带上烟的摆放和详细信息");
+        }
+
+        private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+            return;
         }
 
 

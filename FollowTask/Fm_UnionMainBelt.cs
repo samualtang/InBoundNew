@@ -266,20 +266,27 @@ namespace FollowTask
         }
         private void ndOrderNum_ValueChanged(object sender, EventArgs e)
         {
-          
             NumericUpDown nud = ((NumericUpDown)sender);
-            if (nud.Value != 0 && nud.Value < 60)
+            if (mainbelt != 0)
             {
-               
-                BackBindDate((int)nud.Value);
+
+                if (nud.Value != 0 && nud.Value < 60)
+                {
+
+                   BackBindDate((int)nud.Value);
+                }
+                else
+                {
+                    nud.Value = 1;
+                //  BackBindDate((int)nud.Value); 
+
+                }
+                Thread.Sleep(500);
             }
             else
             {
-               nud.Value  = 1; 
-               BackBindDate((int)nud.Value);
-                
+                nud.Value = 1;
             }
-            Thread.Sleep(500);
         }
 
 

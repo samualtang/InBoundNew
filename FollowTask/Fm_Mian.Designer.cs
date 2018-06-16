@@ -121,28 +121,28 @@
             // 机械手MToolStripMenuItem
             // 
             this.机械手MToolStripMenuItem.Name = "机械手MToolStripMenuItem";
-            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.机械手MToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.机械手MToolStripMenuItem.Text = "机械手(&M)";
             this.机械手MToolStripMenuItem.Click += new System.EventHandler(this.机械手MToolStripMenuItem_Click);
             // 
             // 预分拣YToolStripMenuItem
             // 
             this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
-            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
             this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
             // 
             // 合流UToolStripMenuItem
             // 
             this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
-            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.合流UToolStripMenuItem.Text = "合流(&U)";
             this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
             // 
             // 异形烟NToolStripMenuItem
             // 
             this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
-            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
             this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
             // 
@@ -251,6 +251,7 @@
             this.Name = "Fm_Mian";
             this.Text = "任务追踪";
             this.TransparencyKey = System.Drawing.Color.White;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_Mian_FormClosing);
             this.Load += new System.EventHandler(this.Fm_Mian_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_Mian_SizeChanged);
             this.menuStrip1.ResumeLayout(false);
