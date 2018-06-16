@@ -59,6 +59,8 @@
             this.btnchaxun = new System.Windows.Forms.Button();
             this.lblBYOrderNum = new System.Windows.Forms.Label();
             this.ndOrderNum = new System.Windows.Forms.NumericUpDown();
+            this.lblGoto = new System.Windows.Forms.Label();
+            this.lblGotpakege = new System.Windows.Forms.Label();
             this.groupBoxAfter.SuspendLayout();
             this.groupBoxBefore.SuspendLayout();
             this.gbpanelBefore.SuspendLayout();
@@ -227,7 +229,7 @@
             this.panelbefore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelbefore.Location = new System.Drawing.Point(3, 20);
             this.panelbefore.Name = "panelbefore";
-            this.panelbefore.Size = new System.Drawing.Size(1223, 98);
+            this.panelbefore.Size = new System.Drawing.Size(1226, 98);
             this.panelbefore.TabIndex = 80;
             // 
             // panelafter
@@ -236,16 +238,16 @@
             this.panelafter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelafter.Location = new System.Drawing.Point(3, 20);
             this.panelafter.Name = "panelafter";
-            this.panelafter.Size = new System.Drawing.Size(1229, 99);
+            this.panelafter.Size = new System.Drawing.Size(1223, 99);
             this.panelafter.TabIndex = 80;
             // 
             // gbpanelBefore
             // 
             this.gbpanelBefore.Controls.Add(this.panelbefore);
             this.gbpanelBefore.Font = new System.Drawing.Font("宋体", 11F);
-            this.gbpanelBefore.Location = new System.Drawing.Point(15, 100);
+            this.gbpanelBefore.Location = new System.Drawing.Point(12, 88);
             this.gbpanelBefore.Name = "gbpanelBefore";
-            this.gbpanelBefore.Size = new System.Drawing.Size(1229, 121);
+            this.gbpanelBefore.Size = new System.Drawing.Size(1232, 121);
             this.gbpanelBefore.TabIndex = 81;
             this.gbpanelBefore.TabStop = false;
             this.gbpanelBefore.Text = "机械手之前";
@@ -254,9 +256,9 @@
             // 
             this.gbpanelAfter.Controls.Add(this.panelafter);
             this.gbpanelAfter.Font = new System.Drawing.Font("宋体", 11F);
-            this.gbpanelAfter.Location = new System.Drawing.Point(12, 227);
+            this.gbpanelAfter.Location = new System.Drawing.Point(12, 235);
             this.gbpanelAfter.Name = "gbpanelAfter";
-            this.gbpanelAfter.Size = new System.Drawing.Size(1235, 122);
+            this.gbpanelAfter.Size = new System.Drawing.Size(1229, 122);
             this.gbpanelAfter.TabIndex = 82;
             this.gbpanelAfter.TabStop = false;
             this.gbpanelAfter.Text = "机械手之后";
@@ -276,7 +278,7 @@
             this.pbMachine1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMachine1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMachine1.Image = global::FollowTask.Properties.Resources.机械手1;
-            this.pbMachine1.Location = new System.Drawing.Point(583, 20);
+            this.pbMachine1.Location = new System.Drawing.Point(581, 15);
             this.pbMachine1.Name = "pbMachine1";
             this.pbMachine1.Size = new System.Drawing.Size(73, 70);
             this.pbMachine1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -309,7 +311,7 @@
             // 
             this.lblBYOrderNum.AutoSize = true;
             this.lblBYOrderNum.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblBYOrderNum.Location = new System.Drawing.Point(628, 360);
+            this.lblBYOrderNum.Location = new System.Drawing.Point(628, 366);
             this.lblBYOrderNum.Name = "lblBYOrderNum";
             this.lblBYOrderNum.Size = new System.Drawing.Size(150, 15);
             this.lblBYOrderNum.TabIndex = 86;
@@ -318,7 +320,7 @@
             // ndOrderNum
             // 
             this.ndOrderNum.Font = new System.Drawing.Font("宋体", 11F);
-            this.ndOrderNum.Location = new System.Drawing.Point(783, 355);
+            this.ndOrderNum.Location = new System.Drawing.Point(783, 361);
             this.ndOrderNum.Maximum = new decimal(new int[] {
             60,
             0,
@@ -334,11 +336,32 @@
             0});
             this.ndOrderNum.ValueChanged += new System.EventHandler(this.ndOrderNum_ValueChanged);
             // 
+            // lblGoto
+            // 
+            this.lblGoto.AutoSize = true;
+            this.lblGoto.Font = new System.Drawing.Font("宋体", 19F);
+            this.lblGoto.Location = new System.Drawing.Point(1151, 220);
+            this.lblGoto.Name = "lblGoto";
+            this.lblGoto.Size = new System.Drawing.Size(90, 26);
+            this.lblGoto.TabIndex = 88;
+            this.lblGoto.Text = "←——";
+            // 
+            // lblGotpakege
+            // 
+            this.lblGotpakege.AutoSize = true;
+            this.lblGotpakege.Location = new System.Drawing.Point(1173, 212);
+            this.lblGotpakege.Name = "lblGotpakege";
+            this.lblGotpakege.Size = new System.Drawing.Size(65, 12);
+            this.lblGotpakege.TabIndex = 89;
+            this.lblGotpakege.Text = "前往包装机";
+            // 
             // Fm_UnionMainBelt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 747);
+            this.Controls.Add(this.lblGotpakege);
+            this.Controls.Add(this.lblGoto);
             this.Controls.Add(this.ndOrderNum);
             this.Controls.Add(this.lblBYOrderNum);
             this.Controls.Add(this.btnchaxun);
@@ -399,6 +422,8 @@
         private System.Windows.Forms.Button btnchaxun;
         private System.Windows.Forms.Label lblBYOrderNum;
         private System.Windows.Forms.NumericUpDown ndOrderNum;
+        private System.Windows.Forms.Label lblGoto;
+        private System.Windows.Forms.Label lblGotpakege;
 
     }
 }
