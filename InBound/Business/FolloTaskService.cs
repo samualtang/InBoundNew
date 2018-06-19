@@ -16,10 +16,17 @@ namespace InBound.Business
         public static decimal FullCount = 17;
         public static List<T_PRODUCE_TASK> getAllTask()
         {
-            using (Entities dataentity = new Entities())
-            {
-                var query = from item in dataentity.T_PRODUCE_TASK orderby item.SORTNUM select item;
-                return query.ToList();
+            try
+            { 
+                using (Entities dataentity = new Entities())
+                {
+                    var query = from item in dataentity.T_PRODUCE_TASK orderby item.SORTNUM select item;
+                    return query.ToList();
+                } 
+            }
+            catch (Exception ex)
+            { 
+                throw  ex;
             }
         }
         public static List<T_PRODUCE_TASK> getAllTask(decimal tasknum)

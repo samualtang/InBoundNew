@@ -65,9 +65,24 @@ namespace FollowTask
         /// 合流机械手
         /// </summary>
         /// <param name="machineNo"></param>
-        public Fm_FollowTaskMachineDetail(string machineNo)
+        //public Fm_FollowTaskMachineDetail(string machineNo)
+        //{
+        //    InitializeComponent();
+        //    this.listViewMachineDetails.DoubleBufferedListView(true);
+        //    lblCigreName.Visible = false;//合流机械手
+        //    for (int i = 1; i <= 10; i++)
+        //    {
+        //        string lblName = "lblCig" + i;
+        //        Control contr = (Label)Controls.Find(lblName, true)[0];
+        //        contr.Visible = true;
+        //    } 
+        //    Text ="合流("+ machineNo + "号机械手)";
+        //    this.StartPosition = FormStartPosition.CenterScreen;
+        //    lblMachineNo.Text = machineNo + "号机械手";
+        //}
+
+        public void GetUnionMachineDetails(string text, List<Group> listMachine)
         {
-            InitializeComponent();
             this.listViewMachineDetails.DoubleBufferedListView(true);
             lblCigreName.Visible = false;//合流机械手
             for (int i = 1; i <= 10; i++)
@@ -75,13 +90,12 @@ namespace FollowTask
                 string lblName = "lblCig" + i;
                 Control contr = (Label)Controls.Find(lblName, true)[0];
                 contr.Visible = true;
-            } 
-            Text ="合流("+ machineNo + "号机械手)";
+            }
+            Text = "合流(" + text + "号机械手)";
             this.StartPosition = FormStartPosition.CenterScreen;
-            lblMachineNo.Text = machineNo + "号机械手";
-        }
+            lblMachineNo.Text = text + "号机械手";
 
-        
+        }
 
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {

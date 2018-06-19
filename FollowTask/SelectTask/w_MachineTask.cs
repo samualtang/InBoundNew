@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound;
 using InBound.Business;
 using System.Reflection;
+using System.Threading;
 
 namespace FollowTask
 {
@@ -18,7 +19,7 @@ namespace FollowTask
         {
             InitializeComponent();
         }
-        List<T_PRODUCE_TASK> list =FolloTaskService.getAllTask();
+        List<T_PRODUCE_TASK> list = new List<T_PRODUCE_TASK>();
         public w_MachineTask(string HeadText )
         {  
             InitializeComponent();
@@ -35,9 +36,22 @@ namespace FollowTask
         decimal SortNum;//排序号
         private void w_FollowTask_Load(object sender, EventArgs e)
         {
-            asc.controllInitializeSize(this);
-            BindSelectCmb(); 
-            dgvTask.DataSource = list;
+            try
+            { 
+                asc.controllInitializeSize(this);
+                BindSelectCmb();
+               // list = FolloTaskService.getAllTask();
+                //new Thread(() => { ReadDBInfo(listuinongroup[0]); }).Start();
+             
+                 list = FolloTaskService.getAllTask();  
+
+                dgvTask.DataSource = list; 
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("数据库连接失败，请检查连接状况！");
+            }
         }
         /// <summary>
         /// 下拉框绑定
@@ -56,14 +70,17 @@ namespace FollowTask
        
         private void btnOk_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+
+
                 switch (cmbSelectC.SelectedItem.ToString())
                 {
-                    case "所有任务": 
+                    case "所有任务":
                         if (!string.IsNullOrWhiteSpace(txtInfo.Text))
                         {
-                            TsakNum = Convert.ToDecimal(txtInfo.Text.Replace(" ",""));
-                            dgvTask.DataSource = FolloTaskService.getAllTask(TsakNum); 
+                            TsakNum = Convert.ToDecimal(txtInfo.Text.Replace(" ", ""));
+                            dgvTask.DataSource = FolloTaskService.getAllTask(TsakNum);
                         }
                         else
                         {
@@ -73,7 +90,7 @@ namespace FollowTask
                     case "设备号":
                         if (!string.IsNullOrWhiteSpace(txtInfo.Text))
                         {
-                            Machineseq = Convert.ToDecimal(txtInfo.Text.Replace(" ",""));
+                            Machineseq = Convert.ToDecimal(txtInfo.Text.Replace(" ", ""));
                             dgvTask.DataSource = FolloTaskService.getAllMachineTask(Machineseq).Select(a => new
                             {
                                 CIGARETTECODE = a.CIGARETTDECODE,
@@ -119,6 +136,12 @@ namespace FollowTask
 
                         break;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("错误：" + ex.Message);
+            }
             
         }
         void DgvBind()

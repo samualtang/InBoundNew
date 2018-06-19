@@ -17,11 +17,23 @@ namespace FollowTask
     {
 
         AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
-        Fm_FollowTaskMachineDetail fm_machinedetails ;
+        Fm_FollowTaskMachineDetail fm_machinedetails  = new Fm_FollowTaskMachineDetail(); 
+        int mainbelt = -1;//主皮带
+        decimal groupno = -1;//组号
+        int xynum = -1;//吸烟数量 
+        decimal sortnum = -1;//任务号  
+
+        private delegate void DelegateUnionMachineInfo(string text, List<Group> listMachine);
+        DelegateUnionMachineInfo dumi;
+
+        List<Group> ListUMachine = new List<Group>();
+
         public Fm_UnionMainBelt()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Fm_UnionMainBelt_FormClosing);
+            ndOrderNum.MouseWheel += new MouseEventHandler(ndOrderNum_MouseWheel);
+            dumi += fm_machinedetails.GetUnionMachineDetails;//机械手详细信息委托
             CheckForIllegalCrossThreadCalls = false;
          
             //  addPanel(400, "芙蓉王(硬)",6,false); 
@@ -30,6 +42,19 @@ namespace FollowTask
 
            
         
+        }
+        /// <summary>
+        /// 禁止鼠标滚动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ndOrderNum_MouseWheel(object sender, MouseEventArgs e)
+        {
+            HandledMouseEventArgs h = e as HandledMouseEventArgs;
+            if (h != null)
+            {
+                h.Handled = true;
+            }  
         }
         /// <summary>
         /// 获取卷烟图片
@@ -98,19 +123,23 @@ namespace FollowTask
       
         void Fm_UnionMainBelt_FormClosing(object sender, FormClosingEventArgs e)
         {
-            fm_machinedetails = new Fm_FollowTaskMachineDetail();
+           // fm_machinedetails = new Fm_FollowTaskMachineDetail();
             listViewAfter.Items.Clear();
             listViewBefore.Items.Clear();
-            e.Cancel =true;
-            this.Hide();
-            fm_machinedetails.Close();
-            return;
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is Form)
+                { 
+                    fm_machinedetails.Close();
+                    return;
+                }
+            }  
+            this.Close();
+            //e.Cancel = true;
+            //return;
 
         }
-        int mainbelt = -1;//主皮带
-        decimal groupno = -1;//组号
-        int xynum = -1;//吸烟数量 
-        decimal sortnum = -1;//任务号  
+        
         /// <summary>
         /// 
         /// </summary>
@@ -123,23 +152,25 @@ namespace FollowTask
         {
             try
             {
+                #region 数据绑定
+                //绑定值复原
                 listViewAfter.Items.Clear();
                 listViewBefore.Items.Clear();
                 panelafter.Controls.Clear();
                 panelbefore.Controls.Clear();
+                //给予初始值
                 ndOrderNum.Value = 1;
                 mainbelt = Convert.ToInt32(listparm[0]);//主皮带
                 groupno = Convert.ToDecimal(listparm[1]);//组号
                 sortnum = Convert.ToDecimal(listparm[2]);//任务号
-                xynum = Convert.ToInt32(listparm[3]);//吸烟数量
-
+                xynum = Convert.ToInt32(listparm[3]);//吸烟数量 
                 Text = machineno + "号机械手"; 
                 label1.Text = machineno.ToString();
                 gbpanelBefore.Text = machineno + "号机械手之前卷烟皮带摆放";
                 gbpanelAfter.Text = machineno + "号机械手之后卷烟皮带摆放";
                 groupBoxAfter.Text = machineno + "号机械手之后卷烟数据";
                 groupBoxBefore.Text = machineno + "号机械手之前卷烟数据";
-
+                #endregion 
                 if (mainbelt != -1)
                 {
                     lbldb.Text = "主皮带:" + listparm[0].ToString() + "    组号：" + listparm[1].ToString() + "     任务号:" + listparm[2].ToString() + "      吸烟数量:" + listparm[3].ToString();
@@ -189,8 +220,6 @@ namespace FollowTask
                 lv.SubItems.Add(mod.machineseq.ToString());
                 lv.SubItems.Add("");
                 listViewAfter.Items.Add(lv);
-
-
             }
 
         }
@@ -219,13 +248,29 @@ namespace FollowTask
 
 
         }
+        public void SearchWinForm(Form fname)
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is Form)
+                {
+                    //fname.TopMost = true;
+                    fname.Activate();
 
+                    return;
+                }
+            }
+            fname.Show();
+            fname.Activate();
+        }
       
 
         private void pbMachine1_Click(object sender, EventArgs e)
         {
-            fm_machinedetails = new Fm_FollowTaskMachineDetail(label1.Text);
+            //fm_machinedetails = new Fm_FollowTaskMachineDetail(label1.Text);
+            dumi(label1.Text, ListUMachine);//
             fm_machinedetails.Show();
+            SearchWinForm(fm_machinedetails);
             fm_machinedetails.TopMost = true;
             fm_machinedetails.Activate();
          
@@ -235,7 +280,7 @@ namespace FollowTask
 
         private void Fm_UnionMainBelt_SizeChanged(object sender, EventArgs e)
         {
-            asc.controlAutoSize(this);
+           // asc.controlAutoSize(this);
         }
 
         private void listViewBefore_SizeChanged(object sender, EventArgs e)
@@ -317,6 +362,7 @@ namespace FollowTask
 
         }
 
+       
 
         
  

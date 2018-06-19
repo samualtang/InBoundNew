@@ -151,6 +151,7 @@
             this.补货任务ToolStripMenuItem.Name = "补货任务ToolStripMenuItem";
             this.补货任务ToolStripMenuItem.Size = new System.Drawing.Size(108, 21);
             this.补货任务ToolStripMenuItem.Text = "烟柜补货任务(&X)";
+            this.补货任务ToolStripMenuItem.Visible = false;
             this.补货任务ToolStripMenuItem.Click += new System.EventHandler(this.补货任务ToolStripMenuItem_Click);
             // 
             // txtMainInfo
@@ -249,7 +250,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "Fm_Mian";
-            this.Text = "任务追踪";
+            this.Text = "任务还原";
             this.TransparencyKey = System.Drawing.Color.White;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_Mian_FormClosing);
             this.Load += new System.EventHandler(this.Fm_Mian_Load);

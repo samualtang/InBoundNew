@@ -25,15 +25,13 @@ namespace FollowTask
         System.Resources.ResourceManager rm;
         internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
 
-        internal const string GROUP_NAME = "grp1";                  // Group name
+      //  internal const string GROUP_NAME = "grp1";                  // Group name
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
         AutoSizeFormClass asc = new AutoSizeFormClass();
         /* Global variables */
         IOPCServer pIOPCServer;  //定义opcServer对象
-        Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
-        fm_Machine fm_machine = new fm_Machine();//机械手
-        Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
-        
+      
+      
         public WriteLog writeLog = WriteLog.GetLog();
         /// <summary>
         /// 合流
@@ -69,7 +67,7 @@ namespace FollowTask
             }
             catch (Exception ex)
             {
-                txtMainInfo.Text = "错误异常:连接失败!!!";
+                txtMainInfo.Text = "错误异常:请检查环境配置！，连接失败!!!";
                 writeLog.Write("错误异常：" + ex.Message);
             }
         }
@@ -165,7 +163,7 @@ namespace FollowTask
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             treeV.Enabled = false;
-            Union += fm_union.GetMainInfo;
+          
             this.StartPosition = FormStartPosition.CenterScreen; 
             Thread th = new Thread(Connction);
             th.Start();
@@ -266,7 +264,6 @@ namespace FollowTask
                 //    ShowUinionFrom("合流,第4根");
                 //    break;
                 #endregion
-
             }
 
         }
@@ -316,11 +313,12 @@ namespace FollowTask
         /// <param text="fm">第几组</param>
         void ShowMchineForm(string text)
         {
+            fm_Machine fm_machine = new fm_Machine();//机械手
             if (CheckExist(fm_machine) == true)
             {
                 fm_machine.Dispose();
-                fm_machine = null;
-                return;
+                //fm_machine = null;
+                //return;
             }
             fm_machine.MdiParent = this;
             fm_machine.WindowState = FormWindowState.Maximized;
@@ -331,12 +329,14 @@ namespace FollowTask
         /// </summary>
         /// <param name="text">第几组</param>
         void ShowSortingForm(string text)
-        { 
+        {
+            Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
+  
             if (CheckExist(fm_sorting) == true)
             {
                 fm_sorting.Dispose();
-                fm_sorting = null;
-                return;
+                //fm_sorting = null;
+                //return;
             }
             fm_sorting.MdiParent = this;
             fm_sorting.WindowState = FormWindowState.Maximized;
@@ -347,7 +347,9 @@ namespace FollowTask
         /// </summary>
         /// <param name="text">第几根</param>
         void ShowUinionFrom(string text)
-        { 
+        {
+            Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
+            Union += fm_union.GetMainInfo;
             Union("合流", listUnionTaskGroup, IsOnLine);
             if (CheckExist(fm_union) == true)
             {

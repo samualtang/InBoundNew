@@ -617,7 +617,7 @@ namespace InBound.Business
                                     }).ToList();
 
                     var exitLoopNext = false;
-                    while (!exitLoopNext)
+                    while (!exitLoopNext && groupnoCurrent != 1)
                     {
                         for (int i = 1; i <groupnoCurrent; i++)
                         {

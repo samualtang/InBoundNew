@@ -80,13 +80,9 @@ namespace FollowTask
         #endregion
 
         public delegate void GetNeedInfo(int machineno,List<UnionTaskInfo> after ,List<UnionTaskInfo> before,List<object> listparm);
-     
         public GetNeedInfo getInfo;
-        Fm_UnionMainBelt fm_UnionDetail = new Fm_UnionMainBelt();
-        
-        //Group machineGroup1, machineGroup2, machineGroup3, machineGroup4, machineGroup5, machineGroup6 , machineGroup7, machineGroup8;//合流一条皮带上的机械手
 
-        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4;//合流四条皮带
+        //Fm_UnionMainBelt fm_UnionDetail = new Fm_UnionMainBelt();
         List<Group> listgroup = new List<Group>();
         #endregion
     
@@ -103,7 +99,7 @@ namespace FollowTask
                 updateListBox(text + "主皮带,服务器连接成功,应用程序启动");
                 writeLog.Write(text + "主皮带,服务器连接成功,应用程序启动");
                 
-                getInfo += fm_UnionDetail.GetNeedInfo;
+            
                 CheckForIllegalCrossThreadCalls = false;
                 asc.controllInitializeSize(this); 
 
@@ -127,8 +123,8 @@ namespace FollowTask
                 updateListBox("异常错误：" + ex.Message);
                 writeLog.Write("异常错误：" + ex.Message);
             }
-        } 
-       
+        }
+        Fm_UnionMainBelt fm_un = null;
         #region listBox显示
        
 
@@ -150,9 +146,12 @@ namespace FollowTask
             }
         }
         #endregion
-
+     
         private void Machine1_Click(object sender, EventArgs e)
         {
+            Fm_UnionMainBelt fm_UiMainbelt = new Fm_UnionMainBelt();
+            fm_un = fm_UiMainbelt;
+            getInfo += fm_UiMainbelt.GetNeedInfo;
             if (IsOnLine)
             {
                 try
@@ -163,20 +162,21 @@ namespace FollowTask
                     mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
                     if (mainbelt == 1)
                     {
-                        new Thread(() => { ReadDBInfo(listuinongroup[0]); }).Start();
+                        ReadDBInfo(listuinongroup[0]);
                     }
                     if (mainbelt == 2)
                     {
-                        new Thread(() => { ReadDBInfo(listuinongroup[1]); }).Start();
+                        ReadDBInfo(listuinongroup[1]);
                     }
                     if (mainbelt == 3)
                     {
-                        new Thread(() => { ReadDBInfo(listuinongroup[2]); }).Start();
+                        ReadDBInfo(listuinongroup[2]);
                     }
                     if (mainbelt == 4)
                     {
-                        new Thread(() => { ReadDBInfo(listuinongroup[3]); }).Start();
+                        ReadDBInfo(listuinongroup[3]);
                     }
+
                     if (SortNum != -1)
                     {
                         groupno = GetGroupNo(machineno);//获取组号
@@ -191,8 +191,8 @@ namespace FollowTask
                             listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
 
                             getInfo(machineno, listafter, listbefore, listPrament);
-                            fm_UnionDetail.Show();
-                            SearchWinForm(fm_UnionDetail);
+                            fm_UiMainbelt.Show();
+                            SearchWinForm(fm_UiMainbelt);
                         }
                         else
                         {
@@ -201,19 +201,20 @@ namespace FollowTask
                             listPrament.Add(-1);//任务号
                             listPrament.Add(-1);//吸烟数量
                             getInfo(machineno, listafter, listbefore, listPrament);
-                            fm_UnionDetail.Show();
-                            SearchWinForm(fm_UnionDetail);
+                            fm_UiMainbelt.Show();
+                            SearchWinForm(fm_UiMainbelt);
                         }
                     }
                     else
                     {
                         MessageBox.Show("服务器连接失败!请检查网络连接!");
-                    } 
+                    }
+
                 }
-                catch (Exception ex )
+                catch (Exception ex)
                 {
-                     updateListBox("与服务器断开连接!");
-                     writeLog.Write("单击机械手皮带信息错误:"+ex.Message);
+                    updateListBox("与服务器断开连接!");
+                    writeLog.Write("单击机械手皮带信息错误:" + ex.Message);
                 }
             }
             else
@@ -309,14 +310,7 @@ namespace FollowTask
 
        
 
-        void GroupAdd()
-        {
-            listgroup.Add(UnionTaskGroup1);
-            listgroup.Add(UnionTaskGroup2);
-            listgroup.Add(UnionTaskGroup3);
-            listgroup.Add(UnionTaskGroup4);
-       
-        }
+        
         #region  暂时无用
         ///// <summary>
        ///// 获取当前主皮带机械手号
@@ -640,9 +634,21 @@ namespace FollowTask
 
         private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.Hide();
-            return;
+           // e.Cancel = true;
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is Form)
+                {
+                    //fname.TopMost = true;
+                    if (fm_un != null)
+                    {
+                        fm_un.Close();
+                    }
+                    return;
+                }
+            } 
+            this.Close();
+            //return;
         }
 
 

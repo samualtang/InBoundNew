@@ -321,14 +321,10 @@
             // 
             this.ndOrderNum.Font = new System.Drawing.Font("宋体", 11F);
             this.ndOrderNum.Location = new System.Drawing.Point(783, 361);
-            this.ndOrderNum.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
             this.ndOrderNum.Name = "ndOrderNum";
             this.ndOrderNum.Size = new System.Drawing.Size(51, 24);
             this.ndOrderNum.TabIndex = 87;
+            this.ndOrderNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ndOrderNum.Value = new decimal(new int[] {
             1,
             0,
@@ -373,6 +369,7 @@
             this.Controls.Add(this.groupBoxBefore);
             this.Controls.Add(this.groupBoxAfter);
             this.Controls.Add(this.lblGoto);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Fm_UnionMainBelt";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ww";
