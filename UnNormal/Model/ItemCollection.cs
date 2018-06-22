@@ -6,24 +6,92 @@ using System.Text;
 namespace SortingControlSys.Model
 {
    public static class ItemCollection
-    {
+   {
+       #region 之前的协议
+       ///// <summary>-------------之前协议
        /// <summary>
        /// 获取任务item
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetTaskItem()//第一组任务
+       //public static List<string> GetTaskItem()//第一组任务
+       //{
+       //    List<string> list = new List<string>();
+       //    for (int i = 0; i <= 904; i++)
+       //    {
+       //        list.Add("S7:[UnnormalConnection]DB30,DINT"+i);
+       //        i += 3;
+       //    }
+   
+       //    return list;
+       //}
+
+       //public static List<string> GetTaskItem1()//第二组任务
+       //{
+       //    List<string> list = new List<string>();
+       //    for (int i = 0; i <= 904; i++)
+       //    {
+       //        list.Add("S7:[UnnormalConnection]DB31,DINT" + i);
+       //        i += 3;
+       //    }
+          
+       //    return list;
+       //}
+       
+
+       ///// <summary>
+       ///// 六组烟柜任务
+       ///// </summary>
+       ///// <returns></returns>
+       //public static List<string> GetSixCabinetTaskItem()//六个烟柜任务
+       //{
+       //    List<string> list = new List<string>();
+       //    for (int i = 0; i <= 904; i++)
+       //    {
+       //        list.Add("S7:[UnnormalConnection]DB32,DINT" + i);
+       //        i += 3;
+       //    }
+
+       //    return list;
+       //}
+       ///// <summary> 
+       ///// 监控三个发送标志位
+       ///// </summary>
+       ///// <returns></returns>
+       //public static List<string> GetSendStatesItem() 
+       //{
+       //    List<string> list = new List<string>();
+       //    list.Add("S7:[UnnormalConnection]DB30,DINT900");//第一组
+       //    list.Add("S7:[UnnormalConnection]DB31,DINT900");//第二组
+       //    list.Add("S7:[UnnormalConnection]DB32,DINT900");//烟柜
+
+       //    return list;
+       //}
+        ///// <summary>-------------之前协议
+       //--------------------------------新的协议
+
+        
+#endregion
+
+       /// <summary>
+       /// 1线分拣订单信息
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetTaskItem()//1线分拣订单信息
        {
            List<string> list = new List<string>();
            for (int i = 0; i <= 904; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB30,DINT"+i);
+               list.Add("S7:[UnnormalConnection]DB30,DINT" + i);
                i += 3;
            }
-   
+
            return list;
        }
-
-       public static List<string> GetTaskItem1()//第二组任务
+       /// <summary>
+       /// //2线分拣订单信息
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetTaskItem1()//2线分拣订单信息
        {
            List<string> list = new List<string>();
            for (int i = 0; i <= 904; i++)
@@ -31,16 +99,15 @@ namespace SortingControlSys.Model
                list.Add("S7:[UnnormalConnection]DB31,DINT" + i);
                i += 3;
            }
-          
+
            return list;
        }
-       
 
        /// <summary>
-       /// 六组烟柜任务
+       /// 烟柜2线（A）订单信息
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetSixCabinetTaskItem()//六个烟柜任务
+       public static List<string> GetSixCabinetTaskItem2A()//烟柜2线（A）订单信息
        {
            List<string> list = new List<string>();
            for (int i = 0; i <= 904; i++)
@@ -51,17 +118,33 @@ namespace SortingControlSys.Model
 
            return list;
        }
+
+       /// <summary>
+       /// 烟柜1线（B）订单信息
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSixCabinetTaskItem1B()//烟柜1线（B）订单信息
+       {
+           List<string> list = new List<string>();
+           for (int i = 0; i <= 904; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB34,DINT" + i);
+               i += 3;
+           }
+
+           return list;
+       }
        /// <summary>
        /// 监控三个发送标志位
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetSendStatesItem() 
+       public static List<string> GetSendStatesItem()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB30,DINT900");//第一组
-           list.Add("S7:[UnnormalConnection]DB31,DINT900");//第二组
-           list.Add("S7:[UnnormalConnection]DB32,DINT900");//烟柜
-
+           list.Add("S7:[UnnormalConnection]DB100,DINT0");//第一组
+           list.Add("S7:[UnnormalConnection]DB100,DINT4");//第二组
+           list.Add("S7:[UnnormalConnection]DB100,DINT8");// 烟柜2线（A）订单信息
+           list.Add("S7:[UnnormalConnection]DB100,DINT??");// 烟柜1线（B）订单信息
            return list;
        }
        /// <summary>
@@ -70,11 +153,11 @@ namespace SortingControlSys.Model
        /// <returns></returns>
        public static List<string> GetFinishSignalTaskItem() 
        {
-           List<string> list = new List<string>(); 
-           list.Add("S7:[UnnormalConnection]DB33,DINT0");//烟柜
-           list.Add("S7:[UnnormalConnection]DB33,DINT4");//烟仓
-           list.Add("S7:[UnnormalConnection]DB33,DINT8");//混合道
-
+           List<string> list = new List<string>();
+           list.Add("S7:[UnnormalConnection]DB33,DINT0");//1线分拣订单完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT4");//2线分拣订单完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT8");//烟柜2线（A）完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT??");// 烟柜1线（B）完成信息
            return list;
        }
        public static List<string> GetTaskError()
@@ -115,5 +198,5 @@ namespace SortingControlSys.Model
 
            return list;
        }
-    }
+   }
 }

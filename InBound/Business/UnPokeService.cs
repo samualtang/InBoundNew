@@ -68,7 +68,7 @@ namespace InBound.Business
         //    //}
         //}
         /// <summary>
-        /// 烟道
+        /// 异形烟数据
         /// </summary>
         /// <param name="takeSize"></param>
         /// <param name="lineNum"></param>
@@ -93,10 +93,11 @@ namespace InBound.Business
                     outlist = new List<T_UN_POKE>();
                     return values;
                 }
+             
                 var query1 = (from item in data.T_UN_POKE
                               where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1 && item.LINENUM == lineNum
                               orderby item.MACHINESEQ, item.TROUGHNUM
-                              select item).ToList();
+                              select item).Take(takeSize).ToList();
                 if (query1 != null)
                     //list = query1.Take(takeSize).ToList();
                     list = query1;
@@ -107,6 +108,7 @@ namespace InBound.Business
                 if (list != null)
                 {
                     int j = 0;
+                    var beforeSortNum = data.T_UN_POKE.Where(a => a.CTYPE == 1 && a.LINENUM == lineNum && a.STATUS != 10).OrderByDescending(x => x.SORTNUM).FirstOrDefault();//前一客户顺序号
                     decimal machineseq = 0;
                     //String customercode = "";
                     foreach (var item in list)
@@ -131,8 +133,8 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         //values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
+                        values[j * 9 + 4] = beforeSortNum.SORTNUM;//前一客户顺序号
+                        values[j * 9 + 5] = item.SENDTASKNUM;//整包任务号
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码 
@@ -147,7 +149,7 @@ namespace InBound.Business
             }
         }
         /// <summary>
-        /// 六组烟柜
+        /// 异形烟烟柜数据
         /// </summary>
         /// <param name="takeSize"></param>
         /// <param name="lineNum"></param>
@@ -165,18 +167,19 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 var query =( from item in data.T_UN_POKE 
-                            where item.STATUS == 10  && item.CTYPE ==2  
+                            where item.LINENUM == lineNum && item.STATUS == 10  && item.CTYPE ==2  
                             orderby  item.SENDTASKNUM select item).FirstOrDefault(); //取出第一行的sendtasknum
                 if (query == null)
                 {
                     outlist = new List<T_UN_POKE>();
                     return values;
+                    
                 }
-               // packageNum = getPackageNum(2, lineNum);//取包号 前期需要 
+               // packageNum = getPackageNum(2, lineNum);//取包号 前期需要 w
                 var query1 = (from  item in data.T_UN_POKE
-                             where item.SENDTASKNUM == query.SENDTASKNUM  && item.STATUS  ==  10  && item.CTYPE == 2
+                              where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 2 && item.LINENUM == lineNum 
                                orderby item.MACHINESEQ,item.TROUGHNUM
-                                  select item).ToList();
+                                  select item).Take(takeSize).ToList();
                               
                 if (query1 != null)
                     list = query1;
@@ -185,6 +188,7 @@ namespace InBound.Business
                 if (list != null)
                 {
                     int j = 0;
+                    var beforeSortNum = data.T_UN_POKE.Where(a => a.CTYPE == 2 && a.LINENUM == lineNum && a.STATUS != 10).OrderByDescending(x => x.SORTNUM).FirstOrDefault();//前一客户顺序号
                     decimal machineseq = 0;//物理通道号
                     //String customercode = "";
                     
@@ -200,8 +204,8 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号 item.SENDTASKNUM 取最新一个客户
-                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
+                        values[j * 9 + 4] = beforeSortNum.SORTNUM;//前一客户顺序号
+                        values[j * 9 + 5] = item.SENDTASKNUM;//包装号 item.SENDTASKNUM 取最新一个客户
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码

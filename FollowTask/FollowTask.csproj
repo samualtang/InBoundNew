@@ -123,7 +123,6 @@
       <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
     </Compile>
     <Compile Include="Method\BitmapRegion.cs" />
-    <Compile Include="Modle\CigaretteEnum.cs" />
     <Compile Include="Modle\Group.cs" />
     <Compile Include="Modle\ItemCollection.cs" />
     <Compile Include="Program.cs" />

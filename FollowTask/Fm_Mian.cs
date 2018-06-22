@@ -48,7 +48,7 @@ namespace FollowTask
         public delegate void HandleUnion(string text, List<Group> listgroup, bool inonline);//合流委托
         HandleUnion Union;
 
-        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4;
+        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachine1, UnionMachine2, UnionMachine3, UnionMachine4;
 
         void Connction()
         {
@@ -78,23 +78,62 @@ namespace FollowTask
         /// </summary>
         void AddUnionTaskGroup()
         {
-            UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
-            UnionTaskGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);
-            UnionTaskGroup3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);
-            UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
+            UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);//一号主皮带
+            UnionTaskGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//二号主皮带
+            UnionTaskGroup3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//三号主皮带
+            UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//四号主皮带
+            UnionMachine1 = new Group(pIOPCServer, 5, "group4", 1, LOCALE_ID);//一号主皮带八个机械手
+            UnionMachine2 = new Group(pIOPCServer, 6, "group4", 1, LOCALE_ID);//二号主皮带八个机械手
+            UnionMachine3 = new Group(pIOPCServer, 7, "group4", 1, LOCALE_ID);//三号主皮带八个机械手
+            UnionMachine4 = new Group(pIOPCServer, 8, "group4", 1, LOCALE_ID);//四号主皮带八个机械手
 
             UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
             UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
             UnionTaskGroup3.addItem(ItemCollection.GetTaskGroupItem3());
             UnionTaskGroup4.addItem(ItemCollection.GetTaskGroupItem4());
+            UnionMachine1.addItem(ItemCollection.GetUnionMachineItem1());
+            UnionMachine2.addItem(ItemCollection.GetUnionMachineItem2());
+            UnionMachine3.addItem(ItemCollection.GetUnionMachineItem3());
+            UnionMachine4.addItem(ItemCollection.GetUnionMachineItem4());
 
-            listUnionTaskGroup.Add(UnionTaskGroup1);
-            listUnionTaskGroup.Add(UnionTaskGroup2);
-            listUnionTaskGroup.Add(UnionTaskGroup3);
-            listUnionTaskGroup.Add(UnionTaskGroup4);
+            UnionMachine1.callback += OnDataChange;
+            UnionMachine2.callback += OnDataChange;
+            UnionMachine3.callback += OnDataChange;
+            UnionMachine4.callback += OnDataChange;
+
+
+            listUnionTaskGroup.Add(UnionTaskGroup1);//0
+            listUnionTaskGroup.Add(UnionTaskGroup2);//1
+            listUnionTaskGroup.Add(UnionTaskGroup3);//2
+            listUnionTaskGroup.Add(UnionTaskGroup4);//3
+            listUnionTaskGroup.Add(UnionMachine1);//4
+            listUnionTaskGroup.Add(UnionMachine2);//5
+            listUnionTaskGroup.Add(UnionMachine3);//6
+            listUnionTaskGroup.Add(UnionMachine4);//7
+         
         }
 
         #endregion
+
+        public void OnDataChange(int group, int[] clientId, object[] values)
+        {
+            if (group == 1)//一号主皮带八个机械手
+            {
+                 
+            }
+            if (group == 2)//二号主皮带八个机械手
+            {
+
+            }
+            if (group == 3)//三号主皮带八个机械手
+            {
+
+            }
+            if (group == 4)//四号主皮带八个机械手
+            {
+
+            }
+        }
         /// <summary>
         /// 连接标识符
         /// </summary>

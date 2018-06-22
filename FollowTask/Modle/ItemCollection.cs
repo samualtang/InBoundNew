@@ -115,6 +115,44 @@ namespace FollowTask.Modle
             }
             return list;
         }
+        /// <summary>
+        /// 合流一号主皮带八个机械手
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetUnionMachineItem1()
+        {
+            List<string> list = new List<string>();
+            return list;
+        }
+        /// <summary>
+        /// 合流二号主皮带八个机械手
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetUnionMachineItem2()
+        {
+            List<string> list = new List<string>();
+            return list;
+        }
+        /// <summary>
+        /// 合流三号主皮带八个机械手
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetUnionMachineItem3()
+        {
+            List<string> list = new List<string>();
+            return list;
+        }
+        /// <summary>
+        /// 合流四号主皮带八个机械手
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetUnionMachineItem4()
+        {
+            List<string> list = new List<string>();
+            return list;
+        }
+
+
 
         public static List<string> MachineItemNo1()
         {
