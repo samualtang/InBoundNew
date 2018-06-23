@@ -82,32 +82,35 @@ namespace highSpeed.orderHandle
                  label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
                  label2.Refresh();
              }
-             panel2.Visible = false;
-             label2.Visible = false;
-             progressBar1.Visible = false;
-             lblTime.Visible = false;//时间
-
-             dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
-             this.dgvSortInfo.DataSource = ds.Tables[0];
-             dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
-             this.dgvSortInfo.AutoGenerateColumns = false;
-             
-
-             string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
-             if (columnwidths != "")
+             if (ds.Tables.Count > 0)
              {
-                 string[] columns = columnwidths.Split(',');
-                 int j = 0;
-                 for (int i = 0; i < columns.Length; i++)
+                 panel2.Visible = false;
+                 label2.Visible = false;
+                 progressBar1.Visible = false;
+                 lblTime.Visible = false;//时间
+
+                 dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
+                 this.dgvSortInfo.DataSource = ds.Tables[0];
+                 dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
+                 this.dgvSortInfo.AutoGenerateColumns = false;
+
+
+                 string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
+                 if (columnwidths != "")
                  {
-                     if (dgvSortInfo.Columns[i].Visible == true)
+                     string[] columns = columnwidths.Split(',');
+                     int j = 0;
+                     for (int i = 0; i < columns.Length; i++)
                      {
-                         dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
-                         j = j + 1;
+                         if (dgvSortInfo.Columns[i].Visible == true)
+                         {
+                             dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
+                             j = j + 1;
+                         }
                      }
                  }
+                 dgvSortInfo.ClearSelection(); 
              }
-             dgvSortInfo.ClearSelection();
              Db.Close();
 
          }
@@ -163,8 +166,9 @@ namespace highSpeed.orderHandle
                     TimerByTime.Stop();// 计时结束;
                     MessageBox.Show("分拣车组任务排序成功！" +"\r\n"+"所用时间:"+ times);
                     writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times); 
-                    updateControl(btnSort, true, true); 
-                    DgvBind(sql);//排程成功后刷新
+                    updateControl(btnSort, true, true);
+                    btnRef_Click(null, null);//排程成功后刷新
+                   // DgvBind(sql);//排程成功后刷新
                 }
                 else
                 { 

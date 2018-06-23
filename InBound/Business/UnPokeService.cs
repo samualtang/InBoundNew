@@ -93,7 +93,7 @@ namespace InBound.Business
                     outlist = new List<T_UN_POKE>();
                     return values;
                 }
-             
+
                 var query1 = (from item in data.T_UN_POKE
                               where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1 && item.LINENUM == lineNum
                               orderby item.MACHINESEQ, item.TROUGHNUM
@@ -108,7 +108,6 @@ namespace InBound.Business
                 if (list != null)
                 {
                     int j = 0;
-                    var beforeSortNum = data.T_UN_POKE.Where(a => a.CTYPE == 1 && a.LINENUM == lineNum && a.STATUS != 10).OrderByDescending(x => x.SORTNUM).FirstOrDefault();//前一客户顺序号
                     decimal machineseq = 0;
                     //String customercode = "";
                     foreach (var item in list)
@@ -133,7 +132,7 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         //values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = beforeSortNum.SORTNUM;//前一客户顺序号
+                        values[j * 9 + 4] = item.STORENUM; //前一客户顺序号
                         values[j * 9 + 5] = item.SENDTASKNUM;//整包任务号
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
@@ -188,7 +187,6 @@ namespace InBound.Business
                 if (list != null)
                 {
                     int j = 0;
-                    var beforeSortNum = data.T_UN_POKE.Where(a => a.CTYPE == 2 && a.LINENUM == lineNum && a.STATUS != 10).OrderByDescending(x => x.SORTNUM).FirstOrDefault();//前一客户顺序号
                     decimal machineseq = 0;//物理通道号
                     //String customercode = "";
                     
@@ -204,7 +202,7 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
-                        values[j * 9 + 4] = beforeSortNum.SORTNUM;//前一客户顺序号
+                        values[j * 9 + 4] = item.STORENUM;//前一客户顺序号
                         values[j * 9 + 5] = item.SENDTASKNUM;//包装号 item.SENDTASKNUM 取最新一个客户
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
@@ -246,129 +244,9 @@ namespace InBound.Business
             return lineNum;
          }
 
-        /// <summary>
-        /// 混合烟道
-        /// </summary>
-        /// <param name="takeSize"></param>
-        /// <param name="lineNum"></param>
-        /// <param name="outlist"></param>
-        /// <param name="packageNum"></param>
-        /// <returns></returns>
-        public static object[] getShapeSmokeTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
-        {
-            object[] values = new object[227];//一个任务
-            for (int i = 0; i < values.Length; i++)
-            {
-                values[i] = 0;
-            }
-            using (Entities data = new Entities())
-            {
-                List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = (from item in data.T_UN_POKE
-                            where item.STATUS == 10 && item.CTYPE == 1
-                            orderby item.SENDTASKNUM
-                            select item).FirstOrDefault();
-
-                var query1 = (from item in data.T_UN_POKE
-                              where item.SENDTASKNUM == query.SENDTASKNUM && item.STATUS == 10 && item.CTYPE == 1
-                              orderby item.MACHINESEQ, item.TROUGHNUM
-                              select item).ToList();
-                //packageNum = getPackageNum(2, null);
-                if (query1 != null)
-                    list = query1.ToList();
-                outlist = list;
-                decimal checkcode = 0;//校验码,为流水号之和
-                if (list != null)
-                {
-                    int j = 0;
-                    decimal machineseq = 0;//物理通道号
-                    //String customercode = "";
-
-                    foreach (var item in list)
-                    {
-                        values[j * 9] = item.POKEID;//流水号
-                        machineseq = (item.MACHINESEQ ?? 0);
-                        //customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
-                        //if (customercode.Length > 9)
-                        //{
-                        //    customercode = customercode.Substring(customercode.Length - 9, 9);
-                        //} 
-                        values[j * 9 + 1] = machineseq;//烟道地址
-                        values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = item.SORTNUM;//客户号
-                        values[j * 9 + 4] = item.SENDTASKNUM;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
-                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
-                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
-                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
-                        j++;
-                        checkcode += item.POKEID;
-                    }
-
-                    values[225] = 1;//完成信号
-                    values[226] = checkcode;//校验码,为流水号之和
-                }
-                return values;
-            }
-        }
+       
   
-        /// <summary>
-        /// 获取完成信号
-        /// </summary>
-        /// <param name="takeSize"></param>
-        /// <param name="lineNum"></param>
-        /// <param name="outlist"></param>
-        /// <returns></returns>
-        public static object[] GetFinishSignalTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
-        {  
-            object[] values = new object[227];//一个任务
-            for (int i = 0; i < values.Length; i++)
-            {
-                values[i] = 0;
-            }
-            using (Entities data = new Entities())
-            {
-                List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var query = from item in data.T_UN_POKE
-                            where item.STATUS == 10 && item.CTYPE == 2
-                            orderby item.SORTNUM, item.SECSORTNUM, item.MACHINESEQ, item.TROUGHNUM
-                            select item; 
-                if (query != null)
-                    list = query.Take(takeSize).ToList();
-                outlist = list;
-                decimal checkcode = 0;//校验码,为流水号之和
-                if (list != null)
-                {
-                    int j = 0;
-                    decimal machineseq = 0;//物理通道号
-                    String customercode = "";
-                    foreach (var item in list)
-                    {
-                        values[j * 9] = item.POKEID;//流水号
-                        machineseq = (item.MACHINESEQ ?? 0);
-                        customercode = item.CUSTOMERCODE;//12位的客户专卖证号电控只能最大接收9位
-                        if (customercode.Length > 9)
-                        {
-                            customercode = customercode.Substring(customercode.Length - 9, 9);
-                        } 
-                        values[j * 9 + 1] = machineseq;//烟道地址
-                        values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = customercode;//客户号
-                        values[j * 9 + 4] = 0;//包装号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//发送任务号 25条为一个任务 
-                        values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
-                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
-                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
-                        j++;
-                        checkcode += item.POKEID;
-                    }
-                    values[225] = 1;//完成信号
-                    values[226] = checkcode;//校验码,为流水号之和
-                }
-                return values;
-            }
-        }
-
+       
         public static object[] getCode()
         {
             object[] values = new object[200];

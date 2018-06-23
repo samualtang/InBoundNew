@@ -127,7 +127,7 @@ namespace SortingControlSys.SortingControl
             
             Connect();
         }
-        Group taskgroup1, taskGroup2, SendTaskStatesGroup, statusGroup2, statusGroup3, errgroup, SixCabinetGroup2A, SixCabinetGroup1B, FinishSignalGroup;
+        Group taskgroup1, taskGroup2, SendTaskStatesGroup, statusGroup2, statusGroup3, errgroup, SixCabinetGroup2A, SixCabinetGroup1B, FinishSignalGroup,FirstSendGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -143,7 +143,8 @@ namespace SortingControlSys.SortingControl
                 SixCabinetGroup1B = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);
                //监控发送标志
                 SendTaskStatesGroup =  new Group(pIOPCServer , 8 ,"group8",1,LOCALE_ID);
-
+                //重新分拣标志位
+                FirstSendGroup = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);
 
                 statusGroup2 = new Group(pIOPCServer, 3, "group2", 1, LOCALE_ID);
                 statusGroup3 = new Group(pIOPCServer, 4, "group3", 1, LOCALE_ID);
@@ -152,7 +153,8 @@ namespace SortingControlSys.SortingControl
                 //异形烟6个烟柜
                 taskgroup1.addItem(ItemCollection.GetTaskItem()); //1线分拣订单信息
                 taskGroup2.addItem(ItemCollection.GetTaskItem1());//2线分拣订单信息 
-
+                //重新分拣标志
+                FirstSendGroup.addItem(ItemCollection.GetFristSendItem());
                 SixCabinetGroup2A.addItem(ItemCollection.GetSixCabinetTaskItem2A());//烟柜2线（A）订单信息
                 SixCabinetGroup1B.addItem(ItemCollection.GetSixCabinetTaskItem1B());//烟柜1线（B）订单信息
                 //监控发送标志
@@ -199,18 +201,28 @@ namespace SortingControlSys.SortingControl
                 //{
                 //    SixCabinetGroup.Write(2, 225);
                 //}
-                if (SendTaskStatesGroup.ReadD(0).ToString() == "0")
-                {
-                    SendTaskStatesGroup.Write(2, 0);
-                }
-                if (SendTaskStatesGroup.ReadD(1).ToString() == "0")
-                {
-                    SendTaskStatesGroup.Write(2, 1);
-                }
-                if (SendTaskStatesGroup.ReadD(2).ToString() == "0")
-                {
-                    SendTaskStatesGroup.Write(2, 2);
-                }
+                //if (SendTaskStatesGroup.ReadD(0).ToString() == "0")
+                //{
+                //    SendTaskStatesGroup.Write(2, 0);
+                //}
+                //if (SendTaskStatesGroup.ReadD(1).ToString() == "0")
+                //{
+                //    SendTaskStatesGroup.Write(2, 1);
+                //}
+                //if (SendTaskStatesGroup.ReadD(2).ToString() == "0")
+                //{
+                //    SendTaskStatesGroup.Write(2, 2);
+                //}
+                //if (SendTaskStatesGroup.ReadD(3).ToString() == "0")
+                //{
+                //    SendTaskStatesGroup.Write(2, 3);
+                //}
+                //重新分拣标志写1 
+                FirstSendGroup.Write(1, 0);
+                FirstSendGroup.Write(1, 0);
+                FirstSendGroup.Write(1, 0);
+                updateListBox("重新分拣标志写1成功");
+                writeLog.Write("重新分拣标志写1成功");
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......");
                 updateControlEnable(false, button10);
@@ -389,7 +401,7 @@ namespace SortingControlSys.SortingControl
                 {
                    
                  //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix2A);
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "2", out listSix2A);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");
@@ -435,13 +447,13 @@ namespace SortingControlSys.SortingControl
         {
             try
             {
-                int flag = SendTaskStatesGroup.ReadD(2).CastTo<int>(-1);
+                int flag = SendTaskStatesGroup.ReadD(3).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
 
                     //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "2", out listSix1B);
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix1B);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜分拣数据发送完毕");
@@ -455,12 +467,12 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("烟柜分拣发送数据:" + logstr);
                     updateListBox("烟柜分拣发送数据:" + logstr);
                     //写电控
-                    SixCabinetGroup2A.SyncWrite(datas);
+                    SixCabinetGroup1B.SyncWrite(datas);
                     //读电控
                     String p1 = "";
                     for (int i = 0; i <= 225; i = i + 9)
                     {
-                        p1 += SixCabinetGroup2A.ReadD(i).ToString() + ";";//pokeid  
+                        p1 += SixCabinetGroup1B.ReadD(i).ToString() + ";";//pokeid  
                     }
                     writeLog.Write("读出烟柜电控写入值:" + p1);
 
@@ -698,7 +710,7 @@ namespace SortingControlSys.SortingControl
                                 writeLog.Write("烟柜2线（A）烟柜任务号:" + logstr + "已接收");
                                 updateListBox("烟柜2线（A）烟柜任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(listSix2A, 15);
-                                // UnPokeService.UpdateStroageInout(listSix);
+                                 UnPokeService.UpdateStroageInout(listSix2A);
                             }
                             sendSixCabine2AtTask();
                         }
@@ -722,7 +734,7 @@ namespace SortingControlSys.SortingControl
                                 writeLog.Write("烟柜1线（B）烟柜任务号:" + logstr + "已接收");
                                 updateListBox("烟柜1线（B）烟柜任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(listSix1B, 15);
-                                // UnPokeService.UpdateStroageInout(listSix);
+                                UnPokeService.UpdateStroageInout(listSix1B);
                             }
                             sendSixCabine1BtTask();
                         }
