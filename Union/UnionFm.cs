@@ -278,7 +278,7 @@ namespace SortingControlSys.SortingControl
             else  
             {
                
-                updateListBox("启动定时器");
+               // updateListBox("启动定时器");
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
                
@@ -988,27 +988,28 @@ namespace SortingControlSys.SortingControl
        private void timerSendData_Tick(object sender, EventArgs e)
        {
            updateListBox("触发定时器事件");
-
-           if (SendTaskStatesGroup.Read(0).ToString() == "1" && !issendone)
+          
+           if (SendTaskStatesGroup.Read(0).ToString() != "1" && !issendone)
            {
                SendTaskStatesGroup.Write(0, 0);
                SendTaskStatesGroup.Write(2, 0);
            }
-           if (SendTaskStatesGroup.Read(1).ToString() == "1" && !issendtwo)
+           if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendtwo)
            {
                SendTaskStatesGroup.Write(0, 1);
                SendTaskStatesGroup.Write(2, 1);
            }
-           if (SendTaskStatesGroup.Read(2).ToString() == "1" && !issendthree)
+           if (SendTaskStatesGroup.Read(2).ToString() != "1" && !issendthree)
            {
                SendTaskStatesGroup.Write(0, 2);
                SendTaskStatesGroup.Write(2, 2);
            }
-           if (SendTaskStatesGroup.Read(3).ToString() == "1" && !issendfour)
+           if (SendTaskStatesGroup.Read(3).ToString() != "1" && !issendfour)
            {
                SendTaskStatesGroup.Write(0, 3);
                SendTaskStatesGroup.Write(2, 3);
            }
+           timerSendData.Stop();
        }
  
       

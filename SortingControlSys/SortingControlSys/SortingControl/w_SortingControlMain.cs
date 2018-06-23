@@ -139,20 +139,8 @@ namespace SortingControlSys.SortingControl
 
             }
         }
-        public void updateControlEnable(Boolean enable, Control control)
-        {
-            if (control.InvokeRequired)
-            {
-                //   this.txtreceive.BeginInvoke(new ShowDelegate(Show), strshow);//这个也可以
-
-                control.Invoke(new HandleDelegate2(updateControlEnable), new Object[] { enable, control });
-            }
-            else
-            {
-                control.Enabled = enable;
-
-            }
-        }
+      
+      
         delegate void AysncFinish(object sender, EventArgs e);
         public void startFenJian()
         {
@@ -1665,6 +1653,7 @@ namespace SortingControlSys.SortingControl
                 SendTaskStatesGroup.Write(0, 1);
                 SendTaskStatesGroup.Write(2, 1);
             }
+            timerSendData.Stop();
         }
 
 
