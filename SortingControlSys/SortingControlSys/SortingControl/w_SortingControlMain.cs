@@ -331,6 +331,7 @@ namespace SortingControlSys.SortingControl
                 isInit = true;
                 this.timerSendData.Interval = 1000 * 10;
                 this.timerSendData.Start();//10秒刷新
+                updateListBox("启动定时器");
             }
           
         }
@@ -1608,6 +1609,7 @@ namespace SortingControlSys.SortingControl
         bool issendA = false, issendB = false;
         private void timerSendData_Tick(object sender, EventArgs e)
         {
+            updateListBox("触发定时器事件");
             if (SendTaskStatesGroup.Read(0).ToString() != "1" && !issendA)//监控标志位第一组 产生跳变
             {
                 decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
