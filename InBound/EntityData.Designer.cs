@@ -548,22 +548,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_UN_POKE> T_UN_POKE
-        {
-            get
-            {
-                if ((_T_UN_POKE == null))
-                {
-                    _T_UN_POKE = base.CreateObjectSet<T_UN_POKE>("T_UN_POKE");
-                }
-                return _T_UN_POKE;
-            }
-        }
-        private ObjectSet<T_UN_POKE> _T_UN_POKE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_DEVICESTATUS> T_WMS_DEVICESTATUS
         {
             get
@@ -640,6 +624,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRODUCE_CACHE> _T_PRODUCE_CACHE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_UN_POKE> T_UN_POKE
+        {
+            get
+            {
+                if ((_T_UN_POKE == null))
+                {
+                    _T_UN_POKE = base.CreateObjectSet<T_UN_POKE>("T_UN_POKE");
+                }
+                return _T_UN_POKE;
+            }
+        }
+        private ObjectSet<T_UN_POKE> _T_UN_POKE;
 
         #endregion
 
@@ -886,14 +886,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_UN_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
-        {
-            base.AddObject("T_UN_POKE", t_UN_POKE);
-        }
-    
-        /// <summary>
         /// 用于向 T_WMS_DEVICESTATUS EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_WMS_DEVICESTATUS(T_WMS_DEVICESTATUS t_WMS_DEVICESTATUS)
@@ -931,6 +923,14 @@ namespace InBound
         public void AddToT_PRODUCE_CACHE(T_PRODUCE_CACHE t_PRODUCE_CACHE)
         {
             base.AddObject("T_PRODUCE_CACHE", t_PRODUCE_CACHE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_UN_POKE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
+        {
+            base.AddObject("T_UN_POKE", t_UN_POKE);
         }
 
         #endregion
@@ -3247,6 +3247,30 @@ namespace InBound
         private Nullable<global::System.Decimal> _SECSORTNUM;
         partial void OnSECSORTNUMChanging(Nullable<global::System.Decimal> value);
         partial void OnSECSORTNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String INVFLAG
+        {
+            get
+            {
+                return _INVFLAG;
+            }
+            set
+            {
+                OnINVFLAGChanging(value);
+                ReportPropertyChanging("INVFLAG");
+                _INVFLAG = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("INVFLAG");
+                OnINVFLAGChanged();
+            }
+        }
+        private global::System.String _INVFLAG;
+        partial void OnINVFLAGChanging(global::System.String value);
+        partial void OnINVFLAGChanged();
 
         #endregion
 
@@ -7454,6 +7478,54 @@ namespace InBound
         private Nullable<global::System.Decimal> _SENDTASKNUM;
         partial void OnSENDTASKNUMChanging(Nullable<global::System.Decimal> value);
         partial void OnSENDTASKNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> STORENUM
+        {
+            get
+            {
+                return _STORENUM;
+            }
+            set
+            {
+                OnSTORENUMChanging(value);
+                ReportPropertyChanging("STORENUM");
+                _STORENUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("STORENUM");
+                OnSTORENUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _STORENUM;
+        partial void OnSTORENUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSTORENUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> GRIDNUM
+        {
+            get
+            {
+                return _GRIDNUM;
+            }
+            set
+            {
+                OnGRIDNUMChanging(value);
+                ReportPropertyChanging("GRIDNUM");
+                _GRIDNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GRIDNUM");
+                OnGRIDNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _GRIDNUM;
+        partial void OnGRIDNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnGRIDNUMChanged();
 
         #endregion
 

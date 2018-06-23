@@ -160,6 +160,7 @@
           <Property Name="UNIONEXPORTNUM" Type="varchar2" MaxLength="10" />
           <Property Name="UNIONTASKNUM" Type="number" />
           <Property Name="SECSORTNUM" Type="number" />
+          <Property Name="INVFLAG" Type="varchar2" MaxLength="10" />
         </EntityType>
         <EntityType Name="T_PRODUCE_PRESORTINFO">
           <Key>
@@ -184,7 +185,7 @@
           <Property Name="ACTCOUNT" Type="number" />
           <Property Name="MACHINESEQ" Type="number" />
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
-          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="30" />
           <Property Name="STATE" Type="varchar2" MaxLength="10" />
           <Property Name="MANTISSA" Type="number" />
           <Property Name="CIGARETTETYPE" Type="number" />
@@ -365,6 +366,8 @@
           <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
           <Property Name="CTYPE" Type="number" />
           <Property Name="SENDTASKNUM" Type="number" />
+          <Property Name="STORENUM" Type="number" />
+          <Property Name="GRIDNUM" Type="number" />
         </EntityType>
         <EntityType Name="T_UN_TASK">
           <Key>
@@ -864,12 +867,12 @@
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.T_PRODUCE_TASK" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.T_PRODUCE_SORTTROUGH" />
           <EntitySet Name="T_WMS_DEVICEERRLIST" EntityType="Model.T_WMS_DEVICEERRLIST" />
-          <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.T_WMS_DEVICESTATUS" />
           <EntitySet Name="T_WMS_STORAGEAREA_INOUT" EntityType="Model.T_WMS_STORAGEAREA_INOUT" />
           <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.T_PRODUCE_PRESORTINFO" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
           <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.T_PRODUCE_CACHE" />
+          <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1514,27 +1517,6 @@
           <Property Type="Decimal" Name="ERRORTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
         </EntityType>
-        <EntityType Name="T_UN_POKE">
-          <Key>
-            <PropertyRef Name="POKEID" />
-          </Key>
-          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
-          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
-          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="SENDTASKNUM" Precision="38" Scale="0" />
-        </EntityType>
         <EntityType Name="T_WMS_DEVICESTATUS">
           <Key>
             <PropertyRef Name="ID" />
@@ -1606,6 +1588,7 @@
           <Property Type="String" Name="UNIONEXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="UNIONTASKNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="INVFLAG" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_PRODUCE_CACHE">
           <Key>
@@ -1622,6 +1605,29 @@
           <Property Type="Decimal" Name="STATE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_UN_POKE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="CTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SENDTASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STORENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GRIDNUM" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2303,28 +2309,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_UN_POKE">
-            <EntityTypeMapping TypeName="Model.T_UN_POKE">
-              <MappingFragment StoreEntitySet="T_UN_POKE">
-                <ScalarProperty Name="SENDTASKNUM" ColumnName="SENDTASKNUM" />
-                <ScalarProperty Name="CTYPE" ColumnName="CTYPE" />
-                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
-                <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
-                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
-                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
-                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
-                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
-                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
-                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
-                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
-                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_WMS_DEVICESTATUS">
             <EntityTypeMapping TypeName="Model.T_WMS_DEVICESTATUS">
               <MappingFragment StoreEntitySet="T_WMS_DEVICESTATUS">
@@ -2378,6 +2362,7 @@
           <EntitySetMapping Name="T_PRODUCE_POKE">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
               <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
+                <ScalarProperty Name="INVFLAG" ColumnName="INVFLAG" />
                 <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
                 <ScalarProperty Name="UNIONTASKNUM" ColumnName="UNIONTASKNUM" />
                 <ScalarProperty Name="UNIONEXPORTNUM" ColumnName="UNIONEXPORTNUM" />
@@ -2415,6 +2400,30 @@
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="CODE" ColumnName="CODE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_POKE">
+            <EntityTypeMapping TypeName="Model.T_UN_POKE">
+              <MappingFragment StoreEntitySet="T_UN_POKE">
+                <ScalarProperty Name="GRIDNUM" ColumnName="GRIDNUM" />
+                <ScalarProperty Name="STORENUM" ColumnName="STORENUM" />
+                <ScalarProperty Name="SENDTASKNUM" ColumnName="SENDTASKNUM" />
+                <ScalarProperty Name="CTYPE" ColumnName="CTYPE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2469,12 +2478,12 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_TASK" Width="1.5" PointX="0.75" PointY="16.75" Height="7.1275642903645746" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_SORTTROUGH" Width="1.5" PointX="9.375" PointY="13.75" Height="5.2173673502604174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICEERRLIST" Width="1.5" PointX="12.375" PointY="3.75" Height="2.4746101888020746" />
-        <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="17.375" PointY="3.75" Height="4.0712491861979174" />
         <EntityTypeShape EntityType="Model.T_WMS_DEVICESTATUS" Width="1.5" PointX="11.375" PointY="14.75" Height="2.4746101888020746" />
         <EntityTypeShape EntityType="Model.T_WMS_STORAGEAREA_INOUT" Width="1.5" PointX="0.75" PointY="6.75" Height="4.1377571614583246" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_PRESORTINFO" Width="1.5" PointX="5.375" PointY="19.75" Height="2.2898160807291674" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="14.375" PointY="3.75" Height="4.6921394856770746" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_CACHE" Width="1.5" PointX="7.375" PointY="19.75" Height="3.0289925130208246" />
+        <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.32255126953126" />
       </Diagram>
     </Diagrams>
   </Designer>
