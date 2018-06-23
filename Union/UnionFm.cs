@@ -193,6 +193,7 @@ namespace SortingControlSys.SortingControl
             Type svrComponenttyp;
             Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
             svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+           
             try
             {
                 // Connect to the local server.
@@ -268,29 +269,16 @@ namespace SortingControlSys.SortingControl
         public void checkConnection()
         {
             regDataChange();
+           
             int flag = SendTaskStatesGroup.Read(0).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
             } 
             else  
-            { 
-                if (SendTaskStatesGroup.Read(0).ToString() != "1")
-                {
-                    SendTaskStatesGroup.Write(2, 0);
-                }
-                if (SendTaskStatesGroup.Read(1).ToString() != "1")
-                {
-                    SendTaskStatesGroup.Write(2, 1);
-                }
-                if (SendTaskStatesGroup.Read(2).ToString() != "1")
-                {
-                    SendTaskStatesGroup.Write(2, 2);
-                }
-                if (SendTaskStatesGroup.Read(3).ToString() != "1")
-                {
-                    SendTaskStatesGroup.Write(2, 3);
-                }
+            {
+                timerSendData.Interval = 1000 * 10;
+                timerSendData.Start();
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
                
@@ -389,6 +377,20 @@ namespace SortingControlSys.SortingControl
         {
             try
             {
+                if (mainbelt == 1)
+                { issendone = true; }
+                else if (mainbelt == 2)
+                {
+                    issendtwo = true;
+                }
+                else if (mainbelt == 3)
+                {
+                    issendthree = true;
+                }
+                else if (mainbelt == 4)
+                {
+                    issendfour = true;
+                }
                 int flag = SendTaskStatesGroup.Read(mainbelt-1).CastTo<int>(-1);
                 
                 if (flag == -1)
@@ -980,6 +982,31 @@ namespace SortingControlSys.SortingControl
            initdata();
            timerinitdata.Interval = 20000;//十秒刷新 
             
+       }
+       bool issendone = false, issendtwo = false, issendthree = false, issendfour = false;
+       private void timerSendData_Tick(object sender, EventArgs e)
+       {
+
+           if (SendTaskStatesGroup.Read(0).ToString() != "1" && !issendone)
+           {
+               SendTaskStatesGroup.Write(0, 0);
+               SendTaskStatesGroup.Write(2, 0);
+           }
+           if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendtwo)
+           {
+               SendTaskStatesGroup.Write(0, 1);
+               SendTaskStatesGroup.Write(2, 1);
+           }
+           if (SendTaskStatesGroup.Read(2).ToString() != "1" && !issendthree)
+           {
+               SendTaskStatesGroup.Write(0, 2);
+               SendTaskStatesGroup.Write(2, 2);
+           }
+           if (SendTaskStatesGroup.Read(3).ToString() != "1" && !issendfour)
+           {
+               SendTaskStatesGroup.Write(0, 3);
+               SendTaskStatesGroup.Write(2, 3);
+           }
        }
  
       

@@ -67,6 +67,7 @@
             this.listError = new System.Windows.Forms.ListBox();
             this.Timerinitdata = new System.Windows.Forms.Timer(this.components);
             this.groupBoxErr = new System.Windows.Forms.GroupBox();
+            this.timerSendData = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -418,6 +419,10 @@
             this.groupBoxErr.TabStop = false;
             this.groupBoxErr.Text = "故障信息";
             // 
+            // timerSendData
+            // 
+            this.timerSendData.Tick += new System.EventHandler(this.timerSendData_Tick);
+            // 
             // w_SortingControlMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -481,5 +486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
         private System.Windows.Forms.Button btn_Mainbelt;
+        private System.Windows.Forms.Timer timerSendData;
     }
 }
