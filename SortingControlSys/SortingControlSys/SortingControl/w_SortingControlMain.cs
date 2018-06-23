@@ -66,6 +66,7 @@ namespace SortingControlSys.SortingControl
                 this.Close();
             }
             //stateManager.WriteErrWithCheck("1", 3, "111011000");
+           
 
         }
         protected override void OnLoad(EventArgs e)
@@ -120,6 +121,21 @@ namespace SortingControlSys.SortingControl
             else
             {
                 control.Visible = visible;
+
+            }
+        }
+
+        public void updateControlEnable(Boolean enable, Control control)
+        {
+            if (control.InvokeRequired)
+            {
+                //   this.txtreceive.BeginInvoke(new ShowDelegate(Show), strshow);//这个也可以
+
+                control.Invoke(new HandleDelegate2(updateControlEnable), new Object[] { enable, control });
+            }
+            else
+            {
+                control.Enabled = enable;
 
             }
         }
@@ -327,14 +343,15 @@ namespace SortingControlSys.SortingControl
                 
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......");
-                updateControlEnable(false, button10);
+               
                 isInit = true;
-                this.timerSendData.Interval = 1000 * 10;
-                this.timerSendData.Start();//10秒刷新
-                updateListBox("启动定时器");
+               
             }
           
         }
+
+
+        
         Boolean CheckCanSend(int targetPort)
         {
             int value = taskgroup2.Read(targetPort - 1).CastTo<int>(-1);
@@ -1223,6 +1240,9 @@ namespace SortingControlSys.SortingControl
         {
             //TaskService.GetSortTask(1);
            // List<String> list = ItemCollection.getUnionTaskItem();
+            this.timerSendData.Interval = 1000 * 10;
+            this.timerSendData.Start();//10秒刷新
+            updateListBox("启动定时器");
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
@@ -1251,6 +1271,7 @@ namespace SortingControlSys.SortingControl
 
             }
         }
+ 
         public void updateListBox(string info,ListBox list)
         {
             String time = DateTime.Now.ToLongTimeString();

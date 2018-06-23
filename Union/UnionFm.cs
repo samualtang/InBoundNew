@@ -277,8 +277,7 @@ namespace SortingControlSys.SortingControl
             } 
             else  
             {
-                timerSendData.Interval = 1000 * 10;
-                timerSendData.Start();
+               
                 updateListBox("启动定时器");
                 updateListBox("连接服务器成功......");
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
@@ -777,8 +776,9 @@ namespace SortingControlSys.SortingControl
         }
         private void button10_Click(object sender, EventArgs e)
         {
-           // TaskService.GetUnionTask();
-            //LaneWayService.AddEntity();
+            this.timerSendData.Interval = 1000 * 10;
+            this.timerSendData.Start();//10秒刷新
+            updateListBox("启动定时器");
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
