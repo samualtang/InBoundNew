@@ -292,6 +292,7 @@ namespace SortingControlSys.SortingControl
         { 
             try
             {
+                issendtwo = false;
                 int flag = SendTaskStatesGroup.ReadD(1).CastTo<int>(-1);
                 writeLog.Write("二线发送数据前读标志位：" + flag);
                 if (flag == 2)
@@ -335,6 +336,9 @@ namespace SortingControlSys.SortingControl
                 sendTask2();//异常后重新发送
             }
         }
+
+
+        bool issendone = false, issendtwo = false, issendsixone = false, issendsixtwo = false;
         /// <summary>
         /// 第一组
         /// </summary>
@@ -343,6 +347,7 @@ namespace SortingControlSys.SortingControl
             
             try
             {
+                issendone = true;
                 int flag = SendTaskStatesGroup.ReadD(0).CastTo<int>(-1);
                 writeLog.Write("一线发送数据前读标志位：" + flag);
                 if (flag == 2)
@@ -395,6 +400,7 @@ namespace SortingControlSys.SortingControl
         { 
             try
             {
+                issendsixtwo = false;
                 int flag = SendTaskStatesGroup.ReadD(2).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
@@ -447,6 +453,7 @@ namespace SortingControlSys.SortingControl
         {
             try
             {
+                issendsixone = false;
                 int flag = SendTaskStatesGroup.ReadD(3).CastTo<int>(-1);
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 2)
@@ -778,7 +785,9 @@ namespace SortingControlSys.SortingControl
         private void button10_Click(object sender, EventArgs e)//开始
         {
             // UnPokeService.getTask(25);
-          
+            timerSendTask.Interval = 1000 * 10;
+            timerSendTask.Start();
+            updateListBox("启动定时器");
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 
@@ -1024,6 +1033,32 @@ namespace SortingControlSys.SortingControl
        private void task_data_CellClick(object sender, DataGridViewCellEventArgs e)
        {
            MessageBox.Show(e.RowIndex + "");
+       }
+
+       private void timerSendTask_Tick(object sender, EventArgs e)
+       {
+           updateListBox("出发定时器");
+           if (SendTaskStatesGroup.Read(0).ToString() != "1" && !issendone)//监控标志位第一组 产生跳变
+           {
+               SendTaskStatesGroup.Write(0, 0);
+               SendTaskStatesGroup.Write(2, 0);
+           }
+           else if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendtwo)
+           {
+               SendTaskStatesGroup.Write(0, 1);
+               SendTaskStatesGroup.Write(2, 1);
+           }
+           else if (SendTaskStatesGroup.Read(2).ToString() != "1" && !issendsixone)
+           {
+               SendTaskStatesGroup.Write(0, 2);
+               SendTaskStatesGroup.Write(2, 2);
+           }
+           else if (SendTaskStatesGroup.Read(3).ToString() != "1" && !issendsixtwo)
+           {
+               SendTaskStatesGroup.Write(0, 3);
+               SendTaskStatesGroup.Write(2, 3);
+           }
+           timerSendTask.Stop();
        }
  
       

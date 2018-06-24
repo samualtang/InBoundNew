@@ -158,7 +158,7 @@ namespace SortingControlSys.Model
            list.Add("S7:[UnnormalConnection]DB100,DINT0");//第一组
            list.Add("S7:[UnnormalConnection]DB100,DINT4");//第二组
            list.Add("S7:[UnnormalConnection]DB100,DINT8");// 烟柜2线（A）订单信息
-           // list.Add("S7:[UnnormalConnection]DB100,DINT12");// 烟柜1线（B）订单信息
+           list.Add("S7:[UnnormalConnection]DB100,DINT12");// 烟柜1线（B）订单信息
            return list;
        }
        /// <summary>
@@ -169,9 +169,9 @@ namespace SortingControlSys.Model
        {
            List<string> list = new List<string>();
            list.Add("S7:[UnnormalConnection]DB33,DINT0");//1线分拣订单完成信息
-           list.Add("S7:[UnnormalConnection]DB33,DINT2");//2线分拣订单完成信息
-           list.Add("S7:[UnnormalConnection]DB33,DINT4");//烟柜2线（A）完成信息
-           list.Add("S7:[UnnormalConnection]DB33,DINT6");// 烟柜1线（B）完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT4");//2线分拣订单完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT8");//烟柜2线（A）完成信息
+           list.Add("S7:[UnnormalConnection]DB33,DINT12");// 烟柜1线（B）完成信息
            return list;
        }
        public static List<string> GetTaskError()

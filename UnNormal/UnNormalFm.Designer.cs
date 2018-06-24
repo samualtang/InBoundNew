@@ -28,20 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnNormalFm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnNormalFm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,12 +66,7 @@
             this.list_data = new System.Windows.Forms.ListBox();
             this.groupboxErr = new System.Windows.Forms.GroupBox();
             this.listError = new System.Windows.Forms.ListBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.timerSendTask = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -101,6 +103,55 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1038, 43);
             this.panel3.TabIndex = 36;
+            // 
+            // button7
+            // 
+            this.button7.BackgroundImage = global::UnNormal.Properties.Resources.GetDataOnline;
+            this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button7.Location = new System.Drawing.Point(406, 0);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(108, 43);
+            this.button7.TabIndex = 10;
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::UnNormal.Properties.Resources.edit;
+            this.button6.Location = new System.Drawing.Point(299, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(101, 43);
+            this.button6.TabIndex = 9;
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
+            // button12
+            // 
+            this.button12.BackgroundImage = global::UnNormal.Properties.Resources.stop;
+            this.button12.Location = new System.Drawing.Point(97, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(99, 43);
+            this.button12.TabIndex = 8;
+            this.button12.UseVisualStyleBackColor = true;
+            // 
+            // button11
+            // 
+            this.button11.BackgroundImage = global::UnNormal.Properties.Resources.rfresh;
+            this.button11.Location = new System.Drawing.Point(194, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(99, 43);
+            this.button11.TabIndex = 7;
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(99, 43);
+            this.button10.TabIndex = 0;
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button5
             // 
@@ -153,6 +204,15 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "关闭";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 43);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // task_data
             // 
@@ -326,63 +386,9 @@
             this.listError.Size = new System.Drawing.Size(434, 222);
             this.listError.TabIndex = 0;
             // 
-            // button7
+            // timerSendTask
             // 
-            this.button7.BackgroundImage = global::UnNormal.Properties.Resources.GetDataOnline;
-            this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button7.Location = new System.Drawing.Point(406, 0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(108, 43);
-            this.button7.TabIndex = 10;
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button6
-            // 
-            this.button6.BackgroundImage = global::UnNormal.Properties.Resources.edit;
-            this.button6.Location = new System.Drawing.Point(299, 0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 43);
-            this.button6.TabIndex = 9;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button12
-            // 
-            this.button12.BackgroundImage = global::UnNormal.Properties.Resources.stop;
-            this.button12.Location = new System.Drawing.Point(97, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(99, 43);
-            this.button12.TabIndex = 8;
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            this.button11.BackgroundImage = global::UnNormal.Properties.Resources.rfresh;
-            this.button11.Location = new System.Drawing.Point(194, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 43);
-            this.button11.TabIndex = 7;
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
-            this.button10.Location = new System.Drawing.Point(0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(99, 43);
-            this.button10.TabIndex = 0;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 43);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
+            this.timerSendTask.Tick += new System.EventHandler(this.timerSendTask_Tick);
             // 
             // UnNormalFm
             // 
@@ -443,5 +449,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn finishqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn 分拣线;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.Timer timerSendTask;
     }
 }
