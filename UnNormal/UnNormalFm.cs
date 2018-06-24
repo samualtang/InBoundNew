@@ -218,9 +218,9 @@ namespace SortingControlSys.SortingControl
                 //    SendTaskStatesGroup.Write(2, 3);
                 //}
                 //重新分拣标志写1 
-                FirstSendGroup.Write(1, 0);
-                FirstSendGroup.Write(1, 0);
-                FirstSendGroup.Write(1, 0);
+                //FirstSendGroup.Write(1, 0);
+                //FirstSendGroup.Write(1, 0);
+                //FirstSendGroup.Write(1, 0);
                 updateListBox("重新分拣标志写1成功");
                 writeLog.Write("重新分拣标志写1成功");
                 updateListBox("连接服务器成功......");
