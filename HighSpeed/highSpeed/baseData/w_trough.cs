@@ -27,6 +27,7 @@ namespace highSpeed.baseData
             this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
             this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
             //this.pager1.GetChildAtPoint(7).Visible = false;
+            this.pager1.PageSize = 1000;
             pager1.Width = troughdata.Width;
             seek();
 

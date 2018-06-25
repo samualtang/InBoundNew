@@ -406,8 +406,10 @@ namespace InBound.Business
                 decimal beginSortnum = 0;
                 decimal totalCount = 0;
                 List<Decimal> sortnum = new List<decimal>();
+                int countNum = 0;
                 while (totalCount < orderAmount)
                 {
+                    countNum += 1;
                     var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.MAINBELT==mainbelt && item.SORTNUM > beginSortnum orderby item.SORTNUM select item).FirstOrDefault();
                     if (query != null)
                     {
@@ -420,6 +422,11 @@ namespace InBound.Business
                         }
                         else
                         {
+                            if (countNum == 1)
+                            {
+                                sortnum.Add(query.SORTNUM ?? 0);
+                                beginSortnum = query.SORTNUM ?? 0;
+                            }
                             break;
                         }
                     }
