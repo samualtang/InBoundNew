@@ -765,7 +765,7 @@ namespace InBound.Business
             {
                 try
                 { 
-                    var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList();
+                    var query = (from items in data.T_UN_POKE where items.SORTNUM == sendtasknum select items).ToList();//暂时更新sortnum 本应该是sendtasknum
                     foreach (var item in query)
                     {
                         if (item.STATUS == 15)//必须等于15才能更新已完成
