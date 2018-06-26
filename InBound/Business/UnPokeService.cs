@@ -131,9 +131,9 @@ namespace InBound.Business
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         //values[j * 9 + 3] = customercode;//客户号
-                        values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
+                        values[j * 9 + 3] = item.SENDTASKNUM;// item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = item.STORENUM; //前一客户顺序号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//整包任务号
+                        values[j * 9 + 5] = 0;//整包任务号
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码 
@@ -201,9 +201,9 @@ namespace InBound.Business
 
                         values[j * 9 + 1] = machineseq;//烟道地址
                         values[j * 9 + 2] = 21;//尾数标志 >20
-                        values[j * 9 + 3] = item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
+                        values[j * 9 + 3] = item.SENDTASKNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = item.STORENUM;//前一客户顺序号
-                        values[j * 9 + 5] = item.SENDTASKNUM;//包装号 item.SENDTASKNUM 取最新一个客户
+                        values[j * 9 + 5] = 0;//包装号 item.SENDTASKNUM 取最新一个客户
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = item.SORTNUM;//备用:排序号
                         values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
@@ -765,7 +765,7 @@ namespace InBound.Business
             {
                 try
                 { 
-                    var query = (from items in data.T_UN_POKE where items.SORTNUM == sendtasknum select items).ToList();//暂时更新sortnum 本应该是sendtasknum
+                    var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == sendtasknum select items).ToList();//暂时更新sortnum 本应该是sendtasknum
                     foreach (var item in query)
                     {
                         if (item.STATUS == 15)//必须等于15才能更新已完成

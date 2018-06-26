@@ -717,7 +717,7 @@ namespace SortingControlSys.SortingControl
                                 writeLog.Write("烟柜2线（A）烟柜任务号:" + logstr + "已接收");
                                 updateListBox("烟柜2线（A）烟柜任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(listSix2A, 15);
-                                 UnPokeService.UpdateStroageInout(listSix2A);
+                                UnPokeService.UpdateStroageInout(listSix2A);
                             }
                             sendSixCabine2AtTask();
                         }
