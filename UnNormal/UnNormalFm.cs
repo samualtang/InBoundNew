@@ -1048,12 +1048,12 @@ namespace SortingControlSys.SortingControl
                SendTaskStatesGroup.Write(0, 1);
                SendTaskStatesGroup.Write(2, 1);
            }
-           else if (SendTaskStatesGroup.Read(2).ToString() != "1" && !issendsixone)
+           else if (SendTaskStatesGroup.Read(2).ToString() != "1" && !issendsixtwo)
            {
                SendTaskStatesGroup.Write(0, 2);
                SendTaskStatesGroup.Write(2, 2);
            }
-           else if (SendTaskStatesGroup.Read(3).ToString() != "1" && !issendsixtwo)
+           else if (SendTaskStatesGroup.Read(3).ToString() != "1" && !issendsixone)
            {
                SendTaskStatesGroup.Write(0, 3);
                SendTaskStatesGroup.Write(2, 3);
