@@ -15,7 +15,14 @@ namespace InBound.Business
                return query.ToList();
            }
        }
-
+       public static List<T_PRODUCE_SORTTROUGH> GetBackTrough(int troughtype, int cigarettetype)
+       {
+           using (Entities dataentity = new Entities())
+           {
+               var query = from item in dataentity.T_PRODUCE_SORTTROUGH where item.TROUGHTYPE == troughtype && item.CIGARETTETYPE == cigarettetype  && item.STATE == "0" orderby item.SEQ select item;
+               return query.ToList();
+           }
+       }
        public static List<T_PRODUCE_SORTTROUGH> GetTroughNotINCigaretteType(int troughtype, int cigarettetype)
        {
            using (Entities dataentity = new Entities())
