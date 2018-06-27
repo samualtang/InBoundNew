@@ -310,15 +310,6 @@ namespace SpecialShapeSmoke
        /// </summary>
         public void clearAllText()
         {
-            //int trouglength = 0;
-            //if (CheckTrough())
-            //{
-            //    trouglength = 1;
-            //}
-            //else
-            //{
-            //    trouglength = 2;
-            //}
             // 数据清空
             try
             {
@@ -424,7 +415,7 @@ namespace SpecialShapeSmoke
                 clearAllText();
                 try
                 {
-                    int countGroupBox = 0;//groupBox总数
+                    //int countGroupBox = 0;//groupBox总数
                     int countnum = 0;
                     // string[] Flag = new string[2];   
                     //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
@@ -433,14 +424,16 @@ namespace SpecialShapeSmoke
                     string Log = "";
                    
                     #region  读取DB
-                        if (dbIndex[1] == -1)//  是1061 和2061 单个通道
+                        if (dbIndex[1] == -1)//  是1061 和2061 单个通道？
                         {
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                            countnum = 1;
                         }
                         else
                         {
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
                             finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
+                            countnum = 2;
                         }
                     
                         for (int i = 0; i < boxText.Length; i++)
@@ -451,28 +444,13 @@ namespace SpecialShapeSmoke
                      #endregion
                     if (finishNo[0] != -1 || finishNo[1] != -1)
                     {
-                        if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
+                        //if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
                         for (int j = 0; j < countnum; j++)//数据获取核心
                         {
                             throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
                             initText(panelList[j], throughList[j]);
                         }
                         writeLog.Write(Log);
-
-                        //if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
-                        //{
-                            
-                        //        Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
-                        //        updateLabel("分拣任务完成!分拣结束!", lbl2);
-                            
-                        //}
-
-                        //if (throughList[1].Count <= 0 && !CheckTrough()) //根据不同通道完成来显示完成任务 
-                        //{ 
-                        //    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
-                        //    updateLabel("分拣任务完成!分拣结束!", lbl2);
-                            
-                        //}
                         if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
                         {
                             Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
@@ -612,8 +590,8 @@ namespace SpecialShapeSmoke
                             falge = false;
                         }
                     }
-                   
-                    if (CheckTrough()){falge = true;}
+
+                    if (CheckTrough()) { falge = true; }
                 }
                 catch (Exception e)
                 {

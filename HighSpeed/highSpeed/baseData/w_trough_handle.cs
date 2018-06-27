@@ -57,10 +57,10 @@ namespace highSpeed.baseData
                 //sql = "select 1096 machineseq from dual union select 2096 machineseq from dual";
 
                 //不对状态位进行过滤
-                sql = @"select distinct machineseq,groupno 
+                sql = @"select distinct machineseq 
                         from t_produce_sorttrough h 
-                        where h.troughtype=10 and h.cigarettetype=40 
-                        order by groupno,machineseq";
+                        where h.troughtype=10 and h.cigarettetype=40  
+                        order by  machineseq";
             }
             DataTable dt = Db.Query(sql);
             this.cbthroughnum.DataSource = dt;

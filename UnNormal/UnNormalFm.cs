@@ -221,8 +221,8 @@ namespace SortingControlSys.SortingControl
                 //FirstSendGroup.Write(1, 0);
                 //FirstSendGroup.Write(1, 0);
                 //FirstSendGroup.Write(1, 0);
-                updateListBox("重新分拣标志写1成功");
-                writeLog.Write("重新分拣标志写1成功");
+                //updateListBox("重新分拣标志写1成功");
+                //writeLog.Write("重新分拣标志写1成功");
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......");
                 updateControlEnable(false, button10);
@@ -1037,7 +1037,7 @@ namespace SortingControlSys.SortingControl
 
        private void timerSendTask_Tick(object sender, EventArgs e)
        {
-           updateListBox("出发定时器");
+           updateListBox("触发定时器");
            if (SendTaskStatesGroup.Read(0).ToString() != "1" && !issendone)//监控标志位第一组 产生跳变
            {
                SendTaskStatesGroup.Write(0, 0);
