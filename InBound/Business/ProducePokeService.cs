@@ -550,11 +550,15 @@ namespace InBound.Business
                 var query = (from poke in entity.T_PRODUCE_POKE
                              where poke.TROUGHNUM == troughNo
                              select poke).ToList();
+
+                var tempquery = (from poke in entity.T_PRODUCE_POKE
+                                 where poke.TROUGHNUM == standbyNo
+                             select poke).FirstOrDefault();
                 //更换通道编码
                 query.ForEach(f =>
                 {
                     f.TROUGHNUM = standbyNo;
-                    //f.MACHINESTATE = 20;
+                    f.MACHINESEQ = tempquery.MACHINESEQ;
                 });
                 decimal groupno=0;
                 if (query != null)
