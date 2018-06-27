@@ -395,7 +395,8 @@ namespace InBound.Business
 
             return values;
         }
-         
+
+       
         public static void UpdatePokeByGroupNo(decimal groupno, int orderAmount,int mainbelt)
         {
             using (Entities entity = new Entities())
@@ -572,6 +573,7 @@ namespace InBound.Business
                              record.SORTSTATE = 10;
                              record.POKEPLACE = 0;
                              record.MERAGENUM = 0;
+                             record.MACHINESTATE = 10;
                              record.UNIONTASKNUM = 0;
                          }
                     }

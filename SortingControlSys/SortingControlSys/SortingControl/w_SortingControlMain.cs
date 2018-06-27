@@ -417,7 +417,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                if (flag == 2)//0：已取走， 1：已写入
+                if (flag == 0)//0：已取走， 1：已写入
                 {
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno2, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno2, 10))
                     {
@@ -600,7 +600,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                if (flag == 2)//0：已取走， 1：已写入
+                if (flag == 0)//0：已取走， 1：已写入
                 {
 
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno1, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno1, 10))
@@ -1114,7 +1114,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 1)//第一组 监控标志位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
                         {
                             while (!isInit)
                             {
@@ -1141,7 +1141,7 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 2)//第二组 监控标志位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//2是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
                         {
                             while (!isInit)
                             {
