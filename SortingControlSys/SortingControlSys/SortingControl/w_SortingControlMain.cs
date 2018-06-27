@@ -1136,12 +1136,12 @@ namespace SortingControlSys.SortingControl
                               writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                           }
                            // }
-                          if (!issendA)
+                          if (!isendingA)
                           {
                               delSendTask task = sendTask;
-                          }
 
-                            task.BeginInvoke( null, null);
+                              task.BeginInvoke(null, null);
+                          }
                           //  this.BeginInvoke( new delSendTask(sendTask));
                         }
 
@@ -1171,9 +1171,10 @@ namespace SortingControlSys.SortingControl
                             if (!isendingB)
                             {
                                 delSendTask task = sendTask1;
-                            }
+                            
 
                             task.BeginInvoke(null, null);
+                            }
                         }
                     }
                 }
