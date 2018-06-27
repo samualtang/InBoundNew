@@ -405,6 +405,7 @@ namespace SortingControlSys.SortingControl
         void sendTask1()
         {
             issendB = true;
+            isendingB = true;
             List<decimal> sortNumListS = new List<decimal>();
 
             List<decimal> zqNumListS = new List<decimal>();
@@ -574,6 +575,7 @@ namespace SortingControlSys.SortingControl
                 }
                 sendTask1();//异常后重新发送
             }
+            isendingB = false;
         }
         int mainbeltNum = 4;
         int maxCacheNum = 160;
@@ -581,7 +583,7 @@ namespace SortingControlSys.SortingControl
         List<string> plclist = ItemCollection.getUnionTaskItem();
 
 
-
+        bool isendingA = false,isendingB=false;
        
         /// <summary>
         /// 第一组数据
@@ -589,6 +591,7 @@ namespace SortingControlSys.SortingControl
         void sendTask()
         {
             issendA = true;
+            isendingA = true;
             List<decimal> sortNumList = new List<decimal>();
             List<decimal> zqNumList = new List<decimal>();
             try
@@ -778,6 +781,7 @@ namespace SortingControlSys.SortingControl
                 }
                 sendTask();//异常后重新发送
             }
+            isendingA = false;
         }
         public void WriteErr(int type, int len, String temp, decimal GroupNo)
         {
@@ -1132,7 +1136,10 @@ namespace SortingControlSys.SortingControl
                               writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                           }
                            // }
-                            delSendTask task=sendTask;
+                          if (!issendA)
+                          {
+                              delSendTask task = sendTask;
+                          }
 
                             task.BeginInvoke( null, null);
                           //  this.BeginInvoke( new delSendTask(sendTask));
@@ -1161,7 +1168,10 @@ namespace SortingControlSys.SortingControl
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                             }
                             //} 
-                            delSendTask task = sendTask1;
+                            if (!isendingB)
+                            {
+                                delSendTask task = sendTask1;
+                            }
 
                             task.BeginInvoke(null, null);
                         }
