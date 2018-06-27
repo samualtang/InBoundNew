@@ -556,65 +556,57 @@ namespace InBound.Business
                     f.TROUGHNUM = standbyNo;
                     //f.MACHINESTATE = 20;
                 });
-
-                //获取最近完成的该通道任务
-                var task = query.Where(w => w.SORTSTATE == 20 && w.TROUGHNUM==troughNo).OrderByDescending(w=>w.SORTNUM).FirstOrDefault();
-                var query1 = (from poke in entity.T_PRODUCE_POKE
-                             where poke.TROUGHNUM == troughNo && poke.SORTNUM<=task.SORTNUM
-                             select poke).ToList();
-    
-                query1.ForEach(f =>
+                decimal groupno=0;
+                if (query != null)
                 {
-                   // f.TROUGHNUM = standbyNo;
-                    f.MACHINESTATE = 20;//更新预分拣已完成的订单对应机械手的状态为已完成
-                });
-                if (task != null)
-                {
-                 var queryList=(from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM==task.UNIONTASKNUM select item).ToList();
-
-                    if(queryList!=null)
+                    groupno = query[0].GROUPNO ?? 0;
+                    var querytemp=(from item in entity.T_PRODUCE_POKE where item.GROUPNO==groupno && item.SORTSTATE>10 &&item.SORTSTATE<=15 select item).ToList();
+                    if(querytemp!=null)
                     {
-                        var unfinished = queryList.Where(w => w.SORTSTATE != 20).Sum(w=>w.POKENUM);
-                        if (unfinished != null && unfinished != 0)
-                        {
-                            decimal place = 1;
-                         foreach(var item in queryList)
+                         foreach ( var record in querytemp)
                          {
-                             if (item.SORTSTATE != 20)
-                             {
-                                 item.POKEPLACE = place;
-                                 place += (item.POKENUM??0);
-                             }
-                             item.MERAGENUM = unfinished;
+                             record.SORTSTATE = 10;
+                             record.POKEPLACE = 0;
+                             record.MERAGENUM = 0;
+                             record.UNIONTASKNUM = 0;
                          }
-                        }
                     }
                 }
-                //foreach (var item in allTask)
+                
+                //获取最近完成的该通道任务
+                //var task = query.Where(w => w.SORTSTATE == 20 && w.TROUGHNUM==troughNo).OrderByDescending(w=>w.SORTNUM).FirstOrDefault();
+                //var query1 = (from poke in entity.T_PRODUCE_POKE
+                //             where poke.TROUGHNUM == troughNo && poke.SORTNUM<=task.SORTNUM
+                //             select poke).ToList();
+    
+                //query1.ForEach(f =>
                 //{
-                //    var taskquy = 0M;
-                //    var CompletNot = query.Where(w => w.UNIONTASKNUM == item && w.MACHINESTATE != 20).ToList();
-                //    taskquy = CompletNot.Sum(s => s.POKENUM.Value);
-                //    decimal nextPlace = 0;
-                //    // decimal nextLocal = 0;//下一个位置=前位置+当前数量
-                //    decimal lastPlace = 0;
-                //    decimal lastSortnum = 0;
-                //    CompletNot.ForEach(f =>
-                //    {
-                //        f.MERAGENUM = taskquy;
-                //        f.MACHINESTATE = 20;
-                //        f.POKEPLACE = nextPlace == 0 ? 1 : lastSortnum + lastPlace;
-                //        lastPlace = f.POKEPLACE.Value;
-                //        lastSortnum = f.POKENUM.Value;
-                //        nextPlace = f.POKEPLACE.Value;
-                //    });
-                //    query.Where(w => w.UNIONTASKNUM == item).OrderBy(o => o.SORTNUM).ToList().ForEach(f =>
-                //    {
-                //        f.MERAGENUM = taskquy;
-                //        f.MACHINESTATE = 10;
-                //    });
+                //   // f.TROUGHNUM = standbyNo;
+                //    f.MACHINESTATE = 20;//更新预分拣已完成的订单对应机械手的状态为已完成
+                //});
+                //if (task != null)
+                //{
+                // var queryList=(from item in entity.T_PRODUCE_POKE where item.UNIONTASKNUM==task.UNIONTASKNUM select item).ToList();
 
+                //    if(queryList!=null)
+                //    {
+                //        var unfinished = queryList.Where(w => w.SORTSTATE != 20).Sum(w=>w.POKENUM);
+                //        if (unfinished != null && unfinished != 0)
+                //        {
+                //            decimal place = 1;
+                //         foreach(var item in queryList)
+                //         {
+                //             if (item.SORTSTATE != 20)
+                //             {
+                //                 item.POKEPLACE = place;
+                //                 place += (item.POKENUM??0);
+                //             }
+                //             item.MERAGENUM = unfinished;
+                //         }
+                //        }
+                //    }
                 //}
+     
                 entity.SaveChanges();
             }
         }
