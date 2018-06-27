@@ -53,7 +53,7 @@ namespace highSpeed.orderHandle
                 cbsource.DisplayMember = "TROUGHNUM";
                 cbsource.ValueMember = "TROUGHNUM";
 
-                var chagelist = new DeepCope().DeepCopy(list);
+                var chagelist = SortTroughService.GetBackTrough(10, 20).Where(w => w.GROUPNO == obj.GROUPNO).OrderBy(ord => Decimal.Parse(ord.TROUGHNUM.Trim())).ToList();
                 cbStandby.DataSource = chagelist;
                 cbStandby.DisplayMember = "TROUGHNUM";
                 cbStandby.ValueMember = "TROUGHNUM";
