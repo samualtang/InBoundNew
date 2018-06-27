@@ -463,12 +463,15 @@ namespace InBound.Business
                                 var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
                               var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
                                 var pnum=tempCount;
+                                WriteLog.GetLog().Write("1机械手任务号:" + unionnum +"meragenum:"+pnum);
                                foreach (var t in temp)
-                              {
+                               {
+                                  
                                   t.MERAGENUM = tempCount;
                                   t.UNIONTASKNUM = unionnum;
                                   t.POKEPLACE = pnum;
                                   pnum -= (t.POKENUM??0);
+                                  WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                               }
                                 //uniontasknum += 1;
                             }
@@ -499,12 +502,15 @@ namespace InBound.Business
                                 //uniontasknum += 1;
                                var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
                                var pnum = tempCount;
+                               WriteLog.GetLog().Write("2机械手任务号:" + unionnum + "meragenum:" + pnum);
                                foreach (var t in temp)
                                {
+                                  
                                    t.MERAGENUM = tempCount;
                                    t.UNIONTASKNUM = unionnum;
                                    t.POKEPLACE = pnum;
                                    pnum -= (t.POKENUM ?? 0);
+                                   WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                                }
                                 
                                 tempCount = record.POKENUM??0;
@@ -526,12 +532,16 @@ namespace InBound.Business
                                 var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount;  x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
                                var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
                                var pnum = tempCount;
+                            
+                               WriteLog.GetLog().Write("3机械手任务号:" + unionnum + "meragenum:" + pnum);
                                foreach (var t in temp)
                                {
+                                  
                                    t.MERAGENUM = tempCount;
                                    t.UNIONTASKNUM = unionnum;
                                    t.POKEPLACE = pnum;
                                    pnum -= (t.POKENUM ?? 0);
+                                   WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                                }
                                 // uniontasknum += 1;
                             }
@@ -552,18 +562,42 @@ namespace InBound.Business
                              where poke.TROUGHNUM == troughNo
                              select poke).ToList();
 
-                var tempquery = (from poke in entity.T_PRODUCE_POKE
+                var tempquery = (from poke in entity.T_PRODUCE_SORTTROUGH
                                  where poke.TROUGHNUM == standbyNo
                              select poke).FirstOrDefault();
                 //更换通道编码
-                query.ForEach(f =>
-                {
-                    f.TROUGHNUM = standbyNo;
-                    f.MACHINESEQ = tempquery.MACHINESEQ;
-                });
+
+                var querysource = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHNUM == troughNo select item).FirstOrDefault();
+                var querytarget = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHNUM == standbyNo select item).FirstOrDefault();
+                var tempcigarettecode = querytarget.CIGARETTECODE;
+                var tempCigarettename = querytarget.CIGARETTENAME;
+                var tempmachineseq = querytarget.MACHINESEQ;
+                var status = querytarget.STATE;
+
+                var tempcigarettecode1 = querysource.CIGARETTECODE;
+                var tempCigarettename1 = querysource.CIGARETTENAME;
+                var tempmachineseq1 = querysource.MACHINESEQ;
+                var status1 = querysource.STATE;
+
+                querysource.CIGARETTENAME = tempCigarettename;
+                querysource.CIGARETTECODE = tempcigarettecode;
+                querysource.MACHINESEQ = tempmachineseq;
+                querysource.STATE = status;
+
+                querytarget.CIGARETTENAME = tempCigarettename1;
+                querytarget.CIGARETTECODE = tempcigarettecode1;
+                querytarget.MACHINESEQ = tempmachineseq1;
+                querytarget.STATE = status1;
+                //entity.SaveChanges();
+               
                 decimal groupno=0;
                 if (query != null)
                 {
+                    query.ForEach(f =>
+                    {
+                        f.TROUGHNUM = standbyNo;
+                        f.MACHINESEQ = tempquery.MACHINESEQ;
+                    });
                     groupno = query[0].GROUPNO ?? 0;
                     var querytemp=(from item in entity.T_PRODUCE_POKE where item.GROUPNO==groupno && item.SORTSTATE>10 &&item.SORTSTATE<=15 select item).ToList();
                     if(querytemp!=null)

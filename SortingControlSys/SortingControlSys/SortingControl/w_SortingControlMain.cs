@@ -1644,8 +1644,8 @@ namespace SortingControlSys.SortingControl
                     updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                     writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                 }
-                SendTaskStatesGroup.Write(0, 0);
                 SendTaskStatesGroup.Write(2, 0);
+                SendTaskStatesGroup.Write(0, 0);
             }
             if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendB)//监控标志位第二组 
             {
@@ -1661,8 +1661,8 @@ namespace SortingControlSys.SortingControl
                     updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                     writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                 }
-                SendTaskStatesGroup.Write(0, 1);
                 SendTaskStatesGroup.Write(2, 1);
+                SendTaskStatesGroup.Write(0, 1);
             }
             timerSendData.Stop();
         }
