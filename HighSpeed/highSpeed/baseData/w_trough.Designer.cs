@@ -246,6 +246,7 @@
             // troughdata
             // 
             this.troughdata.AllowUserToAddRows = false;
+            this.troughdata.AllowUserToDeleteRows = false;
             this.troughdata.AllowUserToOrderColumns = true;
             this.troughdata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.troughdata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {

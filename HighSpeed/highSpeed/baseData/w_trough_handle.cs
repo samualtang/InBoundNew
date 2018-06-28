@@ -35,7 +35,7 @@ namespace highSpeed.baseData
                 box_replenishline.Enabled = false;
                 box_transportationline.Enabled = false;
 
-                if (type == "20" || type == "30")
+                if (troughtype == "20" || troughtype == "30")
                 {
                     cbthroughnum.Enabled = false;
                 }
@@ -51,7 +51,7 @@ namespace highSpeed.baseData
         public void init(String sign, String amend_id)
         {
             Db.Open();
-            String sql = "select distinct machineseq from t_produce_sorttrough where cigarettetype='" + type + "'order by machineseq";
+            String sql = "select distinct machineseq from t_produce_sorttrough where cigarettetype='" + type + "' and troughtype ='" + troughtype + "'order by machineseq";
             if (type.Equals("40"))
             {
                 //sql = "select 1096 machineseq from dual union select 2096 machineseq from dual";
@@ -67,10 +67,52 @@ namespace highSpeed.baseData
             this.cbthroughnum.DisplayMember = "machineseq";
             this.cbthroughnum.ValueMember = "machineseq";
             this.cbthroughnum.SelectedIndex = 0;
-
+            //判断修改类型
+            if (troughtype.Equals("10") )//分拣通道
+            {
+                if (type.Equals("30"))
+                {
+                    lbltype.Text = "异型";
+                    lbllineNum.Text = "异形烟分拣线";
+                    cbthroughnum.Enabled = false; 
+                }
+                else if (type.Equals("40"))
+                {
+                    lbltype.Text = "异型";
+                    lbllineNum.Text = "异形混合烟分拣";
+                }
+                else if (type.Equals("20")) 
+                {
+                    lbltype.Text = "常规";
+                    lbllineNum.Text = "常规烟分拣";
+                    cbthroughnum.Enabled = false; 
+                }
+            }
+            else if (troughtype.Equals("20"))
+            {
+                if (type.Equals("20"))
+                {
+                    lbltype.Text = "常规";
+                    label6.Text = "通道类型";
+                    lbllineNum.Text = "重力式货架";
+                    cbthroughnum.Enabled = false; 
+                } 
+            }
+            else if (troughtype.Equals("30"))
+            {
+                label1.Visible = false;
+                label6.Text = "通道类型";
+                lbltype.Text = "主皮带";
+                cbthroughnum.Enabled = false; 
+            }
+            else if (troughtype.Equals("40"))
+            {
+                label1.Visible = false;
+                label6.Text = "通道类型";
+                lbltype.Text = "包装机";
+                cbthroughnum.Enabled = false; 
+            }
             
-            lbltype.Text = "异型";
-            lbllineNum.Text = "异形烟线";
 
             txt_troughdesc.Visible = false;
             box_replenishline.Visible = false;
@@ -141,14 +183,14 @@ namespace highSpeed.baseData
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            String linenum = "";            
-            String troughnum = this.cbthroughnum.SelectedValue.ToString();//设备物理号编号
+            String machineseq = this.cbthroughnum.Text.ToString();//设备物理号编号:获取选择下拉框内的通道编号
+            //String machineseq = this.cbthroughnum.SelectedValue.ToString();//设备物理号编号
             String troughdesc = this.txt_troughdesc.Text.Trim();
             String itemno = this.txt_itemno.Text;
             String itemname = this.txt_itemname.Text;
-            String radioval = troughnum;
+            String radioval = machineseq;
             String groupno = "1";
-                        if (troughnum == "")
+            if (machineseq == "")
             {
                 MessageBox.Show("请选择通道编号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -158,9 +200,9 @@ namespace highSpeed.baseData
                 MessageBox.Show("请选择卷烟品牌!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if (troughnum!=null && troughnum.Length>0)
+            if (machineseq != null && machineseq.Length > 0)
             {
-                if (troughnum.Substring(0, 1).Equals("2"))//第二组异形烟
+                if (machineseq.Substring(0, 1).Equals("2"))//第二组异形烟
                 {
                     groupno = "2";
                 }
@@ -187,9 +229,9 @@ namespace highSpeed.baseData
                     {
                         //MessageBox.Show(sql);
                         sql = "insert into t_produce_sorttrough(id,linenum,troughnum,machineseq,cigarettecode,cigarettename," +
-                                                              "state,mantissa,cigarettetype,troughtype,replenishline,groupno)" +
-                                      "values(s_produce_sorttrough.nextval," + groupno + ",s_produce_sorttrough.nextval," + radioval + ",'" + itemno + "','" + itemname + "'," +
-                                      "'10',0," + type + ",10,3," + groupno + ")";//异形烟对应第三个件烟补货口，六个异形烟柜对应第四个件烟补货口
+                                                              "state,mantissa,cigarettetype,troughtype,replenishline,groupno,seq)" +
+                                      "values(s_produce_sorttrough.nextval," + 0 + ",s_produce_sorttrough.nextval," + radioval + ",'" + itemno + "','" + itemname + "'," +
+                                      "'10',0," + type + ",10,3," + groupno + ",2)";//异形烟对应第三个件烟补货口，六个异形烟柜对应第四个件烟补货口
                         String errorMsg = "";
                         int len = Db.ExecuteNonQuery(sql,out errorMsg);
                         //if (errorMsg != "")
@@ -208,14 +250,20 @@ namespace highSpeed.baseData
 
                         MessageBox.Show("该品牌在混合道中已经存在-" + itemname, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
-
                     }
                 }
                 else
                 {
-
-                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval + " where id=" + id;
-                    
+                    if (type=="40")
+                    {
+                        sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval + " where id=" + id; 
+                    }
+                    else
+                    {
+                        MessageBox.Show("1");
+                        sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',where id=" + id; 
+                    }
+                  
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

@@ -340,14 +340,17 @@ namespace highSpeed.baseData
 
         private void btn_amend_Click(object sender, EventArgs e)
         {
-            String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
-            if (type.Equals("30") || type.Equals("40"))
-            {
-                return;
-            }
+           
             int count = this.troughdata.SelectedRows.Count;
             if (count > 0)
             {
+
+                String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
+                if (type.Equals("30") || type.Equals("40"))
+                {
+                    return;
+                }
+
                 amend_id = this.troughdata.SelectedRows[0].Cells["id"].Value.ToString();
                 sign = "1";
                 String cigarettetype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
@@ -443,6 +446,9 @@ namespace highSpeed.baseData
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
+
+
             win_trough_handle trough_handle = new win_trough_handle("0", "", "40","10");
             trough_handle.WindowState = FormWindowState.Normal;
             trough_handle.StartPosition = FormStartPosition.CenterScreen;
