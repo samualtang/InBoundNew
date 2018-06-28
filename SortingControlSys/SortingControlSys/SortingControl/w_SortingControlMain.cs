@@ -1492,6 +1492,12 @@ namespace SortingControlSys.SortingControl
 
 
         }
+        Bitmap stopone = (Bitmap)Properties.Resources.ResourceManager.GetObject("stopone");//A线停止
+        Bitmap stoptwo = (Bitmap)Properties.Resources.ResourceManager.GetObject("stoptwo");//B线停止
+
+
+        Bitmap startAline = (Bitmap)Properties.Resources.ResourceManager.GetObject("startAline");//A线启动
+        Bitmap startBline = (Bitmap)Properties.Resources.ResourceManager.GetObject("startBline");//B线启动
 
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -1500,7 +1506,7 @@ namespace SortingControlSys.SortingControl
                 AlineStopFlag = ChangeFalg(!AlineStopFlag, 0, "A线", btnClear) == true ? true : false;
             }
         }
-
+     
         private void btnClearB_Click(object sender, EventArgs e)
         {
             if (pIOPCServer != null)
@@ -1522,13 +1528,29 @@ namespace SortingControlSys.SortingControl
 
             if (isStop)
             {
-                ClearCacheGroup.Write(1, index);
+                ClearCacheGroup.Write(1, index);//停止
+                if (lineName == "A线")
+                {
+                    btn.BackgroundImage = startAline;//启动按钮
+                }
+                else
+                {
+                    btn.BackgroundImage = startBline;
+                }
                 isStop = true;
                // btn.Text = string.Format("{0}恢复", lineName);
             }
             else
             {
-                ClearCacheGroup.Write(0, index);
+                ClearCacheGroup.Write(0, index);//启动
+                if (lineName == "A线")
+                {
+                    btn.BackgroundImage = stopone;//停止按钮
+                }
+                else
+                {
+                    btn.BackgroundImage = stoptwo; 
+                }
                 isStop = false;
               //  btn.Text = string.Format("{0}停止", lineName);
             }

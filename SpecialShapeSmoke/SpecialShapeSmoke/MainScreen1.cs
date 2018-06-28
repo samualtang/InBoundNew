@@ -80,6 +80,7 @@ namespace SpecialShapeSmoke
             Panel p = new Panel(); 
            // lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             boxText = ConfigurationManager.AppSettings["troughList"].ToString().Replace(" ", "").Split(',');//通道编号 
+            RefreshTime =ConfigurationManager.AppSettings["RefreshTime"].ToString().Replace(" ", "").CastTo<int>(20);//刷新时间
            // troughno = new decimal[boxText.Length];
             if (boxText.Length == 1)//根据通道编号查找DB对应值
             {
@@ -252,7 +253,7 @@ namespace SpecialShapeSmoke
             } 
             return positiong; 
         }
-        int RefreshTime = 20;
+       static int RefreshTime    ;
         void ConnectServer()
         {
             try
@@ -446,8 +447,7 @@ namespace SpecialShapeSmoke
                             for (int i = 0; i < boxText.Length; i++)
                             {
                                 Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
-                            }
-                            befoerFinishNo = finishNo;
+                            } 
                             writeLog.Write(Log);
                             clearAllText();
                             if (finishNo[0] != -1 || finishNo[1] != -1)
@@ -475,7 +475,8 @@ namespace SpecialShapeSmoke
                                             updateLabel("分拣任务完成!分拣结束!", lbl2);
                                         }
                                     }
-                                }
+                                    befoerFinishNo = finishNo;
+                                } 
                             }
                             else
                             {
