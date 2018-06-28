@@ -309,8 +309,8 @@ namespace SortingControlSys.SortingControl
                     {
                         logstr += i + ":" + datas[i] + ";";
                     }
-                    writeLog.Write("分拣线2:" + logstr);
-                    updateListBox("分拣线2:" + logstr);
+                    writeLog.Write("分拣线二:" + logstr);
+                    updateListBox("分拣线二:" + logstr);
                     taskGroup2.SyncWrite(datas);
                    
                     //写完db块后,再读出来 
@@ -402,7 +402,7 @@ namespace SortingControlSys.SortingControl
             {
                 issendsixtwo = false;
                 int flag = SendTaskStatesGroup.ReadD(2).CastTo<int>(-1);
-                writeLog.Write("烟柜发送数据前读标志位：" + flag);
+                writeLog.Write("烟柜2线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
                    
@@ -410,7 +410,7 @@ namespace SortingControlSys.SortingControl
                     object[] datas = UnPokeService.getSixCabinetTask(25, "2", out listSix2A);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("烟柜分拣数据发送完毕");
+                        updateListBox("烟柜2线分拣数据发送完毕");
                         return;
                     }
                     string logstr = "";
@@ -418,8 +418,8 @@ namespace SortingControlSys.SortingControl
                     {
                         logstr += i + ":" + datas[i] + ";";
                     }
-                    writeLog.Write("烟柜分拣发送数据:" + logstr);
-                    updateListBox("烟柜分拣发送数据:" + logstr);
+                    writeLog.Write("烟柜2线分拣发送数据:" + logstr);
+                    updateListBox("烟柜2线分拣发送数据:" + logstr);
                     //写电控
                     SixCabinetGroup2A.SyncWrite(datas); 
                     //读电控
@@ -428,7 +428,7 @@ namespace SortingControlSys.SortingControl
                     {
                         p1 += SixCabinetGroup2A.ReadD(i).ToString()+";";//pokeid  
                     }
-                    writeLog.Write("读出烟柜电控写入值:" + p1);
+                    writeLog.Write("读出烟柜2线电控写入值:" + p1);
                   
                 }
             }
@@ -455,7 +455,7 @@ namespace SortingControlSys.SortingControl
             {
                 issendsixone = false;
                 int flag = SendTaskStatesGroup.ReadD(3).CastTo<int>(-1);
-                writeLog.Write("烟柜发送数据前读标志位：" + flag);
+                writeLog.Write("烟柜1线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
 
@@ -463,7 +463,7 @@ namespace SortingControlSys.SortingControl
                     object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix1B);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("烟柜分拣数据发送完毕");
+                        updateListBox("烟柜1线分拣数据发送完毕");
                         return;
                     }
                     string logstr = "";
@@ -471,8 +471,8 @@ namespace SortingControlSys.SortingControl
                     {
                         logstr += i + ":" + datas[i] + ";";
                     }
-                    writeLog.Write("烟柜分拣发送数据:" + logstr);
-                    updateListBox("烟柜分拣发送数据:" + logstr);
+                    writeLog.Write("烟柜1线分拣发送数据:" + logstr);
+                    updateListBox("烟柜1线分拣发送数据:" + logstr);
                     //写电控
                     SixCabinetGroup1B.SyncWrite(datas);
                     //读电控
@@ -481,7 +481,7 @@ namespace SortingControlSys.SortingControl
                     {
                         p1 += SixCabinetGroup1B.ReadD(i).ToString() + ";";//pokeid  
                     }
-                    writeLog.Write("读出烟柜电控写入值:" + p1);
+                    writeLog.Write("读出烟柜1线电控写入值:" + p1);
 
                 }
             }

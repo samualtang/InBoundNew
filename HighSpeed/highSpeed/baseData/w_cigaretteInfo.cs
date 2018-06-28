@@ -43,7 +43,7 @@ namespace highSpeed.baseData
 
             DataRow dr = conditiontable.NewRow();
             dr["value"] = "itemno";
-            dr["txtvalue"] = "品牌代码";
+            dr["txtvalue"] = "卷烟编码";
 
             DataRow dr1 = conditiontable.NewRow();
             dr1["value"] = "itemname";
