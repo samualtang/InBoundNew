@@ -161,7 +161,7 @@ namespace SpecialShapeSmoke
             btnView.Click += GetNowView;
             btnView.Location = new Point(p.Width - 8 * topHeight, 0);
             p.Controls.Add(btnView);
-             
+
             Thread thread = new Thread(ConnectServer);
             thread.Start(); 
         } 
@@ -400,8 +400,8 @@ namespace SpecialShapeSmoke
 #endregion
         bool flag = true;//初始化
 
-        static decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
-          
+        static decimal[] finishNo = new decimal[2];//完成信号 (pokeid)
+        static decimal[] befoerFinishNo = new decimal[2];//上一次完成信号(pokeid)
         /// <summary>
         /// 获取数据
         /// </summary>  
@@ -412,7 +412,7 @@ namespace SpecialShapeSmoke
 
             
                // writeLog.Write("Receive Resend Data:"+data);
-                clearAllText();
+            
                 try
                 {
                     //int countGroupBox = 0;//groupBox总数
@@ -421,6 +421,8 @@ namespace SpecialShapeSmoke
                     //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
                     finishNo[0] = -1;
                     finishNo[1] = -1;
+                    befoerFinishNo[0] = -1;
+                    befoerFinishNo[0] = -1;
                     string Log = "";
                    
                     #region  读取DB
@@ -428,60 +430,69 @@ namespace SpecialShapeSmoke
                         {
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
                             countnum = 1;
+                       
                         }
                         else
                         {
                             finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
                             finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
                             countnum = 2;
+                            
                         }
-                    
-                        for (int i = 0; i < boxText.Length; i++)
-                        {
-                           Log  += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
-                        }
-                  
+                       
                      #endregion
-                    if (finishNo[0] != -1 || finishNo[1] != -1)
-                    {
-                        //if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
-                        for (int j = 0; j < countnum; j++)//数据获取核心
+                        if (befoerFinishNo != finishNo )
                         {
-                            throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
-                            initText(panelList[j], throughList[j]);
-                        }
-                        writeLog.Write(Log);
-                        if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
-                        {
-                            Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
-                            updateLabel("分拣任务完成!分拣结束!", lbl2);
-
-                        }
-                        if (boxText.Length == 2)
-                        {
-                            if (throughList[1].Count <= 0 && !CheckTrough())
+                            for (int i = 0; i < boxText.Length; i++)
                             {
-                                Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
-                                updateLabel("分拣任务完成!分拣结束!", lbl2);
+                                Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
+                            }
+                            befoerFinishNo = finishNo;
+                            writeLog.Write(Log);
+                            clearAllText();
+                            if (finishNo[0] != -1 || finishNo[1] != -1)
+                            {
+                                if (befoerFinishNo.Sum() <= finishNo.Sum())
+                                {
+                                    //// if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
+                                    for (int j = 0; j < countnum; j++)//数据获取核心
+                                    {
+                                        throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
+                                        initText(panelList[j], throughList[j]);
+                                    }
+
+                                    if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
+                                    {
+                                        Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                                        updateLabel("分拣任务完成!分拣结束!", lbl2);
+
+                                    }
+                                    if (boxText.Length == 2)
+                                    {
+                                        if (throughList[1].Count <= 0 && !CheckTrough())
+                                        {
+                                            Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                                            updateLabel("分拣任务完成!分拣结束!", lbl2);
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // if (CheckTrough()) { countGroupBox = 1; } else { countGroupBox = 2; }
+                                for (int k = 0; k < boxText.Length; k++)
+                                {
+                                    Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
+                                    updateLabel("服务器断开连接,请重新连接!", lbl2);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                       // if (CheckTrough()) { countGroupBox = 1; } else { countGroupBox = 2; }
-                        for (int k = 0; k < boxText.Length; k++)
-                        {
-                            Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
-                            updateLabel("服务器断开连接,请重新连接!", lbl2);
-                        }
-                    }
-
                     //  var item = service.GetBeginTask();
                     //if (item != null && item.Count > 0)
                     //{
                     //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
                     //}
-
+                    //befoerFinishNo = finishNo;
                 }
                 catch (Exception e)
                 {
@@ -560,31 +571,36 @@ namespace SpecialShapeSmoke
         {
             if (box != null && list != null)
             {
-                int i = 0;// labelCount - 1; 
+                int i =   14; 
                 var newlist = list.Skip(15).Take(1000).ToList(); //获取多于15
+                int no = 1;
                 //int z = newlist.Count();//取剩余烟数
-                int labStart =0;
+             
                 try
                 {
                     foreach (var item in list)
                     {
                         decimal count = item.QUANTITY ?? 0;
-                        if (count >= 1 && i >= 0 && i < 15)
+                        if (count >= 1 && i >= 0 && no <=15 )
                         {
                             Label lbl = (Label)box.Controls[i];
-                            i++;
-                            updateLabel((i)+":  "+item.CIGARETTENAME + ":" + count + "条", lbl);
+                            i--;
+                            updateLabel(no + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
+                            no++;
                         }
                         if (falge && newlist.Count > 0)//用于单通道多显示2061 and  1061
                         {
+                            int labStart = 14;
+                            int newno = 1;
                             foreach (var item2 in newlist)
                             {
                                 decimal count2 = item2.QUANTITY ?? 0;
                                 if (count2 >= 1 && labStart >= 0 && labStart < 15)
                                 {
                                     Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[labStart];
-                                    labStart++;
-                                    updateLabel((labStart + 15) + ":  " + item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
+                                    labStart--;
+                                    updateLabel((newno + 15) + ":  " + item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
+                                    newno++;
                                 }
                             }
                             falge = false;
