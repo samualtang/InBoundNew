@@ -299,6 +299,7 @@
             this.cmbTroughnum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTroughnum.FormattingEnabled = true;
             this.cmbTroughnum.Items.AddRange(new object[] {
+            "全部",
             "1001",
             "1002",
             "1059",

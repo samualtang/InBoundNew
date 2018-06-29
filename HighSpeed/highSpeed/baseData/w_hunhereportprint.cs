@@ -19,7 +19,9 @@ namespace highSpeed.baseData
         public w_hunhereportprint()
         {
             InitializeComponent();
+            cmbTroughnum.SelectedIndex = 0;
             init();
+           
             //seek();
         }
 
@@ -41,7 +43,7 @@ namespace highSpeed.baseData
             {
                 status = 20;
             }
-            if (cmbTroughnum.SelectedIndex == -1)
+            if (cmbTroughnum.SelectedIndex == 0)
             {
                 machineseq = "1001,1002,1059,1060,1061,2001,2002,2059,2060,2061";
             }
