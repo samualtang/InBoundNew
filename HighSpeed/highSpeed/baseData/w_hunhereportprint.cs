@@ -31,7 +31,7 @@ namespace highSpeed.baseData
 
         private void seek()
         {
-
+            string machineseq  ;
             int status = 10;
             if (radioButton2.Checked)
             {
@@ -41,9 +41,17 @@ namespace highSpeed.baseData
             {
                 status = 20;
             }
+            if (cmbTroughnum.SelectedIndex == -1)
+            {
+                machineseq = "1001,1002,1059,1060,1061,2001,2002,2059,2060,2061";
+            }
+            else
+            {
+                machineseq = cmbTroughnum.SelectedItem.ToString();
+            }
             String sSql = "select p.sortnum,p.machineseq,h.cigarettecode,h.cigarettename,t.regioncode,p.pokenum,t.customername "+
                           "from t_un_poke p,t_un_task t,t_produce_sorttrough h "+
-                          "where p.sortnum=t.sortnum and p.troughnum=h.troughnum and h.troughtype=10 and h.cigarettetype=40 and h.state=10 and p.status="+status+
+                          "where p.sortnum=t.sortnum and p.troughnum=h.troughnum and h.troughtype=10 and h.machineseq in (" + machineseq + ") and h.cigarettetype=40 and h.state=10 and p.status=" + status + 
                           "order by p.linenum,p.sortnum,p.secsortnum,p.machineseq,p.troughnum";
             Bind(sSql);
         }

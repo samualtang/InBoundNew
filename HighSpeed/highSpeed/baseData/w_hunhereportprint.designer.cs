@@ -36,19 +36,23 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.btn_print = new System.Windows.Forms.Button();
             this.task_data = new System.Windows.Forms.DataGridView();
-            this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.rownum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.troughinfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.replenishnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.车组 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.cmbTroughnum = new System.Windows.Forms.ComboBox();
+            this.labeltroughnum = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.labeltroughnum);
+            this.panel1.Controls.Add(this.cmbTroughnum);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.radioButton3);
             this.panel1.Controls.Add(this.radioButton2);
@@ -62,7 +66,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(294, 13);
+            this.button1.Location = new System.Drawing.Point(522, 9);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -104,7 +108,7 @@
             // 
             // btn_print
             // 
-            this.btn_print.Location = new System.Drawing.Point(508, 12);
+            this.btn_print.Location = new System.Drawing.Point(653, 9);
             this.btn_print.Name = "btn_print";
             this.btn_print.Size = new System.Drawing.Size(75, 23);
             this.btn_print.TabIndex = 11;
@@ -130,6 +134,43 @@
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.task_data.Size = new System.Drawing.Size(1020, 408);
             this.task_data.TabIndex = 1;
+            // 
+            // rownum
+            // 
+            this.rownum.DataPropertyName = "rownum";
+            this.rownum.HeaderText = "烟道";
+            this.rownum.Name = "rownum";
+            this.rownum.Width = 80;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "客户名称";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 240;
+            // 
+            // troughinfo
+            // 
+            this.troughinfo.DataPropertyName = "troughinfo";
+            this.troughinfo.HeaderText = "品牌名称";
+            this.troughinfo.Name = "troughinfo";
+            this.troughinfo.Width = 150;
+            // 
+            // replenishnum
+            // 
+            this.replenishnum.DataPropertyName = "replenishnum";
+            this.replenishnum.HeaderText = "数量";
+            this.replenishnum.Name = "replenishnum";
+            this.replenishnum.Width = 120;
+            // 
+            // 任务号
+            // 
+            this.任务号.HeaderText = "任务号";
+            this.任务号.Name = "任务号";
+            // 
+            // 车组
+            // 
+            this.车组.HeaderText = "车组";
+            this.车组.Name = "车组";
             // 
             // dgVprint1
             // 
@@ -253,42 +294,34 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // rownum
+            // cmbTroughnum
             // 
-            this.rownum.DataPropertyName = "rownum";
-            this.rownum.HeaderText = "烟道";
-            this.rownum.Name = "rownum";
-            this.rownum.Width = 80;
+            this.cmbTroughnum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTroughnum.FormattingEnabled = true;
+            this.cmbTroughnum.Items.AddRange(new object[] {
+            "1001",
+            "1002",
+            "1059",
+            "1060",
+            "1061",
+            "2001",
+            "2002",
+            "2059",
+            "2060",
+            "2061"});
+            this.cmbTroughnum.Location = new System.Drawing.Point(347, 11);
+            this.cmbTroughnum.Name = "cmbTroughnum";
+            this.cmbTroughnum.Size = new System.Drawing.Size(90, 20);
+            this.cmbTroughnum.TabIndex = 16;
             // 
-            // Column1
+            // labeltroughnum
             // 
-            this.Column1.HeaderText = "客户名称";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 240;
-            // 
-            // troughinfo
-            // 
-            this.troughinfo.DataPropertyName = "troughinfo";
-            this.troughinfo.HeaderText = "品牌名称";
-            this.troughinfo.Name = "troughinfo";
-            this.troughinfo.Width = 150;
-            // 
-            // replenishnum
-            // 
-            this.replenishnum.DataPropertyName = "replenishnum";
-            this.replenishnum.HeaderText = "数量";
-            this.replenishnum.Name = "replenishnum";
-            this.replenishnum.Width = 120;
-            // 
-            // 任务号
-            // 
-            this.任务号.HeaderText = "任务号";
-            this.任务号.Name = "任务号";
-            // 
-            // 车组
-            // 
-            this.车组.HeaderText = "车组";
-            this.车组.Name = "车组";
+            this.labeltroughnum.AutoSize = true;
+            this.labeltroughnum.Location = new System.Drawing.Point(294, 15);
+            this.labeltroughnum.Name = "labeltroughnum";
+            this.labeltroughnum.Size = new System.Drawing.Size(47, 12);
+            this.labeltroughnum.TabIndex = 17;
+            this.labeltroughnum.Text = "通 道：";
             // 
             // w_hunhereportprint
             // 
@@ -322,5 +355,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn replenishnum;
         private System.Windows.Forms.DataGridViewTextBoxColumn 任务号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 车组;
+        private System.Windows.Forms.Label labeltroughnum;
+        private System.Windows.Forms.ComboBox cmbTroughnum;
     }
 }
