@@ -156,7 +156,37 @@ namespace highSpeed.orderHandle
 
         private void btn_schedule_Click(object sender, EventArgs e)
         {
-            
+            //查询禁用的包装机和主皮带
+            string mainbeltno="";
+            string packmachineno = "";
+            Db.Open();
+            DataTable dt1 = Db.Query("select troughnum from t_produce_sorttrough h where h.troughtype = 30 and state = 0 order by troughnum");
+            if (dt1.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt1.Rows.Count; i++)
+                {
+                    mainbeltno = mainbeltno+ " "+dt1.Rows[i][0].ToString();
+                } 
+            }
+            DataTable dt2 = Db.Query("select troughnum from t_produce_sorttrough h where h.troughtype = 40 and state = 0 order by troughnum");
+            if (dt2.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt2.Rows.Count; i++)
+                {
+                    packmachineno = packmachineno + " " + dt2.Rows[i][0].ToString();
+                }
+            }
+            if (dt1.Rows.Count > 0 ||dt2.Rows.Count > 0)
+            {
+                DialogResult re = MessageBox.Show("已被禁用主皮带：" + mainbeltno + "\r已被禁用包装机：" + packmachineno, "是否继续预排程？", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                if (re == DialogResult.Cancel)
+                {
+                    return;
+                }   
+            }
+             
+
             String codestr = this.txt_codestr.Text.Trim();
             //DateTime time = DateTime.Parse(this.datePick.Value.ToString());
             //String date = string.Format("{0:d}", time);

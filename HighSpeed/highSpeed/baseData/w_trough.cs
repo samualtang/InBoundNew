@@ -144,7 +144,7 @@ namespace highSpeed.baseData
             //MessageBox.Show(strsql);
             int total = int.Parse(DataPublic.ExecuteScalar("SELECT count(*) FROM t_produce_sorttrough where 1=1 " + tmp).ToString());
             Console.WriteLine(strsql);
-          //  Db.Open();
+           //Db.Open();
             Bind(strsql);
            // Db.Close();
             pager1.RecordCount = total;

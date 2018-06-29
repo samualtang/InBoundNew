@@ -253,17 +253,9 @@ namespace highSpeed.baseData
                     }
                 }
                 else
-                {
-                    if (type=="40")
-                    {
-                        sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval + " where id=" + id; 
-                    }
-                    else
-                    {
-                        MessageBox.Show("1");
-                        sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',where id=" + id; 
-                    }
-                  
+                { 
+                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval + " where id=" + id; 
+              
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
