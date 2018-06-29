@@ -133,10 +133,10 @@ namespace InBound.Business
                         //values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 3] = item.SENDTASKNUM;// item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = item.STORENUM; //前一客户顺序号
-                        values[j * 9 + 5] = 0;//整包任务号
+                        values[j * 9 + 5] = 0;//备用 0
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
-                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
-                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码 
+                        values[j * 9 + 7] = 0;//备用0
+                        values[j * 9 + 8] = item.SORTNUM;//客户号
                         j++;
                         checkcode += item.POKEID;
                         
@@ -203,10 +203,10 @@ namespace InBound.Business
                         values[j * 9 + 2] = 21;//尾数标志 >20
                         values[j * 9 + 3] = item.SENDTASKNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = item.STORENUM;//前一客户顺序号
-                        values[j * 9 + 5] = 0;//包装号 item.SENDTASKNUM 取最新一个客户
+                        values[j * 9 + 5] = 0;//备用 0
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
-                        values[j * 9 + 7] = item.SORTNUM;//备用:排序号
-                        values[j * 9 + 8] = item.CIGARETTECODE;//条烟条码
+                        values[j * 9 + 7] = 0;//备用 0
+                        values[j * 9 + 8] = item.SORTNUM;//客户号
                         j++;
                         checkcode += item.POKEID;
                     }
