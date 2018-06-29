@@ -319,7 +319,7 @@ namespace SortingControlSys.SortingControl
                     {
                         p1 += taskGroup2.ReadD(i).ToString() + ";";//pokeid  
                     }
-                    writeLog.Write("读出烟仓第二组电控写入值:" + p1);
+                    writeLog.Write("读出烟仓二线电控写入值:" + p1);
                     
                 }
             }
@@ -375,7 +375,7 @@ namespace SortingControlSys.SortingControl
                     {
                         p1 += taskgroup1.ReadD(i).ToString() + ";";//pokeid   
                     }
-                    writeLog.Write("烟仓读出第一组电控写入值:" + p1);
+                    writeLog.Write("读出烟仓一线电控写入值:" + p1);
                     
                 }
             }
@@ -651,7 +651,7 @@ namespace SortingControlSys.SortingControl
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-                    if (clientId[i] == 1)//第一组
+                    if (clientId[i] == 1)//烟仓第一线
                     {
 
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)
@@ -667,15 +667,15 @@ namespace SortingControlSys.SortingControl
                             }
                             if (logstr != null && logstr.Length > 0)
                             {
-                                writeLog.Write("第一组任务号:" + logstr + "已接收");
-                                updateListBox("第一组任务号:" + logstr + "已接收");
+                                writeLog.Write("烟仓一线任务号:" + logstr + "已接收");
+                                updateListBox("烟仓一线任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(list, 15);
                                 UnPokeService.UpdateStroageInout(list);
                             }
                             sendTask1();
                         } 
-                    } 
-                    if (clientId[i] == 2)//第二组
+                    }
+                    if (clientId[i] == 2)//烟仓第二线
                     {
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)
                         {
@@ -690,8 +690,8 @@ namespace SortingControlSys.SortingControl
                             }
                             if (logstr != null && logstr.Length > 0)
                             {
-                                writeLog.Write("第二组任务号:" + logstr + "已接收");
-                                updateListBox("第二组任务号:" + logstr + "已接收");
+                                writeLog.Write("烟仓二线任务号:" + logstr + "已接收");
+                                updateListBox("烟仓二线任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(list1, 15);
                                 UnPokeService.UpdateStroageInout(list1);
                             }
