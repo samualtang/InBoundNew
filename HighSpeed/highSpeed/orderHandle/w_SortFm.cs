@@ -21,7 +21,7 @@ namespace highSpeed.orderHandle
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
         public WriteLog writeLog = WriteLog.GetLog();
-        static  string sqlhwere = "where state = " + 0;
+        static  string sqlhwere = " where state = 0 ";
         static  string sql = "select  REGIONCODE 车组号,Sum(TASKQUANTITY)  任务数 ,STATE 状态,MAINBELT 主皮带,ORDERDATE 订单日期 from t_produce_task " + sqlhwere + " group by REGIONCODE,STATE,MAINBELT,ORDERDATE  order by REGIONCODE";
         public delegate void HandleIsSorting(int flage,bool isOrnot);
         HandleIsSorting handlesort;
@@ -63,7 +63,7 @@ namespace highSpeed.orderHandle
         }
          private void w_SortFm_Load(object sender, EventArgs e)
         {
-            lblInFO.Text = "任务列表:";
+            lblInFO.Text = "分拣车组信息:";
         }
          void DgvBind(string sql)
          {
@@ -118,6 +118,7 @@ namespace highSpeed.orderHandle
             this.btnSort.Enabled = false;//防止点击多下  
             isSort = true;
             handlesort(3,true);
+            
             label2.Text = "正在读取数据..."; 
             progressBar1.Value = 0;
           
@@ -165,12 +166,15 @@ namespace highSpeed.orderHandle
                 String errmsg = sqlpara[1].Value.ToString();
                 if (errcode == "1")
                 {
+                    progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
-                    MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
+                    lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times;
+                    MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
                     updateControl(btnSort, true, true);
                     //  btnRef_Click(null, null);//排程成功后刷新
-                    DgvBind(sql);//排程成功后刷新 
+                  //  DgvBind(sql);//排程成功后刷新 
+                    dgvSortInfo.DataSource = null;
                 }
                 else
                 {
@@ -191,12 +195,12 @@ namespace highSpeed.orderHandle
 
             catch (DataException da)
             {
-                MessageBox.Show("排程异常:" + da.Message);
+                MessageBox.Show("排程异常:" + da.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 writeLog.Write("排程异常:" + da.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("排程异常:" + e.Message);
+                MessageBox.Show("排程异常:" + e.Message,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 writeLog.Write("排程异常:" + e.Message);
             }
             finally
