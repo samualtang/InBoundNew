@@ -254,7 +254,7 @@ namespace highSpeed.baseData
                 }
                 else
                 { 
-                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval + " where id=" + id; 
+                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval+"groupno="+groupno+ " where id=" + id; 
               
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

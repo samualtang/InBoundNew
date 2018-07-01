@@ -95,21 +95,21 @@ namespace highSpeed.orderHandle
                  //this.dgvSortInfo.AutoGenerateColumns = false;
 
 
-                 //string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
-                 //if (columnwidths != "")
-                 //{
-                 //    string[] columns = columnwidths.Split(',');
-                 //    int j = 0;
-                 //    for (int i = 0; i < columns.Length; i++)
-                 //    {
-                 //        if (dgvSortInfo.Columns[i].Visible == true)
-                 //        {
-                 //            dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
-                 //            j = j + 1;
-                 //        }
-                 //    }
-                 //}
-                 //dgvSortInfo.ClearSelection(); 
+                 string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
+                 if (columnwidths != "")
+                 {
+                     string[] columns = columnwidths.Split(',');
+                     int j = 0;
+                     for (int i = 0; i < columns.Length; i++)
+                     {
+                         if (dgvSortInfo.Columns[i].Visible == true)
+                         {
+                             dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
+                             j = j + 1;
+                         }
+                     }
+                 }
+                 dgvSortInfo.ClearSelection(); 
              Db.Close();
 
          }
@@ -168,9 +168,9 @@ namespace highSpeed.orderHandle
                 {
                     progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
-                    lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times;
-                    MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
+                    lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times+"秒";
+                    MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒");
                     updateControl(btnSort, true, true);
                     //  btnRef_Click(null, null);//排程成功后刷新
                   //  DgvBind(sql);//排程成功后刷新 
@@ -178,7 +178,10 @@ namespace highSpeed.orderHandle
                 }
                 else
                 {
-                    MessageBox.Show(errmsg);
+                    progressBar1.Value = progressBar1.Maximum;
+                    lblInFO.Text = " ";
+                    TimerByTime.Stop();// 计时结束;
+                    MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     updateControl(btnSort, true, true); 
                 }
                 updateControl(btnSort, true, true);
