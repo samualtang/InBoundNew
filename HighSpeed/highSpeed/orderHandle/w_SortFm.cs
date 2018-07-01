@@ -31,7 +31,8 @@ namespace highSpeed.orderHandle
             this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
             this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false; 
-            rdbUnionDan.Checked = true; 
+            rdbUnionDan.Checked = true;
+            dgvSortInfo.AllowUserToAddRows = false;
             //this.pager1.GetChildAtPoint(7).Visible = false;
             seek();
             pager1.Width = dgvSortInfo.Width;
@@ -71,17 +72,17 @@ namespace highSpeed.orderHandle
              ds = Db.QueryDs(sql); 
              panel2.Visible = true;
              label2.Visible = true;
-             progressBar1.Visible = true;
+             progressBar1.Visible = false;
              int rcounts = ds.Tables[0].Rows.Count;
              progressBar1.Value = 0;
-             for (int i = 0; i < rcounts; i++)
-             {
-                 Application.DoEvents();
-                 progressBar1.Value = ((i + 1) * 100 / rcounts);
-                 progressBar1.Refresh();
-                 label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
-                 label2.Refresh();
-             }
+             //for (int i = 0; i < rcounts; i++)
+             //{
+             //    Application.DoEvents();
+             //    progressBar1.Value = ((i + 1) * 100 / rcounts);
+             //    progressBar1.Refresh();
+             //    label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
+             //    label2.Refresh();
+             //}
              if (ds.Tables.Count > 0)
              {
                  panel2.Visible = false;
@@ -92,24 +93,24 @@ namespace highSpeed.orderHandle
                  dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
                  this.dgvSortInfo.DataSource = ds.Tables[0];
                  dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
-                 this.dgvSortInfo.AutoGenerateColumns = false;
+                 //this.dgvSortInfo.AutoGenerateColumns = false;
 
 
-                 string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
-                 if (columnwidths != "")
-                 {
-                     string[] columns = columnwidths.Split(',');
-                     int j = 0;
-                     for (int i = 0; i < columns.Length; i++)
-                     {
-                         if (dgvSortInfo.Columns[i].Visible == true)
-                         {
-                             dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
-                             j = j + 1;
-                         }
-                     }
-                 }
-                 dgvSortInfo.ClearSelection(); 
+                 //string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
+                 //if (columnwidths != "")
+                 //{
+                 //    string[] columns = columnwidths.Split(',');
+                 //    int j = 0;
+                 //    for (int i = 0; i < columns.Length; i++)
+                 //    {
+                 //        if (dgvSortInfo.Columns[i].Visible == true)
+                 //        {
+                 //            dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
+                 //            j = j + 1;
+                 //        }
+                 //    }
+                 //}
+                 //dgvSortInfo.ClearSelection(); 
              }
              Db.Close();
 
@@ -119,6 +120,7 @@ namespace highSpeed.orderHandle
             this.btnSort.Enabled = false;//防止点击多下  
             label2.Text = "正在读取数据...";
             progressBar1.Value = times;
+            progressBar1.Value = 0; 
             label2.Visible = true;
             panel2.Visible = true;
             lblTime.Visible = true;
@@ -164,15 +166,15 @@ namespace highSpeed.orderHandle
                 if (errcode == "1")
                 {
                     TimerByTime.Stop();// 计时结束;
-                    MessageBox.Show("分拣车组任务排序成功！" +"\r\n"+"所用时间:"+ times);
-                    writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times); 
+                    MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
+                    writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
                     updateControl(btnSort, true, true);
-                    btnRef_Click(null, null);//排程成功后刷新
-                   // DgvBind(sql);//排程成功后刷新
+                    //  btnRef_Click(null, null);//排程成功后刷新
+                    DgvBind(sql);//排程成功后刷新
                 }
                 else
-                { 
-                    MessageBox.Show(errmsg); 
+                {
+                    MessageBox.Show(errmsg);
                     updateControl(btnSort, true, true);
                 }
                 updateControl(btnSort, true, true);
@@ -181,16 +183,22 @@ namespace highSpeed.orderHandle
                 //  label2.Visible = false;
                 updateControl(label2, false, true);
                 //  progressBar1.Visible = false;
-                updateControl(progressBar1, false, true);   
+                updateControl(progressBar1, false, true);
 
-                updateControl(lblTime, false, true);  
-               
+                updateControl(lblTime, false, true);
+
+            }    
+            catch (DataException da)
+            {
+                MessageBox.Show("异常信息:" + da.Message);
+                writeLog.Write("异常信息:" + da.Message);
             }
             catch (Exception e)
             {
                 MessageBox.Show("异常信息:" + e.Message);
-                writeLog.Write("异常信息:" + e.Message);  
+                writeLog.Write("异常信息:" + e.Message);
             }
+        
         }
         private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
 
