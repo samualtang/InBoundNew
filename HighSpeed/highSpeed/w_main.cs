@@ -678,6 +678,75 @@ namespace highSpeed
         {
             
         }
+       
+        /// <summary>
+        /// 订单接收
+        /// </summary>
+        static bool isRecieveing = false;
+        /// <summary>
+        /// 预排程
+        /// </summary>
+        static bool isScheduleing = false;
+
+        /// <summary>
+        /// 排程
+        /// </summary>
+        static bool isSorting = false;
+        /// <summary>
+        /// 判断子窗体是否正在执行任务
+        /// </summary>
+        /// <param name="index">1 订单接收，2 预排程 ，3排程</param>
+        public void  GetSonFormState(int  index,bool isOrNot)
+        { 
+            if (index == 1)//订单接收
+            {
+                isRecieveing = isOrNot;
+            }
+            if (index == 2)//预排程
+            {
+                isScheduleing = isOrNot;
+            }
+            if (index == 3)//排程
+            {
+                isSorting = isOrNot;
+            } 
+        }
+        private void w_main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isRecieveing)
+            {
+                e.Cancel = true; 
+                return;
+            }
+            if (isScheduleing)
+            {
+                e.Cancel = true; 
+                return;
+            }
+            if (isSorting)
+            {
+                e.Cancel = true; 
+                return;
+            }
+            else
+            {
+                DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                              "操作提示",//对话框的标题 
+                                                              MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                              MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                              MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                if (MsgBoxResult == DialogResult.Yes)
+                {
+                    System.Environment.Exit(System.Environment.ExitCode);
+                    this.Dispose();
+                    this.Close();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
 
 
 

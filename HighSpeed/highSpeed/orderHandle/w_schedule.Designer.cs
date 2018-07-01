@@ -215,6 +215,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "win_schedule";
             this.Text = "预排程";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.win_schedule_FormClosing);
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

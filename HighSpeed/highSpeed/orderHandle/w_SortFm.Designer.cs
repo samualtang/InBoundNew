@@ -36,12 +36,11 @@
             this.lblInFO = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblTime = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
-            this.pager1 = new WHC.Pager.WinControl.Pager();
             this.TimerByTime = new System.Windows.Forms.Timer(this.components);
-            this.lblTime = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -124,12 +123,23 @@
             this.panel2.TabIndex = 4;
             this.panel2.Visible = false;
             // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblTime.Location = new System.Drawing.Point(31, 14);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(75, 15);
+            this.lblTime.TabIndex = 2;
+            this.lblTime.Text = "已用时间:";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(147, 14);
+            this.label2.Font = new System.Drawing.Font("宋体", 11F);
+            this.label2.Location = new System.Drawing.Point(184, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 12);
+            this.label2.Size = new System.Drawing.Size(115, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "正在排程......";
             // 
@@ -161,44 +171,23 @@
             this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
             this.dgvSortInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortInfo_CellFormatting);
             // 
-            // pager1
-            // 
-            this.pager1.CurrentPageIndex = 1;
-            this.pager1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pager1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pager1.Location = new System.Drawing.Point(0, 621);
-            this.pager1.Name = "pager1";
-            this.pager1.RecordCount = 0;
-            this.pager1.Size = new System.Drawing.Size(921, 45);
-            this.pager1.TabIndex = 6;
-            this.pager1.Visible = false;
-            // 
             // TimerByTime
             // 
             this.TimerByTime.Interval = 1000;
             this.TimerByTime.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(31, 14);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(59, 12);
-            this.lblTime.TabIndex = 2;
-            this.lblTime.Text = "已用时间:";
             // 
             // w_SortFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 666);
-            this.Controls.Add(this.pager1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.dgvSortInfo);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Name = "w_SortFm";
             this.Text = "任务排序";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_SortFm_FormClosing);
             this.Load += new System.EventHandler(this.w_SortFm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -218,7 +207,6 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblInFO;
         private System.Windows.Forms.DataGridView dgvSortInfo;
-        private WHC.Pager.WinControl.Pager pager1;
         private System.Windows.Forms.RadioButton rdbUnUnionDan;
         private System.Windows.Forms.RadioButton rdbUnionDan;
         private System.Windows.Forms.Button btnRef;

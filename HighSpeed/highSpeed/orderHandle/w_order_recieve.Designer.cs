@@ -37,14 +37,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.datePick = new System.Windows.Forms.DateTimePicker();
             this.orderdata = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dpid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count_hs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.order_qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -61,17 +61,17 @@
             this.panel1.Controls.Add(this.datePick);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1587, 52);
+            this.panel1.Size = new System.Drawing.Size(1190, 42);
             this.panel1.TabIndex = 0;
             // 
             // btn_all
             // 
-            this.btn_all.Location = new System.Drawing.Point(350, 10);
-            this.btn_all.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btn_all.Location = new System.Drawing.Point(262, 8);
+            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_all.Name = "btn_all";
-            this.btn_all.Size = new System.Drawing.Size(100, 28);
+            this.btn_all.Size = new System.Drawing.Size(75, 22);
             this.btn_all.TabIndex = 9;
             this.btn_all.Text = "全选";
             this.btn_all.UseVisualStyleBackColor = true;
@@ -80,19 +80,19 @@
             // txt_codestr
             // 
             this.txt_codestr.Enabled = false;
-            this.txt_codestr.Location = new System.Drawing.Point(1502, 10);
-            this.txt_codestr.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txt_codestr.Location = new System.Drawing.Point(1126, 8);
+            this.txt_codestr.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_codestr.Name = "txt_codestr";
-            this.txt_codestr.Size = new System.Drawing.Size(79, 25);
+            this.txt_codestr.Size = new System.Drawing.Size(60, 21);
             this.txt_codestr.TabIndex = 8;
             this.txt_codestr.Visible = false;
             // 
             // btn_recieve
             // 
-            this.btn_recieve.Location = new System.Drawing.Point(459, 10);
-            this.btn_recieve.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btn_recieve.Location = new System.Drawing.Point(344, 8);
+            this.btn_recieve.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_recieve.Name = "btn_recieve";
-            this.btn_recieve.Size = new System.Drawing.Size(100, 28);
+            this.btn_recieve.Size = new System.Drawing.Size(75, 22);
             this.btn_recieve.TabIndex = 4;
             this.btn_recieve.Text = "接收";
             this.btn_recieve.UseVisualStyleBackColor = true;
@@ -100,10 +100,10 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(243, 10);
-            this.btn_search.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btn_search.Location = new System.Drawing.Point(182, 8);
+            this.btn_search.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(100, 28);
+            this.btn_search.Size = new System.Drawing.Size(75, 22);
             this.btn_search.TabIndex = 3;
             this.btn_search.Text = "查询";
             this.btn_search.UseVisualStyleBackColor = true;
@@ -112,20 +112,18 @@
             // lab_showinfo
             // 
             this.lab_showinfo.AutoSize = true;
-            this.lab_showinfo.Location = new System.Drawing.Point(621, 13);
-            this.lab_showinfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lab_showinfo.Location = new System.Drawing.Point(466, 10);
             this.lab_showinfo.Name = "lab_showinfo";
-            this.lab_showinfo.Size = new System.Drawing.Size(742, 15);
+            this.lab_showinfo.Size = new System.Drawing.Size(593, 12);
             this.lab_showinfo.TabIndex = 2;
             this.lab_showinfo.Text = "勾选要接收的订单数据，点击“接收”按钮，进行订单接收操作。根据接收量的不同，接收过程需要一定时间。";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 15);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "订单日期";
             // 
@@ -133,10 +131,10 @@
             // 
             this.datePick.CustomFormat = "yyyy-MM-dd";
             this.datePick.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.datePick.Location = new System.Drawing.Point(94, 12);
-            this.datePick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.datePick.Location = new System.Drawing.Point(70, 10);
+            this.datePick.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.datePick.Name = "datePick";
-            this.datePick.Size = new System.Drawing.Size(128, 25);
+            this.datePick.Size = new System.Drawing.Size(97, 21);
             this.datePick.TabIndex = 0;
             this.datePick.Value = new System.DateTime(2013, 10, 24, 0, 0, 0, 0);
             // 
@@ -151,44 +149,14 @@
             this.count_hs,
             this.order_qty});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderdata.Location = new System.Drawing.Point(0, 52);
-            this.orderdata.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.orderdata.Location = new System.Drawing.Point(0, 42);
+            this.orderdata.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(1587, 275);
+            this.orderdata.Size = new System.Drawing.Size(1190, 220);
             this.orderdata.TabIndex = 1;
             this.orderdata.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellEndEdit);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.progressBar1);
-            this.panel2.Location = new System.Drawing.Point(94, 145);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1101, 112);
-            this.panel2.TabIndex = 2;
-            this.panel2.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(41, 18);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(121, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "正在读取数据...";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(44, 52);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(988, 28);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.Visible = false;
             // 
             // checkbox
             // 
@@ -197,7 +165,7 @@
             this.checkbox.HeaderText = "选择";
             this.checkbox.Name = "checkbox";
             this.checkbox.TrueValue = "true";
-            this.checkbox.Width = 43;
+            this.checkbox.Width = 35;
             // 
             // Column1
             // 
@@ -227,17 +195,47 @@
             this.order_qty.Name = "order_qty";
             this.order_qty.ReadOnly = true;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Location = new System.Drawing.Point(70, 116);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(826, 90);
+            this.panel2.TabIndex = 2;
+            this.panel2.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(31, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "正在读取数据...";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(33, 42);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(741, 22);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.Visible = false;
+            // 
             // win_order_recieve
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1587, 327);
+            this.ClientSize = new System.Drawing.Size(1190, 262);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "win_order_recieve";
             this.Text = "订单接收";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.win_order_recieve_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).EndInit();

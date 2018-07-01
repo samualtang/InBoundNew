@@ -95,56 +95,56 @@
             // 订单信息ToolStripMenuItem
             // 
             this.订单信息ToolStripMenuItem.Name = "订单信息ToolStripMenuItem";
-            this.订单信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.订单信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.订单信息ToolStripMenuItem.Text = "卷烟信息";
             this.订单信息ToolStripMenuItem.Click += new System.EventHandler(this.订单信息ToolStripMenuItem_Click);
             // 
             // 零售户信息ToolStripMenuItem
             // 
             this.零售户信息ToolStripMenuItem.Name = "零售户信息ToolStripMenuItem";
-            this.零售户信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.零售户信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.零售户信息ToolStripMenuItem.Text = "零售户信息";
             this.零售户信息ToolStripMenuItem.Click += new System.EventHandler(this.零售户信息ToolStripMenuItem_Click);
             // 
             // 车组信息ToolStripMenuItem
             // 
             this.车组信息ToolStripMenuItem.Name = "车组信息ToolStripMenuItem";
-            this.车组信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.车组信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.车组信息ToolStripMenuItem.Text = "车组信息";
             this.车组信息ToolStripMenuItem.Click += new System.EventHandler(this.车组信息ToolStripMenuItem_Click);
             // 
             // 分拣批次管理ToolStripMenuItem
             // 
             this.分拣批次管理ToolStripMenuItem.Name = "分拣批次管理ToolStripMenuItem";
-            this.分拣批次管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.分拣批次管理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.分拣批次管理ToolStripMenuItem.Text = "分拣批次管理";
             this.分拣批次管理ToolStripMenuItem.Click += new System.EventHandler(this.分拣批次管理ToolStripMenuItem_Click);
             // 
             // 品牌条码信息ToolStripMenuItem
             // 
             this.品牌条码信息ToolStripMenuItem.Name = "品牌条码信息ToolStripMenuItem";
-            this.品牌条码信息ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.品牌条码信息ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.品牌条码信息ToolStripMenuItem.Text = "品牌条码信息";
             this.品牌条码信息ToolStripMenuItem.Click += new System.EventHandler(this.品牌条码信息ToolStripMenuItem_Click);
             // 
             // 品牌尾数维护ToolStripMenuItem
             // 
             this.品牌尾数维护ToolStripMenuItem.Name = "品牌尾数维护ToolStripMenuItem";
-            this.品牌尾数维护ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.品牌尾数维护ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.品牌尾数维护ToolStripMenuItem.Text = "品牌尾数维护";
             this.品牌尾数维护ToolStripMenuItem.Click += new System.EventHandler(this.品牌尾数维护ToolStripMenuItem_Click);
             // 
             // 分拣通道管理ToolStripMenuItem
             // 
             this.分拣通道管理ToolStripMenuItem.Name = "分拣通道管理ToolStripMenuItem";
-            this.分拣通道管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.分拣通道管理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.分拣通道管理ToolStripMenuItem.Text = "分拣通道管理";
             this.分拣通道管理ToolStripMenuItem.Click += new System.EventHandler(this.分拣通道管理ToolStripMenuItem_Click);
             // 
             // 通道转移ToolStripMenuItem
             // 
             this.通道转移ToolStripMenuItem.Name = "通道转移ToolStripMenuItem";
-            this.通道转移ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.通道转移ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.通道转移ToolStripMenuItem.Text = "通道转移";
             this.通道转移ToolStripMenuItem.Click += new System.EventHandler(this.通道转移ToolStripMenuItem_Click);
             // 
@@ -327,6 +327,7 @@
             this.Name = "w_main";
             this.Text = "长株潭烟草物流分拣系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.w_main_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

@@ -9,17 +9,23 @@ using System.Windows.Forms;
 using highSpeed.PubFunc;
 using System.Data.SqlClient;
 using System.Data.OracleClient;
+using InBound;
 
 namespace highSpeed.orderHandle
 {
     public partial class win_order_recieve : Form
     {
         DataSet ds = new DataSet();
+        w_main wm = new w_main();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
+        public delegate void HandleRecieveing(int falge,bool isOrnot);
+        HandleRecieveing handlerecieve;
         DataBase Db = new DataBase();
+        bool isRecieve = false;
         public win_order_recieve()
         {
             InitializeComponent();
+            handlerecieve += wm.GetSonFormState;
             string weekstr = DateTime.Now.DayOfWeek.ToString();
             this.datePick.Value = DateTime.Today;
             
@@ -108,130 +114,146 @@ namespace highSpeed.orderHandle
 
         private void btn_recieve_Click(object sender, EventArgs e)
         {
-            this.btn_recieve.Enabled = false;//接收按钮屏蔽，防止再次点击
-            String codestr = this.txt_codestr.Text.Trim();
-            DateTime time = DateTime.Parse(this.datePick.Value.ToString());
-            String date = string.Format("{0:d}", time);
-            OracleParameter[] sqlpara;
-            string errcode = "", errmsg = "";
-
-            //取是第几次接受数据
-
-            String synseq = "1";
-            String sql="select decode(max(synseq),'','0',max(synseq))+1 from t_produce_order";
-            DataTable dbq = new DataTable();
-            dbq = Db.Query(sql);
-            if (dbq.Rows.Count > 0) {
-                synseq=dbq.Rows[0][0].ToString();
-            }
-
-
-            if (codestr != "")
+            try
             {
-                Db.Open();
-                String[] code = codestr.Substring(1).Split(',');
-                int len=code.Length;
+                this.btn_recieve.Enabled = false;//接收按钮屏蔽，防止再次点击
+                isRecieve = true;
+                handlerecieve(1,true);//订单接收
+                String codestr = this.txt_codestr.Text.Trim();
+                DateTime time = DateTime.Parse(this.datePick.Value.ToString());
+                String date = string.Format("{0:d}", time);
+                OracleParameter[] sqlpara;
+                string errcode = "", errmsg = "";
 
-                string indexstr = "";//记录已完成接收的车组code串
+                //取是第几次接受数据
 
-
-
-                for (int i = 0; i < len; i++ )
+                String synseq = "1";
+                String sql = "select decode(max(synseq),'','0',max(synseq))+1 from t_produce_order";
+                DataTable dbq = new DataTable();
+                dbq = Db.Query(sql);
+                if (dbq.Rows.Count > 0)
                 {
-                    panel2.Visible = true;
-                    label2.Visible = true;
-                    progressBar1.Visible = true;
-                    int rcounts = ds.Tables[0].Rows.Count;
-                    progressBar1.Value = 0;
-                    Application.DoEvents();
-                    if (i == 0) label2.Text = "正在接收" + code[i] + "车组订单数据...";
-                    //MessageBox.Show(label2.Text);
-                    sqlpara = new OracleParameter[5];
-                    sqlpara[0] = new OracleParameter("p_time", date);
-                    sqlpara[1] = new OracleParameter("p_routestr", code[i]);
-                    sqlpara[2] = new OracleParameter("p_synseq", System.Int32.Parse(synseq));
-                    sqlpara[3] = new OracleParameter("p_ErrCode", OracleType.VarChar,30);
-                    sqlpara[4] = new OracleParameter("p_ErrMsg", OracleType.VarChar,1000);
-
-                    sqlpara[3].Direction = ParameterDirection.Output;
-                    sqlpara[4].Direction = ParameterDirection.Output;
-
-                    Db.ExecuteNonQueryWithProc("P_PRODUCE_ORDERRECEIVE", sqlpara);
-                    //MessageBox.Show(date);
-                    //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                    errcode = sqlpara[3].Value.ToString();
-                    errmsg = sqlpara[4].Value.ToString();
-                    //进度条显示
-
-
-
-
-                    progressBar1.Value = ((i + 1) * 100 / len);
-                    progressBar1.Refresh();
-                    String tmpstr="";
-
-                    if (errcode == "1")
-                    {
-                        if (i + 1 < len) tmpstr = "正在接收" + code[i + 1] + "车组订单数据...";
-                        else tmpstr = "";
-                        label2.Text = code[i] + "车组订单数据接收完毕..." + tmpstr;
-                        label2.Refresh();
-                        indexstr = indexstr + "," + code[i];
-                    }
-                    else 
-                    {
-                        label2.Text = errmsg;
-                        label2.Refresh();
-                        break;
-                    }
-                    //MessageBox.Show(label2.Text);
+                    synseq = dbq.Rows[0][0].ToString();
                 }
 
-                //string msg = "订单";
 
-                panel2.Visible = false;
-                label2.Visible = false;
-                progressBar1.Visible = false;
-                this.lab_showinfo.Text = errmsg;
-                MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.txt_codestr.Text = "";
+                if (codestr != "")
+                {
+                    Db.Open();
+                    String[] code = codestr.Substring(1).Split(',');
+                    int len = code.Length;
 
-                /*for (int i = 0; i < orderdata.RowCount;i++ )
-                {
-                    bool obj = (bool)this.orderdata.Rows[i].Cells[0].EditedFormattedValue;
-                    if (obj) indexstr=indexstr +","+ i;
-                }*/
-                
-                if (indexstr != "")
-                {
-                    indexstr = indexstr.Substring(1);
-                    String[] indexArr = indexstr.Split(',');
-                    DataTable dt_new = ds.Tables[0];
-                    DataRowCollection drc = dt_new.Rows;
-                    for (int j = 0; j < indexArr.Length; j++)
+                    string indexstr = "";//记录已完成接收的车组code串
+
+
+
+                    for (int i = 0; i < len; i++)
                     {
-                        Console.Write(indexArr[indexArr.Length - 1 - j]);
+                        panel2.Visible = true;
+                        label2.Visible = true;
+                        progressBar1.Visible = true;
+                        int rcounts = ds.Tables[0].Rows.Count;
+                        progressBar1.Value = 0;
+                        Application.DoEvents();
+                        if (i == 0) label2.Text = "正在接收" + code[i] + "车组订单数据...";
+                        //MessageBox.Show(label2.Text);
+                        sqlpara = new OracleParameter[5];
+                        sqlpara[0] = new OracleParameter("p_time", date);
+                        sqlpara[1] = new OracleParameter("p_routestr", code[i]);
+                        sqlpara[2] = new OracleParameter("p_synseq", System.Int32.Parse(synseq));
+                        sqlpara[3] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[4] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
-                        drc.RemoveAt(Convert.ToInt32(indexArr.Length - 1 - j));
-                        
+                        sqlpara[3].Direction = ParameterDirection.Output;
+                        sqlpara[4].Direction = ParameterDirection.Output;
+
+                        Db.ExecuteNonQueryWithProc("P_PRODUCE_ORDERRECEIVE", sqlpara);
+                        //MessageBox.Show(date);
+                        //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                        errcode = sqlpara[3].Value.ToString();
+                        errmsg = sqlpara[4].Value.ToString();
+                        //进度条显示
+
+
+
+
+                        progressBar1.Value = ((i + 1) * 100 / len);
+                        progressBar1.Refresh();
+                        String tmpstr = "";
+
+                        if (errcode == "1")
+                        {
+                            if (i + 1 < len) tmpstr = "正在接收" + code[i + 1] + "车组订单数据...";
+                            else tmpstr = "";
+                            label2.Text = code[i] + "车组订单数据接收完毕..." + tmpstr;
+                            label2.Refresh();
+                            indexstr = indexstr + "," + code[i];
+                        }
+                        else
+                        {
+                            label2.Text = errmsg;
+                            label2.Refresh();
+                            break;
+                        }
+                        //MessageBox.Show(label2.Text);
                     }
-                    this.orderdata.DataSource = dt_new;
-                    this.orderdata.AutoGenerateColumns = false;
-                }
 
-                seek();
-                
+                    //string msg = "订单";
+
+                    panel2.Visible = false;
+                    label2.Visible = false;
+                    progressBar1.Visible = false;
+                    this.lab_showinfo.Text = errmsg;
+                    MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.txt_codestr.Text = "";
+
+                    /*for (int i = 0; i < orderdata.RowCount;i++ )
+                    {
+                        bool obj = (bool)this.orderdata.Rows[i].Cells[0].EditedFormattedValue;
+                        if (obj) indexstr=indexstr +","+ i;
+                    }*/
+
+                    if (indexstr != "")
+                    {
+                        indexstr = indexstr.Substring(1);
+                        String[] indexArr = indexstr.Split(',');
+                        DataTable dt_new = ds.Tables[0];
+                        DataRowCollection drc = dt_new.Rows;
+                        for (int j = 0; j < indexArr.Length; j++)
+                        {
+                            Console.Write(indexArr[indexArr.Length - 1 - j]);
+
+                            drc.RemoveAt(Convert.ToInt32(indexArr.Length - 1 - j));
+
+                        }
+                        this.orderdata.DataSource = dt_new;
+                        this.orderdata.AutoGenerateColumns = false;
+                    }
+
+                    seek();
+
+                }
+                else
+                {
+                    MessageBox.Show("请至少选择一个要接收订单的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                this.btn_recieve.Enabled = true;//接收按钮放开
             }
-            else 
+            catch (Exception ex)
             {
-                MessageBox.Show("请至少选择一个要接收订单的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                writeLog.Write("订单接收异常" + ex.Message);
+
             }
-            this.btn_recieve.Enabled = true;//接收按钮放开
+            finally
+            {
+                isRecieve = false;
+                handlerecieve(1,false);
+            }
         }
 
-
+        public WriteLog writeLog = WriteLog.GetLog();
         private void orderdata_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -264,6 +286,16 @@ namespace highSpeed.orderHandle
                 czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[2].Value + "";
             }
             this.txt_codestr.Text = czcodestr;
+        }
+
+        private void win_order_recieve_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isRecieve)
+            {
+                e.Cancel = true;
+                MessageBox.Show("正在接收订单！请耐心等待接收完毕！");
+                return;
+            }
         }
     }
 }

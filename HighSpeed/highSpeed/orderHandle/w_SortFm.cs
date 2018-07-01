@@ -17,25 +17,30 @@ namespace highSpeed.orderHandle
     public partial class w_SortFm : Form
     {
         DataSet ds = new DataSet();
+        w_main wm = new w_main();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
         public WriteLog writeLog = WriteLog.GetLog();
         static  string sqlhwere = "where state = " + 0;
         static  string sql = "select  REGIONCODE 车组号,Sum(TASKQUANTITY)  任务数 ,STATE 状态,MAINBELT 主皮带,ORDERDATE 订单日期 from t_produce_task " + sqlhwere + " group by REGIONCODE,STATE,MAINBELT,ORDERDATE  order by REGIONCODE";
-
+        public delegate void HandleIsSorting(int flage,bool isOrnot);
+        HandleIsSorting handlesort;
         int times = 1;//排程时间记录
+
+        bool isSort =false;//正在排程标识符
         public w_SortFm()
         {
             InitializeComponent();
-            this.pager1.PageChanged += new WHC.Pager.WinControl.PageChangedEventHandler(pager1_PageChanged);
-            this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
-            this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
+            //this.pager1.PageChanged += new WHC.Pager.WinControl.PageChangedEventHandler(pager1_PageChanged);
+            //this.pager1.ExportCurrent += new WHC.Pager.WinControl.ExportCurrentEventHandler(pager1_ExportCurrent);
+            //this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
+            handlesort += wm.GetSonFormState;
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false; 
             rdbUnionDan.Checked = true;
             dgvSortInfo.AllowUserToAddRows = false;
             //this.pager1.GetChildAtPoint(7).Visible = false;
             seek();
-            pager1.Width = dgvSortInfo.Width;
+           // pager1.Width = dgvSortInfo.Width;
             writeLog.Write("排程启动");
         }
         void pager1_PageChanged(object sender, EventArgs e)
@@ -53,13 +58,8 @@ namespace highSpeed.orderHandle
 
         void seek()
         { 
-            int total = int.Parse(DataPublic.ExecuteScalar("select Count(*) from t_produce_task").ToString());
-            //Console.WriteLine(strsql);
-            //  Db.Open();
+            //int total = int.Parse(DataPublic.ExecuteScalar("select Count(*) from t_produce_task").ToString());
             DgvBind(sql);
-            // Db.Close();
-            pager1.RecordCount = total;
-            this.pager1.InitPageInfo();
         }
          private void w_SortFm_Load(object sender, EventArgs e)
         {
@@ -75,16 +75,15 @@ namespace highSpeed.orderHandle
              progressBar1.Visible = false;
              int rcounts = ds.Tables[0].Rows.Count;
              progressBar1.Value = 0;
-             //for (int i = 0; i < rcounts; i++)
-             //{
-             //    Application.DoEvents();
-             //    progressBar1.Value = ((i + 1) * 100 / rcounts);
-             //    progressBar1.Refresh();
-             //    label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
-             //    label2.Refresh();
-             //}
-             if (ds.Tables.Count > 0)
+             for (int i = 0; i < rcounts; i++)
              {
+                 Application.DoEvents();
+                 progressBar1.Value = ((i + 1) * 100 / rcounts);
+                 progressBar1.Refresh();
+                 label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                 label2.Refresh();
+             }
+            
                  panel2.Visible = false;
                  label2.Visible = false;
                  progressBar1.Visible = false;
@@ -92,7 +91,7 @@ namespace highSpeed.orderHandle
 
                  dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
                  this.dgvSortInfo.DataSource = ds.Tables[0];
-                 dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
+                 //dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
                  //this.dgvSortInfo.AutoGenerateColumns = false;
 
 
@@ -111,16 +110,17 @@ namespace highSpeed.orderHandle
                  //    }
                  //}
                  //dgvSortInfo.ClearSelection(); 
-             }
              Db.Close();
 
          }
         private void btnSort_Click(object sender, EventArgs e)
         { 
             this.btnSort.Enabled = false;//防止点击多下  
-            label2.Text = "正在读取数据...";
-            progressBar1.Value = times;
-            progressBar1.Value = 0; 
+            isSort = true;
+            handlesort(3,true);
+            label2.Text = "正在读取数据..."; 
+            progressBar1.Value = 0;
+          
             label2.Visible = true;
             panel2.Visible = true;
             lblTime.Visible = true;
@@ -170,12 +170,12 @@ namespace highSpeed.orderHandle
                     writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times);
                     updateControl(btnSort, true, true);
                     //  btnRef_Click(null, null);//排程成功后刷新
-                    DgvBind(sql);//排程成功后刷新
+                    DgvBind(sql);//排程成功后刷新 
                 }
                 else
                 {
                     MessageBox.Show(errmsg);
-                    updateControl(btnSort, true, true);
+                    updateControl(btnSort, true, true); 
                 }
                 updateControl(btnSort, true, true);
                 //  panel2.Visible = false;
@@ -187,16 +187,22 @@ namespace highSpeed.orderHandle
 
                 updateControl(lblTime, false, true);
 
-            }    
+            }
+
             catch (DataException da)
             {
-                MessageBox.Show("异常信息:" + da.Message);
-                writeLog.Write("异常信息:" + da.Message);
+                MessageBox.Show("排程异常:" + da.Message);
+                writeLog.Write("排程异常:" + da.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("异常信息:" + e.Message);
-                writeLog.Write("异常信息:" + e.Message);
+                MessageBox.Show("排程异常:" + e.Message);
+                writeLog.Write("排程异常:" + e.Message);
+            }
+            finally
+            {
+                handlesort(3,false);//告诉父窗体任务结束
+                isSort = false;
             }
         
         }
@@ -252,7 +258,28 @@ namespace highSpeed.orderHandle
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            lblTime.Text ="已用时间:"+ times++.ToString();
+           
+            lblTime.Text ="已用时间:"+ times++.ToString()+"秒";
+            int progs = times * 2;
+
+            progressBar1.Maximum = 100;
+            if (progs > progressBar1.Maximum)
+            {
+                progressBar1.Maximum = progs +2;
+            }
+            progressBar1.Value = progs;
+           
+       
+        }
+
+        private void w_SortFm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isSort)
+            {
+                e.Cancel = true;
+                MessageBox.Show("正在排程！请等待排程结束....");
+                return;
+            }
         }
 
 
