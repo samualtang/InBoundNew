@@ -38,6 +38,12 @@ namespace FollowTask
             lblCacheText.Text = machineText.Substring(6) + "机械手缓存区香烟排序";
         }
 
+        public void GetUnionNowMachineTask()
+        {
+
+
+        }
+
         private void Fm_UinonCache_Load(object sender, EventArgs e)
         {
 

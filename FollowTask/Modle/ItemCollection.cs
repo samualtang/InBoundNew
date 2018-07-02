@@ -102,97 +102,35 @@ namespace FollowTask.Modle
         }
 
         /// <summary>
-        ///  读取合流任务
+        ///  读取合流任务和抓数
         /// </summary>
-        /// <returns></returns
+        /// <returns></returns>
         public static List<string> getUnionTaskItem()
         {
             List<string> list = new List<string>();
             for (int i = 0; i < 32; i++)
             {
-                list.Add(OpcUnionServer + "DB30,DINT" + (i) * 6);//标志位 26
-                list.Add(OpcUnionServer + "DB30,INT" + (4 + (i) * 6));//标志位 26
+                list.Add(OpcUnionServer + "DB30,DINT" + (i) * 6);//任务号  
+                list.Add(OpcUnionServer + "DB30,W" + (4 + (i * 6)));//抓烟条数  
             }
             return list;
         }
         /// <summary>
-        /// 合流一号主皮带八个机械手
+        /// 获取合流机械手当前任务号和抓数
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetUnionMachineItem1()
+        public static List<string> GetUnionMachinNowTaskeItem()
         {
             List<string> list = new List<string>();
-            return list;
-        }
-        /// <summary>
-        /// 合流二号主皮带八个机械手
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetUnionMachineItem2()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        /// <summary>
-        /// 合流三号主皮带八个机械手
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetUnionMachineItem3()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        /// <summary>
-        /// 合流四号主皮带八个机械手
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetUnionMachineItem4()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
+            for (int i = 0; i < 32; i = i + 10)
+            {
+                list.Add(OpcUnionServer + "DB20,DINT" + 256 + i);//当前任务号
+                list.Add(OpcUnionServer + "DB20,W" + 260 + i );//当前抓烟条数
 
-
-
-        public static List<string> MachineItemNo1()
-        {
-            List<string> list = new List<string>();
+            }
             return list;
         }
-        public static List<string> MachineItemNo2()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo3()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo4()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo5()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo6()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo7()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
-        public static List<string> MachineItemNo8()
-        {
-            List<string> list = new List<string>();
-            return list;
-        }
+      
+     
     }
 }

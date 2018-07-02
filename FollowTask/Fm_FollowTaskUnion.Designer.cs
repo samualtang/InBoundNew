@@ -61,14 +61,14 @@
             this.pbMachine5 = new System.Windows.Forms.PictureBox();
             this.pbMachine6 = new System.Windows.Forms.PictureBox();
             this.groupBBelt4 = new System.Windows.Forms.GroupBox();
-            this.button17 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button20 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
-            this.button22 = new System.Windows.Forms.Button();
-            this.button23 = new System.Windows.Forms.Button();
-            this.button24 = new System.Windows.Forms.Button();
+            this.btnhuancun32 = new System.Windows.Forms.Button();
+            this.btnhuancun25 = new System.Windows.Forms.Button();
+            this.btnhuancun26 = new System.Windows.Forms.Button();
+            this.btnhuancun27 = new System.Windows.Forms.Button();
+            this.btnhuancun31 = new System.Windows.Forms.Button();
+            this.btnhuancun28 = new System.Windows.Forms.Button();
+            this.btnhuancun29 = new System.Windows.Forms.Button();
+            this.btnhuancun30 = new System.Windows.Forms.Button();
             this.label32 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -86,14 +86,14 @@
             this.pbMachine29 = new System.Windows.Forms.PictureBox();
             this.pbMachine30 = new System.Windows.Forms.PictureBox();
             this.groupBBelt3 = new System.Windows.Forms.GroupBox();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
+            this.btnhuancun24 = new System.Windows.Forms.Button();
+            this.btnhuancun17 = new System.Windows.Forms.Button();
+            this.btnhuancun18 = new System.Windows.Forms.Button();
+            this.btnhuancun19 = new System.Windows.Forms.Button();
+            this.btnhuancun23 = new System.Windows.Forms.Button();
+            this.btnhuancun20 = new System.Windows.Forms.Button();
+            this.btnhuancun21 = new System.Windows.Forms.Button();
+            this.btnhuancun22 = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -111,14 +111,14 @@
             this.pbMachine21 = new System.Windows.Forms.PictureBox();
             this.pbMachine22 = new System.Windows.Forms.PictureBox();
             this.groupBBelt2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnhuancun16 = new System.Windows.Forms.Button();
+            this.btnhuancun9 = new System.Windows.Forms.Button();
+            this.btnhuancun10 = new System.Windows.Forms.Button();
+            this.btnhuancun11 = new System.Windows.Forms.Button();
+            this.btnhuancun15 = new System.Windows.Forms.Button();
+            this.btnhuancun12 = new System.Windows.Forms.Button();
+            this.btnhuancun13 = new System.Windows.Forms.Button();
+            this.btnhuancun14 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -287,6 +287,7 @@
             this.btnhuancun8.TabIndex = 60;
             this.btnhuancun8.Text = "缓存区";
             this.btnhuancun8.UseVisualStyleBackColor = true;
+            this.btnhuancun8.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun1
             // 
@@ -296,6 +297,7 @@
             this.btnhuancun1.TabIndex = 65;
             this.btnhuancun1.Text = "缓存区";
             this.btnhuancun1.UseVisualStyleBackColor = true;
+            this.btnhuancun1.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun2
             // 
@@ -305,6 +307,7 @@
             this.btnhuancun2.TabIndex = 66;
             this.btnhuancun2.Text = "缓存区";
             this.btnhuancun2.UseVisualStyleBackColor = true;
+            this.btnhuancun2.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun3
             // 
@@ -314,6 +317,7 @@
             this.btnhuancun3.TabIndex = 67;
             this.btnhuancun3.Text = "缓存区";
             this.btnhuancun3.UseVisualStyleBackColor = true;
+            this.btnhuancun3.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun7
             // 
@@ -323,6 +327,7 @@
             this.btnhuancun7.TabIndex = 63;
             this.btnhuancun7.Text = "缓存区";
             this.btnhuancun7.UseVisualStyleBackColor = true;
+            this.btnhuancun7.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun4
             // 
@@ -332,6 +337,7 @@
             this.btnhuancun4.TabIndex = 64;
             this.btnhuancun4.Text = "缓存区";
             this.btnhuancun4.UseVisualStyleBackColor = true;
+            this.btnhuancun4.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun5
             // 
@@ -341,6 +347,7 @@
             this.btnhuancun5.TabIndex = 61;
             this.btnhuancun5.Text = "缓存区";
             this.btnhuancun5.UseVisualStyleBackColor = true;
+            this.btnhuancun5.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // btnhuancun6
             // 
@@ -350,6 +357,7 @@
             this.btnhuancun6.TabIndex = 62;
             this.btnhuancun6.Text = "缓存区";
             this.btnhuancun6.UseVisualStyleBackColor = true;
+            this.btnhuancun6.Click += new System.EventHandler(this.btnhuancun1_Click);
             // 
             // label8
             // 
@@ -553,14 +561,14 @@
             // 
             // groupBBelt4
             // 
-            this.groupBBelt4.Controls.Add(this.button17);
-            this.groupBBelt4.Controls.Add(this.button18);
-            this.groupBBelt4.Controls.Add(this.button19);
-            this.groupBBelt4.Controls.Add(this.button20);
-            this.groupBBelt4.Controls.Add(this.button21);
-            this.groupBBelt4.Controls.Add(this.button22);
-            this.groupBBelt4.Controls.Add(this.button23);
-            this.groupBBelt4.Controls.Add(this.button24);
+            this.groupBBelt4.Controls.Add(this.btnhuancun32);
+            this.groupBBelt4.Controls.Add(this.btnhuancun25);
+            this.groupBBelt4.Controls.Add(this.btnhuancun26);
+            this.groupBBelt4.Controls.Add(this.btnhuancun27);
+            this.groupBBelt4.Controls.Add(this.btnhuancun31);
+            this.groupBBelt4.Controls.Add(this.btnhuancun28);
+            this.groupBBelt4.Controls.Add(this.btnhuancun29);
+            this.groupBBelt4.Controls.Add(this.btnhuancun30);
             this.groupBBelt4.Controls.Add(this.label32);
             this.groupBBelt4.Controls.Add(this.label27);
             this.groupBBelt4.Controls.Add(this.label31);
@@ -586,93 +594,93 @@
             this.groupBBelt4.TabStop = false;
             this.groupBBelt4.Text = "4 号 主 皮 带 :";
             // 
-            // button17
+            // btnhuancun32
             // 
-            this.button17.Location = new System.Drawing.Point(32, 21);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(41, 48);
-            this.button17.TabIndex = 60;
-            this.button17.Text = "缓存区";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button17.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun32.Location = new System.Drawing.Point(32, 21);
+            this.btnhuancun32.Name = "btnhuancun32";
+            this.btnhuancun32.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun32.TabIndex = 60;
+            this.btnhuancun32.Text = "缓存区";
+            this.btnhuancun32.UseVisualStyleBackColor = true;
+            this.btnhuancun32.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun32.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button18
+            // btnhuancun25
             // 
-            this.button18.Location = new System.Drawing.Point(806, 21);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(41, 48);
-            this.button18.TabIndex = 65;
-            this.button18.Text = "缓存区";
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button18.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun25.Location = new System.Drawing.Point(806, 21);
+            this.btnhuancun25.Name = "btnhuancun25";
+            this.btnhuancun25.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun25.TabIndex = 65;
+            this.btnhuancun25.Text = "缓存区";
+            this.btnhuancun25.UseVisualStyleBackColor = true;
+            this.btnhuancun25.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun25.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button19
+            // btnhuancun26
             // 
-            this.button19.Location = new System.Drawing.Point(679, 21);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(41, 48);
-            this.button19.TabIndex = 66;
-            this.button19.Text = "缓存区";
-            this.button19.UseVisualStyleBackColor = true;
-            this.button19.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button19.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun26.Location = new System.Drawing.Point(679, 21);
+            this.btnhuancun26.Name = "btnhuancun26";
+            this.btnhuancun26.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun26.TabIndex = 66;
+            this.btnhuancun26.Text = "缓存区";
+            this.btnhuancun26.UseVisualStyleBackColor = true;
+            this.btnhuancun26.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun26.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button20
+            // btnhuancun27
             // 
-            this.button20.Location = new System.Drawing.Point(591, 21);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(41, 48);
-            this.button20.TabIndex = 67;
-            this.button20.Text = "缓存区";
-            this.button20.UseVisualStyleBackColor = true;
-            this.button20.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button20.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun27.Location = new System.Drawing.Point(591, 21);
+            this.btnhuancun27.Name = "btnhuancun27";
+            this.btnhuancun27.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun27.TabIndex = 67;
+            this.btnhuancun27.Text = "缓存区";
+            this.btnhuancun27.UseVisualStyleBackColor = true;
+            this.btnhuancun27.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun27.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button21
+            // btnhuancun31
             // 
-            this.button21.Location = new System.Drawing.Point(160, 21);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(41, 48);
-            this.button21.TabIndex = 63;
-            this.button21.Text = "缓存区";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button21.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun31.Location = new System.Drawing.Point(160, 21);
+            this.btnhuancun31.Name = "btnhuancun31";
+            this.btnhuancun31.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun31.TabIndex = 63;
+            this.btnhuancun31.Text = "缓存区";
+            this.btnhuancun31.UseVisualStyleBackColor = true;
+            this.btnhuancun31.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun31.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button22
+            // btnhuancun28
             // 
-            this.button22.Location = new System.Drawing.Point(478, 21);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(41, 48);
-            this.button22.TabIndex = 64;
-            this.button22.Text = "缓存区";
-            this.button22.UseVisualStyleBackColor = true;
-            this.button22.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button22.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun28.Location = new System.Drawing.Point(478, 21);
+            this.btnhuancun28.Name = "btnhuancun28";
+            this.btnhuancun28.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun28.TabIndex = 64;
+            this.btnhuancun28.Text = "缓存区";
+            this.btnhuancun28.UseVisualStyleBackColor = true;
+            this.btnhuancun28.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun28.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button23
+            // btnhuancun29
             // 
-            this.button23.Location = new System.Drawing.Point(371, 21);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(41, 48);
-            this.button23.TabIndex = 61;
-            this.button23.Text = "缓存区";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button23.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun29.Location = new System.Drawing.Point(371, 21);
+            this.btnhuancun29.Name = "btnhuancun29";
+            this.btnhuancun29.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun29.TabIndex = 61;
+            this.btnhuancun29.Text = "缓存区";
+            this.btnhuancun29.UseVisualStyleBackColor = true;
+            this.btnhuancun29.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun29.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button24
+            // btnhuancun30
             // 
-            this.button24.Location = new System.Drawing.Point(243, 21);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(41, 48);
-            this.button24.TabIndex = 62;
-            this.button24.Text = "缓存区";
-            this.button24.UseVisualStyleBackColor = true;
-            this.button24.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button24.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun30.Location = new System.Drawing.Point(243, 21);
+            this.btnhuancun30.Name = "btnhuancun30";
+            this.btnhuancun30.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun30.TabIndex = 62;
+            this.btnhuancun30.Text = "缓存区";
+            this.btnhuancun30.UseVisualStyleBackColor = true;
+            this.btnhuancun30.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun30.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // label32
             // 
@@ -876,14 +884,14 @@
             // 
             // groupBBelt3
             // 
-            this.groupBBelt3.Controls.Add(this.button9);
-            this.groupBBelt3.Controls.Add(this.button10);
-            this.groupBBelt3.Controls.Add(this.button11);
-            this.groupBBelt3.Controls.Add(this.button12);
-            this.groupBBelt3.Controls.Add(this.button13);
-            this.groupBBelt3.Controls.Add(this.button14);
-            this.groupBBelt3.Controls.Add(this.button15);
-            this.groupBBelt3.Controls.Add(this.button16);
+            this.groupBBelt3.Controls.Add(this.btnhuancun24);
+            this.groupBBelt3.Controls.Add(this.btnhuancun17);
+            this.groupBBelt3.Controls.Add(this.btnhuancun18);
+            this.groupBBelt3.Controls.Add(this.btnhuancun19);
+            this.groupBBelt3.Controls.Add(this.btnhuancun23);
+            this.groupBBelt3.Controls.Add(this.btnhuancun20);
+            this.groupBBelt3.Controls.Add(this.btnhuancun21);
+            this.groupBBelt3.Controls.Add(this.btnhuancun22);
             this.groupBBelt3.Controls.Add(this.label24);
             this.groupBBelt3.Controls.Add(this.label19);
             this.groupBBelt3.Controls.Add(this.label23);
@@ -909,93 +917,93 @@
             this.groupBBelt3.TabStop = false;
             this.groupBBelt3.Text = "3 号 主 皮 带 :";
             // 
-            // button9
+            // btnhuancun24
             // 
-            this.button9.Location = new System.Drawing.Point(43, 21);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(41, 48);
-            this.button9.TabIndex = 60;
-            this.button9.Text = "缓存区";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button9.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun24.Location = new System.Drawing.Point(43, 21);
+            this.btnhuancun24.Name = "btnhuancun24";
+            this.btnhuancun24.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun24.TabIndex = 60;
+            this.btnhuancun24.Text = "缓存区";
+            this.btnhuancun24.UseVisualStyleBackColor = true;
+            this.btnhuancun24.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun24.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button10
+            // btnhuancun17
             // 
-            this.button10.Location = new System.Drawing.Point(795, 21);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(41, 48);
-            this.button10.TabIndex = 65;
-            this.button10.Text = "缓存区";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button10.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun17.Location = new System.Drawing.Point(795, 21);
+            this.btnhuancun17.Name = "btnhuancun17";
+            this.btnhuancun17.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun17.TabIndex = 65;
+            this.btnhuancun17.Text = "缓存区";
+            this.btnhuancun17.UseVisualStyleBackColor = true;
+            this.btnhuancun17.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun17.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button11
+            // btnhuancun18
             // 
-            this.button11.Location = new System.Drawing.Point(692, 21);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(41, 48);
-            this.button11.TabIndex = 66;
-            this.button11.Text = "缓存区";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button11.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun18.Location = new System.Drawing.Point(692, 21);
+            this.btnhuancun18.Name = "btnhuancun18";
+            this.btnhuancun18.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun18.TabIndex = 66;
+            this.btnhuancun18.Text = "缓存区";
+            this.btnhuancun18.UseVisualStyleBackColor = true;
+            this.btnhuancun18.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun18.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button12
+            // btnhuancun19
             // 
-            this.button12.Location = new System.Drawing.Point(576, 21);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(41, 48);
-            this.button12.TabIndex = 67;
-            this.button12.Text = "缓存区";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button12.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun19.Location = new System.Drawing.Point(576, 21);
+            this.btnhuancun19.Name = "btnhuancun19";
+            this.btnhuancun19.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun19.TabIndex = 67;
+            this.btnhuancun19.Text = "缓存区";
+            this.btnhuancun19.UseVisualStyleBackColor = true;
+            this.btnhuancun19.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun19.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button13
+            // btnhuancun23
             // 
-            this.button13.Location = new System.Drawing.Point(145, 21);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(41, 48);
-            this.button13.TabIndex = 63;
-            this.button13.Text = "缓存区";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button13.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun23.Location = new System.Drawing.Point(145, 21);
+            this.btnhuancun23.Name = "btnhuancun23";
+            this.btnhuancun23.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun23.TabIndex = 63;
+            this.btnhuancun23.Text = "缓存区";
+            this.btnhuancun23.UseVisualStyleBackColor = true;
+            this.btnhuancun23.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun23.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button14
+            // btnhuancun20
             // 
-            this.button14.Location = new System.Drawing.Point(480, 21);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(41, 48);
-            this.button14.TabIndex = 64;
-            this.button14.Text = "缓存区";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button14.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun20.Location = new System.Drawing.Point(480, 21);
+            this.btnhuancun20.Name = "btnhuancun20";
+            this.btnhuancun20.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun20.TabIndex = 64;
+            this.btnhuancun20.Text = "缓存区";
+            this.btnhuancun20.UseVisualStyleBackColor = true;
+            this.btnhuancun20.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun20.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button15
+            // btnhuancun21
             // 
-            this.button15.Location = new System.Drawing.Point(356, 21);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(41, 48);
-            this.button15.TabIndex = 61;
-            this.button15.Text = "缓存区";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button15.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun21.Location = new System.Drawing.Point(356, 21);
+            this.btnhuancun21.Name = "btnhuancun21";
+            this.btnhuancun21.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun21.TabIndex = 61;
+            this.btnhuancun21.Text = "缓存区";
+            this.btnhuancun21.UseVisualStyleBackColor = true;
+            this.btnhuancun21.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun21.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button16
+            // btnhuancun22
             // 
-            this.button16.Location = new System.Drawing.Point(245, 21);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(41, 48);
-            this.button16.TabIndex = 62;
-            this.button16.Text = "缓存区";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button16.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun22.Location = new System.Drawing.Point(245, 21);
+            this.btnhuancun22.Name = "btnhuancun22";
+            this.btnhuancun22.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun22.TabIndex = 62;
+            this.btnhuancun22.Text = "缓存区";
+            this.btnhuancun22.UseVisualStyleBackColor = true;
+            this.btnhuancun22.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun22.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // label24
             // 
@@ -1199,14 +1207,14 @@
             // 
             // groupBBelt2
             // 
-            this.groupBBelt2.Controls.Add(this.button1);
-            this.groupBBelt2.Controls.Add(this.button2);
-            this.groupBBelt2.Controls.Add(this.button3);
-            this.groupBBelt2.Controls.Add(this.button4);
-            this.groupBBelt2.Controls.Add(this.button5);
-            this.groupBBelt2.Controls.Add(this.button6);
-            this.groupBBelt2.Controls.Add(this.button7);
-            this.groupBBelt2.Controls.Add(this.button8);
+            this.groupBBelt2.Controls.Add(this.btnhuancun16);
+            this.groupBBelt2.Controls.Add(this.btnhuancun9);
+            this.groupBBelt2.Controls.Add(this.btnhuancun10);
+            this.groupBBelt2.Controls.Add(this.btnhuancun11);
+            this.groupBBelt2.Controls.Add(this.btnhuancun15);
+            this.groupBBelt2.Controls.Add(this.btnhuancun12);
+            this.groupBBelt2.Controls.Add(this.btnhuancun13);
+            this.groupBBelt2.Controls.Add(this.btnhuancun14);
             this.groupBBelt2.Controls.Add(this.label16);
             this.groupBBelt2.Controls.Add(this.label11);
             this.groupBBelt2.Controls.Add(this.label15);
@@ -1232,93 +1240,93 @@
             this.groupBBelt2.TabStop = false;
             this.groupBBelt2.Text = "2 号 主 皮 带 :";
             // 
-            // button1
+            // btnhuancun16
             // 
-            this.button1.Location = new System.Drawing.Point(53, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(41, 48);
-            this.button1.TabIndex = 60;
-            this.button1.Text = "缓存区";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button1.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun16.Location = new System.Drawing.Point(53, 21);
+            this.btnhuancun16.Name = "btnhuancun16";
+            this.btnhuancun16.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun16.TabIndex = 60;
+            this.btnhuancun16.Text = "缓存区";
+            this.btnhuancun16.UseVisualStyleBackColor = true;
+            this.btnhuancun16.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun16.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button2
+            // btnhuancun9
             // 
-            this.button2.Location = new System.Drawing.Point(777, 17);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(41, 48);
-            this.button2.TabIndex = 65;
-            this.button2.Text = "缓存区";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button2.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun9.Location = new System.Drawing.Point(777, 17);
+            this.btnhuancun9.Name = "btnhuancun9";
+            this.btnhuancun9.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun9.TabIndex = 65;
+            this.btnhuancun9.Text = "缓存区";
+            this.btnhuancun9.UseVisualStyleBackColor = true;
+            this.btnhuancun9.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun9.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button3
+            // btnhuancun10
             // 
-            this.button3.Location = new System.Drawing.Point(694, 17);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(41, 48);
-            this.button3.TabIndex = 66;
-            this.button3.Text = "缓存区";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button3.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun10.Location = new System.Drawing.Point(694, 17);
+            this.btnhuancun10.Name = "btnhuancun10";
+            this.btnhuancun10.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun10.TabIndex = 66;
+            this.btnhuancun10.Text = "缓存区";
+            this.btnhuancun10.UseVisualStyleBackColor = true;
+            this.btnhuancun10.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun10.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button4
+            // btnhuancun11
             // 
-            this.button4.Location = new System.Drawing.Point(566, 21);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(41, 48);
-            this.button4.TabIndex = 67;
-            this.button4.Text = "缓存区";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button4.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun11.Location = new System.Drawing.Point(566, 21);
+            this.btnhuancun11.Name = "btnhuancun11";
+            this.btnhuancun11.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun11.TabIndex = 67;
+            this.btnhuancun11.Text = "缓存区";
+            this.btnhuancun11.UseVisualStyleBackColor = true;
+            this.btnhuancun11.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun11.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button5
+            // btnhuancun15
             // 
-            this.button5.Location = new System.Drawing.Point(127, 21);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(41, 48);
-            this.button5.TabIndex = 63;
-            this.button5.Text = "缓存区";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button5.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun15.Location = new System.Drawing.Point(127, 21);
+            this.btnhuancun15.Name = "btnhuancun15";
+            this.btnhuancun15.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun15.TabIndex = 63;
+            this.btnhuancun15.Text = "缓存区";
+            this.btnhuancun15.UseVisualStyleBackColor = true;
+            this.btnhuancun15.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun15.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button6
+            // btnhuancun12
             // 
-            this.button6.Location = new System.Drawing.Point(482, 21);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(41, 48);
-            this.button6.TabIndex = 64;
-            this.button6.Text = "缓存区";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button6.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun12.Location = new System.Drawing.Point(482, 21);
+            this.btnhuancun12.Name = "btnhuancun12";
+            this.btnhuancun12.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun12.TabIndex = 64;
+            this.btnhuancun12.Text = "缓存区";
+            this.btnhuancun12.UseVisualStyleBackColor = true;
+            this.btnhuancun12.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun12.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button7
+            // btnhuancun13
             // 
-            this.button7.Location = new System.Drawing.Point(346, 21);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(41, 48);
-            this.button7.TabIndex = 61;
-            this.button7.Text = "缓存区";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button7.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun13.Location = new System.Drawing.Point(346, 21);
+            this.btnhuancun13.Name = "btnhuancun13";
+            this.btnhuancun13.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun13.TabIndex = 61;
+            this.btnhuancun13.Text = "缓存区";
+            this.btnhuancun13.UseVisualStyleBackColor = true;
+            this.btnhuancun13.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun13.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
-            // button8
+            // btnhuancun14
             // 
-            this.button8.Location = new System.Drawing.Point(261, 21);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(41, 48);
-            this.button8.TabIndex = 62;
-            this.button8.Text = "缓存区";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.btnhuancun1_Click);
-            this.button8.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
+            this.btnhuancun14.Location = new System.Drawing.Point(261, 21);
+            this.btnhuancun14.Name = "btnhuancun14";
+            this.btnhuancun14.Size = new System.Drawing.Size(41, 48);
+            this.btnhuancun14.TabIndex = 62;
+            this.btnhuancun14.Text = "缓存区";
+            this.btnhuancun14.UseVisualStyleBackColor = true;
+            this.btnhuancun14.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun14.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // label16
             // 
@@ -1587,14 +1595,14 @@
         private System.Windows.Forms.Label labelloaction;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBBelt4;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Button button19;
-        private System.Windows.Forms.Button button20;
-        private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button btnhuancun32;
+        private System.Windows.Forms.Button btnhuancun25;
+        private System.Windows.Forms.Button btnhuancun26;
+        private System.Windows.Forms.Button btnhuancun27;
+        private System.Windows.Forms.Button btnhuancun31;
+        private System.Windows.Forms.Button btnhuancun28;
+        private System.Windows.Forms.Button btnhuancun29;
+        private System.Windows.Forms.Button btnhuancun30;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label31;
@@ -1612,14 +1620,14 @@
         private System.Windows.Forms.PictureBox pbMachine29;
         private System.Windows.Forms.PictureBox pbMachine30;
         private System.Windows.Forms.GroupBox groupBBelt3;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button btnhuancun24;
+        private System.Windows.Forms.Button btnhuancun17;
+        private System.Windows.Forms.Button btnhuancun18;
+        private System.Windows.Forms.Button btnhuancun19;
+        private System.Windows.Forms.Button btnhuancun23;
+        private System.Windows.Forms.Button btnhuancun20;
+        private System.Windows.Forms.Button btnhuancun21;
+        private System.Windows.Forms.Button btnhuancun22;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label23;
@@ -1637,14 +1645,14 @@
         private System.Windows.Forms.PictureBox pbMachine21;
         private System.Windows.Forms.PictureBox pbMachine22;
         private System.Windows.Forms.GroupBox groupBBelt2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnhuancun16;
+        private System.Windows.Forms.Button btnhuancun9;
+        private System.Windows.Forms.Button btnhuancun10;
+        private System.Windows.Forms.Button btnhuancun11;
+        private System.Windows.Forms.Button btnhuancun15;
+        private System.Windows.Forms.Button btnhuancun12;
+        private System.Windows.Forms.Button btnhuancun13;
+        private System.Windows.Forms.Button btnhuancun14;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label15;

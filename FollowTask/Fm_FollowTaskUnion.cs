@@ -42,13 +42,18 @@ namespace FollowTask
         /// </summary>
         static int groupno; 
         /// <summary>
-        /// 任务号
+        /// 任务号组
         /// </summary>
         static decimal SortNum;
         /// <summary>
         /// 吸烟数量
         /// </summary>
         static decimal[] xyNum = new decimal[8];
+
+        /// <summary>
+        /// 任务号
+        /// </summary>
+        static decimal[] SortNumG = new decimal[8];
 
         /// <summary>
         /// 当前机械手之后的烟
@@ -160,34 +165,34 @@ namespace FollowTask
                     listPrament.Clear();
                     int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
                     mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
-                    if (mainbelt == 1)
-                    {
-                        ReadDBInfo(listuinongroup[0]);
-                    }
-                    if (mainbelt == 2)
-                    {
-                        ReadDBInfo(listuinongroup[1]);
-                    }
-                    if (mainbelt == 3)
-                    {
-                        ReadDBInfo(listuinongroup[2]);
-                    }
-                    if (mainbelt == 4)
-                    {
-                        ReadDBInfo(listuinongroup[3]);
-                    }
-
+                    //if (mainbelt == 1)
+                    //{
+                    //    ReadDBInfo(listuinongroup[0]);
+                    //}
+                    //if (mainbelt == 2)
+                    //{
+                    //    ReadDBInfo(listuinongroup[1]);
+                    //}
+                    //if (mainbelt == 3)
+                    //{
+                    //    ReadDBInfo(listuinongroup[2]);
+                    //}
+                    //if (mainbelt == 4)
+                    //{
+                    //    ReadDBInfo(listuinongroup[3]);
+                    //}
+                    ReadDBInfo(listuinongroup[4]);
                     if (SortNum != -1)
                     {
                         groupno = GetGroupNo(machineno);//获取组号
                         if (xyNum[GetXyNumIndex(machineno)] != 0)
                         {
-                            listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之后
-                            listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNum, xyNum[GetXyNumIndex(machineno)]);//机械手之前
+                            listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之后
+                            listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之前
 
                             listPrament.Add(mainbelt);//主皮带
                             listPrament.Add(groupno);//组号
-                            listPrament.Add(SortNum);//任务号
+                            listPrament.Add(SortNumG);//任务号
                             listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
 
                             getInfo(machineno, listafter, listbefore, listPrament);
@@ -231,21 +236,36 @@ namespace FollowTask
         void ReadDBInfo(Group group)
         {
          
-            SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
+            //SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
             if (SortNum != -1)
             {
+                SortNumG[0] = group.ReadD(0).CastTo<int>(-1);
+                SortNumG[1] = group.ReadD(2).CastTo<int>(-1);
+                SortNumG[2] = group.ReadD(4).CastTo<int>(-1);
+                SortNumG[3] = group.ReadD(6).CastTo<int>(-1);
+                SortNumG[4] = group.ReadD(8).CastTo<int>(-1);
+                SortNumG[5] = group.ReadD(10).CastTo<int>(-1);
+                SortNumG[6] = group.ReadD(12).CastTo<int>(-1);
+                SortNumG[7] = group.ReadD(14).CastTo<int>(-1);
+
                 //八个机械手吸烟数量
-                xyNum[0] = group.ReadD(4).CastTo<int>(-1);
-                xyNum[1] = group.ReadD(5).CastTo<int>(-1);
-                xyNum[2] = group.ReadD(6).CastTo<int>(-1);
+                xyNum[0] = group.ReadD(1).CastTo<int>(-1);
+                xyNum[1] = group.ReadD(3).CastTo<int>(-1);
+                xyNum[2] = group.ReadD(5).CastTo<int>(-1);
                 xyNum[3] = group.ReadD(7).CastTo<int>(-1);
-                xyNum[4] = group.ReadD(8).CastTo<int>(-1);
-                xyNum[5] = group.ReadD(9).CastTo<int>(-1);
-                xyNum[6] = group.ReadD(10).CastTo<int>(-1);
-                xyNum[7] = group.ReadD(11).CastTo<int>(-1);
+                xyNum[4] = group.ReadD(9).CastTo<int>(-1);
+                xyNum[5] = group.ReadD(11).CastTo<int>(-1);
+                xyNum[6] = group.ReadD(13).CastTo<int>(-1);
+                xyNum[7] = group.ReadD(15).CastTo<int>(-1); 
             }
         }
-       
+        decimal[] ReadDbInFo(int mainbelt, int machineno)
+        {
+            decimal[] sortnumAndXYnum = new decimal[2];
+
+
+            return sortnumAndXYnum; 
+        }
         /// <summary>
         /// 连接标识符
         /// </summary>
@@ -442,7 +462,7 @@ namespace FollowTask
             //    }
             //    //th2.Abort();
             //}
-            #endregion
+         
         }
 
         /// <summary>
@@ -501,7 +521,7 @@ namespace FollowTask
         //    }
 
         //}
-
+            #endregion
         private void btnhuancun1_Click(object sender, EventArgs e)
         {
             if (IsOnLine)
