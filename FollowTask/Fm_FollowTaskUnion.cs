@@ -192,7 +192,7 @@ namespace FollowTask
 
                             listPrament.Add(mainbelt);//主皮带
                             listPrament.Add(groupno);//组号
-                            listPrament.Add(SortNumG);//任务号
+                            listPrament.Add(SortNumG[GetXyNumIndex(machineno)]);//任务号
                             listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
 
                             getInfo(machineno, listafter, listbefore, listPrament);
@@ -235,7 +235,7 @@ namespace FollowTask
         /// <param name="group">OPC组名</param>
         void ReadDBInfo(Group group)
         {
-         
+          
             //SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
             if (SortNum != -1)
             {
@@ -262,7 +262,15 @@ namespace FollowTask
         decimal[] ReadDbInFo(int mainbelt, int machineno)
         {
             decimal[] sortnumAndXYnum = new decimal[2];
-
+            if (machineno == 1)
+            {
+                machineno = 0;
+            }
+            for (int i = 0 * mainbelt; i < 8 * mainbelt; i++)
+            {
+                sortnumAndXYnum[0] = listuinongroup[4].ReadD((machineno *2)).CastTo<int>(-1);
+                sortnumAndXYnum[1] = listuinongroup[4].ReadD(((machineno * 2) +1)).CastTo<int>(-1);
+            }
 
             return sortnumAndXYnum; 
         }
