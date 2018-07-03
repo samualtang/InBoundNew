@@ -581,12 +581,12 @@ namespace InBound.Business
 
                 querysource.CIGARETTENAME = tempCigarettename;
                 querysource.CIGARETTECODE = tempcigarettecode;
-                querysource.MACHINESEQ = tempmachineseq;
+               // querysource.MACHINESEQ = tempmachineseq;
                 querysource.STATE = status;
 
                 querytarget.CIGARETTENAME = tempCigarettename1;
                 querytarget.CIGARETTECODE = tempcigarettecode1;
-                querytarget.MACHINESEQ = tempmachineseq1;
+                //querytarget.MACHINESEQ = tempmachineseq1;
                 querytarget.STATE = status1;
                 //entity.SaveChanges();
                

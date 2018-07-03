@@ -61,6 +61,7 @@
     <Compile Include="Business\AtsCellInService.cs" />
     <Compile Include="Business\BaseService.cs" />
     <Compile Include="Business\FolloTaskService.cs" />
+    <Compile Include="Business\MainBeltInfoService.cs" />
     <Compile Include="Model\HUNHENOWVIEW.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Model\UnionCaChe.cs" />
     <Compile Include="Model\UnionTaskInfo.cs" />
     <Compile Include="Model\UseRate.cs" />
+    <Compile Include="Model\MainBeltInfo.cs" />
     <Compile Include="OPC\PlcGroup.cs" />
     <Compile Include="OPC\PlcItemCollection.cs" />
     <Compile Include="Pub\AutoSizeFormClass.cs" />
