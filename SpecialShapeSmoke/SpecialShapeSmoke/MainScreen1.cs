@@ -51,6 +51,7 @@ namespace SpecialShapeSmoke
         int boxBottom = 10;
         bool stop = false;
         bool falge = false;//单通多显标志位
+        static bool UpOrDn = true;
         //String lineNum = "0";
         Control control;
         HunHeService service = new HunHeService(); 
@@ -163,10 +164,33 @@ namespace SpecialShapeSmoke
             btnView.Location = new Point(p.Width - 8 * topHeight, 0);
             p.Controls.Add(btnView);
 
+
+            Button SortSet = new Button();
+            SortSet.Width = 2 * topHeight;
+            SortSet.Height = topHeight;
+            SortSet.BackColor = Color.Silver;
+            SortSet.Font = new Font("宋体", 25, FontStyle.Bold);
+            SortSet.Name = "btnSortSet";
+            SortSet.Text = "排序显示";
+            SortSet.Click += SetUpOrDn;
+            SortSet.Location = new Point(p.Width - 12 * topHeight, 0);
+            p.Controls.Add(btnView);
+
             Thread thread = new Thread(ConnectServer);
             thread.Start(); 
-        } 
-
+        }
+        public void SetUpOrDn(object sender, EventArgs e)//修改显示方向
+        {
+            if (UpOrDn)
+            {
+                UpOrDn = false;
+            }
+            else
+            {
+                UpOrDn = true;
+            }
+            getData();
+        }
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
@@ -399,7 +423,7 @@ namespace SpecialShapeSmoke
             //}
         //}
 #endregion
-        bool flag = true;//初始化
+       // bool flag = true;//初始化
 
         static decimal[] finishNo = new decimal[2];//完成信号 (pokeid)
         static decimal[] befoerFinishNo = new decimal[2];//上一次完成信号(pokeid)
@@ -452,13 +476,14 @@ namespace SpecialShapeSmoke
                             clearAllText();
                             if (finishNo[0] != -1 || finishNo[1] != -1)
                             {
-                                if (befoerFinishNo.Sum() <= finishNo.Sum())
+                                if (finishNo.Sum()  >= befoerFinishNo.Sum() )
                                 {
                                     //// if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
                                     for (int j = 0; j < countnum; j++)//数据获取核心
                                     {
                                         throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
-                                        initText(panelList[j], throughList[j]);
+                                        //initText(panelList[j], throughList[j]);
+                                        initTextUpOrDn(panelList[j], throughList[j], UpOrDn);
                                     }
 
                                     if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
@@ -615,6 +640,82 @@ namespace SpecialShapeSmoke
                     writeLog.Write("initText():" + e.Message);
                 }
             } 
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="list"></param>
+        /// <param name="isUpOrDn">默认为真，真则从上往下显示，反亦之</param>
+        public void initTextUpOrDn(GroupBox box, List<HUNHEVIEW> list,  bool isUpOrDn = true)
+        {
+            if (box != null && list != null)
+            {
+                var newlist = list.Skip(15).Take(1000).ToList(); //获取多于15
+                int singleNo = 1;
+                int singleIndex;//单通显示
+                int multiIdnex; //1061，2061
+                if (isUpOrDn)
+                {
+                    singleIndex = 0;
+                    multiIdnex = 0;
+                }
+                else
+                {
+                    singleIndex = 14;
+                    multiIdnex = 14;
+                }
+                try
+                {
+                    foreach (var item in list)
+                    {
+                        decimal count = item.QUANTITY ?? 0;
+                        if (count >= 1 && singleIndex >= 0 && singleIndex < 15)
+                        {
+                            Label lbl = (Label)box.Controls[singleIndex];
+                            if (isUpOrDn)
+                            {
+                                singleIndex++;
+                            }
+                            else
+                            {
+                                singleIndex--;
+                            }
+                            updateLabel(singleNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
+                            singleNo++;
+                        }
+                        if (falge && newlist.Count > 0)//用于单通道多显示2061 and  1061
+                        {
+                            int multiNo = 1;
+                            foreach (var item2 in newlist)
+                            {
+                                decimal count2 = item2.QUANTITY ?? 0;
+                                if (count2 >= 1 && multiIdnex >= 0 && multiIdnex < 15)
+                                {
+                                    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[multiIdnex];
+                                    if (isUpOrDn)
+                                    {
+                                        multiIdnex++;
+                                    }
+                                    else
+                                    {
+                                        multiIdnex--;
+                                    }
+                                    updateLabel((multiNo + 15) + ":  " + item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
+                                    multiNo++;
+                                }
+                            }
+                            falge = false;
+                        }
+                    }
+
+                    if (CheckTrough()) { falge = true; }
+                }
+                catch (Exception e)
+                {
+                    writeLog.Write("initText():" + e.Message);
+                }
+            }
         }
         /// <summary>
         /// 是否为特殊通道1061and2061
