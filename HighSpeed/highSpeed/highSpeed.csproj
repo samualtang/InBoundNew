@@ -379,6 +379,12 @@
     <Compile Include="orderHandle\w_schedulereport.designer.cs">
       <DependentUpon>w_schedulereport.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_uniondata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_uniondata.designer.cs">
+      <DependentUpon>w_uniondata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="progressBar.cs">
       <SubType>Form</SubType>
@@ -577,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_schedulereport.resx">
       <DependentUpon>w_schedulereport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_uniondata.resx">
+      <DependentUpon>w_uniondata.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="progressBar.resx">
       <DependentUpon>progressBar.cs</DependentUpon>

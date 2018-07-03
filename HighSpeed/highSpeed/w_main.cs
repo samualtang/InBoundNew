@@ -748,6 +748,20 @@ namespace highSpeed
             }
         }
 
+        private void 合流任务查询ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_uniondata frm = new w_uniondata();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
 
 

@@ -14,5 +14,8 @@ namespace InBound.Model
         public decimal qty { get; set; }
         public decimal groupno { get; set; }
         public decimal machineseq { get; set; }
+        public String CUSTOMERNAME { get; set; }
+        public String BILLCODE { get; set; }
+        public decimal SORTSEQ { get; set; }
     }
 }
