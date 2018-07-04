@@ -141,9 +141,60 @@ namespace SortingControlSys.SortingControl
         {
             try
             {
-
-
-                DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
+                 
+                #region
+                string msgtxt;
+                if (radioButton1.Checked)
+	            {
+		            msgtxt="新增";
+	            }
+                else if (radioButton2.Checked)
+	            {
+		            msgtxt="已发送";
+	            }
+                else if (radioButton3.Checked)
+	            {
+		            msgtxt="已完成";
+	            }
+                else
+                {
+                    msgtxt = "";
+                    MessageBox.Show("未选择操作类型！");
+                    return;
+                }
+                string linenum="";
+                if (cbLineA.Checked)
+                {
+                    linenum = linenum + "A线、";
+                }
+                if (cbLineB.Checked)
+                {
+                    linenum = linenum + "B线、";
+                }
+                if (!cbLineA.Checked && !cbLineB.Checked)
+                {
+                    MessageBox.Show("未选择组号！");
+                    return;
+                }
+                if (cmb_mainbelt.SelectedIndex<0)
+                {
+                    MessageBox.Show("未选择主皮带号");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(textBox1.Text))
+                {
+                    MessageBox.Show("请输入开始任务号");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(textBox2.Text))
+                {
+                   MessageBox.Show("未输入结束任务号！");
+                   return;
+                }
+                #endregion
+              
+                       
+                DialogResult MsgBoxResult = MessageBox.Show("确定要更新，分拣" + linenum+""+cmb_mainbelt.Text + "号主皮带" + "任务？\r" + textBox1.Text + " 到 " + textBox2.Text + "号的分拣任务 \r状态为" + msgtxt + "?",//对话框的显示内容 
                                                                 "操作提示",//对话框的标题 
                                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                                 MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
@@ -152,14 +203,8 @@ namespace SortingControlSys.SortingControl
 
                 if (MsgBoxResult == DialogResult.Yes)
                 {
-                    if (string.IsNullOrWhiteSpace(textBox1.Text)) 
-                    {
-                        MessageBox.Show("请输入任务号");
-                        return;
-                    }
-                    else
-                    {
-                        String from = textBox1.Text;
+                     
+                     String from = textBox1.Text;
                         String to = textBox2.Text;
                         int taskState = 10;
                         if (string.IsNullOrWhiteSpace(textBox2.Text))
@@ -194,7 +239,7 @@ namespace SortingControlSys.SortingControl
                                 //{
                                 //    InBoundService.UpdateInOut(i, sortgroupno1);
                                 //}
-                                TaskService.UpdateStatus(sortgroupno1, taskState, item.SORTNUM ?? 0);
+                                UpdateStatus(sortgroupno1, taskState, item.SORTNUM ?? 0, Convert.ToInt32(cmb_mainbelt.Text));
                             }
                             if (cbLineB.Checked)
                             {
@@ -202,9 +247,10 @@ namespace SortingControlSys.SortingControl
                                 //{
                                 //    InBoundService.UpdateInOut(i, sortgroupno2);
                                 //}
-                                TaskService.UpdateStatus(sortgroupno2, taskState,  item.SORTNUM ?? 0);
+                                
+                                UpdateStatus(sortgroupno2, taskState, item.SORTNUM ?? 0, Convert.ToInt32(cmb_mainbelt.Text));
                             }
-                        }
+                        
                         ////////////////////////////////////////////////////////////////////之前机制
                         //for (decimal i = dFrom; i <= tFrom; i++)
                         //{
@@ -226,10 +272,10 @@ namespace SortingControlSys.SortingControl
                         //    }
                         //}
                         ////////////////////////////////////////////////////////////////////////
-                        button1_Click(null, null);
+                        
 
                     }
-
+                        button1_Click(null, null);
 
                 }
             }
@@ -237,6 +283,64 @@ namespace SortingControlSys.SortingControl
             { 
                 MessageBox.Show("错误信息:" + ex.Message);
             }
+        }
+        /// <summary>
+        /// 获取主皮带信息
+        /// </summary>
+        /// <returns></returns>
+        public static decimal[] getmainbelt()
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_PRODUCE_SORTTROUGH where items.TROUGHTYPE == 30 orderby items.MACHINESEQ select items.MACHINESEQ).ToList();
+                decimal[] seq = new decimal[query.Count];
+                int i = 0;
+                foreach (var item in query)
+                {
+                    seq[i] = Convert.ToInt32(item);
+                    i++;
+                }
+                return seq;
+            }
+        }
+
+      /// <summary>
+        /// 更新预分拣任务状态--用于状态管理
+      /// </summary>
+      /// <param name="groupno">组号</param>
+      /// <param name="stage">预分拣状态</param>
+      /// <param name="sortnum">开始分拣任务号</param>
+      /// <param name="mainbelt">主皮带</param>
+        public void UpdateStatus(decimal groupno, int stage, decimal sortnum, decimal mainbelt)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == sortnum && item.MAINBELT == mainbelt select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    //若重置状态为未发送 则更新机械手任务号、放烟位置、机械手抓烟数为0，机械手任务状态、分拣状态为10
+                    if (stage==10)
+                    {
+                        foreach (var item in query)
+                        {
+                            item.SORTSTATE = stage;
+                            item.MACHINESTATE = 10;
+                            item.MERAGENUM = 0;
+                            item.POKEPLACE = 0;
+                            item.UNIONTASKNUM = 0;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in query)
+                        {
+                            item.SORTSTATE = stage; 
+                        }
+                    } 
+                    entity.SaveChanges();
+                }
+            }
+
         }
 
         private void 退出EToolStripMenuItem_Click(object sender, EventArgs e)
@@ -296,6 +400,13 @@ namespace SortingControlSys.SortingControl
             this.WindowState = FormWindowState.Normal;
             this.StartPosition = FormStartPosition.CenterScreen;
             asc.controllInitializeSize(this);
+
+            //取出主皮带总数 
+            decimal[] seq = getmainbelt();
+            for (int i = 0; i < seq.Length; i++)
+            {
+                cmb_mainbelt.Items.Add(seq[i]);
+            }
         }
 
         private void StatusManager_SizeChanged(object sender, EventArgs e)

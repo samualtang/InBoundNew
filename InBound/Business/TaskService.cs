@@ -376,7 +376,7 @@ namespace InBound.Business
         {
             using (Entities data = new Entities())
             {
-                var query = (from items in data.T_PRODUCE_POKE where items.SORTNUM >= SortTaskNumFrom && items.SORTNUM <= SortTaskNumFrom select items).ToList();
+                var query = (from items in data.T_PRODUCE_POKE where items.SORTNUM >= SortTaskNumFrom && items.SORTNUM <= SortTaskNumTo select items).ToList();
 
                 return query;
             }

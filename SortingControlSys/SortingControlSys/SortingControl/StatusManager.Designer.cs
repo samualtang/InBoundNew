@@ -62,6 +62,8 @@
             this.lblmachine = new System.Windows.Forms.Label();
             this.txtsortnum = new System.Windows.Forms.TextBox();
             this.lblsortnum = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmb_mainbelt = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -69,6 +71,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cmb_mainbelt);
             this.groupBox1.Controls.Add(this.cbLineB);
             this.groupBox1.Controls.Add(this.cbLineA);
             this.groupBox1.Controls.Add(this.button2);
@@ -89,7 +93,7 @@
             // cbLineB
             // 
             this.cbLineB.AutoSize = true;
-            this.cbLineB.Location = new System.Drawing.Point(793, 27);
+            this.cbLineB.Location = new System.Drawing.Point(680, 27);
             this.cbLineB.Name = "cbLineB";
             this.cbLineB.Size = new System.Drawing.Size(42, 16);
             this.cbLineB.TabIndex = 24;
@@ -99,7 +103,7 @@
             // cbLineA
             // 
             this.cbLineA.AutoSize = true;
-            this.cbLineA.Location = new System.Drawing.Point(729, 28);
+            this.cbLineA.Location = new System.Drawing.Point(630, 27);
             this.cbLineA.Name = "cbLineA";
             this.cbLineA.Size = new System.Drawing.Size(42, 16);
             this.cbLineA.TabIndex = 23;
@@ -118,7 +122,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(575, 25);
+            this.textBox2.Location = new System.Drawing.Point(507, 23);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 21;
@@ -126,7 +130,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(535, 28);
+            this.label2.Location = new System.Drawing.Point(481, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(17, 12);
             this.label2.TabIndex = 20;
@@ -135,7 +139,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(318, 29);
+            this.label1.Location = new System.Drawing.Point(264, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 19;
@@ -143,7 +147,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(425, 25);
+            this.textBox1.Location = new System.Drawing.Point(371, 23);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 21);
             this.textBox1.TabIndex = 18;
@@ -151,7 +155,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(196, 25);
+            this.radioButton3.Location = new System.Drawing.Point(167, 25);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(59, 16);
             this.radioButton3.TabIndex = 17;
@@ -162,7 +166,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(93, 26);
+            this.radioButton2.Location = new System.Drawing.Point(83, 26);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(59, 16);
             this.radioButton2.TabIndex = 16;
@@ -369,6 +373,24 @@
             this.lblsortnum.TabIndex = 13;
             this.lblsortnum.Text = "请输入分拣任务号进行查询:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(757, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 12);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "主皮带:";
+            // 
+            // cmb_mainbelt
+            // 
+            this.cmb_mainbelt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_mainbelt.FormattingEnabled = true;
+            this.cmb_mainbelt.Location = new System.Drawing.Point(804, 25);
+            this.cmb_mainbelt.Name = "cmb_mainbelt";
+            this.cmb_mainbelt.Size = new System.Drawing.Size(121, 20);
+            this.cmb_mainbelt.TabIndex = 25;
+            // 
             // StatusManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -422,5 +444,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmb_mainbelt;
     }
 }
