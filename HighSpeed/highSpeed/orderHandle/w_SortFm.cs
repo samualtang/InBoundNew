@@ -168,6 +168,7 @@ namespace highSpeed.orderHandle
                 {
                     progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
+                    btnSort.Enabled = true;
                     lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times+"秒";
                     MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒");
@@ -181,6 +182,7 @@ namespace highSpeed.orderHandle
                     progressBar1.Value = progressBar1.Maximum;
                     lblInFO.Text = " ";
                     TimerByTime.Stop();// 计时结束;
+                    btnSort.Enabled = true;
                     MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     updateControl(btnSort, true, true); 
                 }
@@ -234,17 +236,20 @@ namespace highSpeed.orderHandle
 
         private void dgvSortInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 2)
+            if (dgvSortInfo.DataSource != null)
             {
-                String statusText = "";
-                switch (e.Value.ToString())
-                { 
-                    case "0":
-                        statusText = "新增";
-                        break;
+                if (e.ColumnIndex == 2)
+                {
+                    String statusText = "";
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            statusText = "新增";
+                            break;
 
+                    }
+                    e.Value = statusText;
                 }
-                e.Value = statusText;
             }
         }
 
