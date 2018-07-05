@@ -183,6 +183,7 @@ namespace highSpeed
                 decimal endSortnum = 0;
                 decimal sortstate = 10;
                  decimal updatestate = 10;
+                 String updatedesc = "";
                 if (cbGroup.SelectedIndex == -1)
                 {
                     MessageBox.Show("请选择组号!");
@@ -247,15 +248,28 @@ namespace highSpeed
                 if (rbg1.Checked)
                 {
                     updatestate = 10;
+                    updatedesc = "新增";
                 }
                 else if (rbg2.Checked)
                 {
                     updatestate = 20;
+                    updatedesc = "已完成";
                     
                 }
-
-                TaskService.UpdateDataByGroupMainBelt(cbGroup.SelectedIndex + 1, this.cmb_mainbelt.SelectedIndex + 1, beginSortnum, endSortnum, sortstate, updatestate);
-                Bind();
+                DialogResult MsgBoxResult = MessageBox.Show("确定要更新组号:" + (cbGroup.SelectedIndex + 1) + "; 主皮带号:" + (this.cmb_mainbelt.SelectedIndex + 1) + "任务号从" + beginSortnum + "-" + endSortnum + "状态为:" + updatedesc + "?",//对话框的显示内容 
+                                                          "操作提示",//对话框的标题  
+                                                          MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                          MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                          MessageBoxDefaultButton.Button2);//
+                if (MsgBoxResult == DialogResult.Yes)
+                {
+                    TaskService.UpdateDataByGroupMainBelt(cbGroup.SelectedIndex + 1, this.cmb_mainbelt.SelectedIndex + 1, beginSortnum, endSortnum, sortstate, updatestate);
+                    Bind();
+                }
+                else
+                {
+                    return;
+                }
             }
             catch (Exception ex)
             { 
