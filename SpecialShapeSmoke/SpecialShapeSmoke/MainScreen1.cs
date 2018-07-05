@@ -51,7 +51,7 @@ namespace SpecialShapeSmoke
         int boxBottom = 10;
         bool stop = false;
         bool falge = false;//单通多显标志位
-        static bool UpOrDn = true;
+        static bool UpOrDn = false;
         //String lineNum = "0";
         Control control;
         HunHeService service = new HunHeService(); 
@@ -173,8 +173,8 @@ namespace SpecialShapeSmoke
             SortSet.Name = "btnSortSet";
             SortSet.Text = "排序显示";
             SortSet.Click += SetUpOrDn;
-            SortSet.Location = new Point(p.Width - 12 * topHeight, 0);
-            p.Controls.Add(btnView);
+            SortSet.Location = new Point(p.Width - 10 * topHeight, 0);
+           // p.Controls.Add(SortSet);
 
             Thread thread = new Thread(ConnectServer);
             thread.Start(); 
@@ -189,7 +189,13 @@ namespace SpecialShapeSmoke
             {
                 UpOrDn = true;
             }
-            getData();
+            clearAllText();
+            for (int j = 0; j < boxText.Length; j++)//数据获取核心
+            {
+                throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
+                //initText(panelList[j], throughList[j]);
+                initTextUpOrDn(panelList[j], throughList[j], UpOrDn);
+            }
         }
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
@@ -433,99 +439,97 @@ namespace SpecialShapeSmoke
         /// 
         public void getData()
         {
-           
+            // writeLog.Write("Receive Resend Data:"+data);
+            try
+            {
+                //int countGroupBox = 0;//groupBox总数
+                int countnum = 0;
+                // string[] Flag = new string[2];   
+                //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
+                //finishNo[0] = -1;
+                //finishNo[1] = -1;
+                //befoerFinishNo[0] = -1;
+                //befoerFinishNo[0] = -1;
+                string Log = "";
 
-            
-               // writeLog.Write("Receive Resend Data:"+data);
-            
-                try
+                #region  读取DB
+                if (dbIndex[1] == -1)//  是1061 和2061 单个通道？
                 {
-                    //int countGroupBox = 0;//groupBox总数
-                    int countnum = 0;
-                    // string[] Flag = new string[2];   
-                    //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
-                    finishNo[0] = -1;
-                    finishNo[1] = -1;
-                    befoerFinishNo[0] = -1;
-                    befoerFinishNo[0] = -1;
-                    string Log = "";
-                   
-                    #region  读取DB
-                        if (dbIndex[1] == -1)//  是1061 和2061 单个通道？
-                        {
-                            finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
-                            countnum = 1;
-                       
-                        }
-                        else
-                        {
-                            finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
-                            finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
-                            countnum = 2;
-                            
-                        }
-                       
-                     #endregion
-                        if (befoerFinishNo != finishNo )
-                        {
-                            for (int i = 0; i < boxText.Length; i++)
-                            {
-                                Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
-                            } 
-                            writeLog.Write(Log);
-                            clearAllText();
-                            if (finishNo[0] != -1 || finishNo[1] != -1)
-                            {
-                                if (finishNo.Sum()  >= befoerFinishNo.Sum() )
-                                {
-                                    //// if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
-                                    for (int j = 0; j < countnum; j++)//数据获取核心
-                                    {
-                                        throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
-                                        //initText(panelList[j], throughList[j]);
-                                        initTextUpOrDn(panelList[j], throughList[j], UpOrDn);
-                                    }
+                    finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                    countnum = 1;
 
-                                    if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
-                                    {
-                                        Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
-                                        updateLabel("分拣任务完成!分拣结束!", lbl2);
+                }
+                else
+                {
+                    finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
+                    finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
+                    countnum = 2;
 
-                                    }
-                                    if (boxText.Length == 2)
-                                    {
-                                        if (throughList[1].Count <= 0 && !CheckTrough())
-                                        {
-                                            Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
-                                            updateLabel("分拣任务完成!分拣结束!", lbl2);
-                                        }
-                                    }
-                                    befoerFinishNo = finishNo;
-                                } 
+                }
+
+                #endregion
+                if (finishNo[0] != -1 || finishNo[1] != -1)
+                {
+                    if (befoerFinishNo.Sum() != finishNo.Sum())
+                    {
+                        for (int i = 0; i < boxText.Length; i++)
+                        {
+                            Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
+                        }
+                        writeLog.Write(Log);
+                        clearAllText();
+
+                        if (finishNo.Sum() >= befoerFinishNo.Sum())
+                        {
+                            //// if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
+                            for (int j = 0; j < countnum; j++)//数据获取核心
+                            {
+                                throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
+                                //initText(panelList[j], throughList[j]);
+                                initTextUpOrDn(panelList[j], throughList[j], UpOrDn);
                             }
-                            else
+
+                            if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
                             {
-                                // if (CheckTrough()) { countGroupBox = 1; } else { countGroupBox = 2; }
-                                for (int k = 0; k < boxText.Length; k++)
+                                Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
+                                updateLabel("分拣任务完成!分拣结束!", lbl2);
+
+                            }
+                            if (boxText.Length == 2)
+                            {
+                                if (throughList[1].Count <= 0 && !CheckTrough())
                                 {
-                                    Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
-                                    updateLabel("服务器断开连接,请重新连接!", lbl2);
+                                    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
+                                    updateLabel("分拣任务完成!分拣结束!", lbl2);
                                 }
                             }
+                            befoerFinishNo = finishNo;
                         }
-                    //  var item = service.GetBeginTask();
-                    //if (item != null && item.Count > 0)
-                    //{
-                    //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
-                    //}
-                    //befoerFinishNo = finishNo;
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    writeLog.Write("GetData():" + e.Message + "\r\n"+"错误源:" + e.Source);
+                    // if (CheckTrough()) { countGroupBox = 1; } else { countGroupBox = 2; }
+                    clearAllText();
+                    for (int k = 0; k < boxText.Length; k++)
+                    {
+                        Label lbl2 = (Label)Controls.Find("orBox" + k, true)[0].Controls[0];
+                        updateLabel("服务器断开连接,请重新连接!", lbl2);
+                    }
                 }
-                //MessageBox.Show(data);
-           
+                //  var item = service.GetBeginTask();
+                //if (item != null && item.Count > 0)
+                //{
+                //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
+                //}
+                //befoerFinishNo = finishNo;
+            }
+            catch (Exception e)
+            {
+                writeLog.Write("GetData():" + e.Message + "\r\n" + "错误源:" + e.Source);
+            }
+            //MessageBox.Show(data);
+
         }
         NowView fNowView;
         System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
@@ -647,7 +651,7 @@ namespace SpecialShapeSmoke
         /// <param name="box"></param>
         /// <param name="list"></param>
         /// <param name="isUpOrDn">默认为真，真则从上往下显示，反亦之</param>
-        public void initTextUpOrDn(GroupBox box, List<HUNHEVIEW> list,  bool isUpOrDn = true)
+        public void initTextUpOrDn(GroupBox box, List<HUNHEVIEW> list,  bool isUpOrDn = false)
         {
             if (box != null && list != null)
             {
