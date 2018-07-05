@@ -123,6 +123,60 @@ namespace InBound.Business
         } 
         #endregion
 
+        public static void UpdateDataByGroupMainBelt(decimal groupNo, decimal mainbelt, decimal beginSortnum, decimal endSortnum, decimal sortstate,decimal updatestatus)
+        {
+            using (Entities dataentity = new Entities())
+            {
+
+                var query = (from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                                on item.TROUGHNUM equals item2.TROUGHNUM
+                            where item.GROUPNO == groupNo && item.MAINBELT == mainbelt && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20 && item.SORTSTATE == sortstate
+                            && item.SORTNUM >= beginSortnum && item.SORTNUM <= endSortnum
+                            orderby item.SORTNUM
+                            select item).ToList();;
+                if (query != null)
+                {
+                    foreach (var item in query)
+                    {
+                        if (updatestatus == 10)
+                        {
+                            item.POKEPLACE = 0;
+                            item.MACHINESTATE = 10;
+                            item.UNIONSTATE = 10;
+                            item.MERAGENUM = 0;
+                            item.UNIONTASKNUM = 0;
+                            item.SECSORTNUM = 0;
+                        }
+
+                        item.SORTSTATE = updatestatus;
+                       
+                    }
+                    dataentity.SaveChanges();
+                }
+                
+            }
+        }
+
+
+
+        public static List<TaskDetail> getFJDataByGroupMainBelt(decimal groupNo, decimal mainbelt,decimal beginSortnum,decimal endSortnum,decimal sortstate)
+        {
+            using (Entities dataentity = new Entities())
+            {
+
+                var query = from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                                on item.TROUGHNUM equals item2.TROUGHNUM
+                            where item.GROUPNO == groupNo && item.MAINBELT == mainbelt && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20 && item.SORTSTATE == sortstate
+                            && item.SORTNUM >= beginSortnum && item.SORTNUM <= endSortnum
+                            orderby item.SORTNUM
+                            select new TaskDetail() { GroupNO = item.GROUPNO ?? 0, TaskNum = item.TASKNUM ?? 0, UnionTasknum = item.UNIONTASKNUM ?? 0, POKENUM = item.POKENUM ?? 0, CIGARETTDECODE = item2.CIGARETTECODE, POCKPLACE = item.POKEPLACE ?? 0, CIGARETTDENAME = item2.CIGARETTENAME, Machineseq = item.MACHINESEQ ?? 0, SortNum = item.SORTNUM ?? 0, tNum = item.POKENUM ?? 0, Billcode = item.BILLCODE, SortState = item.SORTSTATE ?? 0, MainBelt=item.MAINBELT??0, meragenum=item.MERAGENUM??0 };
+                if (query != null)
+                    return query.OrderBy(x => x.SortNum).ToList();
+                else return null;
+            }
+        }
         #region 预分拣查询
         public static List<TaskDetail> getFJDataAll(decimal groupNo1, decimal groupNo2)
         {

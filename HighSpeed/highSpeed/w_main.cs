@@ -762,6 +762,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 任务状态修改ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StatusManager frm = new StatusManager();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
 
 
