@@ -123,6 +123,14 @@ namespace InBound.Business
         } 
         #endregion
 
+        public static void UpdateAll()
+        {
+            using (Entities dataentity = new Entities())
+            {
+                dataentity.ExecuteStoreCommand(" update t_produce_poke set pokeplace=0,meragenum=0,uniontasknum=0,SECSORTNUM=0,sortstate=10,machinestate=10,unionstate=10");
+                dataentity.SaveChanges();
+            }
+        }
         public static void UpdateDataByGroupMainBelt(decimal groupNo, decimal mainbelt, decimal beginSortnum, decimal endSortnum, decimal sortstate,decimal updatestatus)
         {
             using (Entities dataentity = new Entities())

@@ -454,5 +454,25 @@ namespace highSpeed
             //        break;
             //}
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DialogResult MsgBoxResult = MessageBox.Show("确定要初始化所有数据?",//对话框的显示内容 
+                                                          "操作提示",//对话框的标题  
+                                                          MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                          MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                          MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (MsgBoxResult == DialogResult.Yes)
+            {
+
+                TaskService.UpdateAll();
+                MessageBox.Show("初始化成功");
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 }
