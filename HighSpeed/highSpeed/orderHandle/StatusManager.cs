@@ -389,7 +389,7 @@ namespace highSpeed
         }
         private void StatusManager_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            //this.WindowState = FormWindowState.Normal;
             this.StartPosition = FormStartPosition.CenterScreen;
             asc.controllInitializeSize(this);
 
