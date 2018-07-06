@@ -8,6 +8,78 @@ namespace InBound.Business
   public  class MainBeltInfoService:BaseService
     {
 
+
+
+      public static void GetSortMainBeltInfo(List<MainBeltInfo> infolist)
+      {
+          if (infolist != null && infolist.Count != 0)
+          {
+
+              foreach (var info in infolist)
+              {
+                  if (info.Quantity > 0 && info.SortNum > 0)
+                  {
+                      List<UnionTaskInfo> taskList = new List<UnionTaskInfo>();
+                      info.taskInfo = taskList;
+                      using (Entities entity = new Entities())
+                      {
+                          var task = (from item in entity.T_PRODUCE_POKE
+                                      join item2 in entity.T_PRODUCE_SORTTROUGH
+                                          on item.TROUGHNUM equals item2.TROUGHNUM
+                                      where item.GROUPNO==info.GroupNO && item.SORTNUM == info.SortNum && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+
+                                      orderby item.MACHINESEQ
+                                      select
+                                          new TaskDetail()
+                                          {
+                                              CIGARETTDECODE = item2.CIGARETTECODE,
+                                              CIGARETTDENAME = item2
+                                                  .CIGARETTENAME,
+                                              GroupNO = item.GROUPNO ?? 0,
+                                              Machineseq = item.MACHINESEQ ?? 0,
+                                              MainBelt = item.MAINBELT ?? 0,
+                                              SortNum  = item.SORTNUM ?? 0,
+                                              POKENUM = item.POKENUM ?? 0,
+                                              MachineState = item.MACHINESTATE ?? 0
+                                          }).ToList();
+                          if (task != null)
+                          {
+                              decimal tempcount = 0;
+                              foreach (var titem in task)
+                              {
+                                  if (tempcount + titem.POKENUM <= info.Quantity)
+                                  {
+                                      taskList.Insert(0, new UnionTaskInfo()
+                                      {
+                                          CIGARETTDECODE = titem.CIGARETTDECODE,
+                                          CIGARETTDENAME = titem.CIGARETTDENAME,
+                                          MainBelt = titem.MainBelt,
+                                          SortNum = titem.SortNum,
+                                          qty = titem.POKENUM,
+                                          groupno = titem.GroupNO,
+                                          machineseq = titem.Machineseq
+                                      });
+                                      tempcount += titem.POKENUM;
+                                      if (tempcount == info.Quantity)
+                                      {
+                                          break;
+                                      }
+                                  }
+                                  else
+                                  {
+                                      info.MsgCode = "-1";
+                                      info.ErrorMsg = "读取数量有误,当前任务号:" + info.SortNum + " 读取数量:" + info.Quantity;
+                                      
+                                      break;
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+
       public static void GetMainBeltInfo(List<MainBeltInfo> infolist)
       {
           if (infolist != null && infolist.Count != 0)
