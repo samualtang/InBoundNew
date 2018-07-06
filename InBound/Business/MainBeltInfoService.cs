@@ -67,11 +67,35 @@ namespace InBound.Business
                                   }
                                   else
                                   {
-                                      info.MsgCode = "-1";
-                                      info.ErrorMsg = "读取数量有误,当前任务号:" + info.SortNum + " 读取数量:" + info.Quantity;
+
+                                      if (tempcount + 10 == info.Quantity)
+                                      {
+                                          taskList.Insert(0, new UnionTaskInfo()
+                                          {
+                                              CIGARETTDECODE = titem.CIGARETTDECODE,
+                                              CIGARETTDENAME = titem.CIGARETTDENAME,
+                                              MainBelt = titem.MainBelt,
+                                              SortNum = titem.SortNum,
+                                              qty = 10,
+                                              groupno = titem.GroupNO,
+                                              machineseq = titem.Machineseq
+                                          });
+                                          tempcount += 10;
+                                      }
+                                      else
+                                      {
+                                          info.MsgCode = "-1";
+                                          info.ErrorMsg = "读取数量有误,,当前任务号:" + info.SortNum + " 读取数量:" + info.Quantity;
+                                          break;
+                                      }
                                       
-                                      break;
                                   }
+                              }
+                              if (tempcount < info.Quantity)
+                              {
+                                  info.MsgCode = "-1";
+                                  info.ErrorMsg = "读取数量有误,,当前任务号:" + info.SortNum + " 读取数量:" + info.Quantity;
+                                       
                               }
                           }
                       }
