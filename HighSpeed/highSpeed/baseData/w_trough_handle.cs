@@ -35,7 +35,7 @@ namespace highSpeed.baseData
                 box_replenishline.Enabled = false;
                 box_transportationline.Enabled = false;
 
-                if (troughtype == "20" || troughtype == "30")
+                if (troughtype == "20" || troughtype == "30" || troughtype == "10")
                 {
                     cbthroughnum.Enabled = false;
                 }
@@ -254,7 +254,7 @@ namespace highSpeed.baseData
                 }
                 else
                 { 
-                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "',machineseq=" + radioval+",groupno="+groupno+ " where id=" + id; 
+                    sql = "update t_produce_sorttrough set cigarettecode='" + itemno + "',cigarettename='" + itemname + "' where id=" + id; 
               
                     int len = Db.ExecuteNonQuery(sql);
                     if (len != 0) MessageBox.Show("分拣通道信息修改成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
