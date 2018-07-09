@@ -60,12 +60,14 @@
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.btnsyncData = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnsyncData);
             this.panel1.Controls.Add(this.cbctype);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.button2);
@@ -84,7 +86,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1151, 50);
+            this.panel1.Size = new System.Drawing.Size(1217, 50);
             this.panel1.TabIndex = 0;
             // 
             // cbctype
@@ -268,7 +270,7 @@
             this.troughdata.ReadOnly = true;
             this.troughdata.RowTemplate.Height = 23;
             this.troughdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.troughdata.Size = new System.Drawing.Size(1187, 594);
+            this.troughdata.Size = new System.Drawing.Size(1205, 594);
             this.troughdata.TabIndex = 0;
             this.troughdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.troughdata_CellClick);
             this.troughdata.MouseClick += new System.Windows.Forms.MouseEventHandler(this.troughdata_MouseClick);
@@ -501,11 +503,21 @@
             this.pager1.Size = new System.Drawing.Size(1099, 45);
             this.pager1.TabIndex = 1;
             // 
+            // btnsyncData
+            // 
+            this.btnsyncData.Location = new System.Drawing.Point(1136, 12);
+            this.btnsyncData.Name = "btnsyncData";
+            this.btnsyncData.Size = new System.Drawing.Size(52, 23);
+            this.btnsyncData.TabIndex = 18;
+            this.btnsyncData.Text = "同步";
+            this.btnsyncData.UseVisualStyleBackColor = true;
+            this.btnsyncData.Click += new System.EventHandler(this.btnsyncData_Click);
+            // 
             // win_trough
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1151, 559);
+            this.ClientSize = new System.Drawing.Size(1217, 559);
             this.Controls.Add(this.pager1);
             this.Controls.Add(this.troughdata);
             this.Controls.Add(this.panel1);
@@ -552,5 +564,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
         private System.Windows.Forms.DataGridViewTextBoxColumn ctype;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.Button btnsyncData;
     }
 }

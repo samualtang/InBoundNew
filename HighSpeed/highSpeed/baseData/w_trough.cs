@@ -374,6 +374,7 @@ namespace highSpeed.baseData
             {
                 String status = this.troughdata.CurrentRow.Cells["state"].Value + "";
                 String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
+                String cigarettetype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
                 //MessageBox.Show("===" + troughdata.RowCount);
                 if (status == "10")
                 {
@@ -385,11 +386,11 @@ namespace highSpeed.baseData
                     this.btn_qy.Enabled = true;
                     this.btn_jy.Enabled = false;
                 }
-                if (type == "30" || type == "40")
+                if (type=="20" || type == "30" || type == "40" || (type == "10" && cigarettetype != "20"))
                 {
                     this.btn_amend.Enabled = false;
                 }
-                else
+                else 
                 {
                     this.btn_amend.Enabled = true;
                 }
@@ -453,6 +454,36 @@ namespace highSpeed.baseData
             trough_handle.WindowState = FormWindowState.Normal;
             trough_handle.StartPosition = FormStartPosition.CenterScreen;
             trough_handle.ShowDialog();
+        }
+
+        private void btnsyncData_Click(object sender, EventArgs e)
+        {
+            Db.Open();
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("P_PRODUCE_Validation", sqlpara);
+            //MessageBox.Show(date);
+            //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
+            Db.Close();
+            if (errcode == "1")
+            {
+                MessageBox.Show("数据已同步");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
+            }
         }
     }
 }
