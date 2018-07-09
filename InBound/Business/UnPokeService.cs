@@ -773,6 +773,7 @@ namespace InBound.Business
                             item.STATUS = status;
                         }
                     }
+                    data.SaveChanges();
                     data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                     data.SaveChanges();
                 }

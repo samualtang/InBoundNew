@@ -45,7 +45,7 @@ namespace highSpeed.orderHandle
         }
         void pager1_PageChanged(object sender, EventArgs e)
         {
-            seek();
+           
         }
 
         void pager1_ExportCurrent(object sender, EventArgs e)
@@ -57,9 +57,20 @@ namespace highSpeed.orderHandle
         }
 
         void seek()
-        { 
-            //int total = int.Parse(DataPublic.ExecuteScalar("select Count(*) from t_produce_task").ToString());
-            DgvBind(sql);
+        {
+            try
+            { 
+                //int total = int.Parse(DataPublic.ExecuteScalar("select Count(*) from t_produce_task").ToString());
+                DgvBind(sql);
+            }
+            catch (IndexOutOfRangeException iore)
+            { 
+                writeLog.Write("seek()报错索引越界:" + iore.Message);
+            }
+            catch (Exception e)
+            { 
+                writeLog.Write("seek()报错:" + e.Message);
+            }
         }
          private void w_SortFm_Load(object sender, EventArgs e)
         {
@@ -169,22 +180,21 @@ namespace highSpeed.orderHandle
                     progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
                     btnSort.Enabled = true;
-                    lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times+"秒";
+                    lblInFO.Text = "分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒";
                     MessageBox.Show("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     writeLog.Write("分拣车组任务排序成功！" + "\r\n" + "所用时间:" + times + "秒");
                     updateControl(btnSort, true, true);
                     //  btnRef_Click(null, null);//排程成功后刷新
-                  //  DgvBind(sql);//排程成功后刷新 
+                    //  DgvBind(sql);//排程成功后刷新 
                     dgvSortInfo.DataSource = null;
                 }
                 else
                 {
-                    progressBar1.Value = progressBar1.Maximum;
-                    lblInFO.Text = " ";
+                    panel2.Visible = false;
                     TimerByTime.Stop();// 计时结束;
                     btnSort.Enabled = true;
                     MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    updateControl(btnSort, true, true); 
+                    updateControl(btnSort, true, true);
                 }
                 updateControl(btnSort, true, true);
                 //  panel2.Visible = false;
@@ -197,15 +207,14 @@ namespace highSpeed.orderHandle
                 updateControl(lblTime, false, true);
 
             }
-
-            catch (DataException da)
+            catch (IndexOutOfRangeException iore)
             {
-                MessageBox.Show("排程异常:" + da.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                writeLog.Write("排程异常:" + da.Message);
+                MessageBox.Show("排程OK:" + iore.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                writeLog.Write("排程异常索引越界:" + iore.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("排程异常:" + e.Message,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("排程异常:" + e.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 writeLog.Write("排程异常:" + e.Message);
             }
             finally
