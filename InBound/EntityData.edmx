@@ -21,6 +21,7 @@
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.Store.T_UN_POKE_HUNHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
@@ -34,7 +35,6 @@
           <EntitySet Name="T_WMS_DEVICESTATUS" EntityType="Model.Store.T_WMS_DEVICESTATUS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_INBOUND" EntityType="Model.Store.T_WMS_INBOUND" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_INBOUND_LINE" EntityType="Model.Store.T_WMS_INBOUND_LINE" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_WMS_INOUTBOUND_TASK" EntityType="Model.Store.T_WMS_INOUTBOUND_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ITEM" EntityType="Model.Store.T_WMS_ITEM" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_LANEWAY" EntityType="Model.Store.T_WMS_LANEWAY" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_LOG" EntityType="Model.Store.T_WMS_LOG" store:Type="Tables" Schema="ZOOMTEL" />
@@ -97,7 +97,7 @@
           <Property Name="STATUS" Type="number" />
           <Property Name="EXTATTR1" Type="varchar2" MaxLength="30" />
           <Property Name="EXTATTR2" Type="varchar2" MaxLength="30" />
-          <Property Name="EXTATTR3" Type="varchar2" MaxLength="30" />
+          <Property Name="EXTATTR3" Type="varchar2" MaxLength="100" />
           <Property Name="INBOUNDNO" Type="number" />
           <Property Name="WEIGHT" Type="number" />
           <Property Name="INPUTTYPE" Type="number" />
@@ -161,6 +161,7 @@
           <Property Name="UNIONTASKNUM" Type="number" />
           <Property Name="SECSORTNUM" Type="number" />
           <Property Name="INVFLAG" Type="varchar2" MaxLength="10" />
+          <Property Name="SENDPOKENUM" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_PRESORTINFO">
           <Key>
@@ -368,6 +369,18 @@
           <Property Name="SENDTASKNUM" Type="number" />
           <Property Name="STORENUM" Type="number" />
           <Property Name="GRIDNUM" Type="number" />
+          <Property Name="INVFLAG" Type="varchar2" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="T_UN_POKE_HUNHE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="TASKNUM" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="PULLSTATUS" Type="number" />
         </EntityType>
         <EntityType Name="T_UN_TASK">
           <Key>
@@ -577,20 +590,6 @@
           <Property Name="OTHERQTY" Type="number" />
           <Property Name="BARCODE" Type="varchar2" MaxLength="50" />
           <Property Name="BDPCIGCODE" Type="varchar2" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="T_WMS_INOUTBOUND_TASK">
-          <Key>
-            <PropertyRef Name="TASKNO" />
-          </Key>
-          <Property Name="TASKNO" Type="number" Nullable="false" />
-          <Property Name="SOURCEADD" Type="varchar2" MaxLength="20" />
-          <Property Name="TARGETADD" Type="varchar2" MaxLength="20" />
-          <Property Name="TASKTYPE" Type="number" />
-          <Property Name="TASKSTATUS" Type="number" />
-          <Property Name="QTY" Type="number" />
-          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
-          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
-          <Property Name="INBOUNDLINEID" Type="number" />
         </EntityType>
         <EntityType Name="T_WMS_ITEM">
           <Key>
@@ -821,7 +820,6 @@
       <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_WMS_CONSIGNOR" EntityType="Model.T_WMS_CONSIGNOR" />
-          <EntitySet Name="T_WMS_INOUTBOUND_TASK" EntityType="Model.T_WMS_INOUTBOUND_TASK" />
           <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
           <EntitySet Name="T_WMS_LANEWAY" EntityType="Model.T_WMS_LANEWAY" />
           <EntitySet Name="T_WMS_OUTBOUND_LINE" EntityType="Model.T_WMS_OUTBOUND_LINE" />
@@ -873,6 +871,7 @@
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.T_PRODUCE_POKE" />
           <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.T_PRODUCE_CACHE" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
+          <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.T_UN_POKE_HUNHE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -883,20 +882,6 @@
           <Property Type="String" Name="COMAPANY" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CONTACT" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PHONE" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="T_WMS_INOUTBOUND_TASK">
-          <Key>
-            <PropertyRef Name="TASKNO" />
-          </Key>
-          <Property Type="Decimal" Name="TASKNO" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="SOURCEADD" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TARGETADD" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="TASKTYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="TASKSTATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="QTY" Precision="38" Scale="0" />
-          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTENAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="INBOUNDLINEID" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="T_WMS_ITEM">
           <Key>
@@ -1589,6 +1574,7 @@
           <Property Type="Decimal" Name="UNIONTASKNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
           <Property Type="String" Name="INVFLAG" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SENDPOKENUM" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="T_PRODUCE_CACHE">
           <Key>
@@ -1628,6 +1614,18 @@
           <Property Type="Decimal" Name="SENDTASKNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="STORENUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GRIDNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="INVFLAG" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_UN_POKE_HUNHE">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PULLSTATUS" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1643,21 +1641,6 @@
                 <ScalarProperty Name="COMAPANY" ColumnName="COMAPANY" />
                 <ScalarProperty Name="CODE" ColumnName="CODE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_INOUTBOUND_TASK">
-            <EntityTypeMapping TypeName="Model.T_WMS_INOUTBOUND_TASK">
-              <MappingFragment StoreEntitySet="T_WMS_INOUTBOUND_TASK">
-                <ScalarProperty Name="INBOUNDLINEID" ColumnName="INBOUNDLINEID" />
-                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="QTY" ColumnName="QTY" />
-                <ScalarProperty Name="TASKSTATUS" ColumnName="TASKSTATUS" />
-                <ScalarProperty Name="TASKTYPE" ColumnName="TASKTYPE" />
-                <ScalarProperty Name="TARGETADD" ColumnName="TARGETADD" />
-                <ScalarProperty Name="SOURCEADD" ColumnName="SOURCEADD" />
-                <ScalarProperty Name="TASKNO" ColumnName="TASKNO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2362,6 +2345,7 @@
           <EntitySetMapping Name="T_PRODUCE_POKE">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_POKE">
               <MappingFragment StoreEntitySet="T_PRODUCE_POKE">
+                <ScalarProperty Name="SENDPOKENUM" ColumnName="SENDPOKENUM" />
                 <ScalarProperty Name="INVFLAG" ColumnName="INVFLAG" />
                 <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
                 <ScalarProperty Name="UNIONTASKNUM" ColumnName="UNIONTASKNUM" />
@@ -2406,6 +2390,7 @@
           <EntitySetMapping Name="T_UN_POKE">
             <EntityTypeMapping TypeName="Model.T_UN_POKE">
               <MappingFragment StoreEntitySet="T_UN_POKE">
+                <ScalarProperty Name="INVFLAG" ColumnName="INVFLAG" />
                 <ScalarProperty Name="GRIDNUM" ColumnName="GRIDNUM" />
                 <ScalarProperty Name="STORENUM" ColumnName="STORENUM" />
                 <ScalarProperty Name="SENDTASKNUM" ColumnName="SENDTASKNUM" />
@@ -2423,6 +2408,18 @@
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
                 <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_POKE_HUNHE">
+            <EntityTypeMapping TypeName="Model.T_UN_POKE_HUNHE">
+              <MappingFragment StoreEntitySet="T_UN_POKE_HUNHE">
+                <ScalarProperty Name="PULLSTATUS" ColumnName="PULLSTATUS" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
                 <ScalarProperty Name="POKEID" ColumnName="POKEID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2449,7 +2446,6 @@
     <Diagrams>
       <Diagram Name="EntityData" ZoomLevel="55">
         <EntityTypeShape EntityType="Model.T_WMS_CONSIGNOR" Width="1.5" PointX="6.75" PointY="6.75" Height="1.9202278645833246" />
-        <EntityTypeShape EntityType="Model.T_WMS_INOUTBOUND_TASK" Width="1.5" PointX="8.75" PointY="8.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="4.75" PointY="9.75" Height="7.8336393229166674" />
         <EntityTypeShape EntityType="Model.T_WMS_LANEWAY" Width="1.5" PointX="10.75" PointY="0.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.T_WMS_OUTBOUND_LINE" Width="1.5" PointX="10.75" PointY="7.75" Height="2.1050219726562602" />
@@ -2484,6 +2480,7 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKE" Width="1.5" PointX="14.375" PointY="3.75" Height="4.6921394856770746" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_CACHE" Width="1.5" PointX="7.375" PointY="19.75" Height="3.0289925130208246" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.32255126953126" />
+        <EntityTypeShape EntityType="Model.T_UN_POKE_HUNHE" Width="1.5" PointX="16.375" PointY="6.75" Height="2.1050219726562602" />
       </Diagram>
     </Diagrams>
   </Designer>

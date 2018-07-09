@@ -7,10 +7,21 @@ namespace InBound.Model
 {
    public class HUNHEVIEW
     {
+       /// <summary>
+       /// pokeid集合
+       /// </summary>
+       public List<string> POKEIDLIST { get; set; }
+       public decimal POKEID { get; set; }
+       /// <summary>
+       /// 烟名称
+       /// </summary>
        public string CIGARETTENAME { get; set; }
+       /// <summary>
+       /// 烟数量
+       /// </summary>
        public decimal? QUANTITY { get; set; }
        public string CIGARETTECODE { get; set; }
-       public string TROUGHNUM { get; set; }
+       public decimal? MACHINESEQ { get; set; }
     }
  
 }
