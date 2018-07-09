@@ -46,6 +46,9 @@
             this.box_condition = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.troughdata = new System.Windows.Forms.DataGridView();
+            this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.btnsyncData = new System.Windows.Forms.Button();
             this.num = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.troughnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.machineseq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,9 +61,7 @@
             this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.pager1 = new WHC.Pager.WinControl.Pager();
-            this.btnsyncData = new System.Windows.Forms.Button();
+            this.groupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).BeginInit();
             this.SuspendLayout();
@@ -263,7 +264,8 @@
             this.state,
             this.type,
             this.ctype,
-            this.id});
+            this.id,
+            this.groupno});
             this.troughdata.Location = new System.Drawing.Point(0, 50);
             this.troughdata.MultiSelect = false;
             this.troughdata.Name = "troughdata";
@@ -274,102 +276,6 @@
             this.troughdata.TabIndex = 0;
             this.troughdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.troughdata_CellClick);
             this.troughdata.MouseClick += new System.Windows.Forms.MouseEventHandler(this.troughdata_MouseClick);
-            // 
-            // num
-            // 
-            this.num.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.num.DataPropertyName = "num";
-            this.num.HeaderText = "序号";
-            this.num.Name = "num";
-            this.num.ReadOnly = true;
-            this.num.Visible = false;
-            // 
-            // troughnum
-            // 
-            this.troughnum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.troughnum.DataPropertyName = "troughnum";
-            this.troughnum.HeaderText = "烟道编号";
-            this.troughnum.Name = "troughnum";
-            this.troughnum.ReadOnly = true;
-            this.troughnum.Width = 78;
-            // 
-            // machineseq
-            // 
-            this.machineseq.DataPropertyName = "machineseq";
-            this.machineseq.HeaderText = "设备编号";
-            this.machineseq.Name = "machineseq";
-            this.machineseq.ReadOnly = true;
-            // 
-            // cigarettecode
-            // 
-            this.cigarettecode.DataPropertyName = "cigarettecode";
-            this.cigarettecode.HeaderText = "品牌代码";
-            this.cigarettecode.Name = "cigarettecode";
-            this.cigarettecode.ReadOnly = true;
-            // 
-            // cigarettename
-            // 
-            this.cigarettename.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cigarettename.DataPropertyName = "cigarettename";
-            this.cigarettename.HeaderText = "品牌名称";
-            this.cigarettename.Name = "cigarettename";
-            this.cigarettename.ReadOnly = true;
-            this.cigarettename.Width = 78;
-            // 
-            // cigarettetype
-            // 
-            this.cigarettetype.DataPropertyName = "cigarettetype";
-            this.cigarettetype.HeaderText = "品牌类型";
-            this.cigarettetype.Name = "cigarettetype";
-            this.cigarettetype.ReadOnly = true;
-            // 
-            // 通道类型
-            // 
-            this.通道类型.DataPropertyName = "troughtypes";
-            this.通道类型.HeaderText = "通道类型";
-            this.通道类型.Name = "通道类型";
-            this.通道类型.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.status.DataPropertyName = "status";
-            this.status.HeaderText = "使用状态";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.Width = 78;
-            // 
-            // state
-            // 
-            this.state.DataPropertyName = "state";
-            this.state.HeaderText = "state";
-            this.state.Name = "state";
-            this.state.ReadOnly = true;
-            this.state.Visible = false;
-            // 
-            // type
-            // 
-            this.type.DataPropertyName = "type";
-            this.type.HeaderText = "type";
-            this.type.Name = "type";
-            this.type.ReadOnly = true;
-            this.type.Visible = false;
-            // 
-            // ctype
-            // 
-            this.ctype.DataPropertyName = "ctype";
-            this.ctype.HeaderText = "ctype";
-            this.ctype.Name = "ctype";
-            this.ctype.ReadOnly = true;
-            this.ctype.Visible = false;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
             // 
             // dgVprint1
             // 
@@ -513,6 +419,111 @@
             this.btnsyncData.UseVisualStyleBackColor = true;
             this.btnsyncData.Click += new System.EventHandler(this.btnsyncData_Click);
             // 
+            // num
+            // 
+            this.num.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.num.DataPropertyName = "num";
+            this.num.HeaderText = "序号";
+            this.num.Name = "num";
+            this.num.ReadOnly = true;
+            this.num.Visible = false;
+            this.num.Width = 54;
+            // 
+            // troughnum
+            // 
+            this.troughnum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.troughnum.DataPropertyName = "troughnum";
+            this.troughnum.HeaderText = "烟道编号";
+            this.troughnum.Name = "troughnum";
+            this.troughnum.ReadOnly = true;
+            this.troughnum.Width = 78;
+            // 
+            // machineseq
+            // 
+            this.machineseq.DataPropertyName = "machineseq";
+            this.machineseq.HeaderText = "设备编号";
+            this.machineseq.Name = "machineseq";
+            this.machineseq.ReadOnly = true;
+            // 
+            // cigarettecode
+            // 
+            this.cigarettecode.DataPropertyName = "cigarettecode";
+            this.cigarettecode.HeaderText = "品牌代码";
+            this.cigarettecode.Name = "cigarettecode";
+            this.cigarettecode.ReadOnly = true;
+            // 
+            // cigarettename
+            // 
+            this.cigarettename.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.cigarettename.DataPropertyName = "cigarettename";
+            this.cigarettename.HeaderText = "品牌名称";
+            this.cigarettename.Name = "cigarettename";
+            this.cigarettename.ReadOnly = true;
+            this.cigarettename.Width = 78;
+            // 
+            // cigarettetype
+            // 
+            this.cigarettetype.DataPropertyName = "cigarettetype";
+            this.cigarettetype.HeaderText = "品牌类型";
+            this.cigarettetype.Name = "cigarettetype";
+            this.cigarettetype.ReadOnly = true;
+            // 
+            // 通道类型
+            // 
+            this.通道类型.DataPropertyName = "troughtypes";
+            this.通道类型.HeaderText = "通道类型";
+            this.通道类型.Name = "通道类型";
+            this.通道类型.ReadOnly = true;
+            // 
+            // status
+            // 
+            this.status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.status.DataPropertyName = "status";
+            this.status.HeaderText = "使用状态";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 78;
+            // 
+            // state
+            // 
+            this.state.DataPropertyName = "state";
+            this.state.HeaderText = "state";
+            this.state.Name = "state";
+            this.state.ReadOnly = true;
+            this.state.Visible = false;
+            // 
+            // type
+            // 
+            this.type.DataPropertyName = "type";
+            this.type.HeaderText = "type";
+            this.type.Name = "type";
+            this.type.ReadOnly = true;
+            this.type.Visible = false;
+            // 
+            // ctype
+            // 
+            this.ctype.DataPropertyName = "ctype";
+            this.ctype.HeaderText = "ctype";
+            this.ctype.Name = "ctype";
+            this.ctype.ReadOnly = true;
+            this.ctype.Visible = false;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // groupno
+            // 
+            this.groupno.DataPropertyName = "groupno";
+            this.groupno.HeaderText = "groupno";
+            this.groupno.Name = "groupno";
+            this.groupno.ReadOnly = true;
+            this.groupno.Visible = false;
+            // 
             // win_trough
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -552,6 +563,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cbctype;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnsyncData;
         private System.Windows.Forms.DataGridViewTextBoxColumn num;
         private System.Windows.Forms.DataGridViewTextBoxColumn troughnum;
         private System.Windows.Forms.DataGridViewTextBoxColumn machineseq;
@@ -564,6 +576,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
         private System.Windows.Forms.DataGridViewTextBoxColumn ctype;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.Button btnsyncData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn groupno;
     }
 }

@@ -137,7 +137,7 @@ namespace highSpeed.baseData
             }
             String strsql = "SELECT tmp.* FROM (select  rownum as num, troughnum,id,machineseq," +
                             "cigarettecode,cigarettename,state,troughtype as type,cigarettetype as ctype,decode(cigarettetype,'10','混合','20','标准','30','异型','异型混合')as cigarettetype,decode(state,'10','正常','0','禁用')as status, " +
-                            "decode(troughtype,10,'分拣',20,'重力式货架',30,'皮带机',40,'分拣出口')as troughtypes from t_produce_sorttrough t where  1=1 " + tmp +
+                            "decode(troughtype,10,'分拣',20,'重力式货架',30,'皮带机',40,'分拣出口')as troughtypes,groupno from t_produce_sorttrough t where  1=1 " + tmp +
                             " )tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
             String temps = tmp +
                             " ORDER BY troughnum)tmp where  tmp.num>" + (pager1.CurrentPageIndex - 1) * pager1.PageSize + " and tmp.num<=" + pager1.CurrentPageIndex * pager1.PageSize + " order by to_number(tmp.troughnum)";
@@ -375,6 +375,7 @@ namespace highSpeed.baseData
                 String status = this.troughdata.CurrentRow.Cells["state"].Value + "";
                 String type = this.troughdata.CurrentRow.Cells["type"].Value + "";
                 String cigarettetype = this.troughdata.CurrentRow.Cells["ctype"].Value + "";
+                String groupno = this.troughdata.CurrentRow.Cells["groupno"].Value + "";
                 //MessageBox.Show("===" + troughdata.RowCount);
                 if (status == "10")
                 {
@@ -386,7 +387,7 @@ namespace highSpeed.baseData
                     this.btn_qy.Enabled = true;
                     this.btn_jy.Enabled = false;
                 }
-                if (type=="20" || type == "30" || type == "40" || (type == "10" && cigarettetype != "20"))
+                if (type == "20" || type == "30" || type == "40" || (type == "10" && cigarettetype != "20" && groupno=="3"))
                 {
                     this.btn_amend.Enabled = false;
                 }
@@ -468,7 +469,7 @@ namespace highSpeed.baseData
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
 
-            Db.ExecuteNonQueryWithProc("P_PRODUCE_Validation", sqlpara);
+            Db.ExecuteNonQueryWithProc("p_produce_wms_sorttrough", sqlpara);
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
