@@ -20,8 +20,8 @@ namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
     {
-       
-        WriteLog writeLog =  WriteLog.GetLog();
+
+        WriteLog writeLog = WriteLog.GetLog();
         List<GroupBox> panelList = new List<GroupBox>();
         List<T_UN_POKE> listShape = new List<T_UN_POKE>();
         internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
@@ -32,15 +32,15 @@ namespace SpecialShapeSmoke
         /// <summary>
         /// 存储DB块上的 TsakNum  完成号
         /// </summary>
-        decimal  dbMesg =  0; 
+        decimal dbMesg = 0;
         /// <summary>
         /// 存储DB块上的 TsakNum  完成号
         /// </summary>
-        decimal  dbMesg2 = 0;// 
+        decimal dbMesg2 = 0;// 
         /// <summary>
         /// 混合烟道
         /// </summary>
-        Group   ShapeGroup;
+        Group ShapeGroup;
 
         int topHeight = 57;
         int padding = 10;
@@ -54,15 +54,15 @@ namespace SpecialShapeSmoke
         static bool UpOrDn = false;
         //String lineNum = "0";
         Control control;
-        HunHeService service = new HunHeService(); 
+        HunHeService service = new HunHeService();
         Label chezu = new Label();
-
+        System.Drawing.Color labelcolor;
 
         /// <summary>
         ///  通道编号
         /// </summary>
         public string[] boxText = null;
-      //  public decimal[] troughno =  new decimal[9]  ;
+        //  public decimal[] troughno =  new decimal[9]  ;
 
         static Boolean isInit = false;
         //通道集合
@@ -71,23 +71,23 @@ namespace SpecialShapeSmoke
         /// 通道对应DB块索引
         /// </summary>
         decimal[] dbIndex = new decimal[] { -1, -1 };//通道对应DB块索引
-       // Dictionary<string, int>  rgDic = new Dictionary<string, int>();//存放通道对应值
+        // Dictionary<string, int>  rgDic = new Dictionary<string, int>();//存放通道对应值
         public MainScreen1()
         {
             InitializeComponent();
-          
+
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.Hide();
-            this.Show(); 
-            Panel p = new Panel(); 
-           // lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
+            this.Show();
+            Panel p = new Panel();
+            // lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
             boxText = ConfigurationManager.AppSettings["troughList"].ToString().Replace(" ", "").Split(',');//通道编号 
-            RefreshTime =ConfigurationManager.AppSettings["RefreshTime"].ToString().Replace(" ", "").CastTo<int>(20);//刷新时间
-           // troughno = new decimal[boxText.Length];
+            RefreshTime = ConfigurationManager.AppSettings["RefreshTime"].ToString().Replace(" ", "").CastTo<int>(20);//刷新时间
+            // troughno = new decimal[boxText.Length];
             if (boxText.Length == 1)//根据通道编号查找DB对应值
             {
-                dbIndex[0] = DicBind(boxText[0] );
+                dbIndex[0] = DicBind(boxText[0]);
             }
             else if (boxText.Length == 2)
             {
@@ -97,15 +97,15 @@ namespace SpecialShapeSmoke
                 }
             }
             if (CheckTrough())
-            { 
+            {
                 falge = true;
-                addGroupBoxByNew(2); 
+                addGroupBoxByNew(2);
             }
             else
             {
-                addGroupBoxByNew(boxText.Length); 
+                addGroupBoxByNew(boxText.Length);
             }
-            
+
             //if (lineNum == "1")
             //{
             //    boxText = new String[] { "1059", "1060", "1061", };
@@ -125,7 +125,7 @@ namespace SpecialShapeSmoke
             this.BackgroundImage = global::SpecialShapeSmoke.Properties.Resources.mainbj;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
-
+            labelcolor = Color.Green;
 
 
             Button close = new Button();
@@ -147,13 +147,13 @@ namespace SpecialShapeSmoke
             this.Controls.Add(chezu);
 
             Button search = new Button();
-            search.Width = 2*topHeight;
+            search.Width = 2 * topHeight;
             search.Height = topHeight;
             search.BackColor = Color.Silver;
             search.Font = new Font("宋体", 25, FontStyle.Bold);
             search.Text = "刷新";
             search.Click += Refresh;
-            search.Location = new Point(p.Width - 4*topHeight, 0);
+            search.Location = new Point(p.Width - 4 * topHeight, 0);
             p.Controls.Add(search);
 
             Button btnView = new Button();
@@ -176,10 +176,10 @@ namespace SpecialShapeSmoke
             SortSet.Text = "排序显示";
             SortSet.Click += SetUpOrDn;
             SortSet.Location = new Point(p.Width - 10 * topHeight, 0);
-           // p.Controls.Add(SortSet);
+            // p.Controls.Add(SortSet);
 
-           /* Thread thread = new Thread(ConnectServer);
-            thread.Start(); */
+            Thread thread = new Thread(ConnectServer);
+            thread.Start();
         }
         public void SetUpOrDn(object sender, EventArgs e)//修改显示方向
         {
@@ -200,31 +200,31 @@ namespace SpecialShapeSmoke
             }
         }
 
-        
+
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
             {
                 List<HUNHEVIEW> temp = new List<HUNHEVIEW>();
-                HUNHEVIEW tempview =null;
-                int count =0;
+                HUNHEVIEW tempview = null;
+                int count = 0;
                 //定义pokelist的长度为混合道poke的个数
-                List<string> pokeidlist =new List<string>();
+                List<string> pokeidlist = new List<string>();
                 foreach (var item in list)//遍历取到的数据（名称、编码、通道号）
                 {
                     count++;
-                    
+
                     if (tempview == null)//如果tempview没有数据 赋值当前遍历的值
                     {
-                        
+
                         tempview = item;
                         pokeidlist.Add(item.POKEID.ToString());
-                        tempview.POKEIDLIST = pokeidlist; 
+                        tempview.POKEIDLIST = pokeidlist;
                     }
                     else if (item.CIGARETTECODE != tempview.CIGARETTECODE)//如果当前遍历的数据的香烟编码不等于上一次遍历
                     {
-                        temp.Add(tempview); 
-                        tempview = new HUNHEVIEW(); 
+                        temp.Add(tempview);
+                        tempview = new HUNHEVIEW();
                         //存pokeid的集合
                         pokeidlist = new List<string>();
                         pokeidlist.Add(item.POKEID.ToString());
@@ -233,13 +233,13 @@ namespace SpecialShapeSmoke
                         tempview.MACHINESEQ = item.MACHINESEQ;
                         tempview.CIGARETTECODE = item.CIGARETTECODE;
                         tempview.POKEIDLIST = pokeidlist;
-                        
+
                     }
                     else
                     {
                         pokeidlist.Add(item.POKEID.ToString());
                         tempview.QUANTITY += item.QUANTITY; //数量相加
-                       // tempview.TROUGHNUM += item.TROUGHNUM;//将编码拼接
+                        // tempview.TROUGHNUM += item.TROUGHNUM;//将编码拼接
 
                     }
                     if (count == list.Count)
@@ -261,60 +261,58 @@ namespace SpecialShapeSmoke
         /// </summary>
         decimal DicBind(string troughno)
         {
-             decimal positiong = 0;
+            decimal positiong = 0;
             if (troughno == "1001")
-            { 
+            {
                 positiong = 0;
             }
             else if (troughno == "1002")
-            { 
+            {
                 positiong = 1;
             }
             else if (troughno == "1059")
-            { 
+            {
                 positiong = 2;
             }
             else if (troughno == "1060")
-            { 
+            {
                 positiong = 3;
             }
             else if (troughno == "1061")
-            { 
+            {
                 positiong = 4;
             }
-             else if (troughno == "2001")
-            { 
+            else if (troughno == "2001")
+            {
                 positiong = 5;
             }
-             else if (troughno == "2002")
-            { 
+            else if (troughno == "2002")
+            {
                 positiong = 6;
             }
-             else if (troughno == "2059")
-            { 
+            else if (troughno == "2059")
+            {
                 positiong = 7;
             }
-             else if (troughno == "2060")
-            { 
+            else if (troughno == "2060")
+            {
                 positiong = 8;
             }
-             else if (troughno == "2061")
-            { 
+            else if (troughno == "2061")
+            {
                 positiong = 9;
-            } 
-            return positiong; 
+            }
+            return positiong;
         }
-       static int RefreshTime    ;
+        static int RefreshTime;
         void ConnectServer()
         {
-            try
-            {
+            //try
+            //{
                 Type svrComponenttyp;
                 Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME); 
+                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-                
-              
 
                 ShapeGroup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
                 ShapeGroup.addItem(ItemCollection.GetTaskStatusByShapeItem());
@@ -322,18 +320,18 @@ namespace SpecialShapeSmoke
 
                 if (checkConnection()) //连接服务器成功 
                 {
-                    while (true) 
+                    while (true)
                     {
-                      getData();
-                      Thread.Sleep(RefreshTime *1000);//每20秒刷新一次
+                        getData();
+                        Thread.Sleep(RefreshTime * 500);//每20秒刷新一次
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                writeLog.Write(e.Message);
-            }
-           
+            //}-
+            //catch (Exception e)
+            //{
+            //    writeLog.Write(e.Message);
+            //}
+
             //socket = new ClientSocket(ipaddress, PORT);
             //socket.method+=getData;
             //socket.startListen();
@@ -344,12 +342,12 @@ namespace SpecialShapeSmoke
             int flag = ShapeGroup.Read(0).CastTo<int>(-1);
             if (flag == -1)
             {
-                MessageBox.Show("连接服务器失败,请检查网络"); 
+                MessageBox.Show("连接服务器失败,请检查网络");
                 writeLog.Write(" 连接服务器失败,请检查网络.");
                 return false;
             }
             else
-            {  
+            {
                 writeLog.Write(" 连接服务器成功......");
                 return true;
                 //isInit = true;
@@ -357,122 +355,123 @@ namespace SpecialShapeSmoke
         }
 
 
-       /// <summary>
+        /// <summary>
         /// 数据清空
-       /// </summary>
+        /// </summary>
         public void clearAllText()
         {
             // 数据清空
-            try
+            //try
+            //{
+
+
+            throughList = new List<HUNHEVIEW>[boxText.Length];
+            for (int i = 0; i < 2; i++)
             {
-
-
-                throughList = new List<HUNHEVIEW>[boxText.Length];
-                for (int i = 0; i < throughList.Length; i++)
+                for (int j = 0; j < panelList[i].Controls.Count; j++)
                 {
-                    for (int j = 0; j < panelList[i].Controls.Count; j++)
-                    {
-                        Label lbl = (Label)panelList[i].Controls[j];
-                        updateLabel("", lbl);
-                    }
+                    Label lbl = (Label)panelList[i].Controls[j];
+                    updateLabel("", lbl,falg:1);
                 }
             }
-            catch (Exception e)
-            {
+            //}
+            //catch (Exception e)
+            //{
 
-                writeLog.Write("clearAllText():" + e.Message + "/r/n" + e.Source);
-            }
+            //    writeLog.Write("clearAllText():" + e.Message + "/r/n" + e.Source);
+            //}
 
         }
         #region
         //public void OnDataChange(int group, int[] clientId, object[] values )//DB块的值发生变化
         //{
 
-            //if (group == 1)   //混合道 1001 1059 1061  2002 2060
-            //{
-            //    int[] tempvalue = new int[10] ;
-            //    int temp = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    { 
-            //       tempvalue[i] = int.Parse((values[i].ToString())); 
-            //        if (tempvalue[i] >= 1)
-            //        {
-            //            writeLog.Write("从通道：" + boxText[0] + "DB块读取值为:" + tempvalue[i] + "    " + temp +"    "+ dbIndex[0]);
-            //            dbMesg = temp;
-                        
-            //        }
-            //        getData();
-            //    } 
-            //}
-            //else if (group == 2)  //混合道2 1002 1060 2001  2059 2061 
-            //{
-            //    int[] tempvalue = new int[10];
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //      int temp = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
-            //        tempvalue[i] = int.Parse((values[i].ToString())); 
-            //        if (tempvalue[i] >= 1)
-            //        {
-            //            if (boxText.Length > 2)
-            //            {
-            //                writeLog.Write("从通道：" + boxText[1] + "DB块读取值为:" + tempvalue[i] + "     " + temp+"     " + dbIndex[1]);
-            //                dbMesg2 = temp;
-            //            }
-            //              //ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1).ToString(); 
-            //        }
-            //        getData();
-            //    }
-            //}
-            //else
-            //if (group == 3)   
-            //{
-            //    int temp = -1;
-            //    int[] tempvalue = new int[10];
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        for (int k = 0; k< 2; k++)
-            //        {
-            //            temp = ShapeGroup3.Read((int)dbIndex[k]).CastTo<int>(-1);
-            //        }
-                  
-            //        tempvalue[i] = int.Parse((values[i].ToString()));
-            //        if (tempvalue[i] >= 1)
-            //        {
-            //            if (boxText.Length > 2)
-            //            {
-            //                writeLog.Write("从通道：" + boxText[1] + "DB块读取值为:" + tempvalue[i] + "     " + temp + "     " + dbIndex[1]);
-            //                dbMesg2 = temp;
-            //            }
-            //            //ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1).ToString(); 
-            //        }
-            //        getData();
-            //    }
-            //}
+        //if (group == 1)   //混合道 1001 1059 1061  2002 2060
+        //{
+        //    int[] tempvalue = new int[10] ;
+        //    int temp = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);
+        //    for (int i = 0; i < clientId.Length; i++)
+        //    { 
+        //       tempvalue[i] = int.Parse((values[i].ToString())); 
+        //        if (tempvalue[i] >= 1)
+        //        {
+        //            writeLog.Write("从通道：" + boxText[0] + "DB块读取值为:" + tempvalue[i] + "    " + temp +"    "+ dbIndex[0]);
+        //            dbMesg = temp;
+
+        //        }
+        //        getData();
+        //    } 
         //}
-#endregion
-       // bool flag = true;//初始化
+        //else if (group == 2)  //混合道2 1002 1060 2001  2059 2061 
+        //{
+        //    int[] tempvalue = new int[10];
+        //    for (int i = 0; i < clientId.Length; i++)
+        //    {
+        //      int temp = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
+        //        tempvalue[i] = int.Parse((values[i].ToString())); 
+        //        if (tempvalue[i] >= 1)
+        //        {
+        //            if (boxText.Length > 2)
+        //            {
+        //                writeLog.Write("从通道：" + boxText[1] + "DB块读取值为:" + tempvalue[i] + "     " + temp+"     " + dbIndex[1]);
+        //                dbMesg2 = temp;
+        //            }
+        //              //ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1).ToString(); 
+        //        }
+        //        getData();
+        //    }
+        //}
+        //else
+        //if (group == 3)   
+        //{
+        //    int temp = -1;
+        //    int[] tempvalue = new int[10];
+        //    for (int i = 0; i < clientId.Length; i++)
+        //    {
+        //        for (int k = 0; k< 2; k++)
+        //        {
+        //            temp = ShapeGroup3.Read((int)dbIndex[k]).CastTo<int>(-1);
+        //        }
+
+        //        tempvalue[i] = int.Parse((values[i].ToString()));
+        //        if (tempvalue[i] >= 1)
+        //        {
+        //            if (boxText.Length > 2)
+        //            {
+        //                writeLog.Write("从通道：" + boxText[1] + "DB块读取值为:" + tempvalue[i] + "     " + temp + "     " + dbIndex[1]);
+        //                dbMesg2 = temp;
+        //            }
+        //            //ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1).ToString(); 
+        //        }
+        //        getData();
+        //    }
+        //}
+        //}
+        #endregion
+        // bool flag = true;//初始化
 
         static decimal[] finishNo = new decimal[2];//完成信号 (pokeid)
-        static decimal[] befoerFinishNo = new decimal[2];//上一次完成信号(pokeid)
+        static decimal[] befoerFinishNo = new decimal[2] { -1, -1 };//上一次完成信号(pokeid)
+
         /// <summary>
         /// 获取数据
         /// </summary>  
         /// 
-        public void getData()
+        public void getData(bool Refresh = false)
         {
- /*           // writeLog.Write("Receive Resend Data:"+data);
-            try
-            {
-                //int countGroupBox = 0;//groupBox总数
+
+
+            //writeLog.Write("Receive Resend Data:"+data);
+            //try
+            //{ 
+                
                 int countnum = 0;
-                // string[] Flag = new string[2];   
-                //decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
+                decimal[] finishNo = new decimal[2];//完成信号 (taskNum)
                 //finishNo[0] = -1;
                 //finishNo[1] = -1;
-                //befoerFinishNo[0] = -1;
-                //befoerFinishNo[0] = -1;
+
                 string Log = "";
-              
+
                 #region  读取DB
                 if (dbIndex[1] == -1)//  是1061 和2061 单个通道？
                 {
@@ -485,13 +484,11 @@ namespace SpecialShapeSmoke
                     finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
                     finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
                     countnum = 2;
-
                 }
-                
-                #endregion
-                 
 
-                if (finishNo[0] != -1 || finishNo[1] != -1)
+                #endregion
+
+                if (finishNo[0] != -1 || finishNo[1] != -1|| Refresh)
                 {
                     if (befoerFinishNo.Sum() != finishNo.Sum())
                     {
@@ -500,22 +497,20 @@ namespace SpecialShapeSmoke
                             Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
                         }
                         writeLog.Write(Log);
-                        clearAllText();
+                       
 
-                        if (finishNo.Sum() >= befoerFinishNo.Sum())
-                        {
-*/
-           int  countnum = 2;
-           finishNo =new decimal[]{1,2};
-           throughList = new List<HUNHEVIEW>[boxText.Length];
+                        if ((finishNo.Sum() >= befoerFinishNo.Sum()) || Refresh)
+                        { 
+                            clearAllText();
+                            throughList = new List<HUNHEVIEW>[boxText.Length];
                             //// if (CheckTrough()) { countnum = 1; } else { countnum = 2; }
                             for (int j = 0; j < countnum; j++)//数据获取核心
                             {
                                 throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo[j], 300));//第二个 
                                 //initText(panelList[j], throughList[j]);
-                                initTextUpOrDn(panelList[j], throughList[j], UpOrDn);
+                                initTextUpOrDn(panelList[j], throughList[j], true);
                             }
-/*
+
                             if (throughList[0].Count <= 0) //根据不同通道完成来显示完成任务 
                             {
                                 Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
@@ -545,37 +540,25 @@ namespace SpecialShapeSmoke
                         updateLabel("服务器断开连接,请重新连接!", lbl2);
                     }
                 }
-                //  var item = service.GetBeginTask();
-                //if (item != null && item.Count > 0)
-                //{
-                //    updateLabel("当前车组号：" + item[0].REGIONCODE, chezu);
-                //}
-                //befoerFinishNo = finishNo;
-            }
-            catch (Exception e)
-            {
-                writeLog.Write("GetData():" + e.Message + "\r\n" + "错误源:" + e.Source);
-            }
-            //MessageBox.Show(data);
-            */
+
         }
         NowView fNowView;
         System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         //System.Windows.Forms.Timer t2 = new System.Windows.Forms.Timer(); 
         public void GetNowView(object sender, EventArgs e)//获取当前混合道
-        { 
+        {
             int machineseq1 = Convert.ToInt32(boxText[0]);
             int machineseq2;
             if (boxText.Length > 1)
             {
                 machineseq2 = Convert.ToInt32(boxText[1]);
             }
-            else 
+            else
             {
                 machineseq2 = machineseq1;
             }
             fNowView = new NowView(machineseq1, machineseq2, finishNo);
- 
+
             fNowView.Show();
             fNowView.Activate();
 
@@ -587,9 +570,9 @@ namespace SpecialShapeSmoke
             //t2.Stop();
             //t1.Interval = 10000;
             //t1.Start();
- 
+
         }
-        public void SearchWinForm(Form fname) 
+        public void SearchWinForm(Form fname)
         {
             foreach (Form frm in Application.OpenForms)
             {
@@ -622,30 +605,31 @@ namespace SpecialShapeSmoke
 
 
         public void Refresh(object sender, EventArgs e)//刷新
-        { 
-            getData();
+        {
+           
+            getData(true);
         }
         public void initText(GroupBox box, List<HUNHEVIEW> list)
         {
             if (box != null && list != null)
             {
-                int i =   14; 
+                int i = 14;
                 var newlist = list.Skip(15).Take(1000).ToList(); //获取多于15
                 int no = 1;
                 //int z = newlist.Count();//取剩余烟数
-             
-                try
-                {
+
+                //try
+                //{
                     foreach (var item in list)
                     {
                         decimal count = item.QUANTITY ?? 0;
-                        if (count >= 1 && i >= 0 && no <=15 )
+                        if (count >= 1 && i >= 0 && no <= 15)
                         {
                             Label lbl = (Label)box.Controls[i];
-                            Label lab = (Label)box.Controls[i+15];
+                            Label lab = (Label)box.Controls[i + 15];
                             i--;
                             updateLabel(no + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
-                            updateLabel((no+15).ToString(),lab);
+                            updateLabel((no + 15).ToString(), lab);
                             no++;
                         }
                         if (falge && newlist.Count > 0)//用于单通道多显示2061 and  1061
@@ -668,12 +652,12 @@ namespace SpecialShapeSmoke
                     }
 
                     if (CheckTrough()) { falge = true; }
-                }
-                catch (Exception e)
-                {
-                    writeLog.Write("initText():" + e.Message);
-                }
-            } 
+                //}
+                //catch (Exception e)
+                //{
+                //    writeLog.Write("initText():" + e.Message);
+                //}
+            }
         }
         /// <summary>
         /// 
@@ -681,7 +665,7 @@ namespace SpecialShapeSmoke
         /// <param name="box"></param>
         /// <param name="list"></param>
         /// <param name="isUpOrDn">默认为真，真则从上往下显示，反亦之</param>
-        public void initTextUpOrDn(GroupBox box, List<HUNHEVIEW> list,  bool isUpOrDn = false)
+        public void initTextUpOrDn(GroupBox box, List<HUNHEVIEW> list, bool isUpOrDn = false)
         {
             if (box != null && list != null)
             {
@@ -689,6 +673,7 @@ namespace SpecialShapeSmoke
                 int singleNo = 1;
                 int singleIndex;//单通显示
                 int multiIdnex; //1061，2061
+                int multNo = 1;
                 if (isUpOrDn)
                 {
                     singleIndex = 0;
@@ -697,35 +682,95 @@ namespace SpecialShapeSmoke
                 else
                 {
                     singleIndex = 29;
-                    multiIdnex = 29; 
+                    multiIdnex = 29;
                 }
-                try
+                //try
+                //{
+                foreach (var item in list)
                 {
-                    foreach (var item in list)
+                    decimal count = item.QUANTITY ?? 0;
+                    if (count >= 1 && singleIndex >= 0 && singleIndex < 30)
                     {
-                        decimal count = item.QUANTITY ?? 0;
-                        if (count >= 1 && singleIndex >= 0 && singleIndex < 30)
+                        //取pokeid
+                        int PokeCount = item.POKEIDLIST.Count;
+                        string[] pokes = new string[PokeCount];
+                        int no = 0;
+                        foreach (var it in item.POKEIDLIST)
                         {
+                            pokes[no] = it;
+                            no++;
+                        }
+
+                        int index ;
+
+                        if (isUpOrDn)
+                        {
+                            index = 28 - singleIndex;
+                            singleIndex += 2;
+                        }
+                        else
+                        {
+                            index = 29 - singleIndex;
+                            singleIndex -= 2;
+                        }
+                        Label lbl = (Label)box.Controls[index];
+                        Label lab = (Label)box.Controls[index + 1];
+                        //查询是否已经放烟，有则变色
+                        if (HunHeService.GetTag(pokes))
+                        {
+                            updateLabel(singleNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl, true);
+                        }
+                        else
+                        {
+                            updateLabel(singleNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
+                        }
+                        //绑定pokeid
+                        updateLabe2(item.POKEIDLIST, lab);
+                        
+
+                        singleNo++;
+                    }
+                }
+                if (falge && newlist.Count > 0)//用于单通道多显示2061 and  1061
+                {
+                    int multiNo = 1;
+                    foreach (var item in newlist)
+                    {
+                        
+                        decimal count = item.QUANTITY ?? 0;
+                        if (count >= 1 && multiIdnex >= 0 && multiIdnex < 30)
+                        {
+                            int index;
+                            if (isUpOrDn)
+                            {
+                                index = 28 - multiIdnex;
+                                multiIdnex += 2;
+                            }
+                            else
+                            {
+                                index = 29 - multiIdnex;
+                                multiIdnex -= 2;
+                            } 
+                            Label lbl = (Label)Controls.Find("orBox" + 1, true)[0].Controls[index];
+                            Label lab = (Label)Controls.Find("orBox" + 1, true)[0].Controls[index+1];
                             //取pokeid
                             int PokeCount = item.POKEIDLIST.Count;
                             string[] pokes = new string[PokeCount];
                             int no = 0;
                             foreach (var it in item.POKEIDLIST)
-	                        {
+                            {
                                 pokes[no] = it;
                                 no++;
-	                        }
-                            int index = 29 - singleIndex;
-                            Label lbl = (Label)box.Controls[index];
-                            Label lab = (Label)box.Controls[index + 1];
+                            }
+                            
                             //查询是否已经放烟，有则变色
                             if (HunHeService.GetTag(pokes))
-	                        {
-                                updateLabel(singleNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl,true);
-	                        }
+                            {
+                                updateLabel(multNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl, true);
+                            }
                             else
                             {
-                                updateLabel(singleNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
+                                updateLabel(multNo + ":  " + item.CIGARETTENAME + ":" + count + "条", lbl);
                             }
                             //绑定pokeid
                             updateLabe2(item.POKEIDLIST, lab);
@@ -735,44 +780,24 @@ namespace SpecialShapeSmoke
                             }
                             else
                             {
-                                singleIndex-=2;
+                                singleIndex -= 2;
                             }
-                            
-                            singleNo++;
-                        }
-                        if (falge && newlist.Count > 0)//用于单通道多显示2061 and  1061
-                        {
-                            int multiNo = 1;
-                            foreach (var item2 in newlist)
-                            {
-                                decimal count2 = item2.QUANTITY ?? 0;
-                                if (count2 >= 1 && multiIdnex >= 0 && multiIdnex < 15)
-                                {
-                                    Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[multiIdnex];
-                                    
-                                    if (isUpOrDn)
-                                    {
-                                        multiIdnex++; 
-                                    }
-                                    else
-                                    {
-                                        multiIdnex--;
-                                    }
-                                    updateLabel((multiNo + 15) + ":  " + item2.CIGARETTENAME + ":" + count2 + "条", lbl2);
-                                    
-                                    multiNo++;
-                                }
-                            }
-                            falge = false;
+
+                            multNo++;
                         }
                     }
 
+
+                    falge = false;
+
+                }
+
                     if (CheckTrough()) { falge = true; }
-                }
-                catch (Exception e)
-                {
-                    writeLog.Write("initText():" + e.Message);
-                }
+                //}
+                //catch (Exception e)
+                //{
+                 //   writeLog.Write("initText():" + e.Message);
+               // }
             }
         }
         /// <summary>
@@ -792,7 +817,7 @@ namespace SpecialShapeSmoke
         }
         void OpenWin(object sender, EventArgs e)
         {
-           
+
         }
         void closeForm(object sender, EventArgs e)
         {
@@ -804,18 +829,18 @@ namespace SpecialShapeSmoke
                              MessageBoxDefaultButton.Button2);
             //继续尝试链接
             if (MsgBoxResult == DialogResult.Yes)
-            { 
+            {
                 //System.Environment.Exit(0); 
                 this.Dispose();
                 this.Close();
                 System.Environment.Exit(System.Environment.ExitCode);
             }
-           
-            
+
+
         }
         private void groupBox_Paint(object sender, PaintEventArgs e)
         {
-            
+
             GroupBox box = (GroupBox)sender;
             //e.Graphics.Clear(box.BackColor);
             e.Graphics.DrawString(box.Text, box.Font, Brushes.Red, 10, 1);
@@ -828,14 +853,14 @@ namespace SpecialShapeSmoke
 
         void addGroupBoxByNew(int panelCount)//2061 1061
         {
-            int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * ( 2 + 1))) / 2;
+            int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * (2 + 1))) / 2;
             for (var i = 0; i < panelCount; i++)
             {
                 GroupBox box = new GroupBox();
                 //box.Paint += groupBox_Paint;
                 box.Width = panelWidth;
                 box.BackColor = Color.Transparent;
-                box.Name = "orBox0"; 
+                box.Name = "orBox0";
                 box.Font = new Font("宋体", 25, FontStyle.Bold);
                 box.ForeColor = Color.Red;
                 box.Height = Screen.PrimaryScreen.Bounds.Height - topHeight - bottom;
@@ -845,7 +870,7 @@ namespace SpecialShapeSmoke
                 {
                     if (i == 0)
                     {
-                       // box.Location = new Point(panelWidth * i + (padding * (i + 50)), topHeight + padding);
+                        // box.Location = new Point(panelWidth * i + (padding * (i + 50)), topHeight + padding);
                         box.Text = "通道:" + boxText[0];
                     }
                     if (i == 1)
@@ -859,9 +884,9 @@ namespace SpecialShapeSmoke
                     box.Text = "通道" + boxText[i];
                     box.Name = "orBox" + i;
                 }
-                this.Controls.Add(box); 
-                panelList.Add(box); 
-            }  
+                this.Controls.Add(box);
+                panelList.Add(box);
+            }
             addLabel(labelCount);
         }
         #region
@@ -896,15 +921,15 @@ namespace SpecialShapeSmoke
                 for (var i = 0; i < labelCount; i++)
                 {
                     Label lbl = new Label();
-                    lbl.Width = item.Width-2*padding;
+                    lbl.Width = item.Width - 2 * padding;
                     lbl.BackColor = Color.White;
-                    lbl.Height = (item.Height - 2 * labelCount - boxTop-boxBottom) / labelCount;
+                    lbl.Height = (item.Height - 2 * labelCount - boxTop - boxBottom) / labelCount;
                     lbl.ForeColor = Color.Black;
                     //lbl.BorderStyle
                     lbl.TextAlign = ContentAlignment.MiddleLeft;
-                    lbl.Text =  "";
+                    lbl.Text = "";
                     lbl.Name = "lbl" + i;
-                    lbl.Font = new Font( "宋体", 25, FontStyle.Bold);//
+                    lbl.Font = new Font("宋体", 25, FontStyle.Bold);//
                     lbl.Click += new EventHandler(lbl_Click);//点击label事件 
                     lbl.Location = new Point(padding, boxTop + (lbl.Height + 2) * i);
                     item.Controls.Add(lbl);
@@ -913,17 +938,19 @@ namespace SpecialShapeSmoke
                     lab.Location = new Point(lbl.Width, boxTop + (lbl.Height + 2) * i);
                     lab.BackColor = Color.Red;
                     lab.Name = "lab" + i;
+                    lab.Visible = false;
                     lab.Enabled = false;
                     item.Controls.Add(lab);
                 }
             }
 
         }
-       
+
         void lbl_Click(object sender, EventArgs e)
         {
             //父控件的名称
             string ParentControl = ((Label)sender).Parent.Name;
+            
 
             string lblName = ((Label)sender).Name;
             string labName = "lab" + ((Label)sender).Name.Substring(3);
@@ -933,62 +960,65 @@ namespace SpecialShapeSmoke
             Label lab = (Label)Controls.Find(ParentControl, true)[0].Controls.Find(labName, true)[0];
 
             decimal machineseq;
-            if ( throughList.Count()== 1 )
+            if (boxText.Count() == 1)
             {
-                machineseq = Convert.ToDecimal(throughList.First());
+                machineseq = Convert.ToDecimal(boxText.First());
             }
             else
             {
                 machineseq = Convert.ToDecimal(((Label)sender).Parent.Text.Substring(2, 4));
             }
-              
+
             string[] list = lab.Text.Split('|');
-            List<string> pokelist=new List<string>();
+            List<string> pokelist = new List<string>();
             for (int i = 0; i < list.Count(); i++)
-			{
-			 pokelist.Add(list[i]);
-			}
+            {
+                pokelist.Add(list[i]);
+            }
+
+            if (lbl.BackColor == Color.White)
+            {
+                Convert.ToInt32(((Label)sender).Parent.Name.Substring(5, 1));
+
+                if (InBound.Business.HunHeService.PullTag(pokelist, machineseq))
+                {
+                    lbl.BackColor = labelcolor;
+                }
+                //string ij = throughList.GetValue(Convert.ToInt32(((Label)sender).Parent.Name.Substring(5, 1))).ToString();
+            }
+            else if (lbl.BackColor == labelcolor)
+            {
+                if (InBound.Business.HunHeService.CancelTag(pokelist, machineseq))
+                {
+                    lbl.BackColor = Color.White;
+                }
+
+            }
              
-                if (lbl.BackColor == Color.White)
-                {
-                    Convert.ToInt32(((Label)sender).Parent.Name.Substring(5,1));
-                    
-                    if (InBound.Business.HunHeService.PullTag(pokelist,machineseq))
-                    {
-                        lbl.BackColor = Color.Green;
-                    }
-                    string ij = throughList.GetValue(Convert.ToInt32(((Label)sender).Parent.Name.Substring(5, 1))).ToString();
-                 }
-                else if (lbl.BackColor == Color.Green )
-                {
-                    if (InBound.Business.HunHeService.CancelTag(pokelist,machineseq))
-                    {
-                        lbl.BackColor = Color.White;
-                    }
-                    
-                } 
-                    
-               
-            //}
-            
-           // MessageBox.Show("单击了" + lbl2.Name + "" + lbltext); 
-           // throw new NotImplementedException(); 
 
-
-            
-            
         }
-        private delegate void HandleDelegate1(string info, Label label,bool tag);
-        public void updateLabel(string info,Label label,bool tag=false)
+        private delegate void HandleDelegate1(string info, Label label, bool tag,int falg);
+        /// <summary>
+        /// 放烟标志
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="label"></param>
+        /// <param name="tag">true为已放烟</param>
+        public void updateLabel(string info, Label label, bool tag = false,int falg=0)
         {
+            if (falg==1)
+            {
+                label.BackColor = Color.White;
+            }
+
             String time = DateTime.Now.ToLongTimeString();
             if (tag)
             {
-                label.BackColor = Color.Green;
+                label.BackColor = labelcolor;
             }
             if (label.InvokeRequired)
             {
-                label.Invoke(new HandleDelegate1(updateLabel), new Object[] { info, label });
+                label.Invoke(new HandleDelegate1(updateLabel), new Object[] { info, label,tag = false,falg=0 });
             }
             else
             {
@@ -1005,14 +1035,14 @@ namespace SpecialShapeSmoke
             }
             if (label.InvokeRequired)
             {
-                label.Invoke(new HandleDelegate2(updateLabe2), new Object[] { info, label });
+                label.Invoke(new HandleDelegate2(updateLabe2), new Object[] { info, label,tag = false });
             }
             else
             {
                 string pokeid = null;
                 for (int i = 0; i < info.Count; i++)
                 {
-                    if (pokeid==null)
+                    if (pokeid == null)
                     {
                         pokeid = info[i];
                     }
@@ -1028,9 +1058,9 @@ namespace SpecialShapeSmoke
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e); 
+            base.OnClosing(e);
             stop = true;
-           
+
         }
 
         public void Disconnect()
@@ -1048,7 +1078,7 @@ namespace SpecialShapeSmoke
             }
 
         }
- 
+
 
     }
 }
