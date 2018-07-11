@@ -11,7 +11,8 @@
     <RootNamespace>FollowTask</RootNamespace>
     <AssemblyName>FollowTask</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -34,12 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxInterop.DSOFramer">
+      <HintPath>..\HighSpeed\highSpeed\bin\Debug\AxInterop.DSOFramer.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2">
+      <HintPath>..\HighSpeed\highSpeed\bin\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetPrint, Version=5.3.4844.32568, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DotNetPrint.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\HighSpeed\highSpeed\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -122,6 +132,12 @@
     <Compile Include="Fm_UnionMainBelt.Designer.cs">
       <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Fm_UnionMainInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fm_UnionMainInfo.Designer.cs">
+      <DependentUpon>Fm_UnionMainInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Method\BitmapRegion.cs" />
     <Compile Include="Modle\Group.cs" />
     <Compile Include="Modle\ItemCollection.cs" />
@@ -187,6 +203,9 @@
     <EmbeddedResource Include="Fm_UnionMainBelt.resx">
       <DependentUpon>Fm_UnionMainBelt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fm_UnionMainInfo.resx">
+      <DependentUpon>Fm_UnionMainInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +240,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HighSpeed\highSpeed\highSpeed.csproj">
+      <Project>{6AB4972E-AADD-47CB-BFB4-A393E4F16EA5}</Project>
+      <Name>highSpeed</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InBound\InBound.csproj">
       <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
       <Name>InBound</Name>
@@ -232,6 +255,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="DotNetPrint.dll" />
+    <Content Include="DotNetPrint.xml" />
     <Content Include="Lib\opcrcw.comn.dll" />
     <Content Include="Lib\opcrcw.da.dll" />
     <None Include="Resources\1430143.jpg" />

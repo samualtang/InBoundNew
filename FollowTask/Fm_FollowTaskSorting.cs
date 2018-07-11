@@ -11,6 +11,9 @@ using System.Threading;
 using InBound;
 using OpcRcw.Da;
 using Machine;
+using FollowTask.Modle;
+using InBound.Business;
+using InBound.Model;
 
 
 namespace FollowTask
@@ -22,19 +25,9 @@ namespace FollowTask
             InitializeComponent();
         }
 
-
-        internal const string SERVER_NAME = "OPC.SimaticNET";       // local server name
-
-        internal const string GROUP_NAME = "grp1";                  // Group name
-        internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
-        //AutoSizeFormClass asc = new AutoSizeFormClass();
-        /* Global variables */
-        IOPCServer pIOPCServer;  //定义opcServer对象
         public WriteLog writeLog = WriteLog.GetLog();
-        DeviceStateManager stateManager = new DeviceStateManager();
-        Alarms alarms = new Alarms();
-      //  Fm_Mian fm = new Fm_Mian();
-        decimal MainBeltNo = 0;
+
+      
         public Fm_FollowTaskSorting(string text)
         { 
             InitializeComponent();
@@ -44,6 +37,330 @@ namespace FollowTask
             writeLog.Write(text + "应用程序启动");
            
         }
+        List<Group> ListSort = new List<Group>();
+        List<MainBeltInfo> ListmbInfo = new List<MainBeltInfo>();
+      
+   
+        bool isOnLine = false;//服务器连接标识符
+        decimal Sortnum;//任务号
+        decimal[] nowplace = new decimal[40];//当前位置
+        decimal groupno;//组号
+        /// <summary>
+        /// 读取索引
+        /// </summary>
+        static int ReadIndex = 0;
+        public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
+        {
+            String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
+            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
+            if (isonline)
+            {
+                OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
+                Text = text + "预分拣";
+                list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
+                list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
+                ListSort = list;
+                isOnLine = isonline;
+
+            }
+            else
+            {
+
+                updateListBox("与服务器断开连接....");
+            }
+        }
+        /// <summary>
+        /// 获取卷烟图片
+        /// </summary>
+        /// <param name="cigraCode">卷烟编码</param>
+        /// <returns>卷烟图片</returns>
+        Bitmap GetImg(string cigraCode)
+        {
+            Bitmap cigreImg = (Bitmap)Properties.Resources.ResourceManager.GetObject("_" + cigraCode);
+            if (cigreImg == null)
+            {
+                cigreImg = (Bitmap)Properties.Resources.ResourceManager.GetObject("默认卷烟");
+            }
+            return cigreImg;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="count">当前第几次</param>
+        /// <param name="cigarecode">卷烟名称</param>
+        /// <param name="qty">卷烟条数</param>
+        public void addPanel(List<UnionTaskInfo> before)
+        {
+            panelCig.Controls.Clear();
+            for (int i = 0; i < before.Count; i++)
+            {
+                PictureBox img = new PictureBox();
+                Label lbl = new Label();
+                lbl.Text = before[i].qty.ToString();
+                lbl.BackColor = Color.Transparent;
+                lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
+                img.Name = "ImgName" + Guid.NewGuid().ToString();
+                img.Size = new System.Drawing.Size(20, 80);
+                img.AccessibleName = before[i].CIGARETTDENAME + "|" + before[i].qty + "|" + before[i].CIGARETTDECODE;//卷烟名称 和 QTY
+                img.BackgroundImage = GetImg(before[i].CIGARETTDECODE);
+                img.SizeMode = PictureBoxSizeMode.Zoom;
+                img.BorderStyle = BorderStyle.FixedSingle;
+                img.MouseEnter += new EventHandler(img_MouseEnter); 
+                img.Location = new Point(i * img.Width + 10 * i, 0);
+                lbl.Location = new Point(img.Width / 2 - 4, 0);
+                img.Controls.Add(lbl);
+                panelCig.Controls.Add(img);//之后 
+            }
+            //倒着来
+            //int index = before.Count;
+            //for (int i = 0; i < before.Count; i++)
+            //{
+                
+            //    PictureBox img = new PictureBox();
+            //    Label lbl = new Label();
+            //    lbl.Text = before[index].CIGARETTDECODE;
+            //    lbl.BackColor = Color.Transparent;
+            //    lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
+            //    img.Name = "ImgName" + Guid.NewGuid().ToString();
+            //    img.Size = new System.Drawing.Size(20, 80);
+            //    img.AccessibleName = before[index].CIGARETTDENAME + "|" + before[index].qty + "|" + before[index].CIGARETTDECODE;//卷烟名称 和 QTY
+            //    img.BackgroundImage = GetImg(before[index].CIGARETTDECODE);
+            //    img.SizeMode = PictureBoxSizeMode.Zoom;
+            //    img.BorderStyle = BorderStyle.FixedSingle;
+            //    img.MouseEnter += new EventHandler(img_MouseEnter);
+            //    img.Location = new Point(i * img.Width + 10 * i, 0);
+            //    lbl.Location = new Point(img.Width / 2 - 4, 0);
+            //    img.Controls.Add(lbl);
+            //    panelCig.Controls.Add(img);//之后 
+            //    index--;
+            //}
+        }
+        ToolTip p = new ToolTip();
+        void img_MouseEnter(object sender, EventArgs e)
+        {
+            PictureBox pb = ((PictureBox)sender);
+            p.AutoPopDelay = 24000;
+            p.ShowAlways = true;
+            string[] strCigaNameAndQty = new string[3];
+            strCigaNameAndQty = pb.AccessibleName.Split('|');
+            p.SetToolTip(pb, "卷烟名称:" + strCigaNameAndQty[0] + "\r\n" + "卷烟编号:" + strCigaNameAndQty[2] + "\r\n" + "总数：" + strCigaNameAndQty[1]);
+        }
+        /// <summary>
+        /// 小组号变大组号
+        /// </summary>
+        /// <param name="group">小组</param>
+        /// <returns></returns>
+        decimal GroupnotoBigg(decimal group)
+        {
+            if (group ==2)
+            {
+                return 1;
+            }
+            if (group == 3 || group ==4)
+            {
+                return 2;
+            }
+            if (group == 5 || group == 6)
+            {
+                return 3;
+            }
+            if (group == 7|| group ==8)
+            {
+                return 4;
+            }
+            return 1;
+        }
+        /// <summary>
+        /// 读取预分拣DB块
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="groupno"></param>
+        void ReadDBinfo(int index,decimal groupno)
+        {
+            ListmbInfo.Clear(); //清空list
+            int ReadIndex = 0; 
+            
+            for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
+            {
+                Sortnum = ListSort[index - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号
+                nowplace[i] = (ListSort[index - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1)/1000);//位置(米)
+                if (Sortnum > 0)//任务号不为0
+                {
+                    MainBeltInfo info = new MainBeltInfo();
+                    info.SortNum = Sortnum;//任务号
+                    info.Place = Convert.ToDecimal(nowplace[i]);//(listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000000);//位置(米)
+                    info.Quantity = ListSort[index - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1);//数量
+                    info.GroupNO = groupno;//组号
+                    ListmbInfo.Add(info);
+                }
+                ReadIndex = ReadIndex + 4;
+            }
+            MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
+        }
+        /// <summary>
+        /// 读取List
+        /// </summary>
+        /// <param name="index">索引</param>
+        void ReadListInfo(int index)
+        {
+            dgvSortingBeltInfo.DataSource = null;//重置数据显示控件
+            if (ReadIndex < ListmbInfo.Count)
+            {
+
+                if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
+                {
+                    var list = ListmbInfo[index].taskInfo.Select(x => new
+                    {
+                        CIGARETTECODE = x.CIGARETTDECODE,
+                        CIGARETTNAME = x.CIGARETTDENAME,
+                        MAINBELT = x.MainBelt,
+                        QTY = x.qty,
+                        GroupNo = x.groupno,
+                        MEACHINESEQ = x.machineseq,
+                        SORTNUM = x.SortNum,
+
+                    }).ToList();//根据索引读取相对应数据
+                    dgvSortingBeltInfo.DataSource = list;
+                    addPanel(ListmbInfo[index].taskInfo);
+                    lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum ;
+                    lblNum.Text = "数量：" + ListmbInfo[index].Quantity ; 
+                }
+            }
+
+        }
+        void DgvBind()
+        {
+            dgvSortingBeltInfo.Columns[0].HeaderCell.Value = "香烟编号";
+            dgvSortingBeltInfo.Columns[1].HeaderCell.Value = "香烟名称";
+            dgvSortingBeltInfo.Columns[2].HeaderCell.Value = "主皮带";
+            dgvSortingBeltInfo.Columns[3].HeaderCell.Value = "数量";
+            dgvSortingBeltInfo.Columns[4].HeaderCell.Value = "组号";
+            dgvSortingBeltInfo.Columns[5].HeaderCell.Value = "物理通道号";
+            dgvSortingBeltInfo.Columns[6].HeaderCell.Value = "任务号";
+            //dgbMainBeltInfo.Columns[4].HeaderCell.Value = "数量";
+            //dgbMainBeltInfo.Columns[5].HeaderCell.Value = "组号";
+            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "物理通道号";
+            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "客户名称"; 
+            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "客户编号"; 
+            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "排序号"; 
+        }
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (isOnLine)
+            {
+                if (ReadIndex == 0)
+                {
+                    ReadListInfo(0);
+                    MessageBox.Show("最上面了");
+                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
+                    return;
+                }
+                else
+                {
+                    ReadIndex = ReadIndex - 1;
+                    ReadListInfo(ReadIndex);
+                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
+                    // MessageBox.Show("当前位置"+nowplace);
+                }
+            }
+            else
+            {
+                updateListBox("与服务器断开连接....");
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (isOnLine)
+            {
+                if (ReadIndex == ListmbInfo.Count)
+                {
+                    ReadListInfo(ListmbInfo.Count);
+                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
+                    MessageBox.Show("最下面了");
+                    return;
+                }
+                else
+                {
+                    ReadIndex = ReadIndex + 1;
+                    ReadListInfo(ReadIndex);
+                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
+                    //MessageBox.Show("当前位置" + nowplace);
+
+                }
+            }
+            else
+            {
+                updateListBox("与服务器断开连接....");
+            }
+        }
+
+        private void Fm_FollowTaskSorting_Load(object sender, EventArgs e)
+        {
+            if (isOnLine)
+            {
+                if (groupno == 1 || groupno == 3 || groupno == 5 || groupno == 7)
+                {
+                    
+                    ReadDBinfo(1, groupno);
+                    lblPlace.Text = "当前位置：" + nowplace[0];
+                }
+                else
+                {
+                    
+                    ReadDBinfo(2, groupno);
+                }
+                //lblSortnum.Text = "任务号： 0";
+                //lblNum.Text = "数量：0";
+            }
+            else
+            {
+                updateListBox("与服务器断开连接....");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (isOnLine)
+            {
+
+                for (int i = 0; i < ListmbInfo.Count; i++)
+                {
+                    dgvSortingBeltInfo.DataSource = ListmbInfo[i].taskInfo.Select(x => new
+                        {
+                            CIGARETTECODE = x.CIGARETTDECODE,
+                            CIGARETTNAME = x.CIGARETTDENAME,
+                            MAINBELT = x.MainBelt,
+                            QTY = x.qty,
+                            GroupNo = x.groupno,
+                            MEACHINESEQ = x.machineseq,
+                            SORTNUM = x.SortNum,
+
+                        }).ToList();
+                    if (i == 0)
+                    {
+                        DgvBind();
+                    }
+                }
+               
+            }
+            else
+            {
+                updateListBox("与服务器断开连接....");
+            }
+        }
+
+      
+
+      
+
+     
+
+        private void Fm_FollowTaskSorting_SizeChanged(object sender, EventArgs e)
+        {
+             
+        }
+
         #region listBox显示
         public void writeListBox(string info)
         {
@@ -70,119 +387,16 @@ namespace FollowTask
         }
         #endregion
 
-        private void Fm_FollowTaskSorting_Load(object sender, EventArgs e)
-        {  
-            if (Text.Contains("1")||Text.Contains("3")||Text.Contains("5")||Text.Contains("7"))//根据组号分别显示不同组 A组和B组
-            {
-                GroupBoxA.Visible = true;
-                GroupBoxA.Location = new Point(15, 54);
-                btnRefreshA.Location = new Point(804, 36);
-                GroupBoxB.Visible = false;
-                btnRefreshB.Visible = false;
-            }
-            else
-            {
-                GroupBoxA.Visible = false; 
-                btnRefreshA.Visible = false;
-                GroupBoxB.Visible = true; 
-            }
-
-            lblSortText.Text = Text; 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnPrint_Click(object sender, EventArgs e)
         {
-            Button btn = ((Button)sender);//获取当前单击按钮的所有实例
-            #region 区域转换皮带号
-            if (btn.Text.Substring(0, 1) == "A")
-            {
-                switch (btn.Text)
-                {
-                    case "A04":
-                        MainBeltNo = 1;//一号主皮带
-                        break;
-                    case "A07":
-                        MainBeltNo = 2;//二号主皮带
-                        break;
-                    case "A10":
-                        MainBeltNo = 3;//三号主皮带
-                        break;
-                    case "A11":
-                        MainBeltNo = 4;//四号主皮带
-                        break;
-                    case "A01":
-                        MainBeltNo = 5;//所有主皮带
-                        break;
-                    case "A02":
-                        MainBeltNo = 5;//所有主皮带
-                        break; 
-                } 
-            }
-            else if (btn.Text.Substring(0, 1) == "B")
-            {
-                switch (btn.Text)
-                {
-                    case "B05":
-                        MainBeltNo = 1;//一号主皮带
-                        break;
-                    case "B12":
-                        MainBeltNo = 2;//二号主皮带
-                        break;
-                    case "B18":
-                        MainBeltNo = 3;//三号主皮带
-                        break;
-                    case "B23":
-                        MainBeltNo = 4;//四号主皮带
-                        break;
-                    case"B03":
-                        MainBeltNo = 5;//所有主皮带
-                        break;  
-                    case "B01":
-                        MainBeltNo = 5;//所有主皮带
-                        break;
-                }
-            }
-            #endregion
-            Fm_SortDetails fs = new Fm_SortDetails( Text + btn.Text, MainBeltNo); 
-            fs.Show();
-        }
+            dgVprint1.MainTitle = "预分拣第" + groupno + "组皮带表";
+            //dgVprint1.SubTitle = "这是子标题，当然也可以不设的";
+            // dgVprint1.PaperLandscape = true;//用横向打印，默认是纵向
 
-        private void Fm_FollowTaskSorting_MouseMove(object sender, MouseEventArgs e)
-        {
-            //fm.TxtBoxMianInFo("摇摆前皮带订单详情");
-        }
-        //鼠标停留按钮Tips
-        private void btnA011_MouseEnter(object sender, EventArgs e)
-        {
-            Button btn = ((Button)sender);//获取当前单击按钮的所有实例
-            ToolTip p = new ToolTip();
-            p.ShowAlways = true;
-            p.SetToolTip(btn, "摇摆前订单在皮带上的详细信息");
-        }
-
-        private void btnRefreshB_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("这是B区的刷新");
-        }
-
-        private void btnRefreshA_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("这是A区的刷新");
-        }
-
-        private void Fm_FollowTaskSorting_SizeChanged(object sender, EventArgs e)
-        {
-            //asc.controlAutoSize(this);
-            //Control cont = new Control();
-            // cont.Name =    lineShape1.Name ;
-            //for (int i = 1; i <= 38; i++)
-            //{
-            //    cont.Name   = cont.Name.Substring(0, 8) + i;
-            //    asc.controlAutoSize(cont);
-            //}
-        
+            dgVprint1.Print(dgvSortingBeltInfo);
         }
 
 
+      
     }
 }

@@ -24,15 +24,30 @@ namespace FollowTask
         {
             InitializeComponent();
             list_data.Items.Clear();
+            
+          
         }
+      //  Fm_UnionMainBelt fm_un = null;
+        Fm_UnionMainInfo fum = null;
+        Fm_UinonCache fmuc = null;
+    
+        private delegate void DelegateUnionMachineInfo(string text,int mainbelt, List<Group> listMachine);
+        DelegateUnionMachineInfo dumi;//主皮带信息 理论值
+        private delegate void DelegateUnionMainiNFO(int mainbelt, List<Group> list);
+        DelegateUnionMainiNFO handleuInfo;//主皮带信息 DB块
+
+        private delegate void DelegateUnionMachineDetails(int machineno, int mainbelt, List<Group> listmachine);
+        DelegateUnionMachineDetails handleumd;//合流机械手信息
+        private delegate void DelegateUnionCache(int machineno, List<Group> list);
+        DelegateUnionCache handeleuCache;//合流缓存
       
      
         AutoSizeFormClass asc = new AutoSizeFormClass();
- 
-        #region   变量
         public WriteLog writeLog = WriteLog.GetLog();
         DeviceStateManager stateManager = new DeviceStateManager();
         Alarms alarms = new Alarms();
+        #region   变量
+      
         /// <summary>
         /// 主皮带
         /// </summary>
@@ -88,10 +103,12 @@ namespace FollowTask
         public GetNeedInfo getInfo;
 
         //Fm_UnionMainBelt fm_UnionDetail = new Fm_UnionMainBelt();
-        List<Group> listgroup = new List<Group>();
+     
         #endregion
     
-
+        /// <summary>
+        /// 合流OPC组
+        /// </summary>
         List<Group> listuinongroup = new List<Group>();
        
         public void GetMainInfo(string text, List<Group> listgroup, bool isonline)
@@ -120,7 +137,7 @@ namespace FollowTask
         {
             try
             {
-                lblGourpText.Text = this.Text + "主皮带";
+                lblGourpText.Text = this.Text + "";
                 BindLabelName(); 
             }
             catch (Exception ex)
@@ -129,7 +146,7 @@ namespace FollowTask
                 writeLog.Write("异常错误：" + ex.Message);
             }
         }
-        Fm_UnionMainBelt fm_un = null;
+      
         #region listBox显示
        
 
@@ -151,112 +168,134 @@ namespace FollowTask
             }
         }
         #endregion
-     
-        private void Machine1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// SortingMachineDetail方法
+        /// </summary>
+        /// <param name="text">第几组</param>
+      
+        private void Machine1_Click(object sender, EventArgs e)//机械手按钮
+        { 
+            PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
+            int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
+            Fm_FollowTaskMachineDetail fm_machinedetails = new Fm_FollowTaskMachineDetail();
+            handleumd += fm_machinedetails.GetUnionMachineDetails;
+            mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
+            handleumd(machineno, mainbelt, listuinongroup);
+            fm_machinedetails.Show();
+            
+           
+            #region 计算合流皮带理论值
+            //Fm_UnionMainBelt fm_UiMainbelt = new Fm_UnionMainBelt();
+            //fm_un = fm_UiMainbelt;
+            //getInfo += fm_UiMainbelt.GetNeedInfo;
+            //if (IsOnLine)
+            //{
+            //    try
+            //    {
+            //        PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
+            //        listPrament.Clear();
+            //        int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
+            //        mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
+            //        ReadDBInfo(listuinongroup[4]);
+            //        if (SortNum != -1)
+            //        {
+            //            groupno = GetGroupNo(machineno);//获取组号
+            //            if (xyNum[GetXyNumIndex(machineno)] != 0)
+            //            {
+            //                listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之后
+            //                listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之前
+
+            //                listPrament.Add(mainbelt);//主皮带
+            //                listPrament.Add(groupno);//组号
+            //                listPrament.Add(SortNumG[GetXyNumIndex(machineno)]);//任务号
+            //                listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
+
+            //                getInfo(machineno, listafter, listbefore, listPrament);
+            //                fm_UiMainbelt.Show();
+            //                SearchWinForm(fm_UiMainbelt);
+            //            }
+            //            else
+            //            {
+            //                listPrament.Add(-1);//主皮带
+            //                listPrament.Add(-1);//组号
+            //                listPrament.Add(-1);//任务号
+            //                listPrament.Add(-1);//吸烟数量
+            //                getInfo(machineno, listafter, listbefore, listPrament);
+            //                fm_UiMainbelt.Show();
+            //                SearchWinForm(fm_UiMainbelt);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("服务器连接失败!请检查网络连接!");
+            //        }
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        updateListBox("与服务器断开连接!");
+            //        writeLog.Write("单击机械手皮带信息错误:" + ex.Message);
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("尚未连接服务器,请稍候再试！");
+            //}
+
+            #endregion
+        }
+        /// <summary>
+        /// 单例模式显示机械手
+        /// </summary>
+        /// <param name="machineno">机械手号</param>
+        void ShowMachineDetailForm(int machineno)
         {
-            Fm_UnionMainBelt fm_UiMainbelt = new Fm_UnionMainBelt();
-            fm_un = fm_UiMainbelt;
-            getInfo += fm_UiMainbelt.GetNeedInfo;
-            if (IsOnLine)
-            {
-                try
-                {
-                    PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
-                    listPrament.Clear();
-                    int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
-                    mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带
-                    //if (mainbelt == 1)
-                    //{
-                    //    ReadDBInfo(listuinongroup[0]);
-                    //}
-                    //if (mainbelt == 2)
-                    //{
-                    //    ReadDBInfo(listuinongroup[1]);
-                    //}
-                    //if (mainbelt == 3)
-                    //{
-                    //    ReadDBInfo(listuinongroup[2]);
-                    //}
-                    //if (mainbelt == 4)
-                    //{
-                    //    ReadDBInfo(listuinongroup[3]);
-                    //}
-                    ReadDBInfo(listuinongroup[4]);
-                    if (SortNum != -1)
-                    {
-                        groupno = GetGroupNo(machineno);//获取组号
-                        if (xyNum[GetXyNumIndex(machineno)] != 0)
-                        {
-                            listafter = UnionTaskInfoService.GetUnionTaskInfoAfter(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之后
-                            listbefore = UnionTaskInfoService.GetUnionTaskInfoBefore(mainbelt, groupno, SortNumG[GetXyNumIndex(machineno)], xyNum[GetXyNumIndex(machineno)]);//机械手之前
-
-                            listPrament.Add(mainbelt);//主皮带
-                            listPrament.Add(groupno);//组号
-                            listPrament.Add(SortNumG[GetXyNumIndex(machineno)]);//任务号
-                            listPrament.Add(xyNum[GetXyNumIndex(machineno)]);//吸烟数量
-
-                            getInfo(machineno, listafter, listbefore, listPrament);
-                            fm_UiMainbelt.Show();
-                            SearchWinForm(fm_UiMainbelt);
-                        }
-                        else
-                        {
-                            listPrament.Add(-1);//主皮带
-                            listPrament.Add(-1);//组号
-                            listPrament.Add(-1);//任务号
-                            listPrament.Add(-1);//吸烟数量
-                            getInfo(machineno, listafter, listbefore, listPrament);
-                            fm_UiMainbelt.Show();
-                            SearchWinForm(fm_UiMainbelt);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("服务器连接失败!请检查网络连接!");
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    updateListBox("与服务器断开连接!");
-                    writeLog.Write("单击机械手皮带信息错误:" + ex.Message);
-                }
-            }
-            else
-            {
-                MessageBox.Show("尚未连接服务器,请稍候再试！");
-            }
-
-
+           
         }
         /// <summary>
         /// 读取指定皮带DB块
         /// </summary>
         /// <param name="group">OPC组名</param>
-        void ReadDBInfo(Group group)
+        void ReadDBInfo(Group group,int mainbelt)
         {
-          
-            //SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
-            if (SortNum != -1)
+            int index = -1 ;
+            if (mainbelt == 1)
             {
-                SortNumG[0] = group.ReadD(0).CastTo<int>(-1);
-                SortNumG[1] = group.ReadD(2).CastTo<int>(-1);
-                SortNumG[2] = group.ReadD(4).CastTo<int>(-1);
-                SortNumG[3] = group.ReadD(6).CastTo<int>(-1);
-                SortNumG[4] = group.ReadD(8).CastTo<int>(-1);
-                SortNumG[5] = group.ReadD(10).CastTo<int>(-1);
-                SortNumG[6] = group.ReadD(12).CastTo<int>(-1);
-                SortNumG[7] = group.ReadD(14).CastTo<int>(-1);
+                index = 0;
+            }
+            if (mainbelt == 2)
+            {
+                index = 16;
+            }
+            if (mainbelt == 3)
+            {
+                index = 32;
+            }
+            if (mainbelt == 4)
+            {
+                index = 48;
+            }
+            //SortNum = group.ReadD(0).CastTo<int>(-1);//当前任务号
+            if (index != -1 && group.ReadD(0).CastTo<int>(-1) != -1)
+            {
+                SortNumG[0] = group.ReadD(index).CastTo<int>(-1);
+                SortNumG[1] = group.ReadD(index+2).CastTo<int>(-1);
+                SortNumG[2] = group.ReadD(index+4).CastTo<int>(-1);
+                SortNumG[3] = group.ReadD(index+6).CastTo<int>(-1);
+                SortNumG[4] = group.ReadD(index+8).CastTo<int>(-1);
+                SortNumG[5] = group.ReadD(index+10).CastTo<int>(-1);
+                SortNumG[6] = group.ReadD(index+12).CastTo<int>(-1);
+                SortNumG[7] = group.ReadD(index+14).CastTo<int>(-1);
 
                 //八个机械手吸烟数量
-                xyNum[0] = group.ReadD(1).CastTo<int>(-1);
-                xyNum[1] = group.ReadD(3).CastTo<int>(-1);
-                xyNum[2] = group.ReadD(5).CastTo<int>(-1);
-                xyNum[3] = group.ReadD(7).CastTo<int>(-1);
-                xyNum[4] = group.ReadD(9).CastTo<int>(-1);
-                xyNum[5] = group.ReadD(11).CastTo<int>(-1);
-                xyNum[6] = group.ReadD(13).CastTo<int>(-1);
-                xyNum[7] = group.ReadD(15).CastTo<int>(-1); 
+                xyNum[0] = group.ReadD(index+1).CastTo<int>(-1);
+                xyNum[1] = group.ReadD(index+3).CastTo<int>(-1);
+                xyNum[2] = group.ReadD(index+5).CastTo<int>(-1);
+                xyNum[3] = group.ReadD(index+7).CastTo<int>(-1);
+                xyNum[4] = group.ReadD(index+9).CastTo<int>(-1);
+                xyNum[5] = group.ReadD(index+11).CastTo<int>(-1);
+                xyNum[6] = group.ReadD(index+13).CastTo<int>(-1);
+                xyNum[7] = group.ReadD(index+15).CastTo<int>(-1);
             }
         }
         decimal[] ReadDbInFo(int mainbelt, int machineno)
@@ -268,8 +307,8 @@ namespace FollowTask
             }
             for (int i = 0 * mainbelt; i < 8 * mainbelt; i++)
             {
-                sortnumAndXYnum[0] = listuinongroup[4].ReadD((machineno *2)).CastTo<int>(-1);
-                sortnumAndXYnum[1] = listuinongroup[4].ReadD(((machineno * 2) +1)).CastTo<int>(-1);
+                sortnumAndXYnum[0] = listuinongroup[4].ReadD((machineno *2)).CastTo<int>(-1);//4
+                sortnumAndXYnum[1] = listuinongroup[4].ReadD(((machineno * 2) +1)).CastTo<int>(-1);//5
             }
 
             return sortnumAndXYnum; 
@@ -299,6 +338,7 @@ namespace FollowTask
             }
             return groupno;
         }
+      
         /// <summary>
         /// 吸烟数量索引
         /// </summary>
@@ -320,57 +360,7 @@ namespace FollowTask
             }
             return machineNo -1;
         }
-        public void SearchWinForm(Form fname)
-        {
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm is Form)
-                {
-                    //fname.TopMost = true;
-                    fname.Activate();
-
-                    return;
-                }
-            }
-            fname.Show();
-            fname.Activate();
-        }
-
-       
-
-        
-        #region  暂时无用
-        ///// <summary>
-       ///// 获取当前主皮带机械手号
-       ///// </summary>
-       ///// <returns></returns>
-       // decimal[] GetMachineNos()
-       // {
-       //     machinenos[0] = mainbelt * 8 - 7;
-       //     machinenos[1] = mainbelt * 8 - 6;
-       //     machinenos[2] = mainbelt * 8 - 5;
-       //     machinenos[3] = mainbelt * 8 - 4;
-       //     machinenos[4] = mainbelt * 8 - 3;
-       //     machinenos[5] = mainbelt * 8 - 2;
-       //     machinenos[6] = mainbelt * 8 - 1;
-       //     machinenos[7] = mainbelt * 8 - 0;
-       //     return machinenos; 
-       // }
-       // /// <summary>
-       // /// 获取当前皮带组号
-       // /// </summary>
-       // /// <returns></returns>
-       // decimal[] GetGroupNos()
-       // {
-       //     for (int i = 0; i < machinenos.Length; i++)
-       //     {
-       //        groupnos[i] =   GetGroupNo(machinenos[i]);
-       //     }
-       //     return groupnos; 
-        // }
-        #endregion
         bool errorMachine = false;
-        
         void BindLabelName()
         {
             int j = 1;
@@ -382,14 +372,14 @@ namespace FollowTask
                 string pbName = "pbMachine" + j;
                 Control pbox = Controls.Find(pbName, true)[0];
                 PictureBox picutB = (PictureBox)pbox;
-              
-               // label.Parent = picutB;
+
+                // label.Parent = picutB;
                 label.BackColor = Color.Transparent;
                 label.BringToFront();
-                if (Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(pbName,  @"[^0-9]+", "")) % 2 != 0)//A线
+                if (Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(pbName, @"[^0-9]+", "")) % 2 != 0)//A线
                 {
                     label.BackColor = Color.FromArgb(234, 255, 0);
-                    picutB.Image = Amachine;  
+                    picutB.Image = Amachine;
                 }
                 else//B线
                 {
@@ -403,155 +393,47 @@ namespace FollowTask
                 }
                 j++;
             }
-            #region
-            //if (Text.Contains("1"))
-            //{
-            //    int j = 1;
-            //    for (int i = 1; i <= 8; i++)
-            //    {
-
-            //        string labelName = "label" + j;
-            //        Control control2 = Controls.Find(labelName, true)[0];
-            //        control2.Text = i + "";
-
-            //        string pbName = "pbMachine" + j;
-            //        Control control1 = Controls.Find(pbName, true)[0];
-            //        control1.Name = "pbMachine" + i;
-            //        j++;
-            //    }
-            //    //th2.Abort();
-            //}
-            //if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
-            //{
-            //    int j = 1;
-            //    for (int i = 9; i <= 16; i++)
-            //    {
-            //        string labelName = "label" + j;
-            //        Control control2 = Controls.Find(labelName, true)[0];
-            //        control2.Text = i + "";
-
-
-            //        string pbName = "pbMachine" + j;
-            //        Control control1 = Controls.Find(pbName, true)[0]; 
-            //        control1.Name =  "pbMachine"+i ;
-            //        j++;
-            //    }
-            //    //th2.Abort();
-            //}
-            //if (Text.Contains("3"))
-            //{
-            //    int j = 1;
-            //    for (int i = 17; i <= 24; i++)
-            //    {
-            //        string labelName = "label" + j;
-            //        Control control2 = Controls.Find(labelName, true)[0];
-            //        control2.Text = i + "";
-
-            //        string pbName = "pbMachine" + j;
-            //        Control control1 = Controls.Find(pbName, true)[0];
-            //        control1.Name = "pbMachine" + i;
-            //        j++;
-            //    }
-            //    //th2.Abort();
-            //}
-            //if (Text.Contains("4"))
-            //{
-            //    int j = 1;
-            //    for (int i = 25; i <= 32; i++)
-            //    {
-            //        string labelName = "label" + j;
-            //        Control control2 = Controls.Find(labelName, true)[0];
-            //        control2.Text = i + "";
-
-            //        string pbName = "pbMachine" + j;
-            //        Control control1 = Controls.Find(pbName, true)[0];
-            //        control1.Name = "pbMachine" + i;
-            //        j++;
-            //    }
-            //    //th2.Abort();
-            //}
-         
         }
-
+ 
+     
+      
+          
         /// <summary>
-        /// 数据绑定
+        /// 缓存按钮
         /// </summary>
-        //public void BtnText()
-        //{
-        //    if (Text.Contains("1"))
-        //    {
-        //        int j = 1;
-        //        for (int i = 1; i <= 8; i++)
-        //        {
-        //            string labelName = "label" + j;
-        //            Control control2 = Controls.Find(labelName, true)[0];
-
-        //            bindDate(control2, j);
-        //            j++;
-        //        }
-        //        th.Abort();
-        //    }
-        //    if (Text.Contains("2")) // || groupText.Contains("五") || groupText.Contains("七"
-        //    {
-        //        int j = 1;
-        //        for (int i = 9; i <= 16; i++)
-        //        {
-        //            string labelName = "label" + j;
-        //            Control control2 = Controls.Find(labelName, true)[0];
-        //            bindDate(control2, j);
-        //            j++;
-        //        }
-        //        th.Abort();
-        //    }
-        //    if (Text.Contains("3"))
-        //    {
-        //        int j = 1;
-        //        for (int i = 17; i <= 24; i++)
-        //        {
-        //            string labelName = "label" + j;
-        //            Control control2 = Controls.Find(labelName, true)[0];
-        //            bindDate(control2, j);
-        //            j++;
-        //        }
-        //        th.Abort();
-        //    }
-        //    if (Text.Contains("4"))
-        //    {
-        //        int j = 1;
-        //        for (int i = 25; i <= 32; i++)
-        //        {
-        //            string labelName = "label" + j;
-        //            Control control2 = Controls.Find(labelName, true)[0];
-        //            bindDate(control2, j);
-        //            j++;
-        //        }
-        //        th.Abort();
-        //    }
-
-        //}
-            #endregion
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnhuancun1_Click(object sender, EventArgs e)
         {
             if (IsOnLine)
             {
+                
+                //SearchWinForm(fmuc);
                 Button btn = ((Button)sender);//获取当前单击按钮的所有实例
-                string btnNmae = "pbMachine" + btn.Name.Substring(10);
-                Control control = Controls.Find(btnNmae, true)[0];
-                String machineno = System.Text.RegularExpressions.Regex.Replace(control.Text, @"[^0-9]+", "");
-                Fm_UinonCache uc = new Fm_UinonCache(Text + control.Text, machineno);//二号 主皮带  四号机械手
-                uc.Show();
+                int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
+
+                Fm_UinonCache fmuc = new Fm_UinonCache();
+                handeleuCache += fmuc.GetUnionNowMachineTask;
+                handeleuCache(machineno, listuinongroup);
+                fmuc.Show(); 
             }
             else
             {
                 MessageBox.Show("尚未连接服务器,请稍候再试！");
             }
         }
-        #region
-        ToolTip p = new ToolTip();
-        private void Machine1_MouseEnter(object sender, EventArgs e)
+        /// <summary>
+        /// SortingUnionCache方法
+        /// </summary>
+        /// <param name="text">第几组</param>
+        void ShowSortingForm( int machineno)
         {
           
         }
+
+       
+        #region
+        ToolTip p = new ToolTip();
         List<UnionTaskInfo> listUnion = new List<UnionTaskInfo>();
         /// <summary>
         ///  数据获取
@@ -634,23 +516,7 @@ namespace FollowTask
             //}
              
         }
-        /// <summary>
-        /// 清除listview颜色
-        /// </summary>
-        void ClaerColor()
-        {
-            //for (int i = 0; i < listViewUnion.Items.Count; i++)
-            //{
-            //    ListViewItem item = listViewUnion.Items[i];
-            //    for (int j = 0; j < item.SubItems.Count; j++)
-            //    { 
-            //        item.ForeColor = Color.Black ; 
-            //    }
-            //}
-        }
-
-      
-
+       
         private void pbMachine1_MouseEnter(object sender, EventArgs e)
         {
            
@@ -660,26 +526,51 @@ namespace FollowTask
             p.SetToolTip(picBox,System.Text.RegularExpressions.Regex.Replace( picBox.Name ,@"[^0-9]+","") +"号机械手皮带上烟的摆放和详细信息");
         }
 
-        private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
+        private void pbMainbelt1_Click(object sender, EventArgs e)//皮带信息按钮
         {
-           // e.Cancel = true;
+            PictureBox btn = ((PictureBox)sender);
+            int mainbelt = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
+            fum = new Fm_UnionMainInfo();
+            handleuInfo += fum.GetMainInfo;
+            handleuInfo(mainbelt, listuinongroup);
+            fum.Show();
+            fum.MdiParent = this.MdiParent;
+            
+        }
+
+        private void Fm_FollowTaskUnion_FormClosed(object sender, FormClosedEventArgs e)
+        {
             foreach (Form frm in Application.OpenForms)
             {
                 if (frm is Form)
                 {
                     //fname.TopMost = true;
-                    if (fm_un != null)
+                    if (fum != null)
                     {
-                        fm_un.Close();
+                        fum.Close();
+                        fmuc.Close();
                     }
                     return;
                 }
-            } 
+            }
             this.Close();
-            //return;
         }
 
+        public void SearchWinForm(Form fname)
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm is Form)
+                {
+                    fname.Show();
+                    fname.Activate();
 
+                    return;
+                }
+            }
+            fname.Show();
+            fname.Activate();
+        }
 
     }
 }

@@ -9,95 +9,112 @@ namespace FollowTask.Modle
     {
         public static String OpcUnionServer = "S7:[UnionConnection]";
 
+
         /// <summary>
-        ///   一号主皮带任务交互区 
+        ///   一号主皮带任务位置烟数
         /// </summary>
         /// <returns></returns>
         public static List<string> GetTaskGroupItem1()
         {
             List<string> list = new List<string>();
-            list.Add(OpcUnionServer + "DB1,DWORD58");  //任务号 0 d58 4位
-            list.Add(OpcUnionServer + "DB1,W62");   //出口号 1
-            list.Add(OpcUnionServer + "DB1,W64");   //包装机号 2
-            list.Add(OpcUnionServer + "DB1,W66");   //总条数 3
-            list.Add(OpcUnionServer + "DB1,W68");   //1号机械手抓烟数 4
-            list.Add(OpcUnionServer + "DB1,W70");   //2号机械手抓烟数 5
-            list.Add(OpcUnionServer + "DB1,W72");   //3号机械手抓烟数 6 
-            list.Add(OpcUnionServer + "DB1,W74");   //4号机械手抓烟数 7 
-            list.Add(OpcUnionServer + "DB1,W76");   //5号机械手抓烟数 8
-            list.Add(OpcUnionServer + "DB1,W78");   //6号机械手抓烟数 9
-            list.Add(OpcUnionServer + "DB1,W80");   //7号机械手抓烟数 10
-            list.Add(OpcUnionServer + "DB1,W82");   //8号机械手抓烟数  11 
-            list.Add(OpcUnionServer + "DB1,W56");//状态,1为上位写,2为电控接收12
+            for (int i = 0; i < 40; i++)
+            {
+                list.Add(OpcUnionServer + "DB30,DINT"+(850 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,DINT"+(854 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,INT"+(858 + (i * 10))); 
+            }
             return list;
         }
 
         /// <summary>
-        ///   二号主皮带任务交互区 
+        ///   二号主皮带任务位置烟数
         /// </summary>
         /// <returns></returns>
         public static List<string> GetTaskGroupItem2()
         {
             List<string> list = new List<string>();
-            list.Add(OpcUnionServer + "DB1,DWORD86");  //任务号 0
-            list.Add(OpcUnionServer + "DB1,W90");   //出口号 1
-            list.Add(OpcUnionServer + "DB1,W92");   //包装机号 2
-            list.Add(OpcUnionServer + "DB1,W94");   //总条数 3
-            list.Add(OpcUnionServer + "DB1,W96");   //9号机械手抓烟数 4
-            list.Add(OpcUnionServer + "DB1,W98");   //10号机械手抓烟数 5
-            list.Add(OpcUnionServer + "DB1,W100");   //11号机械手抓烟数 6 
-            list.Add(OpcUnionServer + "DB1,W102");   //12号机械手抓烟数 7 
-            list.Add(OpcUnionServer + "DB1,W104");   //13号机械手抓烟数 8
-            list.Add(OpcUnionServer + "DB1,W106");   //14号机械手抓烟数 9
-            list.Add(OpcUnionServer + "DB1,W108");   //15号机械手抓烟数 10
-            list.Add(OpcUnionServer + "DB1,W110");   //16号机械手抓烟数  11
-            list.Add(OpcUnionServer + "DB1,W84");//状态,为上位写,2为电控接收12
+            for (int i = 0; i < 40; i++)
+            {
+                //list.Add(OpcUnionServer + "DB30,DINT1650" + i * 10);
+                //list.Add(OpcUnionServer + "DB30,DINT1654" + i * 10);
+                //list.Add(OpcUnionServer + "DB30,INT1658" + i * 10);
+                list.Add(OpcUnionServer + "DB30,DINT" + (1250 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,DINT" + (1254 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,INT" + (1258 + (i * 10))); 
+            }
             return list;
         }
 
         /// <summary>
-        ///   三号主皮带任务交互区 
+        ///   三号主皮带任务位置烟数
         /// </summary>
         /// <returns></returns>
         public static List<string> GetTaskGroupItem3()
         {
             List<string> list = new List<string>();
-            list.Add(OpcUnionServer + "DB1,DWORD114");  //任务号 0
-            list.Add(OpcUnionServer + "DB1,W118");   //出口号 1
-            list.Add(OpcUnionServer + "DB1,W120");   //包装机号 2
-            list.Add(OpcUnionServer + "DB1,W122");   //总条数 3
-            list.Add(OpcUnionServer + "DB1,W124");   //17号机械手抓烟数 4
-            list.Add(OpcUnionServer + "DB1,W126");   //18号机械手抓烟数 5
-            list.Add(OpcUnionServer + "DB1,W128");   //19号机械手抓烟数 6 
-            list.Add(OpcUnionServer + "DB1,W130");   //20号机械手抓烟数 7 
-            list.Add(OpcUnionServer + "DB1,W132");   //21号机械手抓烟数 8
-            list.Add(OpcUnionServer + "DB1,W134");   //22号机械手抓烟数 9
-            list.Add(OpcUnionServer + "DB1,W136");   //23号机械手抓烟数 10
-            list.Add(OpcUnionServer + "DB1,W138");   //24号机械手抓烟数  11
-            list.Add(OpcUnionServer + "DB1,W112");//状态,1为上位写,2为电控接收12
+            for (int i = 0; i < 40;  i++)
+            {
+                //list.Add(OpcUnionServer + "DB30,DINT2050" + i * 10);
+                //list.Add(OpcUnionServer + "DB30,DINT2054" + i * 10);
+                //list.Add(OpcUnionServer + "DB30,INT2058" + i * 10);
+                list.Add(OpcUnionServer + "DB30,DINT" + (1250 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,DINT" + (1254 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,INT" + (1258 + (i * 10))); 
+            }
             return list;
         }
 
         /// <summary>
-        ///   四号主皮带任务交互区 
+        ///   4号主皮带任务位置烟数
         /// </summary>
         /// <returns></returns>
         public static List<string> GetTaskGroupItem4()
         {
             List<string> list = new List<string>();
-            list.Add(OpcUnionServer + "DB1,DWORD142");  //任务号 0
-            list.Add(OpcUnionServer + "DB1,W146");   //出口号 1
-            list.Add(OpcUnionServer + "DB1,W148");   //包装机号 2
-            list.Add(OpcUnionServer + "DB1,W150");   //总条数 3
-            list.Add(OpcUnionServer + "DB1,W152");   //25号机械手抓烟数 4
-            list.Add(OpcUnionServer + "DB1,W154");   //26号机械手抓烟数 5
-            list.Add(OpcUnionServer + "DB1,W156");   //27号机械手抓烟数 6 
-            list.Add(OpcUnionServer + "DB1,W158");   //28号机械手抓烟数 7 
-            list.Add(OpcUnionServer + "DB1,W160");   //29号机械手抓烟数 8
-            list.Add(OpcUnionServer + "DB1,W162");   //30号机械手抓烟数 9
-            list.Add(OpcUnionServer + "DB1,W164");   //31号机械手抓烟数 10
-            list.Add(OpcUnionServer + "DB1,W166");   //32号机械手抓烟数  11
-            list.Add(OpcUnionServer + "DB1,W140");//状态,1为上位写,2为电控接收12
+            for (int i = 0; i < 40; i++)
+            {
+                //list.Add(OpcUnionServer + "DB1,DINT850" + i);
+                //list.Add(OpcUnionServer + "DB1,DINT854" + i);
+                //list.Add(OpcUnionServer + "DB1,DINT858" + i);
+                list.Add(OpcUnionServer + "DB30,DINT" + (2050 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,DINT" + (2054 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,INT" + (2058 + (i * 10))); 
+            }
+            return list;
+        }
+        /// <summary>
+        /// A组预分拣任务 位置 数量 主皮带号
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetASortingItem(string opcSortingServer)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 40; i++)
+            {
+                list.Add(opcSortingServer + "DB25,DINT" + (0 + (i * 12)));
+                list.Add(opcSortingServer + "DB25,REAL" +( 4 + (i * 12)));
+                list.Add(opcSortingServer + "DB25,INT" + (8 + (i * 12)));
+                list.Add(opcSortingServer + "DB25,INT" + (10 + (i * 12)));
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// B组预分拣任务 位置 数量 主皮带号
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetBSortingItem(string opcSortingServer)
+        { 
+            List<string> list = new List<string>();
+            for (int i = 0; i < 40; i++)
+            {
+                list.Add(opcSortingServer + "DB125,DINT" + (0 + (i * 12)));
+                list.Add(opcSortingServer + "DB125,REAL" + (4 + (i * 12)));
+                list.Add(opcSortingServer + "DB125,INT" + (8 + (i * 12)));
+                list.Add(opcSortingServer + "DB125,INT" + (10 + (i * 12)));
+            }
+           
+          
             return list;
         }
 
@@ -108,7 +125,7 @@ namespace FollowTask.Modle
         public static List<string> getUnionTaskItem()
         {
             List<string> list = new List<string>();
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < 64; i++)
             {
                 list.Add(OpcUnionServer + "DB30,DINT" + (i) * 6);//任务号  
                 list.Add(OpcUnionServer + "DB30,W" + (4 + (i * 6)));//抓烟条数  
@@ -122,10 +139,10 @@ namespace FollowTask.Modle
         public static List<string> GetUnionMachinNowTaskeItem()
         {
             List<string> list = new List<string>();
-            for (int i = 0; i < 32; i = i + 10)
+            for (int i = 0; i < 64; i++ )
             {
-                list.Add(OpcUnionServer + "DB20,DINT" + 256 + i);//当前任务号
-                list.Add(OpcUnionServer + "DB20,W" + 260 + i );//当前抓烟条数
+                list.Add(OpcUnionServer + "DB20,DINT" + (256 + (i * 10)));//当前任务号
+                list.Add(OpcUnionServer + "DB20,W" +( 260 + (i * 10)));//当前抓烟条数
 
             }
             return list;

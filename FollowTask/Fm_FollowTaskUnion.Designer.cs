@@ -60,6 +60,7 @@
             this.pbMachine4 = new System.Windows.Forms.PictureBox();
             this.pbMachine5 = new System.Windows.Forms.PictureBox();
             this.pbMachine6 = new System.Windows.Forms.PictureBox();
+            this.pbMainbelt1 = new System.Windows.Forms.PictureBox();
             this.groupBBelt4 = new System.Windows.Forms.GroupBox();
             this.btnhuancun32 = new System.Windows.Forms.Button();
             this.btnhuancun25 = new System.Windows.Forms.Button();
@@ -85,6 +86,7 @@
             this.pbMachine28 = new System.Windows.Forms.PictureBox();
             this.pbMachine29 = new System.Windows.Forms.PictureBox();
             this.pbMachine30 = new System.Windows.Forms.PictureBox();
+            this.pbMainbelt4 = new System.Windows.Forms.PictureBox();
             this.groupBBelt3 = new System.Windows.Forms.GroupBox();
             this.btnhuancun24 = new System.Windows.Forms.Button();
             this.btnhuancun17 = new System.Windows.Forms.Button();
@@ -110,6 +112,7 @@
             this.pbMachine20 = new System.Windows.Forms.PictureBox();
             this.pbMachine21 = new System.Windows.Forms.PictureBox();
             this.pbMachine22 = new System.Windows.Forms.PictureBox();
+            this.pbMainbelt3 = new System.Windows.Forms.PictureBox();
             this.groupBBelt2 = new System.Windows.Forms.GroupBox();
             this.btnhuancun16 = new System.Windows.Forms.Button();
             this.btnhuancun9 = new System.Windows.Forms.Button();
@@ -135,6 +138,7 @@
             this.pbMachine12 = new System.Windows.Forms.PictureBox();
             this.pbMachine13 = new System.Windows.Forms.PictureBox();
             this.pbMachine14 = new System.Windows.Forms.PictureBox();
+            this.pbMainbelt2 = new System.Windows.Forms.PictureBox();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBBelt1.SuspendLayout();
@@ -146,6 +150,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt1)).BeginInit();
             this.groupBBelt4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine32)).BeginInit();
@@ -155,6 +160,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine28)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine29)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt4)).BeginInit();
             this.groupBBelt3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine24)).BeginInit();
@@ -164,6 +170,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt3)).BeginInit();
             this.groupBBelt2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine16)).BeginInit();
@@ -173,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt2)).BeginInit();
             this.SuspendLayout();
             // 
             // lblGourpText
@@ -241,7 +249,7 @@
             this.panel1.Controls.Add(this.groupBBelt2);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(911, 691);
+            this.panel1.Size = new System.Drawing.Size(933, 691);
             this.panel1.TabIndex = 58;
             // 
             // groupBBelt1
@@ -270,17 +278,19 @@
             this.groupBBelt1.Controls.Add(this.pbMachine4);
             this.groupBBelt1.Controls.Add(this.pbMachine5);
             this.groupBBelt1.Controls.Add(this.pbMachine6);
+            this.groupBBelt1.Controls.Add(this.pbMainbelt1);
             this.groupBBelt1.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBBelt1.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBBelt1.Location = new System.Drawing.Point(11, 29);
             this.groupBBelt1.Name = "groupBBelt1";
-            this.groupBBelt1.Size = new System.Drawing.Size(869, 133);
+            this.groupBBelt1.Size = new System.Drawing.Size(919, 133);
             this.groupBBelt1.TabIndex = 58;
             this.groupBBelt1.TabStop = false;
             this.groupBBelt1.Text = "1 号 主 皮 带 :";
             // 
             // btnhuancun8
             // 
+            this.btnhuancun8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun8.Location = new System.Drawing.Point(53, 21);
             this.btnhuancun8.Name = "btnhuancun8";
             this.btnhuancun8.Size = new System.Drawing.Size(41, 48);
@@ -291,6 +301,7 @@
             // 
             // btnhuancun1
             // 
+            this.btnhuancun1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun1.Location = new System.Drawing.Point(761, 21);
             this.btnhuancun1.Name = "btnhuancun1";
             this.btnhuancun1.Size = new System.Drawing.Size(41, 48);
@@ -301,6 +312,7 @@
             // 
             // btnhuancun2
             // 
+            this.btnhuancun2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun2.Location = new System.Drawing.Point(703, 21);
             this.btnhuancun2.Name = "btnhuancun2";
             this.btnhuancun2.Size = new System.Drawing.Size(41, 48);
@@ -311,6 +323,7 @@
             // 
             // btnhuancun3
             // 
+            this.btnhuancun3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun3.Location = new System.Drawing.Point(557, 21);
             this.btnhuancun3.Name = "btnhuancun3";
             this.btnhuancun3.Size = new System.Drawing.Size(41, 48);
@@ -321,6 +334,7 @@
             // 
             // btnhuancun7
             // 
+            this.btnhuancun7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun7.Location = new System.Drawing.Point(112, 21);
             this.btnhuancun7.Name = "btnhuancun7";
             this.btnhuancun7.Size = new System.Drawing.Size(41, 48);
@@ -331,6 +345,7 @@
             // 
             // btnhuancun4
             // 
+            this.btnhuancun4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun4.Location = new System.Drawing.Point(493, 21);
             this.btnhuancun4.Name = "btnhuancun4";
             this.btnhuancun4.Size = new System.Drawing.Size(41, 48);
@@ -341,6 +356,7 @@
             // 
             // btnhuancun5
             // 
+            this.btnhuancun5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun5.Location = new System.Drawing.Point(337, 21);
             this.btnhuancun5.Name = "btnhuancun5";
             this.btnhuancun5.Size = new System.Drawing.Size(41, 48);
@@ -351,6 +367,7 @@
             // 
             // btnhuancun6
             // 
+            this.btnhuancun6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun6.Location = new System.Drawing.Point(272, 21);
             this.btnhuancun6.Name = "btnhuancun6";
             this.btnhuancun6.Size = new System.Drawing.Size(41, 48);
@@ -559,6 +576,16 @@
             this.pbMachine6.Click += new System.EventHandler(this.Machine1_Click);
             this.pbMachine6.MouseEnter += new System.EventHandler(this.pbMachine1_MouseEnter);
             // 
+            // pbMainbelt1
+            // 
+            this.pbMainbelt1.BackColor = System.Drawing.Color.DarkRed;
+            this.pbMainbelt1.Location = new System.Drawing.Point(866, 52);
+            this.pbMainbelt1.Name = "pbMainbelt1";
+            this.pbMainbelt1.Size = new System.Drawing.Size(47, 38);
+            this.pbMainbelt1.TabIndex = 77;
+            this.pbMainbelt1.TabStop = false;
+            this.pbMainbelt1.Click += new System.EventHandler(this.pbMainbelt1_Click);
+            // 
             // groupBBelt4
             // 
             this.groupBBelt4.Controls.Add(this.btnhuancun32);
@@ -585,17 +612,19 @@
             this.groupBBelt4.Controls.Add(this.pbMachine28);
             this.groupBBelt4.Controls.Add(this.pbMachine29);
             this.groupBBelt4.Controls.Add(this.pbMachine30);
+            this.groupBBelt4.Controls.Add(this.pbMainbelt4);
             this.groupBBelt4.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBBelt4.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBBelt4.Location = new System.Drawing.Point(11, 446);
             this.groupBBelt4.Name = "groupBBelt4";
-            this.groupBBelt4.Size = new System.Drawing.Size(869, 133);
+            this.groupBBelt4.Size = new System.Drawing.Size(919, 133);
             this.groupBBelt4.TabIndex = 49;
             this.groupBBelt4.TabStop = false;
             this.groupBBelt4.Text = "4 号 主 皮 带 :";
             // 
             // btnhuancun32
             // 
+            this.btnhuancun32.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun32.Location = new System.Drawing.Point(32, 21);
             this.btnhuancun32.Name = "btnhuancun32";
             this.btnhuancun32.Size = new System.Drawing.Size(41, 48);
@@ -607,6 +636,7 @@
             // 
             // btnhuancun25
             // 
+            this.btnhuancun25.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun25.Location = new System.Drawing.Point(806, 21);
             this.btnhuancun25.Name = "btnhuancun25";
             this.btnhuancun25.Size = new System.Drawing.Size(41, 48);
@@ -618,6 +648,7 @@
             // 
             // btnhuancun26
             // 
+            this.btnhuancun26.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun26.Location = new System.Drawing.Point(679, 21);
             this.btnhuancun26.Name = "btnhuancun26";
             this.btnhuancun26.Size = new System.Drawing.Size(41, 48);
@@ -629,6 +660,7 @@
             // 
             // btnhuancun27
             // 
+            this.btnhuancun27.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun27.Location = new System.Drawing.Point(591, 21);
             this.btnhuancun27.Name = "btnhuancun27";
             this.btnhuancun27.Size = new System.Drawing.Size(41, 48);
@@ -640,6 +672,7 @@
             // 
             // btnhuancun31
             // 
+            this.btnhuancun31.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun31.Location = new System.Drawing.Point(160, 21);
             this.btnhuancun31.Name = "btnhuancun31";
             this.btnhuancun31.Size = new System.Drawing.Size(41, 48);
@@ -651,6 +684,7 @@
             // 
             // btnhuancun28
             // 
+            this.btnhuancun28.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun28.Location = new System.Drawing.Point(478, 21);
             this.btnhuancun28.Name = "btnhuancun28";
             this.btnhuancun28.Size = new System.Drawing.Size(41, 48);
@@ -662,6 +696,7 @@
             // 
             // btnhuancun29
             // 
+            this.btnhuancun29.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun29.Location = new System.Drawing.Point(371, 21);
             this.btnhuancun29.Name = "btnhuancun29";
             this.btnhuancun29.Size = new System.Drawing.Size(41, 48);
@@ -673,6 +708,7 @@
             // 
             // btnhuancun30
             // 
+            this.btnhuancun30.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun30.Location = new System.Drawing.Point(243, 21);
             this.btnhuancun30.Name = "btnhuancun30";
             this.btnhuancun30.Size = new System.Drawing.Size(41, 48);
@@ -882,6 +918,16 @@
             this.pbMachine30.Click += new System.EventHandler(this.Machine1_Click);
             this.pbMachine30.MouseEnter += new System.EventHandler(this.pbMachine1_MouseEnter);
             // 
+            // pbMainbelt4
+            // 
+            this.pbMainbelt4.BackColor = System.Drawing.Color.Lime;
+            this.pbMainbelt4.Location = new System.Drawing.Point(866, 55);
+            this.pbMainbelt4.Name = "pbMainbelt4";
+            this.pbMainbelt4.Size = new System.Drawing.Size(47, 38);
+            this.pbMainbelt4.TabIndex = 77;
+            this.pbMainbelt4.TabStop = false;
+            this.pbMainbelt4.Click += new System.EventHandler(this.pbMainbelt1_Click);
+            // 
             // groupBBelt3
             // 
             this.groupBBelt3.Controls.Add(this.btnhuancun24);
@@ -908,17 +954,19 @@
             this.groupBBelt3.Controls.Add(this.pbMachine20);
             this.groupBBelt3.Controls.Add(this.pbMachine21);
             this.groupBBelt3.Controls.Add(this.pbMachine22);
+            this.groupBBelt3.Controls.Add(this.pbMainbelt3);
             this.groupBBelt3.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBBelt3.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBBelt3.Location = new System.Drawing.Point(11, 307);
             this.groupBBelt3.Name = "groupBBelt3";
-            this.groupBBelt3.Size = new System.Drawing.Size(869, 133);
+            this.groupBBelt3.Size = new System.Drawing.Size(919, 133);
             this.groupBBelt3.TabIndex = 49;
             this.groupBBelt3.TabStop = false;
             this.groupBBelt3.Text = "3 号 主 皮 带 :";
             // 
             // btnhuancun24
             // 
+            this.btnhuancun24.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun24.Location = new System.Drawing.Point(43, 21);
             this.btnhuancun24.Name = "btnhuancun24";
             this.btnhuancun24.Size = new System.Drawing.Size(41, 48);
@@ -930,6 +978,7 @@
             // 
             // btnhuancun17
             // 
+            this.btnhuancun17.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun17.Location = new System.Drawing.Point(795, 21);
             this.btnhuancun17.Name = "btnhuancun17";
             this.btnhuancun17.Size = new System.Drawing.Size(41, 48);
@@ -941,6 +990,7 @@
             // 
             // btnhuancun18
             // 
+            this.btnhuancun18.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun18.Location = new System.Drawing.Point(692, 21);
             this.btnhuancun18.Name = "btnhuancun18";
             this.btnhuancun18.Size = new System.Drawing.Size(41, 48);
@@ -952,6 +1002,7 @@
             // 
             // btnhuancun19
             // 
+            this.btnhuancun19.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun19.Location = new System.Drawing.Point(576, 21);
             this.btnhuancun19.Name = "btnhuancun19";
             this.btnhuancun19.Size = new System.Drawing.Size(41, 48);
@@ -963,6 +1014,7 @@
             // 
             // btnhuancun23
             // 
+            this.btnhuancun23.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun23.Location = new System.Drawing.Point(145, 21);
             this.btnhuancun23.Name = "btnhuancun23";
             this.btnhuancun23.Size = new System.Drawing.Size(41, 48);
@@ -974,6 +1026,7 @@
             // 
             // btnhuancun20
             // 
+            this.btnhuancun20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun20.Location = new System.Drawing.Point(480, 21);
             this.btnhuancun20.Name = "btnhuancun20";
             this.btnhuancun20.Size = new System.Drawing.Size(41, 48);
@@ -985,6 +1038,7 @@
             // 
             // btnhuancun21
             // 
+            this.btnhuancun21.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun21.Location = new System.Drawing.Point(356, 21);
             this.btnhuancun21.Name = "btnhuancun21";
             this.btnhuancun21.Size = new System.Drawing.Size(41, 48);
@@ -996,6 +1050,7 @@
             // 
             // btnhuancun22
             // 
+            this.btnhuancun22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun22.Location = new System.Drawing.Point(245, 21);
             this.btnhuancun22.Name = "btnhuancun22";
             this.btnhuancun22.Size = new System.Drawing.Size(41, 48);
@@ -1205,6 +1260,16 @@
             this.pbMachine22.Click += new System.EventHandler(this.Machine1_Click);
             this.pbMachine22.MouseEnter += new System.EventHandler(this.pbMachine1_MouseEnter);
             // 
+            // pbMainbelt3
+            // 
+            this.pbMainbelt3.BackColor = System.Drawing.Color.DarkOrange;
+            this.pbMainbelt3.Location = new System.Drawing.Point(866, 46);
+            this.pbMainbelt3.Name = "pbMainbelt3";
+            this.pbMainbelt3.Size = new System.Drawing.Size(47, 38);
+            this.pbMainbelt3.TabIndex = 77;
+            this.pbMainbelt3.TabStop = false;
+            this.pbMainbelt3.Click += new System.EventHandler(this.pbMainbelt1_Click);
+            // 
             // groupBBelt2
             // 
             this.groupBBelt2.Controls.Add(this.btnhuancun16);
@@ -1231,17 +1296,19 @@
             this.groupBBelt2.Controls.Add(this.pbMachine12);
             this.groupBBelt2.Controls.Add(this.pbMachine13);
             this.groupBBelt2.Controls.Add(this.pbMachine14);
+            this.groupBBelt2.Controls.Add(this.pbMainbelt2);
             this.groupBBelt2.Cursor = System.Windows.Forms.Cursors.Default;
             this.groupBBelt2.Font = new System.Drawing.Font("宋体", 13F);
             this.groupBBelt2.Location = new System.Drawing.Point(11, 168);
             this.groupBBelt2.Name = "groupBBelt2";
-            this.groupBBelt2.Size = new System.Drawing.Size(869, 133);
+            this.groupBBelt2.Size = new System.Drawing.Size(919, 133);
             this.groupBBelt2.TabIndex = 49;
             this.groupBBelt2.TabStop = false;
             this.groupBBelt2.Text = "2 号 主 皮 带 :";
             // 
             // btnhuancun16
             // 
+            this.btnhuancun16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun16.Location = new System.Drawing.Point(53, 21);
             this.btnhuancun16.Name = "btnhuancun16";
             this.btnhuancun16.Size = new System.Drawing.Size(41, 48);
@@ -1253,6 +1320,7 @@
             // 
             // btnhuancun9
             // 
+            this.btnhuancun9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun9.Location = new System.Drawing.Point(777, 17);
             this.btnhuancun9.Name = "btnhuancun9";
             this.btnhuancun9.Size = new System.Drawing.Size(41, 48);
@@ -1264,6 +1332,7 @@
             // 
             // btnhuancun10
             // 
+            this.btnhuancun10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun10.Location = new System.Drawing.Point(694, 17);
             this.btnhuancun10.Name = "btnhuancun10";
             this.btnhuancun10.Size = new System.Drawing.Size(41, 48);
@@ -1275,6 +1344,7 @@
             // 
             // btnhuancun11
             // 
+            this.btnhuancun11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun11.Location = new System.Drawing.Point(566, 21);
             this.btnhuancun11.Name = "btnhuancun11";
             this.btnhuancun11.Size = new System.Drawing.Size(41, 48);
@@ -1286,6 +1356,7 @@
             // 
             // btnhuancun15
             // 
+            this.btnhuancun15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun15.Location = new System.Drawing.Point(127, 21);
             this.btnhuancun15.Name = "btnhuancun15";
             this.btnhuancun15.Size = new System.Drawing.Size(41, 48);
@@ -1297,6 +1368,7 @@
             // 
             // btnhuancun12
             // 
+            this.btnhuancun12.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun12.Location = new System.Drawing.Point(482, 21);
             this.btnhuancun12.Name = "btnhuancun12";
             this.btnhuancun12.Size = new System.Drawing.Size(41, 48);
@@ -1308,6 +1380,7 @@
             // 
             // btnhuancun13
             // 
+            this.btnhuancun13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun13.Location = new System.Drawing.Point(346, 21);
             this.btnhuancun13.Name = "btnhuancun13";
             this.btnhuancun13.Size = new System.Drawing.Size(41, 48);
@@ -1319,6 +1392,7 @@
             // 
             // btnhuancun14
             // 
+            this.btnhuancun14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun14.Location = new System.Drawing.Point(261, 21);
             this.btnhuancun14.Name = "btnhuancun14";
             this.btnhuancun14.Size = new System.Drawing.Size(41, 48);
@@ -1528,15 +1602,25 @@
             this.pbMachine14.Click += new System.EventHandler(this.Machine1_Click);
             this.pbMachine14.MouseEnter += new System.EventHandler(this.pbMachine1_MouseEnter);
             // 
+            // pbMainbelt2
+            // 
+            this.pbMainbelt2.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.pbMainbelt2.Location = new System.Drawing.Point(866, 51);
+            this.pbMainbelt2.Name = "pbMainbelt2";
+            this.pbMainbelt2.Size = new System.Drawing.Size(47, 38);
+            this.pbMainbelt2.TabIndex = 77;
+            this.pbMainbelt2.TabStop = false;
+            this.pbMainbelt2.Click += new System.EventHandler(this.pbMainbelt1_Click);
+            // 
             // Fm_FollowTaskUnion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 711);
+            this.ClientSize = new System.Drawing.Size(957, 707);
             this.Controls.Add(this.panel1);
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Fm_FollowTaskUnion_FormClosed);
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
             this.groupBox2.ResumeLayout(false);
@@ -1552,6 +1636,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt1)).EndInit();
             this.groupBBelt4.ResumeLayout(false);
             this.groupBBelt4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine25)).EndInit();
@@ -1562,6 +1647,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine28)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine29)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt4)).EndInit();
             this.groupBBelt3.ResumeLayout(false);
             this.groupBBelt3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine17)).EndInit();
@@ -1572,6 +1658,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt3)).EndInit();
             this.groupBBelt2.ResumeLayout(false);
             this.groupBBelt2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine9)).EndInit();
@@ -1582,6 +1669,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMachine14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMainbelt2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1694,5 +1782,9 @@
         private System.Windows.Forms.PictureBox pbMachine4;
         private System.Windows.Forms.PictureBox pbMachine5;
         private System.Windows.Forms.PictureBox pbMachine6;
+        private System.Windows.Forms.PictureBox pbMainbelt1;
+        private System.Windows.Forms.PictureBox pbMainbelt4;
+        private System.Windows.Forms.PictureBox pbMainbelt3;
+        private System.Windows.Forms.PictureBox pbMainbelt2;
     }
 }

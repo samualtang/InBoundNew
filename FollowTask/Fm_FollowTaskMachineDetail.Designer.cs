@@ -144,7 +144,7 @@
             this.groupBox3.Size = new System.Drawing.Size(236, 370);
             this.groupBox3.TabIndex = 48;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "任务信息";
+            this.groupBox3.Text = "当前任务信息";
             // 
             // listViewMachineDetails
             // 

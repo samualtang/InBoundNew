@@ -87,7 +87,7 @@
             this.补货任务ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1181, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(556, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -160,10 +160,10 @@
             this.txtMainInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtMainInfo.Enabled = false;
             this.txtMainInfo.Font = new System.Drawing.Font("宋体", 11F);
-            this.txtMainInfo.Location = new System.Drawing.Point(0, 722);
+            this.txtMainInfo.Location = new System.Drawing.Point(0, 354);
             this.txtMainInfo.Name = "txtMainInfo";
             this.txtMainInfo.ReadOnly = true;
-            this.txtMainInfo.Size = new System.Drawing.Size(1181, 24);
+            this.txtMainInfo.Size = new System.Drawing.Size(556, 24);
             this.txtMainInfo.TabIndex = 3;
             this.txtMainInfo.Text = "信息:";
             this.txtMainInfo.TextChanged += new System.EventHandler(this.txtMainInfo_TextChanged);
@@ -221,7 +221,7 @@
             treeNode18,
             treeNode19});
             this.treeV.ShowNodeToolTips = true;
-            this.treeV.Size = new System.Drawing.Size(174, 697);
+            this.treeV.Size = new System.Drawing.Size(174, 329);
             this.treeV.TabIndex = 6;
             this.treeV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeV_AfterSelect);
             // 
@@ -241,7 +241,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 746);
+            this.ClientSize = new System.Drawing.Size(556, 378);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.treeV);
             this.Controls.Add(this.txtMainInfo);

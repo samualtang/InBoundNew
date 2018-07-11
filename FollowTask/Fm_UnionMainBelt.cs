@@ -23,7 +23,7 @@ namespace FollowTask
         int xynum = -1;//吸烟数量 
         decimal sortnum = -1;//任务号  
 
-        private delegate void DelegateUnionMachineInfo(string text, List<Group> listMachine);
+        private delegate void DelegateUnionMachineInfo(int machineno,int mainbelt, List<Group> listMachine);
         DelegateUnionMachineInfo dumi;
 
         List<Group> ListUMachine = new List<Group>();
@@ -268,7 +268,7 @@ namespace FollowTask
         private void pbMachine1_Click(object sender, EventArgs e)
         {
             //fm_machinedetails = new Fm_FollowTaskMachineDetail(label1.Text);
-            dumi(label1.Text, ListUMachine);//
+            dumi(1 ,mainbelt, ListUMachine);//
             fm_machinedetails.Show();
             SearchWinForm(fm_machinedetails);
             fm_machinedetails.TopMost = true;

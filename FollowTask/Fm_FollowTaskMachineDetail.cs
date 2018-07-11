@@ -60,7 +60,7 @@ namespace FollowTask
             lblMachineNo.Text = machiname + "号机械手";
             #endregion 
         }
-
+     
         /// <summary>
         /// 合流机械手
         /// </summary>
@@ -80,25 +80,26 @@ namespace FollowTask
         //    this.StartPosition = FormStartPosition.CenterScreen;
         //    lblMachineNo.Text = machineNo + "号机械手";
         //}
-
-        public void GetUnionMachineDetails(string text, List<Group> listMachine)
+        int MainBelt;//主皮带
+        int MachineNo;//机械收号
+        List<Group> Listmachine = new List<Group>();
+        public void GetUnionMachineDetails(int  machineno,int mainbelt, List<Group> listMachine)
         {
             this.listViewMachineDetails.DoubleBufferedListView(true);
-            lblCigreName.Visible = false;//合流机械手
-            for (int i = 1; i <= 10; i++)
-            {
-                string lblName = "lblCig" + i;
-                Control contr = (Label)Controls.Find(lblName, true)[0];
-                contr.Visible = true;
-            }
-            Text = "合流(" + text + "号机械手)";
+            lblCigreName.Visible = false;//合流机械手 
+            MainBelt = mainbelt;
+            MachineNo = machineno;
+            Text =  "合流( " + machineno  + "  号机械手)";
             this.StartPosition = FormStartPosition.CenterScreen;
-            lblMachineNo.Text = text + "号机械手";
-
+            lblMachineNo.Text = "合流(" + machineno + "号机械手)";
+            Listmachine = listMachine; 
         }
 
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
+
+            decimal sortnum =   ReadDbInFo(MainBelt, MachineNo)[0];//当前任务号
+            decimal xynum = ReadDbInFo(MainBelt, MachineNo)[1];   //当前抓烟数
             Random rd = new Random();
             int[] pan = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1,1, 1  };
             int[] state = new int[10]; 
@@ -182,6 +183,26 @@ namespace FollowTask
             {
                 ch.Width = _Width / _Count - 1;
             }
+        }
+        /// <summary>
+        /// 读取DB当前任务号和当前抓数
+        /// </summary>
+        /// <param name="mainbelt">主皮带</param>
+        /// <param name="machineno">机械手号</param>
+        /// <returns></returns>
+        decimal[] ReadDbInFo(int mainbelt, int machineno)
+        {
+            decimal[] sortnumAndXYnum = new decimal[2];
+            if (machineno == 1)
+            {
+                machineno = 0;
+            }
+
+            sortnumAndXYnum[0] = Listmachine[5].ReadD((machineno * 2) ).CastTo<int>(-1);//0
+            sortnumAndXYnum[1] = Listmachine[5].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//1
+           
+
+            return sortnumAndXYnum;
         }
     }
 }

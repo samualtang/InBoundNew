@@ -48,8 +48,11 @@ namespace FollowTask
         public delegate void HandleUnion(string text, List<Group> listgroup, bool inonline);//合流委托
         HandleUnion Union;
 
-        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup ;
+        public delegate void HandleSorting(string text, List<Group> list, bool isonline);//预分拣委托
+        HandleSorting Sorting;
 
+        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup ;
+        Group SortingTaskGroupA, SortingTaskGroupB;
         void Connction()
         {
             txtMainInfo.Text = "连接服务器中.....";
@@ -61,7 +64,8 @@ namespace FollowTask
             {
 
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);//连接本地服务器
-                AddUnionTaskGroup();
+                AddUnionTaskGroup();//合流
+                AddSortingTaskGroup();//预分拣
                 CheckConnection();
                
             }
@@ -107,6 +111,19 @@ namespace FollowTask
             listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
           
          
+        }
+        /// <summary>
+        /// 预分拣
+        /// </summary>
+        void AddSortingTaskGroup()
+        {
+            SortingTaskGroupA =  new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//预分拣组A
+            SortingTaskGroupB = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//预分拣组A
+
+            //SortingTaskGroupB.addItem(ItemCollection.GetASortingItem(""));
+
+            listSortTaskGroup.Add(SortingTaskGroupA);//预分拣A线
+            listSortTaskGroup.Add(SortingTaskGroupB);//预分拣B线
         }
 
         #endregion
@@ -165,6 +182,7 @@ namespace FollowTask
                 {
                     IsOnLine = false;
                     Union("合流", null, IsOnLine);//重新绑定合流 
+                    Sorting("1预分拣", null, IsOnLine);//重新绑定预分拣
                     writeLog.Write("服务器断开连接");
                     txtMainInfo.Text = "服务器断开连接!!";
                     CheckBrek = true;
@@ -180,6 +198,7 @@ namespace FollowTask
                 {
                     IsOnLine = true;
                     Union("合流", listUnionTaskGroup, IsOnLine);//重新绑定合流 
+                    Sorting("1预分拣", listSortTaskGroup, IsOnLine);//重新绑定预分拣
                     writeLog.Write("服务器连接正常");
                     txtMainInfo.Text = "服务器连接正常!!";
                     CheckBrek = false;
@@ -218,46 +237,46 @@ namespace FollowTask
             switch (nodeselect)
             {
                 #region 机械手
-                case "MachineGroup1":
-                    ShowMchineForm("机械手,第1组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第1组的机械手信息";
-                    break;
-                case "MachineGroup2":
-                    ShowMchineForm("机械手,第2组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第2组的机械手信息";
-                    break;
-                case "MachineGroup3":
-                    ShowMchineForm("机械手,第3组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第3组的机械手信息";
-                    break;
-                case "MachineGroup4":
-                    ShowMchineForm("机械手,第4组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第4组的机械手信息";
-                    break;
-                case "MachineGroup5":
-                    ShowMchineForm("机械手,第5组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第5组的机械手信息";
-                    break;
-                case "MachineGroup6":
-                    ShowMchineForm("机械手,第6组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第6组的机械手信息";
-                    break;
-                case "MachineGroup7":
-                    ShowMchineForm("机械手,第7组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第7组的机械手信息";
-                    break;
-                case "MachineGroup8":
-                    ShowMchineForm("机械手,第8组");
-                    txtMainInfo.Clear();
-                    txtMainInfo.Text = "第8组的机械手信息";
-                    break;
+                //case "MachineGroup1":
+                //    ShowMchineForm("机械手,第1组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第1组的机械手信息";
+                //    break;
+                //case "MachineGroup2":
+                //    ShowMchineForm("机械手,第2组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第2组的机械手信息";
+                //    break;
+                //case "MachineGroup3":
+                //    ShowMchineForm("机械手,第3组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第3组的机械手信息";
+                //    break;
+                //case "MachineGroup4":
+                //    ShowMchineForm("机械手,第4组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第4组的机械手信息";
+                //    break;
+                //case "MachineGroup5":
+                //    ShowMchineForm("机械手,第5组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第5组的机械手信息";
+                //    break;
+                //case "MachineGroup6":
+                //    ShowMchineForm("机械手,第6组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第6组的机械手信息";
+                //    break;
+                //case "MachineGroup7":
+                //    ShowMchineForm("机械手,第7组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第7组的机械手信息";
+                //    break;
+                //case "MachineGroup8":
+                //    ShowMchineForm("机械手,第8组");
+                //    txtMainInfo.Clear();
+                //    txtMainInfo.Text = "第8组的机械手信息";
+                //    break;
                 #endregion
                 #region 预分拣
                 case "fjBigGroup1":
@@ -366,12 +385,13 @@ namespace FollowTask
         void ShowSortingForm(string text)
         {
             Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
-  
+            Sorting += fm_sorting.GetSoringBeltInfo;
+            Sorting(text, listSortTaskGroup, IsOnLine);
             if (CheckExist(fm_sorting) == true)
             {
-                fm_sorting.Dispose();
+                fm_sorting.Close();
                 //fm_sorting = null;
-                //return;
+                return;
             }
             fm_sorting.MdiParent = this;
             fm_sorting.WindowState = FormWindowState.Maximized;
@@ -388,9 +408,9 @@ namespace FollowTask
             Union("合流", listUnionTaskGroup, IsOnLine);
             if (CheckExist(fm_union) == true)
             {
-                fm_union.Show();
+                fm_union.Close();
                 //fm_union = null;
-               // return;
+                return; 
             }
             fm_union.MdiParent = this;
             fm_union.WindowState = FormWindowState.Maximized;
