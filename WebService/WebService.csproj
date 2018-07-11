@@ -39,6 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\opcrcw.comn.dll</HintPath>
+    </Reference>
+    <Reference Include="opcrcw.da, Version=3.0.3.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\opcrcw.da.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -60,6 +70,9 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="GetMainBelt.asmx" />
+    <Content Include="Lib\opcrcw.comn.dll" />
+    <Content Include="Lib\opcrcw.da.dll" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -99,6 +112,13 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GetMainBelt.asmx.cs">
+      <DependentUpon>GetMainBelt.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modle\Group.cs" />
+    <Compile Include="Modle\ItemCollection.cs" />
+    <Compile Include="OpcServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WmsIn.asmx.cs">
       <DependentUpon>WmsIn.asmx</DependentUpon>
