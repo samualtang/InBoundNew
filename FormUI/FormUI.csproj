@@ -169,6 +169,11 @@
     <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\GetMainBelt\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="TooL\Constant.cs" />
     <Compile Include="TooL\TaskType.cs" />
     <Compile Include="w_user.cs">
@@ -352,6 +357,7 @@
     </Compile>
     <None Include="Resources\login2.psd" />
     <None Include="Service References\Billservice\WMSBillServiceService.wsdl" />
+    <None Include="Service References\GetMainBelt\GetMainBelt.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InBound\InBound.csproj">
@@ -364,6 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Billservice\" />
+    <WCFMetadataStorage Include="Service References\GetMainBelt\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\Billservice\configuration91.svcinfo" />
@@ -383,6 +390,13 @@
     <Content Include="lib\System.Data.OracleClient.dll" />
     <Content Include="Resources\btnOk.bmp" />
     <Content Include="Resources\login2.bmp" />
+    <None Include="Service References\GetMainBelt\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\GetMainBelt\configuration.svcinfo" />
+    <None Include="Service References\GetMainBelt\configuration91.svcinfo" />
+    <None Include="Service References\GetMainBelt\GetMainBelt.disco" />
     <None Include="Resources\btnCancel.bmp" />
     <None Include="Resources\bg21.JPG" />
     <None Include="Resources\bg2.JPG" />

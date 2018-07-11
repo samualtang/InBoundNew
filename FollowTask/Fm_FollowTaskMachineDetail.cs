@@ -82,6 +82,7 @@ namespace FollowTask
         //}
         int MainBelt;//主皮带
         int MachineNo;//机械收号
+        int GroupNo;//组号
         List<Group> Listmachine = new List<Group>();
         public void GetUnionMachineDetails(int  machineno,int mainbelt, List<Group> listMachine)
         {
@@ -89,28 +90,74 @@ namespace FollowTask
             lblCigreName.Visible = false;//合流机械手 
             MainBelt = mainbelt;
             MachineNo = machineno;
+            GroupNo =  GetGroupNo(machineno);
             Text =  "合流( " + machineno  + "  号机械手)";
             this.StartPosition = FormStartPosition.CenterScreen;
             lblMachineNo.Text = "合流(" + machineno + "号机械手)";
-            Listmachine = listMachine; 
+            Listmachine = listMachine;
+           
         }
-
+        /// <summary>
+        /// 获取组号
+        /// </summary>
+        /// <param name="machineNo">机械手号</param>
+        /// <returns></returns>4   
+        int GetGroupNo(int machineNo)
+        {
+            if (machineNo >= 8)
+            {
+                GroupNo = machineNo % 8;// Convert.ToDecimal(Math.IEEERemainder(machineNo, 8));//取余获得组号
+            }
+            else
+            {
+                GroupNo = machineNo;
+            }
+            if (GroupNo == 0)
+            {
+                GroupNo = 8;
+            }
+            return GroupNo;
+        }
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
-
             decimal sortnum =   ReadDbInFo(MainBelt, MachineNo)[0];//当前任务号
-            decimal xynum = ReadDbInFo(MainBelt, MachineNo)[1];   //当前抓烟数
-            Random rd = new Random();
-            int[] pan = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1,1, 1  };
-            int[] state = new int[10]; 
-            int[] zhua = new int[10]; 
-            for (int i = 0; i < 10; i++)
+            decimal xynum = ReadDbInFo(MainBelt, MachineNo)[1];   //当前抓烟数 
+            txtPokenum.Text = xynum.ToString();
+            txtSortnum.Text = sortnum.ToString(); ;
+            int lablindex = 1;
+            var list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo);
+            if (list != null)
             {
-                state[i] = rd.Next(0, 2);
-                zhua[i] = rd.Next(0, 2);
+                foreach (var item in list)
+                {
+
+                    string lblName = "lblCig" + lablindex;
+                    Control contr = (Label)Controls.Find(lblName, true)[0];
+                    contr.Text = item.CIGARETTDENAME;
+                    lablindex++;
+                }
+                BindXipan(list.Count);
+            }
+            else
+            {
+                BindXipan(0);
             } 
+        }
+        void BindXipan(int count)
+        { 
+            int[] pan = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            int[] state = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] zhua = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+            for (int i = 0; i < count; i++)
+            {
+                state[i] = 0;
+                zhua[i] = 0;
+            }
             pbBind(pan, state, zhua); 
         }
+
+        
         #region 吸盘
         /// <summary >
         /// 吸盘信息绑定
@@ -199,10 +246,15 @@ namespace FollowTask
             }
 
             sortnumAndXYnum[0] = Listmachine[5].ReadD((machineno * 2) ).CastTo<int>(-1);//0
-            sortnumAndXYnum[1] = Listmachine[5].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//1
+            sortnumAndXYnum[1] = Listmachine[5].ReadD(((machineno * 2) + 1)).CastTo<int>(-1);//1
            
 
             return sortnumAndXYnum;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Fm_FollowTaskMachineDetail_Load(null, null);
         }
     }
 }

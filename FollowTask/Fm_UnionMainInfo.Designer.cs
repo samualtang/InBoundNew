@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelOption = new System.Windows.Forms.Panel();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.lblNum = new System.Windows.Forms.Label();
+            this.lblSortnum = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
             this.lblOption = new System.Windows.Forms.Label();
             this.btnAllInfo = new System.Windows.Forms.Button();
@@ -36,18 +40,21 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.lblPlace = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblNowcOUNT = new System.Windows.Forms.Label();
+            this.lblCOunt = new System.Windows.Forms.Label();
             this.panelCig = new System.Windows.Forms.Panel();
-            this.dgbMainBeltInfo = new System.Windows.Forms.DataGridView();
-            this.lblNum = new System.Windows.Forms.Label();
-            this.lblSortnum = new System.Windows.Forms.Label();
+            this.dgvMainBeltInfo = new System.Windows.Forms.DataGridView();
+            this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.lblGOto = new System.Windows.Forms.Label();
             this.panelOption.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgbMainBeltInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // panelOption
             // 
             this.panelOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelOption.Controls.Add(this.txtTitle);
             this.panelOption.Controls.Add(this.lblNum);
             this.panelOption.Controls.Add(this.lblSortnum);
             this.panelOption.Controls.Add(this.btnPrint);
@@ -58,13 +65,41 @@
             this.panelOption.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelOption.Location = new System.Drawing.Point(0, 0);
             this.panelOption.Name = "panelOption";
-            this.panelOption.Size = new System.Drawing.Size(713, 47);
+            this.panelOption.Size = new System.Drawing.Size(713, 58);
             this.panelOption.TabIndex = 1;
+            // 
+            // txtTitle
+            // 
+            this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTitle.Enabled = false;
+            this.txtTitle.Location = new System.Drawing.Point(11, 3);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.ReadOnly = true;
+            this.txtTitle.Size = new System.Drawing.Size(100, 21);
+            this.txtTitle.TabIndex = 24;
+            // 
+            // lblNum
+            // 
+            this.lblNum.AutoSize = true;
+            this.lblNum.Location = new System.Drawing.Point(387, 32);
+            this.lblNum.Name = "lblNum";
+            this.lblNum.Size = new System.Drawing.Size(47, 12);
+            this.lblNum.TabIndex = 23;
+            this.lblNum.Text = "数量：0";
+            // 
+            // lblSortnum
+            // 
+            this.lblSortnum.AutoSize = true;
+            this.lblSortnum.Location = new System.Drawing.Point(285, 32);
+            this.lblSortnum.Name = "lblSortnum";
+            this.lblSortnum.Size = new System.Drawing.Size(59, 12);
+            this.lblSortnum.TabIndex = 22;
+            this.lblSortnum.Text = "任务号：0";
             // 
             // btnPrint
             // 
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(612, 11);
+            this.btnPrint.Location = new System.Drawing.Point(614, 27);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 19;
@@ -75,7 +110,7 @@
             // lblOption
             // 
             this.lblOption.AutoSize = true;
-            this.lblOption.Location = new System.Drawing.Point(11, 16);
+            this.lblOption.Location = new System.Drawing.Point(3, 32);
             this.lblOption.Name = "lblOption";
             this.lblOption.Size = new System.Drawing.Size(47, 12);
             this.lblOption.TabIndex = 5;
@@ -84,7 +119,7 @@
             // btnAllInfo
             // 
             this.btnAllInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllInfo.Location = new System.Drawing.Point(496, 11);
+            this.btnAllInfo.Location = new System.Drawing.Point(498, 27);
             this.btnAllInfo.Name = "btnAllInfo";
             this.btnAllInfo.Size = new System.Drawing.Size(75, 23);
             this.btnAllInfo.TabIndex = 4;
@@ -95,7 +130,7 @@
             // btnNext
             // 
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnNext.Location = new System.Drawing.Point(165, 11);
+            this.btnNext.Location = new System.Drawing.Point(167, 27);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 4;
@@ -106,7 +141,7 @@
             // btnLast
             // 
             this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLast.Location = new System.Drawing.Point(61, 11);
+            this.btnLast.Location = new System.Drawing.Point(63, 27);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(75, 23);
             this.btnLast.TabIndex = 3;
@@ -117,24 +152,45 @@
             // lblPlace
             // 
             this.lblPlace.AutoSize = true;
-            this.lblPlace.Location = new System.Drawing.Point(6, 104);
+            this.lblPlace.Location = new System.Drawing.Point(4, 124);
             this.lblPlace.Name = "lblPlace";
-            this.lblPlace.Size = new System.Drawing.Size(65, 12);
+            this.lblPlace.Size = new System.Drawing.Size(71, 12);
             this.lblPlace.TabIndex = 6;
-            this.lblPlace.Text = "当前位置：";
+            this.lblPlace.Text = "当前位置：0";
             // 
             // groupBoxUnionInfo
             // 
+            this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
+            this.groupBoxUnionInfo.Controls.Add(this.lblNowcOUNT);
+            this.groupBoxUnionInfo.Controls.Add(this.lblCOunt);
             this.groupBoxUnionInfo.Controls.Add(this.lblPlace);
             this.groupBoxUnionInfo.Controls.Add(this.panelCig);
             this.groupBoxUnionInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxUnionInfo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBoxUnionInfo.Location = new System.Drawing.Point(0, 47);
+            this.groupBoxUnionInfo.Location = new System.Drawing.Point(0, 58);
             this.groupBoxUnionInfo.Name = "groupBoxUnionInfo";
-            this.groupBoxUnionInfo.Size = new System.Drawing.Size(713, 123);
+            this.groupBoxUnionInfo.Size = new System.Drawing.Size(713, 141);
             this.groupBoxUnionInfo.TabIndex = 2;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
+            // 
+            // lblNowcOUNT
+            // 
+            this.lblNowcOUNT.AutoSize = true;
+            this.lblNowcOUNT.Location = new System.Drawing.Point(162, 124);
+            this.lblNowcOUNT.Name = "lblNowcOUNT";
+            this.lblNowcOUNT.Size = new System.Drawing.Size(77, 12);
+            this.lblNowcOUNT.TabIndex = 8;
+            this.lblNowcOUNT.Text = "当前批次:0/0";
+            // 
+            // lblCOunt
+            // 
+            this.lblCOunt.AutoSize = true;
+            this.lblCOunt.Location = new System.Drawing.Point(286, 123);
+            this.lblCOunt.Name = "lblCOunt";
+            this.lblCOunt.Size = new System.Drawing.Size(53, 12);
+            this.lblCOunt.TabIndex = 7;
+            this.lblCOunt.Text = "总批次:0";
             // 
             // panelCig
             // 
@@ -143,54 +199,169 @@
             this.panelCig.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCig.Location = new System.Drawing.Point(3, 17);
             this.panelCig.Name = "panelCig";
-            this.panelCig.Size = new System.Drawing.Size(707, 84);
+            this.panelCig.Size = new System.Drawing.Size(707, 99);
             this.panelCig.TabIndex = 2;
             // 
-            // dgbMainBeltInfo
+            // dgvMainBeltInfo
             // 
-            this.dgbMainBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgbMainBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgbMainBeltInfo.Location = new System.Drawing.Point(0, 170);
-            this.dgbMainBeltInfo.Name = "dgbMainBeltInfo";
-            this.dgbMainBeltInfo.RowTemplate.Height = 23;
-            this.dgbMainBeltInfo.Size = new System.Drawing.Size(713, 237);
-            this.dgbMainBeltInfo.TabIndex = 3;
+            this.dgvMainBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMainBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMainBeltInfo.Location = new System.Drawing.Point(0, 199);
+            this.dgvMainBeltInfo.Name = "dgvMainBeltInfo";
+            this.dgvMainBeltInfo.RowTemplate.Height = 23;
+            this.dgvMainBeltInfo.Size = new System.Drawing.Size(713, 208);
+            this.dgvMainBeltInfo.TabIndex = 3;
             // 
-            // lblNum
+            // dgVprint1
             // 
-            this.lblNum.AutoSize = true;
-            this.lblNum.Location = new System.Drawing.Point(385, 16);
-            this.lblNum.Name = "lblNum";
-            this.lblNum.Size = new System.Drawing.Size(41, 12);
-            this.lblNum.TabIndex = 23;
-            this.lblNum.Text = "数量：";
+            this.dgVprint1.Alignment = System.Drawing.StringAlignment.Center;
+            this.dgVprint1.AutoFormat = false;
+            this.dgVprint1.AutoResizeRowHeight = false;
+            this.dgVprint1.Border = "1111";
+            this.dgVprint1.CanEditPrintSettings = true;
+            this.dgVprint1.Columns = 2;
+            this.dgVprint1.ColumnSpace = 50F;
+            this.dgVprint1.DefaultColor = System.Drawing.Color.Black;
+            this.dgVprint1.DocuMentName = "DataGridView打印控件";
+            this.dgVprint1.DoubleLineSpace = 10.16F;
+            this.dgVprint1.EnableChangeGroup = true;
+            this.dgVprint1.EnableChangeHeaderAndFooter = true;
+            this.dgVprint1.EnableChangePageSettings = true;
+            this.dgVprint1.EnableChangeSum = true;
+            this.dgVprint1.EnableChangeTableSettings = true;
+            this.dgVprint1.EnableChangeTableStyle = true;
+            this.dgVprint1.EnableChangeTitle = true;
+            this.dgVprint1.EnableChangeWaterMark = true;
+            this.dgVprint1.EnableChangeZDX = true;
+            this.dgVprint1.EnabledPrint = true;
+            this.dgVprint1.FixedCols = 1;
+            this.dgVprint1.GridColor = System.Drawing.Color.Black;
+            this.dgVprint1.GroupColumn = "";
+            this.dgVprint1.GroupNewPage = false;
+            this.dgVprint1.IsAddRowID = false;
+            this.dgVprint1.IsAutoAddEmptyRow = false;
+            this.dgVprint1.IsDGVCellValignmentCenter = true;
+            this.dgVprint1.IsDrawmargin = true;
+            this.dgVprint1.IsDrawPageFooterLine = false;
+            this.dgVprint1.IsDrawPageHeaderLine = false;
+            this.dgVprint1.IsDrawTableFooterEveryPage = false;
+            this.dgVprint1.IsDrawZDX = false;
+            this.dgVprint1.IsGroupNewRowID = false;
+            this.dgVprint1.IsImmediatePrint = false;
+            this.dgVprint1.IsImmediatePrintShowPrintDialog = true;
+            this.dgVprint1.IsPrintRowHeaderColumn = false;
+            this.dgVprint1.IsShowAboutPage = true;
+            this.dgVprint1.IsShowUnvisibleColum = true;
+            this.dgVprint1.IsUseAPIprintDialog = false;
+            this.dgVprint1.IsUseDoubleLine = false;
+            this.dgVprint1.LastPageMode = true;
+            this.dgVprint1.LineSpace = 50F;
+            this.dgVprint1.MainTitle = "表格主标题";
+            this.dgVprint1.MainTitleFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.MinFontSize = 6F;
+            this.dgVprint1.OuterBorder = false;
+            this.dgVprint1.OuterBorderColor = System.Drawing.Color.Black;
+            this.dgVprint1.OuterBorderWidth = 5.08F;
+            this.dgVprint1.PageFooterColor = System.Drawing.Color.Black;
+            this.dgVprint1.PageFooterFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.dgVprint1.PageFooterLeft = null;
+            this.dgVprint1.PageFooterMiddle = "共[总页数]页 第[页码]页";
+            this.dgVprint1.PageFooterRight = null;
+            this.dgVprint1.PageHeaderColor = System.Drawing.Color.Black;
+            this.dgVprint1.PageHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.dgVprint1.PageHeaderLeft = null;
+            this.dgVprint1.PageHeaderMiddle = null;
+            this.dgVprint1.PageHeaderRight = null;
+            this.dgVprint1.PaperHeight = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.dgVprint1.PaperKind = System.Drawing.Printing.PaperKind.A4;
+            this.dgVprint1.PaperLandscape = false;
+            this.dgVprint1.PaperMargins = new System.Drawing.Printing.Margins(254, 254, 254, 254);
+            this.dgVprint1.PaperName = "";
+            this.dgVprint1.PaperWidth = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.dgVprint1.PrintBackColor = true;
+            this.dgVprint1.PrinterName = "";
+            this.dgVprint1.PrintRange = VBprinter.DGVprint.DGVPrintRange.AllVisibleRowsAndColumns;
+            this.dgVprint1.PrintTitlePerPage = true;
+            this.dgVprint1.PrintType = VBprinter.DGVprint.mytype.GeneralPrint;
+            this.dgVprint1.PrintZero = false;
+            this.dgVprint1.RowHeight = 0F;
+            this.dgVprint1.ShapeDepth = 18;
+            this.dgVprint1.SortColumn = "";
+            this.dgVprint1.SortMode = System.ComponentModel.ListSortDirection.Ascending;
+            this.dgVprint1.SubTitle = "";
+            this.dgVprint1.SubTitleFont = new System.Drawing.Font("宋体", 12F);
+            this.dgVprint1.SubTitleStyle = 0;
+            this.dgVprint1.SumBackColor = System.Drawing.Color.Empty;
+            this.dgVprint1.SumColumns = "";
+            this.dgVprint1.SumFont = null;
+            this.dgVprint1.SumForeColor = System.Drawing.Color.Empty;
+            this.dgVprint1.SumNumberAlign = System.Drawing.StringAlignment.Center;
+            this.dgVprint1.TableBottomLeftTitleAlign = System.Drawing.StringAlignment.Near;
+            this.dgVprint1.TableBottomMiddleTitleAlign = System.Drawing.StringAlignment.Center;
+            this.dgVprint1.TableBottomRightTitleAlign = System.Drawing.StringAlignment.Far;
+            this.dgVprint1.TableFooterFont = new System.Drawing.Font("宋体", 10F);
+            this.dgVprint1.TableFooterLeft = null;
+            this.dgVprint1.TableFooterMiddle = null;
+            this.dgVprint1.TableFooterRight = null;
+            this.dgVprint1.TableHeaderFont = new System.Drawing.Font("宋体", 10F);
+            this.dgVprint1.TableHeaderLeft = null;
+            this.dgVprint1.TableHeaderMiddle = null;
+            this.dgVprint1.TableHeaderRight = null;
+            this.dgVprint1.TableTopLeftTitleAlign = System.Drawing.StringAlignment.Near;
+            this.dgVprint1.TableTopMiddleTitleAlign = System.Drawing.StringAlignment.Center;
+            this.dgVprint1.TableTopRightTitleAlign = System.Drawing.StringAlignment.Far;
+            this.dgVprint1.TitleTextStyle = 0;
+            this.dgVprint1.WaterMarkColor = System.Drawing.Color.Red;
+            this.dgVprint1.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 80F, System.Drawing.FontStyle.Bold);
+            this.dgVprint1.WaterMarkLandscape = true;
+            this.dgVprint1.WaterMarkOpacity = ((byte)(128));
+            this.dgVprint1.WaterMarkText = "";
+            this.dgVprint1.WindowTitle = "打印预览结果";
+            this.dgVprint1.ZDXFont = new System.Drawing.Font("宋体", 9F);
+            this.dgVprint1.ZDXLinecoLor = System.Drawing.Color.Black;
+            this.dgVprint1.ZDXLineStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.dgVprint1.ZDXPosition = 0F;
+            this.dgVprint1.ZDXText = "装订线";
+            this.dgVprint1.ZDXTextColor = System.Drawing.Color.Black;
+            this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
+            this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblSortnum
+            // lblGOto
             // 
-            this.lblSortnum.AutoSize = true;
-            this.lblSortnum.Location = new System.Drawing.Point(283, 16);
-            this.lblSortnum.Name = "lblSortnum";
-            this.lblSortnum.Size = new System.Drawing.Size(53, 12);
-            this.lblSortnum.TabIndex = 22;
-            this.lblSortnum.Text = "任务号：";
+            this.lblGOto.AutoSize = true;
+            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblGOto.Location = new System.Drawing.Point(585, 123);
+            this.lblGOto.Name = "lblGOto";
+            this.lblGOto.Size = new System.Drawing.Size(122, 15);
+            this.lblGOto.TabIndex = 9;
+            this.lblGOto.Text = "--前往包装机-->";
             // 
             // Fm_UnionMainInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 407);
-            this.Controls.Add(this.dgbMainBeltInfo);
+            this.Controls.Add(this.dgvMainBeltInfo);
             this.Controls.Add(this.groupBoxUnionInfo);
             this.Controls.Add(this.panelOption);
             this.Name = "Fm_UnionMainInfo";
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_UnionMainInfo_FormClosing);
             this.Load += new System.EventHandler(this.Fm_UnionMainInfo_Load);
+            this.SizeChanged += new System.EventHandler(this.Fm_UnionMainInfo_SizeChanged);
             this.panelOption.ResumeLayout(false);
             this.panelOption.PerformLayout();
             this.groupBoxUnionInfo.ResumeLayout(false);
             this.groupBoxUnionInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgbMainBeltInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -204,10 +375,15 @@
         private System.Windows.Forms.Panel panelCig;
         private System.Windows.Forms.Label lblOption;
         private System.Windows.Forms.Button btnAllInfo;
-        private System.Windows.Forms.DataGridView dgbMainBeltInfo;
+        private System.Windows.Forms.DataGridView dgvMainBeltInfo;
         private System.Windows.Forms.Label lblPlace;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Label lblNum;
         private System.Windows.Forms.Label lblSortnum;
+        private VBprinter.DGVprint dgVprint1;
+        private System.Windows.Forms.Label lblNowcOUNT;
+        private System.Windows.Forms.Label lblCOunt;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Label lblGOto;
     }
 }

@@ -98,11 +98,13 @@ namespace FollowTask
         public void GetMainInfo(int mainbelt, List<Group> list)
         {
             Text = mainbelt + "号主皮带";
+            txtTitle.Text ="合流"+ mainbelt + "号主皮带";
             MainBelt = mainbelt;
             listMainBelt = list;
+            
 
         }
-        double[] nowplace = new double[140];
+       
         /// <summary>
         /// 读取DB块上的任务号，位置，数量
         /// </summary>
@@ -115,15 +117,12 @@ namespace FollowTask
         
             for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
             {
-                Sortnum = listMainBelt[mainbelt - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号
-             
-              
+                Sortnum = listMainBelt[mainbelt - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号 
                 if (Sortnum > 0)//任务号不为0
                 {
-                    MainBeltInfo info = new MainBeltInfo();
-                    nowplace[i] = (listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000);//位置(米)
+                    MainBeltInfo info = new MainBeltInfo(); 
                     info.SortNum = Sortnum;//任务号
-                    info.Place = Convert.ToDecimal(nowplace[i]);//(listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000000);//位置(米)
+                    info.Place = (listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000);//位置(米)
                     info.Quantity =Convert.ToDecimal( listMainBelt[mainbelt - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1));//数量
                     info.mainbelt = mainbelt.ToString();//主皮带
                     ListmbInfo.Add(info);
@@ -139,81 +138,81 @@ namespace FollowTask
         /// <param name="index">任务号的索引</param>
         void ReadListInfo(int index)
         {
-            panelCig.Controls.Clear();
-            dgbMainBeltInfo.DataSource = null;//重置数据显示控件
-        
-            if (ReadIndex < ListmbInfo.Count)
+            if (index < ListmbInfo.Count)
             {
-            
+                panelCig.Controls.Clear();//清空panel控件数据
+                dgvMainBeltInfo.DataSource = null;//重置数据显示控件
+                ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//距离从大到小排序
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
-                    var list= ListmbInfo[index].taskInfo.Select(x => new
+                    dgvMainBeltInfo.DataSource = ListmbInfo[index].taskInfo.Select(x => new
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
                         CIGARETTNAME = x.CIGARETTDENAME,
                         QTY = x.qty,
-                        MAINBELT = x.MainBelt, 
-                        SORTNUM = x.SortNum, 
-                        
-                    }).ToList();//根据索引读取相对应数据
-                    dgbMainBeltInfo.DataSource = list;
+                        MAINBELT = x.MainBelt,
+                        SORTNUM = x.SortNum,
+                    }).ToList();//根据索引读取相对应数据   
                     DgvBind();
-                    addPanel(ListmbInfo[index].taskInfo);
+                    addPanel(ListmbInfo[index].taskInfo);//往panel控件增添当前数据
                     lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum;
                     lblNum.Text = "数量：" + ListmbInfo[index].Quantity;
-                }
+                    lblPlace.Text = "当前位置：" + ListmbInfo[index].Place + "米";
+                } 
+                lblCOunt.Text = "总批次：" + ListmbInfo.Count;
+                lblNowcOUNT.Text = "当前批次:" + (index + 1) + "/" + ListmbInfo.Count;
             }
-          
         }
-
+        /// <summary>
+        /// 绑定Dgv列头显示
+        /// </summary>
         void DgvBind()
         {
-            dgbMainBeltInfo.Columns[0].HeaderCell.Value = "香烟编号";
-            dgbMainBeltInfo.Columns[1].HeaderCell.Value = "香烟名称";
-            dgbMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
-            dgbMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
-            dgbMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
-            //dgbMainBeltInfo.Columns[4].HeaderCell.Value = "数量";
-            //dgbMainBeltInfo.Columns[5].HeaderCell.Value = "组号";
-            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "物理通道号";
-            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "客户名称"; 
-            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "客户编号"; 
-            //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "排序号"; 
+            try
+            { 
+                dgvMainBeltInfo.Columns[0].HeaderCell.Value = "香烟编号";
+                dgvMainBeltInfo.Columns[1].HeaderCell.Value = "香烟名称";
+                dgvMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
+                dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
+                dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
        
         private void btnLast_Click(object sender, EventArgs e)
         {
             if (ReadIndex == 0)
             {
-                MessageBox.Show("最上面了");
                 ReadListInfo(0);
+                MessageBox.Show("是第一批了"); 
                 return;
             }
             else
             {
                 ReadIndex = ReadIndex - 1;
                 ReadListInfo(ReadIndex);
-                lblPlace.Text = "当前位置：" + nowplace[ReadIndex] + "米";
-               // MessageBox.Show("当前位置"+nowplace);
+             
+             
             }
           
 
         }
         private void btnNext_Click(object sender, EventArgs e)//点击下一个
         {
-            if (ReadIndex == ListmbInfo.Count)
+            if (ReadIndex > (ListmbInfo.Count -1))
             {
-                ReadListInfo(ListmbInfo.Count);
-                MessageBox.Show("最下面了"); 
+               // ReadListInfo(ListmbInfo.Count);  
+                MessageBox.Show("最后一批了");
                 return;
             }
             else
             {
                 ReadIndex = ReadIndex + 1;
-                ReadListInfo(ReadIndex);
-                lblPlace.Text = "当前位置：" + nowplace[ReadIndex] + "米";
-                //MessageBox.Show("当前位置" + nowplace);
-                
+                ReadListInfo(ReadIndex); 
             }
          
         }
@@ -234,7 +233,7 @@ namespace FollowTask
                     listunion.Add(un);
                 }
                 DgvBind();
-                dgbMainBeltInfo.DataSource = listunion;
+                dgvMainBeltInfo.DataSource = listunion;
             }  
         }
         private void Fm_UnionMainInfo_FormClosing(object sender, FormClosingEventArgs e)
@@ -256,12 +255,22 @@ namespace FollowTask
             lblNum.Text = "数量：0";
             ReadDBinfo(MainBelt);
             ReadListInfo(0);
-            lblPlace.Text = "当前位置：" + nowplace[0]+"米"; 
+          
+           
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            dgVprint1.MainTitle = "合流" + MainBelt + "号主皮带表";
+            //dgVprint1.SubTitle = "这是子标题，当然也可以不设的";
+            // dgVprint1.PaperLandscape = true;//用横向打印，默认是纵向
 
+            dgVprint1.Print(dgvMainBeltInfo);
+        }
+
+        private void Fm_UnionMainInfo_SizeChanged(object sender, EventArgs e)
+        {
+         
         }
        
        

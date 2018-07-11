@@ -412,7 +412,7 @@ namespace FollowTask
                 Button btn = ((Button)sender);//获取当前单击按钮的所有实例
                 int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
 
-                Fm_UinonCache fmuc = new Fm_UinonCache();
+                Fm_UinonCache fmuc = new Fm_UinonCache(); 
                 handeleuCache += fmuc.GetUnionNowMachineTask;
                 handeleuCache(machineno, listuinongroup);
                 fmuc.Show(); 
@@ -538,23 +538,7 @@ namespace FollowTask
             
         }
 
-        private void Fm_FollowTaskUnion_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm is Form)
-                {
-                    //fname.TopMost = true;
-                    if (fum != null)
-                    {
-                        fum.Close();
-                        fmuc.Close();
-                    }
-                    return;
-                }
-            }
-            this.Close();
-        }
+       
 
         public void SearchWinForm(Form fname)
         {
@@ -570,6 +554,20 @@ namespace FollowTask
             }
             fname.Show();
             fname.Activate();
+        }
+
+        private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (fum != null)
+            {
+                fum.Close();
+                fum.Dispose();
+            }
+            if (fmuc != null)
+            {
+                fmuc.Close();
+                fmuc.Dispose();
+            } 
         }
 
     }

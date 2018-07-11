@@ -30,12 +30,6 @@ namespace FollowTask
         /// 存放当前任务号 和当前吸烟数量
         /// </summary>
         decimal[] sortnumAndXYnum = new decimal[2]; 
-        public Fm_UinonCache(string machineText,string machineno) 
-        {
-            InitializeComponent();
-            MainBelt =  Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(machineText, @"[^0-9]+", ""));//获取主皮带号 
-            lblCacheText.Text = machineText.Substring(6) + "机械手缓存区香烟排序";
-        }
         /// <summary>
         /// 存放opc组
         /// </summary>
@@ -49,6 +43,7 @@ namespace FollowTask
             MainBelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
             lblCacheText.Text = machineno + "号机械手缓存区香烟排序";
             listUnionMachine = list;
+            Fm_UinonCache_Load(null, null);
         }
      
         /// <summary>
@@ -125,14 +120,21 @@ namespace FollowTask
        #endregion
         private void Fm_UinonCache_Load(object sender, EventArgs e)
         {
-            ReadDbInFo(MainBelt, MachineNo);
-            if (sortnumAndXYnum.Count() != 0)
+            try
+            { 
+                ReadDbInFo(MainBelt, MachineNo);
+                if (sortnumAndXYnum.Count() != 0)
+                {
+                    //ReadDBInfo(listUnionMachine[5], MainBelt);
+                    txtSortnum.Text = sortnumAndXYnum[0] + "";
+                    txtPokenum.Text = sortnumAndXYnum[1] + "";
+                    list = FolloTaskService.getUnionCache(groupno, MainBelt, sortnumAndXYnum[0], sortnumAndXYnum[1]);//获取数据
+                    btnRefresh_Click(null, null);
+                }
+            }
+            catch (Exception ex)
             {
-                //ReadDBInfo(listUnionMachine[5], MainBelt);
-                textBox1.Text = sortnumAndXYnum[0] + "";
-                txtPokenum.Text = sortnumAndXYnum[1] + "";
-                list1 = FolloTaskService.getUnionCache(groupno, MainBelt, sortnumAndXYnum[0], sortnumAndXYnum[1]);//获取数据
-                btnRefresh_Click(null, null);
+                MessageBox.Show("错误异常" + ex);
             }
         }
         /// <summary>
@@ -156,32 +158,10 @@ namespace FollowTask
             }
             return groupno; 
         }
-        List<FollowTaskDeail> list1 = new List<FollowTaskDeail>();
+        List<FollowTaskDeail> list = new List<FollowTaskDeail>();
         private void btnPokeTime_Click(object sender, EventArgs e)
         {
            
-        }
-
-        /// <summary>
-        /// 吸烟数量索引
-        /// </summary>
-        /// <param name="machineNo">机械手号</param>
-        /// <returns></returns>
-        int GetXyNumIndex(int machineNo)
-        {
-            if (machineNo >= 9 && machineNo <= 16)
-            {
-                return (machineNo - 8) - 1;
-            }
-            if (machineNo >= 17 && machineNo <= 24)
-            {
-                return (machineNo - 8 * 2) - 1;
-            }
-            if (machineNo >= 25 && machineNo <= 32)
-            {
-                return (machineNo - 8 * 3) - 1;
-            }
-            return machineNo - 1;
         }
         /// <summary>
         /// LV绑定
@@ -240,7 +220,7 @@ namespace FollowTask
      
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            ListViewBind(list1);
+            ListViewBind(list);
         }
 
         private void listViewUnionCache_SizeChanged(object sender, EventArgs e)

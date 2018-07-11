@@ -247,9 +247,9 @@
             this.panel1.Controls.Add(this.groupBBelt4);
             this.panel1.Controls.Add(this.groupBBelt3);
             this.panel1.Controls.Add(this.groupBBelt2);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(12, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(933, 691);
+            this.panel1.Size = new System.Drawing.Size(947, 690);
             this.panel1.TabIndex = 58;
             // 
             // groupBBelt1
@@ -579,6 +579,8 @@
             // pbMainbelt1
             // 
             this.pbMainbelt1.BackColor = System.Drawing.Color.DarkRed;
+            this.pbMainbelt1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMainbelt1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMainbelt1.Location = new System.Drawing.Point(866, 52);
             this.pbMainbelt1.Name = "pbMainbelt1";
             this.pbMainbelt1.Size = new System.Drawing.Size(47, 38);
@@ -921,6 +923,8 @@
             // pbMainbelt4
             // 
             this.pbMainbelt4.BackColor = System.Drawing.Color.Lime;
+            this.pbMainbelt4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMainbelt4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMainbelt4.Location = new System.Drawing.Point(866, 55);
             this.pbMainbelt4.Name = "pbMainbelt4";
             this.pbMainbelt4.Size = new System.Drawing.Size(47, 38);
@@ -1263,6 +1267,8 @@
             // pbMainbelt3
             // 
             this.pbMainbelt3.BackColor = System.Drawing.Color.DarkOrange;
+            this.pbMainbelt3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMainbelt3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMainbelt3.Location = new System.Drawing.Point(866, 46);
             this.pbMainbelt3.Name = "pbMainbelt3";
             this.pbMainbelt3.Size = new System.Drawing.Size(47, 38);
@@ -1605,6 +1611,8 @@
             // pbMainbelt2
             // 
             this.pbMainbelt2.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.pbMainbelt2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbMainbelt2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMainbelt2.Location = new System.Drawing.Point(866, 51);
             this.pbMainbelt2.Name = "pbMainbelt2";
             this.pbMainbelt2.Size = new System.Drawing.Size(47, 38);
@@ -1616,11 +1624,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(957, 707);
+            this.ClientSize = new System.Drawing.Size(975, 696);
             this.Controls.Add(this.panel1);
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Fm_FollowTaskUnion_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
             this.groupBox2.ResumeLayout(false);

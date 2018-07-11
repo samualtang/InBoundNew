@@ -227,7 +227,7 @@ namespace FollowTask
             //InBound.Business.TaskService.UpdateMachineFinished(22540, "84");
         
             btnLeft.Location = new Point(166, Height / 2);
-            BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
+            //BitmapRegion.CreateControlRegion(btnLeft, btmpathLeft);//创建Button图片
         }
 
 
@@ -425,8 +425,8 @@ namespace FollowTask
             if (click)
             {
                 treeV.Visible = false;//隐藏
-                btnLeft.Location = new Point(0, this.Size.Height / 2);
-                BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathRight));
+                btnLeft.Location = new Point(-13, this.Size.Height / 2);
+                //BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathRight));
                 click = false;
             }
             else
@@ -434,7 +434,7 @@ namespace FollowTask
                 treeV.Visible = true;
                 btnLeft.Dock = DockStyle.None;
                 btnLeft.Location = new Point(166, this.Size.Height / 2);
-                BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));
+                //BitmapRegion.CreateControlRegion(btnLeft, new Bitmap(btmpathLeft));
                 click = true;
             }
 
@@ -445,7 +445,7 @@ namespace FollowTask
         {
             if (!click)
             {
-                btnLeft.Location = new Point(0, this.Size.Height / 2);
+                btnLeft.Location = new Point(-13, this.Size.Height / 2);
             }
             else
             {
