@@ -428,7 +428,7 @@ namespace highSpeed.baseData
             sqlpara[0].Direction = ParameterDirection.Output;
             sqlpara[1].Direction = ParameterDirection.Output;
 
-            Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULEVALIDATION", sqlpara);
+            Db.ExecuteNonQueryWithProc("P_PRODUCE_Validation", sqlpara);
             //MessageBox.Show(date);
             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
