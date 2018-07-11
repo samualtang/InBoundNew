@@ -11,6 +11,7 @@ using InBound;
 using InBound.Business;
 using System.Configuration;
 using InBound.Model;
+using highSpeed.PubFunc;
 
 namespace highSpeed
 {
@@ -472,6 +473,36 @@ namespace highSpeed
             else
             {
                 return;
+            }
+        }
+        DataBase Db = new DataBase();
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Db.Open();
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULEVALIDATION", sqlpara);
+            //MessageBox.Show(date);
+            //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
+            Db.Close();
+            if (errcode == "1")
+            {
+                MessageBox.Show("设置正常");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
             }
         }
     }
