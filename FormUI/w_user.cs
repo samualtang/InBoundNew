@@ -13,6 +13,7 @@ using FormUI.TooL;
 using InBound;
 using InBound.Model;
 using InBound.Pub;
+using System.IO.Ports;
 
 namespace FormUI
 {
@@ -74,7 +75,34 @@ namespace FormUI
         }
         #endregion
 
+        SerialPort sp = new SerialPort();
+        public void OpenSerialPort()
+        {
 
+            sp.PortName = "COM20";
+            if (!sp.IsOpen)
+            {
+                try
+                {
+                    sp.ReadBufferSize = 32;
+                    sp.BaudRate = 57600;
+                    sp.Open();
+                    sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
+                }
+                catch
+                {
+                    //if (sp!=null && sp.IsOpen)
+                    //{
+                    //    sp.Close();
+                    //}
+                    //Thread.Sleep(5000);
+                    //OpenSerialPort();
+                }
+            }
+
+        }
+        void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        { }
         #region btn_OK
         private void button1_Click(object sender, EventArgs e)
         {
@@ -92,6 +120,16 @@ namespace FormUI
             list.Add(info);
             MainBeltInfoService.GetSortMainBeltInfo(list);
           //  String str = "1203".Substring(0,2);
+
+
+            List<MainBeltInfo> infolist = new List<MainBeltInfo>();
+            MainBeltInfo info = new MainBeltInfo();
+            info.SortNum = 71069;
+           // info.GroupNO = 1;
+            info.Quantity = 1;
+            info.mainbelt = "2";
+            infolist.Add(info);
+            MainBeltInfoService.GetMainBeltInfo(infolist);
             try
             {
               // throw(new Exception());
