@@ -78,10 +78,19 @@ namespace FormUI
         #region btn_OK
         private void button1_Click(object sender, EventArgs e)
         {
-       
+
+            //GetMainBelt.GetMainBeltSoapClient client = new GetMainBelt.GetMainBeltSoapClient();
+            //String s = client.GetMainBeltInfo(1);
             //List<T_PRODUCE_POKE> list= TaskService.getList(1, 1);
          //  String list= AtsCellInService.getCellNoCode("1111111");
-          
+            //List<MainBeltInfo> list = new List<MainBeltInfo>();
+            //MainBeltInfo info = new MainBeltInfo();
+            //info.SortNum = 71448;
+            //info.Quantity = 14;
+            //info.GroupNO = 1;
+            //info.mainbelt = "2";
+            //list.Add(info);
+            //MainBeltInfoService.GetSortMainBeltInfo(list);
           //  String str = "1203".Substring(0,2);
             try
             {
