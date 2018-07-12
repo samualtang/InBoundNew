@@ -39,7 +39,7 @@ namespace WebService
                 if (Sortnum > 0)//任务号不为0
                 {
                     MainBeltInfo info = new MainBeltInfo();
-                    nowplace[i] = (OpcServer.listUnionTaskGroup[mainBelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000);//位置(米)
+                    nowplace[i] = (OpcServer.listUnionTaskGroup[mainBelt - 1].ReadD((ReadIndex + 1)).CastTo<double>(-1) / 1000);//位置(米)
                     info.SortNum = Sortnum;//任务号
                     info.Place = Convert.ToDecimal(nowplace[i]);//(listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000000);//位置(米)
                     info.Quantity = Convert.ToDecimal(OpcServer.listUnionTaskGroup[mainBelt - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1));//数量
