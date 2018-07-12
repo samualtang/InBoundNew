@@ -55,19 +55,19 @@ namespace FollowTask
             groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
             if (isonline)
             {
-                OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
-                Text = text + "预分拣";
+                OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]"; 
                 list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
                 list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
                 ListSort = list;
                 isOnLine = isonline;
-
+              
             }
             else
             {
 
                 updateListBox("与服务器断开连接....");
             }
+            Fm_FollowTaskSorting_Load(null, null);
         }
         /// <summary>
         /// 获取卷烟图片
@@ -202,31 +202,33 @@ namespace FollowTask
         /// </summary>
         /// <param name="index">索引</param>
         void ReadListInfo(int index)
-        {
-            dgvSortingBeltInfo.DataSource = null;//重置数据显示控件
+        { 
             if (ReadIndex < ListmbInfo.Count)
             {
-
+                panelCig.Controls.Clear();
+                dgvSortingBeltInfo.DataSource = null;//重置数据显示控件
+                ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
-                    var list = ListmbInfo[index].taskInfo.Select(x => new
-                    {
-                        CIGARETTECODE = x.CIGARETTDECODE,
-                        CIGARETTNAME = x.CIGARETTDENAME,
-                        MAINBELT = x.MainBelt,
-                        QTY = x.qty,
-                        GroupNo = x.groupno,
-                        MEACHINESEQ = x.machineseq,
-                        SORTNUM = x.SortNum,
-
-                    }).ToList();//根据索引读取相对应数据
-                    dgvSortingBeltInfo.DataSource = list;
+                    dgvSortingBeltInfo.DataSource = ListmbInfo[index].taskInfo.Select(x => new
+                   {
+                       CIGARETTECODE = x.CIGARETTDECODE,
+                       CIGARETTNAME = x.CIGARETTDENAME,
+                       MAINBELT = x.MainBelt,
+                       QTY = x.qty,
+                       GroupNo = x.groupno,
+                       MEACHINESEQ = x.machineseq,
+                       SORTNUM = x.SortNum, 
+                   }).ToList();//根据索引读取相对应数据 
+                    DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);
-                    lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum ;
-                    lblNum.Text = "数量：" + ListmbInfo[index].Quantity ; 
+                    lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum;
+                    lblNum.Text = "数量：" + ListmbInfo[index].Quantity;
+                    lblPlace.Text = "当前位置：" + ListmbInfo[index].Place + "米";
                 }
-            }
-
+                lblCOunt.Text = "总批次：" + ListmbInfo.Count;
+                lblNowcOUNT.Text = "当前批次:" + (index + 1) + "/" + ListmbInfo.Count;
+            } 
         }
         void DgvBind()
         {
@@ -251,16 +253,14 @@ namespace FollowTask
                 if (ReadIndex == 0)
                 {
                     ReadListInfo(0);
-                    MessageBox.Show("最上面了");
-                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
+                    MessageBox.Show("最上面了"); 
                     return;
                 }
                 else
                 {
                     ReadIndex = ReadIndex - 1;
                     ReadListInfo(ReadIndex);
-                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
-                    // MessageBox.Show("当前位置"+nowplace);
+                
                 }
             }
             else
@@ -273,20 +273,16 @@ namespace FollowTask
         {
             if (isOnLine)
             {
-                if (ReadIndex == ListmbInfo.Count)
+                if (ReadIndex > (ListmbInfo.Count - 1))
                 {
-                    ReadListInfo(ListmbInfo.Count);
-                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
-                    MessageBox.Show("最下面了");
+                    // ReadListInfo(ListmbInfo.Count); 
+                    MessageBox.Show("最后一批了");
                     return;
                 }
                 else
                 {
                     ReadIndex = ReadIndex + 1;
                     ReadListInfo(ReadIndex);
-                    lblPlace.Text = "当前位置：" + nowplace[ReadIndex];
-                    //MessageBox.Show("当前位置" + nowplace);
-
                 }
             }
             else
@@ -301,15 +297,17 @@ namespace FollowTask
             {
                 if (groupno == 1 || groupno == 3 || groupno == 5 || groupno == 7)
                 {
-                    
+
                     ReadDBinfo(1, groupno);
-                    lblPlace.Text = "当前位置：" + nowplace[0];
+
                 }
                 else
                 {
-                    
                     ReadDBinfo(2, groupno);
                 }
+                ReadListInfo(0); 
+                Text = groupno + "组预分拣";
+                txtTitle.Text = Text;
                 //lblSortnum.Text = "任务号： 0";
                 //lblNum.Text = "数量：0";
             }

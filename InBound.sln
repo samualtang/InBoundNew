@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InBound", "InBound\InBound.csproj", "{17D610AF-2478-4E66-B576-0EB21F117081}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormUI", "FormUI\FormUI.csproj", "{89BB01E2-210C-4964-90E5-9BBC6F016E7C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4C082C68-717D-4D7C-B7D6-4F9D493F250D} = {4C082C68-717D-4D7C-B7D6-4F9D493F250D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRun", "AutoRun\AutoRun.csproj", "{6B90E3A6-B243-49C2-A7DB-D9C3298E5DBF}"
 EndProject

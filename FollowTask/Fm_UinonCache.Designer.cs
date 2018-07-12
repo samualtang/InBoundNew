@@ -48,7 +48,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnPrint = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtSortnum = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPokenum = new System.Windows.Forms.TextBox();
@@ -200,7 +200,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnPrint);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtSortnum);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtPokenum);
@@ -224,13 +224,13 @@
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
-            // textBox1
+            // txtSortnum
             // 
-            this.textBox1.Location = new System.Drawing.Point(89, 70);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 16;
+            this.txtSortnum.Location = new System.Drawing.Point(89, 70);
+            this.txtSortnum.Name = "txtSortnum";
+            this.txtSortnum.ReadOnly = true;
+            this.txtSortnum.Size = new System.Drawing.Size(100, 21);
+            this.txtSortnum.TabIndex = 16;
             // 
             // label2
             // 
@@ -267,6 +267,7 @@
             this.btnRefresh.TabIndex = 11;
             this.btnRefresh.Text = "刷 新";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // lblCacheText
             // 
@@ -442,7 +443,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSortnum;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPokenum;

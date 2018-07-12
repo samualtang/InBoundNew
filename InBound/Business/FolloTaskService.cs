@@ -183,7 +183,72 @@ namespace InBound.Business
             }
         }
 
+        public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno)
+        {
+            using (Entities dataentity  = new Entities())
+            {
+                if (groupno == 4) { groupno = 3; } else if (groupno == 3) { groupno = 4; }
+                //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
+                if (groupno == 8) { groupno = 7; } else if (groupno == 7) { groupno = 8; }
+                //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
+                var query = (from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM
+                             where item.SORTNUM == sortnum && item.MAINBELT == mainbelt && item.GROUPNO == groupno
+                            orderby item.SORTNUM
+                            select new FollowTaskDeail()
+                            {
+                                SortNum = item.SORTNUM ?? 0,
+                                MERAGENUM = item.MERAGENUM ?? 0,
+                                POKENUM = item.POKENUM ?? 0,
+                                MainBelt = item.MAINBELT ?? 0,
+                                CIGARETTDECODE = item2.CIGARETTECODE,
+                                CIGARETTDENAME = item2.CIGARETTENAME,
+                                GroupNO = item.GROUPNO ?? 0,
+                                Machineseq = item.MACHINESEQ ?? 0
+                            }).ToList();
+                if (query != null)
+                {
+                    return ChaiFenList(query);
+                }
+                else
+                {
+                    return null;
+                }
+            }
 
+        }
+        public static List<FollowTaskDeail> ChaiFenList( List<FollowTaskDeail> list)
+        {
+            List<FollowTaskDeail> newlist = new List<FollowTaskDeail>();
+            if (list.Count > 0 && list != null)
+            {
+                foreach (var item in list)
+                {
+                    if (item.POKENUM > 1)
+                    {
+                        for (int i = 0; i < item.POKENUM; i++)
+                        {
+                            newlist.Add(item); 
+                        }
+                    }
+                    else
+                    {
+                        newlist.Add(item);
+                    }
+                }
+                foreach (var item in newlist)
+                {
+                    item.POKENUM = 1;
+                }
+                return newlist;
+
+            }
+            else
+            {
+                return null;
+            } 
+        }
         /// <summary>
         /// 查询机械手任务
         /// </summary>
@@ -222,7 +287,7 @@ namespace InBound.Business
                     var query = (from p in dataentity.T_PRODUCE_POKE
                                  join t in dataentity.T_PRODUCE_SORTTROUGH
                                  on p.TROUGHNUM equals t.TROUGHNUM
-                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting
+                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting && p.SORTSTATE == 20
                                  orderby p.SORTNUM, p.MACHINESEQ
                                  select new FollowTaskDeail() { CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME, POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0, POKEID = p.POKEID, MainBelt = p.MAINBELT ?? 0, SortNum = p.SORTNUM ?? 0, GroupNO = t.GROUPNO ?? 0 }).ToList();
                     if (query != null)

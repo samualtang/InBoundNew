@@ -36,7 +36,7 @@
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("第六组");
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("第七组");
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("第八组");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("机械手", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("预分拣", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
@@ -45,24 +45,7 @@
             treeNode6,
             treeNode7,
             treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("第一组");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("第二组");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("第三组");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("第四组");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("第五组");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("第六组");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("第七组");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("第八组");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("预分拣", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12,
-            treeNode13,
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17});
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("合流");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("合流");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Fm_Mian));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -178,48 +161,29 @@
             this.treeV.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
             this.treeV.Location = new System.Drawing.Point(0, 25);
             this.treeV.Name = "treeV";
-            treeNode1.Name = "MachineGroup1";
+            treeNode1.Name = "fjBigGroup1";
             treeNode1.Text = "第一组";
-            treeNode2.Name = "MachineGroup2";
+            treeNode2.Name = "fjBigGroup2";
             treeNode2.Text = "第二组";
-            treeNode3.Name = "MachineGroup3";
+            treeNode3.Name = "fjBigGroup3";
             treeNode3.Text = "第三组";
-            treeNode4.Name = "MachineGroup4";
+            treeNode4.Name = "fjBigGroup4";
             treeNode4.Text = "第四组";
-            treeNode5.Name = "MachineGroup5";
+            treeNode5.Name = "fjBigGroup5";
             treeNode5.Text = "第五组";
-            treeNode6.Name = "MachineGroup6";
+            treeNode6.Name = "fjBigGroup6";
             treeNode6.Text = "第六组";
-            treeNode7.Name = "MachineGroup7";
+            treeNode7.Name = "fjBigGroup7";
             treeNode7.Text = "第七组";
-            treeNode8.Name = "MachineGroup8";
+            treeNode8.Name = "fjBigGroup8";
             treeNode8.Text = "第八组";
-            treeNode9.Name = "Machine";
-            treeNode9.Text = "机械手";
-            treeNode10.Name = "fjBigGroup1";
-            treeNode10.Text = "第一组";
-            treeNode11.Name = "fjBigGroup2";
-            treeNode11.Text = "第二组";
-            treeNode12.Name = "fjBigGroup3";
-            treeNode12.Text = "第三组";
-            treeNode13.Name = "fjBigGroup4";
-            treeNode13.Text = "第四组";
-            treeNode14.Name = "fjBigGroup5";
-            treeNode14.Text = "第五组";
-            treeNode15.Name = "fjBigGroup6";
-            treeNode15.Text = "第六组";
-            treeNode16.Name = "fjBigGroup7";
-            treeNode16.Text = "第七组";
-            treeNode17.Name = "fjBigGroup8";
-            treeNode17.Text = "第八组";
-            treeNode18.Name = "readyTASK";
-            treeNode18.Text = "预分拣";
-            treeNode19.Name = "UinonTask";
-            treeNode19.Text = "合流";
+            treeNode9.Name = "readyTASK";
+            treeNode9.Text = "预分拣";
+            treeNode10.Name = "UinonTask";
+            treeNode10.Text = "合流";
             this.treeV.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode9,
-            treeNode18,
-            treeNode19});
+            treeNode10});
             this.treeV.ShowNodeToolTips = true;
             this.treeV.Size = new System.Drawing.Size(174, 329);
             this.treeV.TabIndex = 6;
@@ -227,9 +191,10 @@
             // 
             // btnLeft
             // 
-            this.btnLeft.Location = new System.Drawing.Point(166, 264);
+            this.btnLeft.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLeft.Location = new System.Drawing.Point(161, 265);
             this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(21, 23);
+            this.btnLeft.Size = new System.Drawing.Size(21, 20);
             this.btnLeft.TabIndex = 8;
             this.btnLeft.Text = "<-";
             this.btnLeft.UseVisualStyleBackColor = true;

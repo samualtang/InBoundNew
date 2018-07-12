@@ -32,18 +32,22 @@
             this.groupBoxprogramINfo = new System.Windows.Forms.GroupBox();
             this.list_data = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.lblNum = new System.Windows.Forms.Label();
+            this.lblSortnum = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnAllInfo = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnLast = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblCOunt = new System.Windows.Forms.Label();
+            this.lblNowcOUNT = new System.Windows.Forms.Label();
             this.lblPlace = new System.Windows.Forms.Label();
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvSortingBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.lblNum = new System.Windows.Forms.Label();
-            this.lblSortnum = new System.Windows.Forms.Label();
+            this.lblGOto = new System.Windows.Forms.Label();
             this.groupBoxprogramINfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
@@ -55,9 +59,9 @@
             this.groupBoxprogramINfo.Controls.Add(this.list_data);
             this.groupBoxprogramINfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBoxprogramINfo.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBoxprogramINfo.Location = new System.Drawing.Point(0, 324);
+            this.groupBoxprogramINfo.Location = new System.Drawing.Point(0, 330);
             this.groupBoxprogramINfo.Name = "groupBoxprogramINfo";
-            this.groupBoxprogramINfo.Size = new System.Drawing.Size(707, 94);
+            this.groupBoxprogramINfo.Size = new System.Drawing.Size(707, 88);
             this.groupBoxprogramINfo.TabIndex = 12;
             this.groupBoxprogramINfo.TabStop = false;
             this.groupBoxprogramINfo.Text = "程序信息";
@@ -69,11 +73,13 @@
             this.list_data.ItemHeight = 15;
             this.list_data.Location = new System.Drawing.Point(3, 20);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(701, 71);
+            this.list_data.Size = new System.Drawing.Size(701, 65);
             this.list_data.TabIndex = 0;
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.txtTitle);
             this.panel1.Controls.Add(this.lblNum);
             this.panel1.Controls.Add(this.lblSortnum);
             this.panel1.Controls.Add(this.btnPrint);
@@ -87,10 +93,38 @@
             this.panel1.Size = new System.Drawing.Size(707, 55);
             this.panel1.TabIndex = 13;
             // 
+            // txtTitle
+            // 
+            this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTitle.Enabled = false;
+            this.txtTitle.Location = new System.Drawing.Point(8, 3);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.ReadOnly = true;
+            this.txtTitle.Size = new System.Drawing.Size(100, 21);
+            this.txtTitle.TabIndex = 25;
+            // 
+            // lblNum
+            // 
+            this.lblNum.AutoSize = true;
+            this.lblNum.Location = new System.Drawing.Point(393, 31);
+            this.lblNum.Name = "lblNum";
+            this.lblNum.Size = new System.Drawing.Size(47, 12);
+            this.lblNum.TabIndex = 21;
+            this.lblNum.Text = "数量：0";
+            // 
+            // lblSortnum
+            // 
+            this.lblSortnum.AutoSize = true;
+            this.lblSortnum.Location = new System.Drawing.Point(291, 31);
+            this.lblSortnum.Name = "lblSortnum";
+            this.lblSortnum.Size = new System.Drawing.Size(59, 12);
+            this.lblSortnum.TabIndex = 20;
+            this.lblSortnum.Text = "任务号：0";
+            // 
             // btnPrint
             // 
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(620, 18);
+            this.btnPrint.Location = new System.Drawing.Point(620, 26);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 18;
@@ -101,7 +135,7 @@
             // btnAllInfo
             // 
             this.btnAllInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllInfo.Location = new System.Drawing.Point(506, 18);
+            this.btnAllInfo.Location = new System.Drawing.Point(506, 26);
             this.btnAllInfo.Name = "btnAllInfo";
             this.btnAllInfo.Size = new System.Drawing.Size(75, 23);
             this.btnAllInfo.TabIndex = 6;
@@ -112,7 +146,7 @@
             // btnNext
             // 
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnNext.Location = new System.Drawing.Point(174, 18);
+            this.btnNext.Location = new System.Drawing.Point(174, 26);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 7;
@@ -123,7 +157,7 @@
             // btnLast
             // 
             this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLast.Location = new System.Drawing.Point(50, 18);
+            this.btnLast.Location = new System.Drawing.Point(50, 26);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(75, 23);
             this.btnLast.TabIndex = 5;
@@ -134,7 +168,7 @@
             // lblInfo
             // 
             this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(8, 23);
+            this.lblInfo.Location = new System.Drawing.Point(8, 31);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(41, 12);
             this.lblInfo.TabIndex = 0;
@@ -142,25 +176,46 @@
             // 
             // groupBoxUnionInfo
             // 
+            this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
+            this.groupBoxUnionInfo.Controls.Add(this.lblCOunt);
+            this.groupBoxUnionInfo.Controls.Add(this.lblNowcOUNT);
             this.groupBoxUnionInfo.Controls.Add(this.lblPlace);
             this.groupBoxUnionInfo.Controls.Add(this.panelCig);
             this.groupBoxUnionInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxUnionInfo.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBoxUnionInfo.Location = new System.Drawing.Point(0, 55);
             this.groupBoxUnionInfo.Name = "groupBoxUnionInfo";
-            this.groupBoxUnionInfo.Size = new System.Drawing.Size(707, 123);
+            this.groupBoxUnionInfo.Size = new System.Drawing.Size(707, 142);
             this.groupBoxUnionInfo.TabIndex = 14;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
             // 
+            // lblCOunt
+            // 
+            this.lblCOunt.AutoSize = true;
+            this.lblCOunt.Location = new System.Drawing.Point(292, 127);
+            this.lblCOunt.Name = "lblCOunt";
+            this.lblCOunt.Size = new System.Drawing.Size(53, 12);
+            this.lblCOunt.TabIndex = 9;
+            this.lblCOunt.Text = "总批次:0";
+            // 
+            // lblNowcOUNT
+            // 
+            this.lblNowcOUNT.AutoSize = true;
+            this.lblNowcOUNT.Location = new System.Drawing.Point(173, 127);
+            this.lblNowcOUNT.Name = "lblNowcOUNT";
+            this.lblNowcOUNT.Size = new System.Drawing.Size(77, 12);
+            this.lblNowcOUNT.TabIndex = 10;
+            this.lblNowcOUNT.Text = "当前批次:0/0";
+            // 
             // lblPlace
             // 
             this.lblPlace.AutoSize = true;
-            this.lblPlace.Location = new System.Drawing.Point(7, 106);
+            this.lblPlace.Location = new System.Drawing.Point(6, 127);
             this.lblPlace.Name = "lblPlace";
-            this.lblPlace.Size = new System.Drawing.Size(65, 12);
+            this.lblPlace.Size = new System.Drawing.Size(71, 12);
             this.lblPlace.TabIndex = 7;
-            this.lblPlace.Text = "当前位置：";
+            this.lblPlace.Text = "当前位置：0";
             // 
             // panelCig
             // 
@@ -169,17 +224,17 @@
             this.panelCig.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCig.Location = new System.Drawing.Point(3, 17);
             this.panelCig.Name = "panelCig";
-            this.panelCig.Size = new System.Drawing.Size(701, 84);
+            this.panelCig.Size = new System.Drawing.Size(701, 107);
             this.panelCig.TabIndex = 2;
             // 
             // dgvSortingBeltInfo
             // 
             this.dgvSortingBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortingBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSortingBeltInfo.Location = new System.Drawing.Point(0, 178);
+            this.dgvSortingBeltInfo.Location = new System.Drawing.Point(0, 197);
             this.dgvSortingBeltInfo.Name = "dgvSortingBeltInfo";
             this.dgvSortingBeltInfo.RowTemplate.Height = 23;
-            this.dgvSortingBeltInfo.Size = new System.Drawing.Size(707, 146);
+            this.dgvSortingBeltInfo.Size = new System.Drawing.Size(707, 133);
             this.dgvSortingBeltInfo.TabIndex = 15;
             // 
             // dgVprint1
@@ -304,23 +359,15 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblNum
+            // lblGOto
             // 
-            this.lblNum.AutoSize = true;
-            this.lblNum.Location = new System.Drawing.Point(393, 23);
-            this.lblNum.Name = "lblNum";
-            this.lblNum.Size = new System.Drawing.Size(41, 12);
-            this.lblNum.TabIndex = 21;
-            this.lblNum.Text = "数量：";
-            // 
-            // lblSortnum
-            // 
-            this.lblSortnum.AutoSize = true;
-            this.lblSortnum.Location = new System.Drawing.Point(291, 23);
-            this.lblSortnum.Name = "lblSortnum";
-            this.lblSortnum.Size = new System.Drawing.Size(53, 12);
-            this.lblSortnum.TabIndex = 20;
-            this.lblSortnum.Text = "任务号：";
+            this.lblGOto.AutoSize = true;
+            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblGOto.Location = new System.Drawing.Point(551, 126);
+            this.lblGOto.Name = "lblGOto";
+            this.lblGOto.Size = new System.Drawing.Size(152, 15);
+            this.lblGOto.TabIndex = 11;
+            this.lblGOto.Text = "--前往合流主皮带-->";
             // 
             // Fm_FollowTaskSorting
             // 
@@ -362,6 +409,10 @@
         private VBprinter.DGVprint dgVprint1;
         private System.Windows.Forms.Label lblNum;
         private System.Windows.Forms.Label lblSortnum;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Label lblCOunt;
+        private System.Windows.Forms.Label lblNowcOUNT;
+        private System.Windows.Forms.Label lblGOto;
 
 
     }
