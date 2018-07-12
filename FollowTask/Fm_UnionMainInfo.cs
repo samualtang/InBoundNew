@@ -17,7 +17,7 @@ namespace FollowTask
         public Fm_UnionMainInfo()
         {
             InitializeComponent();
-         
+            dgvMainBeltInfo.DoubleBufferedDataGirdView(true);
         }
         /// <summary>
         /// 主皮带信息集合
@@ -95,13 +95,24 @@ namespace FollowTask
             strCigaNameAndQty = pb.AccessibleName.Split('|');
             p.SetToolTip(pb, "卷烟名称:" + strCigaNameAndQty[0] + "\r\n" + "卷烟编号:" + strCigaNameAndQty[2] + "\r\n" + "总数：" + strCigaNameAndQty[1]);
         }
-        public void GetMainInfo(int mainbelt, List<Group> list)
+        public void GetMainInfo(int mainbelt, List<Group> list,bool isonline)
         {
-            Text = mainbelt + "号主皮带";
-            txtTitle.Text ="合流"+ mainbelt + "号主皮带";
-            MainBelt = mainbelt;
-            listMainBelt = list;
-            
+            if (isonline)
+            {
+                Text = mainbelt + "号主皮带";
+                txtTitle.Text = "合流" + mainbelt + "号主皮带";
+                MainBelt = mainbelt;
+                listMainBelt = list;
+                lblSortnum.Text = "任务号：0";
+                lblNum.Text = "数量：0";
+                ReadDBinfo(MainBelt);//读取DB块上的值
+                ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上
+            }
+            else
+            {
+                lblErorr.Visible = true;
+                lblErorr.Text = "错误信息:服务器连接失败";
+            }
 
         }
        
@@ -113,6 +124,8 @@ namespace FollowTask
         void ReadDBinfo(int mainbelt)
         {
             ListmbInfo.Clear(); //清空list
+            dgvMainBeltInfo.DataSource = null;
+            panelCig.Controls.Clear();
             int ReadIndex = 0;
         
             for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
@@ -138,13 +151,23 @@ namespace FollowTask
         /// <param name="index">任务号的索引</param>
         void ReadListInfo(int index)
         {
-            if (index < ListmbInfo.Count)
+            if (index <= ListmbInfo.Count && ListmbInfo.Count >0)
             {
+                groupBoxUnionInfo.Visible = true;
                 panelCig.Controls.Clear();//清空panel控件数据
                 dgvMainBeltInfo.DataSource = null;//重置数据显示控件
-                ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//距离从大到小排序
+                ListmbInfo = ListmbInfo.OrderBy(a => a.Place ).ThenBy(a=> a.SortNum).ToList();//对距离任务号进行排序
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
+                    if (!string.IsNullOrWhiteSpace(ListmbInfo[index].MsgCode))//如有错误信息
+                    {
+                        lblErorr.Visible = true;
+                        lblErorr.Text = "错误代码：" + ListmbInfo[index].MsgCode + "错误信息：" + ListmbInfo[index].ErrorMsg;
+                    }
+                    else
+                    {
+                        lblErorr.Visible = false;
+                    }
                     dgvMainBeltInfo.DataSource = ListmbInfo[index].taskInfo.Select(x => new
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
@@ -152,9 +175,11 @@ namespace FollowTask
                         QTY = x.qty,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
+                     
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//往panel控件增添当前数据
+                    txtSortnum.Text = ListmbInfo[index].SortNum.ToString();
                     lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum;
                     lblNum.Text = "数量：" + ListmbInfo[index].Quantity;
                     lblPlace.Text = "当前位置：" + ListmbInfo[index].Place + "米";
@@ -203,7 +228,8 @@ namespace FollowTask
         }
         private void btnNext_Click(object sender, EventArgs e)//点击下一个
         {
-            if (ReadIndex > (ListmbInfo.Count -1))
+            groupBoxUnionInfo.Visible = true;
+            if (ReadIndex >= (ListmbInfo.Count -1))
             {
                // ReadListInfo(ListmbInfo.Count);  
                 MessageBox.Show("最后一批了");
@@ -219,22 +245,31 @@ namespace FollowTask
 
         private void btnAllInfo_Click(object sender, EventArgs e)
         { 
-            List<UnionTaskInfo> listunion = new List<UnionTaskInfo>(); 
-            for (int i = 0; i < ListmbInfo.Count; i++)
+            List<UnionTaskInfo> listunion = new List<UnionTaskInfo>();
+            if (ListmbInfo.Count > 0)
             {
-                if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
+                groupBoxUnionInfo.Visible = true;
+                for (int i = 0; i < ListmbInfo.Count; i++)
                 {
-                    UnionTaskInfo un = new UnionTaskInfo();
-                    un.CIGARETTDECODE = ListmbInfo[i].taskInfo[i].CIGARETTDECODE;
-                    un.CIGARETTDENAME = ListmbInfo[i].taskInfo[i].CIGARETTDENAME;
-                    un.qty = ListmbInfo[i].taskInfo[i].qty;
-                    un.MainBelt = ListmbInfo[i].taskInfo[i].MainBelt;
-                    un.SortNum = ListmbInfo[i].taskInfo[i].SortNum;
-                    listunion.Add(un);
+
+                    for (int j = 0; j < ListmbInfo[i].taskInfo.Count; j++)
+                    {
+                        UnionTaskInfo un = new UnionTaskInfo();
+                        if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
+                        {
+                            un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
+                            un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
+                            un.qty = ListmbInfo[i].taskInfo[j].qty;
+                            un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
+                            un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                            listunion.Add(un);
+                        }
+                    }
+
+                    DgvBind();
+                    dgvMainBeltInfo.DataSource = listunion;
                 }
-                DgvBind();
-                dgvMainBeltInfo.DataSource = listunion;
-            }  
+            }
         }
         private void Fm_UnionMainInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -249,15 +284,7 @@ namespace FollowTask
             this.Close();
         }
 
-        private void Fm_UnionMainInfo_Load(object sender, EventArgs e)
-        {
-            lblSortnum.Text = "任务号：0";
-            lblNum.Text = "数量：0";
-            ReadDBinfo(MainBelt);
-            ReadListInfo(0);
-          
-           
-        }
+
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
@@ -270,7 +297,52 @@ namespace FollowTask
 
         private void Fm_UnionMainInfo_SizeChanged(object sender, EventArgs e)
         {
-         
+
+        }
+
+        private void btnCx_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSortnum.Text))
+            {
+                MessageBox.Show("不能为空");
+            }
+            else
+            {
+                groupBoxUnionInfo.Visible = false;
+               dgvMainBeltInfo.DataSource= UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtSortnum.Text));
+               DgvBind2();
+            }
+        }
+        /// <summary>
+        /// 绑定Dgv列头显示
+        /// </summary>
+        void DgvBind2()
+        {
+            try
+            {
+                dgvMainBeltInfo.Columns[0].HeaderCell.Value = "香烟编号";
+                dgvMainBeltInfo.Columns[1].HeaderCell.Value = "香烟名称";
+                dgvMainBeltInfo.Columns[2].HeaderCell.Value = "主皮带";
+                dgvMainBeltInfo.Columns[3].HeaderCell.Value = "任务号";
+                dgvMainBeltInfo.Columns[4].HeaderCell.Value = "数量";
+                dgvMainBeltInfo.Columns[5].HeaderCell.Value = "组号";
+                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "物理通道号";
+                dgvMainBeltInfo.Columns[7].HeaderCell.Value = "客户名";
+                dgvMainBeltInfo.Columns[8].HeaderCell.Value = "客户编码";
+                dgvMainBeltInfo.Columns[9].HeaderCell.Value = "送货顺序号";
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void txtSortnum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != '\b' && !Char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
        
        

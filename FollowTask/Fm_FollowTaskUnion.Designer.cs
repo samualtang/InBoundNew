@@ -203,6 +203,7 @@
             this.groupBox2.TabIndex = 55;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "程序状态";
+            this.groupBox2.Visible = false;
             // 
             // list_data
             // 
@@ -247,9 +248,10 @@
             this.panel1.Controls.Add(this.groupBBelt4);
             this.panel1.Controls.Add(this.groupBBelt3);
             this.panel1.Controls.Add(this.groupBBelt2);
-            this.panel1.Location = new System.Drawing.Point(12, 2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(947, 690);
+            this.panel1.Size = new System.Drawing.Size(953, 684);
             this.panel1.TabIndex = 58;
             // 
             // groupBBelt1
@@ -1624,13 +1626,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 696);
+            this.ClientSize = new System.Drawing.Size(953, 679);
             this.Controls.Add(this.panel1);
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);
             this.Load += new System.EventHandler(this.Fm_FollowTaskUnion_Load);
-            this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskUnion_SizeChanged);
+            this.SizeChanged += new System.EventHandler(this.listViewUnion_SizeChanged);
             this.groupBox2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -183,7 +183,7 @@ namespace InBound.Business
             }
         }
 
-        public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno)
+        public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno,decimal xynum)
         {
             using (Entities dataentity  = new Entities())
             {
@@ -209,7 +209,7 @@ namespace InBound.Business
                             }).ToList();
                 if (query != null)
                 {
-                    return ChaiFenList(query);
+                    return ChaiFenList(query, xynum);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace InBound.Business
             }
 
         }
-        public static List<FollowTaskDeail> ChaiFenList( List<FollowTaskDeail> list)
+        public static List<FollowTaskDeail> ChaiFenList(List<FollowTaskDeail> list, decimal xynum)
         {
             List<FollowTaskDeail> newlist = new List<FollowTaskDeail>();
             if (list.Count > 0 && list != null)
@@ -227,19 +227,22 @@ namespace InBound.Business
                 {
                     if (item.POKENUM > 1)
                     {
-                        for (int i = 0; i < item.POKENUM; i++)
+                        for (int i = 0; i < xynum; xynum--)
                         {
-                            newlist.Add(item); 
+                            newlist.Add(item);
+                           
                         }
                     }
                     else
                     {
                         newlist.Add(item);
+
                     }
+                    xynum--; 
                 }
                 foreach (var item in newlist)
                 {
-                    item.POKENUM = 1;
+                    item.POKENUM = 1; 
                 }
                 return newlist;
 

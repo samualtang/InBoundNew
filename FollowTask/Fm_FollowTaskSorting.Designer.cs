@@ -41,13 +41,14 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblGOto = new System.Windows.Forms.Label();
             this.lblCOunt = new System.Windows.Forms.Label();
             this.lblNowcOUNT = new System.Windows.Forms.Label();
             this.lblPlace = new System.Windows.Forms.Label();
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvSortingBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.lblGOto = new System.Windows.Forms.Label();
+            this.lblErorr = new System.Windows.Forms.Label();
             this.groupBoxprogramINfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
@@ -124,7 +125,7 @@
             // btnPrint
             // 
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(620, 26);
+            this.btnPrint.Location = new System.Drawing.Point(593, 26);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 18;
@@ -135,7 +136,7 @@
             // btnAllInfo
             // 
             this.btnAllInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllInfo.Location = new System.Drawing.Point(506, 26);
+            this.btnAllInfo.Location = new System.Drawing.Point(479, 26);
             this.btnAllInfo.Name = "btnAllInfo";
             this.btnAllInfo.Size = new System.Drawing.Size(75, 23);
             this.btnAllInfo.TabIndex = 6;
@@ -176,6 +177,7 @@
             // 
             // groupBoxUnionInfo
             // 
+            this.groupBoxUnionInfo.Controls.Add(this.lblErorr);
             this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
             this.groupBoxUnionInfo.Controls.Add(this.lblCOunt);
             this.groupBoxUnionInfo.Controls.Add(this.lblNowcOUNT);
@@ -189,6 +191,17 @@
             this.groupBoxUnionInfo.TabIndex = 14;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
+            // 
+            // lblGOto
+            // 
+            this.lblGOto.AutoSize = true;
+            this.lblGOto.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblGOto.Location = new System.Drawing.Point(552, 124);
+            this.lblGOto.Name = "lblGOto";
+            this.lblGOto.Size = new System.Drawing.Size(152, 15);
+            this.lblGOto.TabIndex = 11;
+            this.lblGOto.Text = "--前往合流主皮带-->";
             // 
             // lblCOunt
             // 
@@ -359,15 +372,15 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblGOto
+            // lblErorr
             // 
-            this.lblGOto.AutoSize = true;
-            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblGOto.Location = new System.Drawing.Point(551, 126);
-            this.lblGOto.Name = "lblGOto";
-            this.lblGOto.Size = new System.Drawing.Size(152, 15);
-            this.lblGOto.TabIndex = 11;
-            this.lblGOto.Text = "--前往合流主皮带-->";
+            this.lblErorr.AutoSize = true;
+            this.lblErorr.Location = new System.Drawing.Point(394, 127);
+            this.lblErorr.Name = "lblErorr";
+            this.lblErorr.Size = new System.Drawing.Size(65, 12);
+            this.lblErorr.TabIndex = 12;
+            this.lblErorr.Text = "错误信息：";
+            this.lblErorr.Visible = false;
             // 
             // Fm_FollowTaskSorting
             // 
@@ -380,6 +393,7 @@
             this.Controls.Add(this.groupBoxprogramINfo);
             this.Name = "Fm_FollowTaskSorting";
             this.Text = "Fm_Sorting";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskSorting_FormClosing);
             this.Load += new System.EventHandler(this.Fm_FollowTaskSorting_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_FollowTaskSorting_SizeChanged);
             this.groupBoxprogramINfo.ResumeLayout(false);
@@ -413,6 +427,7 @@
         private System.Windows.Forms.Label lblCOunt;
         private System.Windows.Forms.Label lblNowcOUNT;
         private System.Windows.Forms.Label lblGOto;
+        private System.Windows.Forms.Label lblErorr;
 
 
     }
