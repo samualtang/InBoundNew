@@ -40,20 +40,27 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.lblPlace = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblGOto = new System.Windows.Forms.Label();
             this.lblNowcOUNT = new System.Windows.Forms.Label();
             this.lblCOunt = new System.Windows.Forms.Label();
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvMainBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.lblGOto = new System.Windows.Forms.Label();
+            this.lblErorr = new System.Windows.Forms.Label();
+            this.panelThoery = new System.Windows.Forms.Panel();
+            this.btnCx = new System.Windows.Forms.Button();
+            this.txtSortnum = new System.Windows.Forms.TextBox();
+            this.lblTheory = new System.Windows.Forms.Label();
             this.panelOption.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).BeginInit();
+            this.panelThoery.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelOption
             // 
             this.panelOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelOption.Controls.Add(this.panelThoery);
             this.panelOption.Controls.Add(this.txtTitle);
             this.panelOption.Controls.Add(this.lblNum);
             this.panelOption.Controls.Add(this.lblSortnum);
@@ -65,7 +72,7 @@
             this.panelOption.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelOption.Location = new System.Drawing.Point(0, 0);
             this.panelOption.Name = "panelOption";
-            this.panelOption.Size = new System.Drawing.Size(713, 58);
+            this.panelOption.Size = new System.Drawing.Size(879, 58);
             this.panelOption.TabIndex = 1;
             // 
             // txtTitle
@@ -98,8 +105,9 @@
             // 
             // btnPrint
             // 
+            this.btnPrint.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(614, 27);
+            this.btnPrint.Location = new System.Drawing.Point(541, 27);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 19;
@@ -118,8 +126,9 @@
             // 
             // btnAllInfo
             // 
+            this.btnAllInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAllInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllInfo.Location = new System.Drawing.Point(498, 27);
+            this.btnAllInfo.Location = new System.Drawing.Point(449, 27);
             this.btnAllInfo.Name = "btnAllInfo";
             this.btnAllInfo.Size = new System.Drawing.Size(75, 23);
             this.btnAllInfo.TabIndex = 4;
@@ -129,6 +138,7 @@
             // 
             // btnNext
             // 
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnNext.Location = new System.Drawing.Point(167, 27);
             this.btnNext.Name = "btnNext";
@@ -140,6 +150,7 @@
             // 
             // btnLast
             // 
+            this.btnLast.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnLast.Location = new System.Drawing.Point(63, 27);
             this.btnLast.Name = "btnLast";
@@ -160,6 +171,7 @@
             // 
             // groupBoxUnionInfo
             // 
+            this.groupBoxUnionInfo.Controls.Add(this.lblErorr);
             this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
             this.groupBoxUnionInfo.Controls.Add(this.lblNowcOUNT);
             this.groupBoxUnionInfo.Controls.Add(this.lblCOunt);
@@ -169,10 +181,21 @@
             this.groupBoxUnionInfo.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBoxUnionInfo.Location = new System.Drawing.Point(0, 58);
             this.groupBoxUnionInfo.Name = "groupBoxUnionInfo";
-            this.groupBoxUnionInfo.Size = new System.Drawing.Size(713, 141);
+            this.groupBoxUnionInfo.Size = new System.Drawing.Size(879, 141);
             this.groupBoxUnionInfo.TabIndex = 2;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
+            // 
+            // lblGOto
+            // 
+            this.lblGOto.AutoSize = true;
+            this.lblGOto.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblGOto.Location = new System.Drawing.Point(754, 116);
+            this.lblGOto.Name = "lblGOto";
+            this.lblGOto.Size = new System.Drawing.Size(122, 15);
+            this.lblGOto.TabIndex = 9;
+            this.lblGOto.Text = "--前往包装机-->";
             // 
             // lblNowcOUNT
             // 
@@ -199,7 +222,7 @@
             this.panelCig.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCig.Location = new System.Drawing.Point(3, 17);
             this.panelCig.Name = "panelCig";
-            this.panelCig.Size = new System.Drawing.Size(707, 99);
+            this.panelCig.Size = new System.Drawing.Size(873, 99);
             this.panelCig.TabIndex = 2;
             // 
             // dgvMainBeltInfo
@@ -209,7 +232,7 @@
             this.dgvMainBeltInfo.Location = new System.Drawing.Point(0, 199);
             this.dgvMainBeltInfo.Name = "dgvMainBeltInfo";
             this.dgvMainBeltInfo.RowTemplate.Height = 23;
-            this.dgvMainBeltInfo.Size = new System.Drawing.Size(713, 208);
+            this.dgvMainBeltInfo.Size = new System.Drawing.Size(879, 215);
             this.dgvMainBeltInfo.TabIndex = 3;
             // 
             // dgVprint1
@@ -334,34 +357,76 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblGOto
+            // lblErorr
             // 
-            this.lblGOto.AutoSize = true;
-            this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblGOto.Location = new System.Drawing.Point(585, 123);
-            this.lblGOto.Name = "lblGOto";
-            this.lblGOto.Size = new System.Drawing.Size(122, 15);
-            this.lblGOto.TabIndex = 9;
-            this.lblGOto.Text = "--前往包装机-->";
+            this.lblErorr.AutoSize = true;
+            this.lblErorr.Location = new System.Drawing.Point(394, 123);
+            this.lblErorr.Name = "lblErorr";
+            this.lblErorr.Size = new System.Drawing.Size(65, 12);
+            this.lblErorr.TabIndex = 10;
+            this.lblErorr.Text = "错误信息：";
+            this.lblErorr.Visible = false;
+            // 
+            // panelThoery
+            // 
+            this.panelThoery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelThoery.Controls.Add(this.btnCx);
+            this.panelThoery.Controls.Add(this.txtSortnum);
+            this.panelThoery.Controls.Add(this.lblTheory);
+            this.panelThoery.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelThoery.Location = new System.Drawing.Point(622, 0);
+            this.panelThoery.Name = "panelThoery";
+            this.panelThoery.Size = new System.Drawing.Size(255, 56);
+            this.panelThoery.TabIndex = 25;
+            // 
+            // btnCx
+            // 
+            this.btnCx.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCx.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCx.Location = new System.Drawing.Point(121, 26);
+            this.btnCx.Name = "btnCx";
+            this.btnCx.Size = new System.Drawing.Size(62, 23);
+            this.btnCx.TabIndex = 31;
+            this.btnCx.Text = "查询";
+            this.btnCx.UseVisualStyleBackColor = true;
+            this.btnCx.Click += new System.EventHandler(this.btnCx_Click);
+            // 
+            // txtSortnum
+            // 
+            this.txtSortnum.Location = new System.Drawing.Point(18, 28);
+            this.txtSortnum.Name = "txtSortnum";
+            this.txtSortnum.Size = new System.Drawing.Size(81, 21);
+            this.txtSortnum.TabIndex = 30;
+            this.txtSortnum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSortnum_KeyPress);
+            // 
+            // lblTheory
+            // 
+            this.lblTheory.AutoSize = true;
+            this.lblTheory.Location = new System.Drawing.Point(16, 7);
+            this.lblTheory.Name = "lblTheory";
+            this.lblTheory.Size = new System.Drawing.Size(125, 12);
+            this.lblTheory.TabIndex = 29;
+            this.lblTheory.Text = "查询任务号理论数据：";
             // 
             // Fm_UnionMainInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 407);
+            this.ClientSize = new System.Drawing.Size(879, 414);
             this.Controls.Add(this.dgvMainBeltInfo);
             this.Controls.Add(this.groupBoxUnionInfo);
             this.Controls.Add(this.panelOption);
             this.Name = "Fm_UnionMainInfo";
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_UnionMainInfo_FormClosing);
-            this.Load += new System.EventHandler(this.Fm_UnionMainInfo_Load);
             this.SizeChanged += new System.EventHandler(this.Fm_UnionMainInfo_SizeChanged);
             this.panelOption.ResumeLayout(false);
             this.panelOption.PerformLayout();
             this.groupBoxUnionInfo.ResumeLayout(false);
             this.groupBoxUnionInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).EndInit();
+            this.panelThoery.ResumeLayout(false);
+            this.panelThoery.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -385,5 +450,10 @@
         private System.Windows.Forms.Label lblCOunt;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label lblGOto;
+        private System.Windows.Forms.Label lblErorr;
+        private System.Windows.Forms.Panel panelThoery;
+        private System.Windows.Forms.Button btnCx;
+        private System.Windows.Forms.TextBox txtSortnum;
+        private System.Windows.Forms.Label lblTheory;
     }
 }

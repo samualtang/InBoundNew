@@ -47,7 +47,8 @@ namespace FollowTask
         List<Group> listSortTaskGroup = new List<Group>();
         public delegate void HandleUnion(string text, List<Group> listgroup, bool inonline);//合流委托
         HandleUnion Union;
-
+        private delegate void HandleClosing(bool guan);//窗体关闭委托
+        HandleClosing hc;
         public delegate void HandleSorting(string text, List<Group> list, bool isonline);//预分拣委托
         HandleSorting Sorting;
 
@@ -75,7 +76,16 @@ namespace FollowTask
                 writeLog.Write("错误异常：" + ex.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        void  Delge()
+        {
+            Union += fm_union.GetMainInfo;
+            Sorting += fm_sorting.GetSoringBeltInfo;
+            hc += fm_sorting.GetClosSingle;
+            hc += fm_union.GetClosSingle;
+        }
         #region 添加opc组
         /// <summary>
         /// 合流
@@ -217,11 +227,12 @@ namespace FollowTask
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             treeV.Enabled = false;
-          
+            Delge();
             this.StartPosition = FormStartPosition.CenterScreen; 
             Thread th = new Thread(Connction);
             th.Start();
         }
+     
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
             //InBound.Business.TaskService.UpdateMachineFinished(22540, "84");
@@ -378,37 +389,42 @@ namespace FollowTask
             fm_machine.WindowState = FormWindowState.Maximized;
             fm_machine.Show();
         }
+        Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
         /// <summary>
         /// SortingShow方法
         /// </summary>
         /// <param name="text">第几组</param>
         void ShowSortingForm(string text)
         {
-            Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
-            Sorting += fm_sorting.GetSoringBeltInfo;
+            
+       
             Sorting(text, listSortTaskGroup, IsOnLine);
             if (CheckExist(fm_sorting) == true)
             {
-                fm_sorting.Close();
-                //fm_sorting = null;
+                fm_sorting.Show();
+                fm_sorting.MdiParent = this;
+                fm_sorting.WindowState = FormWindowState.Maximized;
                 return;
             }
             fm_sorting.MdiParent = this;
             fm_sorting.WindowState = FormWindowState.Maximized;
             fm_sorting.Show();
         }
+        Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
         /// <summary>
         /// UinionShow方法
         /// </summary>
         /// <param name="text">第几根</param>
         void ShowUinionFrom(string text)
         {
-            Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
-            Union += fm_union.GetMainInfo;
+         
+         
             Union("合流", listUnionTaskGroup, IsOnLine);
             if (CheckExist(fm_union) == true)
             {
-                fm_union.Close();
+                fm_union.Show();
+                fm_union.MdiParent = this;
+                fm_union.WindowState = FormWindowState.Maximized;
                 //fm_union = null;
                 return; 
             }
@@ -585,14 +601,15 @@ namespace FollowTask
                 }
             }
         }
+
         private void Fm_Mian_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            
             DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
                                                              "操作提示",//对话框的标题  
                                                              MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                              MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
             //Console.WriteLine(MsgBoxResult);
             if (MsgBoxResult == DialogResult.Yes)
             {
@@ -601,12 +618,13 @@ namespace FollowTask
 
                 writeLog.Write("退出程序。。。。。。");
                 System.Environment.Exit(System.Environment.ExitCode);
-
+                
                 this.Dispose();
                 this.Close();
             }
             else
             {
+                hc(false);
                 e.Cancel = true;
             }
            

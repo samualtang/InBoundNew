@@ -83,19 +83,27 @@ namespace FollowTask
         int MainBelt;//主皮带
         int MachineNo;//机械收号
         int GroupNo;//组号
+        bool isOnLine;//是否连线
         List<Group> Listmachine = new List<Group>();
-        public void GetUnionMachineDetails(int  machineno,int mainbelt, List<Group> listMachine)
+        public void GetUnionMachineDetails(int  machineno,int mainbelt, List<Group> listMachine,bool isonline)
         {
-            this.listViewMachineDetails.DoubleBufferedListView(true);
-            lblCigreName.Visible = false;//合流机械手 
-            MainBelt = mainbelt;
-            MachineNo = machineno;
-            GroupNo =  GetGroupNo(machineno);
-            Text =  "合流( " + machineno  + "  号机械手)";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            lblMachineNo.Text = "合流(" + machineno + "号机械手)";
-            Listmachine = listMachine;
-           
+            isOnLine = isonline;
+            if (isOnLine)
+            {
+                this.listViewMachineDetails.DoubleBufferedListView(true);
+                lblCigreName.Visible = false;//合流机械手 
+                MainBelt = mainbelt;
+                MachineNo = machineno;
+                GroupNo = GetGroupNo(machineno);
+                Text = "合流( " + machineno + "  号机械手)";
+                this.StartPosition = FormStartPosition.CenterScreen;
+                lblMachineNo.Text = "合流(" + machineno + "号机械手)";
+                Listmachine = listMachine;
+            }
+            else
+            {
+             
+            }
         }
         /// <summary>
         /// 获取组号
@@ -120,14 +128,28 @@ namespace FollowTask
         }
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
-            decimal sortnum =   ReadDbInFo(MainBelt, MachineNo)[0];//当前任务号
+            if (isOnLine)
+            {
+
+                Bind();
+            }
+            else
+            {
+                MessageBox.Show("服务器尚未连接！");
+            }
+        }
+        void Bind()
+        {
+            
+            decimal sortnum = ReadDbInFo(MainBelt, MachineNo)[0];//当前任务号
             decimal xynum = ReadDbInFo(MainBelt, MachineNo)[1];   //当前抓烟数 
             txtPokenum.Text = xynum.ToString();
             txtSortnum.Text = sortnum.ToString(); ;
             int lablindex = 1;
-            var list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo);
+            List<InBound.Model.FollowTaskDeail> list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo, xynum);
             if (list != null)
             {
+                list = list.Take(10).ToList();
                 foreach (var item in list)
                 {
 
@@ -254,7 +276,7 @@ namespace FollowTask
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Fm_FollowTaskMachineDetail_Load(null, null);
+            Bind();
         }
     }
 }
