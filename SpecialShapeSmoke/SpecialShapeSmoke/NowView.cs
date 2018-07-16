@@ -136,7 +136,7 @@ namespace SpecialShapeSmoke
                         {
                             row.Selected = false;
                         }
-                        DgvNowView.Rows[i].Selected = true;
+                        DgvNowView.Rows[i].Selected = true; 
                         DgvNowView.FirstDisplayedScrollingRowIndex = i;
                         
                         break;

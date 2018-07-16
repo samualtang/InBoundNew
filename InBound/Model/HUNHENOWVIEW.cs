@@ -11,7 +11,7 @@ namespace InBound.Model
         public decimal? sortnum { get; set; }
         public string customername { get; set; }
         public string regioncode { get; set; }
-        public string TROUGHNUM { get; set; }
+        public decimal? TROUGHNUM { get; set; }
         public string CIGARETTENAME { get; set; }
         public decimal? pokenum { get; set; }
         public decimal? status { get; set; }
