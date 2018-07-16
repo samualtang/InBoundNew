@@ -531,6 +531,7 @@ namespace FollowTask
             handleuInfo += fum.GetMainInfo;
             handleuInfo(mainbelt, listuinongroup,IsOnLine);
             fum.Show();
+            fum.StartPosition = FormStartPosition.CenterScreen;
             fum.MdiParent = this.MdiParent;
             
         }

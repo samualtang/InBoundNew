@@ -179,7 +179,7 @@
             this.treeV.ShowNodeToolTips = true;
             this.treeV.Size = new System.Drawing.Size(174, 480);
             this.treeV.TabIndex = 6;
-            this.treeV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeV_AfterSelect);
+            this.treeV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeV_MouseDown);
             // 
             // btnLeft
             // 

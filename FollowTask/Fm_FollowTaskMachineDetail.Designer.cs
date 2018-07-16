@@ -40,6 +40,8 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxXiPanInfo = new System.Windows.Forms.GroupBox();
+            this.lblmotion = new System.Windows.Forms.Label();
+            this.lblState = new System.Windows.Forms.Label();
             this.lblCig10 = new System.Windows.Forms.Label();
             this.lblCig5 = new System.Windows.Forms.Label();
             this.lblCig8 = new System.Windows.Forms.Label();
@@ -205,6 +207,8 @@
             // 
             // groupBoxXiPanInfo
             // 
+            this.groupBoxXiPanInfo.Controls.Add(this.lblmotion);
+            this.groupBoxXiPanInfo.Controls.Add(this.lblState);
             this.groupBoxXiPanInfo.Controls.Add(this.lblCig10);
             this.groupBoxXiPanInfo.Controls.Add(this.lblCig5);
             this.groupBoxXiPanInfo.Controls.Add(this.lblCig8);
@@ -253,6 +257,26 @@
             this.groupBoxXiPanInfo.TabIndex = 47;
             this.groupBoxXiPanInfo.TabStop = false;
             this.groupBoxXiPanInfo.Text = "吸盘信息";
+            // 
+            // lblmotion
+            // 
+            this.lblmotion.AutoSize = true;
+            this.lblmotion.Font = new System.Drawing.Font("宋体", 9F);
+            this.lblmotion.Location = new System.Drawing.Point(51, 34);
+            this.lblmotion.Name = "lblmotion";
+            this.lblmotion.Size = new System.Drawing.Size(29, 12);
+            this.lblmotion.TabIndex = 54;
+            this.lblmotion.Text = "动作";
+            // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Font = new System.Drawing.Font("宋体", 9F);
+            this.lblState.Location = new System.Drawing.Point(102, 34);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(29, 12);
+            this.lblState.TabIndex = 54;
+            this.lblState.Text = "状态";
             // 
             // lblCig10
             // 
@@ -358,7 +382,7 @@
             // 
             this.lblCigreName.AutoSize = true;
             this.lblCigreName.Font = new System.Drawing.Font("宋体", 18F);
-            this.lblCigreName.Location = new System.Drawing.Point(116, 23);
+            this.lblCigreName.Location = new System.Drawing.Point(135, 22);
             this.lblCigreName.Name = "lblCigreName";
             this.lblCigreName.Size = new System.Drawing.Size(82, 24);
             this.lblCigreName.TabIndex = 52;
@@ -734,5 +758,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtPokenum;
+        private System.Windows.Forms.Label lblState;
+        private System.Windows.Forms.Label lblmotion;
     }
 }

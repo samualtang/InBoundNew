@@ -48,6 +48,15 @@ namespace FollowTask.Modle
                 out pobjGroup1);
         InitReqIOInterfaces();
         }
+        public void RemovedItem()
+        { 
+            if (ItemDeffArray != null)
+            {
+                //RemovedItem
+                ItemDeffArray = null;
+                ItemSvrHandleArray = null;
+            }
+        }
         public void addItem(List<String> itemNameList)
         {
             if (itemNameList != null)

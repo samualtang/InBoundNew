@@ -52,7 +52,7 @@ namespace FollowTask
         public delegate void HandleSorting(string text, List<Group> list, bool isonline);//预分拣委托
         HandleSorting Sorting;
 
-        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup ;
+        Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup,UnionMachineDropGroup ;
         Group SortingTaskGroupA, SortingTaskGroupB;
         public Fm_Mian()
         {
@@ -156,7 +156,7 @@ namespace FollowTask
             UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//四号主皮带
             UnionMachineTaskGroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//合流机械手任务号抓数
             UnionMachineNowTaskGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//合流机械手当前任务号和抓数
-           
+            UnionMachineDropGroup = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);//合流机械手任务号 放烟信号
 
             UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
             UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
@@ -164,7 +164,7 @@ namespace FollowTask
             UnionTaskGroup4.addItem(ItemCollection.GetTaskGroupItem4());
             UnionMachineTaskGroup.addItem(ItemCollection.getUnionTaskItem());
             UnionMachineNowTaskGroup.addItem(ItemCollection.GetUnionMachinNowTaskeItem());
-          
+            UnionMachineDropGroup.addItem(ItemCollection.GetMachineGroup());
 
           //  UnionMachineTaskGroup.callback += OnDataChange;
             //UnionMachineNowTaskGroup.callback += OnDataChange;
@@ -177,6 +177,7 @@ namespace FollowTask
             listUnionTaskGroup.Add(UnionTaskGroup4);//3
             listUnionTaskGroup.Add(UnionMachineTaskGroup);//4
             listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
+            listUnionTaskGroup.Add(UnionMachineDropGroup);//6 
           
          
         }
@@ -292,6 +293,7 @@ namespace FollowTask
 
         private void treeV_AfterSelect(object sender, TreeViewEventArgs e)
         {
+
             string nodeselect = treeV.SelectedNode.Name;//获取选择name 
             switch (nodeselect)
             {
@@ -634,6 +636,102 @@ namespace FollowTask
                 e.Cancel = true;
             }
            
+        }
+
+        private void treeV_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if ((sender as TreeView) != null)
+            {
+
+                treeV.SelectedNode = treeV.GetNodeAt(e.X, e.Y);
+                string nodeselect = treeV.SelectedNode.Name;//获取选择name 
+                switch (nodeselect)
+                {
+                    #region 机械手
+                    //case "MachineGroup1":
+                    //    ShowMchineForm("机械手,第1组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第1组的机械手信息";
+                    //    break;
+                    //case "MachineGroup2":
+                    //    ShowMchineForm("机械手,第2组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第2组的机械手信息";
+                    //    break;
+                    //case "MachineGroup3":
+                    //    ShowMchineForm("机械手,第3组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第3组的机械手信息";
+                    //    break;
+                    //case "MachineGroup4":
+                    //    ShowMchineForm("机械手,第4组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第4组的机械手信息";
+                    //    break;
+                    //case "MachineGroup5":
+                    //    ShowMchineForm("机械手,第5组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第5组的机械手信息";
+                    //    break;
+                    //case "MachineGroup6":
+                    //    ShowMchineForm("机械手,第6组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第6组的机械手信息";
+                    //    break;
+                    //case "MachineGroup7":
+                    //    ShowMchineForm("机械手,第7组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第7组的机械手信息";
+                    //    break;
+                    //case "MachineGroup8":
+                    //    ShowMchineForm("机械手,第8组");
+                    //    txtMainInfo.Clear();
+                    //    txtMainInfo.Text = "第8组的机械手信息";
+                    //    break;
+                    #endregion
+                    #region 预分拣
+                    case "fjBigGroup1":
+                        ShowSortingForm("预分拣,第1组");
+                        break;
+                    case "fjBigGroup2":
+                        ShowSortingForm("预分拣,第2组");
+                        break;
+                    case "fjBigGroup3":
+                        ShowSortingForm("预分拣,第3组");
+                        break;
+                    case "fjBigGroup4":
+                        ShowSortingForm("预分拣,第4组");
+                        break;
+                    case "fjBigGroup5":
+                        ShowSortingForm("预分拣,第5组");
+                        break;
+                    case "fjBigGroup6":
+                        ShowSortingForm("预分拣,第6组");
+                        break;
+                    case "fjBigGroup7":
+                        ShowSortingForm("预分拣,第7组");
+                        break;
+                    case "fjBigGroup8":
+                        ShowSortingForm("预分拣,第8组");
+                        break;
+                    #endregion
+                    #region 合流
+                    case "UinonTask":
+                        ShowUinionFrom("合流");
+                        break;
+                    //case "UinonBelt2":
+                    //    ShowUinionFrom("合流,第2根");
+                    //    break;
+                    //case "UinonBelt3":
+                    //    ShowUinionFrom("合流,第3根");
+                    //    break;
+                    //case "UinonBelt4":
+                    //    ShowUinionFrom("合流,第4根");
+                    //    break;
+                    #endregion
+                }
+            }
         }
     }
 }

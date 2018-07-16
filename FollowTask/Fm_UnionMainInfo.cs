@@ -67,24 +67,52 @@ namespace FollowTask
         public void addPanel(List<UnionTaskInfo> before)
         {
             panelCig.Controls.Clear();
-            for (int i = 0; i < before.Count; i++)
-            { 
+            //for (int i = 0; i < before.Count; i++)
+            //{ 
+              
+            //    PictureBox img = new PictureBox();
+            //    Label lbl = new Label();
+            //    lbl.Text = before[i].qty.ToString();
+            //    lbl.BackColor = Color.Transparent;
+            //    lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
+            //    img.Name = "ImgName" + Guid.NewGuid().ToString();
+            //    img.Size = new System.Drawing.Size(20, 80);
+            //    img.AccessibleName = before[i].CIGARETTDENAME + "|" + before[i].qty + "|" + before[i].CIGARETTDECODE;//卷烟名称 和 QTY
+            //    img.BackgroundImage = GetImg(before[i].CIGARETTDECODE);
+            //    img.SizeMode = PictureBoxSizeMode.Zoom;
+            //    img.BorderStyle = BorderStyle.FixedSingle;
+            //    img.MouseEnter += new EventHandler(img_MouseEnter); 
+            //    img.Location = new Point(i * img.Width + 10 * i, 0);
+            //    lbl.Location = new Point(img.Width / 2 - 4, 0);
+               
+            //    panelCig.Controls.Add(img);//之后
+            //    img.Controls.Add(lbl);
+            //}
+            int i = 0;
+            foreach (var item in before)
+            {
                 PictureBox img = new PictureBox();
                 Label lbl = new Label();
-                lbl.Text = before[i].qty.ToString();
+                lbl.Text =item.qty.ToString();
                 lbl.BackColor = Color.Transparent;
                 lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
                 img.Name = "ImgName" + Guid.NewGuid().ToString();
                 img.Size = new System.Drawing.Size(20, 80);
-                img.AccessibleName = before[i].CIGARETTDENAME + "|" + before[i].qty + "|" + before[i].CIGARETTDECODE;//卷烟名称 和 QTY
-                img.BackgroundImage = GetImg(before[i].CIGARETTDECODE);
+                img.AccessibleName = item.CIGARETTDENAME + "|" + item.qty + "|" + item.CIGARETTDECODE;//卷烟名称 和 QTY
+                img.BackgroundImage = GetImg(item.CIGARETTDECODE);
                 img.SizeMode = PictureBoxSizeMode.Zoom;
                 img.BorderStyle = BorderStyle.FixedSingle;
-                img.MouseEnter += new EventHandler(img_MouseEnter); 
+                img.MouseEnter += new EventHandler(img_MouseEnter);
                 img.Location = new Point(i * img.Width + 10 * i, 0);
                 lbl.Location = new Point(img.Width / 2 - 4, 0);
-                panelCig.Controls.Add(img);//之后
+                if (item.IsOnMainBelt == 0)//不在皮带上
+                {
+                    lbl.BackColor = Color.Red;
+                    //img.BackColor = Color.Red;
+                }
+                panelCig.Controls.Add(img);
                 img.Controls.Add(lbl);
+                i++;
             }
         }
         ToolTip p = new ToolTip();
@@ -122,8 +150,11 @@ namespace FollowTask
             ReadDBinfo(MainBelt);//读取DB块上的值
             ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上
         }
+
+
+
         /// <summary>
-        /// 读取DB块上的任务号，位置，数量
+        /// 读取DB块上的任务号，位置，数量,机械手任务号，机械手放烟数量
         /// </summary>
         /// <param name="index">读取索引</param>
         /// <param name="mainbelt">主皮带</param>
@@ -132,8 +163,14 @@ namespace FollowTask
             ListmbInfo.Clear(); //清空list
             dgvMainBeltInfo.DataSource = null;
             panelCig.Controls.Clear();
-            int ReadIndex = 0;
-        
+            int ReadIndex = 0;//读取DB索引
+            List<decimal> SortNumList = new List<decimal>();
+            List<decimal> QuantityList = new List<decimal>();
+            for (int i = (mainbelt - 1) * 8; i < mainbelt * 8; i++)
+            {
+                SortNumList.Add(listMainBelt[6].ReadD(i).CastTo<decimal>(0));//任务号
+                QuantityList.Add(listMainBelt[6].ReadD(32 + i).CastTo<decimal>(0));//放烟数量
+            }
             for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
             {
                 Sortnum = listMainBelt[mainbelt - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号 
@@ -144,6 +181,8 @@ namespace FollowTask
                     info.Place = (listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000);//位置(米)
                     info.Quantity =Convert.ToDecimal( listMainBelt[mainbelt - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1));//数量
                     info.mainbelt = mainbelt.ToString();//主皮带
+                    info.SortNumList = SortNumList;//机械手任务号
+                    info.QuantityList = QuantityList;//机械手放烟数量
                     ListmbInfo.Add(info);
                 }
                 ReadIndex = ReadIndex + 3;
@@ -181,7 +220,7 @@ namespace FollowTask
                         QTY = x.qty,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
-                     
+
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//往panel控件增添当前数据
@@ -189,7 +228,7 @@ namespace FollowTask
                     lblSortnum.Text = "任务号：" + ListmbInfo[index].SortNum;
                     lblNum.Text = "数量：" + ListmbInfo[index].Quantity;
                     lblPlace.Text = "当前位置：" + ListmbInfo[index].Place + "米";
-                } 
+                }
                 lblCOunt.Text = "总批次：" + ListmbInfo.Count;
                 lblNowcOUNT.Text = "当前批次:" + (index + 1) + "/" + ListmbInfo.Count;
             }
@@ -368,6 +407,7 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[7].HeaderCell.Value = "客户名";
                 dgvMainBeltInfo.Columns[8].HeaderCell.Value = "客户编码";
                 dgvMainBeltInfo.Columns[9].HeaderCell.Value = "送货顺序号";
+                dgvMainBeltInfo.Columns[10].HeaderCell.Value = "是否在皮带";
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -388,6 +428,25 @@ namespace FollowTask
             if (e.KeyCode == Keys.Enter)
             {
                 btnCx_Click(sender, e);
+            }
+        }
+
+        private void dgvMainBeltInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 10)
+            {
+                String statusText = "";
+                switch (e.Value.ToString())
+                {
+                    case "1":
+                        statusText = "是";
+                        break;
+                    case "0":
+                        statusText = "否";
+                        break;
+
+                }
+                e.Value = statusText;
             }
         }
        

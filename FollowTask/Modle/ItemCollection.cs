@@ -147,6 +147,27 @@ namespace FollowTask.Modle
             }
             return list;
         }
+        /// <summary>
+        /// 合流机械手任务号 放烟数量
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetMachineGroup()
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 32; i++)
+            {
+                list.Add(OpcUnionServer + "DB30,DINT" + (i) * 6);//任务号
+
+
+            }
+            for (int i = 0; i < 32; i++)
+            {
+
+                list.Add(OpcUnionServer + "DB30,INT" + (2450 + (i * 2)));//已放烟数量
+
+            }
+            return list;
+        }
       
      
     }

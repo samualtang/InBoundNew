@@ -286,6 +286,7 @@
             this.dgvMainBeltInfo.RowTemplate.Height = 23;
             this.dgvMainBeltInfo.Size = new System.Drawing.Size(879, 215);
             this.dgvMainBeltInfo.TabIndex = 3;
+            this.dgvMainBeltInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvMainBeltInfo_CellFormatting);
             // 
             // dgVprint1
             // 

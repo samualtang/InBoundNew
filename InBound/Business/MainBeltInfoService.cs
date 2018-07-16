@@ -120,6 +120,7 @@ namespace InBound.Business
                       for (int i = 1; i <= 8; i++)
                       {
                           var tempIndex = i;
+                          var tempindex2 = i;
                           if (tempIndex == 3)
                           {
                               tempIndex = 4;
@@ -136,8 +137,8 @@ namespace InBound.Business
                           {
                               tempIndex = 7;
                           }
-                          decimal tempSortNum = info.SortNumList[tempIndex - 1];
-                          decimal tempQuantity = info.QuantityList[tempIndex - 1];
+                          decimal tempSortNum = info.SortNumList[tempindex2 - 1];
+                          decimal tempQuantity = info.QuantityList[tempindex2 - 1];
                           var tempList = taskList.Where(x => x.groupno == tempIndex).ToList();
                           if (tempList != null && tempList.Count() > 0)
                           {

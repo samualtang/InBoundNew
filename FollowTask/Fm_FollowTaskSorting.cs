@@ -45,11 +45,10 @@ namespace FollowTask
         public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
         {
             String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
-            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
-            if (list[0] != null && list[1] != null)//在每次添加OPC Item之前清空 
-            {
-           
-            }
+            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", "")); 
+            list[0].RemovedItem();//在给OPCItem添加Item之前清空
+            list[1].RemovedItem();
+            ReadIndex = 0;
             if (isonline)
             {
                 OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
@@ -384,8 +383,8 @@ namespace FollowTask
                 }
                 else
                 {
-                    ReadListInfo(0);
-
+                    ReadListInfo(ReadIndex);
+                    btnAllInfo.Text = "所 有";
                 }
                
             }
