@@ -1,6 +1,6 @@
 ﻿namespace SpecialShapeSmoke
 {
-    partial class NowView
+    partial class SearchCustomer
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn_search = new System.Windows.Forms.Button();
+            this.txt_search = new System.Windows.Forms.TextBox();
             this.DgvNowView = new System.Windows.Forms.DataGridView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnNowPoke = new System.Windows.Forms.Button();
-            this.btnMachineSeq1 = new System.Windows.Forms.Button();
-            this.btnMachineSeq2 = new System.Windows.Forms.Button();
-            this.labMachineSeq = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,13 +42,34 @@
             this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TaskNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btn_search
+            // 
+            this.btn_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btn_search.Location = new System.Drawing.Point(683, 10);
+            this.btn_search.Name = "btn_search";
+            this.btn_search.Size = new System.Drawing.Size(75, 23);
+            this.btn_search.TabIndex = 0;
+            this.btn_search.Text = "查 找";
+            this.btn_search.UseVisualStyleBackColor = true;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
+            // 
+            // txt_search
+            // 
+            this.txt_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txt_search.Location = new System.Drawing.Point(352, 12);
+            this.txt_search.Name = "txt_search";
+            this.txt_search.Size = new System.Drawing.Size(314, 21);
+            this.txt_search.TabIndex = 1;
             // 
             // DgvNowView
             // 
             this.DgvNowView.AllowUserToAddRows = false;
             this.DgvNowView.AllowUserToDeleteRows = false;
+            this.DgvNowView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvNowView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvNowView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TaskNum,
@@ -62,63 +81,26 @@
             this.PokeNum,
             this.status,
             this.PokeId});
-            this.DgvNowView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DgvNowView.Location = new System.Drawing.Point(3, 17);
+            this.DgvNowView.Location = new System.Drawing.Point(7, 45);
             this.DgvNowView.Name = "DgvNowView";
             this.DgvNowView.ReadOnly = true;
             this.DgvNowView.RowTemplate.Height = 23;
             this.DgvNowView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvNowView.Size = new System.Drawing.Size(1010, 451);
-            this.DgvNowView.TabIndex = 0;
-            this.DgvNowView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvNowView_CellFormatting);
+            this.DgvNowView.TabIndex = 3;
             // 
-            // groupBox1
+            // comboBox1
             // 
-            this.groupBox1.Controls.Add(this.DgvNowView);
-            this.groupBox1.Location = new System.Drawing.Point(4, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1016, 471);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            // 
-            // btnNowPoke
-            // 
-            this.btnNowPoke.Location = new System.Drawing.Point(909, 7);
-            this.btnNowPoke.Name = "btnNowPoke";
-            this.btnNowPoke.Size = new System.Drawing.Size(75, 23);
-            this.btnNowPoke.TabIndex = 2;
-            this.btnNowPoke.Text = "定位当前";
-            this.btnNowPoke.UseVisualStyleBackColor = true;
-            this.btnNowPoke.Click += new System.EventHandler(this.btnNowPoke_Click);
-            // 
-            // btnMachineSeq1
-            // 
-            this.btnMachineSeq1.Location = new System.Drawing.Point(4, 7);
-            this.btnMachineSeq1.Name = "btnMachineSeq1";
-            this.btnMachineSeq1.Size = new System.Drawing.Size(75, 23);
-            this.btnMachineSeq1.TabIndex = 3;
-            this.btnMachineSeq1.Text = "通道1";
-            this.btnMachineSeq1.UseVisualStyleBackColor = true;
-            this.btnMachineSeq1.Click += new System.EventHandler(this.btnMachineSeq1_Click);
-            // 
-            // btnMachineSeq2
-            // 
-            this.btnMachineSeq2.Location = new System.Drawing.Point(85, 7);
-            this.btnMachineSeq2.Name = "btnMachineSeq2";
-            this.btnMachineSeq2.Size = new System.Drawing.Size(75, 23);
-            this.btnMachineSeq2.TabIndex = 4;
-            this.btnMachineSeq2.Text = "通道2";
-            this.btnMachineSeq2.UseVisualStyleBackColor = true;
-            this.btnMachineSeq2.Click += new System.EventHandler(this.btnMachineSeq2_Click);
-            // 
-            // labMachineSeq
-            // 
-            this.labMachineSeq.AutoSize = true;
-            this.labMachineSeq.Location = new System.Drawing.Point(452, 12);
-            this.labMachineSeq.Name = "labMachineSeq";
-            this.labMachineSeq.Size = new System.Drawing.Size(35, 12);
-            this.labMachineSeq.TabIndex = 5;
-            this.labMachineSeq.Text = "通道1";
+            this.comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "卷烟名称",
+            "商户名称"});
+            this.comboBox1.Location = new System.Drawing.Point(225, 12);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 4;
             // 
             // PokeId
             // 
@@ -190,24 +172,19 @@
             this.TaskNum.ReadOnly = true;
             this.TaskNum.Width = 90;
             // 
-            // NowView
+            // SearchCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1023, 499);
-            this.Controls.Add(this.labMachineSeq);
-            this.Controls.Add(this.btnMachineSeq2);
-            this.Controls.Add(this.btnMachineSeq1);
-            this.Controls.Add(this.btnNowPoke);
-            this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "NowView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "混合道分拣详情";
-            this.Deactivate += new System.EventHandler(this.NowView_Deactivate);
-            this.Load += new System.EventHandler(this.NowView_Load);
+            this.ClientSize = new System.Drawing.Size(1029, 489);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.DgvNowView);
+            this.Controls.Add(this.txt_search);
+            this.Controls.Add(this.btn_search);
+            this.Name = "SearchCustomer";
+            this.Text = "条烟定位";
+            this.Deactivate += new System.EventHandler(this.SearchCustomer_Deactivate);
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,12 +192,10 @@
 
         #endregion
 
+        private System.Windows.Forms.Button btn_search;
+        private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.DataGridView DgvNowView;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnNowPoke;
-        private System.Windows.Forms.Button btnMachineSeq1;
-        private System.Windows.Forms.Button btnMachineSeq2;
-        private System.Windows.Forms.Label labMachineSeq;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn TaskNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Code;
