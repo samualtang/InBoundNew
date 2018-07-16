@@ -114,8 +114,9 @@ namespace InBound.Business
                   if (info.Quantity > 0 && info.SortNum > 0)
                   {
                       List<UnionTaskInfo> taskList = new List<UnionTaskInfo>();
-                      info.taskInfo = taskList;
+                     
                       taskList = UnionTaskInfoService.GetUnionTaskInfo(info.SortNum);
+                      info.taskInfo = taskList;
                       for (int i = 1; i <= 8; i++)
                       {
                           var tempIndex = i;

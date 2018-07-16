@@ -113,12 +113,33 @@ namespace FormUI
          //  String list= AtsCellInService.getCellNoCode("1111111");
             List<MainBeltInfo> list = new List<MainBeltInfo>();
             MainBeltInfo info = new MainBeltInfo();
-            info.SortNum = 71686;
+            info.SortNum = 72345;
             info.Quantity = 20;
             info.GroupNO = 1;
             info.mainbelt = "1";
             list.Add(info);
-            MainBeltInfoService.GetSortMainBeltInfo(list);
+            List<decimal> list1 = new List<decimal>();
+            list1.Add(72370);
+            list1.Add(72369);
+            list1.Add(72362);
+            list1.Add(72361);
+            list1.Add(72360);
+            list1.Add(72355);
+            list1.Add(72352);
+            list1.Add(72352);
+
+            List<decimal> list2 = new List<decimal>();
+            list2.Add(0);
+            list2.Add(0);
+            list2.Add(0);
+            list2.Add(0);
+            list2.Add(0);
+            list2.Add(0);
+            list2.Add(10);
+            list2.Add(0);
+            info.SortNumList = list1;
+            info.QuantityList = list2;
+            MainBeltInfoService.GetMainBeltInfo(list);
           //  String str = "1203".Substring(0,2);
 
 
