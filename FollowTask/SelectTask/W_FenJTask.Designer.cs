@@ -38,6 +38,7 @@
             this.lblNo2 = new System.Windows.Forms.Label();
             this.lblNo3 = new System.Windows.Forms.Label();
             this.txtinfo3 = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTask)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,6 +71,7 @@
             // 
             // btnOk
             // 
+            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnOk.Font = new System.Drawing.Font("宋体", 11F);
             this.btnOk.Location = new System.Drawing.Point(791, 23);
             this.btnOk.Name = "btnOk";
@@ -86,7 +88,7 @@
             this.cmbSelectC.FormattingEnabled = true;
             this.cmbSelectC.Location = new System.Drawing.Point(101, 24);
             this.cmbSelectC.Name = "cmbSelectC";
-            this.cmbSelectC.Size = new System.Drawing.Size(140, 23);
+            this.cmbSelectC.Size = new System.Drawing.Size(114, 23);
             this.cmbSelectC.TabIndex = 5;
             this.cmbSelectC.SelectedIndexChanged += new System.EventHandler(this.cmbSelectC_SelectedIndexChanged);
             // 
@@ -136,6 +138,14 @@
             this.txtinfo3.Size = new System.Drawing.Size(142, 24);
             this.txtinfo3.TabIndex = 18;
             // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(12, 11);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(865, 88);
+            this.panel1.TabIndex = 20;
+            // 
             // W_FenJTask
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -151,6 +161,7 @@
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cmbSelectC);
+            this.Controls.Add(this.panel1);
             this.Name = "W_FenJTask";
             this.Text = "W_FenJTask";
             this.Load += new System.EventHandler(this.W_FenJTask_Load);
@@ -173,5 +184,6 @@
         private System.Windows.Forms.Label lblNo2;
         private System.Windows.Forms.Label lblNo3;
         private System.Windows.Forms.TextBox txtinfo3;
+        private System.Windows.Forms.Panel panel1;
     }
 }

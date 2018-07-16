@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelOption = new System.Windows.Forms.Panel();
+            this.panelThoery = new System.Windows.Forms.Panel();
+            this.btnCx = new System.Windows.Forms.Button();
+            this.txtSortnum = new System.Windows.Forms.TextBox();
+            this.lblTheory = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblNum = new System.Windows.Forms.Label();
             this.lblSortnum = new System.Windows.Forms.Label();
@@ -40,21 +44,17 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.lblPlace = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblErorr = new System.Windows.Forms.Label();
             this.lblGOto = new System.Windows.Forms.Label();
             this.lblNowcOUNT = new System.Windows.Forms.Label();
             this.lblCOunt = new System.Windows.Forms.Label();
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvMainBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.lblErorr = new System.Windows.Forms.Label();
-            this.panelThoery = new System.Windows.Forms.Panel();
-            this.btnCx = new System.Windows.Forms.Button();
-            this.txtSortnum = new System.Windows.Forms.TextBox();
-            this.lblTheory = new System.Windows.Forms.Label();
             this.panelOption.SuspendLayout();
+            this.panelThoery.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).BeginInit();
-            this.panelThoery.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelOption
@@ -74,6 +74,48 @@
             this.panelOption.Name = "panelOption";
             this.panelOption.Size = new System.Drawing.Size(879, 58);
             this.panelOption.TabIndex = 1;
+            // 
+            // panelThoery
+            // 
+            this.panelThoery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelThoery.Controls.Add(this.btnCx);
+            this.panelThoery.Controls.Add(this.txtSortnum);
+            this.panelThoery.Controls.Add(this.lblTheory);
+            this.panelThoery.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelThoery.Location = new System.Drawing.Point(622, 0);
+            this.panelThoery.Name = "panelThoery";
+            this.panelThoery.Size = new System.Drawing.Size(255, 56);
+            this.panelThoery.TabIndex = 25;
+            // 
+            // btnCx
+            // 
+            this.btnCx.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCx.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCx.Location = new System.Drawing.Point(121, 26);
+            this.btnCx.Name = "btnCx";
+            this.btnCx.Size = new System.Drawing.Size(62, 23);
+            this.btnCx.TabIndex = 31;
+            this.btnCx.Text = "查询";
+            this.btnCx.UseVisualStyleBackColor = true;
+            this.btnCx.Click += new System.EventHandler(this.btnCx_Click);
+            // 
+            // txtSortnum
+            // 
+            this.txtSortnum.Location = new System.Drawing.Point(18, 28);
+            this.txtSortnum.Name = "txtSortnum";
+            this.txtSortnum.Size = new System.Drawing.Size(81, 21);
+            this.txtSortnum.TabIndex = 30;
+            this.txtSortnum.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSortnum_KeyDown);
+            this.txtSortnum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSortnum_KeyPress);
+            // 
+            // lblTheory
+            // 
+            this.lblTheory.AutoSize = true;
+            this.lblTheory.Location = new System.Drawing.Point(16, 7);
+            this.lblTheory.Name = "lblTheory";
+            this.lblTheory.Size = new System.Drawing.Size(125, 12);
+            this.lblTheory.TabIndex = 29;
+            this.lblTheory.Text = "查询任务号理论数据：";
             // 
             // txtTitle
             // 
@@ -185,6 +227,16 @@
             this.groupBoxUnionInfo.TabIndex = 2;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
+            // 
+            // lblErorr
+            // 
+            this.lblErorr.AutoSize = true;
+            this.lblErorr.Location = new System.Drawing.Point(394, 123);
+            this.lblErorr.Name = "lblErorr";
+            this.lblErorr.Size = new System.Drawing.Size(65, 12);
+            this.lblErorr.TabIndex = 10;
+            this.lblErorr.Text = "错误信息：";
+            this.lblErorr.Visible = false;
             // 
             // lblGOto
             // 
@@ -357,57 +409,6 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblErorr
-            // 
-            this.lblErorr.AutoSize = true;
-            this.lblErorr.Location = new System.Drawing.Point(394, 123);
-            this.lblErorr.Name = "lblErorr";
-            this.lblErorr.Size = new System.Drawing.Size(65, 12);
-            this.lblErorr.TabIndex = 10;
-            this.lblErorr.Text = "错误信息：";
-            this.lblErorr.Visible = false;
-            // 
-            // panelThoery
-            // 
-            this.panelThoery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelThoery.Controls.Add(this.btnCx);
-            this.panelThoery.Controls.Add(this.txtSortnum);
-            this.panelThoery.Controls.Add(this.lblTheory);
-            this.panelThoery.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelThoery.Location = new System.Drawing.Point(622, 0);
-            this.panelThoery.Name = "panelThoery";
-            this.panelThoery.Size = new System.Drawing.Size(255, 56);
-            this.panelThoery.TabIndex = 25;
-            // 
-            // btnCx
-            // 
-            this.btnCx.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCx.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCx.Location = new System.Drawing.Point(121, 26);
-            this.btnCx.Name = "btnCx";
-            this.btnCx.Size = new System.Drawing.Size(62, 23);
-            this.btnCx.TabIndex = 31;
-            this.btnCx.Text = "查询";
-            this.btnCx.UseVisualStyleBackColor = true;
-            this.btnCx.Click += new System.EventHandler(this.btnCx_Click);
-            // 
-            // txtSortnum
-            // 
-            this.txtSortnum.Location = new System.Drawing.Point(18, 28);
-            this.txtSortnum.Name = "txtSortnum";
-            this.txtSortnum.Size = new System.Drawing.Size(81, 21);
-            this.txtSortnum.TabIndex = 30;
-            this.txtSortnum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSortnum_KeyPress);
-            // 
-            // lblTheory
-            // 
-            this.lblTheory.AutoSize = true;
-            this.lblTheory.Location = new System.Drawing.Point(16, 7);
-            this.lblTheory.Name = "lblTheory";
-            this.lblTheory.Size = new System.Drawing.Size(125, 12);
-            this.lblTheory.TabIndex = 29;
-            this.lblTheory.Text = "查询任务号理论数据：";
-            // 
             // Fm_UnionMainInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -422,11 +423,11 @@
             this.SizeChanged += new System.EventHandler(this.Fm_UnionMainInfo_SizeChanged);
             this.panelOption.ResumeLayout(false);
             this.panelOption.PerformLayout();
+            this.panelThoery.ResumeLayout(false);
+            this.panelThoery.PerformLayout();
             this.groupBoxUnionInfo.ResumeLayout(false);
             this.groupBoxUnionInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).EndInit();
-            this.panelThoery.ResumeLayout(false);
-            this.panelThoery.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -29,18 +29,13 @@ namespace FollowTask
         internal const int LOCALE_ID = 0x409;                       // LOCALE FOR ENGLISH.
          
         /* Global variables */
-        IOPCServer pIOPCServer;  //定义opcServer对象
+      
         public WriteLog writeLog = WriteLog.GetLog();
-        DeviceStateManager stateManager = new DeviceStateManager();
-        Alarms alarms = new Alarms();
-
-        Group machineGroup1;
-        AutoSizeFormClass asc = new AutoSizeFormClass();//自适应窗体
         List<Group> listgroup = new List<Group>();
         public fm_Machine(string text)//窗体初始化
         {
             InitializeComponent();
-            asc.controllInitializeSize(this);
+           
             this.listViewMchineBelt.DoubleBufferedListView(true); //双缓存 减少闪烁
             listViewMchineBelt.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             this.Text = text;
@@ -86,11 +81,11 @@ namespace FollowTask
 
         private void Machine1_Click(object sender, EventArgs e)//机械手单击事件
         {
-            Button name = ((Button)sender);//获取当前单击按钮的所有实例
-            updateListBox("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
-            //writeLog.Write("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
-            Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text + name.Text, listgroup);
-            ftmd.Show();
+            //Button name = ((Button)sender);//获取当前单击按钮的所有实例
+            //updateListBox("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
+            ////writeLog.Write("查看" + Text.Substring(4) +"的"+ name.Text + "机械手");
+            //Fm_FollowTaskMachineDetail ftmd = new Fm_FollowTaskMachineDetail(Text + name.Text, listgroup);
+            //ftmd.Show();
              
         } 
         /// <summary>
@@ -173,7 +168,7 @@ namespace FollowTask
         }
         private void fm_Machine_SizeChanged(object sender, EventArgs e)
         {
-            asc.controlAutoSize(this);
+          
         }
         int times;
         private void timer1_Tick(object sender, EventArgs e)

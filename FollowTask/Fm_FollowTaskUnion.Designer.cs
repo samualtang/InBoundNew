@@ -139,6 +139,8 @@
             this.pbMachine13 = new System.Windows.Forms.PictureBox();
             this.pbMachine14 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt2 = new System.Windows.Forms.PictureBox();
+            this.btnZoom = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBBelt1.SuspendLayout();
@@ -189,9 +191,9 @@
             this.lblGourpText.Font = new System.Drawing.Font("宋体", 16F);
             this.lblGourpText.Location = new System.Drawing.Point(409, 8);
             this.lblGourpText.Name = "lblGourpText";
-            this.lblGourpText.Size = new System.Drawing.Size(76, 22);
+            this.lblGourpText.Size = new System.Drawing.Size(32, 22);
             this.lblGourpText.TabIndex = 53;
-            this.lblGourpText.Text = "label1";
+            this.lblGourpText.Text = "l ";
             // 
             // groupBox2
             // 
@@ -240,6 +242,8 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.btnZoom);
+            this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.labelloaction);
             this.panel1.Controls.Add(this.labelfangxiang);
             this.panel1.Controls.Add(this.lblGourpText);
@@ -300,17 +304,20 @@
             this.btnhuancun8.Text = "缓存区";
             this.btnhuancun8.UseVisualStyleBackColor = true;
             this.btnhuancun8.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun8.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun1
             // 
+            this.btnhuancun1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnhuancun1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnhuancun1.Location = new System.Drawing.Point(761, 21);
             this.btnhuancun1.Name = "btnhuancun1";
             this.btnhuancun1.Size = new System.Drawing.Size(41, 48);
             this.btnhuancun1.TabIndex = 65;
-            this.btnhuancun1.Text = "缓存区";
+            this.btnhuancun1.Text = "缓存";
             this.btnhuancun1.UseVisualStyleBackColor = true;
             this.btnhuancun1.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun1.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun2
             // 
@@ -322,6 +329,7 @@
             this.btnhuancun2.Text = "缓存区";
             this.btnhuancun2.UseVisualStyleBackColor = true;
             this.btnhuancun2.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun2.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun3
             // 
@@ -333,6 +341,7 @@
             this.btnhuancun3.Text = "缓存区";
             this.btnhuancun3.UseVisualStyleBackColor = true;
             this.btnhuancun3.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun3.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun7
             // 
@@ -344,6 +353,7 @@
             this.btnhuancun7.Text = "缓存区";
             this.btnhuancun7.UseVisualStyleBackColor = true;
             this.btnhuancun7.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun7.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun4
             // 
@@ -355,6 +365,7 @@
             this.btnhuancun4.Text = "缓存区";
             this.btnhuancun4.UseVisualStyleBackColor = true;
             this.btnhuancun4.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun4.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun5
             // 
@@ -366,6 +377,7 @@
             this.btnhuancun5.Text = "缓存区";
             this.btnhuancun5.UseVisualStyleBackColor = true;
             this.btnhuancun5.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun5.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // btnhuancun6
             // 
@@ -377,6 +389,7 @@
             this.btnhuancun6.Text = "缓存区";
             this.btnhuancun6.UseVisualStyleBackColor = true;
             this.btnhuancun6.Click += new System.EventHandler(this.btnhuancun1_Click);
+            this.btnhuancun6.MouseEnter += new System.EventHandler(this.btnhuancun8_MouseEnter);
             // 
             // label8
             // 
@@ -936,6 +949,7 @@
             // 
             // groupBBelt3
             // 
+            this.groupBBelt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.groupBBelt3.Controls.Add(this.btnhuancun24);
             this.groupBBelt3.Controls.Add(this.btnhuancun17);
             this.groupBBelt3.Controls.Add(this.btnhuancun18);
@@ -1622,12 +1636,35 @@
             this.pbMainbelt2.TabStop = false;
             this.pbMainbelt2.Click += new System.EventHandler(this.pbMainbelt1_Click);
             // 
+            // btnZoom
+            // 
+            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoom.Location = new System.Drawing.Point(905, 4);
+            this.btnZoom.Name = "btnZoom";
+            this.btnZoom.Size = new System.Drawing.Size(19, 20);
+            this.btnZoom.TabIndex = 60;
+            this.btnZoom.Text = "口";
+            this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Location = new System.Drawing.Point(927, 4);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(19, 20);
+            this.btnClose.TabIndex = 59;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // Fm_FollowTaskUnion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 679);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);
@@ -1796,5 +1833,7 @@
         private System.Windows.Forms.PictureBox pbMainbelt4;
         private System.Windows.Forms.PictureBox pbMainbelt3;
         private System.Windows.Forms.PictureBox pbMainbelt2;
+        private System.Windows.Forms.Button btnZoom;
+        private System.Windows.Forms.Button btnClose;
     }
 }

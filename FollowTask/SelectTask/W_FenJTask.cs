@@ -27,7 +27,7 @@ namespace FollowTask
         decimal SortNum;//排序号
         private void W_FenJTask_Load(object sender, EventArgs e)
         {
-            asc.controllInitializeSize(this);
+           // asc.controllInitializeSize(this);
             dgvTask.DataSource = FolloTaskService.getFJDataAll(1, 1);
              
             BindSelectCmb();
@@ -39,7 +39,7 @@ namespace FollowTask
         void BindSelectCmb()
         {
             cmbSelectC.Items.Add("所有分拣任务");//0
-            cmbSelectC.Items.Add("排序号"); //1
+            cmbSelectC.Items.Add("任务号"); //1
             //cmbSelectC.Items.Add("合流任务号");//2
             //cmbSelectC.Items.Add("品牌");//3
             //cmbSelectC.Items.Add("数量");//4
@@ -145,7 +145,7 @@ namespace FollowTask
                         return;
                     }
                     break;
-                case "排序号":
+                case "任务号":
                     if (!string.IsNullOrWhiteSpace(txtInfo.Text) && !string.IsNullOrWhiteSpace(txtinfo2.Text) && !string.IsNullOrWhiteSpace(txtinfo3.Text))
                     {
                         groupNo1 = Convert.ToDecimal(txtInfo.Text.Replace(" ", ""));
@@ -175,7 +175,7 @@ namespace FollowTask
 
         private void W_FenJTask_SizeChanged(object sender, EventArgs e)
         {
-            asc.controlAutoSize(this);
+           // asc.controlAutoSize(this);
         }
 
 

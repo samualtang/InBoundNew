@@ -613,6 +613,16 @@ namespace FollowTask.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cache {
+            get {
+                object obj = ResourceManager.GetObject("Cache", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap 合流故障机械手 {
             get {
                 object obj = ResourceManager.GetObject("合流故障机械手", resourceCulture);

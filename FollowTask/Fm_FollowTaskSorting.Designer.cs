@@ -32,6 +32,7 @@
             this.groupBoxprogramINfo = new System.Windows.Forms.GroupBox();
             this.list_data = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblNum = new System.Windows.Forms.Label();
             this.lblSortnum = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@
             this.btnLast = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
+            this.lblErorr = new System.Windows.Forms.Label();
             this.lblGOto = new System.Windows.Forms.Label();
             this.lblCOunt = new System.Windows.Forms.Label();
             this.lblNowcOUNT = new System.Windows.Forms.Label();
@@ -48,7 +50,8 @@
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvSortingBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.lblErorr = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnZoom = new System.Windows.Forms.Button();
             this.groupBoxprogramINfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
@@ -60,12 +63,13 @@
             this.groupBoxprogramINfo.Controls.Add(this.list_data);
             this.groupBoxprogramINfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBoxprogramINfo.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBoxprogramINfo.Location = new System.Drawing.Point(0, 330);
+            this.groupBoxprogramINfo.Location = new System.Drawing.Point(0, 555);
             this.groupBoxprogramINfo.Name = "groupBoxprogramINfo";
-            this.groupBoxprogramINfo.Size = new System.Drawing.Size(707, 88);
+            this.groupBoxprogramINfo.Size = new System.Drawing.Size(953, 18);
             this.groupBoxprogramINfo.TabIndex = 12;
             this.groupBoxprogramINfo.TabStop = false;
             this.groupBoxprogramINfo.Text = "程序信息";
+            this.groupBoxprogramINfo.Visible = false;
             // 
             // list_data
             // 
@@ -74,12 +78,15 @@
             this.list_data.ItemHeight = 15;
             this.list_data.Location = new System.Drawing.Point(3, 20);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(701, 65);
+            this.list_data.Size = new System.Drawing.Size(947, 0);
             this.list_data.TabIndex = 0;
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnZoom);
+            this.panel1.Controls.Add(this.btnClose);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txtTitle);
             this.panel1.Controls.Add(this.lblNum);
             this.panel1.Controls.Add(this.lblSortnum);
@@ -91,8 +98,20 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(707, 55);
+            this.panel1.Size = new System.Drawing.Size(953, 55);
             this.panel1.TabIndex = 13;
+            this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Location = new System.Drawing.Point(537, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "刷新";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // txtTitle
             // 
@@ -107,7 +126,7 @@
             // lblNum
             // 
             this.lblNum.AutoSize = true;
-            this.lblNum.Location = new System.Drawing.Point(393, 31);
+            this.lblNum.Location = new System.Drawing.Point(352, 31);
             this.lblNum.Name = "lblNum";
             this.lblNum.Size = new System.Drawing.Size(47, 12);
             this.lblNum.TabIndex = 21;
@@ -116,7 +135,7 @@
             // lblSortnum
             // 
             this.lblSortnum.AutoSize = true;
-            this.lblSortnum.Location = new System.Drawing.Point(291, 31);
+            this.lblSortnum.Location = new System.Drawing.Point(250, 31);
             this.lblSortnum.Name = "lblSortnum";
             this.lblSortnum.Size = new System.Drawing.Size(59, 12);
             this.lblSortnum.TabIndex = 20;
@@ -125,7 +144,7 @@
             // btnPrint
             // 
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(593, 26);
+            this.btnPrint.Location = new System.Drawing.Point(627, 26);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 18;
@@ -136,7 +155,7 @@
             // btnAllInfo
             // 
             this.btnAllInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAllInfo.Location = new System.Drawing.Point(479, 26);
+            this.btnAllInfo.Location = new System.Drawing.Point(438, 26);
             this.btnAllInfo.Name = "btnAllInfo";
             this.btnAllInfo.Size = new System.Drawing.Size(75, 23);
             this.btnAllInfo.TabIndex = 6;
@@ -147,7 +166,7 @@
             // btnNext
             // 
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnNext.Location = new System.Drawing.Point(174, 26);
+            this.btnNext.Location = new System.Drawing.Point(133, 26);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 7;
@@ -187,17 +206,27 @@
             this.groupBoxUnionInfo.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBoxUnionInfo.Location = new System.Drawing.Point(0, 55);
             this.groupBoxUnionInfo.Name = "groupBoxUnionInfo";
-            this.groupBoxUnionInfo.Size = new System.Drawing.Size(707, 142);
+            this.groupBoxUnionInfo.Size = new System.Drawing.Size(953, 142);
             this.groupBoxUnionInfo.TabIndex = 14;
             this.groupBoxUnionInfo.TabStop = false;
             this.groupBoxUnionInfo.Text = "皮带";
+            // 
+            // lblErorr
+            // 
+            this.lblErorr.AutoSize = true;
+            this.lblErorr.Location = new System.Drawing.Point(394, 127);
+            this.lblErorr.Name = "lblErorr";
+            this.lblErorr.Size = new System.Drawing.Size(65, 12);
+            this.lblErorr.TabIndex = 12;
+            this.lblErorr.Text = "错误信息：";
+            this.lblErorr.Visible = false;
             // 
             // lblGOto
             // 
             this.lblGOto.AutoSize = true;
             this.lblGOto.Dock = System.Windows.Forms.DockStyle.Right;
             this.lblGOto.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblGOto.Location = new System.Drawing.Point(552, 124);
+            this.lblGOto.Location = new System.Drawing.Point(798, 124);
             this.lblGOto.Name = "lblGOto";
             this.lblGOto.Size = new System.Drawing.Size(152, 15);
             this.lblGOto.TabIndex = 11;
@@ -237,17 +266,18 @@
             this.panelCig.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelCig.Location = new System.Drawing.Point(3, 17);
             this.panelCig.Name = "panelCig";
-            this.panelCig.Size = new System.Drawing.Size(701, 107);
+            this.panelCig.Size = new System.Drawing.Size(947, 107);
             this.panelCig.TabIndex = 2;
             // 
             // dgvSortingBeltInfo
             // 
+            this.dgvSortingBeltInfo.BackgroundColor = System.Drawing.Color.LightGreen;
             this.dgvSortingBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortingBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSortingBeltInfo.Location = new System.Drawing.Point(0, 197);
             this.dgvSortingBeltInfo.Name = "dgvSortingBeltInfo";
             this.dgvSortingBeltInfo.RowTemplate.Height = 23;
-            this.dgvSortingBeltInfo.Size = new System.Drawing.Size(707, 133);
+            this.dgvSortingBeltInfo.Size = new System.Drawing.Size(953, 358);
             this.dgvSortingBeltInfo.TabIndex = 15;
             // 
             // dgVprint1
@@ -372,25 +402,38 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // lblErorr
+            // btnClose
             // 
-            this.lblErorr.AutoSize = true;
-            this.lblErorr.Location = new System.Drawing.Point(394, 127);
-            this.lblErorr.Name = "lblErorr";
-            this.lblErorr.Size = new System.Drawing.Size(65, 12);
-            this.lblErorr.TabIndex = 12;
-            this.lblErorr.Text = "错误信息：";
-            this.lblErorr.Visible = false;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Location = new System.Drawing.Point(929, 1);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(19, 20);
+            this.btnClose.TabIndex = 27;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnZoom
+            // 
+            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoom.Location = new System.Drawing.Point(907, 1);
+            this.btnZoom.Name = "btnZoom";
+            this.btnZoom.Size = new System.Drawing.Size(19, 20);
+            this.btnZoom.TabIndex = 28;
+            this.btnZoom.Text = "口";
+            this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
             // 
             // Fm_FollowTaskSorting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 418);
+            this.ClientSize = new System.Drawing.Size(953, 573);
             this.Controls.Add(this.dgvSortingBeltInfo);
             this.Controls.Add(this.groupBoxUnionInfo);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBoxprogramINfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Fm_FollowTaskSorting";
             this.Text = "Fm_Sorting";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskSorting_FormClosing);
@@ -428,6 +471,9 @@
         private System.Windows.Forms.Label lblNowcOUNT;
         private System.Windows.Forms.Label lblGOto;
         private System.Windows.Forms.Label lblErorr;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnZoom;
 
 
     }

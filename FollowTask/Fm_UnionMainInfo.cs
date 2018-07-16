@@ -10,6 +10,7 @@ using FollowTask.Modle;
 using InBound;
 using InBound.Model;
 using InBound.Business;
+using System.Threading;
 namespace FollowTask
 {
     public partial class Fm_UnionMainInfo : Form
@@ -18,6 +19,7 @@ namespace FollowTask
         {
             InitializeComponent();
             dgvMainBeltInfo.DoubleBufferedDataGirdView(true);
+            CheckForIllegalCrossThreadCalls = false;
         }
         /// <summary>
         /// 主皮带信息集合
@@ -105,8 +107,8 @@ namespace FollowTask
                 listMainBelt = list;
                 lblSortnum.Text = "任务号：0";
                 lblNum.Text = "数量：0";
-                ReadDBinfo(MainBelt);//读取DB块上的值
-                ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上
+               ThreadRead();
+               
             }
             else
             {
@@ -115,7 +117,11 @@ namespace FollowTask
             }
 
         }
-       
+        void ThreadRead()
+        {
+            ReadDBinfo(MainBelt);//读取DB块上的值
+            ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上
+        }
         /// <summary>
         /// 读取DB块上的任务号，位置，数量
         /// </summary>
@@ -204,7 +210,7 @@ namespace FollowTask
             catch (ArgumentOutOfRangeException ex)
             {
 
-                MessageBox.Show(ex.Message);
+                 
             }
         }
        
@@ -212,7 +218,7 @@ namespace FollowTask
         {
             if (ReadIndex == 0)
             {
-                ReadListInfo(0);
+                //ReadListInfo(0);
                 MessageBox.Show("是第一批了"); 
                 return;
             }
@@ -228,7 +234,7 @@ namespace FollowTask
         }
         private void btnNext_Click(object sender, EventArgs e)//点击下一个
         {
-            groupBoxUnionInfo.Visible = true;
+          
             if (ReadIndex >= (ListmbInfo.Count -1))
             {
                // ReadListInfo(ListmbInfo.Count);  
@@ -246,29 +252,52 @@ namespace FollowTask
         private void btnAllInfo_Click(object sender, EventArgs e)
         { 
             List<UnionTaskInfo> listunion = new List<UnionTaskInfo>();
-            if (ListmbInfo.Count > 0)
+            if (btnAllInfo.Text == "所 有")
             {
-                groupBoxUnionInfo.Visible = true;
-                for (int i = 0; i < ListmbInfo.Count; i++)
+                if (ListmbInfo.Count > 0)
                 {
 
-                    for (int j = 0; j < ListmbInfo[i].taskInfo.Count; j++)
+                    groupBoxUnionInfo.Visible = false;
+                    for (int i = 0; i < ListmbInfo.Count; i++)
                     {
-                        UnionTaskInfo un = new UnionTaskInfo();
-                        if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
-                        {
-                            un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
-                            un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
-                            un.qty = ListmbInfo[i].taskInfo[j].qty;
-                            un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
-                            un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
-                            listunion.Add(un);
-                        }
-                    }
 
+                        for (int j = 0; j < ListmbInfo[i].taskInfo.Count; j++)
+                        {
+                            UnionTaskInfo un = new UnionTaskInfo();
+                            if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
+                            {
+                                un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
+                                un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
+                                un.qty = ListmbInfo[i].taskInfo[j].qty;
+                                un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
+                                un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                                listunion.Add(un);
+                            }
+                        }
+
+
+                    }
                     DgvBind();
-                    dgvMainBeltInfo.DataSource = listunion;
+                    dgvMainBeltInfo.DataSource = listunion.Select(x => new
+                    {
+                        CIGARETTECODE = x.CIGARETTDECODE,
+                        CIGARETTNAME = x.CIGARETTDENAME,
+                        QTY = x.qty,
+                        MAINBELT = x.MainBelt,
+                        SORTNUM = x.SortNum,
+
+                    }).ToList();//根据索引读取相对应数据  
+                    btnAllInfo.Text = "返 回";
                 }
+                else
+                {
+                    MessageBox.Show("当前没有数据");
+                }
+            }
+            else
+            {
+                ReadListInfo(ReadIndex);
+                btnAllInfo.Text = "所 有";
             }
         }
         private void Fm_UnionMainInfo_FormClosing(object sender, FormClosingEventArgs e)
@@ -302,15 +331,24 @@ namespace FollowTask
 
         private void btnCx_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtSortnum.Text))
+            if (btnCx.Text == "查询")
             {
-                MessageBox.Show("不能为空");
+                if (string.IsNullOrWhiteSpace(txtSortnum.Text))
+                {
+                    MessageBox.Show("不能为空");
+                }
+                else
+                {
+                    groupBoxUnionInfo.Visible = false;
+                    dgvMainBeltInfo.DataSource = UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtSortnum.Text));
+                    DgvBind2();
+                    btnCx.Text = "返回";
+                }
             }
             else
             {
-                groupBoxUnionInfo.Visible = false;
-               dgvMainBeltInfo.DataSource= UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtSortnum.Text));
-               DgvBind2();
+                ReadListInfo(ReadIndex);
+                btnCx.Text = "查询";
             }
         }
         /// <summary>
@@ -342,6 +380,14 @@ namespace FollowTask
             if (e.KeyChar != '\b' && !Char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void txtSortnum_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnCx_Click(sender, e);
             }
         }
        

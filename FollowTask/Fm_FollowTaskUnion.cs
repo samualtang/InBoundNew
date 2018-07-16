@@ -24,7 +24,7 @@ namespace FollowTask
         {
             InitializeComponent();
             list_data.Items.Clear();
-            
+            Location = new Point(0, 0);
           
         }
       //  Fm_UnionMainBelt fm_un = null;
@@ -131,6 +131,7 @@ namespace FollowTask
                 updateListBox(text + "主皮带,服务器连接失败,请检查网络连接");
                 writeLog.Write(text + "主皮带,服务器连接失败,请检查网络连接");
             }
+         
         }
  
         private void Fm_FollowTaskUnion_Load(object sender, EventArgs e)
@@ -181,6 +182,7 @@ namespace FollowTask
             handleumd += fm_machinedetails.GetUnionMachineDetails;
             mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
             handleumd(machineno, mainbelt, listuinongroup,IsOnLine);
+            fm_machinedetails.MdiParent = this.MdiParent;
             fm_machinedetails.Show();
             
            
@@ -244,14 +246,7 @@ namespace FollowTask
 
             #endregion
         }
-        /// <summary>
-        /// 单例模式显示机械手
-        /// </summary>
-        /// <param name="machineno">机械手号</param>
-        void ShowMachineDetailForm(int machineno)
-        {
-           
-        }
+        
         /// <summary>
         /// 读取指定皮带DB块
         /// </summary>
@@ -415,6 +410,7 @@ namespace FollowTask
                 Fm_UinonCache fmuc = new Fm_UinonCache(); 
                 handeleuCache += fmuc.GetUnionNowMachineTask;
                 handeleuCache(machineno, listuinongroup);
+                fmuc.MdiParent = this.MdiParent;
                 fmuc.Show(); 
             }
             else
@@ -491,7 +487,8 @@ namespace FollowTask
 
         private void listViewUnion_SizeChanged(object sender, EventArgs e)
         {
-           
+            btnClose.Location = new Point(this.Width - 25, 0);
+            btnZoom.Location = new Point(this.Width - 55, 0);
         }
         #endregion
 
@@ -555,15 +552,12 @@ namespace FollowTask
             fname.Show();
             fname.Activate();
         }
-        bool Guan;
-        public void GetClosSingle(bool guan)
-        {
-            Guan = guan;
-        }
+
         private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Guan)
+            if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
             {
+                this.Hide();
                 if (fum != null)
                 {
                     fum.Close();
@@ -574,8 +568,43 @@ namespace FollowTask
                     fmuc.Close();
                     fmuc.Dispose();
                 }
-                this.Hide();
-                e.Cancel = true;
+                e.Cancel = false;
+            }
+            else { e.Cancel = true; }
+           
+
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+           this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.Hide();
+            if (fum != null)
+            {
+                fum.Close();
+                fum.Dispose();
+            }
+            if (fmuc != null)
+            {
+                fmuc.Close();
+                fmuc.Dispose();
+            }
+       
+            this.DialogResult = System.Windows.Forms.DialogResult.None;
+        }
+        bool maxormin = true;
+        private void btnZoom_Click(object sender, EventArgs e)
+        {
+            if (maxormin)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                maxormin = false;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                maxormin = true;
             }
         }
 

@@ -54,6 +54,21 @@ namespace FollowTask
 
         Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup ;
         Group SortingTaskGroupA, SortingTaskGroupB;
+        public Fm_Mian()
+        {
+            InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
+            treeV.Enabled = false;
+            fm_sorting = new Fm_FollowTaskSorting();
+            fm_union = new Fm_FollowTaskUnion();
+
+          
+            Delge();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            Thread th = new Thread(Connction);
+            th.Start();
+        }
+     
         void Connction()
         {
             txtMainInfo.Text = "连接服务器中.....";
@@ -76,15 +91,58 @@ namespace FollowTask
                 writeLog.Write("错误异常：" + ex.Message);
             }
         }
+        Fm_FollowTaskSorting fm_sorting;
+        Fm_FollowTaskUnion fm_union;
         /// <summary>
         /// 
         /// </summary>
         void  Delge()
-        {
+        { 
             Union += fm_union.GetMainInfo;
-            Sorting += fm_sorting.GetSoringBeltInfo;
-            hc += fm_sorting.GetClosSingle;
-            hc += fm_union.GetClosSingle;
+            Sorting += fm_sorting.GetSoringBeltInfo; 
+        }
+        /// <summary>
+        /// SortingShow方法
+        /// </summary>
+        /// <param name="text">第几组</param>
+        void ShowSortingForm(string text)
+        {
+            Sorting(text, listSortTaskGroup, IsOnLine);
+            if (CheckExist(fm_sorting) == true)
+            {
+                fm_sorting.Show();
+                fm_sorting. Location = new Point(0, 0);
+                fm_sorting.MdiParent = this;
+               // fm_sorting.WindowState = FormWindowState.Maximized;
+                return;
+            }
+            fm_sorting.MdiParent = this;
+            fm_sorting.Location = new Point(0, 0);
+            //fm_sorting.WindowState = FormWindowState.Maximized;
+            fm_sorting.Show();
+        }
+       
+        /// <summary>
+        /// UinionShow方法
+        /// </summary>
+        /// <param name="text">第几根</param>
+        void ShowUinionFrom(string text)
+        { 
+            Union("合流", listUnionTaskGroup, IsOnLine);
+            if (CheckExist(fm_union) == true)
+            {
+                fm_union.Show();
+                fm_union.Location = new Point(0, 0);
+                fm_union.MdiParent = this;
+                //fm_union.WindowState = FormWindowState.Maximized;
+                //fm_union = null;
+                return;
+            }
+            fm_union.MdiParent = this;
+            fm_union.Location = new Point(0, 0);
+            //fm_union.WindowState = FormWindowState.Maximized;
+            fm_union.Show();
+
         }
         #region 添加opc组
         /// <summary>
@@ -222,17 +280,7 @@ namespace FollowTask
         Bitmap btmpathLeft = (Bitmap)Properties.Resources.ResourceManager.GetObject("41");
         Bitmap btmpathRight = (Bitmap)Properties.Resources.ResourceManager.GetObject("71");
         #endregion
-        public Fm_Mian()
-        {
-            InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
-            treeV.Enabled = false;
-            Delge();
-            this.StartPosition = FormStartPosition.CenterScreen; 
-            Thread th = new Thread(Connction);
-            th.Start();
-        }
-     
+       
         private void Fm_Mian_Load(object sender, EventArgs e)
         {
             //InBound.Business.TaskService.UpdateMachineFinished(22540, "84");
@@ -389,50 +437,8 @@ namespace FollowTask
             fm_machine.WindowState = FormWindowState.Maximized;
             fm_machine.Show();
         }
-        Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
-        /// <summary>
-        /// SortingShow方法
-        /// </summary>
-        /// <param name="text">第几组</param>
-        void ShowSortingForm(string text)
-        {
-            
+      // Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();//预分拣
        
-            Sorting(text, listSortTaskGroup, IsOnLine);
-            if (CheckExist(fm_sorting) == true)
-            {
-                fm_sorting.Show();
-                fm_sorting.MdiParent = this;
-                fm_sorting.WindowState = FormWindowState.Maximized;
-                return;
-            }
-            fm_sorting.MdiParent = this;
-            fm_sorting.WindowState = FormWindowState.Maximized;
-            fm_sorting.Show();
-        }
-        Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();//合流
-        /// <summary>
-        /// UinionShow方法
-        /// </summary>
-        /// <param name="text">第几根</param>
-        void ShowUinionFrom(string text)
-        {
-         
-         
-            Union("合流", listUnionTaskGroup, IsOnLine);
-            if (CheckExist(fm_union) == true)
-            {
-                fm_union.Show();
-                fm_union.MdiParent = this;
-                fm_union.WindowState = FormWindowState.Maximized;
-                //fm_union = null;
-                return; 
-            }
-            fm_union.MdiParent = this;
-            fm_union.WindowState = FormWindowState.Maximized;
-            fm_union.Show();
-
-        }
         #endregion
 
 
@@ -604,7 +610,7 @@ namespace FollowTask
 
         private void Fm_Mian_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+           
             DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
                                                              "操作提示",//对话框的标题  
                                                              MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
@@ -615,7 +621,7 @@ namespace FollowTask
             {
                 Disconnect();
 
-
+               
                 writeLog.Write("退出程序。。。。。。");
                 System.Environment.Exit(System.Environment.ExitCode);
                 
@@ -624,7 +630,7 @@ namespace FollowTask
             }
             else
             {
-                hc(false);
+                
                 e.Cancel = true;
             }
            

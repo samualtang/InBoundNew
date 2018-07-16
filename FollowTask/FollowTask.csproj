@@ -312,6 +312,7 @@
     <None Include="Resources\A线机械手.jpg" />
     <None Include="Resources\B线机械手.jpg" />
     <None Include="Resources\合流故障机械手.jpg" />
+    <None Include="Resources\Cache.jpg" />
     <Content Include="Resources\抓取.bmp" />
     <Content Include="Resources\故障.bmp" />
     <Content Include="Resources\无烟.bmp" />

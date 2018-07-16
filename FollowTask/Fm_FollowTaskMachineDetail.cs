@@ -19,6 +19,7 @@ namespace FollowTask
         {
             InitializeComponent();
             this.listViewMachineDetails.DoubleBufferedListView(true);
+            this.WindowState = FormWindowState.Normal;
         }
         #region 图片 
           //string imgZhuaQu = Application.StartupPath + @" \Resources\抓取.bmp";
@@ -278,5 +279,7 @@ namespace FollowTask
         {
             Bind();
         }
+
+      
     }
 }

@@ -20,23 +20,16 @@ namespace FollowTask
 {
     public partial class Fm_FollowTaskSorting : Form
     {
+
         public Fm_FollowTaskSorting()
         {
             InitializeComponent();
+          
         }
 
         public WriteLog writeLog = WriteLog.GetLog();
 
       
-        public Fm_FollowTaskSorting(string text)
-        { 
-            InitializeComponent();
-           // asc.controllInitializeSize(this);
-            this.Text = text;
-            updateListBox(text + "应用程序启动");
-            writeLog.Write(text + "应用程序启动");
-           
-        }
         List<Group> ListSort = new List<Group>();
         List<MainBeltInfo> ListmbInfo = new List<MainBeltInfo>();
       
@@ -53,6 +46,10 @@ namespace FollowTask
         {
             String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
             groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
+            if (list[0] != null && list[1] != null)//在每次添加OPC Item之前清空 
+            {
+           
+            }
             if (isonline)
             {
                 OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
@@ -74,13 +71,14 @@ namespace FollowTask
                 ReadListInfo(0);
                 Text = groupno + "组预分拣";
                 txtTitle.Text = Text;
+              
                 //lblSortnum.Text = "任务号： 0";
                 //lblNum.Text = "数量：0"; 
             }
             else
             {
 
-                updateListBox("与服务器断开连接....");
+                lblErorr.Text ="与服务器断开连接....";
             }
         }
         /// <summary>
@@ -192,7 +190,7 @@ namespace FollowTask
         void ReadDBinfo(int index,decimal groupno)
         {
             ListmbInfo.Clear(); //清空list
-            dgvSortingBeltInfo = null;
+           // dgvSortingBeltInfo = null;
             panelCig.Controls.Clear();
             int ReadIndex = 0; 
             
@@ -219,7 +217,7 @@ namespace FollowTask
         /// <param name="index">索引</param>
         void ReadListInfo(int index)
         {
-            if (index <= ListmbInfo.Count && ListmbInfo.Count >0)
+            if (index <= ListmbInfo.Count && ListmbInfo.Count > 0)
             {
                 groupBoxUnionInfo.Visible = true;
                 panelCig.Controls.Clear();
@@ -227,10 +225,10 @@ namespace FollowTask
                 ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
-                    if (!string.IsNullOrWhiteSpace( ListmbInfo[index].MsgCode ))
+                    if (!string.IsNullOrWhiteSpace(ListmbInfo[index].MsgCode))
                     {
                         lblErorr.Visible = true;
-                        lblErorr.Text = "错误代码：" + ListmbInfo[index].MsgCode+"错误信息：" + ListmbInfo[index].ErrorMsg;
+                        lblErorr.Text = "错误代码：" + ListmbInfo[index].MsgCode + "错误信息：" + ListmbInfo[index].ErrorMsg;
                     }
                     else
                     {
@@ -242,9 +240,9 @@ namespace FollowTask
                        CIGARETTNAME = x.CIGARETTDENAME,
                        MAINBELT = x.MainBelt,
                        QTY = x.qty,
-                       GroupNo = x.groupno, 
+                       GroupNo = x.groupno,
                        MEACHINESEQ = x.machineseq,
-                       SORTNUM = x.SortNum, 
+                       SORTNUM = x.SortNum,
                    }).ToList();//根据索引读取相对应数据 
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//根据当前卷烟信息 往panel控件添加数据
@@ -254,7 +252,17 @@ namespace FollowTask
                 }
                 lblCOunt.Text = "总批次：" + ListmbInfo.Count;
                 lblNowcOUNT.Text = "当前批次:" + (index + 1) + "/" + ListmbInfo.Count;
-            } 
+            }
+            else
+            {
+                lblSortnum.Text = "任务号：";
+                lblNum.Text = "数量：" ;
+                lblPlace.Text = "当前位置：0米" ;
+                   lblCOunt.Text = "总批次：" ;
+                lblNowcOUNT.Text = "当前批次:" + 0 + "/" +0;
+                dgvSortingBeltInfo.DataSource = null;
+            }
+            
         }
         void DgvBind()
         {
@@ -333,30 +341,51 @@ namespace FollowTask
         {
             if (isOnLine)
             {
-                if (ListmbInfo.Count > 0)
+                if (btnAllInfo.Text == "所 有")
                 {
-                    groupBoxUnionInfo.Visible = false;
-                    List<UnionTaskInfo> listunion = new List<UnionTaskInfo>();
-                    for (int i = 0; i < ListmbInfo.Count; i++)
+                    if (ListmbInfo.Count > 0)
                     {
-
-                        for (int j = 0; j < ListmbInfo[i].taskInfo.Count; j++)
+                        groupBoxUnionInfo.Visible = false;
+                        List<UnionTaskInfo> listunion = new List<UnionTaskInfo>();
+                        for (int i = 0; i < ListmbInfo.Count; i++)
                         {
-                            UnionTaskInfo un = new UnionTaskInfo();
-                            if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
+
+                            for (int j = 0; j < ListmbInfo[i].taskInfo.Count; j++)
                             {
-                                un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
-                                un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
-                                un.qty = ListmbInfo[i].taskInfo[j].qty;
-                                un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
-                                un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
-                                listunion.Add(un);
+                                UnionTaskInfo un = new UnionTaskInfo();
+                                if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
+                                {
+                                    un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
+                                    un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
+                                    un.qty = ListmbInfo[i].taskInfo[j].qty;
+                                    un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
+                                    un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                                    listunion.Add(un);
+                                }
                             }
                         }
-
                         DgvBind();
-                        dgvSortingBeltInfo.DataSource = listunion;
+                        dgvSortingBeltInfo.DataSource = listunion.Select(x => new
+                        {
+                            CIGARETTECODE = x.CIGARETTDECODE,
+                            CIGARETTNAME = x.CIGARETTDENAME,
+                            MAINBELT = x.MainBelt,
+                            QTY = x.qty,
+                            GroupNo = x.groupno,
+                            MEACHINESEQ = x.machineseq,
+                            SORTNUM = x.SortNum,
+                        }).ToList();//根据索引读取相对应数据 ;
+                        btnAllInfo.Text = "返回";
                     }
+                    else
+                    {
+                        MessageBox.Show("当前没有数据");
+                    }
+                }
+                else
+                {
+                    ReadListInfo(0);
+
                 }
                
             }
@@ -374,7 +403,7 @@ namespace FollowTask
 
         private void Fm_FollowTaskSorting_SizeChanged(object sender, EventArgs e)
         {
-             
+            Location = new Point(0, 0); 
         }
 
         #region listBox显示
@@ -411,19 +440,69 @@ namespace FollowTask
 
             dgVprint1.Print(dgvSortingBeltInfo);
         }
-        bool Guan;
-       public  void GetClosSingle( bool guan)
-        {
-            Guan = guan;
-        }
+      
         private void Fm_FollowTaskSorting_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Guan)
+            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+            //                                                 "操作提示",//对话框的标题  
+            //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                                 MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
             {
                 this.Hide();
-                e.Cancel = true;
+                e.Cancel = false;
             }
+            else { e.Cancel = true; }
+         
            
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (groupno == 1 || groupno == 3 || groupno == 5 || groupno == 7)
+            {
+
+                ReadDBinfo(1, groupno);
+
+            }
+            else
+            {
+                ReadDBinfo(2, groupno);
+            }
+            ReadListInfo(0);
+            Text = groupno + "组预分拣";
+            txtTitle.Text = Text;
+        }
+
+        private void panel1_SizeChanged(object sender, EventArgs e)
+        {
+            btnClose.Location = new Point(this.Width-25, 0);
+            btnZoom.Location = new Point(this.Width - 55, 0);
+          
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.Hide ();
+            this.DialogResult = System.Windows.Forms.DialogResult.None;
+             
+        }
+        bool maxormin = true;
+        private void btnZoom_Click(object sender, EventArgs e)
+        {
+            if (maxormin)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                maxormin = false;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                maxormin = true;
+            }
         }
 
 
