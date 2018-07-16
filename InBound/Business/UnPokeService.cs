@@ -73,7 +73,7 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 var query = (from item in data.T_UN_POKE
-                             where item.STATUS != 20 && item.MACHINESEQ == machineseq && item.LINENUM == lineNum
+                             where item.STATUS == 10 && item.MACHINESEQ == machineseq && item.LINENUM == lineNum
                              select item).Sum(x=>x.POKENUM??0);
                 return query;
             }
