@@ -33,10 +33,10 @@ namespace FollowTask
     
         private delegate void DelegateUnionMachineInfo(string text,int mainbelt, List<Group> listMachine);
         DelegateUnionMachineInfo dumi;//主皮带信息 理论值
-        private delegate void DelegateUnionMainiNFO(int mainbelt, List<Group> list);
+        private delegate void DelegateUnionMainiNFO(int mainbelt, List<Group> list,bool isonline);
         DelegateUnionMainiNFO handleuInfo;//主皮带信息 DB块
 
-        private delegate void DelegateUnionMachineDetails(int machineno, int mainbelt, List<Group> listmachine);
+        private delegate void DelegateUnionMachineDetails(int machineno, int mainbelt, List<Group> listmachine,bool  isonline);
         DelegateUnionMachineDetails handleumd;//合流机械手信息
         private delegate void DelegateUnionCache(int machineno, List<Group> list);
         DelegateUnionCache handeleuCache;//合流缓存
@@ -180,7 +180,7 @@ namespace FollowTask
             Fm_FollowTaskMachineDetail fm_machinedetails = new Fm_FollowTaskMachineDetail();
             handleumd += fm_machinedetails.GetUnionMachineDetails;
             mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
-            handleumd(machineno, mainbelt, listuinongroup);
+            handleumd(machineno, mainbelt, listuinongroup,IsOnLine);
             fm_machinedetails.Show();
             
            
@@ -532,7 +532,7 @@ namespace FollowTask
             int mainbelt = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
             fum = new Fm_UnionMainInfo();
             handleuInfo += fum.GetMainInfo;
-            handleuInfo(mainbelt, listuinongroup);
+            handleuInfo(mainbelt, listuinongroup,IsOnLine);
             fum.Show();
             fum.MdiParent = this.MdiParent;
             
@@ -555,19 +555,28 @@ namespace FollowTask
             fname.Show();
             fname.Activate();
         }
-
+        bool Guan;
+        public void GetClosSingle(bool guan)
+        {
+            Guan = guan;
+        }
         private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (fum != null)
+            if (Guan)
             {
-                fum.Close();
-                fum.Dispose();
+                if (fum != null)
+                {
+                    fum.Close();
+                    fum.Dispose();
+                }
+                if (fmuc != null)
+                {
+                    fmuc.Close();
+                    fmuc.Dispose();
+                }
+                this.Hide();
+                e.Cancel = true;
             }
-            if (fmuc != null)
-            {
-                fmuc.Close();
-                fmuc.Dispose();
-            } 
         }
 
     }

@@ -67,6 +67,17 @@ namespace InBound.Business
         //    //    }
         //    //}
         //}
+
+        public static decimal getLeftQty(String lineNum, decimal machineseq)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             where item.STATUS == 10 && item.MACHINESEQ == machineseq && item.LINENUM == lineNum
+                             select item).Sum(x=>x.POKENUM??0);
+                return query;
+            }
+        }
         /// <summary>
         /// 异形烟数据
         /// </summary>
@@ -129,7 +140,7 @@ namespace InBound.Business
                         }
 
                         values[j * 9 + 1] = machineseq;//烟道地址
-                        values[j * 9 + 2] = 21;//尾数标志 >20
+                        values[j * 9 + 2] = getLeftQty(lineNum,item.MACHINESEQ??0);//尾数标志 >20
                         //values[j * 9 + 3] = customercode;//客户号
                         values[j * 9 + 3] = item.SENDTASKNUM;// item.SORTNUM;//客户号,这里的客户号并不是客户专卖证号,而是任务号
                         values[j * 9 + 4] = item.STORENUM; //前一客户顺序号
