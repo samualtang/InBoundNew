@@ -123,11 +123,11 @@ namespace FormUI
 
 
             List<MainBeltInfo> infolist = new List<MainBeltInfo>();
-            MainBeltInfo info = new MainBeltInfo();
-            info.SortNum = 71069;
+            MainBeltInfo info1 = new MainBeltInfo();
+            info1.SortNum = 71069;
            // info.GroupNO = 1;
-            info.Quantity = 1;
-            info.mainbelt = "2";
+            info1.Quantity = 1;
+            info1.mainbelt = "2";
             infolist.Add(info);
             MainBeltInfoService.GetMainBeltInfo(infolist);
             try
