@@ -91,6 +91,8 @@ namespace InBound.Business
                                                 = item.SORTNUM ?? 0,
                                             POKENUM = item.POKENUM ?? 0,
                                             MachineState = item.MACHINESTATE ?? 0
+                                           
+
                                         }).ToList();
 
                         var exitLoop = false;
@@ -140,7 +142,8 @@ namespace InBound.Business
                                                 SortNum = titem.SortNum,
                                                 qty = titem.POKENUM,
                                                 groupno = titem.GroupNO,
-                                                machineseq = titem.Machineseq
+                                                machineseq = titem.Machineseq,
+                                                 IsOnMainBelt=0
                                             });
                                             titem.MachineState = 30;
                                             tempcount += titem.POKENUM;
@@ -160,7 +163,8 @@ namespace InBound.Business
                                                     SortNum = titem.SortNum,
                                                     qty = 10 - tempcount,
                                                     groupno = titem.GroupNO,
-                                                    machineseq = titem.Machineseq
+                                                    machineseq = titem.Machineseq,
+                                                    IsOnMainBelt = 0
                                                 });
                                                 titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                             }

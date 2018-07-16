@@ -8,6 +8,8 @@ namespace InBound.Model
     public class MainBeltInfo
     {
         public decimal SortNum { get; set; }
+        public List<decimal> SortNumList { get; set; }
+        public List<decimal> QuantityList { get; set; }
         public decimal Quantity { get; set; }
         public decimal Place { get; set; }
         public string mainbelt { get; set; }

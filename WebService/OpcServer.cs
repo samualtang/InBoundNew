@@ -12,7 +12,7 @@ namespace WebService
 
        public static IOPCServer pIOPCServer;  //定义opcServer对象
        internal const string SERVER_NAME = "OPC.SimaticNET";
-       public static Group UnionTaskGroup1, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup;
+       public static Group UnionTaskGroup1,MachineGroup, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup;
        internal const int LOCALE_ID = 0x409;  
           public static  List<Group> listUnionTaskGroup = new List<Group>();
         public static void Connect()
@@ -35,7 +35,8 @@ namespace WebService
             UnionTaskGroup4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//四号主皮带
             UnionMachineTaskGroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//合流机械手任务号抓数
             UnionMachineNowTaskGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//合流机械手当前任务号和抓数
-           
+            MachineGroup= new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//合流机械手当前任务号和抓数
+            
 
             UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
             UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
@@ -43,7 +44,7 @@ namespace WebService
             UnionTaskGroup4.addItem(ItemCollection.GetTaskGroupItem4());
             UnionMachineTaskGroup.addItem(ItemCollection.getUnionTaskItem());
             UnionMachineNowTaskGroup.addItem(ItemCollection.GetUnionMachinNowTaskeItem());
-          
+            MachineGroup.addItem(ItemCollection.GetMachineGroup());
 
           //  UnionMachineTaskGroup.callback += OnDataChange;
             //UnionMachineNowTaskGroup.callback += OnDataChange;
@@ -56,7 +57,7 @@ namespace WebService
             listUnionTaskGroup.Add(UnionTaskGroup4);//3
             listUnionTaskGroup.Add(UnionMachineTaskGroup);//4
             listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
-          
+            listUnionTaskGroup.Add(MachineGroup);//6
          
         }
     }

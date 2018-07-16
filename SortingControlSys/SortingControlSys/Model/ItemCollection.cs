@@ -80,8 +80,8 @@ namespace SortingControlSys.Model
              List<string> list = new List<string>();
              for (int i = 0; i < 32; i++)
              {
-                 list.Add(UnionOpcServer + "DB30,DINT"+(i)*6);//标志位 26
-                 list.Add(UnionOpcServer + "DB30,INT" +(4+ (i) * 6));//标志位 26
+                 list.Add(UnionOpcServer + "DB30,DINT"+(i)*6);//任务号
+                 list.Add(UnionOpcServer + "DB30,INT" +(4+ (i) * 6));//已抓烟数量
              }
             return list;
         }

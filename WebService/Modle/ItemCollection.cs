@@ -26,6 +26,25 @@ namespace WebService.Modle
             return list;
         }
 
+        
+        public static List<string> GetMachineGroup()
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 32; i++)
+            {
+                list.Add(OpcUnionServer + "DB30,DINT" + (i) * 6);//任务号
+               
+                
+            }
+            for (int i = 0; i < 32; i++)
+            {
+                
+                list.Add(OpcUnionServer + "DB30,INT" + (2450 + (i * 2)));//已放烟数量
+
+            }
+            return list;
+        }
+
         /// <summary>
         ///   二号主皮带任务位置烟数
         /// </summary>
