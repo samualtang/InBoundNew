@@ -268,8 +268,8 @@ namespace FollowTask
                 machineno = 0;
             }
 
-            sortnumAndXYnum[0] = Listmachine[5].ReadD((machineno * 2) ).CastTo<int>(-1);//0
-            sortnumAndXYnum[1] = Listmachine[5].ReadD(((machineno * 2) + 1)).CastTo<int>(-1);//1
+            sortnumAndXYnum[0] = Listmachine[5].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//0  2   4
+            sortnumAndXYnum[1] = Listmachine[5].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//1   3  5
            
 
             return sortnumAndXYnum;

@@ -35,6 +35,8 @@
             this.labelfangxiang = new System.Windows.Forms.Label();
             this.labelloaction = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnZoom = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.groupBBelt1 = new System.Windows.Forms.GroupBox();
             this.btnhuancun8 = new System.Windows.Forms.Button();
             this.btnhuancun1 = new System.Windows.Forms.Button();
@@ -139,8 +141,6 @@
             this.pbMachine13 = new System.Windows.Forms.PictureBox();
             this.pbMachine14 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt2 = new System.Windows.Forms.PictureBox();
-            this.btnZoom = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBBelt1.SuspendLayout();
@@ -257,6 +257,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(953, 684);
             this.panel1.TabIndex = 58;
+            // 
+            // btnZoom
+            // 
+            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoom.Location = new System.Drawing.Point(905, 4);
+            this.btnZoom.Name = "btnZoom";
+            this.btnZoom.Size = new System.Drawing.Size(19, 20);
+            this.btnZoom.TabIndex = 60;
+            this.btnZoom.Text = "口";
+            this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Location = new System.Drawing.Point(927, 4);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(19, 20);
+            this.btnClose.TabIndex = 59;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // groupBBelt1
             // 
@@ -1635,28 +1657,6 @@
             this.pbMainbelt2.TabIndex = 77;
             this.pbMainbelt2.TabStop = false;
             this.pbMainbelt2.Click += new System.EventHandler(this.pbMainbelt1_Click);
-            // 
-            // btnZoom
-            // 
-            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZoom.Location = new System.Drawing.Point(905, 4);
-            this.btnZoom.Name = "btnZoom";
-            this.btnZoom.Size = new System.Drawing.Size(19, 20);
-            this.btnZoom.TabIndex = 60;
-            this.btnZoom.Text = "口";
-            this.btnZoom.UseVisualStyleBackColor = true;
-            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(927, 4);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(19, 20);
-            this.btnClose.TabIndex = 59;
-            this.btnClose.Text = "X";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // Fm_FollowTaskUnion
             // 

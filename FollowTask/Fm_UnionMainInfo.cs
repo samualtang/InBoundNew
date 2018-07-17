@@ -20,6 +20,7 @@ namespace FollowTask
             InitializeComponent();
             dgvMainBeltInfo.DoubleBufferedDataGirdView(true);
             CheckForIllegalCrossThreadCalls = false;
+            WindowState = FormWindowState.Maximized;
         }
         /// <summary>
         /// 主皮带信息集合
@@ -107,6 +108,7 @@ namespace FollowTask
                 lbl.Location = new Point(img.Width / 2 - 4, 0);
                 if (item.IsOnMainBelt == 0)//不在皮带上
                 {
+                   // img.BorderStyle = BorderStyle.Fixed3D;
                     lbl.BackColor = Color.Red;
                     //img.BackColor = Color.Red;
                 }
@@ -220,7 +222,7 @@ namespace FollowTask
                         QTY = x.qty,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
-
+                        IsOnBelt = x.IsOnMainBelt, 
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//往panel控件增添当前数据
@@ -245,6 +247,7 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
                 dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
                 dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
+                dgvMainBeltInfo.Columns[5].HeaderCell.Value = "是否在主皮带";
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -310,13 +313,14 @@ namespace FollowTask
                                 un.qty = ListmbInfo[i].taskInfo[j].qty;
                                 un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
                                 un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                                un.IsOnMainBelt = ListmbInfo[i].taskInfo[j].IsOnMainBelt;
                                 listunion.Add(un);
                             }
                         }
 
 
                     }
-                    DgvBind();
+                   
                     dgvMainBeltInfo.DataSource = listunion.Select(x => new
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
@@ -324,8 +328,9 @@ namespace FollowTask
                         QTY = x.qty,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
-
+                        IsOnBelt = x.IsOnMainBelt, 
                     }).ToList();//根据索引读取相对应数据  
+                    DgvBind();
                     btnAllInfo.Text = "返 回";
                 }
                 else
@@ -379,8 +384,18 @@ namespace FollowTask
                 else
                 {
                     groupBoxUnionInfo.Visible = false;
-                    dgvMainBeltInfo.DataSource = UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtSortnum.Text));
-                    DgvBind2();
+                    dgvMainBeltInfo.DataSource = UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtSortnum.Text))
+                    .Select(x => new
+                    {
+                        CIGARETTECODE = x.CIGARETTDECODE,
+                        CIGARETTNAME = x.CIGARETTDENAME,
+                        QTY = x.qty,
+                        MAINBELT = x.MainBelt,
+                        SORTNUM = x.SortNum,
+                      //  IsOnBelt = x.IsOnMainBelt,
+                    }).ToList();//根据索引读取相对应数据  
+                     // DgvBind();
+                   DgvBind2();
                     btnCx.Text = "返回";
                 }
             }
@@ -399,15 +414,11 @@ namespace FollowTask
             {
                 dgvMainBeltInfo.Columns[0].HeaderCell.Value = "香烟编号";
                 dgvMainBeltInfo.Columns[1].HeaderCell.Value = "香烟名称";
-                dgvMainBeltInfo.Columns[2].HeaderCell.Value = "主皮带";
-                dgvMainBeltInfo.Columns[3].HeaderCell.Value = "任务号";
-                dgvMainBeltInfo.Columns[4].HeaderCell.Value = "数量";
-                dgvMainBeltInfo.Columns[5].HeaderCell.Value = "组号";
-                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "物理通道号";
-                dgvMainBeltInfo.Columns[7].HeaderCell.Value = "客户名";
-                dgvMainBeltInfo.Columns[8].HeaderCell.Value = "客户编码";
-                dgvMainBeltInfo.Columns[9].HeaderCell.Value = "送货顺序号";
-                dgvMainBeltInfo.Columns[10].HeaderCell.Value = "是否在皮带";
+                dgvMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
+                dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
+                dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
+               // dgvMainBeltInfo.Columns[5].HeaderCell.Value = "是否在主皮带";
+               // dgvMainBeltInfo.Columns[10].HeaderCell.Value = "是否在皮带";
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -433,7 +444,7 @@ namespace FollowTask
 
         private void dgvMainBeltInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 10)
+            if (e.ColumnIndex == 5)
             {
                 String statusText = "";
                 switch (e.Value.ToString())
