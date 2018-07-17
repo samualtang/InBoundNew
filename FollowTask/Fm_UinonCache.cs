@@ -43,7 +43,7 @@ namespace FollowTask
             MainBelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
             lblCacheText.Text = machineno + "号机械手缓存区香烟排序";
             listUnionMachine = list;
-            Fm_UinonCache_Load(null, null);
+           // Fm_UinonCache_Load(null, null);
         }
      
         /// <summary>
@@ -54,12 +54,9 @@ namespace FollowTask
         /// <returns>一个数组[0]是当前任务号 [1]是当前吸烟数量</returns>
        void ReadDbInFo(int mainbelt, int machineno)
         { 
-            if (machineno == 1)
-            {
-                machineno = 0;
-            } 
-            sortnumAndXYnum[0] = listUnionMachine[5].ReadD((machineno * 2)).CastTo<int>(-1);//当前任务号
-            sortnumAndXYnum[1] = listUnionMachine[5].ReadD(((machineno * 2) + 1)).CastTo<int>(-1);//当前吸烟数量 
+        
+            sortnumAndXYnum[0] = listUnionMachine[5].ReadD(((machineno * 2) - 2)).CastTo<int>(-1);//当前任务号
+            sortnumAndXYnum[1] = listUnionMachine[5].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
             
         }
        #region 暂时无用
@@ -120,8 +117,12 @@ namespace FollowTask
        #endregion
         private void Fm_UinonCache_Load(object sender, EventArgs e)
         {
+            GetDate();
+        }
+        void GetDate()
+        {
             try
-            { 
+            {
                 ReadDbInFo(MainBelt, MachineNo);
                 if (sortnumAndXYnum.Count() != 0)
                 {
@@ -129,7 +130,7 @@ namespace FollowTask
                     txtSortnum.Text = sortnumAndXYnum[0] + "";
                     txtPokenum.Text = sortnumAndXYnum[1] + "";
                     list = FolloTaskService.getUnionCache(groupno, MainBelt, sortnumAndXYnum[0], sortnumAndXYnum[1]);//获取数据
-                    btnRefresh_Click(null, null);
+                    ListViewBind(list);
                 }
             }
             catch (Exception ex)
@@ -173,18 +174,21 @@ namespace FollowTask
             {
                 if (list != null)
                 {
-                    int Nums = 1;//序号
-                    foreach (var row in list)
+                    if (list.Count > 0)
                     {
-                        int index = this.dgvUnionCache.Rows.Add();
+                        int Nums = 1;//序号
+                        foreach (var row in list)
+                        {
+                            int index = this.dgvUnionCache.Rows.Add();
 
-                        this.dgvUnionCache.Rows[index].Cells[0].Value = Nums++; //序号
-                        this.dgvUnionCache.Rows[index].Cells[1].Value =  row.MainBelt;//主皮带
-                        this.dgvUnionCache.Rows[index].Cells[2].Value = row.SortNum;//任务号
-                        this.dgvUnionCache.Rows[index].Cells[3].Value = row.GroupNO;//组号  
-                        this.dgvUnionCache.Rows[index].Cells[4].Value = row.POKENUM;//数量
-                        this.dgvUnionCache.Rows[index].Cells[5].Value =row.CIGARETTDECODE;//卷烟编码
-                        this.dgvUnionCache.Rows[index].Cells[6].Value = row.CIGARETTDENAME;//卷烟名称
+                            this.dgvUnionCache.Rows[index].Cells[0].Value = Nums++; //序号
+                            this.dgvUnionCache.Rows[index].Cells[1].Value = row.MainBelt;//主皮带
+                            this.dgvUnionCache.Rows[index].Cells[2].Value = row.SortNum;//任务号
+                            this.dgvUnionCache.Rows[index].Cells[3].Value = row.GroupNO;//组号  
+                            this.dgvUnionCache.Rows[index].Cells[4].Value = row.POKENUM;//数量
+                            this.dgvUnionCache.Rows[index].Cells[5].Value = row.CIGARETTDECODE;//卷烟编码
+                            this.dgvUnionCache.Rows[index].Cells[6].Value = row.CIGARETTDENAME;//卷烟名称
+                        }
                     }
 
                 }
@@ -220,7 +224,7 @@ namespace FollowTask
      
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            ListViewBind(list);
+            GetDate();
         }
 
         private void listViewUnionCache_SizeChanged(object sender, EventArgs e)
