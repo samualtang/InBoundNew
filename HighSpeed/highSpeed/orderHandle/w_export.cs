@@ -113,19 +113,19 @@ namespace highSpeed.orderHandle
             //            " WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
             //            " and aa.synseq=" + synseq + " and rr.ctype=2 )" +
             //            " order by sortnum,sortname ";
+         
+            String sql =" select * from ( " +
+                        " select p.sortnum ,t.customercode,t.customername,p.machineseq,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
+                        " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r " +
+                        " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq= " + synseq +
+                        " union all " +
+                        " SELECT aa.sortnum,aa.customercode,aa.customername,pp.machineseq,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname " +
+                        " FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr " +
+                        " WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
+                        " and aa.synseq=" + synseq + " and rr.ctype=2 ) " +
+                        " order by sortnum,sortname,machineseq ";
+
             
-            String sql = "select sortnum,customercode,customername,cigarettecode,cigarettename,quantity,odate,regioncode,sortname from ("+
-                        "select p.sortnum ,t.customercode,t.customername,p.machineseq,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname "+
-                        "from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r "+
-                        "where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq=" + synseq +
-                        "union all"+
-                        "SELECT aa.sortnum,aa.customercode,aa.customername,pp.machineseq,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname "+
-                        "FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr" +
-                        "WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' "+
-                        "and aa.synseq=" + synseq + " and rr.ctype=2 )" +
-                        "order by sortnum,sortname,machineseq";
-
-
             //取批次号
             String batchcodesql = "select SEQ_ONEHAOGONGCHENG.Nextval from dual";
 

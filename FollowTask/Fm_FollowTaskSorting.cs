@@ -201,7 +201,7 @@ namespace FollowTask
                 {
                     MainBeltInfo info = new MainBeltInfo();
                     info.SortNum = Sortnum;//任务号
-                    info.Place = (ListSort[index - 1].ReadD((ReadIndex + 1)).CastTo<int>(-1) / 1000);//位置(米)
+                    info.Place = (ListSort[index - 1].ReadD((ReadIndex + 1)).CastTo<decimal>(-1) / 1000);//位置(米)
                     info.Quantity = ListSort[index - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1);//数量
                     info.GroupNO = groupno;//组号
                     ListmbInfo.Add(info);
@@ -209,6 +209,7 @@ namespace FollowTask
                 ReadIndex = ReadIndex + 4;
             }
             MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
+            ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
         }
         /// <summary>
         /// 读取List
@@ -220,8 +221,7 @@ namespace FollowTask
             {
                 groupBoxUnionInfo.Visible = true;
                 panelCig.Controls.Clear();
-                dgvSortingBeltInfo.DataSource = null;//重置数据显示控件
-                ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
+                dgvSortingBeltInfo.DataSource = null;//重置数据显示控件 
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
                     if (!string.IsNullOrWhiteSpace(ListmbInfo[index].MsgCode))
