@@ -34,15 +34,15 @@
             this.btnMachineSeq1 = new System.Windows.Forms.Button();
             this.btnMachineSeq2 = new System.Windows.Forms.Button();
             this.labMachineSeq = new System.Windows.Forms.Label();
-            this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TaskNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -120,59 +120,13 @@
             this.labMachineSeq.TabIndex = 5;
             this.labMachineSeq.Text = "通道1";
             // 
-            // PokeId
+            // TaskNum
             // 
-            this.PokeId.DataPropertyName = "PokeId";
-            this.PokeId.HeaderText = "顺序号";
-            this.PokeId.Name = "PokeId";
-            this.PokeId.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.DataPropertyName = "status";
-            this.status.HeaderText = "分拣状态";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            // 
-            // PokeNum
-            // 
-            this.PokeNum.DataPropertyName = "PokeNum";
-            this.PokeNum.HeaderText = "数量";
-            this.PokeNum.Name = "PokeNum";
-            this.PokeNum.ReadOnly = true;
-            this.PokeNum.Width = 60;
-            // 
-            // CIGARETTENAME
-            // 
-            this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
-            this.CIGARETTENAME.HeaderText = "品牌名称";
-            this.CIGARETTENAME.Name = "CIGARETTENAME";
-            this.CIGARETTENAME.ReadOnly = true;
-            this.CIGARETTENAME.Width = 150;
-            // 
-            // CustomerName
-            // 
-            this.CustomerName.DataPropertyName = "CustomerName";
-            this.CustomerName.HeaderText = "零售户";
-            this.CustomerName.Name = "CustomerName";
-            this.CustomerName.ReadOnly = true;
-            this.CustomerName.Width = 230;
-            // 
-            // TroughNum
-            // 
-            this.TroughNum.DataPropertyName = "TroughNum";
-            this.TroughNum.HeaderText = "通道号";
-            this.TroughNum.Name = "TroughNum";
-            this.TroughNum.ReadOnly = true;
-            this.TroughNum.Width = 70;
-            // 
-            // Code
-            // 
-            this.Code.DataPropertyName = "regioncode";
-            this.Code.HeaderText = "车组";
-            this.Code.Name = "Code";
-            this.Code.ReadOnly = true;
-            this.Code.Width = 60;
+            this.TaskNum.DataPropertyName = "TaskNum";
+            this.TaskNum.HeaderText = "订单任务号";
+            this.TaskNum.Name = "TaskNum";
+            this.TaskNum.ReadOnly = true;
+            this.TaskNum.Width = 90;
             // 
             // SortNum
             // 
@@ -182,13 +136,59 @@
             this.SortNum.ReadOnly = true;
             this.SortNum.Width = 90;
             // 
-            // TaskNum
+            // Code
             // 
-            this.TaskNum.DataPropertyName = "TaskNum";
-            this.TaskNum.HeaderText = "订单任务号";
-            this.TaskNum.Name = "TaskNum";
-            this.TaskNum.ReadOnly = true;
-            this.TaskNum.Width = 90;
+            this.Code.DataPropertyName = "regioncode";
+            this.Code.HeaderText = "车组";
+            this.Code.Name = "Code";
+            this.Code.ReadOnly = true;
+            this.Code.Width = 60;
+            // 
+            // TroughNum
+            // 
+            this.TroughNum.DataPropertyName = "TroughNum";
+            this.TroughNum.HeaderText = "通道号";
+            this.TroughNum.Name = "TroughNum";
+            this.TroughNum.ReadOnly = true;
+            this.TroughNum.Width = 70;
+            // 
+            // CustomerName
+            // 
+            this.CustomerName.DataPropertyName = "CustomerName";
+            this.CustomerName.HeaderText = "零售户";
+            this.CustomerName.Name = "CustomerName";
+            this.CustomerName.ReadOnly = true;
+            this.CustomerName.Width = 230;
+            // 
+            // CIGARETTENAME
+            // 
+            this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
+            this.CIGARETTENAME.HeaderText = "品牌名称";
+            this.CIGARETTENAME.Name = "CIGARETTENAME";
+            this.CIGARETTENAME.ReadOnly = true;
+            this.CIGARETTENAME.Width = 150;
+            // 
+            // PokeNum
+            // 
+            this.PokeNum.DataPropertyName = "PokeNum";
+            this.PokeNum.HeaderText = "数量";
+            this.PokeNum.Name = "PokeNum";
+            this.PokeNum.ReadOnly = true;
+            this.PokeNum.Width = 60;
+            // 
+            // status
+            // 
+            this.status.DataPropertyName = "status";
+            this.status.HeaderText = "分拣状态";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
+            // PokeId
+            // 
+            this.PokeId.DataPropertyName = "PokeId";
+            this.PokeId.HeaderText = "流水号";
+            this.PokeId.Name = "PokeId";
+            this.PokeId.ReadOnly = true;
             // 
             // NowView
             // 

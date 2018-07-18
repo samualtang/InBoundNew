@@ -79,11 +79,10 @@ namespace SpecialShapeSmoke
                 //保存好创建的XML文档
                 xmlDoc.Save("HunHeDate.XML");
  
-        }
-
+        } 
         private void button1_Click(object sender, EventArgs e)
         {
-            CreateXML();
+             
         }
     }
 }

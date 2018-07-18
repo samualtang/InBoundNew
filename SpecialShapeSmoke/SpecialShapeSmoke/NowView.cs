@@ -163,7 +163,7 @@ namespace SpecialShapeSmoke
         public void DateBind(decimal Seq, string pokeid = null)
         {
             HunHeService HunHeNowCigarette = new HunHeService();
-            List<HUNHENOWVIEW> hunhelist=HunHeNowCigarette.GetALLCigarette(Seq);
+            List<HUNHENOWVIEW1> hunhelist=HunHeNowCigarette.GetALLCigarette(Seq);
             if(hunhelist.Count < 1)
             {
                 labMachineSeq.Text = Seq + "通道没有分拣数据，请选择其他通道！";

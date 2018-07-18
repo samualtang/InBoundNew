@@ -16,6 +16,7 @@ using OpcRcw.Da;
 using OpcRcw.Comn;
 using SpecialShapeSmoke.Model;
 using System.Runtime.InteropServices;
+using System.IO.Ports;
 namespace SpecialShapeSmoke
 {
     public partial class MainScreen1 : Form
@@ -77,9 +78,13 @@ namespace SpecialShapeSmoke
         TextBox txtbox1;
         TextBox txtbox2;
 
+
         public MainScreen1()
         {
             InitializeComponent();
+
+            OpenSerialPort();
+            OpenSerialPort1(); 
 
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -214,12 +219,13 @@ namespace SpecialShapeSmoke
             SortSet.Click += SetUpOrDn;
             SortSet.Location = new Point(p.Width - 10 * topHeight, 0);
             // p.Controls.Add(SortSet);
+ 
 
             txtbox1 = new TextBox();
             txtbox1.Width = 120;
             txtbox1.Height = 20;
             txtbox1.Location = new Point(340, 30);
-            txtbox1.Visible = false;
+            //txtbox1.Visible = false;
             p.Controls.Add(txtbox1);
 
             Button btn1 = new Button();
@@ -235,7 +241,7 @@ namespace SpecialShapeSmoke
             txtbox2.Width = 120;
             txtbox2.Height = 20;
             txtbox2.Location = new Point(560, 30);
-            txtbox2.Visible = false;
+            //txtbox2.Visible = false;
             p.Controls.Add(txtbox2);
 
             Button btn2 = new Button();
@@ -249,6 +255,7 @@ namespace SpecialShapeSmoke
 
             Thread thread = new Thread(ConnectServer);
             thread.Start();
+            
         }
 
         public void SetUpOrDn(object sender, EventArgs e)//修改显示方向
@@ -272,6 +279,7 @@ namespace SpecialShapeSmoke
         }
 
 
+     
         public List<HUNHEVIEW> GroupList(List<HUNHEVIEW> list)
         {
             if (list != null)
@@ -1147,21 +1155,21 @@ namespace SpecialShapeSmoke
                 pokeid = Convert.ToDecimal(lab.Text);
             }
 
-            HUNHEVIEW hunhe = HunHeService.GetNextCigarette(pokeid);
+            HUNHEVIEW1 hunhe = HunHeService.GetNextCigarette_bar(pokeid);
 
             Label lbl2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lbl14", true)[0];
             Label lab2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lab14", true)[0];
 
-            HUNHEVIEW hunhe2 =hunhe;
+            HUNHEVIEW1 hunhe2 =hunhe;
             if (lab2.Text.Length > 0)
             {
-                hunhe2 = HunHeService.GetHaveCigarette(Convert.ToDecimal(lab2.Text.Split('|').First()));
+                hunhe = HunHeService.GetHaveCigarette_BAR(Convert.ToDecimal(lab2.Text.Split('|').First()));
             }
                
             if (hunhe.CIGARETTECODE != ccode)
             {
                 lbl.BackColor = Color.Red;
-                MessageBox.Show("放烟错误！");
+                //MessageBox.Show("放烟错误！");
             }
             else
             {
@@ -1174,11 +1182,134 @@ namespace SpecialShapeSmoke
                 else
                 {
                     lbl.BackColor = Color.YellowGreen;
-                    MessageBox.Show("数据显示缓存已满！");
+                    //MessageBox.Show("数据显示缓存已满！");
                 }
                
             } 
         }
+
+
+
+
+        SerialPort sp = new SerialPort();
+        SerialPort sp1 = new SerialPort();
+        public void OpenSerialPort1()
+        {
+
+            sp1.PortName = "COM4";
+            if (!sp1.IsOpen)
+            {
+                try
+                {
+                    sp1.ReadBufferSize = 32;
+                    sp1.BaudRate = 9600;
+                    sp1.Open();
+                    sp1.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived1);
+                }
+                catch
+                {
+                    //if (sp!=null && sp.IsOpen)
+                    //{
+                    //    sp.Close();
+                    //}
+                    //Thread.Sleep(5000);
+                    //OpenSerialPort();
+                }
+            }
+
+        }
+        public void OpenSerialPort()
+        {
+
+            sp.PortName = "COM3";
+            if (!sp.IsOpen)
+            {
+                try
+                {
+                    sp.ReadBufferSize = 32;
+                    sp.BaudRate = 9600;
+                    sp.Open();
+                    sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
+                }
+                catch
+                {
+                    //if (sp!=null && sp.IsOpen)
+                    //{
+                    //    sp.Close();
+                    //}
+                    //Thread.Sleep(5000);
+                    //OpenSerialPort();
+                }
+            }
+
+        }
+        static string str;
+        void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = sender as SerialPort;
+            String tempCode = sp.ReadExisting();
+            str = tempCode.Split('\r').First(); 
+            TextboxFZ3(1, str);
+        }
+        void sp_DataReceived1(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = sender as SerialPort;
+            String tempCode = sp.ReadExisting();
+            str = tempCode.Split('\r').First();
+            TextboxFZ3(2, str);
+            
+        }
+
+        private void TextboxFZ3(int id,string str)
+        {
+            if (this.txtbox2.InvokeRequired)
+            {
+                FlushClient fc = new FlushClient(TextboxFZ3);
+                this.Invoke(fc, id,str); //通过代理调用刷新方法
+            }
+            else
+            {
+                if (id==2)
+                {
+                    this.txtbox2.Text = str;
+                    pullcigarette(txtbox1.Text, "3", Convert.ToDecimal(boxText.First()));
+                }
+                if (id==1)
+                { 
+                    this.txtbox1.Text = str;
+                    pullcigarette(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));
+     
+                }
+            }
+        }
+        private delegate void FlushClient(int b,string a);
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        string packbar_1;
+        string packbar_2;
+
         private void btn1_Click(object sender, EventArgs e)
         {
             pullcigarette(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));

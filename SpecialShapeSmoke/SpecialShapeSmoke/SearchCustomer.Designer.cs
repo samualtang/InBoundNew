@@ -32,22 +32,23 @@
             this.txt_search = new System.Windows.Forms.TextBox();
             this.DgvNowView = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TaskNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_search
             // 
             this.btn_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btn_search.Location = new System.Drawing.Point(683, 10);
+            this.btn_search.Location = new System.Drawing.Point(735, 10);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(75, 23);
             this.btn_search.TabIndex = 0;
@@ -58,7 +59,7 @@
             // txt_search
             // 
             this.txt_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txt_search.Location = new System.Drawing.Point(352, 12);
+            this.txt_search.Location = new System.Drawing.Point(404, 12);
             this.txt_search.Name = "txt_search";
             this.txt_search.Size = new System.Drawing.Size(314, 21);
             this.txt_search.TabIndex = 1;
@@ -67,12 +68,13 @@
             // 
             this.DgvNowView.AllowUserToAddRows = false;
             this.DgvNowView.AllowUserToDeleteRows = false;
-            this.DgvNowView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvNowView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvNowView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvNowView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TaskNum,
+            this.CustomerNo,
             this.SortNum,
             this.Code,
             this.TroughNum,
@@ -81,12 +83,12 @@
             this.PokeNum,
             this.status,
             this.PokeId});
-            this.DgvNowView.Location = new System.Drawing.Point(7, 45);
+            this.DgvNowView.Location = new System.Drawing.Point(6, 38);
             this.DgvNowView.Name = "DgvNowView";
             this.DgvNowView.ReadOnly = true;
             this.DgvNowView.RowTemplate.Height = 23;
             this.DgvNowView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvNowView.Size = new System.Drawing.Size(1010, 451);
+            this.DgvNowView.Size = new System.Drawing.Size(1120, 527);
             this.DgvNowView.TabIndex = 3;
             // 
             // comboBox1
@@ -97,72 +99,10 @@
             this.comboBox1.Items.AddRange(new object[] {
             "卷烟名称",
             "商户名称"});
-            this.comboBox1.Location = new System.Drawing.Point(225, 12);
+            this.comboBox1.Location = new System.Drawing.Point(277, 12);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 4;
-            // 
-            // PokeId
-            // 
-            this.PokeId.DataPropertyName = "PokeId";
-            this.PokeId.HeaderText = "顺序号";
-            this.PokeId.Name = "PokeId";
-            this.PokeId.ReadOnly = true;
-            // 
-            // status
-            // 
-            this.status.DataPropertyName = "status";
-            this.status.HeaderText = "分拣状态";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            // 
-            // PokeNum
-            // 
-            this.PokeNum.DataPropertyName = "PokeNum";
-            this.PokeNum.HeaderText = "数量";
-            this.PokeNum.Name = "PokeNum";
-            this.PokeNum.ReadOnly = true;
-            this.PokeNum.Width = 60;
-            // 
-            // CIGARETTENAME
-            // 
-            this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
-            this.CIGARETTENAME.HeaderText = "品牌名称";
-            this.CIGARETTENAME.Name = "CIGARETTENAME";
-            this.CIGARETTENAME.ReadOnly = true;
-            this.CIGARETTENAME.Width = 150;
-            // 
-            // CustomerName
-            // 
-            this.CustomerName.DataPropertyName = "CustomerName";
-            this.CustomerName.HeaderText = "零售户";
-            this.CustomerName.Name = "CustomerName";
-            this.CustomerName.ReadOnly = true;
-            this.CustomerName.Width = 230;
-            // 
-            // TroughNum
-            // 
-            this.TroughNum.DataPropertyName = "TroughNum";
-            this.TroughNum.HeaderText = "通道号";
-            this.TroughNum.Name = "TroughNum";
-            this.TroughNum.ReadOnly = true;
-            this.TroughNum.Width = 70;
-            // 
-            // Code
-            // 
-            this.Code.DataPropertyName = "regioncode";
-            this.Code.HeaderText = "车组";
-            this.Code.Name = "Code";
-            this.Code.ReadOnly = true;
-            this.Code.Width = 60;
-            // 
-            // SortNum
-            // 
-            this.SortNum.DataPropertyName = "SortNum";
-            this.SortNum.HeaderText = "分拣任务号";
-            this.SortNum.Name = "SortNum";
-            this.SortNum.ReadOnly = true;
-            this.SortNum.Width = 90;
             // 
             // TaskNum
             // 
@@ -172,11 +112,80 @@
             this.TaskNum.ReadOnly = true;
             this.TaskNum.Width = 90;
             // 
+            // CustomerNo
+            // 
+            this.CustomerNo.DataPropertyName = "tasksort";
+            this.CustomerNo.HeaderText = "客户顺序";
+            this.CustomerNo.Name = "CustomerNo";
+            this.CustomerNo.ReadOnly = true;
+            // 
+            // SortNum
+            // 
+            this.SortNum.DataPropertyName = "SortNum";
+            this.SortNum.HeaderText = "分拣任务号";
+            this.SortNum.Name = "SortNum";
+            this.SortNum.ReadOnly = true;
+            this.SortNum.Width = 90;
+            // 
+            // Code
+            // 
+            this.Code.DataPropertyName = "regioncode";
+            this.Code.HeaderText = "车组";
+            this.Code.Name = "Code";
+            this.Code.ReadOnly = true;
+            this.Code.Width = 60;
+            // 
+            // TroughNum
+            // 
+            this.TroughNum.DataPropertyName = "TroughNum";
+            this.TroughNum.HeaderText = "通道号";
+            this.TroughNum.Name = "TroughNum";
+            this.TroughNum.ReadOnly = true;
+            this.TroughNum.Width = 70;
+            // 
+            // CustomerName
+            // 
+            this.CustomerName.DataPropertyName = "CustomerName";
+            this.CustomerName.HeaderText = "零售户";
+            this.CustomerName.Name = "CustomerName";
+            this.CustomerName.ReadOnly = true;
+            this.CustomerName.Width = 230;
+            // 
+            // CIGARETTENAME
+            // 
+            this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
+            this.CIGARETTENAME.HeaderText = "品牌名称";
+            this.CIGARETTENAME.Name = "CIGARETTENAME";
+            this.CIGARETTENAME.ReadOnly = true;
+            this.CIGARETTENAME.Width = 150;
+            // 
+            // PokeNum
+            // 
+            this.PokeNum.DataPropertyName = "PokeNum";
+            this.PokeNum.HeaderText = "数量";
+            this.PokeNum.Name = "PokeNum";
+            this.PokeNum.ReadOnly = true;
+            this.PokeNum.Width = 60;
+            // 
+            // status
+            // 
+            this.status.DataPropertyName = "status";
+            this.status.HeaderText = "分拣状态";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
+            // PokeId
+            // 
+            this.PokeId.DataPropertyName = "PokeId";
+            this.PokeId.HeaderText = "流水号";
+            this.PokeId.Name = "PokeId";
+            this.PokeId.ReadOnly = true;
+            // 
             // SearchCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 489);
+            this.ClientSize = new System.Drawing.Size(1133, 565);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.DgvNowView);
             this.Controls.Add(this.txt_search);
@@ -197,6 +206,7 @@
         private System.Windows.Forms.DataGridView DgvNowView;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn TaskNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Code;
         private System.Windows.Forms.DataGridViewTextBoxColumn TroughNum;
