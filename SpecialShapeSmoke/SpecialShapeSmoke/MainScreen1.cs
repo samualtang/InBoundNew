@@ -144,15 +144,15 @@ namespace SpecialShapeSmoke
             this.BackgroundImageLayout = ImageLayout.Stretch;
              
             //颜色绑定
-            labelcolor = Color.Green;
+            labelcolor = Color.Lime;
             string GetColor = ConfigurationManager.AppSettings["color"].ToString();
             switch (GetColor)
             {
                 case "Red":
                     labelcolor = Color.Red;
                     break;
-                case "Green":
-                    labelcolor = Color.Green;
+                case "LightCyan":
+                    labelcolor = Color.LightCyan;
                     break;
                 case "Blue":
                     labelcolor = Color.Blue;
@@ -160,8 +160,11 @@ namespace SpecialShapeSmoke
                 case "Yellow":
                     labelcolor = Color.Yellow;
                     break;
-                default:
+                case "Green":
                     labelcolor = Color.Green;
+                    break;
+                default:
+                    labelcolor = Color.Lime;
                     break;
             }
             //关闭按钮
@@ -562,19 +565,19 @@ namespace SpecialShapeSmoke
             #region  读取DB
             if (dbIndex[1] == -1)//  是1061 和2061 单个通道？
             {
-                finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                //finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
                 countnum = 2;
 
             }
             else
             {
-                finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
-                finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
+                //finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1); //两个通道
+                //finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);
                 countnum = 2;
             }
             //cs
-            //finishNo[0] = 0;
-            //finishNo[1] = 0;
+            finishNo[0] = 0;
+            finishNo[1] = 0;
             #endregion
 
             if (finishNo[0] != -1 || finishNo[1] != -1 || Refresh)
@@ -1184,12 +1187,12 @@ namespace SpecialShapeSmoke
                 if (lbl2.Text == "" || hunhe2 .PACK_BAR== hunhe.PACK_BAR)
                 {
                     lbl.BackColor = Color.White;
-                    HunHeService.PullTag(hunhe.POKEID, 1001);
+                    HunHeService.PullTag(hunhe.POKEID, machineseq);
                     getData(true);
                 }
                 else
                 {
-                    lbl.BackColor = Color.YellowGreen;
+                    lbl.BackColor = labelcolor;
                     //MessageBox.Show("数据显示缓存已满！");
                 }
                
@@ -1227,7 +1230,7 @@ namespace SpecialShapeSmoke
                 hunhe = HunHeService.GetHaveCigarette(Convert.ToDecimal(lab2.Text.Split('|').First()));
             }
 
-            if (hunhe.CIGARETTECODE != ccode)
+            if (hunhe2.CIGARETTECODE != ccode)
             {
                 lbl.BackColor = Color.Red;
                 //MessageBox.Show("放烟错误！");
@@ -1235,14 +1238,13 @@ namespace SpecialShapeSmoke
             else
             {
                 if (lbl2.Text == "" || hunhe2.CIGARETTECODE == hunhe.CIGARETTECODE)
-                {
-                    lbl.BackColor = Color.White;
-                    HunHeService.PullTag(hunhe.POKEID, 1001);
+                { 
+                    HunHeService.PullTag(hunhe2.POKEID, machineseq);
                     getData(true);
                 }
                 else
                 {
-                    lbl.BackColor = Color.YellowGreen;
+                    lbl.BackColor = Color.Yellow;
                     //MessageBox.Show("数据显示缓存已满！");
                 }
 
@@ -1396,6 +1398,7 @@ namespace SpecialShapeSmoke
             
             Label lbl = (Label)Controls.Find(ParentControl, true)[0].Controls.Find(lblName, true)[0];
             Label lab = (Label)Controls.Find(ParentControl, true)[0].Controls.Find(labName, true)[0];
+
             if (lbl.Name!="lbl0")
             {
                 return;
@@ -1428,7 +1431,7 @@ namespace SpecialShapeSmoke
                     }
 
                     //MessageBox.Show(ParentControl + "  " + ((Label)sender).Name + "\r" + lbl.Name + " "
-                    //    + lbl.Text + "\r" + lab.Name + " " + lab.Text + "\r" + hunhe.CIGARETTENAME + " " + hunhe.CIGARETTECODE + " pokeid为" + hunhe.POKEID);
+                    //+ lbl.Text + "\r" + lab.Name + " " + lab.Text + "\r" + hunhe.CIGARETTENAME + " " + hunhe.CIGARETTECODE + " pokeid为" + hunhe.POKEID);
                 }
             }
             /*

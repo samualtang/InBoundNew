@@ -18,6 +18,8 @@ namespace SpecialShapeSmoke
         public Form1()
         {
             InitializeComponent();
+
+            label2.BackColor = Color.LightCyan;
         }
 
         public void CreateXML()
