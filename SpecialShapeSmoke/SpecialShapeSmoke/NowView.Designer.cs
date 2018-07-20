@@ -39,6 +39,7 @@
             this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CIGARETTECODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +59,7 @@
             this.Code,
             this.TroughNum,
             this.CustomerName,
+            this.CIGARETTECODE,
             this.CIGARETTENAME,
             this.PokeNum,
             this.status,
@@ -68,24 +70,29 @@
             this.DgvNowView.ReadOnly = true;
             this.DgvNowView.RowTemplate.Height = 23;
             this.DgvNowView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvNowView.Size = new System.Drawing.Size(1010, 451);
+            this.DgvNowView.Size = new System.Drawing.Size(1237, 499);
             this.DgvNowView.TabIndex = 0;
             this.DgvNowView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvNowView_CellFormatting);
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.DgvNowView);
-            this.groupBox1.Location = new System.Drawing.Point(4, 27);
+            this.groupBox1.Location = new System.Drawing.Point(4, 63);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1016, 471);
+            this.groupBox1.Size = new System.Drawing.Size(1243, 519);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
             // btnNowPoke
             // 
-            this.btnNowPoke.Location = new System.Drawing.Point(909, 7);
+            this.btnNowPoke.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNowPoke.Font = new System.Drawing.Font("宋体", 20F);
+            this.btnNowPoke.Location = new System.Drawing.Point(933, 12);
             this.btnNowPoke.Name = "btnNowPoke";
-            this.btnNowPoke.Size = new System.Drawing.Size(75, 23);
+            this.btnNowPoke.Size = new System.Drawing.Size(152, 45);
             this.btnNowPoke.TabIndex = 2;
             this.btnNowPoke.Text = "定位当前";
             this.btnNowPoke.UseVisualStyleBackColor = true;
@@ -93,9 +100,10 @@
             // 
             // btnMachineSeq1
             // 
-            this.btnMachineSeq1.Location = new System.Drawing.Point(4, 7);
+            this.btnMachineSeq1.Font = new System.Drawing.Font("宋体", 20F);
+            this.btnMachineSeq1.Location = new System.Drawing.Point(7, 12);
             this.btnMachineSeq1.Name = "btnMachineSeq1";
-            this.btnMachineSeq1.Size = new System.Drawing.Size(75, 23);
+            this.btnMachineSeq1.Size = new System.Drawing.Size(108, 45);
             this.btnMachineSeq1.TabIndex = 3;
             this.btnMachineSeq1.Text = "通道1";
             this.btnMachineSeq1.UseVisualStyleBackColor = true;
@@ -103,9 +111,10 @@
             // 
             // btnMachineSeq2
             // 
-            this.btnMachineSeq2.Location = new System.Drawing.Point(85, 7);
+            this.btnMachineSeq2.Font = new System.Drawing.Font("宋体", 20F);
+            this.btnMachineSeq2.Location = new System.Drawing.Point(121, 12);
             this.btnMachineSeq2.Name = "btnMachineSeq2";
-            this.btnMachineSeq2.Size = new System.Drawing.Size(75, 23);
+            this.btnMachineSeq2.Size = new System.Drawing.Size(108, 45);
             this.btnMachineSeq2.TabIndex = 4;
             this.btnMachineSeq2.Text = "通道2";
             this.btnMachineSeq2.UseVisualStyleBackColor = true;
@@ -113,10 +122,13 @@
             // 
             // labMachineSeq
             // 
+            this.labMachineSeq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labMachineSeq.AutoSize = true;
-            this.labMachineSeq.Location = new System.Drawing.Point(452, 12);
+            this.labMachineSeq.Font = new System.Drawing.Font("宋体", 20F);
+            this.labMachineSeq.Location = new System.Drawing.Point(420, 28);
             this.labMachineSeq.Name = "labMachineSeq";
-            this.labMachineSeq.Size = new System.Drawing.Size(35, 12);
+            this.labMachineSeq.Size = new System.Drawing.Size(80, 27);
             this.labMachineSeq.TabIndex = 5;
             this.labMachineSeq.Text = "通道1";
             // 
@@ -160,6 +172,13 @@
             this.CustomerName.ReadOnly = true;
             this.CustomerName.Width = 230;
             // 
+            // CIGARETTECODE
+            // 
+            this.CIGARETTECODE.DataPropertyName = "CIGARETTECODE";
+            this.CIGARETTECODE.HeaderText = "品牌编码";
+            this.CIGARETTECODE.Name = "CIGARETTECODE";
+            this.CIGARETTECODE.ReadOnly = true;
+            // 
             // CIGARETTENAME
             // 
             this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
@@ -194,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1023, 499);
+            this.ClientSize = new System.Drawing.Size(1248, 584);
             this.Controls.Add(this.labMachineSeq);
             this.Controls.Add(this.btnMachineSeq2);
             this.Controls.Add(this.btnMachineSeq1);
@@ -226,6 +245,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Code;
         private System.Windows.Forms.DataGridViewTextBoxColumn TroughNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CIGARETTECODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn CIGARETTENAME;
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;

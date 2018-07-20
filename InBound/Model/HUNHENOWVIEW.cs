@@ -29,6 +29,7 @@ namespace InBound.Model
         public string customername { get; set; }
         public string regioncode { get; set; }
         public decimal? TROUGHNUM { get; set; }
+        public string CIGARETTECODE { get; set; }
         public string CIGARETTENAME { get; set; }
         public decimal? pokenum { get; set; }
         public decimal? status { get; set; }

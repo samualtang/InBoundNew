@@ -87,7 +87,7 @@ namespace InBound.Business
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHENOWVIEW1() { tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
+                                 select new HUNHENOWVIEW1() { tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE=item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
                     return query;
                 }
                 catch (Exception e)
@@ -418,7 +418,9 @@ namespace InBound.Business
                     var query = (from item in entity.T_WMS_ITEM
                                  join item1 in entity.T_PRODUCE_SORTTROUGH 
                                  on item.ITEMNO equals item1.CIGARETTECODE
-                                 where item1.CIGARETTETYPE == 40
+                                 where( item1.CIGARETTETYPE == 40
+                                  || item1.CIGARETTETYPE == 30)
+                                 && item1.STATE == "10"
                                  select new ALLTIAOMA() { ITEMNO = item.ITEMNO, ITEM_NAME = item.ITEMNAME, PACK_BAR = item.PACK_BAR }).ToList();
                     return query; 
                 }
@@ -427,8 +429,9 @@ namespace InBound.Business
                     var query = (from item in entity.T_WMS_ITEM
                                  join item1 in entity.T_PRODUCE_SORTTROUGH
                                  on item.ITEMNO equals item1.CIGARETTECODE
-                                 where item1.CIGARETTETYPE == 40
-                                 
+                                 where (item1.CIGARETTETYPE == 40
+                                  || item1.CIGARETTETYPE == 30)
+                                 && item1.STATE == "10"
                                  && item.ITEMNAME.Contains(cname)
                                  select new ALLTIAOMA() { ITEMNO = item.ITEMNO, ITEM_NAME = item.ITEMNAME, PACK_BAR = item.PACK_BAR }).ToList();
                     return query; 
