@@ -85,10 +85,9 @@ namespace InBound.Business
                                  join item2 in entity.T_PRODUCE_SORTTROUGH
                                  on item.TROUGHNUM equals item2.TROUGHNUM
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
-                                 join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS , tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
+                                 select new HUNHENOWVIEW1() { tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE=item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
                     return query;
                 }
                 catch (Exception e)

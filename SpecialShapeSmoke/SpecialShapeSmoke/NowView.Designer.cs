@@ -44,7 +44,6 @@
             this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -64,8 +63,7 @@
             this.CIGARETTENAME,
             this.PokeNum,
             this.status,
-            this.PokeId,
-            this.PULLSTATUS});
+            this.PokeId});
             this.DgvNowView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvNowView.Location = new System.Drawing.Point(3, 17);
             this.DgvNowView.Name = "DgvNowView";
@@ -78,9 +76,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.DgvNowView);
             this.groupBox1.Location = new System.Drawing.Point(4, 63);
             this.groupBox1.Name = "groupBox1";
@@ -102,10 +100,10 @@
             // 
             // btnMachineSeq1
             // 
-            this.btnMachineSeq1.Font = new System.Drawing.Font("宋体", 18F);
+            this.btnMachineSeq1.Font = new System.Drawing.Font("宋体", 20F);
             this.btnMachineSeq1.Location = new System.Drawing.Point(7, 12);
             this.btnMachineSeq1.Name = "btnMachineSeq1";
-            this.btnMachineSeq1.Size = new System.Drawing.Size(154, 45);
+            this.btnMachineSeq1.Size = new System.Drawing.Size(108, 45);
             this.btnMachineSeq1.TabIndex = 3;
             this.btnMachineSeq1.Text = "通道1";
             this.btnMachineSeq1.UseVisualStyleBackColor = true;
@@ -113,10 +111,10 @@
             // 
             // btnMachineSeq2
             // 
-            this.btnMachineSeq2.Font = new System.Drawing.Font("宋体", 18F);
-            this.btnMachineSeq2.Location = new System.Drawing.Point(167, 12);
+            this.btnMachineSeq2.Font = new System.Drawing.Font("宋体", 20F);
+            this.btnMachineSeq2.Location = new System.Drawing.Point(121, 12);
             this.btnMachineSeq2.Name = "btnMachineSeq2";
-            this.btnMachineSeq2.Size = new System.Drawing.Size(154, 45);
+            this.btnMachineSeq2.Size = new System.Drawing.Size(108, 45);
             this.btnMachineSeq2.TabIndex = 4;
             this.btnMachineSeq2.Text = "通道2";
             this.btnMachineSeq2.UseVisualStyleBackColor = true;
@@ -124,11 +122,11 @@
             // 
             // labMachineSeq
             // 
-            this.labMachineSeq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labMachineSeq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labMachineSeq.AutoSize = true;
             this.labMachineSeq.Font = new System.Drawing.Font("宋体", 20F);
-            this.labMachineSeq.Location = new System.Drawing.Point(432, 30);
+            this.labMachineSeq.Location = new System.Drawing.Point(420, 28);
             this.labMachineSeq.Name = "labMachineSeq";
             this.labMachineSeq.Size = new System.Drawing.Size(80, 27);
             this.labMachineSeq.TabIndex = 5;
@@ -211,13 +209,6 @@
             this.PokeId.Name = "PokeId";
             this.PokeId.ReadOnly = true;
             // 
-            // PULLSTATUS
-            // 
-            this.PULLSTATUS.DataPropertyName = "PULLSTATUS";
-            this.PULLSTATUS.HeaderText = "放烟标志";
-            this.PULLSTATUS.Name = "PULLSTATUS";
-            this.PULLSTATUS.ReadOnly = true;
-            // 
             // NowView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -259,6 +250,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
     }
 }
