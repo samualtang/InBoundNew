@@ -188,16 +188,30 @@ namespace SpecialShapeSmoke
         private void DgvNowView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         { 
             //重绘状态单元格显示
-            if(e.ColumnIndex == 7)
+            if(e.ColumnIndex == 8)
             {
                 string Status = "";
                 switch (e.Value.ToString())
                 {
+
+
+                //foreach (DataGridViewRow item in DgvNowView.Rows)
+                //{
+                //    if (Convert.ToDecimal(item.Cells[9].Value) <= Convert.ToDecimal(Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString()))
+                //    {
+                //        Status = "分拣完成";
+                //    }
+                //    else
+                //    {
+                //        Status = "";
+                //    }
+                //}
+                     
                     case "10":
-                        Status = "待分拣";
+                        Status = "未出烟";
                         break;
                     case "15":
-                        Status = "正在分拣";
+                        Status = "已出烟";
                         foreach (DataGridViewRow item in DgvNowView.Rows)
                         {
                             if (Convert.ToDecimal(item.Cells[8].Value) < Convert.ToDecimal(Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString()))
@@ -207,12 +221,27 @@ namespace SpecialShapeSmoke
                         } 
                         break;
                     case "20":
-                        Status = "分拣完成";
+                        Status = "已出烟";
                         break;
                 }
                 e.Value = Status;
             }
-           
+
+            if (e.ColumnIndex == 10)
+            {
+                string PullStatus = "";
+                switch (e.Value.ToString())
+                {
+                    case "1":
+                        PullStatus = "已放烟";
+                        break;
+                    default:
+                        PullStatus = "";
+                        break; 
+                }
+                e.Value=PullStatus;
+
+            }
 
         }
         

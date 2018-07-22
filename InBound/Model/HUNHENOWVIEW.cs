@@ -33,7 +33,8 @@ namespace InBound.Model
         public string CIGARETTENAME { get; set; }
         public decimal? pokenum { get; set; }
         public decimal? status { get; set; }
-        public decimal? pokeid { get; set; } 
+        public decimal? pokeid { get; set; }
+        public decimal? PULLSTATUS { get; set; }
     }
     /// <summary>
     /// 混合道条码
