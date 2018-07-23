@@ -85,9 +85,10 @@ namespace InBound.Business
                                  join item2 in entity.T_PRODUCE_SORTTROUGH
                                  on item.TROUGHNUM equals item2.TROUGHNUM
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
+                                 join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHENOWVIEW1() { tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE=item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
+                                 select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
                     return query;
                 }
                 catch (Exception e)
@@ -330,7 +331,7 @@ namespace InBound.Business
                                  where item.POKEID == pokeid
                                  && item4.PULLSTATUS == 0
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNO, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM , PACK_BAR=item2.PACK_BAR}).FirstOrDefault();
+                                 select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNO, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM, PACK_BAR = item2.PACK_BAR }).FirstOrDefault();
                     return query;
                 }
                 catch (Exception e)
@@ -413,16 +414,16 @@ namespace InBound.Business
         {
             using (Entities entity = new Entities())
             {
-                if (cname==null)
+                if (cname == null)
                 {
                     var query = (from item in entity.T_WMS_ITEM
-                                 join item1 in entity.T_PRODUCE_SORTTROUGH 
+                                 join item1 in entity.T_PRODUCE_SORTTROUGH
                                  on item.ITEMNO equals item1.CIGARETTECODE
-                                 where( item1.CIGARETTETYPE == 40
+                                 where (item1.CIGARETTETYPE == 40
                                   || item1.CIGARETTETYPE == 30)
                                  && item1.STATE == "10"
                                  select new ALLTIAOMA() { ITEMNO = item.ITEMNO, ITEM_NAME = item.ITEMNAME, PACK_BAR = item.PACK_BAR }).ToList();
-                    return query; 
+                    return query;
                 }
                 else
                 {
@@ -434,9 +435,9 @@ namespace InBound.Business
                                  && item1.STATE == "10"
                                  && item.ITEMNAME.Contains(cname)
                                  select new ALLTIAOMA() { ITEMNO = item.ITEMNO, ITEM_NAME = item.ITEMNAME, PACK_BAR = item.PACK_BAR }).ToList();
-                    return query; 
+                    return query;
                 }
-               
+
             }
         }
 
@@ -521,7 +522,7 @@ namespace InBound.Business
         #endregion
 
         //录入条码
-        public static bool InsertAllPack_bar(string str,string packbar)
+        public static bool InsertAllPack_bar(string str, string packbar)
         {
             try
             {
@@ -538,7 +539,7 @@ namespace InBound.Business
             {
                 return false;
             }
-          
+
 
         }
 
