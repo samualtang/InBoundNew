@@ -207,6 +207,11 @@ namespace highSpeed.orderHandle
                 updateControl(lblTime, false, true);
 
             }
+            catch (NullReferenceException nullex)
+            {
+                MessageBox.Show("排程OK:" + nullex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                writeLog.Write("排程异常:" + nullex.Message);
+            }
             catch (IndexOutOfRangeException iore)
             {
                 MessageBox.Show("排程OK:" + iore.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -245,20 +250,33 @@ namespace highSpeed.orderHandle
 
         private void dgvSortInfo_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dgvSortInfo.DataSource != null)
+            try
             {
-                if (e.ColumnIndex == 2)
-                {
-                    String statusText = "";
-                    switch (e.Value.ToString())
-                    {
-                        case "0":
-                            statusText = "新增";
-                            break;
 
+                if (dgvSortInfo.DataSource != null)
+                {
+                    if (e.ColumnIndex == 2)
+                    {
+                        String statusText = "";
+                        switch (e.Value.ToString())
+                        {
+                            case "0":
+                                statusText = "新增";
+                                break;
+
+                        }
+                        e.Value = statusText;
                     }
-                    e.Value = statusText;
                 }
+            }
+            catch (NullReferenceException nullref)
+            {
+                writeLog.Write("排程异常NullReferenceException:" + nullref.Message);
+            }
+            catch (Exception ex)
+            {
+
+                writeLog.Write("排程异常Exception:" + ex.Message);
             }
         }
 

@@ -100,10 +100,12 @@ namespace FollowTask
                 this.StartPosition = FormStartPosition.CenterScreen;
                 lblMachineNo.Text = "合流(" + machineno + "号机械手)";
                 Listmachine = listMachine;
+                Bind();
             }
             else
             {
-             
+                MessageBox.Show("服务器尚未连接！");
+                this.Close();
             }
         }
         /// <summary>
@@ -129,15 +131,16 @@ namespace FollowTask
         }
         private void Fm_FollowTaskMachineDetail_Load(object sender, EventArgs e)
         {
-            if (isOnLine)
-            {
+            //if (isOnLine)
+            //{
 
-                Bind();
-            }
-            else
-            {
-                MessageBox.Show("服务器尚未连接！");
-            }
+            //    Bind();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("服务器尚未连接！");
+            //    this.Close();
+            //}
         }
         void Bind()
         {
@@ -154,12 +157,13 @@ namespace FollowTask
                 foreach (var item in list)
                 {
 
-                    string lblName = "lblCig" + lablindex;
+                    string lblName = "lblCig" + lablindex;               
                     Control contr = (Label)Controls.Find(lblName, true)[0];
                     contr.Text = item.CIGARETTDENAME;
                     lablindex++;
                 }
                 BindXipan(list.Count);
+               // ListBind(list);
             }
             else
             {
@@ -179,7 +183,22 @@ namespace FollowTask
             }
             pbBind(pan, state, zhua); 
         }
+        void ListBind(List<InBound.Model.FollowTaskDeail> list)
+        {
+            if (list != null && list.Count > 0)
+            {
 
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ListViewItem lv = new ListViewItem();
+                    var mod = list[i];
+                    lv.SubItems[0].Text = mod.SortNum.ToString();//任务号
+                    lv.SubItems.Add(mod.qty.ToString());//数量 
+                    listViewMachineDetails.Items.Add(lv);
+                }
+            }
+
+        }
         
         #region 吸盘
         /// <summary >
@@ -263,10 +282,6 @@ namespace FollowTask
         decimal[] ReadDbInFo(int mainbelt, int machineno)
         {
             decimal[] sortnumAndXYnum = new decimal[2];
-            if (machineno == 1)
-            {
-                machineno = 0;
-            }
 
             sortnumAndXYnum[0] = Listmachine[5].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//0  2   4
             sortnumAndXYnum[1] = Listmachine[5].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//1   3  5

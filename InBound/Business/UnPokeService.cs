@@ -18,7 +18,148 @@ namespace InBound.Business
                 data.ExecuteStoreCommand("update t_un_poke set sortmachine=10");
             }
         }
+        //public static object[] GetTask(List<decimal> listsortnum,List<decimal> listpokenum,int[] packagemachineNo)
+        //{
 
+        //}
+
+        public static int  GetSendPackageMachine()
+        {
+
+
+            return 0;
+        }
+        /// <summary>
+        /// 获取当前包装机当前任务的总数和异型烟数量
+        /// </summary>
+        /// <param name="sortnum">当前任务号</param>
+        ///  <param name="takesize">读单量</param>
+        /// <returns>5个订单异型烟总数</returns>
+        public static decimal GetTaksQuantity(decimal sortnum,int takesize = 5)
+        {
+            decimal OqtyAndTqty = 0 ;
+            using (Entities data = new Entities())
+            {
+                var sort = (from item in data.T_UN_TASK
+                            where item.SORTNUM > sortnum
+                            orderby item.SORTNUM
+                            select item).Take(takesize).ToList();
+                foreach (var sortitem in sort)//循环读取五个单的异型烟量
+                {
+                    var query = (from item in data.T_UN_TASK
+                                 where item.SORTNUM == sortitem.SORTNUM
+                                 select item).Select(a => new { TaskQuantity = a.TASKQUANTITY }).FirstOrDefault();
+                    OqtyAndTqty  += query.TaskQuantity ?? 0;//异型烟数量
+                }
+            }
+            return OqtyAndTqty;
+        }
+        /// <summary>
+        /// 获取异型烟缓存区剩余量
+        /// </summary>
+        /// <param name="sortnum">任务号</param>
+        /// <param name="xynum">以抓烟数量</param>
+        /// <returns>剩余量</returns>
+        public static decimal GetCacheCount(decimal packagemachine,decimal sortnum , decimal xynum,decimal maxCount)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             where item.SORTNUM >= sortnum && item.STATUS >= 15 &&item.PACKAGEMACHINE == packagemachine
+                             select item).Sum(x => x.POKENUM) ?? 0;
+                if (query != null)
+                {
+                    return maxCount - (query + xynum);
+                }
+                return query;
+            }  
+        }
+        /// <summary>
+        /// 是否有未完成任务
+        /// </summary>
+        /// <param name="packagemachine">包装机号</param>
+        /// <param name="state">状态</param>
+        /// <returns></returns>
+        public static bool CheckExistPreSendTask(decimal packagemachine, decimal state)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE 
+                             where item.PACKAGEMACHINE == packagemachine && item.STATUS == state 
+                             select item).ToList();
+                if (query != null &&query.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                } 
+            } 
+        }
+        /// <summary>
+        /// 获取可发任务的包装机
+        /// </summary>
+        /// <param name="lineNum">线路</param>
+        /// <param name="sortNum">四个包装机的任务号</param>
+        /// <param name="xyNum">四个包装机的抓眼数量</param>
+        /// <param name="DISPATCHESIZE">下任务阀值</param>
+        /// <returns>包装机号</returns>
+        public static int GetSendPackageMachine(decimal lineNum,List<decimal> sortNum, List<decimal> xyNum,out decimal DISPATCHESIZE)
+        {
+            int packagemachine = 0;//包装几号
+            int start = 0;//起点
+            int end = 0;//终点
+            DISPATCHESIZE = 0;//空出多少开始下任务 （阈值）
+            if (lineNum == 1)//一线对应 1-4号包装机
+            {
+                start = 1;
+                end = 4;
+            }
+            else//二线对应 5-8包装机
+            {
+                start = 5;
+                end = 8;
+            }
+            for (int i = start; i < end; i++)//在四个包装机找可以发送任务的包装机
+            {
+                int index = 0;
+                if (!CheckExistCanSendPackeMachine(i))//当前包装机无任务跳到下个包装机
+                {
+                    index++;
+                    continue;
+                }
+                T_PRODUCE_CACHE cache = ProduceCacheService.GetUnCache(i);
+                decimal currentNum = GetCacheCount(i, sortNum[index], xyNum[index],cache.CACHESIZE??0);//获取缓存剩余量
+                WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[index] + " 已抓烟数量:" + xyNum[index]);
+                if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
+                {
+                    WriteLog.GetLog().Write("包装机号:" + i + "当前发送主皮带:" + i);
+                    index++;
+                    return i; 
+                }
+
+                index++;
+            }
+            return packagemachine;
+        }
+        public static bool CheckExistCanSendPackeMachine(decimal packagemachine)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             where item.PACKAGEMACHINE == packagemachine && item.STATUS == 10
+                             select item).FirstOrDefault();
+                if (query != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         //public static void UpdateTaskNum(List<T_UN_POKE> task, decimal sendtaskNum)
         //{
         //    using (Entities data = new Entities())

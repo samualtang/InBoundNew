@@ -18,5 +18,6 @@ namespace InBound.Model
         public String BILLCODE { get; set; }
         public decimal SORTSEQ { get; set; }
         public decimal IsOnMainBelt { get; set; }//0 在机械手  1 在皮带
+        public decimal Place { get; set; }
     }
 }

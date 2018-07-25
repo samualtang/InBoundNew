@@ -175,16 +175,22 @@ namespace FollowTask
         /// <param name="text">第几组</param>
       
         private void Machine1_Click(object sender, EventArgs e)//机械手按钮
-        { 
-            PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
-            int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
-            Fm_FollowTaskMachineDetail fm_machinedetails = new Fm_FollowTaskMachineDetail();
-            handleumd += fm_machinedetails.GetUnionMachineDetails;
-            mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
-            handleumd(machineno, mainbelt, listuinongroup,IsOnLine);
-            fm_machinedetails.MdiParent = this.MdiParent;
-            fm_machinedetails.Show();
-            
+        {
+            if (IsOnLine)
+            {
+                PictureBox btn = ((PictureBox)sender);//获取当前单击的实例
+                int machineno = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "")); //获取机械手
+                Fm_FollowTaskMachineDetail fm_machinedetails = new Fm_FollowTaskMachineDetail();
+                handleumd += fm_machinedetails.GetUnionMachineDetails;
+                mainbelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
+                handleumd(machineno, mainbelt, listuinongroup, IsOnLine);
+                // fm_machinedetails.MdiParent = this.MdiParent;
+                fm_machinedetails.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("服务器尚未连接！");
+            }
            
             #region 计算合流皮带理论值
             //Fm_UnionMainBelt fm_UiMainbelt = new Fm_UnionMainBelt();
@@ -296,17 +302,12 @@ namespace FollowTask
         decimal[] ReadDbInFo(int mainbelt, int machineno)
         {
             decimal[] sortnumAndXYnum = new decimal[2];
-            if (machineno == 1)
-            {
-                machineno = 0;
-            }
-            for (int i = 0 * mainbelt; i < 8 * mainbelt; i++)
-            {
-                sortnumAndXYnum[0] = listuinongroup[4].ReadD((machineno *2)).CastTo<int>(-1);//4
-                sortnumAndXYnum[1] = listuinongroup[4].ReadD(((machineno * 2) +1)).CastTo<int>(-1);//5
-            }
 
-            return sortnumAndXYnum; 
+            sortnumAndXYnum[0] = listuinongroup[4].ReadD(((machineno * 2) - 2)).CastTo<int>(-1);//4
+            sortnumAndXYnum[1] = listuinongroup[4].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//5
+
+
+            return sortnumAndXYnum;
         }
         /// <summary>
         /// 连接标识符
@@ -410,8 +411,8 @@ namespace FollowTask
                 Fm_UinonCache fmuc = new Fm_UinonCache(); 
                 handeleuCache += fmuc.GetUnionNowMachineTask;
                 handeleuCache(machineno, listuinongroup);
-                fmuc.MdiParent = this.MdiParent;
-                fmuc.Show(); 
+                //fmuc.MdiParent = this.MdiParent;
+                fmuc.ShowDialog(); 
             }
             else
             {

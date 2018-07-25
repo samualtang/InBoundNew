@@ -30,7 +30,7 @@ namespace FollowTask
         /// <summary>
         /// 读取索引
         /// </summary>
-        static int ReadIndex = 0;
+        static int ReadIndexByBtn = 0;
         
         /// <summary>
         /// LIST DB块
@@ -127,6 +127,7 @@ namespace FollowTask
             strCigaNameAndQty = pb.AccessibleName.Split('|');
             p.SetToolTip(pb, "卷烟名称:" + strCigaNameAndQty[0] + "\r\n" + "卷烟编号:" + strCigaNameAndQty[2] + "\r\n" + "总数：" + strCigaNameAndQty[1]);
         }
+        delegate void Handledelegate();
         public void GetMainInfo(int mainbelt, List<Group> list,bool isonline)
         {
             if (isonline)
@@ -137,7 +138,7 @@ namespace FollowTask
                 listMainBelt = list;
                 lblSortnum.Text = "任务号：0";
                 lblNum.Text = "数量：0";
-               ThreadRead();
+                ThreadRead();
                
             }
             else
@@ -149,9 +150,11 @@ namespace FollowTask
         }
         void ThreadRead()
         {
-            ReadIndex = 0;
+           
+            ReadIndexByBtn = 0;
             ReadDBinfo(MainBelt);//读取DB块上的值
-            ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上
+            ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上 
+           
         }
 
 
@@ -191,7 +194,7 @@ namespace FollowTask
                 ReadIndex = ReadIndex + 3;
             }
             MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
-            ListmbInfo = ListmbInfo.OrderByDescending(x=>x.Place).ToList();// ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
+            ListmbInfo = ListmbInfo.OrderBy(x=>x.Place).ToList();// ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
         }
     
         /// <summary>
@@ -225,6 +228,7 @@ namespace FollowTask
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         IsOnBelt = x.IsOnMainBelt, 
+                        PLACE = ListmbInfo[index].Place +"米",
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//往panel控件增添当前数据
@@ -250,6 +254,8 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
                 dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
                 dgvMainBeltInfo.Columns[5].HeaderCell.Value = "是否在主皮带";
+                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "位置";
+
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -260,7 +266,7 @@ namespace FollowTask
        
         private void btnLast_Click(object sender, EventArgs e)
         {
-            if (ReadIndex == 0)
+            if (ReadIndexByBtn == 0)
             {
                 //ReadListInfo(0);
                 MessageBox.Show("是第一批了"); 
@@ -268,8 +274,8 @@ namespace FollowTask
             }
             else
             {
-                ReadIndex = ReadIndex - 1;
-                ReadListInfo(ReadIndex);
+                ReadIndexByBtn = ReadIndexByBtn - 1;
+                ReadListInfo(ReadIndexByBtn);
              
              
             }
@@ -279,7 +285,7 @@ namespace FollowTask
         private void btnNext_Click(object sender, EventArgs e)//点击下一个
         {
           
-            if (ReadIndex >= (ListmbInfo.Count -1))
+            if (ReadIndexByBtn >= (ListmbInfo.Count -1))
             {
                // ReadListInfo(ListmbInfo.Count);  
                 MessageBox.Show("最后一批了");
@@ -287,8 +293,8 @@ namespace FollowTask
             }
             else
             {
-                ReadIndex = ReadIndex + 1;
-                ReadListInfo(ReadIndex); 
+                ReadIndexByBtn = ReadIndexByBtn + 1;
+                ReadListInfo(ReadIndexByBtn); 
             }
          
         }
@@ -316,6 +322,7 @@ namespace FollowTask
                                 un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
                                 un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
                                 un.IsOnMainBelt = ListmbInfo[i].taskInfo[j].IsOnMainBelt;
+                                un.Place = ListmbInfo[i].Place ;
                                 listunion.Add(un);
                             }
                         }
@@ -331,6 +338,7 @@ namespace FollowTask
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         IsOnBelt = x.IsOnMainBelt, 
+                        Place = x.Place+"米",
                     }).ToList();//根据索引读取相对应数据  
                     DgvBind();
                     btnAllInfo.Text = "返 回";
@@ -342,7 +350,7 @@ namespace FollowTask
             }
             else
             {
-                ReadListInfo(ReadIndex);
+                ReadListInfo(ReadIndexByBtn);
                 btnAllInfo.Text = "所 有";
             }
         }
@@ -403,7 +411,7 @@ namespace FollowTask
             }
             else
             {
-                ReadListInfo(ReadIndex);
+                ReadListInfo(ReadIndexByBtn);
                 btnCx.Text = "查询";
             }
         }

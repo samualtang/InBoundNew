@@ -21,5 +21,18 @@ namespace InBound.Business
                 return query;
             }
         }
+
+
+        public static T_PRODUCE_CACHE GetUnCache(decimal packagemachine)
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_CACHE
+                             where item.PACKAGEMACHINE == packagemachine
+                                 && item.STATE == 10
+                             select item).FirstOrDefault();
+                return query;
+            }
+        }
     }
 }

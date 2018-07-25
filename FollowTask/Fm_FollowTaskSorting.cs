@@ -221,6 +221,7 @@ namespace FollowTask
             {
                 groupBoxUnionInfo.Visible = true;
                 panelCig.Controls.Clear();
+
                 dgvSortingBeltInfo.DataSource = null;//重置数据显示控件 
                 if (ListmbInfo[index].taskInfo != null && ListmbInfo[index].taskInfo.Count > 0)//当数据不为空
                 {
@@ -242,6 +243,7 @@ namespace FollowTask
                        GroupNo = x.groupno,
                        MEACHINESEQ = x.machineseq,
                        SORTNUM = x.SortNum,
+                       PLACE = ListmbInfo[index].Place +"米",
                    }).ToList();//根据索引读取相对应数据 
                     DgvBind();
                     addPanel(ListmbInfo[index].taskInfo);//根据当前卷烟信息 往panel控件添加数据
@@ -274,6 +276,7 @@ namespace FollowTask
                 dgvSortingBeltInfo.Columns[4].HeaderCell.Value = "组号";
                 dgvSortingBeltInfo.Columns[5].HeaderCell.Value = "物理通道号";
                 dgvSortingBeltInfo.Columns[6].HeaderCell.Value = "任务号";
+                dgvSortingBeltInfo.Columns[7].HeaderCell.Value = "位置";
                 //dgbMainBeltInfo.Columns[4].HeaderCell.Value = "数量";
                 //dgbMainBeltInfo.Columns[5].HeaderCell.Value = "组号";
                 //dgbMainBeltInfo.Columns[6].HeaderCell.Value = "物理通道号";
@@ -359,6 +362,7 @@ namespace FollowTask
                                     un.qty = ListmbInfo[i].taskInfo[j].qty;
                                     un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
                                     un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                                    un.Place = ListmbInfo[i].Place;
                                     listunion.Add(un);
                                 }
                             }
@@ -373,6 +377,7 @@ namespace FollowTask
                             GroupNo = x.groupno,
                             MEACHINESEQ = x.machineseq,
                             SORTNUM = x.SortNum,
+                             PLACE=x.Place+"米",
                         }).ToList();//根据索引读取相对应数据 ;
                         btnAllInfo.Text = "返回";
                     }

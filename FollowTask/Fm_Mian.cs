@@ -47,8 +47,6 @@ namespace FollowTask
         List<Group> listSortTaskGroup = new List<Group>();
         public delegate void HandleUnion(string text, List<Group> listgroup, bool inonline);//合流委托
         HandleUnion Union;
-        private delegate void HandleClosing(bool guan);//窗体关闭委托
-        HandleClosing hc;
         public delegate void HandleSorting(string text, List<Group> list, bool isonline);//预分拣委托
         HandleSorting Sorting;
 
@@ -57,6 +55,7 @@ namespace FollowTask
         public Fm_Mian()
         {
             InitializeComponent();
+            //InBound.Business.UnPokeService.GetTaksQuantity(73868);
             this.WindowState = FormWindowState.Maximized;
             CheckForIllegalCrossThreadCalls = false;
             treeV.Enabled = false;

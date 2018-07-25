@@ -43,6 +43,7 @@ namespace FollowTask
             MainBelt = (int)Math.Ceiling(((double)machineno / 8));//获取主皮带 
             lblCacheText.Text = machineno + "号机械手缓存区香烟排序";
             listUnionMachine = list;
+            GetDate();
            // Fm_UinonCache_Load(null, null);
         }
      
@@ -117,7 +118,7 @@ namespace FollowTask
        #endregion
         private void Fm_UinonCache_Load(object sender, EventArgs e)
         {
-            GetDate();
+          
         }
         void GetDate()
         {

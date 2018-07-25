@@ -182,7 +182,14 @@ namespace InBound.Business
                 else return null;
             }
         }
-
+        /// <summary>
+        /// 获取合流机械手信息
+        /// </summary>
+        /// <param name="sortnum">任务号</param>
+        /// <param name="mainbelt">主皮带</param>
+        /// <param name="groupno">组号</param>
+        /// <param name="xynum">吸烟数量</param>
+        /// <returns></returns>
         public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno,decimal xynum)
         {
             using (Entities dataentity  = new Entities())
@@ -244,7 +251,7 @@ namespace InBound.Business
                 {
                     item.POKENUM = 1; 
                 }
-                return newlist;
+                return newlist.OrderBy(a=> a.SortNum).ToList();
 
             }
             else
