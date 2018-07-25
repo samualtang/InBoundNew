@@ -470,7 +470,7 @@ namespace SpecialShapeSmoke
             }
             catch (Exception e)
             {
-
+                MessageBox.Show("放烟错误3");
                 writeLog.Write("调用方法：clearAllText():时发生异常，" + e.Message + "/r/n异常源为：" + e.Source);
             }
 
@@ -684,9 +684,9 @@ namespace SpecialShapeSmoke
                 //writeLog.Write("Receive Resend Data:" + data);
                 
             }
-            catch
+            catch(Exception ex)   
             {
-                writeLog.Write("getData()数据获取失败！");
+                writeLog.Write("getData()数据获取失败！"+ex.Message);
             }
         }
         NowView fNowView;
@@ -817,6 +817,7 @@ namespace SpecialShapeSmoke
                 }
                 catch (Exception e)
                 {
+                    MessageBox.Show("放烟错误");
                     writeLog.Write("initText();生成数据集合时发生异常：" + e.Message);
                 }
             }
@@ -958,6 +959,7 @@ namespace SpecialShapeSmoke
                 }
                 catch (Exception e)
                 {
+                    MessageBox.Show("放烟错误");
                     writeLog.Write("initTextUpOrDn()绑定数据时发生异常:" + e.Message);
                 }
             }
@@ -1364,25 +1366,35 @@ namespace SpecialShapeSmoke
 
         private void TextboxFZ3(int id, string str)
         {
-            if (this.txtbox2.InvokeRequired)
+            try
             {
-                FlushClient fc = new FlushClient(TextboxFZ3);
-                this.Invoke(fc, id, str); //通过代理调用刷新方法
-            }
-            else
-            {
-                if (id == 2)
+                if (this.txtbox2.InvokeRequired)
                 {
-                    this.txtbox2.Text = str;
-                    pullcigarette(txtbox2.Text, "3", Convert.ToDecimal(boxText.First()));
+                    FlushClient fc = new FlushClient(TextboxFZ3);
+                    this.Invoke(fc, id, str); //通过代理调用刷新方法
                 }
-                if (id == 1)
+                else
                 {
-                    this.txtbox1.Text = str;
-                    pullcigarette(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));
+                    if (id == 2)
+                    {
+                        this.txtbox2.Text = str;
+                        pullcigarette(txtbox2.Text, "3", Convert.ToDecimal(boxText.First()));
+                    }
+                    if (id == 1)
+                    {
+                        this.txtbox1.Text = str;
+                        pullcigarette(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));
 
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Label lab = (Label)Controls.Find("orBox" + (id == 1 ? 1 : 3), true)[0].Controls.Find("lab0", true)[0];
+                lab.BackColor = Color.Blue;
+                writeLog.Write(id+"号数据区域异常，" + e.Message);
+            }
+           
         }
         private delegate void FlushClient(int b, string a);
 
