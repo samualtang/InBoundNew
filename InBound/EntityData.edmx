@@ -13,6 +13,24 @@
           <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.Store.T_PRODUCE_CACHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.Store.T_PRODUCE_POKE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.Store.T_PRODUCE_POKESEQ" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_PRODUCE_POKESEQ">
+            <DefiningQuery>SELECT 
+      "T_PRODUCE_POKESEQ"."POKEID" AS "POKEID", 
+      "T_PRODUCE_POKESEQ"."TROUGHNUM" AS "TROUGHNUM", 
+      "T_PRODUCE_POKESEQ"."POKENUM" AS "POKENUM", 
+      "T_PRODUCE_POKESEQ"."SORTSTATE" AS "SORTSTATE", 
+      "T_PRODUCE_POKESEQ"."TASKNUM" AS "TASKNUM", 
+      "T_PRODUCE_POKESEQ"."TASKQTY" AS "TASKQTY", 
+      "T_PRODUCE_POKESEQ"."MACHINESEQ" AS "MACHINESEQ", 
+      "T_PRODUCE_POKESEQ"."MAINBELT" AS "MAINBELT", 
+      "T_PRODUCE_POKESEQ"."GROUPNO" AS "GROUPNO", 
+      "T_PRODUCE_POKESEQ"."PACKAGEMACHINE" AS "PACKAGEMACHINE", 
+      "T_PRODUCE_POKESEQ"."SORTNUM" AS "SORTNUM", 
+      "T_PRODUCE_POKESEQ"."BILLCODE" AS "BILLCODE", 
+      "T_PRODUCE_POKESEQ"."CIGARETTECODE" AS "CIGARETTECODE", 
+      "T_PRODUCE_POKESEQ"."CIGARETTENAME" AS "CIGARETTENAME"
+      FROM "ZOOMTEL"."T_PRODUCE_POKESEQ" "T_PRODUCE_POKESEQ"</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.Store.T_PRODUCE_PRESORTINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
@@ -162,6 +180,28 @@
           <Property Name="SECSORTNUM" Type="number" />
           <Property Name="INVFLAG" Type="varchar2" MaxLength="10" />
           <Property Name="SENDPOKENUM" Type="number" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“ZOOMTEL.T_PRODUCE_POKESEQ”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="T_PRODUCE_POKESEQ">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="TROUGHNUM" Type="varchar2" MaxLength="30" />
+          <Property Name="POKENUM" Type="number" />
+          <Property Name="SORTSTATE" Type="number" />
+          <Property Name="TASKNUM" Type="number" />
+          <Property Name="TASKQTY" Type="number" />
+          <Property Name="MACHINESEQ" Type="number" />
+          <Property Name="MAINBELT" Type="number" />
+          <Property Name="GROUPNO" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="T_PRODUCE_PRESORTINFO">
           <Key>
@@ -872,6 +912,7 @@
           <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.T_PRODUCE_CACHE" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.T_UN_POKE_HUNHE" />
+          <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.T_PRODUCE_POKESEQ" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1626,6 +1667,25 @@
           <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="PULLSTATUS" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_POKESEQ">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TROUGHNUM" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTSTATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TASKQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="GROUPNO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2424,6 +2484,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_POKESEQ">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_POKESEQ">
+              <MappingFragment StoreEntitySet="T_PRODUCE_POKESEQ">
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
+                <ScalarProperty Name="TASKQTY" ColumnName="TASKQTY" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+                <ScalarProperty Name="SORTSTATE" ColumnName="SORTSTATE" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2481,6 +2561,7 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_CACHE" Width="1.5" PointX="7.375" PointY="19.75" Height="3.0289925130208246" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.32255126953126" />
         <EntityTypeShape EntityType="Model.T_UN_POKE_HUNHE" Width="1.5" PointX="16.375" PointY="6.75" Height="2.1050219726562602" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_POKESEQ" Width="1.5" PointX="9.375" PointY="19.75" Height="3.5833748372395746" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -76,16 +76,42 @@ namespace FormUI
         #endregion
 
         SerialPort sp = new SerialPort();
+        SerialPort sp1 = new SerialPort();
+        public void OpenSerialPort1()
+        {
+
+            sp1.PortName = "COM4";
+            if (!sp1.IsOpen)
+            {
+                try
+                {
+                    sp1.ReadBufferSize = 32;
+                    sp1.BaudRate = 9600;
+                    sp1.Open();
+                    sp1.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived1);
+                }
+                catch
+                {
+                    //if (sp!=null && sp.IsOpen)
+                    //{
+                    //    sp.Close();
+                    //}
+                    //Thread.Sleep(5000);
+                    //OpenSerialPort();
+                }
+            }
+
+        }
         public void OpenSerialPort()
         {
 
-            sp.PortName = "COM20";
+            sp.PortName = "COM3";
             if (!sp.IsOpen)
             {
                 try
                 {
                     sp.ReadBufferSize = 32;
-                    sp.BaudRate = 57600;
+                    sp.BaudRate = 9600;
                     sp.Open();
                     sp.DataReceived += new SerialDataReceivedEventHandler(sp_DataReceived);
                 }
@@ -102,7 +128,17 @@ namespace FormUI
 
         }
         void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        { }
+        {
+             SerialPort sp = sender as SerialPort;
+            String tempCode = sp.ReadExisting();
+            MessageBox.Show("d1"+tempCode);
+        }
+        void sp_DataReceived1(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = sender as SerialPort;
+            String tempCode = sp.ReadExisting();
+            MessageBox.Show("d2"+tempCode);
+        }
         #region btn_OK
         private void button1_Click(object sender, EventArgs e)
         {
@@ -151,6 +187,12 @@ namespace FormUI
             info1.mainbelt = "2";
             infolist.Add(info);
             MainBeltInfoService.GetMainBeltInfo(infolist);
+           // OpenSerialPort();
+          //  OpenSerialPort1();
+            if (info1.Quantity == 1)
+            {
+                return;
+            }
             try
             {
               // throw(new Exception());
