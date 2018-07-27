@@ -107,12 +107,12 @@ namespace FollowTask
             {
                 PictureBox img = new PictureBox();
                 Label lbl = new Label();
-                lbl.Text = before[i].qty.ToString();
+                lbl.Text = before[i].POKENUM.ToString();
                 lbl.BackColor = Color.Transparent;
                 lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
                 img.Name = "ImgName" + Guid.NewGuid().ToString();
                 img.Size = new System.Drawing.Size(20, 80);
-                img.AccessibleName = before[i].CIGARETTDENAME + "|" + before[i].qty + "|" + before[i].CIGARETTDECODE;//卷烟名称 和 QTY
+                img.AccessibleName = before[i].CIGARETTDENAME + "|" + before[i].POKENUM + "|" + before[i].CIGARETTDECODE;//卷烟名称 和 QTY
                 img.BackgroundImage = GetImg(before[i].CIGARETTDECODE);
                 img.SizeMode = PictureBoxSizeMode.Zoom;
                 img.BorderStyle = BorderStyle.FixedSingle;
@@ -239,7 +239,7 @@ namespace FollowTask
                        CIGARETTECODE = x.CIGARETTDECODE,
                        CIGARETTNAME = x.CIGARETTDENAME,
                        MAINBELT = x.MainBelt,
-                       QTY = x.qty,
+                       QTY = x.POKENUM,
                        GroupNo = x.groupno,
                        MEACHINESEQ = x.machineseq,
                        SORTNUM = x.SortNum,
@@ -359,7 +359,7 @@ namespace FollowTask
                                 {
                                     un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
                                     un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
-                                    un.qty = ListmbInfo[i].taskInfo[j].qty;
+                                    un.POKENUM = ListmbInfo[i].taskInfo[j].POKENUM;
                                     un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
                                     un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
                                     un.Place = ListmbInfo[i].Place;
@@ -373,7 +373,7 @@ namespace FollowTask
                             CIGARETTECODE = x.CIGARETTDECODE,
                             CIGARETTNAME = x.CIGARETTDENAME,
                             MAINBELT = x.MainBelt,
-                            QTY = x.qty,
+                            QTY = x.POKENUM,
                             GroupNo = x.groupno,
                             MEACHINESEQ = x.machineseq,
                             SORTNUM = x.SortNum,
