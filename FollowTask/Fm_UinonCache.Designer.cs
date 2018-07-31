@@ -139,7 +139,6 @@
             this.dgvUnionCache.Location = new System.Drawing.Point(3, 20);
             this.dgvUnionCache.MultiSelect = false;
             this.dgvUnionCache.Name = "dgvUnionCache";
-            this.dgvUnionCache.ReadOnly = true;
             this.dgvUnionCache.RowHeadersVisible = false;
             this.dgvUnionCache.RowTemplate.Height = 23;
             this.dgvUnionCache.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -150,7 +149,6 @@
             // 
             this.Column6.HeaderText = "序号";
             this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
             this.Column6.Width = 55;
             // 
             // Column5
@@ -158,7 +156,6 @@
             this.Column5.DataPropertyName = "mianbelt";
             this.Column5.HeaderText = "主皮带";
             this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
             this.Column5.Width = 85;
             // 
             // Column4
@@ -166,13 +163,11 @@
             this.Column4.DataPropertyName = "pokeid";
             this.Column4.HeaderText = "任务号";
             this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
             // 
             // Column7
             // 
             this.Column7.HeaderText = "组号";
             this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
             this.Column7.Width = 50;
             // 
             // Column3
@@ -180,7 +175,6 @@
             this.Column3.DataPropertyName = "pokenum";
             this.Column3.HeaderText = "数量";
             this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
             this.Column3.Width = 50;
             // 
             // Column1
@@ -188,14 +182,12 @@
             this.Column1.DataPropertyName = "cigrcode";
             this.Column1.HeaderText = "香烟编号";
             this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
             // 
             // Column2
             // 
             this.Column2.DataPropertyName = "cigrname";
             this.Column2.HeaderText = "香烟名称";
             this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
             // 
             // groupBox2
             // 

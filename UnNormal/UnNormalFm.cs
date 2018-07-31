@@ -297,29 +297,30 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("烟仓二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
+                    string OutStr = "";
                    // decimal packageNum = 0;
-                    object[] datas = UnPokeService.getTask(25, "2", out list1);
+                    object[] datas = UnPokeService.getTask(25, "2", out list1, out OutStr);
                     if (int.Parse(datas[0].ToString())== 0)
                     {
                         updateListBox("烟仓二线分拣数据发送完毕");
                         return;
                     }
-                    string logstr = "";
-                    for (int i = 0; i < datas.Length; i++)
-                    {
-                        logstr += i + ":" + datas[i] + ";";
-                    }
-                    writeLog.Write("烟仓分拣二线:" + logstr);
-                    updateListBox("烟仓分拣二线:" + logstr);
+                    //string logstr = "";
+                    //for (int i = 0; i < datas.Length; i++)
+                    //{
+                    //    logstr += i + ":" + datas[i] + ";";
+                    //}
+                    writeLog.Write("烟仓分拣二线:" + OutStr);
+                    updateListBox("烟仓分拣二线:" + OutStr);
                     taskGroup2.SyncWrite(datas);
                    
                     //写完db块后,再读出来 
-                    String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 9)
-                    {
-                        p1 += taskGroup2.ReadD(i).ToString() + ";";//pokeid  
-                    }
-                    writeLog.Write("读出烟仓二线电控写入值:" + p1);
+                    //String p1 = "";
+                    //for (int i = 0; i <= 225; i = i + 9)
+                    //{
+                    //    p1 += taskGroup2.ReadD(i).ToString() + ";";//pokeid  
+                    //}
+                    //writeLog.Write("读出烟仓二线电控写入值:" + p1);
                     
                 }
             }
@@ -352,30 +353,30 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("烟仓一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                   
-                    object[] datas = UnPokeService.getTask(25, "1", out list);
+                    string OutStr = "";
+                    object[] datas = UnPokeService.getTask(25, "1", out list, out OutStr);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟仓一线分拣数据发送完毕");
                         return;
                     } 
-                    string logstr = "";
-                    for (int i = 0; i < datas.Length; i++)
-                    {
-                        logstr += i + ":" + datas[i] + ";";
-                    }
+                    //string logstr = "";
+                    //for (int i = 0; i < datas.Length; i++)
+                    //{
+                    //    logstr += i + ":" + datas[i] + ";";
+                    //}
 
-                    writeLog.Write("分拣烟仓一线:" + logstr);
-                    updateListBox("分拣烟仓一线:" + logstr);
+                    writeLog.Write("分拣烟仓一线:" + OutStr);
+                    updateListBox("分拣烟仓一线:" + OutStr);
 
                     taskgroup1.SyncWrite(datas);  
                     //写完db块后,再读出来 
-                    String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 9)
-                    {
-                        p1 += taskgroup1.ReadD(i).ToString() + ";";//pokeid   
-                    }
-                    writeLog.Write("读出烟仓一线电控写入值:" + p1);
+                    //String p1 = "";
+                    //for (int i = 0; i <= 225; i = i + 9)
+                    //{
+                    //    p1 += taskgroup1.ReadD(i).ToString() + ";";//pokeid   
+                    //}
+                   //writeLog.Write("读出烟仓一线电控写入值:" + p1);
                     
                 }
             }
@@ -405,30 +406,30 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("烟柜二线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
-                   
+                    string OutStr = "";
                  //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "2", out listSix2A);
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "2", out listSix2A, out OutStr);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜二线分拣数据发送完毕");
                         return;
                     }
-                    string logstr = "";
-                    for (int i = 0; i < datas.Length; i++)
-                    {
-                        logstr += i + ":" + datas[i] + ";";
-                    }
-                    writeLog.Write("烟柜二线分拣发送数据:" + logstr);
-                    updateListBox("烟柜二线分拣发送数据:" + logstr);
+                    //string logstr = "";
+                    //for (int i = 0; i < datas.Length; i++)
+                    //{
+                    //    logstr += i + ":" + datas[i] + ";";
+                    //}
+                    writeLog.Write("烟柜二线分拣发送数据:" + OutStr);
+                    updateListBox("烟柜二线分拣发送数据:" + OutStr);
                     //写电控
                     SixCabinetGroup2A.SyncWrite(datas); 
                     //读电控
-                    String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 9)
-                    {
-                        p1 += SixCabinetGroup2A.ReadD(i).ToString()+";";//pokeid  
-                    }
-                    writeLog.Write("读出烟柜二线电控写入值:" + p1);
+                    //String p1 = "";
+                    //for (int i = 0; i <= 225; i = i + 9)
+                    //{
+                    //    p1 += SixCabinetGroup2A.ReadD(i).ToString()+";";//pokeid  
+                    //}
+                    //writeLog.Write("读出烟柜二线电控写入值:" + p1);
                   
                 }
             }
@@ -454,34 +455,35 @@ namespace SortingControlSys.SortingControl
             try
             {
                 issendsixone = false;
+                string OutStr = "";
                 int flag = SendTaskStatesGroup.ReadD(3).CastTo<int>(-1);
                 writeLog.Write("烟柜一线发送数据前读标志位：" + flag);
                 if (flag == 2)
                 {
 
                     //   string linenum = UnPokeService.getSixCabinetLineNum();//烟柜分拣线
-                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix1B);
+                    object[] datas = UnPokeService.getSixCabinetTask(25, "1", out listSix1B, out OutStr);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟柜一线分拣数据发送完毕");
                         return;
                     }
-                    string logstr = "";
-                    for (int i = 0; i < datas.Length; i++)
-                    {
-                        logstr += i + ":" + datas[i] + ";";
-                    }
-                    writeLog.Write("烟柜一线分拣发送数据:" + logstr);
-                    updateListBox("烟柜一线分拣发送数据:" + logstr);
+                    //string logstr = "";
+                    //for (int i = 0; i < datas.Length; i++)
+                    //{
+                    //    logstr += i + ":" + datas[i] + ";";
+                    //}
+                    writeLog.Write("烟柜一线分拣发送数据:" + OutStr);
+                    updateListBox("烟柜一线分拣发送数据:" + OutStr);
                     //写电控
                     SixCabinetGroup1B.SyncWrite(datas);
                     //读电控
-                    String p1 = "";
-                    for (int i = 0; i <= 225; i = i + 9)
-                    {
-                        p1 += SixCabinetGroup1B.ReadD(i).ToString() + ";";//pokeid  
-                    }
-                    writeLog.Write("读出烟柜一线电控写入值:" + p1);
+                    //String p1 = "";
+                    //for (int i = 0; i <= 225; i = i + 9)
+                    //{
+                    //    p1 += SixCabinetGroup1B.ReadD(i).ToString() + ";";//pokeid  
+                    //}
+                    //writeLog.Write("读出烟柜一线电控写入值:" + p1);
 
                 }
             }

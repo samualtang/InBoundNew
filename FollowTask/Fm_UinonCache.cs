@@ -125,12 +125,15 @@ namespace FollowTask
             try
             {
                 ReadDbInFo(MainBelt, MachineNo);
+                dgvUnionCache.DataSource = null;
+                list.Clear();
                 if (sortnumAndXYnum.Count() != 0)
                 {
                     //ReadDBInfo(listUnionMachine[5], MainBelt);
                     txtSortnum.Text = sortnumAndXYnum[0] + "";
                     txtPokenum.Text = sortnumAndXYnum[1] + "";
                     list = FolloTaskService.getUnionCache(groupno, MainBelt, sortnumAndXYnum[0], sortnumAndXYnum[1]);//获取数据
+                    
                     ListViewBind(list);
                 }
             }
@@ -173,6 +176,8 @@ namespace FollowTask
         { 
             try
             {
+                //dgvUnionCache.DataSource = null;
+                dgvUnionCache.Rows.Clear(); 
                 if (list != null)
                 {
                     if (list.Count > 0)
@@ -250,6 +255,8 @@ namespace FollowTask
                 dgVprint1.Print(dgvUnionCache);
             
         }
+
+
 
       
 
