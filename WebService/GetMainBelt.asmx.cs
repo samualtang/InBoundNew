@@ -25,7 +25,14 @@ namespace WebService
         [WebMethod]
         public string GetMainBeltInfo(int mainBelt)
         {
-            OpcServer.Connect();
+            try
+            {
+                OpcServer.Connect();
+            }
+            catch(Exception ex)
+            {
+                return "远程连接失败,请检查网络";
+            }
             List<MainBeltInfo> ListmbInfo = new List<MainBeltInfo>();
            
             int ReadIndex = 0;
@@ -59,6 +66,7 @@ namespace WebService
                     ReadIndex = ReadIndex + 3;
                 }
             MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
+            ListmbInfo = ListmbInfo.OrderBy(x => x.Place).ToList();
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof( List<MainBeltInfo>));
             using (MemoryStream ms = new MemoryStream())
             {
