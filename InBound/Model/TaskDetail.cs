@@ -57,6 +57,7 @@ namespace InBound.Model
        public String CUSTOMERNAME { get; set; }
        public String BILLCODE { get; set; }
        public decimal SORTSEQ { get; set; }
-        
+       public string TROUGHNUM { get; set; }
+       public decimal TASKQTY { get; set; }
     }
 }

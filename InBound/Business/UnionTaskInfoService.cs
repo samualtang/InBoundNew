@@ -57,6 +57,70 @@ namespace InBound.Business
                 }
             }
         }
+        /// <summary>
+        /// 条烟识别
+        /// </summary>
+        public static void InsertPokeseqInfo()
+        {
+            using (Entities entity = new Entities())
+            {
+              
+                int index = 1;
+                var listsortnum = GetAllSortnum();
+                foreach (var item in listsortnum)
+                {
+
+                    List<UnionTaskInfo> info = GetUnionTaskInfo(item).ToList();
+                    foreach (var union in info)
+                    {
+                        T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
+                        poke.POKEID = index++;
+                        poke.TROUGHNUM = union.TROUGHNUM;
+                        poke.POKENUM = union.POKENUM;
+                        poke.SORTSTATE = 20;
+                        poke.TASKQTY = union.TASKQTY;
+                        poke.TASKNUM = union.TASKNUM;
+                        poke.MACHINESEQ = union.machineseq;
+                        poke.MAINBELT = union.MainBelt;
+                        poke.GROUPNO = union.groupno;
+                        poke.PACKAGEMACHINE = union.PACKAGEMACHINE;
+                        poke.SORTNUM = union.SortNum;
+                        poke.BILLCODE = union.BILLCODE;
+                        poke.CIGARETTECODE = union.CIGARETTDECODE;
+                        poke.CIGARETTENAME = union.CIGARETTDENAME;
+                        entity.AddToT_PRODUCE_POKESEQ(poke); 
+                    }
+                    entity.SaveChanges();
+                }
+               
+            }
+        }
+   
+        
+        /// <summary>
+        /// 获取所有任务号
+        /// </summary>
+        /// <returns></returns>
+        public static List<decimal> GetAllSortnum()
+        {
+            List<decimal> sortnum = new List<decimal>();
+            using (Entities entity = new Entities())
+            {
+                var sortquery = (from item in entity.T_PRODUCE_POKE
+                                 orderby item.SORTNUM
+                                 select item).Select(a=>  new {SORTNUM = a.SORTNUM ??0}).Distinct().OrderBy(x=> x.SORTNUM ).ToList();
+                foreach (var item in sortquery)
+                {
+                    sortnum.Add(item.SORTNUM);
+                }
+            }
+            return sortnum;
+        }
+        /// <summary>
+        /// 获取当前任务号卷烟进入包装机的顺序
+        /// </summary>
+        /// <param name="sortnum">任务号</param>
+        /// <returns>卷烟顺序</returns>
         public static List<UnionTaskInfo> GetUnionTaskInfo(decimal sortnum)
         {
             using (Entities entity = new Entities())
@@ -82,17 +146,17 @@ namespace InBound.Business
                                              CUSTOMERNAME=item3.CUSTOMERNAME,
                                              SORTSEQ=item3.SORTSEQ??0,
                                             CIGARETTDECODE = item2.CIGARETTECODE,
-                                            CIGARETTDENAME = item2
-                                                .CIGARETTENAME,
+                                            CIGARETTDENAME = item2.CIGARETTENAME,
                                             GroupNO = item.GROUPNO ?? 0,
                                             Machineseq = item.MACHINESEQ ?? 0,
                                             MainBelt = item.MAINBELT ?? 0,
-                                            SortNum
-                                                = item.SORTNUM ?? 0,
+                                            SortNum= item.SORTNUM ?? 0,
                                             POKENUM = item.POKENUM ?? 0,
-                                            MachineState = item.MACHINESTATE ?? 0
-                                           
-
+                                            MachineState = item.MACHINESTATE ?? 0,
+                                             PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0,
+                                             TROUGHNUM = item.TROUGHNUM,
+                                             TaskNum = item.TASKNUM ?? 0,
+                                             TASKQTY = item.TASKQTY ?? 0,
                                         }).ToList();
 
                         var exitLoop = false;
@@ -131,19 +195,23 @@ namespace InBound.Business
                                     {
                                         if (tempcount + titem.POKENUM <= 10)
                                         {
-                                            info.Add( new UnionTaskInfo()
+                                            info.Add(new UnionTaskInfo()
                                             {
-                                                CUSTOMERNAME=titem.CUSTOMERNAME,
-                                                 BILLCODE=titem.Billcode,
-                                                 SORTSEQ=titem.SORTSEQ,
+                                                CUSTOMERNAME = titem.CUSTOMERNAME,
+                                                BILLCODE = titem.Billcode,
+                                                SORTSEQ = titem.SORTSEQ,
                                                 CIGARETTDECODE = titem.CIGARETTDECODE,
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = titem.POKENUM,
+                                                POKENUM = titem.POKENUM,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq,
-                                                 IsOnMainBelt=0
+                                                IsOnMainBelt = 0,
+                                                PACKAGEMACHINE = titem.PACKAGEMACHINE,
+                                                TASKNUM = titem.TaskNum,
+                                                TASKQTY = titem.TASKQTY,
+                                                TROUGHNUM = titem.TROUGHNUM,
                                             });
                                             titem.MachineState = 30;
                                             tempcount += titem.POKENUM;
@@ -152,7 +220,7 @@ namespace InBound.Business
                                         {
                                             if (tempcount < 10)
                                             {
-                                                info.Add( new UnionTaskInfo()
+                                                info.Add(new UnionTaskInfo()
                                                 {
                                                     CUSTOMERNAME = titem.CUSTOMERNAME,
                                                     BILLCODE = titem.Billcode,
@@ -161,10 +229,14 @@ namespace InBound.Business
                                                     CIGARETTDENAME = titem.CIGARETTDENAME,
                                                     MainBelt = titem.MainBelt,
                                                     SortNum = titem.SortNum,
-                                                    qty = 10 - tempcount,
+                                                    POKENUM = 10 - tempcount,
                                                     groupno = titem.GroupNO,
                                                     machineseq = titem.Machineseq,
-                                                    IsOnMainBelt = 0
+                                                    IsOnMainBelt = 0,
+                                                    PACKAGEMACHINE = titem.PACKAGEMACHINE,
+                                                    TASKNUM = titem.TaskNum,
+                                                    TASKQTY = titem.TASKQTY,
+                                                    TROUGHNUM = titem.TROUGHNUM,
                                                 });
                                                 titem.POKENUM = titem.POKENUM - (10 - tempcount);
                                             }
@@ -261,7 +333,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = titem.POKENUM,
+                                                POKENUM = titem.POKENUM,
                                                  groupno=titem.GroupNO,
                                                   machineseq=titem.Machineseq
                                             });
@@ -278,7 +350,7 @@ namespace InBound.Business
                                                     CIGARETTDENAME = titem.CIGARETTDENAME,
                                                     MainBelt = titem.MainBelt,
                                                     SortNum = titem.SortNum,
-                                                    qty = 10 - tempcount,
+                                                    POKENUM = 10 - tempcount,
                                                     groupno = titem.GroupNO,
                                                     machineseq = titem.Machineseq
                                                 });
@@ -361,7 +433,7 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM,
+                                            POKENUM = titem.POKENUM,
                                             groupno = titem.GroupNO,
                                             machineseq = titem.Machineseq
                                         });
@@ -378,7 +450,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount,
+                                                POKENUM = 10 - tempcount,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq
                                             });
@@ -469,7 +541,7 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM,
+                                            POKENUM = titem.POKENUM,
                                             groupno = titem.GroupNO,
                                             machineseq = titem.Machineseq
                                         });
@@ -486,7 +558,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount,
+                                                POKENUM = 10 - tempcount,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq
                                             });
@@ -568,7 +640,7 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM,
+                                            POKENUM = titem.POKENUM,
                                             groupno = titem.GroupNO,
                                             machineseq = titem.Machineseq
                                         });
@@ -585,7 +657,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount,
+                                                POKENUM = 10 - tempcount,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq
                                             });
@@ -737,7 +809,7 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM,
+                                            POKENUM = titem.POKENUM,
                                             groupno = titem.GroupNO,
                                             machineseq = titem.Machineseq
                                         });
@@ -754,7 +826,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount,
+                                                POKENUM = 10 - tempcount,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq
                                             });
@@ -835,7 +907,7 @@ namespace InBound.Business
                                             CIGARETTDENAME = titem.CIGARETTDENAME,
                                             MainBelt = titem.MainBelt,
                                             SortNum = titem.SortNum,
-                                            qty = titem.POKENUM,
+                                            POKENUM = titem.POKENUM,
                                             groupno = titem.GroupNO,
                                             machineseq = titem.Machineseq
                                         });
@@ -852,7 +924,7 @@ namespace InBound.Business
                                                 CIGARETTDENAME = titem.CIGARETTDENAME,
                                                 MainBelt = titem.MainBelt,
                                                 SortNum = titem.SortNum,
-                                                qty = 10 - tempcount,
+                                                POKENUM = 10 - tempcount,
                                                 groupno = titem.GroupNO,
                                                 machineseq = titem.Machineseq
                                             });

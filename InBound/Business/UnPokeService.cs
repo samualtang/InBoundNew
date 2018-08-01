@@ -67,7 +67,7 @@ namespace InBound.Business
                 var query = (from item in data.T_UN_POKE
                              where item.SORTNUM >= sortnum && item.STATUS >= 15 &&item.PACKAGEMACHINE == packagemachine
                              select item).Sum(x => x.POKENUM) ?? 0;
-                if (query != null)
+                if (query != 0)
                 {
                     return maxCount - (query + xynum);
                 }
@@ -226,9 +226,10 @@ namespace InBound.Business
         /// <param name="lineNum"></param>
         /// <param name="outlist"></param>
         /// <returns></returns>
-        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        public static object[] getTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out string outStr)
         {
             object[] values = new object[227];
+            String needDatas = "";
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -243,6 +244,7 @@ namespace InBound.Business
                 if (query == null)
                 {
                     outlist = new List<T_UN_POKE>();
+                    outStr  =    null;
                     return values;
                 }
 
@@ -261,7 +263,7 @@ namespace InBound.Business
                 {
                     int j = 0;
                     decimal machineseq = 0;
-                    //String customercode = "";
+                 
                     foreach (var item in list)
                     {
                         values[j * 9] = item.POKEID;//流水号
@@ -289,13 +291,18 @@ namespace InBound.Business
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = 0;//备用0
                         values[j * 9 + 8] = item.SORTNUM;//客户号
-                        j++;
+                       
                         checkcode += item.POKEID;
-                        
-                    } 
+                        needDatas += j * 9 + ":" + values[j * 9].ToString() + "," + (j * 9 + 1) + ":" + values[j * 9 + 1].ToString() + "," + (j * 9 + 2) + ":" + values[j * 9 + 2].ToString() + ","
+                          + (j * 9 + 3) + ":" + values[j * 9 + 3].ToString() + "," + (j * 9 + 4) + ":" + values[j * 9 + 4].ToString() + "," + (j * 9 + 5) + ":" + values[j * 9 + 5].ToString() + ","
+                          + (j * 9 + 6) + ":" + values[j * 9 + 6].ToString() + "," + (j * 9 + 7) + ":" + values[j * 9 + 7].ToString() + "," + (j * 9 + 8) + ":" + values[j * 9 + 8].ToString() + ";";
+                        j++;
+                    }
                     values[225] = 1;//完成信号
-                    values[226] = checkcode;//校验码,为流水号之和
+                    values[226] = checkcode;//校验码,为流水号之和 
+                    needDatas += "225:" + values[225].ToString() + ",226:" + values[226].ToString();
                 }
+                outStr = needDatas;
                 return values;
             }
         }
@@ -306,10 +313,11 @@ namespace InBound.Business
         /// <param name="lineNum"></param>
         /// <param name="outlist"></param>
         /// <returns></returns>
-        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist)
+        public static object[] getSixCabinetTask(int takeSize, string lineNum, out List<T_UN_POKE> outlist,out string outStr)
         {
            
             object[] values = new object[227];//一个任务
+            String needDatas = "";
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
@@ -323,6 +331,7 @@ namespace InBound.Business
                 if (query == null)
                 {
                     outlist = new List<T_UN_POKE>();
+                    outStr = null;
                     return values;
                     
                 }
@@ -359,13 +368,17 @@ namespace InBound.Business
                         values[j * 9 + 6] = item.PACKAGEMACHINE;//包装机号
                         values[j * 9 + 7] = 0;//备用 0
                         values[j * 9 + 8] = item.SORTNUM;//客户号
+                        needDatas += j * 9 + ":" + values[j * 9].ToString() + "," + (j * 9 + 1) + ":" + values[j * 9 + 1].ToString() + "," + (j * 9 + 2) + ":" + values[j * 9 + 2].ToString() + ","
+                           + (j * 9 + 3) + ":" + values[j * 9 + 3].ToString() + "," + (j * 9 + 4) + ":" + values[j * 9 + 4].ToString() + "," + (j * 9 + 5) + ":" + values[j * 9 + 5].ToString() + ","
+                           + (j * 9 + 6) + ":" + values[j * 9 + 6].ToString() + "," + (j * 9 + 7) + ":" + values[j * 9 + 7].ToString() + "," + (j * 9 + 8) + ":" + values[j * 9 + 8].ToString() + ";";
                         j++;
                         checkcode += item.POKEID;
                     }
-
                     values[225] = 1;//完成信号
                     values[226] = checkcode;//校验码,为流水号之和
+                    needDatas += "225:" + values[225].ToString() + ",226:" + values[226].ToString();
                 }
+                outStr = needDatas;
                 return values;
             }
         }

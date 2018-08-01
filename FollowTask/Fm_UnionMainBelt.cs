@@ -214,8 +214,8 @@ namespace FollowTask
                 lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
                 lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
-                addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.qty,true);
-                lv.SubItems.Add(mod.qty.ToString());
+                addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.POKENUM,true);
+                lv.SubItems.Add(mod.POKENUM.ToString());
                 lv.SubItems.Add(mod.groupno.ToString());
                 lv.SubItems.Add(mod.machineseq.ToString());
                 lv.SubItems.Add("");
@@ -239,8 +239,8 @@ namespace FollowTask
                 lv.SubItems.Add(mod.MainBelt.ToString());
                 lv.SubItems.Add(mod.CIGARETTDECODE.ToString());
                 lv.SubItems.Add(mod.CIGARETTDENAME.ToString());
-                addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.qty,false);
-                lv.SubItems.Add(mod.qty.ToString());
+                addPanel(i, mod.CIGARETTDECODE, mod.CIGARETTDENAME, (int)mod.POKENUM,false);
+                lv.SubItems.Add(mod.POKENUM.ToString());
                 lv.SubItems.Add(mod.groupno.ToString());
                 lv.SubItems.Add(mod.machineseq.ToString());
                 listViewBefore.Items.Add(lv);

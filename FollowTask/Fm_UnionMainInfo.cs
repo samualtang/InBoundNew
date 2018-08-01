@@ -94,12 +94,12 @@ namespace FollowTask
             {
                 PictureBox img = new PictureBox();
                 Label lbl = new Label();
-                lbl.Text =item.qty.ToString();
+                lbl.Text =item.POKENUM.ToString();
                 lbl.BackColor = Color.Transparent;
                 lbl.Font = new System.Drawing.Font("宋体", 10, FontStyle.Regular);
                 img.Name = "ImgName" + Guid.NewGuid().ToString();
                 img.Size = new System.Drawing.Size(20, 80);
-                img.AccessibleName = item.CIGARETTDENAME + "|" + item.qty + "|" + item.CIGARETTDECODE;//卷烟名称 和 QTY
+                img.AccessibleName = item.CIGARETTDENAME + "|" + item.POKENUM + "|" + item.CIGARETTDECODE;//卷烟名称 和 QTY
                 img.BackgroundImage = GetImg(item.CIGARETTDECODE);
                 img.SizeMode = PictureBoxSizeMode.Zoom;
                 img.BorderStyle = BorderStyle.FixedSingle;
@@ -224,7 +224,7 @@ namespace FollowTask
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
                         CIGARETTNAME = x.CIGARETTDENAME,
-                        QTY = x.qty,
+                        QTY = x.POKENUM,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         IsOnBelt = x.IsOnMainBelt, 
@@ -318,7 +318,7 @@ namespace FollowTask
                             {
                                 un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
                                 un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
-                                un.qty = ListmbInfo[i].taskInfo[j].qty;
+                                un.POKENUM = ListmbInfo[i].taskInfo[j].POKENUM;
                                 un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
                                 un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
                                 un.IsOnMainBelt = ListmbInfo[i].taskInfo[j].IsOnMainBelt;
@@ -334,7 +334,7 @@ namespace FollowTask
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
                         CIGARETTNAME = x.CIGARETTDENAME,
-                        QTY = x.qty,
+                        QTY = x.POKENUM,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         IsOnBelt = x.IsOnMainBelt, 
@@ -399,7 +399,7 @@ namespace FollowTask
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
                         CIGARETTNAME = x.CIGARETTDENAME,
-                        QTY = x.qty,
+                        QTY = x.POKENUM,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                       //  IsOnBelt = x.IsOnMainBelt,

@@ -59,16 +59,20 @@ namespace highSpeed.orderHandle
         void seek()
         {
             try
-            { 
+            {
                 //int total = int.Parse(DataPublic.ExecuteScalar("select Count(*) from t_produce_task").ToString());
                 DgvBind(sql);
             }
+            catch (NullReferenceException nullre)
+            {
+                writeLog.Write("空引用:" + nullre.Message);
+            }
             catch (IndexOutOfRangeException iore)
-            { 
+            {
                 writeLog.Write("seek()报错索引越界:" + iore.Message);
             }
             catch (Exception e)
-            { 
+            {
                 writeLog.Write("seek()报错:" + e.Message);
             }
         }
@@ -177,6 +181,7 @@ namespace highSpeed.orderHandle
                 String errmsg = sqlpara[1].Value.ToString();
                 if (errcode == "1")
                 {
+                    InBound.Business.UnionTaskInfoService.InsertPokeseqInfo();
                     progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
                     btnSort.Enabled = true;
@@ -209,17 +214,17 @@ namespace highSpeed.orderHandle
             }
             catch (NullReferenceException nullex)
             {
-                MessageBox.Show("排程OK:" + nullex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 writeLog.Write("排程异常:" + nullex.Message);
             }
             catch (IndexOutOfRangeException iore)
             {
-                MessageBox.Show("排程OK:" + iore.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 writeLog.Write("排程异常索引越界:" + iore.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("排程异常:" + e.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 writeLog.Write("排程异常:" + e.Message);
             }
             finally

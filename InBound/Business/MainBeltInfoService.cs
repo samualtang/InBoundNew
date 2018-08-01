@@ -55,7 +55,7 @@ namespace InBound.Business
                                           CIGARETTDENAME = titem.CIGARETTDENAME,
                                           MainBelt = titem.MainBelt,
                                           SortNum = titem.SortNum,
-                                          qty = titem.POKENUM,
+                                          POKENUM = titem.POKENUM,
                                           groupno = titem.GroupNO,
                                           machineseq = titem.Machineseq
                                       });
@@ -76,7 +76,7 @@ namespace InBound.Business
                                               CIGARETTDENAME = titem.CIGARETTDENAME,
                                               MainBelt = titem.MainBelt,
                                               SortNum = titem.SortNum,
-                                              qty = 10,
+                                              POKENUM = 10,
                                               groupno = titem.GroupNO,
                                               machineseq = titem.Machineseq
                                           });
@@ -151,10 +151,10 @@ namespace InBound.Business
                                   decimal tempQty = 0;
                                   foreach (var item in tempList)
                                   {
-                                      if (tempQty + item.qty <= tempQuantity)
+                                      if (tempQty + item.POKENUM <= tempQuantity)
                                       {
                                           item.IsOnMainBelt = 1;
-                                          tempQty += item.qty;
+                                          tempQty += item.POKENUM;
                                       }
                                       else
                                       {

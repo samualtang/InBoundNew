@@ -54,8 +54,15 @@ namespace FollowTask
         Group SortingTaskGroupA, SortingTaskGroupB;
         public Fm_Mian()
         {
+            try
+            {
+
+            
             InitializeComponent();
             //InBound.Business.UnPokeService.GetTaksQuantity(73868);
+          //List<InBound.Model.UnionTaskInfo> list =  InBound.Business.UnionTaskInfoService.GetUnionTaskInfo(74386);
+          //List<decimal> listsortnum = InBound.Business.UnionTaskInfoService.GetAllSortnum();
+           // InBound.Business.UnionTaskInfoService.InsertPokeseqInfo();
             this.WindowState = FormWindowState.Maximized;
             CheckForIllegalCrossThreadCalls = false;
             treeV.Enabled = false;
@@ -67,6 +74,12 @@ namespace FollowTask
             this.StartPosition = FormStartPosition.CenterScreen;
             Thread th = new Thread(Connction);
             th.Start();
+            }
+            catch (UpdateException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
      
         void Connction()
