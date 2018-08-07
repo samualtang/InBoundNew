@@ -21,6 +21,19 @@
           <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.Store.T_SYS_MENUROLERELATIVE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_CACHE" EntityType="Model.Store.T_UN_CACHE" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_UN_CACHE">
+            <DefiningQuery>SELECT 
+      "T_UN_CACHE"."ID" AS "ID", 
+      "T_UN_CACHE"."CODE" AS "CODE", 
+      "T_UN_CACHE"."NAME" AS "NAME", 
+      "T_UN_CACHE"."CACHESIZE" AS "CACHESIZE", 
+      "T_UN_CACHE"."DBPOSITION" AS "DBPOSITION", 
+      "T_UN_CACHE"."DISPATCHESIZE" AS "DISPATCHESIZE", 
+      "T_UN_CACHE"."DISPATCHENUM" AS "DISPATCHENUM", 
+      "T_UN_CACHE"."STATE" AS "STATE", 
+      "T_UN_CACHE"."PACKAGEMACHINE" AS "PACKAGEMACHINE"
+      FROM "ZOOMTEL"."T_UN_CACHE" "T_UN_CACHE"</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.Store.T_UN_POKE_HUNHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
@@ -366,6 +379,23 @@
           <Property Name="WORKSOURCE" Type="varchar2" MaxLength="20" />
           <Property Name="ROLEID" Type="number" Precision="6" />
           <Property Name="WECHATUSERID" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“ZOOMTEL.T_UN_CACHE”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="T_UN_CACHE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CODE" Type="varchar2" MaxLength="20" />
+          <Property Name="NAME" Type="varchar2" MaxLength="30" />
+          <Property Name="CACHESIZE" Type="number" />
+          <Property Name="DBPOSITION" Type="varchar2" MaxLength="30" />
+          <Property Name="DISPATCHESIZE" Type="number" />
+          <Property Name="DISPATCHENUM" Type="number" />
+          <Property Name="STATE" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
         </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
@@ -893,6 +923,7 @@
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.T_UN_POKE_HUNHE" />
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.T_PRODUCE_POKESEQ" />
+          <EntitySet Name="T_UN_CACHE" EntityType="Model.T_UN_CACHE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1666,6 +1697,20 @@
           <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CIGARETTENAME" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_UN_CACHE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="CACHESIZE" Precision="38" Scale="0" />
+          <Property Type="String" Name="DBPOSITION" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="DISPATCHESIZE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="DISPATCHENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2484,6 +2529,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_CACHE">
+            <EntityTypeMapping TypeName="Model.T_UN_CACHE">
+              <MappingFragment StoreEntitySet="T_UN_CACHE">
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="DISPATCHENUM" ColumnName="DISPATCHENUM" />
+                <ScalarProperty Name="DISPATCHESIZE" ColumnName="DISPATCHESIZE" />
+                <ScalarProperty Name="DBPOSITION" ColumnName="DBPOSITION" />
+                <ScalarProperty Name="CACHESIZE" ColumnName="CACHESIZE" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2542,6 +2602,7 @@
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.32255126953126" />
         <EntityTypeShape EntityType="Model.T_UN_POKE_HUNHE" Width="1.5" PointX="16.375" PointY="6.75" Height="2.1050219726562602" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKESEQ" Width="1.5" PointX="9.375" PointY="19.75" Height="3.5833748372395746" />
+        <EntityTypeShape EntityType="Model.T_UN_CACHE" Width="1.5" PointX="22.375" PointY="19.75" Height="2.6594042968750102" />
       </Diagram>
     </Diagrams>
   </Designer>
