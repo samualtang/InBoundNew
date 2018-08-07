@@ -253,7 +253,9 @@
       <Name>Machine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="DotNetPrint.dll" />
     <Content Include="DotNetPrint.xml" />

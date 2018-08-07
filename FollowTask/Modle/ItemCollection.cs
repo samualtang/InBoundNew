@@ -57,9 +57,9 @@ namespace FollowTask.Modle
                 //list.Add(OpcUnionServer + "DB30,DINT2050" + i * 10);
                 //list.Add(OpcUnionServer + "DB30,DINT2054" + i * 10);
                 //list.Add(OpcUnionServer + "DB30,INT2058" + i * 10);
-                list.Add(OpcUnionServer + "DB30,DINT" + (1250 + (i * 10)));
-                list.Add(OpcUnionServer + "DB30,DINT" + (1254 + (i * 10)));
-                list.Add(OpcUnionServer + "DB30,INT" + (1258 + (i * 10))); 
+                list.Add(OpcUnionServer + "DB30,DINT" + (1650 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,DINT" + (1654 + (i * 10)));
+                list.Add(OpcUnionServer + "DB30,INT" + (1658 + (i * 10))); 
             }
             return list;
         }

@@ -316,14 +316,17 @@ namespace FollowTask
                             UnionTaskInfo un = new UnionTaskInfo();
                             if (ListmbInfo[i].taskInfo != null && ListmbInfo[i].taskInfo.Count > 0)//当数据不为空
                             {
-                                un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
-                                un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
-                                un.POKENUM = ListmbInfo[i].taskInfo[j].POKENUM;
-                                un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
-                                un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
-                                un.IsOnMainBelt = ListmbInfo[i].taskInfo[j].IsOnMainBelt;
-                                un.Place = ListmbInfo[i].Place ;
-                                listunion.Add(un);
+                                if (ListmbInfo[i].taskInfo[j].IsOnMainBelt == 1)
+                                {
+                                    un.CIGARETTDECODE = ListmbInfo[i].taskInfo[j].CIGARETTDECODE;
+                                    un.CIGARETTDENAME = ListmbInfo[i].taskInfo[j].CIGARETTDENAME;
+                                    un.POKENUM = ListmbInfo[i].taskInfo[j].POKENUM;
+                                    un.MainBelt = ListmbInfo[i].taskInfo[j].MainBelt;
+                                    un.SortNum = ListmbInfo[i].taskInfo[j].SortNum;
+                                    un.IsOnMainBelt = ListmbInfo[i].taskInfo[j].IsOnMainBelt;
+                                    un.Place = ListmbInfo[i].Place;
+                                    listunion.Add(un);
+                                }
                             }
                         }
 

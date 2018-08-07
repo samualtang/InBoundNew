@@ -234,18 +234,23 @@ namespace InBound.Business
                 {
                     if (item.POKENUM > 1)
                     {
-                        for (int i = 0; i < xynum; xynum--)
+                        for (int i = 0; i < item.POKENUM; i++)
                         {
+                            xynum--;
                             newlist.Add(item);
+                            if (xynum < 1)
+                            {
+                                break;
+                            }
                            
                         }
                     }
                     else
                     {
                         newlist.Add(item);
-
+                        xynum--; 
                     }
-                    xynum--; 
+                   
                 }
                 foreach (var item in newlist)
                 {
