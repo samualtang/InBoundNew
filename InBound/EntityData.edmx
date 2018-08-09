@@ -38,6 +38,7 @@
           <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.Store.T_UN_POKE_HUNHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.Store.T_WMS_ABNORMALLIST" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.Store.T_WMS_ATSCELL_CJ_HIS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.Store.T_WMS_ATSCELL_IN" store:Type="Tables" Schema="ZOOMTEL" />
@@ -479,6 +480,16 @@
           <Property Name="QUANTITY" Type="number" Precision="10" Scale="1" />
           <Property Name="UNIT" Type="varchar2" MaxLength="5" />
           <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="T_WMS_ABNORMALLIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="DECICENO" Type="varchar2" MaxLength="50" />
+          <Property Name="ERRORMSG" Type="nvarchar2" MaxLength="100" />
+          <Property Name="AREANAME" Type="nvarchar2" MaxLength="100" />
+          <Property Name="AREAPLC" Type="varchar2" MaxLength="50" />
         </EntityType>
         <EntityType Name="T_WMS_ATSCELL">
           <Key>
@@ -924,6 +935,7 @@
           <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.T_UN_POKE_HUNHE" />
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.T_PRODUCE_POKESEQ" />
           <EntitySet Name="T_UN_CACHE" EntityType="Model.T_UN_CACHE" />
+          <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.T_WMS_ABNORMALLIST" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1711,6 +1723,16 @@
           <Property Type="Decimal" Name="DISPATCHENUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="STATE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_WMS_ABNORMALLIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="DECICENO" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ERRORMSG" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AREANAME" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AREAPLC" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2544,6 +2566,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ABNORMALLIST">
+            <EntityTypeMapping TypeName="Model.T_WMS_ABNORMALLIST">
+              <MappingFragment StoreEntitySet="T_WMS_ABNORMALLIST">
+                <ScalarProperty Name="AREAPLC" ColumnName="AREAPLC" />
+                <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
+                <ScalarProperty Name="ERRORMSG" ColumnName="ERRORMSG" />
+                <ScalarProperty Name="DECICENO" ColumnName="DECICENO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2603,6 +2636,7 @@
         <EntityTypeShape EntityType="Model.T_UN_POKE_HUNHE" Width="1.5" PointX="16.375" PointY="6.75" Height="2.1050219726562602" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKESEQ" Width="1.5" PointX="9.375" PointY="19.75" Height="3.5833748372395746" />
         <EntityTypeShape EntityType="Model.T_UN_CACHE" Width="1.5" PointX="22.375" PointY="19.75" Height="2.6594042968750102" />
+        <EntityTypeShape EntityType="Model.T_WMS_ABNORMALLIST" Width="1.5" PointX="7.375" PointY="9.75" Height="1.9202278645833246" />
       </Diagram>
     </Diagrams>
   </Designer>

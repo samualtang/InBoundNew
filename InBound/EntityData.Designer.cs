@@ -672,6 +672,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_UN_CACHE> _T_UN_CACHE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_ABNORMALLIST> T_WMS_ABNORMALLIST
+        {
+            get
+            {
+                if ((_T_WMS_ABNORMALLIST == null))
+                {
+                    _T_WMS_ABNORMALLIST = base.CreateObjectSet<T_WMS_ABNORMALLIST>("T_WMS_ABNORMALLIST");
+                }
+                return _T_WMS_ABNORMALLIST;
+            }
+        }
+        private ObjectSet<T_WMS_ABNORMALLIST> _T_WMS_ABNORMALLIST;
 
         #endregion
 
@@ -979,6 +995,14 @@ namespace InBound
         public void AddToT_UN_CACHE(T_UN_CACHE t_UN_CACHE)
         {
             base.AddObject("T_UN_CACHE", t_UN_CACHE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_ABNORMALLIST EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_ABNORMALLIST(T_WMS_ABNORMALLIST t_WMS_ABNORMALLIST)
+        {
+            base.AddObject("T_WMS_ABNORMALLIST", t_WMS_ABNORMALLIST);
         }
 
         #endregion
@@ -9378,6 +9402,159 @@ namespace InBound
         private global::System.String _ALLOWSORT;
         partial void OnALLOWSORTChanging(global::System.String value);
         partial void OnALLOWSORTChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_WMS_ABNORMALLIST")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_WMS_ABNORMALLIST : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_WMS_ABNORMALLIST 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_WMS_ABNORMALLIST CreateT_WMS_ABNORMALLIST(global::System.Decimal id)
+        {
+            T_WMS_ABNORMALLIST t_WMS_ABNORMALLIST = new T_WMS_ABNORMALLIST();
+            t_WMS_ABNORMALLIST.ID = id;
+            return t_WMS_ABNORMALLIST;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _ID;
+        partial void OnIDChanging(global::System.Decimal value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DECICENO
+        {
+            get
+            {
+                return _DECICENO;
+            }
+            set
+            {
+                OnDECICENOChanging(value);
+                ReportPropertyChanging("DECICENO");
+                _DECICENO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DECICENO");
+                OnDECICENOChanged();
+            }
+        }
+        private global::System.String _DECICENO;
+        partial void OnDECICENOChanging(global::System.String value);
+        partial void OnDECICENOChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ERRORMSG
+        {
+            get
+            {
+                return _ERRORMSG;
+            }
+            set
+            {
+                OnERRORMSGChanging(value);
+                ReportPropertyChanging("ERRORMSG");
+                _ERRORMSG = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ERRORMSG");
+                OnERRORMSGChanged();
+            }
+        }
+        private global::System.String _ERRORMSG;
+        partial void OnERRORMSGChanging(global::System.String value);
+        partial void OnERRORMSGChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AREANAME
+        {
+            get
+            {
+                return _AREANAME;
+            }
+            set
+            {
+                OnAREANAMEChanging(value);
+                ReportPropertyChanging("AREANAME");
+                _AREANAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AREANAME");
+                OnAREANAMEChanged();
+            }
+        }
+        private global::System.String _AREANAME;
+        partial void OnAREANAMEChanging(global::System.String value);
+        partial void OnAREANAMEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AREAPLC
+        {
+            get
+            {
+                return _AREAPLC;
+            }
+            set
+            {
+                OnAREAPLCChanging(value);
+                ReportPropertyChanging("AREAPLC");
+                _AREAPLC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AREAPLC");
+                OnAREAPLCChanged();
+            }
+        }
+        private global::System.String _AREAPLC;
+        partial void OnAREAPLCChanging(global::System.String value);
+        partial void OnAREAPLCChanged();
 
         #endregion
 
