@@ -15,6 +15,8 @@ namespace InBound.Model
         public string mainbelt { get; set; }
         public decimal GroupNO { get; set; }
         public string MsgCode { get; set; }
+        public decimal PackageMachine { get; set; }
+        public string DeviceName { get; set; }
         public string ErrorMsg { get; set; }
         public List<UnionTaskInfo> taskInfo { get; set; }
     }

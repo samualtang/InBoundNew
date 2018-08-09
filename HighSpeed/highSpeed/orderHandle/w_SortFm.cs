@@ -65,7 +65,7 @@ namespace highSpeed.orderHandle
             }
             catch (NullReferenceException nullre)
             {
-                writeLog.Write("空引用:" + nullre.Message);
+                writeLog.Write("seek()空引用:" + nullre.Message);
             }
             catch (IndexOutOfRangeException iore)
             {
@@ -128,12 +128,14 @@ namespace highSpeed.orderHandle
              Db.Close();
 
          }
+        delegate void HandleSort();
+        
         private void btnSort_Click(object sender, EventArgs e)
         { 
             this.btnSort.Enabled = false;//防止点击多下  
             isSort = true;
             handlesort(3,true);
-            
+            progressBar1.Maximum = 100;
             label2.Text = "正在读取数据..."; 
             progressBar1.Value = 0;
           
@@ -141,10 +143,13 @@ namespace highSpeed.orderHandle
             panel2.Visible = true;
             lblTime.Visible = true;
             progressBar1.Visible = true;
-            times = 1;//时间重置
+            times = 1;//时间重置 
             TimerByTime.Start();// = true;//启动时间记录
-            Thread thread = new Thread(new ThreadStart(Sort));
-            thread.Start();
+            //Thread thread = new Thread(new ThreadStart(Sort));//旧的
+            //thread.Start();
+
+            HandleSort task = Sort; //新的
+            task.BeginInvoke(null, null);
             label2.Text = "正在对分拣车组任务数据进重新排序";  
         }
 
@@ -152,6 +157,8 @@ namespace highSpeed.orderHandle
         {
             try
             {
+
+                progressBar1.Value = (progressBar1.Maximum / 2);
                 OracleParameter[] sqlpara;
                 sqlpara = new OracleParameter[3];
                 sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
@@ -212,23 +219,30 @@ namespace highSpeed.orderHandle
                 updateControl(lblTime, false, true);
 
             }
+            catch (DataException dataex)
+            {
+                writeLog.Write("排程异常:" + dataex.Message);
+            }
             catch (NullReferenceException nullex)
             {
-                MessageBox.Show("排程OK:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 writeLog.Write("排程异常:" + nullex.Message);
             }
             catch (IndexOutOfRangeException iore)
             {
-                MessageBox.Show("排程OK:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 writeLog.Write("排程异常索引越界:" + iore.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("排程OK:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("排程OK:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 writeLog.Write("排程异常:" + e.Message);
             }
             finally
             {
+                panel2.Visible = false;
+                TimerByTime.Stop();// 计时结束;
+                btnSort.Enabled = true;
                 handlesort(3,false);//告诉父窗体任务结束
                 isSort = false;
             }
@@ -304,14 +318,9 @@ namespace highSpeed.orderHandle
         {
            
             lblTime.Text ="已用时间:"+ times++.ToString()+"秒";
-            int progs = times * 2;
+             
 
-            progressBar1.Maximum = 100;
-            if (progs > progressBar1.Maximum)
-            {
-                progressBar1.Maximum = progs +2;
-            }
-            progressBar1.Value = progs;
+           
            
        
         }

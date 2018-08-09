@@ -32,11 +32,18 @@ namespace InBound.Business
         public static int GetSortPackageMachine(List<decimal> sortNum,List<int> PackacgeMachine, int Takesize = 5)
         {
             Dictionary<int, decimal> sortTop = new Dictionary<int, decimal>();
-            for (int i = 1; i <= sortNum.Count; i++)
+            if (sortNum.Count > 0)
             {
-                sortTop.Add(PackacgeMachine[i-1], GetTaksQuantity(sortNum[i - 1], PackacgeMachine[i - 1], Takesize));  //获取当前包装机前五订单的异形烟所需要的量 
-            } 
-            return sortTop.Max(a=> a.Key) ; 
+                for (int i = 1; i <= sortNum.Count; i++)
+                {
+                    sortTop.Add(PackacgeMachine[i - 1], GetTaksQuantity(sortNum[i - 1], PackacgeMachine[i - 1], Takesize));  //获取当前包装机前五订单的异形烟所需要的量 
+                }
+                return sortTop.Max(a => a.Key);
+            }
+            else
+            {
+                return 0;
+            }
         }
         /// <summary>
         /// 获取当前包装机当前任务的总数和异型烟数量
@@ -119,10 +126,10 @@ namespace InBound.Business
         public static int GetSendPackageMachine( List<decimal> sortNum, List<decimal> xyNum, out decimal DISPATCHESIZE)
         {
             int packagemachine = 0;//包装几号
-            int maxOrder = 30;//最大订单数
+            //int maxOrder = 30;//最大订单数
             List<decimal> listNum = new List<decimal>();
             List<int> packmachi = new List<int>();
-             decimal leftnum = 0;//剩余数量
+            // decimal leftnum = 0;//剩余数量
             DISPATCHESIZE = 0;//空出多少开始下任务    补烟数
             for (int i = 1; i <= 8; i++)//在八个包装机找可以发送任务的包装机
             {
@@ -140,6 +147,7 @@ namespace InBound.Business
                     packmachi.Add(i);// 包装机
                     continue;
                 }
+                packmachi.Add(i);
                 //if (currentNum >= (cache.DISPATCHENUM ?? 0))
                 //{
                 //    int tempOrderCount = GetLeftOrderCount(i, listNum[i - 1]);//获取当前包装机剩余订单数量
@@ -164,13 +172,26 @@ namespace InBound.Business
                 //} 
             }
             if (listNum.Count > 0)//取当前缓存量最少的包装机 做二次取级
-            { 
+            {
                 packagemachine = GetSortPackageMachine(listNum, packmachi);//二次优先级获取(包装机缓存量最少但是需要异形烟量最大的包装机)
                 //WriteLog.GetLog().Write( "当前发送包装机:" + packagemachine);
                 return packagemachine;
             }
+            else
+            {
+                if (sortNum.Count == 0 && packmachi.Count == 0)
+                {
+                    return packagemachine;
+                }
+                else
+                {
+                    packagemachine = GetSortPackageMachine(sortNum, packmachi);//如果没有缓存小于阈值的 则取包装机需要量的优先级
+                    //WriteLog.GetLog().Write( "当前发送包装机:" + packagemachine);
+                    return packagemachine;
+                }
+            }
             //WriteLog.GetLog().Write( "当前发送主皮带:" + packagemachine);
-            return packagemachine;
+           // return packagemachine;
         }
 
         /// <summary>
@@ -183,14 +204,120 @@ namespace InBound.Business
             using (Entities entity = new Entities())
             {
                 int totaleCount = 0;
-                var benginSortnum = (from item in entity.T_UN_POKE where item.STATUS == 10  && item.PACKAGEMACHINE ==packagemachine orderby item.SORTNUM select item).FirstOrDefault();
+                List<decimal> sortnum = new List<decimal>();
+                decimal benginSortnum;
+                var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
                 while ( totaleCount < OrdermaxCount)
                 {
-                    
-                }
+                    //获取第一个未执行的任务号
+                    var firstSortnum = (from item in entity.T_UN_POKE where item.STATUS == 10 && item.PACKAGEMACHINE == packagemachine orderby item.SORTNUM select item).FirstOrDefault();
 
+                    benginSortnum = firstSortnum.SORTNUM ?? 0;
+                    sortnum.Add(benginSortnum );//添加到任务集合
+                    var thisSortPokenum = (from sortpoke in entity.T_UN_POKE
+                                           where sortpoke.SORTNUM == firstSortnum.SORTNUM
+                                           && sortpoke.PACKAGEMACHINE == packagemachine
+                                           orderby sortpoke.SORTNUM
+                                           select sortpoke).Take(OrdermaxCount).ToList();//查询这个任务 
+                    totaleCount += Convert.ToInt32(thisSortPokenum.Sum(x=> x.POKENUM ?? 0));//当前任务的数量累加 
+                    if (totaleCount >= OrdermaxCount)//当任务总数多于总计算量跳出
+                    {
+                        break;
+                    }
+                } 
+                foreach (var sortItem in sortnum)
+                {
+                    var onetask = (from item in entity.T_UN_POKE 
+                                   where item.SORTNUM == sortItem && item.PACKAGEMACHINE == packagemachine
+                                   select item).Take(OrdermaxCount).OrderBy(a => a.SORTNUM).ThenByDescending(x => x.CTYPE).ToList(); //获取一个任务 烟柜优先
+                    foreach (var item in onetask)//可以执行的任务给予计算
+                    {
+                        item.STATUS = 12;
+                        item.SENDTASKNUM = sendtasknum;
+                    }
+                } 
+                entity.SaveChanges();
             }
 
+        }
+
+        /// <summary>
+        /// 异形烟数据 (一个DB交互区)
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <returns></returns>
+        public static object[] getNewDate(int packagemachine, out List<T_UN_POKE> outlist, out string outStr)
+        {
+            object[] values = new object[132];
+            String needDatas = "";
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var query = (from item in data.T_UN_POKE
+                             where item.PACKAGEMACHINE == packagemachine && item.STATUS == 12
+                             orderby item.SORTNUM
+                             select item).FirstOrDefault();//取出可以发送的客户)
+                if (query == null)
+                {
+                    outlist = new List<T_UN_POKE>();
+                    outStr = null;
+                    return values;
+                }
+
+                decimal machineseq = 0;
+           
+                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.PACKAGEMACHINE == packagemachine  && task.STATUS ==12 orderby task.SORTNUM select task).ToList();
+                outlist = query1;
+                foreach (var slipt in query1)
+                {
+
+                    machineseq = (slipt.MACHINESEQ ?? 0);
+                    if (slipt.MACHINESEQ > 3000)
+                    {
+                        machineseq = (slipt.MACHINESEQ ?? 0) - 3000;
+                        values[(((int)machineseq + 122) - 1)] = ((slipt.POKENUM ?? 0) + Convert.ToInt32(values[(((int)machineseq + 122) - 1)]));
+                      //  needDatas += values[(((int)machineseq + 122) - 1)] + ";";
+                    }
+                    else if (slipt.MACHINESEQ > 1000 && slipt.MACHINESEQ < 2000)
+                    {
+                        machineseq = (slipt.MACHINESEQ ?? 0) - 1000;
+                        values[((int)machineseq - 1)] = ((slipt.POKENUM ?? 0) + Convert.ToInt32(values[((int)machineseq - 1)]));
+                      //  needDatas += values[((int)machineseq - 1)] + ";";
+                    }
+                    else if (slipt.MACHINESEQ > 2000 && slipt.MACHINESEQ < 3000)
+                    {
+                        machineseq = (slipt.MACHINESEQ ?? 0) - 2000;
+                        values[(((int)machineseq + 61) - 1)] = ((slipt.POKENUM ?? 0) + Convert.ToInt32(values[(((int)machineseq + 61) - 1)]));
+                       // needDatas += values[(((int)machineseq + 61) - 1)] + ";";
+                    }
+                    
+                    values[128] = slipt.PACKAGEMACHINE;//包装机编号
+                    values[129] = slipt.SENDTASKNUM;//任务包号
+                    values[130] = slipt.POKEID;//流水号
+                    values[131] = 1;//成功标识
+                }
+
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Convert.ToInt32(values[i]) == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        needDatas += "烟仓:" + (values.ToList().IndexOf(values[i]) + 1) + ",出烟数量:" + values[i] + ";";
+                    }
+                } 
+                needDatas += values[128] + ":" + values[129] + ":" + values[130] + ":" + values[131] + ":";
+                outStr = needDatas;
+                return values;
+            }
         }
         /// <summary>
         /// 获取当前包装机剩余订单数量

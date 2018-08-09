@@ -609,6 +609,18 @@ namespace FollowTask
                 maxormin = true;
             }
         }
+        FM_Device fd;
+        delegate void HandleDevice(int mainbelt, List<Group> list, bool isonline);
+        HandleDevice handledevice;
+        private void btnDevice1_Click(object sender, EventArgs e)
+        {
+            Button btn = ((Button)sender);
+            int mainbelt = Convert.ToInt32(System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
+            fd = new FM_Device();
+            handledevice += fd.GetMainInfo;
+            handledevice(mainbelt, listuinongroup, IsOnLine); 
+            fd.ShowDialog();
+        }
 
     }
 }

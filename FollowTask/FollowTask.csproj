@@ -84,6 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceState.cs" />
+    <Compile Include="FM_Device.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FM_Device.Designer.cs">
+      <DependentUpon>FM_Device.cs</DependentUpon>
+    </Compile>
     <Compile Include="Fm_FollowTaskUnion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,12 @@
     </Compile>
     <Compile Include="Fm_FollowTaskMachineDetail.Designer.cs">
       <DependentUpon>Fm_FollowTaskMachineDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FM_MainbeltDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FM_MainbeltDevice.Designer.cs">
+      <DependentUpon>FM_MainbeltDevice.cs</DependentUpon>
     </Compile>
     <Compile Include="Fm_Mian.cs">
       <SubType>Form</SubType>
@@ -179,6 +191,9 @@
     <Compile Include="SelectTask\w_UnNormal.Designer.cs">
       <DependentUpon>w_UnNormal.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FM_Device.resx">
+      <DependentUpon>FM_Device.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fm_FollowTaskUnion.resx">
       <DependentUpon>Fm_FollowTaskUnion.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Fm_FollowTaskMachineDetail.resx">
       <DependentUpon>Fm_FollowTaskMachineDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FM_MainbeltDevice.resx">
+      <DependentUpon>FM_MainbeltDevice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fm_Mian.resx">
       <DependentUpon>Fm_Mian.cs</DependentUpon>
