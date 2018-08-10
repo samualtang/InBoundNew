@@ -126,12 +126,12 @@ namespace FollowTask
                 fm_sorting.Show();
                 fm_sorting. Location = new Point(0, 0);
                 fm_sorting.MdiParent = this;
-               // fm_sorting.WindowState = FormWindowState.Maximized;
+               fm_sorting.WindowState = FormWindowState.Maximized;
                 return;
             }
             fm_sorting.MdiParent = this;
             fm_sorting.Location = new Point(0, 0);
-            //fm_sorting.WindowState = FormWindowState.Maximized;
+            fm_sorting.WindowState = FormWindowState.Maximized;
             fm_sorting.Show();
         }
        
@@ -147,13 +147,13 @@ namespace FollowTask
                 fm_union.Show();
                 fm_union.Location = new Point(0, 0);
                 fm_union.MdiParent = this;
-                //fm_union.WindowState = FormWindowState.Maximized;
+                fm_union.WindowState = FormWindowState.Maximized;
                 //fm_union = null;
                 return;
             }
             fm_union.MdiParent = this;
             fm_union.Location = new Point(0, 0);
-            //fm_union.WindowState = FormWindowState.Maximized;
+            fm_union.WindowState = FormWindowState.Maximized;
             fm_union.Show();
 
         }

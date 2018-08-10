@@ -57,6 +57,25 @@ namespace InBound.Business
                 }
             }
         }
+        public static int GetPokeCount()
+        {
+            using (Entities entity = new Entities())
+            {
+                var count = (from item in entity.T_PRODUCE_POKE
+                             select item).Sum(a => a.POKENUM);
+                return Convert.ToInt32(count);
+            }
+        }
+
+        public static int GetPokeSEQCount()
+        {
+            using (Entities entity = new Entities())
+            {
+                var count = (from item in entity.T_PRODUCE_POKESEQ
+                             select item).Sum(a => a.POKENUM);
+                return Convert.ToInt32(count);
+            }
+        }
         /// <summary>
         /// 条烟识别
         /// </summary>
@@ -65,7 +84,7 @@ namespace InBound.Business
             using (Entities entity = new Entities())
             {
               
-                int index = 1;
+               
                 var listsortnum = GetAllSortnum();
                 foreach (var item in listsortnum)
                 {
@@ -74,7 +93,7 @@ namespace InBound.Business
                     foreach (var union in info)
                     {
                         T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
-                        poke.POKEID = index++;
+                        poke.POKEID = GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
                         poke.TROUGHNUM = union.TROUGHNUM;
                         poke.POKENUM = union.POKENUM;
                         poke.SORTSTATE = 20;
@@ -95,7 +114,27 @@ namespace InBound.Business
                
             }
         }
-   
+        public static List<UnionTaskInfo> GetUnionAllTaskInfo()
+        {
+            List<UnionTaskInfo> list = new List<UnionTaskInfo>();
+            using (Entities entity = new Entities())
+            { 
+                var listsortnum = GetAllSortnum();
+                foreach (var item in listsortnum)
+                { 
+                    List<UnionTaskInfo> info = GetUnionTaskInfo(item); 
+                    list.AddRange(info); 
+                }
+                if (list != null)
+                {
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         
         /// <summary>
         /// 获取所有任务号
@@ -109,7 +148,11 @@ namespace InBound.Business
                 var sortquery = (from item in entity.T_PRODUCE_POKE
                                  orderby item.SORTNUM
                                  select item).Select(a=>  new {SORTNUM = a.SORTNUM ??0}).Distinct().OrderBy(x=> x.SORTNUM ).ToList();
-                foreach (var item in sortquery)
+                var sortpokeseq = (from item in entity.T_PRODUCE_POKESEQ
+                                  orderby item.SORTNUM
+                                   select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
+                var fnailySortpoke = sortquery.Except(sortpokeseq).ToList();
+                foreach (var item in fnailySortpoke)
                 {
                     sortnum.Add(item.SORTNUM);
                 }

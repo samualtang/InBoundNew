@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPokeSeq = new System.Windows.Forms.Button();
             this.btnRef = new System.Windows.Forms.Button();
             this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
             this.rdbUnionDan = new System.Windows.Forms.RadioButton();
@@ -41,13 +42,19 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.TimerByTime = new System.Windows.Forms.Timer(this.components);
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.lblPokeSeq = new System.Windows.Forms.Label();
+            this.lblproseer = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.rdbUnUnionDan);
             this.panel1.Controls.Add(this.rdbUnionDan);
@@ -58,6 +65,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(921, 48);
             this.panel1.TabIndex = 0;
+            // 
+            // btnPokeSeq
+            // 
+            this.btnPokeSeq.Location = new System.Drawing.Point(756, 12);
+            this.btnPokeSeq.Name = "btnPokeSeq";
+            this.btnPokeSeq.Size = new System.Drawing.Size(75, 23);
+            this.btnPokeSeq.TabIndex = 4;
+            this.btnPokeSeq.Text = "条烟顺序";
+            this.btnPokeSeq.UseVisualStyleBackColor = true;
+            this.btnPokeSeq.Click += new System.EventHandler(this.btnPokeSeq_Click);
             // 
             // btnRef
             // 
@@ -176,11 +193,50 @@
             this.TimerByTime.Interval = 1000;
             this.TimerByTime.Tick += new System.EventHandler(this.Timer_Tick);
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.lblproseer);
+            this.panel3.Controls.Add(this.progressBar2);
+            this.panel3.Controls.Add(this.lblPokeSeq);
+            this.panel3.Font = new System.Drawing.Font("宋体", 11F);
+            this.panel3.Location = new System.Drawing.Point(46, 69);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(359, 100);
+            this.panel3.TabIndex = 6;
+            this.panel3.Visible = false;
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Location = new System.Drawing.Point(12, 34);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(293, 23);
+            this.progressBar2.TabIndex = 1;
+            // 
+            // lblPokeSeq
+            // 
+            this.lblPokeSeq.AutoSize = true;
+            this.lblPokeSeq.Location = new System.Drawing.Point(11, 9);
+            this.lblPokeSeq.Name = "lblPokeSeq";
+            this.lblPokeSeq.Size = new System.Drawing.Size(97, 15);
+            this.lblPokeSeq.TabIndex = 0;
+            this.lblPokeSeq.Text = "条烟顺序进度";
+            // 
+            // lblproseer
+            // 
+            this.lblproseer.AutoSize = true;
+            this.lblproseer.Location = new System.Drawing.Point(11, 68);
+            this.lblproseer.Name = "lblproseer";
+            this.lblproseer.Size = new System.Drawing.Size(67, 15);
+            this.lblproseer.TabIndex = 2;
+            this.lblproseer.Text = "完成进度";
+            // 
             // w_SortFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 666);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.dgvSortInfo);
             this.Controls.Add(this.panel1);
@@ -194,6 +250,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -212,5 +270,10 @@
         private System.Windows.Forms.Button btnRef;
         private System.Windows.Forms.Timer TimerByTime;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Button btnPokeSeq;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.Label lblPokeSeq;
+        private System.Windows.Forms.Label lblproseer;
     }
 }

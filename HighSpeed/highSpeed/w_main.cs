@@ -776,6 +776,11 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 基础数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 

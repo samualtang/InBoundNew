@@ -557,22 +557,26 @@ namespace FollowTask
 
         private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Hide();
-                if (fum != null)
-                {
-                    fum.Close();
-                    fum.Dispose();
-                }
-                if (fmuc != null)
-                {
-                    fmuc.Close();
-                    fmuc.Dispose();
-                }
-                e.Cancel = false;
-            }
-            else { e.Cancel = true; }
+            this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.Hide();
+            e.Cancel = true; 
+            //this.DialogResult = System.Windows.Forms.DialogResult.None;
+            //if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
+            //{
+            //    this.Hide();
+            //    if (fum != null)
+            //    {
+            //        fum.Close();
+            //        fum.Dispose();
+            //    }
+            //    if (fmuc != null)
+            //    {
+            //        fmuc.Close();
+            //        fmuc.Dispose();
+            //    }
+            //    e.Cancel = false;
+            //}
+            //else { e.Cancel = true; }
            
 
 
@@ -580,34 +584,34 @@ namespace FollowTask
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-           this.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.Hide();
-            if (fum != null)
-            {
-                fum.Close();
-                fum.Dispose();
-            }
-            if (fmuc != null)
-            {
-                fmuc.Close();
-                fmuc.Dispose();
-            }
+           //this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+           // this.Hide();
+           // if (fum != null)
+           // {
+           //     fum.Close();
+           //     fum.Dispose();
+           // }
+           // if (fmuc != null)
+           // {
+           //     fmuc.Close();
+           //     fmuc.Dispose();
+           // }
        
-            this.DialogResult = System.Windows.Forms.DialogResult.None;
+           // this.DialogResult = System.Windows.Forms.DialogResult.None;
         }
-        bool maxormin = true;
+       // bool maxormin = true;
         private void btnZoom_Click(object sender, EventArgs e)
         {
-            if (maxormin)
-            {
-                this.WindowState = FormWindowState.Maximized;
-                maxormin = false;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-                maxormin = true;
-            }
+            //if (maxormin)
+            //{
+            //    this.WindowState = FormWindowState.Maximized;
+            //    maxormin = false;
+            //}
+            //else
+            //{
+            //    this.WindowState = FormWindowState.Normal;
+            //    maxormin = true;
+            //}
         }
         FM_Device fd;
         delegate void HandleDevice(int mainbelt, List<Group> list, bool isonline);

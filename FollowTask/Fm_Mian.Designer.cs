@@ -53,7 +53,7 @@
             this.查询任务sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.预分拣YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.合流UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.异形烟NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.异形烟包装机缓存NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.补货任务ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMainInfo = new System.Windows.Forms.TextBox();
             this.treeV = new System.Windows.Forms.TreeView();
@@ -93,7 +93,7 @@
             this.查询任务sToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.预分拣YToolStripMenuItem,
             this.合流UToolStripMenuItem,
-            this.异形烟NToolStripMenuItem});
+            this.异形烟包装机缓存NToolStripMenuItem});
             this.查询任务sToolStripMenuItem.Name = "查询任务sToolStripMenuItem";
             this.查询任务sToolStripMenuItem.Size = new System.Drawing.Size(82, 21);
             this.查询任务sToolStripMenuItem.Text = "查询任务(&F)";
@@ -102,23 +102,24 @@
             // 预分拣YToolStripMenuItem
             // 
             this.预分拣YToolStripMenuItem.Name = "预分拣YToolStripMenuItem";
-            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.预分拣YToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.预分拣YToolStripMenuItem.Text = "预分拣(&Y)";
+            this.预分拣YToolStripMenuItem.Visible = false;
             this.预分拣YToolStripMenuItem.Click += new System.EventHandler(this.预分拣YToolStripMenuItem_Click);
             // 
             // 合流UToolStripMenuItem
             // 
             this.合流UToolStripMenuItem.Name = "合流UToolStripMenuItem";
-            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.合流UToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.合流UToolStripMenuItem.Text = "合流(&U)";
             this.合流UToolStripMenuItem.Click += new System.EventHandler(this.合流UToolStripMenuItem_Click);
             // 
-            // 异形烟NToolStripMenuItem
+            // 异形烟包装机缓存NToolStripMenuItem
             // 
-            this.异形烟NToolStripMenuItem.Name = "异形烟NToolStripMenuItem";
-            this.异形烟NToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.异形烟NToolStripMenuItem.Text = "异形烟(&N)";
-            this.异形烟NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
+            this.异形烟包装机缓存NToolStripMenuItem.Name = "异形烟包装机缓存NToolStripMenuItem";
+            this.异形烟包装机缓存NToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.异形烟包装机缓存NToolStripMenuItem.Text = "异形烟包装机缓存(&N)";
+            this.异形烟包装机缓存NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
             // 
             // 补货任务ToolStripMenuItem
             // 
@@ -230,7 +231,7 @@
         private System.Windows.Forms.ToolStripMenuItem 查询任务sToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 预分拣YToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 合流UToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 异形烟NToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 异形烟包装机缓存NToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 补货任务ToolStripMenuItem;
 
     }

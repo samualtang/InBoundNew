@@ -445,23 +445,7 @@ namespace FollowTask
             dgVprint1.Print(dgvSortingBeltInfo);
         }
       
-        private void Fm_FollowTaskSorting_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
-            //                                                 "操作提示",//对话框的标题  
-            //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-            //                                                 MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-            //                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-            //Console.WriteLine(MsgBoxResult);
-            if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Hide();
-                e.Cancel = false;
-            }
-            else { e.Cancel = true; }
-         
-           
-        }
+      
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -486,27 +470,46 @@ namespace FollowTask
             btnZoom.Location = new Point(this.Width - 55, 0);
           
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
+        private void Fm_FollowTaskSorting_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.Hide ();
+            this.Hide();
             this.DialogResult = System.Windows.Forms.DialogResult.None;
+            //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+            //                                                 "操作提示",//对话框的标题  
+            //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                                 MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                                MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+            //Console.WriteLine(MsgBoxResult);
+            //if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
+            //{
+            //    this.Hide();
+            //    e.Cancel = false;
+            //}
+            //else { e.Cancel = true; }
+
+
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            //this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            //this.Hide ();
+            //this.DialogResult = System.Windows.Forms.DialogResult.None;
              
         }
-        bool maxormin = true;
+       // bool maxormin = true;
         private void btnZoom_Click(object sender, EventArgs e)
         {
-            if (maxormin)
-            {
-                this.WindowState = FormWindowState.Maximized;
-                maxormin = false;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-                maxormin = true;
-            }
+            //if (maxormin)
+            //{
+            //    this.WindowState = FormWindowState.Maximized;
+            //    maxormin = false;
+            //}
+            //else
+            //{
+            //    this.WindowState = FormWindowState.Normal;
+            //    maxormin = true;
+            //}
         }
 
 

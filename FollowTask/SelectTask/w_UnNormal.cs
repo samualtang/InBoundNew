@@ -16,8 +16,22 @@ namespace FollowTask
         public w_UnNormal()
         {
             InitializeComponent();
-            dgvTask.DoubleBufferedDataGirdView(true);
+
+            dgvMainBeltInfo.DoubleBufferedDataGirdView(true);
             this.Text = "异形烟";
+        }
+
+        private void txtDeviceNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                
+            }
+        }
+
+        private void btnEnter_Click(object sender, EventArgs e)
+        {
+            InBound.Business.UnPokeService.GetUnTaskInfo(1, 22, 10);
         }
     }
 }

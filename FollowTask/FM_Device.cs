@@ -18,10 +18,11 @@ namespace FollowTask
         public FM_Device()
         {
             InitializeComponent();
+           
         }
 
         decimal DeviceNum = decimal.Parse(ConfigurationManager.AppSettings["DeviceNum"].ToString());//总设备数
-        decimal Section = decimal.Parse(ConfigurationManager.AppSettings["Section"].ToString());//一个设备段之间的距离DeviceName
+        //decimal Section = decimal.Parse(ConfigurationManager.AppSettings["Section"].ToString());//一个设备段之间的距离DeviceName
         string DeviceName = ConfigurationManager.AppSettings["UnionMainBeltDeviceName"].ToString();
         /// <summary>
         /// 主皮带信息集合
@@ -32,7 +33,8 @@ namespace FollowTask
         /// LIST DB块
         /// </summary>
         List<Group> listMainBelt = new List<Group>();
-         
+
+        int MainBelt = 0;
         /// <summary>
         /// 获取卷烟图片
         /// </summary>
@@ -47,14 +49,17 @@ namespace FollowTask
             }
             return cigreImg;
         }
-
+        delegate  void HandeleRead();
         public void GetMainInfo(int mainbelt, List<Group> list, bool isonline)
         {
             if (isonline)
-            {
+            { 
                 Text = mainbelt + "号主皮带";
                 listMainBelt = list;
                 ReadDBinfo(mainbelt);
+              
+             
+                lblDeviceNo.Text ="设备名称"+ DeviceName + "1";
             }
             else
             {
@@ -63,6 +68,7 @@ namespace FollowTask
             }
 
         }
+      
         /// <summary>
         /// 
         /// </summary>
@@ -153,6 +159,7 @@ namespace FollowTask
             ListmbInfo = ListmbInfo.OrderBy(x => x.Place).ToList();// ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
             GetDviceName(ListmbInfo, DeviceNum, DeviceName);
         }
+        List<string> listDerviceName = new List<string>();//设备名
         /// <summary>
         /// 获取设备名
         /// </summary>
@@ -161,22 +168,30 @@ namespace FollowTask
         /// /// <param name="devicename">设备名称</param>
         void GetDviceName(List<InBound.Model.MainBeltInfo> list, decimal deviceNum, string devicename)
         {
-            List<decimal> listcount = new List<decimal>();//设备和设备之间的间距 
-            List<string> listDerviceName = new List<string>();//设备名
-            for (int i = 1; i <= deviceNum; i++)
+            if (list.Count > 0)
             {
-                listDerviceName.Add(devicename + i);
-            }
-            for (int i = 1; i <= deviceNum; i++)//取得一设备与设备之间的间距
-            {
-                listcount.Add(((deviceNum * i) - deviceNum));
-                listcount.Add((deviceNum * i));
-            }
-            for (int i = 0; i < listcount.Count; i++)//这个任务位置所在哪个设备号中间
-            {
-                if (listcount[i] > list[i].Place && list[i].Place < listcount[i + 1])
+                List<decimal> listcount = new List<decimal>();//设备和设备之间的间距 
+             
+                for (int i = 1; i <= deviceNum; i++)
                 {
-                    list[i].DeviceName = listDerviceName[i];
+                    listDerviceName.Add(devicename + i);
+                }
+                for (int i = 1; i <= deviceNum; i++)//取得一设备与设备之间的间距
+                {
+                    listcount.Add(((deviceNum * i) - deviceNum));
+                    listcount.Add((deviceNum * i));
+                }
+                for (int i = 0; i < list.Count; i++)//这个任务位置所在哪个设备号中间
+                {
+                    for (int j = 0; j < deviceNum; j++)
+                    {
+                        if (listcount[((j * 2))] < list[i].Place && list[i].Place < listcount[((j * 2) + 1)])
+                        {
+                            list[i].DeviceName = listDerviceName[j];
+                            break;
+                        }
+                    }
+                   
                 }
             }
             
@@ -185,21 +200,30 @@ namespace FollowTask
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtDeviceNo.Text))
+            GetData(txtDeviceNo.Text);
+        }
+        void GetData(string devicename)
+        {
+            if (!string.IsNullOrWhiteSpace(devicename))
             {
+                devicename = devicename.ToUpper(); 
+                lblDeviceCount.Text ="设备："+ devicename + "/" + DeviceName+""+DeviceNum;
                 List<UnionTaskInfo> listUnionInfo = new List<UnionTaskInfo>();
-                var deviceInfo = ListmbInfo.Where(a => a.DeviceName == txtDeviceNo.Text).ToList();
+                var deviceInfo = ListmbInfo.Where(a => a.DeviceName == devicename).ToList();
                 if (deviceInfo.Count > 0)
                 {
                     dgvMainBeltInfo.DataSource = null;
                     listUnionInfo.Clear();
+                    
                     foreach (var item in deviceInfo)
-                    { 
+                    {
+                        item.taskInfo[0].Place = deviceInfo[0].Place;
                         listUnionInfo.AddRange(item.taskInfo);
+                       
                     }
                     addPanel(listUnionInfo);//添加数据图片至panel控件上面
                     lblDeviceNo.Text = "设备编号:" + txtDeviceNo.Text;
-                    dgvMainBeltInfo.DataSource = listUnionInfo.Where(x=> x.IsOnMainBelt ==1).Select(x => new
+                    dgvMainBeltInfo.DataSource = listUnionInfo.Select(x => new
                     {
                         CIGARETTECODE = x.CIGARETTDECODE,
                         CIGARETTNAME = x.CIGARETTDENAME,
@@ -207,7 +231,7 @@ namespace FollowTask
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         PACKAGEMACHINE = x.PACKAGEMACHINE,
-                        PLACE = x.Place + "米", 
+                        PLACE = x.Place + "米",
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
                 }
@@ -220,7 +244,9 @@ namespace FollowTask
             {
                 MessageBox.Show("请输入设备号!");
             }
+
         }
+
         void DgvBind()
         {
             try
@@ -238,6 +264,22 @@ namespace FollowTask
             {
 
 
+            }
+        }
+
+        private void txtDeviceNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                GetData(txtDeviceNo.Text);
+            }
+        }
+
+        private void FM_Device_Load(object sender, EventArgs e)
+        {
+            if (ListmbInfo.Count > 0)
+            {
+                GetData(DeviceName + "1");
             }
         }
 

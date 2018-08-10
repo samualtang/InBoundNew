@@ -240,7 +240,39 @@ namespace InBound.Business
             }
 
         }
+        public static List<InBound.Model.UnTaskInfo> GetUnTaskInfo(int packagemachine, decimal sortnum,decimal  state)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             join item2 in data.T_PRODUCE_SORTTROUGH
+                              on item.TROUGHNUM equals item2.TROUGHNUM
+                              join item3 in data.T_UN_TASK
+                              on item.BILLCODE equals item3.BILLCODE
+                             where item.PACKAGEMACHINE == packagemachine && item.SORTNUM == sortnum && item.STATUS == state
+                             select new UnTaskInfo
+                             {
+                                 CIGARETTDENAME = item2.CIGARETTENAME,
+                                 CIGARETTDECODE = item2.CIGARETTECODE,
+                                 machineseq = item.MACHINESEQ ?? 0,
+                                 PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0,
+                                 SortNum = item.SORTNUM ?? 0,
+                                 STATUS = item.STATUS ??0,
+                                 CUSTOMERNAME = item3.CUSTOMERNAME,
+                                 REGIONCODE = item3.REGIONCODE,
+                                 SORTSEQ = item3.SORTSEQ??0,
+                             }).ToList();
+                if (query != null)
+                {
+                    return query;
+                }
+                else
+                {
+                    return null;
+                }
+            }
 
+        }
         /// <summary>
         /// 异形烟数据 (一个DB交互区)
         /// </summary>

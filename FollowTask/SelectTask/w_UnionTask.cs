@@ -66,41 +66,7 @@ namespace FollowTask
             //cmbSelectC.Items.Add("机械手"); //6
             cmbSelectC.SelectedIndex = 1;
         }
-        /// <summary>
-        /// DataGridView列头绑定
-        /// </summary>
-        void DgvBind()
-        { 
-            if (cmbSelectC.SelectedIndex == 0)//设备号
-            {
-                dgvTask.Columns[0].HeaderCell.Value = "任务号";
-                dgvTask.Columns[1].HeaderCell.Value = "抓数(pokenum)";
-                //dgvTask.Columns[2].HeaderCell.Value = "订单号";
-                dgvTask.Columns[2].HeaderCell.Value = "主皮带";
-                dgvTask.Columns[3].HeaderCell.Value = "组号";
-                dgvTask.Columns[4].HeaderCell.Value = "卷烟编号";
-                dgvTask.Columns[5].HeaderCell.Value = "卷烟名称";
-                dgvTask.Columns[6].HeaderCell.Value = "烟柜号";
-                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
-                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
-                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
-            }
-            else if (cmbSelectC.SelectedIndex == 1)
-            {
-                dgvTask.Columns[0].HeaderCell.Value = "任务号";
-                dgvTask.Columns[1].HeaderCell.Value = "抓数(pokenum)";
-                //dgvTask.Columns[2].HeaderCell.Value = "订单号";
-                dgvTask.Columns[2].HeaderCell.Value = "主皮带";
-                dgvTask.Columns[3].HeaderCell.Value = "组号";
-                dgvTask.Columns[4].HeaderCell.Value = "卷烟编号";
-                dgvTask.Columns[5].HeaderCell.Value = "卷烟名称";
-                dgvTask.Columns[5].HeaderCell.Value = "烟柜号";
-                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
-                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
-                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
-            }
-        }
-
+     
         private void cmbSelectC_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbSelectC.SelectedIndex == 0)
@@ -119,46 +85,95 @@ namespace FollowTask
             switch (cmbSelectC.SelectedItem.ToString())
             {
                 case "所有合流任务":
-                          dgvTask.DataSource = FolloTaskService.getUnionDataAll().Select(a=>  new {
-                              SortNum = a.SortNum,
-                              //MERAGENUM = a.MERAGENUM,
-                              POKENUM = a.POKENUM,
-                              MAINBELT = a.MainBelt,
-                              GROUPNO = a.GroupNO,
-                              CIGARETTDECODE = a.CIGARETTDECODE,
-                              CIGARETTDENAME = a.CIGARETTDENAME,
-                              MACHINESEQ = a.Machineseq
-                          }).ToList();
+                          dgvTask.DataSource =UnionTaskInfoService.GetUnionAllTaskInfo().Select(x => new
+                        {
+                            CIGARETTECODE = x.CIGARETTDECODE,
+                            CIGARETTNAME = x.CIGARETTDENAME,
+                            QTY = x.POKENUM,
+                            MAINBELT = x.MainBelt,
+                            SORTNUM = x.SortNum,
+                            IsOnBelt = x.IsOnMainBelt, 
+                        }).ToList();//根据索引读取相对应数据   
                           DgvBind();
                     break;
                 case "任务号":
                     if (!string.IsNullOrWhiteSpace(txtinfo1.Text))
                     {
-                        dgvTask.DataSource = FolloTaskService.getUnionData(Convert.ToDecimal(txtinfo1.Text)).Select(a => new
+                        dgvTask.DataSource = InBound.Business.UnionTaskInfoService.GetUnionTaskInfo(Convert.ToDecimal(txtinfo1.Text)).Select(x => new
                         {
-                            SortNum = a.SortNum,
-                            //MERAGENUM = a.MERAGENUM,
-                            POKENUM = a.POKENUM,
-                            MAINBELT = a.MainBelt,
-                             GROUPNO = a.GroupNO,
-                            CIGARETTDECODE = a.CIGARETTDECODE,
-                            CIGARETTDENAME = a.CIGARETTDENAME,
-                            MACHINESEQ=a.Machineseq
-                        }) .ToList();
+                            CIGARETTECODE = x.CIGARETTDECODE,
+                            CIGARETTNAME = x.CIGARETTDENAME,
+                            QTY = x.POKENUM,
+                            MAINBELT = x.MainBelt,
+                            SORTNUM = x.SortNum,
+                            IsOnBelt = x.IsOnMainBelt, 
+                        }).ToList();//根据索引读取相对应数据   
                         DgvBind();
                     }
                     else
                     {
                         MessageBox.Show("请输入任务号");
-                    }
-                  
+                    } 
                     break;
             }
         }
+        /// <summary>
+        /// DataGridView列头绑定
+        /// </summary>
+        void DgvBind()
+        {
+            if (cmbSelectC.SelectedIndex == 0)//设备号
+            {
+                dgvTask.Columns[0].HeaderCell.Value = "卷烟编码";
+                dgvTask.Columns[1].HeaderCell.Value = "卷烟名称";
+                //dgvTask.Columns[2].HeaderCell.Value = "订单号";
+                dgvTask.Columns[2].HeaderCell.Value = "数量";
+                dgvTask.Columns[3].HeaderCell.Value = "主皮带号";
+                dgvTask.Columns[4].HeaderCell.Value = "任务号";
+                dgvTask.Columns[5].HeaderCell.Value = "是否在皮带上";
+                //dgvTask.Columns[6].HeaderCell.Value = "烟柜号";
+                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
+                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
+                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
+            }
+            else if (cmbSelectC.SelectedIndex == 1)
+            {
+                dgvTask.Columns[0].HeaderCell.Value = "卷烟编码";
+                dgvTask.Columns[1].HeaderCell.Value = "卷烟名称";
+                //dgvTask.Columns[2].HeaderCell.Value = "订单号";
+                dgvTask.Columns[2].HeaderCell.Value = "数量";
+                dgvTask.Columns[3].HeaderCell.Value = "主皮带号";
+                dgvTask.Columns[4].HeaderCell.Value = "任务号";
+                dgvTask.Columns[5].HeaderCell.Value = "是否在皮带上";
+                //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
+                //dgvTask.Columns[5].HeaderCell.Value = "订单号";
+                //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
+            }
+        }
+
         AutoSizeFormClass asc = new AutoSizeFormClass();
         private void w_UnionTask_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
+        }
+
+        private void dgvTask_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 5)
+            {
+                String statusText = "";
+                switch (e.Value.ToString())
+                {
+                    case "1":
+                        statusText = "是";
+                        break;
+                    case "0":
+                        statusText = "否";
+                        break;
+
+                }
+                e.Value = statusText;
+            }
         }
     }
 }

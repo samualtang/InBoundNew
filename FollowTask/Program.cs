@@ -16,8 +16,8 @@ namespace FollowTask
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            //Application.Run(new Fm_Mian());
-           Application.Run(new ErrorStart.ErrorStart_Main());
+            Application.Run(new Fm_Mian());
+          // Application.Run(new ErrorStart.ErrorStart_Main());
            
         }
     }

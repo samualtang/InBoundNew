@@ -32,6 +32,8 @@
             this.groupBoxprogramINfo = new System.Windows.Forms.GroupBox();
             this.list_data = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnZoom = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblNum = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvSortingBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnZoom = new System.Windows.Forms.Button();
             this.groupBoxprogramINfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
@@ -101,6 +101,30 @@
             this.panel1.Size = new System.Drawing.Size(953, 55);
             this.panel1.TabIndex = 13;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
+            // 
+            // btnZoom
+            // 
+            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoom.Location = new System.Drawing.Point(907, 1);
+            this.btnZoom.Name = "btnZoom";
+            this.btnZoom.Size = new System.Drawing.Size(19, 20);
+            this.btnZoom.TabIndex = 28;
+            this.btnZoom.Text = "口";
+            this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.Visible = false;
+            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Location = new System.Drawing.Point(929, 1);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(19, 20);
+            this.btnClose.TabIndex = 27;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Visible = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // button1
             // 
@@ -402,28 +426,6 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
-            // btnClose
-            // 
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(929, 1);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(19, 20);
-            this.btnClose.TabIndex = 27;
-            this.btnClose.Text = "X";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnZoom
-            // 
-            this.btnZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZoom.Location = new System.Drawing.Point(907, 1);
-            this.btnZoom.Name = "btnZoom";
-            this.btnZoom.Size = new System.Drawing.Size(19, 20);
-            this.btnZoom.TabIndex = 28;
-            this.btnZoom.Text = "口";
-            this.btnZoom.UseVisualStyleBackColor = true;
-            this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
-            // 
             // Fm_FollowTaskSorting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -433,7 +435,6 @@
             this.Controls.Add(this.groupBoxUnionInfo);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBoxprogramINfo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Fm_FollowTaskSorting";
             this.Text = "Fm_Sorting";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskSorting_FormClosing);

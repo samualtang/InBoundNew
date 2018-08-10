@@ -63,7 +63,9 @@ namespace WcfServiceLib
             using (MemoryStream ms = new MemoryStream())
             {
                 ser.WriteObject(ms, ListmbInfo);
-                return Encoding.UTF8.GetString(ms.ToArray());
+                string s= Encoding.UTF8.GetString(ms.ToArray());
+                s=s.Replace("\\","");
+                return s;
             }
         
           

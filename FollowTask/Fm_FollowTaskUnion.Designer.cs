@@ -38,6 +38,7 @@
             this.btnZoom = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.groupBBelt1 = new System.Windows.Forms.GroupBox();
+            this.btnDevice1 = new System.Windows.Forms.Button();
             this.btnhuancun8 = new System.Windows.Forms.Button();
             this.btnhuancun1 = new System.Windows.Forms.Button();
             this.btnhuancun2 = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@
             this.pbMachine6 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt1 = new System.Windows.Forms.PictureBox();
             this.groupBBelt4 = new System.Windows.Forms.GroupBox();
+            this.btnDevice4 = new System.Windows.Forms.Button();
             this.btnhuancun32 = new System.Windows.Forms.Button();
             this.btnhuancun25 = new System.Windows.Forms.Button();
             this.btnhuancun26 = new System.Windows.Forms.Button();
@@ -90,6 +92,7 @@
             this.pbMachine30 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt4 = new System.Windows.Forms.PictureBox();
             this.groupBBelt3 = new System.Windows.Forms.GroupBox();
+            this.btnDevice3 = new System.Windows.Forms.Button();
             this.btnhuancun24 = new System.Windows.Forms.Button();
             this.btnhuancun17 = new System.Windows.Forms.Button();
             this.btnhuancun18 = new System.Windows.Forms.Button();
@@ -116,6 +119,7 @@
             this.pbMachine22 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt3 = new System.Windows.Forms.PictureBox();
             this.groupBBelt2 = new System.Windows.Forms.GroupBox();
+            this.btnDevice2 = new System.Windows.Forms.Button();
             this.btnhuancun16 = new System.Windows.Forms.Button();
             this.btnhuancun9 = new System.Windows.Forms.Button();
             this.btnhuancun10 = new System.Windows.Forms.Button();
@@ -141,10 +145,6 @@
             this.pbMachine13 = new System.Windows.Forms.PictureBox();
             this.pbMachine14 = new System.Windows.Forms.PictureBox();
             this.pbMainbelt2 = new System.Windows.Forms.PictureBox();
-            this.btnDevice1 = new System.Windows.Forms.Button();
-            this.btnDevice2 = new System.Windows.Forms.Button();
-            this.btnDevice3 = new System.Windows.Forms.Button();
-            this.btnDevice4 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBBelt1.SuspendLayout();
@@ -271,6 +271,7 @@
             this.btnZoom.TabIndex = 60;
             this.btnZoom.Text = "口";
             this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.Visible = false;
             this.btnZoom.Click += new System.EventHandler(this.btnZoom_Click);
             // 
             // btnClose
@@ -282,6 +283,7 @@
             this.btnClose.TabIndex = 59;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Visible = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // groupBBelt1
@@ -320,6 +322,19 @@
             this.groupBBelt1.TabIndex = 58;
             this.groupBBelt1.TabStop = false;
             this.groupBBelt1.Text = "1 号 主 皮 带 :";
+            // 
+            // btnDevice1
+            // 
+            this.btnDevice1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDevice1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDevice1.Font = new System.Drawing.Font("宋体", 9F);
+            this.btnDevice1.Location = new System.Drawing.Point(842, 26);
+            this.btnDevice1.Name = "btnDevice1";
+            this.btnDevice1.Size = new System.Drawing.Size(71, 23);
+            this.btnDevice1.TabIndex = 78;
+            this.btnDevice1.Text = "设备查询";
+            this.btnDevice1.UseVisualStyleBackColor = true;
+            this.btnDevice1.Click += new System.EventHandler(this.btnDevice1_Click);
             // 
             // btnhuancun8
             // 
@@ -667,6 +682,19 @@
             this.groupBBelt4.TabStop = false;
             this.groupBBelt4.Text = "4 号 主 皮 带 :";
             // 
+            // btnDevice4
+            // 
+            this.btnDevice4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDevice4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDevice4.Font = new System.Drawing.Font("宋体", 9F);
+            this.btnDevice4.Location = new System.Drawing.Point(847, 26);
+            this.btnDevice4.Name = "btnDevice4";
+            this.btnDevice4.Size = new System.Drawing.Size(66, 23);
+            this.btnDevice4.TabIndex = 78;
+            this.btnDevice4.Text = "设备查询";
+            this.btnDevice4.UseVisualStyleBackColor = true;
+            this.btnDevice4.Click += new System.EventHandler(this.btnDevice1_Click);
+            // 
             // btnhuancun32
             // 
             this.btnhuancun32.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -682,7 +710,7 @@
             // btnhuancun25
             // 
             this.btnhuancun25.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnhuancun25.Location = new System.Drawing.Point(806, 21);
+            this.btnhuancun25.Location = new System.Drawing.Point(803, 21);
             this.btnhuancun25.Name = "btnhuancun25";
             this.btnhuancun25.Size = new System.Drawing.Size(41, 48);
             this.btnhuancun25.TabIndex = 65;
@@ -827,7 +855,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.BackColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(835, 105);
+            this.label25.Location = new System.Drawing.Point(832, 105);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(26, 18);
             this.label25.TabIndex = 76;
@@ -849,7 +877,7 @@
             this.pbMachine25.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMachine25.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pbMachine25.ErrorImage")));
             this.pbMachine25.Image = global::FollowTask.Properties.Resources.机械手1;
-            this.pbMachine25.Location = new System.Drawing.Point(806, 73);
+            this.pbMachine25.Location = new System.Drawing.Point(803, 73);
             this.pbMachine25.Name = "pbMachine25";
             this.pbMachine25.Size = new System.Drawing.Size(57, 54);
             this.pbMachine25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1012,6 +1040,19 @@
             this.groupBBelt3.TabIndex = 49;
             this.groupBBelt3.TabStop = false;
             this.groupBBelt3.Text = "3 号 主 皮 带 :";
+            // 
+            // btnDevice3
+            // 
+            this.btnDevice3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDevice3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDevice3.Font = new System.Drawing.Font("宋体", 9F);
+            this.btnDevice3.Location = new System.Drawing.Point(842, 21);
+            this.btnDevice3.Name = "btnDevice3";
+            this.btnDevice3.Size = new System.Drawing.Size(71, 23);
+            this.btnDevice3.TabIndex = 78;
+            this.btnDevice3.Text = "设备查询";
+            this.btnDevice3.UseVisualStyleBackColor = true;
+            this.btnDevice3.Click += new System.EventHandler(this.btnDevice1_Click);
             // 
             // btnhuancun24
             // 
@@ -1358,6 +1399,19 @@
             this.groupBBelt2.TabStop = false;
             this.groupBBelt2.Text = "2 号 主 皮 带 :";
             // 
+            // btnDevice2
+            // 
+            this.btnDevice2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDevice2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDevice2.Font = new System.Drawing.Font("宋体", 9F);
+            this.btnDevice2.Location = new System.Drawing.Point(842, 26);
+            this.btnDevice2.Name = "btnDevice2";
+            this.btnDevice2.Size = new System.Drawing.Size(71, 23);
+            this.btnDevice2.TabIndex = 78;
+            this.btnDevice2.Text = "设备查询";
+            this.btnDevice2.UseVisualStyleBackColor = true;
+            this.btnDevice2.Click += new System.EventHandler(this.btnDevice1_Click);
+            // 
             // btnhuancun16
             // 
             this.btnhuancun16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -1666,57 +1720,12 @@
             this.pbMainbelt2.TabStop = false;
             this.pbMainbelt2.Click += new System.EventHandler(this.pbMainbelt1_Click);
             // 
-            // btnDevice1
-            // 
-            this.btnDevice1.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnDevice1.Location = new System.Drawing.Point(842, 26);
-            this.btnDevice1.Name = "btnDevice1";
-            this.btnDevice1.Size = new System.Drawing.Size(71, 23);
-            this.btnDevice1.TabIndex = 78;
-            this.btnDevice1.Text = "设备查询";
-            this.btnDevice1.UseVisualStyleBackColor = true;
-            this.btnDevice1.Click += new System.EventHandler(this.btnDevice1_Click);
-            // 
-            // btnDevice2
-            // 
-            this.btnDevice2.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnDevice2.Location = new System.Drawing.Point(842, 26);
-            this.btnDevice2.Name = "btnDevice2";
-            this.btnDevice2.Size = new System.Drawing.Size(71, 23);
-            this.btnDevice2.TabIndex = 78;
-            this.btnDevice2.Text = "设备查询";
-            this.btnDevice2.UseVisualStyleBackColor = true;
-            this.btnDevice2.Click += new System.EventHandler(this.btnDevice1_Click);
-            // 
-            // btnDevice3
-            // 
-            this.btnDevice3.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnDevice3.Location = new System.Drawing.Point(842, 21);
-            this.btnDevice3.Name = "btnDevice3";
-            this.btnDevice3.Size = new System.Drawing.Size(71, 23);
-            this.btnDevice3.TabIndex = 78;
-            this.btnDevice3.Text = "设备查询";
-            this.btnDevice3.UseVisualStyleBackColor = true;
-            this.btnDevice3.Click += new System.EventHandler(this.btnDevice1_Click);
-            // 
-            // btnDevice4
-            // 
-            this.btnDevice4.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnDevice4.Location = new System.Drawing.Point(853, 26);
-            this.btnDevice4.Name = "btnDevice4";
-            this.btnDevice4.Size = new System.Drawing.Size(66, 23);
-            this.btnDevice4.TabIndex = 78;
-            this.btnDevice4.Text = "设备查询";
-            this.btnDevice4.UseVisualStyleBackColor = true;
-            this.btnDevice4.Click += new System.EventHandler(this.btnDevice1_Click);
-            // 
             // Fm_FollowTaskUnion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 679);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Fm_FollowTaskUnion";
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_FollowTaskUnion_FormClosing);

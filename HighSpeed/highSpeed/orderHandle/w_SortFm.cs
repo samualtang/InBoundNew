@@ -78,6 +78,16 @@ namespace highSpeed.orderHandle
         }
          private void w_SortFm_Load(object sender, EventArgs e)
         {
+            int pokecount = InBound.Business.UnionTaskInfoService.GetPokeCount();
+            int pokeseqcount = InBound.Business.UnionTaskInfoService.GetPokeSEQCount();
+            if (pokecount == pokeseqcount)
+            {
+                btnPokeSeq.Enabled = false;
+            }
+            else
+            {
+                btnPokeSeq.Enabled = true ;
+            }
             lblInFO.Text = "分拣车组信息:";
         }
          void DgvBind(string sql)
@@ -188,7 +198,7 @@ namespace highSpeed.orderHandle
                 String errmsg = sqlpara[1].Value.ToString();
                 if (errcode == "1")
                 {
-                    InBound.Business.UnionTaskInfoService.InsertPokeseqInfo();
+                    btnPokeSeq.Enabled = true;
                     progressBar1.Value = progressBar1.Maximum;
                     TimerByTime.Stop();// 计时结束;
                     btnSort.Enabled = true;
@@ -334,7 +344,59 @@ namespace highSpeed.orderHandle
                 return;
             }
         }
+       
+       
+        private void btnPokeSeq_Click(object sender, EventArgs e)
+        {
+            Thread th =   new Thread(ProgreesThread);
+            try
+            { 
+                th.Start();
+                panel3.Visible = true;
+                progressBar2.Value = 0;
+                int rcounts = InBound.Business.UnionTaskInfoService.GetPokeCount();
+                for (int i = 0; i < rcounts; i++)
+                {
+                    Application.DoEvents();
+                    progressBar2.Value = ((i + 1) * 100 / rcounts);
+                    progressBar2.Refresh();
+                    lblproseer.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                    lblproseer.Refresh();
+                }
+              
+            }
+            catch (DataException date)
+            {
+                MessageBox.Show("条烟顺序失败：" + date.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("条烟顺序失败：" + ex.Message);
+            }
+           
+        }
 
+        void ProgreesThread()
+        {
+            try
+            {
+                InBound.Business.UnionTaskInfoService.InsertPokeseqInfo();
+                MessageBox.Show("条烟顺序生成成功！");
+            }
+            catch (DataException date)
+            {
+                MessageBox.Show("条烟顺序失败：" + date.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("条烟顺序失败：" + ex.Message);
+            }
+            finally
+            { 
+                panel3.Visible = false;
+                btnPokeSeq.Enabled = false;
+            }
+        }
 
     }
 }
