@@ -43,9 +43,9 @@
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.TimerByTime = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblproseer = new System.Windows.Forms.Label();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.lblPokeSeq = new System.Windows.Forms.Label();
-            this.lblproseer = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -187,6 +187,7 @@
             this.dgvSortInfo.TabIndex = 5;
             this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
             this.dgvSortInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortInfo_CellFormatting);
+            this.dgvSortInfo.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSortInfo_DataError);
             // 
             // TimerByTime
             // 
@@ -206,6 +207,15 @@
             this.panel3.TabIndex = 6;
             this.panel3.Visible = false;
             // 
+            // lblproseer
+            // 
+            this.lblproseer.AutoSize = true;
+            this.lblproseer.Location = new System.Drawing.Point(11, 68);
+            this.lblproseer.Name = "lblproseer";
+            this.lblproseer.Size = new System.Drawing.Size(67, 15);
+            this.lblproseer.TabIndex = 2;
+            this.lblproseer.Text = "完成进度";
+            // 
             // progressBar2
             // 
             this.progressBar2.Location = new System.Drawing.Point(12, 34);
@@ -216,20 +226,11 @@
             // lblPokeSeq
             // 
             this.lblPokeSeq.AutoSize = true;
-            this.lblPokeSeq.Location = new System.Drawing.Point(11, 9);
+            this.lblPokeSeq.Location = new System.Drawing.Point(13, 8);
             this.lblPokeSeq.Name = "lblPokeSeq";
             this.lblPokeSeq.Size = new System.Drawing.Size(97, 15);
             this.lblPokeSeq.TabIndex = 0;
             this.lblPokeSeq.Text = "条烟顺序进度";
-            // 
-            // lblproseer
-            // 
-            this.lblproseer.AutoSize = true;
-            this.lblproseer.Location = new System.Drawing.Point(11, 68);
-            this.lblproseer.Name = "lblproseer";
-            this.lblproseer.Size = new System.Drawing.Size(67, 15);
-            this.lblproseer.TabIndex = 2;
-            this.lblproseer.Text = "完成进度";
             // 
             // w_SortFm
             // 
