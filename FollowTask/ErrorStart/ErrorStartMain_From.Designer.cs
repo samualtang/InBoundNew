@@ -28,33 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Btn_start = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Btn_start
+            // checkedListBox1
             // 
-            this.Btn_start.Location = new System.Drawing.Point(29, 29);
-            this.Btn_start.Name = "Btn_start";
-            this.Btn_start.Size = new System.Drawing.Size(169, 35);
-            this.Btn_start.TabIndex = 0;
-            this.Btn_start.Text = "button1";
-            this.Btn_start.UseVisualStyleBackColor = true;
-            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "故障1",
+            "故障2",
+            "故障3",
+            "故障4",
+            "故障5"});
+            this.checkedListBox1.Location = new System.Drawing.Point(291, 29);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(215, 196);
+            this.checkedListBox1.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(103, 113);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Btn_start_Click);
             // 
             // ErrorStartMain_From
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(562, 429);
-            this.Controls.Add(this.Btn_start);
+            this.ClientSize = new System.Drawing.Size(901, 432);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.checkedListBox1);
             this.Name = "ErrorStartMain_From";
             this.Text = "ErrorStartMain_From";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ErrorStartMain_From_FormClosing);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button Btn_start;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button button1;
+
     }
 }

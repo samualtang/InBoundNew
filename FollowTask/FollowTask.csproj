@@ -83,7 +83,37 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModle\AllPlcState.cs" />
+    <Compile Include="DataModle\DicForm.cs" />
+    <Compile Include="DataModle\ErrorState.cs" />
+    <Compile Include="DataModle\SortData.cs" />
     <Compile Include="DeviceState.cs" />
+    <Compile Include="DataModle\Abnormallists.cs" />
+    <Compile Include="ErrorStart\AllSystemStart.cs" />
+    <Compile Include="ErrorStart\ErrorStartMain_From.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\ErrorStartMain_From.Designer.cs">
+      <DependentUpon>ErrorStartMain_From.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStart\ErrorStart_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\ErrorStart_Main.Designer.cs">
+      <DependentUpon>ErrorStart_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStart\SortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\SortForm.Designer.cs">
+      <DependentUpon>SortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStart\UnionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\UnionForm.Designer.cs">
+      <DependentUpon>UnionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FM_Device.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +221,18 @@
     <Compile Include="SelectTask\w_UnNormal.Designer.cs">
       <DependentUpon>w_UnNormal.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ErrorStart\ErrorStartMain_From.resx">
+      <DependentUpon>ErrorStartMain_From.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStart\ErrorStart_Main.resx">
+      <DependentUpon>ErrorStart_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStart\SortForm.resx">
+      <DependentUpon>SortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStart\UnionForm.resx">
+      <DependentUpon>UnionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FM_Device.resx">
       <DependentUpon>FM_Device.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,6 +321,9 @@
     <Content Include="DotNetPrint.xml" />
     <Content Include="Lib\opcrcw.comn.dll" />
     <Content Include="Lib\opcrcw.da.dll" />
+    <Content Include="Resources\合流自检.JPG" />
+    <Content Include="Resources\自检.JPG" />
+    <Content Include="Resources\预分拣.JPG" />
     <None Include="Resources\1430143.jpg" />
     <None Include="Resources\1430159.jpg" />
     <None Include="Resources\1430161.jpg" />
@@ -333,6 +378,8 @@
     <None Include="Resources\B线机械手.jpg" />
     <None Include="Resources\合流故障机械手.jpg" />
     <None Include="Resources\Cache.jpg" />
+    <Content Include="Resources\分拣详细.JPG" />
+    <Content Include="Resources\合流.JPG" />
     <Content Include="Resources\抓取.bmp" />
     <Content Include="Resources\故障.bmp" />
     <Content Include="Resources\无烟.bmp" />

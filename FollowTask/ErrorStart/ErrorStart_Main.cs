@@ -27,6 +27,8 @@ namespace FollowTask.ErrorStart
        IOPCServer pIOPCServer;     */
         SortForm sort;
 
+
+
         public void OnDataChange(int group, int[] clientId, object[] values)
         {
             if (group == 1)//一号主皮带八个机械手
@@ -46,40 +48,7 @@ namespace FollowTask.ErrorStart
 
             }
         }
-
-        private bool CheckExist(Form frm)
-        {
-            bool blResult = false;
-
-            for (int i = 0; i < MdiChildren.Length; i++)
-            {
-                if (MdiChildren[i].GetType().Name == frm.GetType().Name)
-                {
-                    Form tmpFrm = MdiChildren[i];
-                    if (tmpFrm.Text == frm.Text)
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
-                    else if (frm.Text == "")
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
-                    else if (frm.GetType().Name.ToLower() == "w_export_new")
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
-                }
-            }
-            return blResult;
-        }
-
-
+       
 
         Group FJPlcAdress;
         Thread td;
@@ -298,16 +267,16 @@ namespace FollowTask.ErrorStart
         private void Start_Click()
         {
             HandleDelegate task1 = Start_FJ1;
-            task1.BeginInvoke(null, Btn_start);
+            task1.BeginInvoke(null, null);
 
             HandleDelegate task2 = Start_FJ2;
-            task2.BeginInvoke(null, Btn_start);
+            task2.BeginInvoke(null, null);
 
             HandleDelegate task3 = Start_FJ3;
-            task3.BeginInvoke(null, Btn_start);
+            task3.BeginInvoke(null, null);
 
             HandleDelegate task4 = Start_FJ4;
-            task4.BeginInvoke(null, Btn_start);
+            task4.BeginInvoke(null, null);
         }
 
         private void Start_Click1()
@@ -439,6 +408,76 @@ namespace FollowTask.ErrorStart
                 updateListBox("预分拣第四组plc未连接", listBox1);
             }  
         }
+
+        ErrorStartMain_From fm;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!ReadFormDictionary(fm))
+            {
+                fm = new ErrorStartMain_From();
+                WriteFormDictionary(fm);
+            } 
+            
+
+        }
+         
+        /// <summary>
+        /// 字典加入窗体
+        /// </summary>
+        /// <param name="fm"></param>
+        private void WriteFormDictionary(Form fm)
+        {
+            DicForm.DicFormList.Add(fm, true);
+            fm.TopLevel = false;
+            //指定父容器
+            fm.Parent = splitContainer1.Panel2;
+            fm.WindowState = FormWindowState.Maximized;
+            fm.Show();
+        }
+        /// <summary>
+        /// 字典读取窗体
+        /// </summary>
+        /// <param name="fm">窗体对象</param>
+        /// <returns>是否存在窗体</returns>
+        private bool ReadFormDictionary(Form fm)
+        {
+            if (DicForm.DicFormList.Count() > 0)
+            {
+                //如果存在窗体
+                if (DicForm.DicFormList.ContainsKey(fm))
+                {
+                    //如果为开启状态
+                    if (DicForm.DicFormList.ContainsValue(true))
+                    {
+                        fm.Activate();
+                    }
+                    else
+                    {
+                        fm = new ErrorStartMain_From();
+                        fm.Show();
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            foreach (var item in DicForm.DicFormList)
+            {
+                MessageBox.Show(item.Key + "" + item.Value);                
+            }
+        }
+
+
 
     }
 }
