@@ -623,6 +623,26 @@ namespace FollowTask.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap 分拣详细 {
+            get {
+                object obj = ResourceManager.GetObject("分拣详细", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 合流 {
+            get {
+                object obj = ResourceManager.GetObject("合流", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap 合流故障机械手 {
             get {
                 object obj = ResourceManager.GetObject("合流故障机械手", resourceCulture);
@@ -676,6 +696,56 @@ namespace FollowTask.Properties {
         internal static System.Drawing.Bitmap 机械手1 {
             get {
                 object obj = ResourceManager.GetObject("机械手1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 自检1 {
+            get {
+                object obj = ResourceManager.GetObject("自检1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 预分拣 {
+            get {
+                object obj = ResourceManager.GetObject("预分拣", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 预分拣1 {
+            get {
+                object obj = ResourceManager.GetObject("预分拣1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 预分拣2 {
+            get {
+                object obj = ResourceManager.GetObject("预分拣2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap 预分拣3 {
+            get {
+                object obj = ResourceManager.GetObject("预分拣3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

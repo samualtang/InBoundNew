@@ -28,26 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("开机自检");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("入库区");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("立库区");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("出库区");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("备烟区");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("预分拣区");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("异型烟区");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("合流区");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("包装机区");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("区域查看", new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9});
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.b1_f3 = new System.Windows.Forms.Button();
+            this.b8 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.b1_f2 = new System.Windows.Forms.Button();
+            this.b7 = new System.Windows.Forms.Button();
+            this.b1_f4 = new System.Windows.Forms.Button();
+            this.Btn_start = new System.Windows.Forms.Button();
+            this.b1_f1 = new System.Windows.Forms.Button();
+            this.b6 = new System.Windows.Forms.Button();
+            this.btn_sort = new System.Windows.Forms.Button();
+            this.b5 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.b4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.b3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.b2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -55,63 +57,234 @@
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            this.splitContainer1.Size = new System.Drawing.Size(631, 395);
-            this.splitContainer1.SplitterDistance = 152;
+            this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.b1_f3);
+            this.splitContainer1.Panel1.Controls.Add(this.b8);
+            this.splitContainer1.Panel1.Controls.Add(this.button6);
+            this.splitContainer1.Panel1.Controls.Add(this.b1_f2);
+            this.splitContainer1.Panel1.Controls.Add(this.b7);
+            this.splitContainer1.Panel1.Controls.Add(this.b1_f4);
+            this.splitContainer1.Panel1.Controls.Add(this.Btn_start);
+            this.splitContainer1.Panel1.Controls.Add(this.b1_f1);
+            this.splitContainer1.Panel1.Controls.Add(this.b6);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_sort);
+            this.splitContainer1.Panel1.Controls.Add(this.b5);
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.b4);
+            this.splitContainer1.Panel1.Controls.Add(this.button3);
+            this.splitContainer1.Panel1.Controls.Add(this.b3);
+            this.splitContainer1.Panel1.Controls.Add(this.button4);
+            this.splitContainer1.Panel1.Controls.Add(this.b2);
+            this.splitContainer1.Panel1.Controls.Add(this.button5);
+            this.splitContainer1.Panel1.Controls.Add(this.button7);
+            this.splitContainer1.Panel1.Controls.Add(this.button8);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.splitContainer1.Size = new System.Drawing.Size(1233, 644);
+            this.splitContainer1.SplitterDistance = 452;
             this.splitContainer1.TabIndex = 1;
             // 
-            // treeView1
+            // listBox1
             // 
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeView1.Font = new System.Drawing.Font("宋体", 14F);
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            treeNode1.Checked = true;
-            treeNode1.Name = "SortForm";
-            treeNode1.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            treeNode1.Text = "开机自检";
-            treeNode2.Name = "节点2";
-            treeNode2.Text = "入库区";
-            treeNode3.Name = "节点3";
-            treeNode3.Text = "立库区";
-            treeNode4.Name = "节点4";
-            treeNode4.Text = "出库区";
-            treeNode5.Name = "节点5";
-            treeNode5.Text = "备烟区";
-            treeNode6.Name = "节点6";
-            treeNode6.Text = "预分拣区";
-            treeNode7.Name = "节点10";
-            treeNode7.Text = "异型烟区";
-            treeNode8.Name = "节点9";
-            treeNode8.Text = "合流区";
-            treeNode9.Name = "节点11";
-            treeNode9.Text = "包装机区";
-            treeNode10.Name = "节点1";
-            treeNode10.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            treeNode10.Text = "区域查看";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode10});
-            this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(151, 398);
-            this.treeView1.TabIndex = 1;
-            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(222, 172);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(223, 460);
+            this.listBox1.TabIndex = 0;
+            // 
+            // b1_f3
+            // 
+            this.b1_f3.Location = new System.Drawing.Point(187, 198);
+            this.b1_f3.Name = "b1_f3";
+            this.b1_f3.Size = new System.Drawing.Size(29, 13);
+            this.b1_f3.TabIndex = 19;
+            this.b1_f3.UseVisualStyleBackColor = true;
+            // 
+            // b8
+            // 
+            this.b8.Location = new System.Drawing.Point(188, 580);
+            this.b8.Name = "b8";
+            this.b8.Size = new System.Drawing.Size(29, 52);
+            this.b8.TabIndex = 17;
+            this.b8.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(12, 467);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(176, 52);
+            this.button6.TabIndex = 7;
+            this.button6.Text = "立库区域";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // b1_f2
+            // 
+            this.b1_f2.Location = new System.Drawing.Point(187, 185);
+            this.b1_f2.Name = "b1_f2";
+            this.b1_f2.Size = new System.Drawing.Size(29, 13);
+            this.b1_f2.TabIndex = 18;
+            this.b1_f2.UseVisualStyleBackColor = true;
+            // 
+            // b7
+            // 
+            this.b7.Location = new System.Drawing.Point(188, 524);
+            this.b7.Name = "b7";
+            this.b7.Size = new System.Drawing.Size(29, 52);
+            this.b7.TabIndex = 16;
+            this.b7.UseVisualStyleBackColor = true;
+            // 
+            // b1_f4
+            // 
+            this.b1_f4.Location = new System.Drawing.Point(187, 211);
+            this.b1_f4.Name = "b1_f4";
+            this.b1_f4.Size = new System.Drawing.Size(29, 13);
+            this.b1_f4.TabIndex = 18;
+            this.b1_f4.UseVisualStyleBackColor = true;
+            // 
+            // Btn_start
+            // 
+            this.Btn_start.BackgroundImage = global::FollowTask.Properties.Resources.自检1;
+            this.Btn_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_start.Location = new System.Drawing.Point(34, 23);
+            this.Btn_start.Name = "Btn_start";
+            this.Btn_start.Size = new System.Drawing.Size(340, 84);
+            this.Btn_start.TabIndex = 1;
+            this.Btn_start.UseVisualStyleBackColor = true;
+            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
+            // 
+            // b1_f1
+            // 
+            this.b1_f1.Location = new System.Drawing.Point(187, 172);
+            this.b1_f1.Name = "b1_f1";
+            this.b1_f1.Size = new System.Drawing.Size(29, 13);
+            this.b1_f1.TabIndex = 10;
+            this.b1_f1.UseVisualStyleBackColor = true;
+            // 
+            // b6
+            // 
+            this.b6.Location = new System.Drawing.Point(188, 467);
+            this.b6.Name = "b6";
+            this.b6.Size = new System.Drawing.Size(29, 52);
+            this.b6.TabIndex = 15;
+            this.b6.UseVisualStyleBackColor = true;
+            // 
+            // btn_sort
+            // 
+            this.btn_sort.BackgroundImage = global::FollowTask.Properties.Resources.预分拣1;
+            this.btn_sort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_sort.Location = new System.Drawing.Point(12, 172);
+            this.btn_sort.Name = "btn_sort";
+            this.btn_sort.Size = new System.Drawing.Size(176, 52);
+            this.btn_sort.TabIndex = 2;
+            this.btn_sort.UseVisualStyleBackColor = true;
+            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
+            // 
+            // b5
+            // 
+            this.b5.Location = new System.Drawing.Point(188, 409);
+            this.b5.Name = "b5";
+            this.b5.Size = new System.Drawing.Size(29, 52);
+            this.b5.TabIndex = 14;
+            this.b5.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 231);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(176, 52);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "合流区域";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // b4
+            // 
+            this.b4.Location = new System.Drawing.Point(188, 351);
+            this.b4.Name = "b4";
+            this.b4.Size = new System.Drawing.Size(29, 52);
+            this.b4.TabIndex = 13;
+            this.b4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(12, 291);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(176, 52);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "异型烟区域";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // b3
+            // 
+            this.b3.Location = new System.Drawing.Point(188, 291);
+            this.b3.Name = "b3";
+            this.b3.Size = new System.Drawing.Size(29, 52);
+            this.b3.TabIndex = 12;
+            this.b3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(12, 351);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(176, 52);
+            this.button4.TabIndex = 5;
+            this.button4.Text = "入库区域";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // b2
+            // 
+            this.b2.Location = new System.Drawing.Point(188, 231);
+            this.b2.Name = "b2";
+            this.b2.Size = new System.Drawing.Size(29, 52);
+            this.b2.TabIndex = 11;
+            this.b2.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(12, 409);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(176, 52);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "出库区域";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 580);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(176, 52);
+            this.button7.TabIndex = 8;
+            this.button7.Text = "包装机区域";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(12, 524);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(176, 52);
+            this.button8.TabIndex = 9;
+            this.button8.Text = "备烟区域";
+            this.button8.UseVisualStyleBackColor = true;
             // 
             // ErrorStart_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 395);
+            this.ClientSize = new System.Drawing.Size(1233, 644);
             this.Controls.Add(this.splitContainer1);
             this.Name = "ErrorStart_Main";
             this.Text = "ErrorStart_Main";
+            this.Load += new System.EventHandler(this.ErrorStart_Main_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -122,7 +295,28 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button Btn_start;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button b1_f3;
+        private System.Windows.Forms.Button b8;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button b1_f2;
+        private System.Windows.Forms.Button b7;
+        private System.Windows.Forms.Button b1_f4;
+        private System.Windows.Forms.Button b1_f1;
+        private System.Windows.Forms.Button b6;
+        private System.Windows.Forms.Button btn_sort;
+        private System.Windows.Forms.Button b5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button b4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button b3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button b2;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+
 
     }
 }

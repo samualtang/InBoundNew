@@ -490,6 +490,8 @@
           <Property Name="ERRORMSG" Type="nvarchar2" MaxLength="100" />
           <Property Name="AREANAME" Type="nvarchar2" MaxLength="100" />
           <Property Name="AREAPLC" Type="varchar2" MaxLength="50" />
+          <Property Name="PLCID" Type="number" />
+          <Property Name="PLCINDEX" Type="number" />
         </EntityType>
         <EntityType Name="T_WMS_ATSCELL">
           <Key>
@@ -1733,6 +1735,8 @@
           <Property Type="String" Name="ERRORMSG" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="AREANAME" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="AREAPLC" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PLCID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PLCINDEX" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2569,6 +2573,8 @@
           <EntitySetMapping Name="T_WMS_ABNORMALLIST">
             <EntityTypeMapping TypeName="Model.T_WMS_ABNORMALLIST">
               <MappingFragment StoreEntitySet="T_WMS_ABNORMALLIST">
+                <ScalarProperty Name="PLCINDEX" ColumnName="PLCINDEX" />
+                <ScalarProperty Name="PLCID" ColumnName="PLCID" />
                 <ScalarProperty Name="AREAPLC" ColumnName="AREAPLC" />
                 <ScalarProperty Name="AREANAME" ColumnName="AREANAME" />
                 <ScalarProperty Name="ERRORMSG" ColumnName="ERRORMSG" />

@@ -9555,6 +9555,54 @@ namespace InBound
         private global::System.String _AREAPLC;
         partial void OnAREAPLCChanging(global::System.String value);
         partial void OnAREAPLCChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLCID
+        {
+            get
+            {
+                return _PLCID;
+            }
+            set
+            {
+                OnPLCIDChanging(value);
+                ReportPropertyChanging("PLCID");
+                _PLCID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLCID");
+                OnPLCIDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLCID;
+        partial void OnPLCIDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLCIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLCINDEX
+        {
+            get
+            {
+                return _PLCINDEX;
+            }
+            set
+            {
+                OnPLCINDEXChanging(value);
+                ReportPropertyChanging("PLCINDEX");
+                _PLCINDEX = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLCINDEX");
+                OnPLCINDEXChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLCINDEX;
+        partial void OnPLCINDEXChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLCINDEXChanged();
 
         #endregion
 
