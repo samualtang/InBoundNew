@@ -781,6 +781,20 @@ namespace highSpeed
 
         }
 
+        private void 今日订单ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            win_order_Union frm = new win_order_Union();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
 
 

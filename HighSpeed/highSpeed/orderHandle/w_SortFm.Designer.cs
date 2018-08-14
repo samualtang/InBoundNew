@@ -54,6 +54,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblproseer);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.rdbUnUnionDan);
@@ -197,7 +198,6 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.lblproseer);
             this.panel3.Controls.Add(this.progressBar2);
             this.panel3.Controls.Add(this.lblPokeSeq);
             this.panel3.Font = new System.Drawing.Font("宋体", 11F);
@@ -210,11 +210,12 @@
             // lblproseer
             // 
             this.lblproseer.AutoSize = true;
-            this.lblproseer.Location = new System.Drawing.Point(11, 68);
+            this.lblproseer.Location = new System.Drawing.Point(842, 16);
             this.lblproseer.Name = "lblproseer";
-            this.lblproseer.Size = new System.Drawing.Size(67, 15);
+            this.lblproseer.Size = new System.Drawing.Size(53, 12);
             this.lblproseer.TabIndex = 2;
             this.lblproseer.Text = "完成进度";
+            this.lblproseer.Visible = false;
             // 
             // progressBar2
             // 
