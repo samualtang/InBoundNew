@@ -354,12 +354,13 @@ namespace highSpeed.orderHandle
         delegate void HandleSortPokeseq();
         private void btnPokeSeq_Click(object sender, EventArgs e)
         {
+            btnPokeSeq.Enabled = false;
             isSort = true;
             handlesort(3, true);
             HandleSortPokeseq task = ThreadSortPokeseq;
             task.BeginInvoke(null, null);
             lblproseer.Visible = true;
-            lblproseer.Text = "条烟顺序生成中...需要一定时间！请等候";
+            lblproseer.Text = "条烟顺序生成中...需要一定时间！请等候"; 
         }
 
         void ThreadSortPokeseq()
@@ -382,6 +383,7 @@ namespace highSpeed.orderHandle
                 handlesort(3, false);//告诉父窗体任务结束
                 lblproseer.Visible = false;
                 btnPokeSeq.Enabled = false;
+                isSort = false;
             }
 
 

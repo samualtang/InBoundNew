@@ -279,7 +279,7 @@
             // 
             // dgvMainBeltInfo
             // 
-            this.dgvMainBeltInfo.BackgroundColor = System.Drawing.Color.LightGreen;
+            this.dgvMainBeltInfo.BackgroundColor = System.Drawing.Color.Honeydew;
             this.dgvMainBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMainBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMainBeltInfo.Location = new System.Drawing.Point(0, 199);

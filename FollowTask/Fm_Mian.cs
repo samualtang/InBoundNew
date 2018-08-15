@@ -750,5 +750,17 @@ namespace FollowTask
                 }
             }
         }
+        delegate  void HandleDviceCheck(int text,List<Group> list , bool isOnline);
+        HandleDviceCheck handledive;
+       
+
+        private void 合流ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FM_Device fd  = new FM_Device();
+
+            handledive += fd.GetMainInfo;
+           
+
+        }
     }
 }

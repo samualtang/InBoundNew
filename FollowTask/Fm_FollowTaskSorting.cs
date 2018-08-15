@@ -474,7 +474,7 @@ namespace FollowTask
         {
             this.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.Hide();
-            this.DialogResult = System.Windows.Forms.DialogResult.None;
+            e.Cancel = true; 
             //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
             //                                                 "操作提示",//对话框的标题  
             //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
@@ -510,6 +510,15 @@ namespace FollowTask
             //    this.WindowState = FormWindowState.Normal;
             //    maxormin = true;
             //}
+        }
+        delegate void HandleDevice(string text, List<Group> list, bool isOnline);
+        HandleDevice handledevice;
+        private void btnDevice1_Click(object sender, EventArgs e)
+        {
+            FM_MainbeltDevice sfd = new FM_MainbeltDevice();
+            handledevice += sfd.GetSoringBeltInfo;
+            handledevice(Text, ListSort, isOnLine);
+            sfd.ShowDialog();
         }
 
 

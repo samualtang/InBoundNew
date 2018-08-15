@@ -13,17 +13,21 @@ using InBound.Business;
 using System.Configuration;
 namespace FollowTask
 {
-    public partial class FM_Device : Form
+    public partial class FM_SortingDevice : Form
     {
-        public FM_Device()
+        public FM_SortingDevice()
         {
             InitializeComponent();
            
         }
 
-        decimal DeviceNum = decimal.Parse(ConfigurationManager.AppSettings["UnionMainDeviceNum"].ToString());//总设备数
+        decimal DeviceNum = 0;//总设备数
         //decimal Section = decimal.Parse(ConfigurationManager.AppSettings["Section"].ToString());//一个设备段之间的距离DeviceName
-        string DeviceName = ConfigurationManager.AppSettings["UnionMainBeltDeviceName"].ToString();
+        string DeviceName = "0";
+
+        //decimal DeviceNumB = 0;//总设备数
+        ////decimal Section = decimal.Parse(ConfigurationManager.AppSettings["Section"].ToString());//一个设备段之间的距离DeviceName
+        //string DeviceNameB ="0";
         /// <summary>
         /// 主皮带信息集合
         /// </summary>
@@ -32,9 +36,10 @@ namespace FollowTask
         /// <summary>
         /// LIST DB块
         /// </summary>
-        List<Group> listMainBelt = new List<Group>();
+        List<Group> listSoring = new List<Group>();
+        decimal Sortnum = 0;
 
-        int MainBelt = 0;
+        decimal groupno = 0;
         /// <summary>
         /// 获取卷烟图片
         /// </summary>
@@ -50,16 +55,35 @@ namespace FollowTask
             return cigreImg;
         }
         delegate  void HandeleRead();
-        public void GetMainInfo(int mainbelt, List<Group> list, bool isonline)
+        public void GetSortinInfo(string text, List<Group> list, bool isonline)
         {
+            string OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
+            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
+            list[0].RemovedItem();//在给OPCItem添加Item之前清空
+            list[1].RemovedItem();
             if (isonline)
-            { 
-                Text = mainbelt + "号主皮带";
-                listMainBelt = list;
-                ReadDBinfo(mainbelt);
+            {
+                OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
+                list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
+                list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
+                Text = text + "号主皮带";
+                listSoring = list;
+                if (groupno == 1 || groupno == 3 || groupno == 5 || groupno == 7)
+                {
+
+                    ReadDBinfo(1, groupno);
+                    DeviceNum = decimal.Parse(ConfigurationManager.AppSettings["SortingMainDeviceNumA"].ToString());//总设备数
+                    DeviceName = ConfigurationManager.AppSettings["SortingMainBeltDeviceNameA"].ToString();
+                }
+                else
+                {
+                    ReadDBinfo(2, groupno);
+                    DeviceNum = decimal.Parse(ConfigurationManager.AppSettings["SortingMainDeviceNumB"].ToString());//总设备数
+                    DeviceName = ConfigurationManager.AppSettings["SortingMainBeltDeviceNameB"].ToString();
+                }
               
              
-                lblDeviceNo.Text ="设备名称"+ DeviceName + "1";
+                lblDeviceNo.Text ="设备名称"+ DeviceName  ;
             }
             else
             {
@@ -68,7 +92,31 @@ namespace FollowTask
             }
 
         }
-      
+        /// <summary>
+        /// 小组号变大组号
+        /// </summary>
+        /// <param name="group">小组</param>
+        /// <returns></returns>
+        decimal GroupnotoBigg(decimal group)
+        {
+            if (group == 2)
+            {
+                return 1;
+            }
+            if (group == 3 || group == 4)
+            {
+                return 2;
+            }
+            if (group == 5 || group == 6)
+            {
+                return 3;
+            }
+            if (group == 7 || group == 8)
+            {
+                return 4;
+            }
+            return 1;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -124,40 +172,31 @@ namespace FollowTask
         /// </summary>
         /// <param name="index">读取索引</param>
         /// <param name="mainbelt">主皮带</param>
-        void ReadDBinfo(int mainbelt)
+        void ReadDBinfo(int index, decimal groupno)
         {
             ListmbInfo.Clear(); //清空list
-            dgvMainBeltInfo.DataSource = null;
+            // dgvSortingBeltInfo = null;
             panelCig.Controls.Clear();
-            int ReadIndex = 0;//读取DB索引
-            decimal Sortnum = 0;
-            List<decimal> SortNumList = new List<decimal>();
-            List<decimal> QuantityList = new List<decimal>();
-            for (int i = (mainbelt - 1) * 8; i < mainbelt * 8; i++)
-            {
-                SortNumList.Add(listMainBelt[6].ReadD(i).CastTo<decimal>(0));//任务号
-                QuantityList.Add(listMainBelt[6].ReadD(32 + i).CastTo<decimal>(0));//放烟数量
-            }
+            int ReadIndex = 0;
+
             for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
             {
-                Sortnum = listMainBelt[mainbelt - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号 
+                Sortnum = listSoring[index - 1].ReadD(ReadIndex).CastTo<int>(0);//任务号
+
                 if (Sortnum > 0)//任务号不为0
                 {
                     MainBeltInfo info = new MainBeltInfo();
                     info.SortNum = Sortnum;//任务号
-                    info.Place = (listMainBelt[mainbelt - 1].ReadD((ReadIndex + 1)).CastTo<decimal>(-1) / 1000);//位置(米)
-                    info.Quantity = Convert.ToDecimal(listMainBelt[mainbelt - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1));//数量
-                    info.mainbelt = mainbelt.ToString();//主皮带
-                    info.SortNumList = SortNumList;//机械手任务号
-                    info.QuantityList = QuantityList;//机械手放烟数量
+                    info.Place = (listSoring[index - 1].ReadD((ReadIndex + 1)).CastTo<decimal>(-1) / 1000);//位置(米)
+                    info.Quantity = listSoring[index - 1].ReadD((ReadIndex + 2)).CastTo<int>(-1);//数量
+                    info.GroupNO = groupno;//组号
                     info.DeviceName = ""; 
                     ListmbInfo.Add(info);
                 }
-                ReadIndex = ReadIndex + 3;
+                ReadIndex = ReadIndex + 4;
             }
-            MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
-            ListmbInfo = ListmbInfo.OrderBy(x => x.Place).ToList();// ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
-            GetDviceName(ListmbInfo, DeviceNum, DeviceName);
+            MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
+            ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
         }
         List<string> listDerviceName = new List<string>();//设备名
         /// <summary>
@@ -166,7 +205,7 @@ namespace FollowTask
         /// <param name="list">数据集</param>
         /// <param name="deviceNum">设备总数</param> 
         /// /// <param name="devicename">设备名称</param>
-        void GetDviceName(List<InBound.Model.MainBeltInfo> list, decimal deviceNum, string devicename)
+        void GetDviceName(List<InBound.Model.MainBeltInfo> list, decimal deviceNum, string devicename ,decimal groupno)
         {
             if (list.Count > 0)
             {
@@ -187,6 +226,28 @@ namespace FollowTask
                     {
                         if (listcount[((j * 2))] < list[i].Place && list[i].Place < listcount[((j * 2) + 1)])
                         {
+                            if (list[i].Place > 35)
+                            {
+                                if (list[i].mainbelt == "1")
+                                {
+                                    list[i].DeviceName = devicename + "24," + devicename + "25," + devicename + "26";
+
+                                }
+                                if (list[i].mainbelt == "2")
+                                {
+                                    list[i].DeviceName = devicename + "19," + devicename + "20," + devicename + "21";
+
+                                }
+                                if (list[i].mainbelt == "3")
+                                {
+                                    list[i].DeviceName = devicename + "19," + devicename + "20," + devicename + "21";
+
+                                }
+                                if (list[i].mainbelt == "4")
+                                {
+                                    list[i].DeviceName = devicename + "19," + devicename + "20," + devicename + "21"; 
+                                }
+                            }
                             list[i].DeviceName = listDerviceName[j];
                             break;
                         }

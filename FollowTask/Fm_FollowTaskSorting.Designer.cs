@@ -32,6 +32,7 @@
             this.groupBoxprogramINfo = new System.Windows.Forms.GroupBox();
             this.list_data = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDevice1 = new System.Windows.Forms.Button();
             this.btnZoom = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -84,6 +85,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnDevice1);
             this.panel1.Controls.Add(this.btnZoom);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.button1);
@@ -101,6 +103,19 @@
             this.panel1.Size = new System.Drawing.Size(953, 55);
             this.panel1.TabIndex = 13;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
+            // 
+            // btnDevice1
+            // 
+            this.btnDevice1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDevice1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDevice1.Font = new System.Drawing.Font("宋体", 9F);
+            this.btnDevice1.Location = new System.Drawing.Point(720, 26);
+            this.btnDevice1.Name = "btnDevice1";
+            this.btnDevice1.Size = new System.Drawing.Size(81, 23);
+            this.btnDevice1.TabIndex = 79;
+            this.btnDevice1.Text = "设 备 查 询";
+            this.btnDevice1.UseVisualStyleBackColor = true;
+            this.btnDevice1.Click += new System.EventHandler(this.btnDevice1_Click);
             // 
             // btnZoom
             // 
@@ -295,7 +310,7 @@
             // 
             // dgvSortingBeltInfo
             // 
-            this.dgvSortingBeltInfo.BackgroundColor = System.Drawing.Color.LightGreen;
+            this.dgvSortingBeltInfo.BackgroundColor = System.Drawing.Color.Honeydew;
             this.dgvSortingBeltInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortingBeltInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSortingBeltInfo.Location = new System.Drawing.Point(0, 197);
@@ -475,6 +490,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnZoom;
+        private System.Windows.Forms.Button btnDevice1;
 
 
     }
