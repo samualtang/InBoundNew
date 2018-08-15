@@ -77,7 +77,6 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.lbl7);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pbAline);
@@ -113,7 +112,7 @@
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Controls.Add(this.lblloading);
-            this.panel3.Location = new System.Drawing.Point(8, 43);
+            this.panel3.Location = new System.Drawing.Point(179, 138);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(416, 614);
             this.panel3.TabIndex = 45;
@@ -160,7 +159,6 @@
             // pbAline
             // 
             this.pbAline.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbAline.Image = global::FollowTask.Properties.Resources.A;
             this.pbAline.Location = new System.Drawing.Point(12, 404);
             this.pbAline.Name = "pbAline";
             this.pbAline.Size = new System.Drawing.Size(82, 50);
@@ -170,7 +168,6 @@
             // pbBline
             // 
             this.pbBline.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbBline.Image = global::FollowTask.Properties.Resources.Bb;
             this.pbBline.Location = new System.Drawing.Point(12, 142);
             this.pbBline.Name = "pbBline";
             this.pbBline.Size = new System.Drawing.Size(82, 50);
@@ -411,6 +408,7 @@
             // 
             // groupBoxUnionInfo
             // 
+            this.groupBoxUnionInfo.Controls.Add(this.panel3);
             this.groupBoxUnionInfo.Controls.Add(this.lblDeviceCount);
             this.groupBoxUnionInfo.Controls.Add(this.lblErorr);
             this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
