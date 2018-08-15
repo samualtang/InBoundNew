@@ -43,18 +43,19 @@
             this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.TimerByTime = new System.Windows.Forms.Timer(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
-            this.lblproseer = new System.Windows.Forms.Label();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.lblPokeSeq = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lblproseer);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.rdbUnUnionDan);
@@ -198,8 +199,8 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.progressBar2);
-            this.panel3.Controls.Add(this.lblPokeSeq);
+            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.pbLoading);
             this.panel3.Font = new System.Drawing.Font("宋体", 11F);
             this.panel3.Location = new System.Drawing.Point(46, 69);
             this.panel3.Name = "panel3";
@@ -207,31 +208,34 @@
             this.panel3.TabIndex = 6;
             this.panel3.Visible = false;
             // 
-            // lblproseer
+            // label1
             // 
-            this.lblproseer.AutoSize = true;
-            this.lblproseer.Location = new System.Drawing.Point(842, 16);
-            this.lblproseer.Name = "lblproseer";
-            this.lblproseer.Size = new System.Drawing.Size(53, 12);
-            this.lblproseer.TabIndex = 2;
-            this.lblproseer.Text = "完成进度";
-            this.lblproseer.Visible = false;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(210, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(142, 15);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "条烟顺序生成中。。";
             // 
-            // progressBar2
+            // pbLoading
             // 
-            this.progressBar2.Location = new System.Drawing.Point(12, 34);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(293, 23);
-            this.progressBar2.TabIndex = 1;
+            this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
+            this.pbLoading.Location = new System.Drawing.Point(-2, -2);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(206, 100);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 27;
+            this.pbLoading.TabStop = false;
             // 
-            // lblPokeSeq
+            // button1
             // 
-            this.lblPokeSeq.AutoSize = true;
-            this.lblPokeSeq.Location = new System.Drawing.Point(13, 8);
-            this.lblPokeSeq.Name = "lblPokeSeq";
-            this.lblPokeSeq.Size = new System.Drawing.Size(97, 15);
-            this.lblPokeSeq.TabIndex = 0;
-            this.lblPokeSeq.Text = "条烟顺序进度";
+            this.button1.Location = new System.Drawing.Point(837, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // w_SortFm
             // 
@@ -254,6 +258,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -274,8 +279,8 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnPokeSeq;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Label lblPokeSeq;
-        private System.Windows.Forms.Label lblproseer;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pbLoading;
+        private System.Windows.Forms.Button button1;
     }
 }

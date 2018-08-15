@@ -21,6 +21,7 @@ namespace FollowTask
             dgvMainBeltInfo.DoubleBufferedDataGirdView(true);
             CheckForIllegalCrossThreadCalls = false;
             WindowState = FormWindowState.Maximized;
+            pbLoading.VisibleChanged += new EventHandler(pbLoading_VisibleChanged);
         }
         /// <summary>
         /// 主皮带信息集合
@@ -35,7 +36,7 @@ namespace FollowTask
         /// <summary>
         /// LIST DB块
         /// </summary>
-        List<Group> listMainBelt = new List<Group>();
+      static   List<Group> listMainBelt = new List<Group>();
         /// <summary>
         /// 主皮带号
         /// </summary>
@@ -130,31 +131,37 @@ namespace FollowTask
         delegate void Handledelegate();
         public void GetMainInfo(int mainbelt, List<Group> list,bool isonline)
         {
-            if (isonline)
-            {
-                Text = mainbelt + "号主皮带";
-                txtTitle.Text = "合流" + mainbelt + "号主皮带";
-                MainBelt = mainbelt;
-                listMainBelt = list;
-                lblSortnum.Text = "任务号：0";
-                lblNum.Text = "数量：0";
-                ThreadRead();
-               
+            try
+            { 
+                if (isonline)
+                {
+                    Text = mainbelt + "号主皮带";
+                    txtTitle.Text = "合流" + mainbelt + "号主皮带";
+                    MainBelt = mainbelt;
+                    listMainBelt = list;
+                    lblSortnum.Text = "任务号：0";
+                    lblNum.Text = "数量：0";
+                    Handledelegate task = ThreadRead;
+                    task.BeginInvoke(null, null);
+                }
+                else
+                {
+                    lblErorr.Visible = true;
+                    lblErorr.Text = "错误信息:服务器连接失败";
+                }
             }
-            else
+            catch (Exception ex)
             {
                 lblErorr.Visible = true;
-                lblErorr.Text = "错误信息:服务器连接失败";
+                lblErorr.Text = "错误信息:服务器连接失败" + ex.Message;
+               
             }
 
         }
         void ThreadRead()
-        {
-           
+        { 
             ReadIndexByBtn = 0;
-            ReadDBinfo(MainBelt);//读取DB块上的值
-            ReadListInfo(0);//初始读取以计算后的List信息绑定到DGV上 
-           
+            ReadDBinfo(MainBelt);//读取DB块上的值 
         }
 
 
@@ -195,6 +202,7 @@ namespace FollowTask
             }
             MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(x=>x.Place).ToList();// ListmbInfo.OrderBy(a => a.Place).ThenBy(a => a.SortNum).ToList();//对距离任务号进行排序
+            pbLoading.Visible = false; 
         }
     
         /// <summary>
@@ -473,6 +481,17 @@ namespace FollowTask
                 e.Value = statusText;
             }
         }
+
+       
+
+        void pbLoading_VisibleChanged(object sender, EventArgs e)
+        {
+            ReadListInfo(0);
+        }
+
+      
+ 
+ 
        
        
     }

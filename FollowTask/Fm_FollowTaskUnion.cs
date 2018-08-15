@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using InBound;
 using OpcRcw.Da;
-using Machine;
+//using Machine;
 
 using FollowTask.Modle;
 using InBound.Business;
@@ -45,7 +45,7 @@ namespace FollowTask
         AutoSizeFormClass asc = new AutoSizeFormClass();
         public WriteLog writeLog = WriteLog.GetLog();
         DeviceStateManager stateManager = new DeviceStateManager();
-        Alarms alarms = new Alarms();
+        //  alarms = new Alarms();
         #region   变量
       
         /// <summary>

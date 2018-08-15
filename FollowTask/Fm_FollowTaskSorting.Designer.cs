@@ -53,10 +53,12 @@
             this.panelCig = new System.Windows.Forms.Panel();
             this.dgvSortingBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.pbLoading = new System.Windows.Forms.PictureBox();
             this.groupBoxprogramINfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortingBeltInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxprogramINfo
@@ -85,6 +87,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pbLoading);
             this.panel1.Controls.Add(this.btnDevice1);
             this.panel1.Controls.Add(this.btnZoom);
             this.panel1.Controls.Add(this.btnClose);
@@ -441,6 +444,17 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
+            // pbLoading
+            // 
+            this.pbLoading.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbLoading.Image = global::FollowTask.Properties.Resources.loading;
+            this.pbLoading.Location = new System.Drawing.Point(0, 0);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(951, 53);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 80;
+            this.pbLoading.TabStop = false;
+            // 
             // Fm_FollowTaskSorting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -461,6 +475,7 @@
             this.groupBoxUnionInfo.ResumeLayout(false);
             this.groupBoxUnionInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortingBeltInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -491,6 +506,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnZoom;
         private System.Windows.Forms.Button btnDevice1;
+        private System.Windows.Forms.PictureBox pbLoading;
 
 
     }

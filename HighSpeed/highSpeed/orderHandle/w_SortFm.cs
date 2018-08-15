@@ -11,6 +11,7 @@ using System.Data.OracleClient;
 using System.Threading;
 using highSpeed.PubFunc;
 using InBound;
+using InBound.Business;
 
 namespace highSpeed.orderHandle
 {
@@ -38,10 +39,16 @@ namespace highSpeed.orderHandle
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false; 
             rdbUnionDan.Checked = true;
             dgvSortInfo.AllowUserToAddRows = false;
+            panel3.VisibleChanged += new EventHandler(panel3_VisibleChanged);
             //this.pager1.GetChildAtPoint(7).Visible = false;
             seek();
            // pager1.Width = dgvSortInfo.Width;
             writeLog.Write("排程启动");
+        }
+
+        void panel3_VisibleChanged(object sender, EventArgs e)
+        {
+          
         }
         void pager1_PageChanged(object sender, EventArgs e)
         {
@@ -80,8 +87,8 @@ namespace highSpeed.orderHandle
         }
          private void w_SortFm_Load(object sender, EventArgs e)
         {
-            int pokecount = InBound.Business.UnionTaskInfoService.GetPokeCount();
-            int pokeseqcount = InBound.Business.UnionTaskInfoService.GetPokeSEQCount();
+            int pokecount = UnionTaskInfoService.GetPokeCount();
+            int pokeseqcount = UnionTaskInfoService.GetPokeSEQCount();
             if (pokecount == pokeseqcount)
             {
                 btnPokeSeq.Enabled = false;
@@ -357,32 +364,35 @@ namespace highSpeed.orderHandle
             btnPokeSeq.Enabled = false;
             isSort = true;
             handlesort(3, true);
+            panel3.Visible = true;
             HandleSortPokeseq task = ThreadSortPokeseq;
             task.BeginInvoke(null, null);
-            lblproseer.Visible = true;
-            lblproseer.Text = "条烟顺序生成中...需要一定时间！请等候"; 
+            //lblproseer.Visible = true;
+            //lblproseer.Text = "条烟顺序生成中...需要一定时间！请等候"; 
         }
 
         void ThreadSortPokeseq()
         {
             try
             {
-                InBound.Business.UnionTaskInfoService.InsertPokeseqInfo();
-                MessageBox.Show("条烟顺序生成成功！");
+                UnionTaskInfoService.InsertPokeseqInfo();
+                panel3.Visible = false;
+                MessageBox.Show("条烟顺序生成成功！"); 
             }
             catch (DataException date)
             {
                 MessageBox.Show("条烟顺序失败：" + date.Message);
+                label1.Text = "条烟顺序失败：" + date.Message;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("条烟顺序失败：" + ex.Message);
+                label1.Text = "条烟顺序失败：" + ex.Message;
             }
             finally
             {
                 handlesort(3, false);//告诉父窗体任务结束
-                lblproseer.Visible = false;
-                btnPokeSeq.Enabled = false;
+                btnPokeSeq.Enabled = false; 
                 isSort = false;
             }
 
@@ -392,6 +402,14 @@ namespace highSpeed.orderHandle
         private void dgvSortInfo_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             dgvSortInfo.Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+             
+            int list = UnionTaskInfoService.GetPokeCount();
+
+            MessageBox.Show(list.ToString());
         }
 
     }

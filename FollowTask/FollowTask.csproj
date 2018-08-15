@@ -45,9 +45,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DotNetPrint.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\HighSpeed\highSpeed\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="opcrcw.comn, Version=1.10.2.0, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
@@ -267,17 +264,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HighSpeed\highSpeed\highSpeed.csproj">
-      <Project>{6AB4972E-AADD-47CB-BFB4-A393E4F16EA5}</Project>
-      <Name>highSpeed</Name>
-    </ProjectReference>
     <ProjectReference Include="..\InBound\InBound.csproj">
       <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
       <Name>InBound</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Machine\Machine.csproj">
-      <Project>{EAD75420-3F6F-45E0-A92E-678BA1FD4681}</Project>
-      <Name>Machine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
