@@ -30,9 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FM_MainbeltDevice));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblloading = new System.Windows.Forms.Label();
             this.lbl7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pbAline = new System.Windows.Forms.PictureBox();
@@ -56,6 +53,9 @@
             this.btnB0 = new System.Windows.Forms.Button();
             this.btnA4 = new System.Windows.Forms.Button();
             this.btnA0 = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblloading = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvMainBeltInfo = new System.Windows.Forms.DataGridView();
             this.groupBoxUnionInfo = new System.Windows.Forms.GroupBox();
@@ -65,10 +65,10 @@
             this.lblPlace = new System.Windows.Forms.Label();
             this.btnGroup1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAline)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBline)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).BeginInit();
             this.groupBoxUnionInfo.SuspendLayout();
@@ -77,6 +77,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.lbl7);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pbAline);
@@ -106,37 +107,6 @@
             this.panel1.Size = new System.Drawing.Size(431, 660);
             this.panel1.TabIndex = 0;
             this.panel1.Click += new System.EventHandler(this.btnB04_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel3.Controls.Add(this.pictureBox1);
-            this.panel3.Controls.Add(this.lblloading);
-            this.panel3.Location = new System.Drawing.Point(179, 138);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(416, 614);
-            this.panel3.TabIndex = 45;
-            this.panel3.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(40, 138);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(344, 317);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.WaitOnLoad = true;
-            // 
-            // lblloading
-            // 
-            this.lblloading.AutoSize = true;
-            this.lblloading.Font = new System.Drawing.Font("宋体", 11F);
-            this.lblloading.Location = new System.Drawing.Point(135, 79);
-            this.lblloading.Name = "lblloading";
-            this.lblloading.Size = new System.Drawing.Size(150, 15);
-            this.lblloading.TabIndex = 0;
-            this.lblloading.Text = "载入中 请稍候。。。";
             // 
             // lbl7
             // 
@@ -384,6 +354,37 @@
             this.btnA0.UseVisualStyleBackColor = true;
             this.btnA0.Click += new System.EventHandler(this.btnB04_Click);
             // 
+            // panel3
+            // 
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.lblloading);
+            this.panel3.Location = new System.Drawing.Point(8, 33);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(416, 614);
+            this.panel3.TabIndex = 45;
+            this.panel3.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(40, 138);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(344, 317);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.WaitOnLoad = true;
+            // 
+            // lblloading
+            // 
+            this.lblloading.AutoSize = true;
+            this.lblloading.Font = new System.Drawing.Font("宋体", 11F);
+            this.lblloading.Location = new System.Drawing.Point(135, 79);
+            this.lblloading.Name = "lblloading";
+            this.lblloading.Size = new System.Drawing.Size(150, 15);
+            this.lblloading.TabIndex = 0;
+            this.lblloading.Text = "载入中 请稍候。。。";
+            // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -408,7 +409,6 @@
             // 
             // groupBoxUnionInfo
             // 
-            this.groupBoxUnionInfo.Controls.Add(this.panel3);
             this.groupBoxUnionInfo.Controls.Add(this.lblDeviceCount);
             this.groupBoxUnionInfo.Controls.Add(this.lblErorr);
             this.groupBoxUnionInfo.Controls.Add(this.lblGOto);
@@ -485,11 +485,11 @@
             this.Text = "FM_MainbeltDevice";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAline)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBline)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAline)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBline)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).EndInit();
             this.groupBoxUnionInfo.ResumeLayout(false);
