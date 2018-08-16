@@ -9555,6 +9555,150 @@ namespace InBound
         private global::System.String _AREAPLC;
         partial void OnAREAPLCChanging(global::System.String value);
         partial void OnAREAPLCChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLCID
+        {
+            get
+            {
+                return _PLCID;
+            }
+            set
+            {
+                OnPLCIDChanging(value);
+                ReportPropertyChanging("PLCID");
+                _PLCID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLCID");
+                OnPLCIDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLCID;
+        partial void OnPLCIDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLCIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLCINDEX
+        {
+            get
+            {
+                return _PLCINDEX;
+            }
+            set
+            {
+                OnPLCINDEXChanging(value);
+                ReportPropertyChanging("PLCINDEX");
+                _PLCINDEX = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLCINDEX");
+                OnPLCINDEXChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLCINDEX;
+        partial void OnPLCINDEXChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLCINDEXChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ENDDECICENO
+        {
+            get
+            {
+                return _ENDDECICENO;
+            }
+            set
+            {
+                OnENDDECICENOChanging(value);
+                ReportPropertyChanging("ENDDECICENO");
+                _ENDDECICENO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ENDDECICENO");
+                OnENDDECICENOChanged();
+            }
+        }
+        private global::System.String _ENDDECICENO;
+        partial void OnENDDECICENOChanging(global::System.String value);
+        partial void OnENDDECICENOChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OFFSET
+        {
+            get
+            {
+                return _OFFSET;
+            }
+            set
+            {
+                OnOFFSETChanging(value);
+                ReportPropertyChanging("OFFSET");
+                _OFFSET = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OFFSET");
+                OnOFFSETChanged();
+            }
+        }
+        private global::System.String _OFFSET;
+        partial void OnOFFSETChanging(global::System.String value);
+        partial void OnOFFSETChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MACHINESEQ
+        {
+            get
+            {
+                return _MACHINESEQ;
+            }
+            set
+            {
+                OnMACHINESEQChanging(value);
+                ReportPropertyChanging("MACHINESEQ");
+                _MACHINESEQ = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MACHINESEQ");
+                OnMACHINESEQChanged();
+            }
+        }
+        private global::System.String _MACHINESEQ;
+        partial void OnMACHINESEQChanging(global::System.String value);
+        partial void OnMACHINESEQChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TYPE
+        {
+            get
+            {
+                return _TYPE;
+            }
+            set
+            {
+                OnTYPEChanging(value);
+                ReportPropertyChanging("TYPE");
+                _TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TYPE");
+                OnTYPEChanged();
+            }
+        }
+        private global::System.String _TYPE;
+        partial void OnTYPEChanging(global::System.String value);
+        partial void OnTYPEChanged();
 
         #endregion
 

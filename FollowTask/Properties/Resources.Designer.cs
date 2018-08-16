@@ -653,9 +653,39 @@ namespace FollowTask.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 分拣详细 {
+            get {
+                object obj = ResourceManager.GetObject("分拣详细", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 合流 {
+            get {
+                object obj = ResourceManager.GetObject("合流", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 合流故障机械手 {
             get {
                 object obj = ResourceManager.GetObject("合流故障机械手", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 合流自检 {
+            get {
+                object obj = ResourceManager.GetObject("合流自检", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -706,6 +736,26 @@ namespace FollowTask.Properties {
         internal static System.Drawing.Bitmap 机械手1 {
             get {
                 object obj = ResourceManager.GetObject("机械手1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 自检 {
+            get {
+                object obj = ResourceManager.GetObject("自检", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 预分拣 {
+            get {
+                object obj = ResourceManager.GetObject("预分拣", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

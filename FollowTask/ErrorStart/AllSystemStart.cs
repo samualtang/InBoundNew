@@ -6,12 +6,12 @@ using System.Text;
 using OpcRcw.Da;
 using OpcRcw.Comn;
 using System.Runtime.InteropServices;
-using SortingControlSys.Model;
+using FollowTask.Modle;
 using InBound.Model;
 using InBound.Business;
 
 using InBound;
-using Machine;
+using FollowTask.DataModle;
 
 namespace FollowTask.ErrorStart
 {
@@ -36,23 +36,69 @@ namespace FollowTask.ErrorStart
 
         List<Group> ListSort = new List<Group>();
 
-        List<string> str = new List<string>();
+        List<string> str1 = new List<string>();
+        List<string> str2 = new List<string>();
+        List<string> str3 = new List<string>();
+        List<string> str4 = new List<string>();
         public List<string> ReadDBinfo(int no)
         {
-            str.Clear();
+            List<string> str = new List<string>();
+            Connction(); 
             FJOpcServer1.addItem(GetFJPlcAdress(no));
 
             for (int i = 0; i < GetFJOpcServerItem().Count(); i++)//从电控读取数据 
             {
-                string k = FJOpcServer1.ReadD(i).ToString();
-                str.Add(k);
+                try
+                {
+                    string k = FJOpcServer1.ReadD(i).ToString();
+                    str.Add(k);
+                    switch (no)
+                    {
+                        case 0:
+                            AllPlcState.FJState1 = 1;
+                            str1 = str;
+                            break;
+                        case 1:
+                            AllPlcState.FJState2 = 1;
+                            str2 = str;
+                            break;
+                        case 2:
+                            AllPlcState.FJState3 = 1;
+                            str3 = str;
+                            break;
+                        case 3:
+                            AllPlcState.FJState4 = 1;
+                            str4 = str;
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    switch (no)
+                    {
+                        case 0 :
+                            AllPlcState.FJState1 = 0;
+                            break;
+                        case 1 :
+                            AllPlcState.FJState2 = 0;
+                            break;
+                        case 2 :
+                            AllPlcState.FJState3 = 0;
+                            break;
+                        case 3:
+                            AllPlcState.FJState4 = 0;
+                            break; 
+                    }
+                    
+                }
+                    
             }
-            return str;
-            //foreach (var item in str)
-            //{
-            //    updateListBox(item, listBox1);
-            //}
+            return str; 
         }
+
+
+
+
         Group FJOpcServer1, FJOpcServer2, FJOpcServer3, FJOpcServer4;
 
        public void Connction()
@@ -86,7 +132,7 @@ namespace FollowTask.ErrorStart
         {
             using (Entities et=new Entities())
             {
-                var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]").OrderBy(X=>X.DECICENO).Select(x => new Abnormallists{ DECICENO = x.DECICENO, AREANAME = x.AREANAME, ERRORMSG = x.ERRORMSG }).ToList();
+                var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]").OrderBy(X=>X.ID).Select(x => new Abnormallists{ DECICENO = x.DECICENO, AREANAME = x.AREANAME, ERRORMSG = x.ERRORMSG }).ToList();
                 return list;
             }
         }  
