@@ -118,7 +118,7 @@ namespace highSpeed.orderHandle
                         " select p.sortnum ,t.customercode,t.customername,p.machineseq,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
                         " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r " +
                         " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq= " + synseq +
-                        " order by sortnum,sortname,machineseq ";
+                        " order by sortnum,sortname,machineseq )";
 
             
             //取批次号

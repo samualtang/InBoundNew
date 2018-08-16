@@ -289,11 +289,29 @@
     <Compile Include="orderHandle\w_enableStandby.Designer.cs">
       <DependentUpon>w_enableStandby.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_export_CGY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_CGY.Designer.cs">
+      <DependentUpon>w_export_CGY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export_YXY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_YXY.Designer.cs">
+      <DependentUpon>w_export_YXY.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_reprint.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="orderHandle\w_reprint.Designer.cs">
       <DependentUpon>w_reprint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_reschedule_alone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_reschedule_alone.Designer.cs">
+      <DependentUpon>w_reschedule_alone.cs</DependentUpon>
     </Compile>
     <Compile Include="orderHandle\w_senddata.cs">
       <SubType>Form</SubType>
@@ -307,11 +325,17 @@
     <Compile Include="orderHandle\w_SortFm.Designer.cs">
       <DependentUpon>w_SortFm.cs</DependentUpon>
     </Compile>
-    <Compile Include="orderHandle\w_un_schedule.cs">
+    <Compile Include="orderHandle\w_SortFm_alone.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="orderHandle\w_un_schedule.Designer.cs">
-      <DependentUpon>w_un_schedule.cs</DependentUpon>
+    <Compile Include="orderHandle\w_SortFm_alone.Designer.cs">
+      <DependentUpon>w_SortFm_alone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_un_schedule_alone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_un_schedule_alone.Designer.cs">
+      <DependentUpon>w_un_schedule_alone.cs</DependentUpon>
     </Compile>
     <Compile Include="orderHandle\w_un_order_recieve.cs">
       <SubType>Form</SubType>
@@ -372,6 +396,12 @@
     </Compile>
     <Compile Include="orderHandle\w_schedule.Designer.cs">
       <DependentUpon>w_schedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_un_SortFm_alone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_un_SortFm_alone.Designer.cs">
+      <DependentUpon>w_un_SortFm_alone.cs</DependentUpon>
     </Compile>
     <Compile Include="orderHandle\w_yxydata.cs">
       <SubType>Form</SubType>
@@ -551,8 +581,17 @@
     <EmbeddedResource Include="orderHandle\w_enableStandby.resx">
       <DependentUpon>w_enableStandby.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_CGY.resx">
+      <DependentUpon>w_export_CGY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_YXY.resx">
+      <DependentUpon>w_export_YXY.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_reprint.resx">
       <DependentUpon>w_reprint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_reschedule_alone.resx">
+      <DependentUpon>w_reschedule_alone.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_senddata.resx">
       <DependentUpon>w_senddata.cs</DependentUpon>
@@ -560,8 +599,11 @@
     <EmbeddedResource Include="orderHandle\w_SortFm.resx">
       <DependentUpon>w_SortFm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="orderHandle\w_un_schedule.resx">
-      <DependentUpon>w_un_schedule.cs</DependentUpon>
+    <EmbeddedResource Include="orderHandle\w_SortFm_alone.resx">
+      <DependentUpon>w_SortFm_alone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_un_schedule_alone.resx">
+      <DependentUpon>w_un_schedule_alone.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_un_order_recieve.resx">
       <DependentUpon>w_un_order_recieve.cs</DependentUpon>
@@ -592,6 +634,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_schedule.resx">
       <DependentUpon>w_schedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_un_SortFm_alone.resx">
+      <DependentUpon>w_un_SortFm_alone.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_yxydata.resx">
       <DependentUpon>w_yxydata.cs</DependentUpon>

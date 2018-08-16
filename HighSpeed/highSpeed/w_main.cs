@@ -242,7 +242,7 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
-     
+
         private void 任务排程ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             w_SortFm frm = new w_SortFm();
@@ -546,7 +546,7 @@ namespace highSpeed
 
         private void 异型烟排程ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            win_un_schedule frm = new win_un_schedule();
+            w_un_schedule_alone frm = new w_un_schedule_alone();
             if (CheckExist(frm) == true)
             {
                 frm.Dispose();
@@ -797,7 +797,7 @@ namespace highSpeed
 
         private void 异型烟预排程ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            win_un_schedule frm = new win_un_schedule();
+            w_un_schedule_alone frm = new w_un_schedule_alone();
             if (CheckExist(frm) == true)
             {
                 frm.Dispose();
@@ -809,10 +809,83 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 异型烟排程ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            w_un_SortFm_alone frm = new w_un_SortFm_alone();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void 常规烟预排程ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            w_reschedule_alone frm = new w_reschedule_alone();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void 常规烟排程ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_SortFm_alone frm = new w_SortFm_alone();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void 任务导出异型烟ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_export_CGY frm = new w_export_CGY();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void 任务导出异型烟ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            w_export_YXY frm = new w_export_YXY();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+ 
+
+    
 
 
 
-
+      
        
 
 

@@ -1,6 +1,6 @@
 ﻿namespace highSpeed.orderHandle
 {
-    partial class win_un_schedule
+    partial class w_un_schedule_alone
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rBtn_Line2 = new System.Windows.Forms.RadioButton();
+            this.rbtn_Line1 = new System.Windows.Forms.RadioButton();
             this.txt_splitval = new System.Windows.Forms.TextBox();
             this.btn_search = new System.Windows.Forms.Button();
             this.txt_codestr = new System.Windows.Forms.TextBox();
@@ -42,8 +44,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.rbtn_Line1 = new System.Windows.Forms.RadioButton();
-            this.rBtn_Line2 = new System.Windows.Forms.RadioButton();
+            this.btn_all = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_all);
             this.panel1.Controls.Add(this.rBtn_Line2);
             this.panel1.Controls.Add(this.rbtn_Line1);
             this.panel1.Controls.Add(this.txt_splitval);
@@ -64,9 +66,31 @@
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
             // 
+            // rBtn_Line2
+            // 
+            this.rBtn_Line2.AutoSize = true;
+            this.rBtn_Line2.Location = new System.Drawing.Point(800, 14);
+            this.rBtn_Line2.Name = "rBtn_Line2";
+            this.rBtn_Line2.Size = new System.Drawing.Size(53, 16);
+            this.rBtn_Line2.TabIndex = 13;
+            this.rBtn_Line2.TabStop = true;
+            this.rBtn_Line2.Text = "2号线";
+            this.rBtn_Line2.UseVisualStyleBackColor = true;
+            // 
+            // rbtn_Line1
+            // 
+            this.rbtn_Line1.AutoSize = true;
+            this.rbtn_Line1.Location = new System.Drawing.Point(741, 14);
+            this.rbtn_Line1.Name = "rbtn_Line1";
+            this.rbtn_Line1.Size = new System.Drawing.Size(53, 16);
+            this.rbtn_Line1.TabIndex = 12;
+            this.rbtn_Line1.TabStop = true;
+            this.rbtn_Line1.Text = "1号线";
+            this.rbtn_Line1.UseVisualStyleBackColor = true;
+            // 
             // txt_splitval
             // 
-            this.txt_splitval.Location = new System.Drawing.Point(956, 13);
+            this.txt_splitval.Location = new System.Drawing.Point(1003, 14);
             this.txt_splitval.Name = "txt_splitval";
             this.txt_splitval.Size = new System.Drawing.Size(37, 21);
             this.txt_splitval.TabIndex = 11;
@@ -76,7 +100,7 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(549, 11);
+            this.btn_search.Location = new System.Drawing.Point(527, 13);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(75, 23);
             this.btn_search.TabIndex = 10;
@@ -94,7 +118,7 @@
             // 
             // btn_schedule
             // 
-            this.btn_schedule.Location = new System.Drawing.Point(818, 11);
+            this.btn_schedule.Location = new System.Drawing.Point(876, 11);
             this.btn_schedule.Name = "btn_schedule";
             this.btn_schedule.Size = new System.Drawing.Size(75, 23);
             this.btn_schedule.TabIndex = 5;
@@ -186,29 +210,18 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
-            // rbtn_Line1
+            // btn_all
             // 
-            this.rbtn_Line1.AutoSize = true;
-            this.rbtn_Line1.Location = new System.Drawing.Point(675, 14);
-            this.rbtn_Line1.Name = "rbtn_Line1";
-            this.rbtn_Line1.Size = new System.Drawing.Size(53, 16);
-            this.rbtn_Line1.TabIndex = 12;
-            this.rbtn_Line1.TabStop = true;
-            this.rbtn_Line1.Text = "1号线";
-            this.rbtn_Line1.UseVisualStyleBackColor = true;
+            this.btn_all.Location = new System.Drawing.Point(618, 13);
+            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_all.Name = "btn_all";
+            this.btn_all.Size = new System.Drawing.Size(75, 22);
+            this.btn_all.TabIndex = 15;
+            this.btn_all.Text = "全选";
+            this.btn_all.UseVisualStyleBackColor = true;
+            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
             // 
-            // rBtn_Line2
-            // 
-            this.rBtn_Line2.AutoSize = true;
-            this.rBtn_Line2.Location = new System.Drawing.Point(734, 14);
-            this.rBtn_Line2.Name = "rBtn_Line2";
-            this.rBtn_Line2.Size = new System.Drawing.Size(53, 16);
-            this.rBtn_Line2.TabIndex = 13;
-            this.rBtn_Line2.TabStop = true;
-            this.rBtn_Line2.Text = "2号线";
-            this.rBtn_Line2.UseVisualStyleBackColor = true;
-            // 
-            // win_un_schedule
+            // w_un_schedule_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -216,7 +229,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
-            this.Name = "win_un_schedule";
+            this.Name = "w_un_schedule_alone";
             this.Text = "异型烟任务预排程";
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);
@@ -246,5 +259,6 @@
         private System.Windows.Forms.TextBox txt_splitval;
         private System.Windows.Forms.RadioButton rBtn_Line2;
         private System.Windows.Forms.RadioButton rbtn_Line1;
+        private System.Windows.Forms.Button btn_all;
     }
 }

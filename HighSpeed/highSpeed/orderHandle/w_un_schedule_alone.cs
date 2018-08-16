@@ -12,12 +12,12 @@ using System.Data.OracleClient;
 
 namespace highSpeed.orderHandle
 {
-    public partial class win_un_schedule : Form
+    public partial class w_un_schedule_alone : Form
     {
         DataSet ds = new DataSet();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
-        public win_un_schedule()
+        public w_un_schedule_alone()
         {
             InitializeComponent();
             seek();
@@ -299,6 +299,17 @@ namespace highSpeed.orderHandle
             DataTable dt = Db.Query(sql);
             str = dt.Rows[0][0].ToString();
             return str;
+        }
+
+        private void btn_all_Click(object sender, EventArgs e)
+        {
+            String czcodestr = "";
+            for (int i = 0; i < this.orderdata.RowCount; i++)
+            {
+                orderdata.Rows[i].Cells[0].Value = "true";
+                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[1].Value + "";
+            }
+            this.txt_codestr.Text = czcodestr;
         }
 
     }
