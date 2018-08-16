@@ -404,13 +404,6 @@ namespace highSpeed.orderHandle
             dgvSortInfo.Visible = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-             
-            int list = UnionTaskInfoService.GetPokeCount();
-
-            MessageBox.Show(list.ToString());
-        }
 
     }
 }
