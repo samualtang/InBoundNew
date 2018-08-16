@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelOption = new System.Windows.Forms.Panel();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
             this.panelThoery = new System.Windows.Forms.Panel();
             this.btnCx = new System.Windows.Forms.Button();
             this.txtSortnum = new System.Windows.Forms.TextBox();
@@ -52,6 +53,7 @@
             this.dgvMainBeltInfo = new System.Windows.Forms.DataGridView();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.panelOption.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.panelThoery.SuspendLayout();
             this.groupBoxUnionInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainBeltInfo)).BeginInit();
@@ -60,6 +62,7 @@
             // panelOption
             // 
             this.panelOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelOption.Controls.Add(this.pbLoading);
             this.panelOption.Controls.Add(this.panelThoery);
             this.panelOption.Controls.Add(this.txtTitle);
             this.panelOption.Controls.Add(this.lblNum);
@@ -74,6 +77,17 @@
             this.panelOption.Name = "panelOption";
             this.panelOption.Size = new System.Drawing.Size(879, 58);
             this.panelOption.TabIndex = 1;
+            // 
+            // pbLoading
+            // 
+            this.pbLoading.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbLoading.Image = global::FollowTask.Properties.Resources.loading;
+            this.pbLoading.Location = new System.Drawing.Point(0, 0);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(622, 56);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 26;
+            this.pbLoading.TabStop = false;
             // 
             // panelThoery
             // 
@@ -423,8 +437,10 @@
             this.Text = "合流主皮带";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_UnionMainInfo_FormClosing);
             this.SizeChanged += new System.EventHandler(this.Fm_UnionMainInfo_SizeChanged);
+          
             this.panelOption.ResumeLayout(false);
             this.panelOption.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.panelThoery.ResumeLayout(false);
             this.panelThoery.PerformLayout();
             this.groupBoxUnionInfo.ResumeLayout(false);
@@ -458,5 +474,6 @@
         private System.Windows.Forms.Button btnCx;
         private System.Windows.Forms.TextBox txtSortnum;
         private System.Windows.Forms.Label lblTheory;
+        private System.Windows.Forms.PictureBox pbLoading;
     }
 }

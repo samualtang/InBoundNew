@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 using InBound;
 using OpcRcw.Da;
-using Machine;
+//using Machine;
 using FollowTask.Modle;
 using InBound.Business;
 using InBound.Model;
@@ -24,7 +24,12 @@ namespace FollowTask
         public Fm_FollowTaskSorting()
         {
             InitializeComponent();
-          
+            pbLoading.VisibleChanged += new EventHandler(pbLoading_VisibleChanged);
+        }
+
+        void pbLoading_VisibleChanged(object sender, EventArgs e)
+        {
+            ReadListInfo(0);
         }
 
         public WriteLog writeLog = WriteLog.GetLog();
@@ -42,42 +47,56 @@ namespace FollowTask
         /// 读取索引
         /// </summary>
         static int ReadIndex = 0;
+        delegate void HandleThreadRead(decimal group);
         public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
         {
-            String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
-            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", "")); 
-            list[0].RemovedItem();//在给OPCItem添加Item之前清空
-            list[1].RemovedItem();
-            ReadIndex = 0;
-            if (isonline)
+            try
             {
-                OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
-                list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
-                list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
-                ListSort = list;
-                isOnLine = isonline;
-
-                if (groupno == 1 || groupno == 3 || groupno == 5 || groupno == 7)
+                String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
+                groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
+                list[0].RemovedItem();//在给OPCItem添加Item之前清空
+                list[1].RemovedItem();
+                ReadIndex = 0;
+                if (isonline)
                 {
+                    OpcFJConnectionService = OpcFJConnectionService + GroupnotoBigg(groupno) + "]";
+                    list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
+                    list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
+                    ListSort = list;
+                    isOnLine = isonline;
 
-                    ReadDBinfo(1, groupno);
+                    HandleThreadRead task = ThreadReadDB;
+                    task.BeginInvoke(groupno, null, null);
 
+                    Text = groupno + "组预分拣";
+                    txtTitle.Text = Text;
+
+                    //lblSortnum.Text = "任务号： 0";
+                    //lblNum.Text = "数量：0"; 
                 }
                 else
                 {
-                    ReadDBinfo(2, groupno);
+                    lblErorr.Visible = true;
+                    lblErorr.Text = "与服务器断开连接....";
                 }
-                ReadListInfo(0);
-                Text = groupno + "组预分拣";
-                txtTitle.Text = Text;
-              
-                //lblSortnum.Text = "任务号： 0";
-                //lblNum.Text = "数量：0"; 
+            }
+            catch (Exception ex)
+            {
+                lblErorr.Visible = true;
+                lblErorr.Text = "与服务器断开连接...." + ex.Message;
+            }
+        }
+        void ThreadReadDB( decimal gp)
+        {
+            if (gp == 1 || gp == 3 || gp == 5 || gp == 7)
+            {
+
+                ReadDBinfo(1, gp);
+
             }
             else
             {
-
-                lblErorr.Text ="与服务器断开连接....";
+                ReadDBinfo(2, gp);
             }
         }
         /// <summary>
@@ -210,6 +229,7 @@ namespace FollowTask
             }
             MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
+            pbLoading.Visible = false;
         }
         /// <summary>
         /// 读取List

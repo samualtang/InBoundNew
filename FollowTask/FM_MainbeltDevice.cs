@@ -56,31 +56,39 @@ namespace FollowTask
         delegate void HandleRead(decimal groupno);
         public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
         {
-          
-            String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
-            groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
-            list[0].RemovedItem();//在给OPCItem添加Item之前清空
-            list[1].RemovedItem();
-          
-           
-            if (isonline)
-            {
-                groupno = GroupnotoBigg(groupno);
-                OpcFJConnectionService = OpcFJConnectionService + groupno + "]";
-                list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
-                list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
-                ListSort = list;
-                isOnLine = isonline;
-                 
-                Text = groupno + "组预分拣";
-                HandleRead task = ReadDBinfo; 
-                task.BeginInvoke(groupno, null, null);
-                
-            }
-            else
+            try
             {
 
-                lblErorr.Text = "与服务器断开连接....";
+
+                String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
+                groupno = Convert.ToDecimal(System.Text.RegularExpressions.Regex.Replace(text, @"[^0-9]+", ""));
+                list[0].RemovedItem();//在给OPCItem添加Item之前清空
+                list[1].RemovedItem();
+
+
+                if (isonline)
+                {
+                    groupno = GroupnotoBigg(groupno);
+                    OpcFJConnectionService = OpcFJConnectionService + groupno + "]";
+                    list[0].addItem(ItemCollection.GetASortingItem(OpcFJConnectionService));
+                    list[1].addItem(ItemCollection.GetBSortingItem(OpcFJConnectionService));
+                    ListSort = list;
+                    isOnLine = isonline;
+                    lblyaobai.Text = groupno + "组预分拣";
+                    Text = groupno + "组预分拣";
+                    HandleRead task = ReadDBinfo;
+                    task.BeginInvoke(groupno, null, null);
+
+                }
+                else
+                {
+
+                    lblErorr.Text = "与服务器断开连接....";
+                }
+            }
+            catch (Exception ex )
+            {
+                lblloading.Text = "服务器连接失败，请检查网络！"+ ex.Message; 
             }
         }
         decimal Sortnum;
@@ -97,7 +105,7 @@ namespace FollowTask
             { 
 
                 // dgvSortingBeltInfo = null;
-                btnGroup1.Controls.Clear();
+                panebelt.Controls.Clear();
                 int ReadIndex = 0;
 
                 for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
@@ -133,10 +141,17 @@ namespace FollowTask
                 {
                     MainBeltInfoService.GetSortMainBeltInfo(ListmbInfoB); //填充完成之后传进方法 计算 ，
                     ListmbInfoB = ListmbInfoA.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
-                    GetDviceName(ListmbInfoA, "btnB");
+                    GetDviceName(ListmbInfoB, "btnB");
                 } 
             }
-            panel3.Visible = false;
+            if (isOnLine)
+            {
+                panel3.Visible = false;
+            }
+            else
+            {
+                lblloading.Text = "服务器连接失败!请检查网络";
+            }
         }
         /// <summary>
         /// 获取设备名
@@ -153,21 +168,28 @@ namespace FollowTask
                 {
                     if (list[i].Place > 30)
                     {
-                        if (list[i].mainbelt == "1")
+                        for (int j = 0; j < list[i].taskInfo.Count; j++)
                         {
-                            list[i].DeviceName = line + "1";
-                        }
-                        else if (list[i].mainbelt == "2")
-                        {
-                            list[i].DeviceName = line + "2";
-                        }
-                        else if (list[i].mainbelt == "3")
-                        {
-                            list[i].DeviceName = line + "3";
-                        }
-                        else if (list[i].mainbelt == "4")
-                        {
-                            list[i].DeviceName = line + "4";
+                            if (list[i].taskInfo[j].MainBelt == 1)
+                            {
+                                list[i].DeviceName = line + "1";
+                                break;
+                            }
+                            else if (list[i].taskInfo[j].MainBelt == 2)
+                            {
+                                list[i].DeviceName = line + "2";
+                                break;
+                            }
+                            else if (list[i].taskInfo[j].MainBelt == 3)
+                            {
+                                list[i].DeviceName = line + "3";
+                                break;
+                            }
+                            else if (list[i].taskInfo[j].MainBelt == 4)
+                            {
+                                list[i].DeviceName = line + "4";
+                                break;
+                            }
                         }
                     }
                     else
@@ -202,7 +224,7 @@ namespace FollowTask
         /// <param name="qty">卷烟条数</param>
         public void addPanel(List<UnionTaskInfo> before)
         {
-            btnGroup1.Controls.Clear();
+            panebelt.Controls.Clear();
             for (int i = 0; i < before.Count; i++)
             {
                 PictureBox img = new PictureBox();
@@ -220,7 +242,7 @@ namespace FollowTask
                 img.Location = new Point(i * img.Width + 10 * i, 0);
                 lbl.Location = new Point(img.Width / 2 - 4, 0);
                 img.Controls.Add(lbl);
-                btnGroup1.Controls.Add(img);//之后 
+                panebelt.Controls.Add(img);//之后 
             }
             //倒着来
             //int index = before.Count;
@@ -284,60 +306,66 @@ namespace FollowTask
         private void btnB04_Click(object sender, EventArgs e)
         {
             Button btn = ((Button)sender);
-            if (ListmbInfoA.Count == 0)
-            {
-                MessageBox.Show("当前" + groupno + "组A线暂无任务，请稍候再试！");
-                return;
-            }
-            else if (ListmbInfoB.Count == 0)
-            {
-                MessageBox.Show("当前" + groupno + "组B线暂无任务，请稍候再试！");
-                return;
-            }
-            if (ListmbInfoB.Count > 0 || ListmbInfoA.Count > 0)
+
+            panebelt.Controls.Clear();            if (ListmbInfoB.Count > 0 || ListmbInfoA.Count > 0)
             {
                 string devicename = btn.Name;
-                string mainbelt = System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", "").ToString();
+              //  decimal mainbelt =Convert.ToDecimal( System.Text.RegularExpressions.Regex.Replace(btn.Name, @"[^0-9]+", ""));
                 if (devicename.Contains("A"))
                 {
                     dgvMainBeltInfo.DataSource = null;
-                    GetInfoBind(ListmbInfoA, devicename, mainbelt);
+                    GetInfoBind(ListmbInfoA, devicename);
                 }
                 else if (devicename.Contains("B"))
                 {
                     dgvMainBeltInfo.DataSource = null;
-                    GetInfoBind(ListmbInfoA, devicename, mainbelt);
+                    GetInfoBind(ListmbInfoB, devicename);
                 }
             }
             else
             {
-                MessageBox.Show("当前" + groupno + "组暂无任务，请稍候再试！");
+                if (ListmbInfoA.Count == 0)
+                {
+                    MessageBox.Show("当前" + groupno + "组A线暂无任务，请稍候再试！");
+                    
+                }
+                if (ListmbInfoA.Count == 0)
+                {
+                    MessageBox.Show("当前" + groupno + "组B线暂无任务，请稍候再试！");
+                   
+                } 
             }
         }
-        void GetInfoBind(List<MainBeltInfo> list, string devicename, string mainbelt)
+        void GetInfoBind(List<MainBeltInfo> list, string devicename)
         {
             List<UnionTaskInfo> listUnionInfo = new List<UnionTaskInfo>();
-            var deviceInfo = list.Where(a => a.DeviceName == devicename && a.mainbelt == mainbelt).ToList();
+            List<MainBeltInfo> deviceInfo = new List<MainBeltInfo>();
+
+            deviceInfo = list.Where(a => a.DeviceName == devicename).ToList();
+
+
+
             if (deviceInfo.Count > 0)
-            { 
+            {
                 foreach (var item in deviceInfo)
                 {
-                    item.taskInfo[0].Place = deviceInfo[0].Place;
+                    // item.taskInfo[0].Place = deviceInfo[0].Place;
                     listUnionInfo.AddRange(item.taskInfo);
                 }
+
+                addPanel(listUnionInfo);//添加数据图片至panel控件上面 
+                dgvMainBeltInfo.DataSource = listUnionInfo.Select(x => new
+                {
+                    CIGARETTECODE = x.CIGARETTDECODE,
+                    CIGARETTNAME = x.CIGARETTDENAME,
+                    QTY = x.POKENUM,
+                    MAINBELT = x.MainBelt,
+                    SORTNUM = x.SortNum,
+                    //PACKAGEMACHINE = x.PACKAGEMACHINE,
+                    //PLACE = x.Place + "米",
+                }).OrderByDescending(a=> a.SORTNUM).ToList();//根据索引读取相对应数据   
+                DgvBind();
             }
-            addPanel(listUnionInfo);//添加数据图片至panel控件上面 
-            dgvMainBeltInfo.DataSource = listUnionInfo.Select(x => new
-            {
-                CIGARETTECODE = x.CIGARETTDECODE,
-                CIGARETTNAME = x.CIGARETTDENAME,
-                QTY = x.POKENUM,
-                MAINBELT = x.MainBelt,
-                SORTNUM = x.SortNum,
-                PACKAGEMACHINE = x.PACKAGEMACHINE,
-                PLACE = x.Place + "米",
-            }).ToList();//根据索引读取相对应数据   
-            DgvBind();
 
         }
 
@@ -350,8 +378,8 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
                 dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
                 dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
-                dgvMainBeltInfo.Columns[5].HeaderCell.Value = "包装机";
-                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "位置";
+                //dgvMainBeltInfo.Columns[5].HeaderCell.Value = "包装机";
+                //dgvMainBeltInfo.Columns[6].HeaderCell.Value = "位置";
 
             }
             catch (ArgumentOutOfRangeException ex)
