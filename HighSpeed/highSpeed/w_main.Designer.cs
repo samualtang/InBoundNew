@@ -47,6 +47,7 @@
             this.tsmi_enablestandby = new System.Windows.Forms.ToolStripMenuItem();
             this.合流任务查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.报表统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.今日订单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.今日订单汇总ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异型烟补货计划ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.排程报表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +61,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.今日订单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.异型烟预排程ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -156,6 +157,7 @@
             this.订单处理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.订单接收ToolStripMenuItem,
             this.预排程ToolStripMenuItem,
+            this.异型烟预排程ToolStripMenuItem,
             this.任务排程ToolStripMenuItem1,
             this.任务导出ToolStripMenuItem,
             this.分拣进度ToolStripMenuItem,
@@ -226,6 +228,13 @@
             this.报表统计ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.报表统计ToolStripMenuItem.Text = "报表统计";
             // 
+            // 今日订单ToolStripMenuItem
+            // 
+            this.今日订单ToolStripMenuItem.Name = "今日订单ToolStripMenuItem";
+            this.今日订单ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.今日订单ToolStripMenuItem.Text = "今日订单";
+            this.今日订单ToolStripMenuItem.Click += new System.EventHandler(this.今日订单ToolStripMenuItem_Click);
+            // 
             // 今日订单汇总ToolStripMenuItem
             // 
             this.今日订单汇总ToolStripMenuItem.Name = "今日订单汇总ToolStripMenuItem";
@@ -266,14 +275,14 @@
             // 数据库设置ToolStripMenuItem
             // 
             this.数据库设置ToolStripMenuItem.Name = "数据库设置ToolStripMenuItem";
-            this.数据库设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.数据库设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.数据库设置ToolStripMenuItem.Text = "数据库设置";
             this.数据库设置ToolStripMenuItem.Click += new System.EventHandler(this.数据库设置ToolStripMenuItem_Click);
             // 
             // 任务状态修改ToolStripMenuItem
             // 
             this.任务状态修改ToolStripMenuItem.Name = "任务状态修改ToolStripMenuItem";
-            this.任务状态修改ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.任务状态修改ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.任务状态修改ToolStripMenuItem.Text = "任务状态修改";
             this.任务状态修改ToolStripMenuItem.Click += new System.EventHandler(this.任务状态修改ToolStripMenuItem_Click);
             // 
@@ -327,12 +336,12 @@
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // 今日订单ToolStripMenuItem
+            // 异型烟预排程ToolStripMenuItem
             // 
-            this.今日订单ToolStripMenuItem.Name = "今日订单ToolStripMenuItem";
-            this.今日订单ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.今日订单ToolStripMenuItem.Text = "今日订单";
-            this.今日订单ToolStripMenuItem.Click += new System.EventHandler(this.今日订单ToolStripMenuItem_Click);
+            this.异型烟预排程ToolStripMenuItem.Name = "异型烟预排程ToolStripMenuItem";
+            this.异型烟预排程ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.异型烟预排程ToolStripMenuItem.Text = "异型烟预排程";
+            this.异型烟预排程ToolStripMenuItem.Click += new System.EventHandler(this.异型烟预排程ToolStripMenuItem_Click);
             // 
             // w_main
             // 
@@ -391,5 +400,6 @@
         private System.Windows.Forms.ToolStripMenuItem 合流任务查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 任务状态修改ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 今日订单ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 异型烟预排程ToolStripMenuItem;
     }
 }

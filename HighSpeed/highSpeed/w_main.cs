@@ -795,6 +795,20 @@ namespace highSpeed
             frm.Show();
         }
 
+        private void 异型烟预排程ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            win_un_schedule frm = new win_un_schedule();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
 
 
 

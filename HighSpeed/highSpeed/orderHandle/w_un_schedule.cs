@@ -28,10 +28,11 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
             this.txt_codestr.Text = "";
-            String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
+            //String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
+            String str = "select regioncode,sum(e.quantity) as qty,count(distinct e.billcode)as cuscount from t_produce_orderline e join  t_produce_order r on r.billcode=e.billcode where r.unstate='新增' and e.cigarettecode in (select h.cigarettecode from t_produce_sorttrough h where h.cigarettetype in (30,40) and h.troughtype=10 and h.state=10)group by r.regioncode";
             //String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from highspeed.t_un_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
             //MessageBox.Show(strsql);
-            Bind(strsql);
+            Bind(str);
 
             this.txt_codestr.Text = "";
         }
@@ -154,6 +155,24 @@ namespace highSpeed.orderHandle
 
         private void btn_schedule_Click(object sender, EventArgs e)
         {
+            int sortline;
+            if (!rbtn_Line1.Checked&&!rBtn_Line2.Checked)
+            {
+                MessageBox.Show("请选择排程线路！");
+                return;
+            }
+            else
+            {
+                if (rbtn_Line1.Checked)
+                {
+                    sortline = 1;
+                }
+                else
+                {
+                    sortline = 2;
+                }
+               
+            }
             String codestr = this.txt_codestr.Text.Trim();
             //DateTime time = DateTime.Parse(this.datePick.Value.ToString());
             //String date = string.Format("{0:d}", time);
@@ -183,18 +202,18 @@ namespace highSpeed.orderHandle
                             int rcounts = ds.Tables[0].Rows.Count;
                             progressBar1.Value = 0;
                             Application.DoEvents();
-                            if (i == 0) label2.Text = "正在对" + code[i] + "车组订单数据进行排程...";
+                            if (i == 0) label2.Text = "正在对" + code[i] + "车组订单数据进行预排程...";
                             //MessageBox.Show(label2.Text);
                             sqlpara = new OracleParameter[4];
                             //sqlpara[0] = new OracleParameter("p_time", date);
                             sqlpara[0] = new OracleParameter("p_code", code[i]);
-                            sqlpara[1] = new OracleParameter("p_splitval", splitval);
+                            sqlpara[1] = new OracleParameter("p_sortline", sortline);
                             sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar,30);
                             sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar,100);
 
                             sqlpara[2].Direction = ParameterDirection.Output;
                             sqlpara[3].Direction = ParameterDirection.Output;
-                            Db.ExecuteNonQueryWithProc("P_UN_SCHEDULE", sqlpara);
+                            Db.ExecuteNonQueryWithProc("P_UN_PRE_SCHEDULE_ALONE", sqlpara);
                             //MessageBox.Show(date);
                             //MessageBox.Show(code[i]+"订单数据接收完成!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             errcode = sqlpara[2].Value.ToString();
@@ -276,7 +295,7 @@ namespace highSpeed.orderHandle
         private string getBatchcode() 
         {
             string str = "";
-            string sql = "SELECT count(*)  FROM highspeed.t_produce_batch WHERE state=1";
+            string sql = "SELECT count(*)  FROM t_produce_batch WHERE state=10 and batchtype=20";
             DataTable dt = Db.Query(sql);
             str = dt.Rows[0][0].ToString();
             return str;

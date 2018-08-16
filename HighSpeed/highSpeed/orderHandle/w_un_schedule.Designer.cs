@@ -42,6 +42,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.rbtn_Line1 = new System.Windows.Forms.RadioButton();
+            this.rBtn_Line2 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -49,6 +51,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rBtn_Line2);
+            this.panel1.Controls.Add(this.rbtn_Line1);
             this.panel1.Controls.Add(this.txt_splitval);
             this.panel1.Controls.Add(this.btn_search);
             this.panel1.Controls.Add(this.txt_codestr);
@@ -62,7 +66,7 @@
             // 
             // txt_splitval
             // 
-            this.txt_splitval.Location = new System.Drawing.Point(574, 13);
+            this.txt_splitval.Location = new System.Drawing.Point(956, 13);
             this.txt_splitval.Name = "txt_splitval";
             this.txt_splitval.Size = new System.Drawing.Size(37, 21);
             this.txt_splitval.TabIndex = 11;
@@ -72,7 +76,7 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(643, 11);
+            this.btn_search.Location = new System.Drawing.Point(549, 11);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(75, 23);
             this.btn_search.TabIndex = 10;
@@ -82,7 +86,7 @@
             // 
             // txt_codestr
             // 
-            this.txt_codestr.Location = new System.Drawing.Point(1055, 13);
+            this.txt_codestr.Location = new System.Drawing.Point(1046, 13);
             this.txt_codestr.Name = "txt_codestr";
             this.txt_codestr.Size = new System.Drawing.Size(60, 21);
             this.txt_codestr.TabIndex = 9;
@@ -90,7 +94,7 @@
             // 
             // btn_schedule
             // 
-            this.btn_schedule.Location = new System.Drawing.Point(724, 11);
+            this.btn_schedule.Location = new System.Drawing.Point(818, 11);
             this.btn_schedule.Name = "btn_schedule";
             this.btn_schedule.Size = new System.Drawing.Size(75, 23);
             this.btn_schedule.TabIndex = 5;
@@ -182,6 +186,28 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
+            // rbtn_Line1
+            // 
+            this.rbtn_Line1.AutoSize = true;
+            this.rbtn_Line1.Location = new System.Drawing.Point(675, 14);
+            this.rbtn_Line1.Name = "rbtn_Line1";
+            this.rbtn_Line1.Size = new System.Drawing.Size(53, 16);
+            this.rbtn_Line1.TabIndex = 12;
+            this.rbtn_Line1.TabStop = true;
+            this.rbtn_Line1.Text = "1号线";
+            this.rbtn_Line1.UseVisualStyleBackColor = true;
+            // 
+            // rBtn_Line2
+            // 
+            this.rBtn_Line2.AutoSize = true;
+            this.rBtn_Line2.Location = new System.Drawing.Point(734, 14);
+            this.rBtn_Line2.Name = "rBtn_Line2";
+            this.rBtn_Line2.Size = new System.Drawing.Size(53, 16);
+            this.rBtn_Line2.TabIndex = 13;
+            this.rBtn_Line2.TabStop = true;
+            this.rBtn_Line2.Text = "2号线";
+            this.rBtn_Line2.UseVisualStyleBackColor = true;
+            // 
             // win_un_schedule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -191,7 +217,7 @@
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
             this.Name = "win_un_schedule";
-            this.Text = "任务排程";
+            this.Text = "异型烟任务预排程";
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -218,5 +244,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.TextBox txt_splitval;
+        private System.Windows.Forms.RadioButton rBtn_Line2;
+        private System.Windows.Forms.RadioButton rbtn_Line1;
     }
 }
