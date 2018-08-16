@@ -486,7 +486,8 @@ namespace FollowTask
 
         void pbLoading_VisibleChanged(object sender, EventArgs e)
         {
-            ReadListInfo(0);
+            this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
+           
         }
 
       

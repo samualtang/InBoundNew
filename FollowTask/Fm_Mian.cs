@@ -12,6 +12,7 @@ using OpcRcw.Da;
 using FollowTask.Modle;
 using System.Threading;
 using System.Runtime.InteropServices;
+using FollowTask.ErrorStart;
  
 
 namespace FollowTask
@@ -66,11 +67,10 @@ namespace FollowTask
                 this.WindowState = FormWindowState.Maximized;
                 CheckForIllegalCrossThreadCalls = false;
                 treeV.Enabled = false;
-                fm_sorting = new Fm_FollowTaskSorting();
-                fm_union = new Fm_FollowTaskUnion();
+             
 
 
-                Delge();
+               
                 this.StartPosition = FormStartPosition.CenterScreen;
                 Thread th = new Thread(Connction);
                 th.Start();
@@ -104,35 +104,35 @@ namespace FollowTask
                 writeLog.Write("错误异常：" + ex.Message);
             }
         }
-        Fm_FollowTaskSorting fm_sorting;
-        Fm_FollowTaskUnion fm_union;
+       
         /// <summary>
         /// 
         /// </summary>
         void  Delge()
         { 
-            Union += fm_union.GetMainInfo;
-            Sorting += fm_sorting.GetSoringBeltInfo; 
+           
+        
         }
+ 
         /// <summary>
         /// SortingShow方法
         /// </summary>
         /// <param name="text">第几组</param>
         void ShowSortingForm(string text)
         {
+            Fm_FollowTaskSorting fm_sorting = new Fm_FollowTaskSorting();
+            Sorting += fm_sorting.GetSoringBeltInfo; 
             Sorting(text, listSortTaskGroup, IsOnLine);
-            if (CheckExist(fm_sorting) == true)
+            if (CheckExist(fm_sorting))
             {
-                fm_sorting.Show();
-                fm_sorting. Location = new Point(0, 0);
-                fm_sorting.MdiParent = this;
-               fm_sorting.WindowState = FormWindowState.Maximized;
+                fm_sorting.Dispose();
+                fm_sorting = null; 
                 return;
             }
-            fm_sorting.MdiParent = this;
-            fm_sorting.Location = new Point(0, 0);
-            fm_sorting.WindowState = FormWindowState.Maximized;
             fm_sorting.Show();
+            fm_sorting.MdiParent = this; 
+            fm_sorting.WindowState = FormWindowState.Maximized;
+
         }
        
         /// <summary>
@@ -140,21 +140,20 @@ namespace FollowTask
         /// </summary>
         /// <param name="text">第几根</param>
         void ShowUinionFrom(string text)
-        { 
+        {
+            Fm_FollowTaskUnion fm_union = new Fm_FollowTaskUnion();
+            Union += fm_union.GetMainInfo;
             Union("合流", listUnionTaskGroup, IsOnLine);
-            if (CheckExist(fm_union) == true)
+            if (CheckExist(fm_union))
             {
-                fm_union.Show();
-                fm_union.Location = new Point(0, 0);
-                fm_union.MdiParent = this;
-                fm_union.WindowState = FormWindowState.Maximized;
-                //fm_union = null;
+                fm_union.Dispose();
+                fm_union = null; 
                 return;
             }
-            fm_union.MdiParent = this;
-            fm_union.Location = new Point(0, 0);
-            fm_union.WindowState = FormWindowState.Maximized;
             fm_union.Show();
+            fm_union.MdiParent = this;
+            fm_union.WindowState = FormWindowState.Maximized;
+            
 
         }
         #region 添加opc组
@@ -248,7 +247,7 @@ namespace FollowTask
                 txtMainInfo.Text = "服务器连接失败!";
                 writeLog.Write("服务器连接失败");
                 CheckBrek = true;
-                treeV.Enabled = true;
+                treeV.Enabled = false;
                 goto breaks;
             }
             else
@@ -413,24 +412,11 @@ namespace FollowTask
                 if (MdiChildren[i].GetType().Name == frm.GetType().Name)
                 {
                     Form tmpFrm = MdiChildren[i];
-                    if (tmpFrm.Text == frm.Text)
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
-                    else if (frm.Text == "")
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
-                    else if (frm.GetType().Name.ToLower() == "w_export_new")
-                    {
-                        blResult = true;
-                        tmpFrm.Show();
-                        tmpFrm.Activate();
-                    }
+                    if (tmpFrm.Name == frm.Name)
+                    { 
+                      blResult = true;
+                      tmpFrm.Activate();
+                    } 
                 }
             }
             return blResult;
@@ -760,6 +746,70 @@ namespace FollowTask
 
             handledive += fd.GetMainInfo;
            
+
+        }
+      static  ErrorStart_Main esm;
+        private void 任务还原FToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var item in this.MdiChildren)
+            {
+                if (item.Name == "ErrorStart_Main")
+                {
+                    if (item != null)
+                    {
+                        item.Close();
+                    } 
+                }
+            }
+            ShowORDead(1);
+        }
+        string[] formname = { "Fm_FollowTaskSorting", "Fm_FollowTaskMachineDetail", "Fm_FollowTaskUnion", "FM_MainbeltDevice", "FM_Device", "Fm_UnionMainInfo", "Fm_UinonCache" };
+        //预分拣 合流机械手详情 合流 预分拣设备号查询 合流主皮带设备号查询 合流主皮带信息 合流机械手缓存 以上对应窗体的名字的
+        private void 开机自检CToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowORDead(0);
+            for (int i = 0; i < MdiChildren.Length; i++)
+            {
+                for (int j = 0; j < formname.Length; j++)
+                {
+                    if (MdiChildren[i].Name == formname[j])
+                    {
+                        if (MdiChildren[i] != null)
+                        {
+                            MdiChildren[i].Close();
+                        }
+                    }
+                } 
+            }
+            esm = new ErrorStart_Main();
+            if (CheckExist(esm))
+            {
+                esm.Dispose();
+               // esm = null;
+                return;
+            }
+            else
+            {
+                esm.Show();
+                esm.MdiParent = this;
+                esm.WindowState = FormWindowState.Maximized;
+            }
+            
+        }
+
+        void ShowORDead(int index)
+        {
+            if (index == 1)
+            {
+                btnLeft.Visible = true;
+                treeV.Visible = true;
+
+            }
+            else if( index ==0)
+            {
+                treeV.Visible = false;
+                btnLeft.Visible = false; 
+            }
 
         }
     }

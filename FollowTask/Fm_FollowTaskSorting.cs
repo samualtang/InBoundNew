@@ -29,7 +29,7 @@ namespace FollowTask
 
         void pbLoading_VisibleChanged(object sender, EventArgs e)
         {
-            ReadListInfo(0);
+            this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
         }
 
         public WriteLog writeLog = WriteLog.GetLog();
@@ -50,6 +50,7 @@ namespace FollowTask
         delegate void HandleThreadRead(decimal group);
         public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
         {
+            Text = text + "预分拣";
             try
             {
                 String OpcFJConnectionService = "S7:[FJCONNECTIONGROUP";//OPC服务器名
@@ -68,7 +69,7 @@ namespace FollowTask
                     HandleThreadRead task = ThreadReadDB;
                     task.BeginInvoke(groupno, null, null);
 
-                    Text = groupno + "组预分拣";
+                  
                     txtTitle.Text = Text;
 
                     //lblSortnum.Text = "任务号： 0";
@@ -492,9 +493,9 @@ namespace FollowTask
         }
         private void Fm_FollowTaskSorting_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.Hide();
-            e.Cancel = true; 
+            //this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            //this.Hide();
+            //e.Cancel = true; 
             //DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
             //                                                 "操作提示",//对话框的标题  
             //                                                 MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
@@ -507,7 +508,9 @@ namespace FollowTask
             //    e.Cancel = false;
             //}
             //else { e.Cancel = true; }
-
+            MdiParent = null; 
+            Dispose(true);
+           
 
         }
         private void btnClose_Click(object sender, EventArgs e)

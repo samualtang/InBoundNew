@@ -557,9 +557,14 @@ namespace FollowTask
 
         private void Fm_FollowTaskUnion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.Hide();
-            e.Cancel = true; 
+           
+
+
+            //MdiParent = null;
+             Dispose(true);
+            //this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            //this.Hide();
+            //e.Cancel = true; 
             //this.DialogResult = System.Windows.Forms.DialogResult.None;
             //if (this.DialogResult == System.Windows.Forms.DialogResult.Yes)
             //{

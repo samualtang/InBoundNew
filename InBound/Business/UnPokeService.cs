@@ -173,9 +173,16 @@ namespace InBound.Business
             }
             if (listNum.Count > 0)//取当前缓存量最少的包装机 做二次取级
             {
-                packagemachine = GetSortPackageMachine(listNum, packmachi);//二次优先级获取(包装机缓存量最少但是需要异形烟量最大的包装机)
-                //WriteLog.GetLog().Write( "当前发送包装机:" + packagemachine);
-                return packagemachine;
+                if (listNum.Count == 1)
+                {
+                    return Convert.ToInt32(listNum[0]);
+                }
+                else
+                {
+                    packagemachine = GetSortPackageMachine(listNum, packmachi);//二次优先级获取(包装机缓存量最少但是需要异形烟量最大的包装机)
+                    //WriteLog.GetLog().Write( "当前发送包装机:" + packagemachine);
+                    return packagemachine;
+                }
             }
             else
             {

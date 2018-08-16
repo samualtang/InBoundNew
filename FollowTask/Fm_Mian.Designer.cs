@@ -54,11 +54,13 @@
             this.预分拣YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.合流UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.异形烟包装机缓存NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.预分拣设备视图YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.合流ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMainInfo = new System.Windows.Forms.TextBox();
             this.treeV = new System.Windows.Forms.TreeView();
             this.btnLeft = new System.Windows.Forms.Button();
-            this.预分拣设备视图YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.合流ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开机自检CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.任务还原FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +79,8 @@
             // 系统ToolStripMenuItem
             // 
             this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.开机自检CToolStripMenuItem,
+            this.任务还原FToolStripMenuItem,
             this.退出EToolStripMenuItem});
             this.系统ToolStripMenuItem.Name = "系统ToolStripMenuItem";
             this.系统ToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
@@ -121,6 +125,21 @@
             this.异形烟包装机缓存NToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.异形烟包装机缓存NToolStripMenuItem.Text = "异形烟包装机缓存(&N)";
             this.异形烟包装机缓存NToolStripMenuItem.Click += new System.EventHandler(this.异形烟NToolStripMenuItem_Click);
+            // 
+            // 预分拣设备视图YToolStripMenuItem
+            // 
+            this.预分拣设备视图YToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.合流ToolStripMenuItem});
+            this.预分拣设备视图YToolStripMenuItem.Name = "预分拣设备视图YToolStripMenuItem";
+            this.预分拣设备视图YToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
+            this.预分拣设备视图YToolStripMenuItem.Text = "设备查询(&B)";
+            // 
+            // 合流ToolStripMenuItem
+            // 
+            this.合流ToolStripMenuItem.Name = "合流ToolStripMenuItem";
+            this.合流ToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.合流ToolStripMenuItem.Text = "合流(&U)";
+            this.合流ToolStripMenuItem.Click += new System.EventHandler(this.合流ToolStripMenuItem_Click);
             // 
             // txtMainInfo
             // 
@@ -173,6 +192,7 @@
             this.treeV.ShowNodeToolTips = true;
             this.treeV.Size = new System.Drawing.Size(174, 480);
             this.treeV.TabIndex = 6;
+            this.treeV.Visible = false;
             this.treeV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeV_MouseDown);
             // 
             // btnLeft
@@ -184,24 +204,24 @@
             this.btnLeft.TabIndex = 8;
             this.btnLeft.Text = "<-";
             this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Visible = false;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             this.btnLeft.MouseLeave += new System.EventHandler(this.btnLeft_MouseLeave);
             this.btnLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnLeft_MouseMove);
             // 
-            // 预分拣设备视图YToolStripMenuItem
+            // 开机自检CToolStripMenuItem
             // 
-            this.预分拣设备视图YToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.合流ToolStripMenuItem});
-            this.预分拣设备视图YToolStripMenuItem.Name = "预分拣设备视图YToolStripMenuItem";
-            this.预分拣设备视图YToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
-            this.预分拣设备视图YToolStripMenuItem.Text = "设备查询(&B)";
+            this.开机自检CToolStripMenuItem.Name = "开机自检CToolStripMenuItem";
+            this.开机自检CToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.开机自检CToolStripMenuItem.Text = "开机自检(&C)";
+            this.开机自检CToolStripMenuItem.Click += new System.EventHandler(this.开机自检CToolStripMenuItem_Click);
             // 
-            // 合流ToolStripMenuItem
+            // 任务还原FToolStripMenuItem
             // 
-            this.合流ToolStripMenuItem.Name = "合流ToolStripMenuItem";
-            this.合流ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.合流ToolStripMenuItem.Text = "合流(&U)";
-            this.合流ToolStripMenuItem.Click += new System.EventHandler(this.合流ToolStripMenuItem_Click);
+            this.任务还原FToolStripMenuItem.Name = "任务还原FToolStripMenuItem";
+            this.任务还原FToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.任务还原FToolStripMenuItem.Text = "任务还原(&F)";
+            this.任务还原FToolStripMenuItem.Click += new System.EventHandler(this.任务还原FToolStripMenuItem_Click);
             // 
             // Fm_Mian
             // 
@@ -216,7 +236,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "Fm_Mian";
-            this.Text = "任务还原";
+            this.Text = "上位控场集成系统";
             this.TransparencyKey = System.Drawing.Color.White;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Fm_Mian_FormClosing);
             this.Load += new System.EventHandler(this.Fm_Mian_Load);
@@ -242,6 +262,8 @@
         private System.Windows.Forms.ToolStripMenuItem 异形烟包装机缓存NToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 预分拣设备视图YToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 合流ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 开机自检CToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 任务还原FToolStripMenuItem;
 
     }
 }
