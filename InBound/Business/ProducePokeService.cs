@@ -487,7 +487,11 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    record.POKEPLACE = 10;//add by tjl 2018/08/17
+                                    record.POKEPLACE = tempCount % 10;
+                                    if (record.POKEPLACE == 10)
+                                    {
+                                        record.POKEPLACE = 10;
+                                    }
                                 }
                                 record.SECSORTNUM = sendOrder;
                                 sendOrder += 1;
