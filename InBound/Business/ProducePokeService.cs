@@ -487,7 +487,7 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    record.POKEPLACE = tempCount % 10;
+                                    record.POKEPLACE = record.POKENUM % 10;
                                     if (record.POKEPLACE == 10)
                                     {
                                         record.POKEPLACE = 10;
