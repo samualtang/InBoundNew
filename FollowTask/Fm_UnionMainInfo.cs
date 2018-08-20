@@ -367,15 +367,15 @@ namespace FollowTask
         }
         private void Fm_UnionMainInfo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm is Form)
-                {
-                    //fm_machinedetails.Close();
-                    return;
-                }
-            }
-            this.Close();
+            //foreach (Form frm in Application.OpenForms)
+            //{
+            //    if (frm is Form)
+            //    {
+            //        //fm_machinedetails.Close();
+            //        return;
+            //    }
+            //}
+            //this.Close();
         }
 
 
@@ -486,8 +486,10 @@ namespace FollowTask
 
         void pbLoading_VisibleChanged(object sender, EventArgs e)
         {
-            this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
-           
+            if (IsHandleCreated)
+            {
+                this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
+            }
         }
 
       
