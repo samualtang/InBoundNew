@@ -18,7 +18,9 @@ namespace FollowTask
 
            // Application.Run(new Fm_Mian());
            Application.Run(new Fm_Mian());
-           
+
+           Application.Run(new FollowTask.ErrorStart.InOutForm());
+
         }
     }
 }

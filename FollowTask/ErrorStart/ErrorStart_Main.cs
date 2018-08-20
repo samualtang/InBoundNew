@@ -27,7 +27,7 @@ namespace FollowTask.ErrorStart
        IOPCServer pIOPCServer;     */
         SortForm sort;
 
-
+        InOutForm Inout;
 
         public void OnDataChange(int group, int[] clientId, object[] values)
         {
@@ -266,17 +266,25 @@ namespace FollowTask.ErrorStart
 #endregion
         private void Start_Click()
         {
-            HandleDelegate task1 = Start_FJ1;
-            task1.BeginInvoke(null, null);
+            try
+            {
+                HandleDelegate task1 = Start_FJ1;
+                task1.BeginInvoke(null, null);
 
-            HandleDelegate task2 = Start_FJ2;
-            task2.BeginInvoke(null, null);
+                HandleDelegate task2 = Start_FJ2;
+                task2.BeginInvoke(null, null);
 
-            HandleDelegate task3 = Start_FJ3;
-            task3.BeginInvoke(null, null);
+                HandleDelegate task3 = Start_FJ3;
+                task3.BeginInvoke(null, null);
 
-            HandleDelegate task4 = Start_FJ4;
-            task4.BeginInvoke(null, null);
+                HandleDelegate task4 = Start_FJ4;
+                task4.BeginInvoke(null, null);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("连接PLC失败！");
+            }
+          
         }
 
         private void Start_Click1()
@@ -475,6 +483,24 @@ namespace FollowTask.ErrorStart
             {
                 MessageBox.Show(item.Key + "" + item.Value);                
             }
+        }
+
+        private void btn_inout_Click(object sender, EventArgs e)
+        {
+            if (Controls.Contains(Inout))
+            {
+                Inout.WindowState = FormWindowState.Maximized;
+                Inout.Show();
+            }
+            else
+            {
+                Inout = new InOutForm();
+                Inout.TopLevel = false;
+                Inout.Parent = splitContainer1.Panel2; 
+                Inout.WindowState = FormWindowState.Maximized;
+                Inout.Show();
+            }
+
         }
 
 
