@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FollowTask
+namespace UnNormal_New
 {
     static class Program
     {
@@ -15,12 +15,7 @@ namespace FollowTask
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-           // Application.Run(new Fm_Mian());
-           Application.Run(new Fm_Mian());
-
-           Application.Run(new FollowTask.ErrorStart.InOutForm());
-
+            Application.Run(new Form1());
         }
     }
 }

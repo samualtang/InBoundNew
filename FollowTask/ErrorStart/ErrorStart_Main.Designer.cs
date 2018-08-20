@@ -42,7 +42,7 @@
             this.b6 = new System.Windows.Forms.Button();
             this.b5 = new System.Windows.Forms.Button();
             this.b4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_inout = new System.Windows.Forms.Button();
             this.b3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.b2 = new System.Windows.Forms.Button();
@@ -83,7 +83,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.b5);
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.b4);
-            this.splitContainer1.Panel1.Controls.Add(this.button3);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_inout);
             this.splitContainer1.Panel1.Controls.Add(this.b3);
             this.splitContainer1.Panel1.Controls.Add(this.button4);
             this.splitContainer1.Panel1.Controls.Add(this.b2);
@@ -149,7 +149,6 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(176, 52);
             this.button6.TabIndex = 7;
-            this.button6.Text = "立库区域";
             this.button6.UseVisualStyleBackColor = true;
             // 
             // b1_f2
@@ -208,14 +207,15 @@
             this.b4.TabIndex = 13;
             this.b4.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btn_inout
             // 
-            this.button3.Location = new System.Drawing.Point(12, 291);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(176, 52);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "异型烟区域";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_inout.Location = new System.Drawing.Point(12, 291);
+            this.btn_inout.Name = "btn_inout";
+            this.btn_inout.Size = new System.Drawing.Size(176, 52);
+            this.btn_inout.TabIndex = 4;
+            this.btn_inout.Text = "出入库";
+            this.btn_inout.UseVisualStyleBackColor = true;
+            this.btn_inout.Click += new System.EventHandler(this.btn_inout_Click);
             // 
             // b3
             // 
@@ -231,7 +231,6 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(176, 52);
             this.button4.TabIndex = 5;
-            this.button4.Text = "入库区域";
             this.button4.UseVisualStyleBackColor = true;
             // 
             // b2
@@ -248,7 +247,6 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(176, 52);
             this.button5.TabIndex = 6;
-            this.button5.Text = "出库区域";
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button7
@@ -334,7 +332,7 @@
         private System.Windows.Forms.Button b5;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button b4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_inout;
         private System.Windows.Forms.Button b3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button b2;

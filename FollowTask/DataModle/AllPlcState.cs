@@ -14,6 +14,7 @@ namespace FollowTask.DataModle
         public static int FJState2 { get; set; }
         public static int FJState3 { get; set; }
         public static int FJState4 { get; set; }
+        public static int InOutState { get; set; }
 
     }
 }
