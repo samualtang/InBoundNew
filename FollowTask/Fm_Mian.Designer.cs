@@ -49,6 +49,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Fm_Mian));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开机自检CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.任务还原FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查询任务sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.预分拣YToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,8 +61,6 @@
             this.txtMainInfo = new System.Windows.Forms.TextBox();
             this.treeV = new System.Windows.Forms.TreeView();
             this.btnLeft = new System.Windows.Forms.Button();
-            this.开机自检CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.任务还原FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,10 +86,24 @@
             this.系统ToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
             this.系统ToolStripMenuItem.Text = "系统(&S)";
             // 
+            // 开机自检CToolStripMenuItem
+            // 
+            this.开机自检CToolStripMenuItem.Name = "开机自检CToolStripMenuItem";
+            this.开机自检CToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.开机自检CToolStripMenuItem.Text = "开机自检(&C)";
+            this.开机自检CToolStripMenuItem.Click += new System.EventHandler(this.开机自检CToolStripMenuItem_Click);
+            // 
+            // 任务还原FToolStripMenuItem
+            // 
+            this.任务还原FToolStripMenuItem.Name = "任务还原FToolStripMenuItem";
+            this.任务还原FToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.任务还原FToolStripMenuItem.Text = "任务还原(&F)";
+            this.任务还原FToolStripMenuItem.Click += new System.EventHandler(this.任务还原FToolStripMenuItem_Click);
+            // 
             // 退出EToolStripMenuItem
             // 
             this.退出EToolStripMenuItem.Name = "退出EToolStripMenuItem";
-            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出EToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.退出EToolStripMenuItem.Text = "退出(&E)";
             this.退出EToolStripMenuItem.Click += new System.EventHandler(this.退出EToolStripMenuItem_Click);
             // 
@@ -208,20 +222,6 @@
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             this.btnLeft.MouseLeave += new System.EventHandler(this.btnLeft_MouseLeave);
             this.btnLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnLeft_MouseMove);
-            // 
-            // 开机自检CToolStripMenuItem
-            // 
-            this.开机自检CToolStripMenuItem.Name = "开机自检CToolStripMenuItem";
-            this.开机自检CToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.开机自检CToolStripMenuItem.Text = "开机自检(&C)";
-            this.开机自检CToolStripMenuItem.Click += new System.EventHandler(this.开机自检CToolStripMenuItem_Click);
-            // 
-            // 任务还原FToolStripMenuItem
-            // 
-            this.任务还原FToolStripMenuItem.Name = "任务还原FToolStripMenuItem";
-            this.任务还原FToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.任务还原FToolStripMenuItem.Text = "任务还原(&F)";
-            this.任务还原FToolStripMenuItem.Click += new System.EventHandler(this.任务还原FToolStripMenuItem_Click);
             // 
             // Fm_Mian
             // 

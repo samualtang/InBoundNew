@@ -29,7 +29,10 @@ namespace FollowTask
 
         void pbLoading_VisibleChanged(object sender, EventArgs e)
         {
-            this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
+            if (IsHandleCreated)
+            {
+                this.Invoke(new EventHandler(delegate { ReadListInfo(0); }));
+            }
         }
 
         public WriteLog writeLog = WriteLog.GetLog();
@@ -508,8 +511,8 @@ namespace FollowTask
             //    e.Cancel = false;
             //}
             //else { e.Cancel = true; }
-            MdiParent = null; 
-            Dispose(true);
+            //MdiParent = null; 
+            //Dispose(true);
            
 
         }

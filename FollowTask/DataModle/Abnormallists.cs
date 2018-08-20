@@ -10,5 +10,9 @@ namespace FollowTask.ErrorStart
         public string DECICENO { get; set; }
         public string AREANAME { get; set; }
         public string ERRORMSG { get; set; }
+
+        public string OFFSET { get; set; }
+        public string MACHINESEQ { get; set; }
+        public string TYPE { get; set; }
     }
 }

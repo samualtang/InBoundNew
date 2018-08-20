@@ -305,7 +305,7 @@ namespace FollowTask
 
         private void treeV_AfterSelect(object sender, TreeViewEventArgs e)
         {
-
+        
             string nodeselect = treeV.SelectedNode.Name;//获取选择name 
             switch (nodeselect)
             {
@@ -392,7 +392,8 @@ namespace FollowTask
                 //    break;
                 #endregion
             }
-
+            treeV.Enabled = false;
+            Thread.Sleep(1000);
         }
        
         
@@ -768,24 +769,32 @@ namespace FollowTask
         private void 开机自检CToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowORDead(0);
-            for (int i = 0; i < MdiChildren.Length; i++)
+            if (MdiChildren.Count() != 0)
             {
                 for (int j = 0; j < formname.Length; j++)
                 {
-                    if (MdiChildren[i].Name == formname[j])
+                    if (MdiChildren[0].GetType().Name == formname[j])
                     {
-                        if (MdiChildren[i] != null)
+                        if (MdiChildren[0] != null)
                         {
-                            MdiChildren[i].Close();
+                            MdiChildren[0].Close();
+                            if (MdiChildren.Length > 0)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
-                } 
+                }
             }
             esm = new ErrorStart_Main();
             if (CheckExist(esm))
             {
                 esm.Dispose();
-               // esm = null;
+                // esm = null;
                 return;
             }
             else
@@ -794,7 +803,7 @@ namespace FollowTask
                 esm.MdiParent = this;
                 esm.WindowState = FormWindowState.Maximized;
             }
-            
+
         }
 
         void ShowORDead(int index)
@@ -812,5 +821,6 @@ namespace FollowTask
             }
 
         }
+
     }
 }

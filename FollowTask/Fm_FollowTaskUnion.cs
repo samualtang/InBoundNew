@@ -561,7 +561,7 @@ namespace FollowTask
 
 
             //MdiParent = null;
-             Dispose(true);
+             //Dispose(true);
             //this.DialogResult = System.Windows.Forms.DialogResult.Yes;
             //this.Hide();
             //e.Cancel = true; 
