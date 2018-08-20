@@ -469,7 +469,18 @@ namespace InBound.Business
                                   
                                   t.MERAGENUM = tempCount;
                                   t.UNIONTASKNUM = unionnum;
-                                  t.POKEPLACE = pnum;
+                                  if (pnum > 10)
+                                  {
+                                      t.POKEPLACE = pnum % 10;
+                                      if (t.POKEPLACE == 0)
+                                      {
+                                          t.POKEPLACE = 10;
+                                      }
+                                  }
+                                  else
+                                  {
+                                      t.POKEPLACE = pnum;
+                                  }
                                   pnum -= (t.POKENUM??0);
                                   WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                               }
@@ -487,8 +498,8 @@ namespace InBound.Business
                                 }
                                 else
                                 {
-                                    record.POKEPLACE = tempCount % 10;
-                                    if (record.POKEPLACE == 10)
+                                    record.POKEPLACE = record.POKENUM % 10;
+                                    if (record.POKEPLACE == 0)
                                     {
                                         record.POKEPLACE = 10;
                                     }
@@ -512,7 +523,18 @@ namespace InBound.Business
                                   
                                    t.MERAGENUM = tempCount;
                                    t.UNIONTASKNUM = unionnum;
-                                   t.POKEPLACE = pnum;
+                                   if (pnum > 10)
+                                   {
+                                       t.POKEPLACE = pnum % 10;
+                                       if (t.POKEPLACE == 0)
+                                       {
+                                           t.POKEPLACE = 10;
+                                       }
+                                   }
+                                   else
+                                   {
+                                       t.POKEPLACE = pnum;
+                                   }
                                    pnum -= (t.POKENUM ?? 0);
                                    WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                                }
@@ -527,6 +549,10 @@ namespace InBound.Business
                                 else
                                 {
                                     record.POKEPLACE =tempCount%10;
+                                    if (record.POKEPLACE == 0)
+                                    {
+                                        record.POKEPLACE = 10;
+                                    }
                                 }
                                 
                             }
@@ -543,7 +569,18 @@ namespace InBound.Business
                                   
                                    t.MERAGENUM = tempCount;
                                    t.UNIONTASKNUM = unionnum;
-                                   t.POKEPLACE = pnum;
+                                   if (pnum > 10)
+                                   {
+                                       t.POKEPLACE = pnum % 10;
+                                       if (t.POKEPLACE == 0)
+                                       {
+                                           t.POKEPLACE = 10;
+                                       }
+                                   }
+                                   else
+                                   {
+                                       t.POKEPLACE = pnum;
+                                   }
                                    pnum -= (t.POKENUM ?? 0);
                                    WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                                }
