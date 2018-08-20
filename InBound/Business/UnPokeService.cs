@@ -210,40 +210,96 @@ namespace InBound.Business
         {
             using (Entities entity = new Entities())
             {
-                int totaleCount = 0;
-                List<decimal> sortnum = new List<decimal>();
-                decimal benginSortnum;
-                var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
-                while ( totaleCount < OrdermaxCount)
+                decimal totaleCount = 0;//任务出烟数量
+                List<decimal> sortnum = new List<decimal>();//任务号集合
+                decimal benginSortnum;//用于计算任务号
+                int index = 0;
+                //获取指定包装机未执行的任务号
+                var firstSortnum = (from item in entity.T_UN_POKE where item.STATUS == 10 && item.PACKAGEMACHINE == packagemachine orderby item.SORTNUM select item).ToList();
+                if (firstSortnum.Count > 0 && firstSortnum != null)
                 {
-                    //获取第一个未执行的任务号
-                    var firstSortnum = (from item in entity.T_UN_POKE where item.STATUS == 10 && item.PACKAGEMACHINE == packagemachine orderby item.SORTNUM select item).FirstOrDefault();
-
-                    benginSortnum = firstSortnum.SORTNUM ?? 0;
-                    sortnum.Add(benginSortnum );//添加到任务集合
-                    var thisSortPokenum = (from sortpoke in entity.T_UN_POKE
-                                           where sortpoke.SORTNUM == firstSortnum.SORTNUM
-                                           && sortpoke.PACKAGEMACHINE == packagemachine
-                                           orderby sortpoke.SORTNUM
-                                           select sortpoke).Take(OrdermaxCount).ToList();//查询这个任务 
-                    totaleCount += Convert.ToInt32(thisSortPokenum.Sum(x=> x.POKENUM ?? 0));//当前任务的数量累加 
-                    if (totaleCount >= OrdermaxCount)//当任务总数多于总计算量跳出
+                    foreach (var item in firstSortnum)
                     {
-                        break;
+                        var thisSortPokenum = (from sortpoke in entity.T_UN_POKE
+                                               where sortpoke.SORTNUM == item.SORTNUM && sortpoke.PACKAGEMACHINE == packagemachine
+                                               orderby sortpoke.MACHINESEQ
+                                               select sortpoke).Sum(a => a.POKENUM);//查询这个任务的出烟数量
+                        var CanSendTaskNum = (from OKTask in entity.T_UN_POKE where OKTask.STATUS == 12 && OKTask.PACKAGEMACHINE == packagemachine select OKTask).Sum(a => a.POKENUM);//生成任务抓烟数
+                        if (thisSortPokenum > OrdermaxCount)//如果当前订单出烟数量大于 补烟量 拆单， 否则累加
+                        {
+                         
+                            if ((CanSendTaskNum + thisSortPokenum) > OrdermaxCount)//如果生成任务抓烟数大于补烟量
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if ((totaleCount + CanSendTaskNum) > OrdermaxCount)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                item.STATUS = 12;
+                                item.SENDTASKNUM = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");//一个订单一个包号 
+                            }
+
+                        }
                     }
-                } 
+                    //while (true)
+                    //{
+                    //    benginSortnum = firstSortnum[index].SORTNUM ?? 0;//获取未执行的任务号   
+                    //    var thisSortPokenum = (from sortpoke in entity.T_UN_POKE
+                    //                           where sortpoke.SORTNUM == benginSortnum && sortpoke.PACKAGEMACHINE == packagemachine
+                    //                           orderby sortpoke.MACHINESEQ
+                    //                           select sortpoke).Sum(a => a.POKENUM);//查询这个任务的出烟数量
+                    //    if (thisSortPokenum > OrdermaxCount)//如果当前订单出烟数量大于 补烟量 拆单， 否则累加
+                    //    {
+                            
+                    //        sortnum.Add(benginSortnum);//添加到任务集合  
+                    //        break; 
+                    //    }
+                    //    else
+                    //    {
+                    //        if ((totaleCount + (thisSortPokenum ??0)) > OrdermaxCount)//如果累加量大于补烟量 跳出
+                    //        {
+                    //            break;
+                    //        }
+                    //        else
+                    //        {
+                    //            totaleCount += (thisSortPokenum ?? 0);//当前任务的数量累加
+                                
+                    //            sortnum.Add(benginSortnum);//添加到任务集合  
+                    //        }
+                    //    }
+                    //    var CanSendTaskNum = (from OKTask in entity.T_UN_POKE where OKTask.STATUS == 12 && OKTask.PACKAGEMACHINE == packagemachine select OKTask).Sum(a => a.POKENUM);//生成任务抓烟数
+                    //    if (CanSendTaskNum > OrdermaxCount)//如果生成任务抓烟数大于补烟量
+                    //    {
+                    //        break;
+                    //    }
+                    //    //if (totaleCount >= OrdermaxCount)//当任务总数多于总计算量跳出
+                    //    //{
+                    //    //    break;
+                    //    //}
+                    //    index++;
+                     
+                    //}
+                }
+                
                 foreach (var sortItem in sortnum)
                 {
+                    decimal sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");//一个订单一个包号
                     var onetask = (from item in entity.T_UN_POKE 
                                    where item.SORTNUM == sortItem && item.PACKAGEMACHINE == packagemachine
-                                   select item).Take(OrdermaxCount).OrderBy(a => a.SORTNUM).ThenByDescending(x => x.CTYPE).ToList(); //获取一个任务 烟柜优先
+                                   select item).OrderBy(a => a.SORTNUM).ThenByDescending(x => x.CTYPE).Take(OrdermaxCount).ToList(); //获取一个任务  烟柜优先
                     foreach (var item in onetask)//可以执行的任务给予计算
                     {
                         item.STATUS = 12;
                         item.SENDTASKNUM = sendtasknum;
                     }
                 } 
-                entity.SaveChanges();
+               entity.SaveChanges();
             }
 
         }
