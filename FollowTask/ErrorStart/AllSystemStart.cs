@@ -129,28 +129,28 @@ namespace FollowTask.ErrorStart
         }
 
         /// <summary>
-        /// 出入库读取PLC
+        /// 出入库读取PLC 电机
         /// </summary>
-        /// <param name="no"></param>
-        /// <returns></returns>
+        /// <returns>发生的故障</returns>
         public List<ErrorInfo> ReadDBinfo_inout()
         {
-
             List<ErrorInfo> str = new List<ErrorInfo>();
-            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress();
-            List<string> DBlist = AdressAndMsg.Select(X=>X.DBAdress).ToList();
+            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress(1);
+            List<string> DBlist = new List<string>();
+            foreach (var item in AdressAndMsg.Select(X=>X.DBAdress).ToList())
+            {
+                DBlist.Add(InOutOpcServerName + item);
+            }
             Connction();
-
             InOutcServer.addItem(DBlist);
-
             try
             {
-                for (int i = 0; i < DBlist.Count(); i++)//从电控读取数据 
+                for (int i = 0; i < DBlist.Count(); i++)
                 { 
                     ErrorInfo info = new ErrorInfo();
                     info.DBAdress = DBlist[i];
                     info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
-                    info.Value=InOutcServer.ReadD(i).ToString();
+                    info.Value = InOutcServer.ReadD(i).ToString();//从电控读取数据 
                     str.Add(info);
                 }
                 AllPlcState.InOutState = 1;
@@ -159,10 +159,45 @@ namespace FollowTask.ErrorStart
             {
                 AllPlcState.InOutState = 0; 
             }
-          
             return str;
         }
+        /// <summary>
+        /// 出入库读取PLC 输送线
+        /// </summary>
+        /// <returns>发生的故障</returns>
+        public List<ErrorInfo> ReadDBinfo_outbelt()
+        {
 
+            List<ErrorInfo> str = new List<ErrorInfo>();
+            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress(2);
+            List<string> DBlist = new List<string>();
+            foreach (var item in AdressAndMsg.Select(X => X.DBAdress).ToList())
+            {
+                DBlist.Add(InOutOpcServerName + item);
+            }
+            Connction();
+
+            InOutcServer.addItem(DBlist);
+
+            try
+            {
+                for (int i = 0; i < DBlist.Count(); i++)
+                {
+                    ErrorInfo info = new ErrorInfo();
+                    info.DBAdress = DBlist[i];
+                    info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
+                    info.Value = InOutcServer.ReadD(i).ToString();//从电控读取数据 
+                    str.Add(info);
+                }
+                AllPlcState.InOutState = 1;
+            }
+            catch (Exception)
+            {
+                AllPlcState.InOutState = 0;
+            }
+
+            return str;
+        }
 
       
         /// <summary>
@@ -178,45 +213,58 @@ namespace FollowTask.ErrorStart
             }
         }
 
-        /// <summary>
+      
+       /// <summary>
         /// 数据库获取 出入库 故障信息地址
-        /// </summary>
+       /// </summary>
+       /// <param name="tag">1电机、2输送带、3码分机、4入库队列</param>
         /// <returns>出入库 地址集合</returns>
-        public List<Abnormallists> GetInOutOpcServerItem()
+        public List<Abnormallists> GetInOutOpcServerItem(int tag)
         {
+            List<Abnormallists> DBList = new List<Abnormallists>();
             using (Entities et = new Entities())
             {
-                int num = et.T_WMS_ABNORMALLIST.Count();
-
-                var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "出入库" && x.AREAPLC == "S7:[InOutConnection]").Select(x => new Abnormallists
+                if (tag == 1)
                 {
-                    AREANAME = x.AREANAME,
-                    ERRORMSG = x.ERRORMSG,
-                    DECICENO = x.DECICENO,
-                    OFFSET = x.OFFSET,
-                    MACHINESEQ = x.MACHINESEQ,
-                    TYPE = x.TYPE
-                }).ToList();
-
-
-                List<Abnormallists> content = list.Where(x => x.TYPE == "1").Select(x => x).ToList();
-                List<Abnormallists> head = list.Where(x => x.TYPE == "2").Select(x => x).ToList();
-                List<Abnormallists> DBList = new List<Abnormallists>();
-
-                foreach (var item in head)
-                {
-                    foreach (var it in content)
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "出入库" && x.AREAPLC == "S7:[InOutConnection]").Select(x => new Abnormallists
                     {
-                        Abnormallists data = new Abnormallists();
-                        string DB = ((Convert.ToInt32(item.MACHINESEQ) - 100) * 2).ToString();
-                        data.DECICENO = it.DECICENO + "," + DB;
-                        data.ERRORMSG = item.ERRORMSG + "" + it.ERRORMSG;
-                        DBList.Add(data);
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    List<Abnormallists> content = list.Where(x => x.TYPE == "1").Select(x => x).ToList();
+                    List<Abnormallists> head = list.Where(x => x.TYPE == "2").Select(x => x).ToList();
+                    foreach (var item in head)
+                    {
+                        foreach (var it in content)
+                        {
+                            Abnormallists data = new Abnormallists();
+                            string DB = ((Convert.ToDouble(item.MACHINESEQ) - 100) + Convert.ToDouble(it.OFFSET)).ToString();
+                            data.DECICENO = it.DECICENO + "," + DB;
+                            data.ERRORMSG = item.ERRORMSG + "" + it.ERRORMSG;
+                            DBList.Add(data);
+                        }
                     }
+                    
+                }
+                if (tag==2)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "输送线" && x.AREAPLC == "S7:[InOutConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    DBList = list;
                 }
                 return DBList;
             }
-        }  
+        }
 
         /// <summary>
         /// 预分拣 每组plc的故障地址
@@ -256,13 +304,13 @@ namespace FollowTask.ErrorStart
             return list;
         }
 
-        public List<ErrorInfo> GetInOutPlcAdress()
+        public List<ErrorInfo> GetInOutPlcAdress(int tag)
         {
             List<ErrorInfo> list = new List<ErrorInfo>();
-            foreach (var item in GetFJOpcServerItem())
+            foreach (var item in GetInOutOpcServerItem(tag))
             {
                 ErrorInfo info = new ErrorInfo();
-                info.DBAdress = item.DECICENO;
+                info.DBAdress = item.DECICENO+","+item.OFFSET;
                 info.ErrorMsg = item.ERRORMSG;
                 list.Add(info);
             }
