@@ -25,37 +25,16 @@ namespace FollowTask.ErrorStart
        internal const int LOCALE_ID = 0x409;          
        List<string> FJConnectionGroup1, FJConnectionGroup2, FJConnectionGroup3, FJConnectionGroup4;
        IOPCServer pIOPCServer;     */
-        SortForm sort;
-
+        SortForm sort; 
         InOutForm Inout;
 
-        public void OnDataChange(int group, int[] clientId, object[] values)
-        {
-            if (group == 1)//一号主皮带八个机械手
-            {
-
-            }
-            if (group == 2)//二号主皮带八个机械手
-            {
-
-            }
-            if (group == 3)//三号主皮带八个机械手
-            {
-
-            }
-            if (group == 4)//四号主皮带八个机械手
-            {
-
-            }
-        }
-       
-
+    
         Group FJPlcAdress;
         Thread td;
         private void Btn_start_Click(object sender, EventArgs e)
         {  
             b2.BackColor = Color.Yellow;
-            b3.BackColor = Color.Yellow;
+           
             b4.BackColor = Color.Yellow;
             b5.BackColor = Color.Yellow;
             b6.BackColor = Color.Yellow;
@@ -99,7 +78,7 @@ namespace FollowTask.ErrorStart
         //{
         //    Btn_start.Enabled = true;
         //}
-#region
+        #region 预分拣
         /// <summary>
         /// 开始分拣1组
         /// </summary>
@@ -116,14 +95,14 @@ namespace FollowTask.ErrorStart
                 if (item == "-1")
                 {
                     ErrorDates ed = new ErrorDates();
-                    ed.FJIndex = falg;
+                    ed.Index = falg;
                     using (Entities et = new Entities())
                     {
                         var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                        ed.FJError = FJErrors;
+                        ed.ErrorMsg = FJErrors;
                         ed.ErrorTime = DateTime.Now.ToShortTimeString();
                     }
-                    ed.FJValue = item;
+                    ed.Value = item;
                     Errorlist.Add(ed);
                 }
                 falg++;
@@ -157,14 +136,14 @@ namespace FollowTask.ErrorStart
                 if (item == "-1")
                 {
                     ErrorDates ed = new ErrorDates();
-                    ed.FJIndex = falg;
+                    ed.Index = falg;
                     using (Entities et = new Entities())
                     {
                         var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                        ed.FJError = FJErrors;
+                        ed.ErrorMsg = FJErrors;
                         ed.ErrorTime = DateTime.Now.ToShortTimeString();
                     }
-                    ed.FJValue = item;
+                    ed.Value = item;
                     Errorlist.Add(ed);
                 }
                 falg++;
@@ -198,14 +177,14 @@ namespace FollowTask.ErrorStart
                 if (item == "-1")
                 {
                     ErrorDates ed = new ErrorDates();
-                    ed.FJIndex = falg;
+                    ed.Index = falg;
                     using (Entities et = new Entities())
                     {
                         var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                        ed.FJError = FJErrors;
+                        ed.ErrorMsg = FJErrors;
                         ed.ErrorTime = DateTime.Now.ToShortTimeString();
                     }
-                    ed.FJValue = item;
+                    ed.Value = item;
                     Errorlist.Add(ed);
                 }
                 falg++;
@@ -239,14 +218,14 @@ namespace FollowTask.ErrorStart
                 if (item == "-1")
                 {
                     ErrorDates ed = new ErrorDates();
-                    ed.FJIndex = falg;
+                    ed.Index = falg;
                     using (Entities et = new Entities())
                     {
                         var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                        ed.FJError = FJErrors;
+                        ed.ErrorMsg = FJErrors;
                         ed.ErrorTime = DateTime.Now.ToShortTimeString();
                     }
-                    ed.FJValue = item;
+                    ed.Value = item;
                     Errorlist.Add(ed);
                 }
                 falg++;
@@ -264,33 +243,190 @@ namespace FollowTask.ErrorStart
            // GetState();
         }
 #endregion
+
+        #region  出入库
+        private void Start_InOut1()
+        {
+            b3_1.BackColor = Color.Yellow;
+
+            List<string> InOutlist = new List<string>();
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_inout(1);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("出入库：电机存在故障", listBox1);
+                b3_1.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed); 
+                    }
+                }
+                InOutData.InOutDataList1 = Errors;
+            }
+            else
+            {
+                b3_1.BackColor = Color.Green;
+            }
+
+        }
+        private void Start_InOut2()
+        {
+            b3_2.BackColor = Color.Yellow;
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_inout(2);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("出入库：输送带存在故障", listBox1);
+                b3_2.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed); 
+                    }
+                }
+                InOutData.InOutDataList2 = Errors;
+            }
+            else
+            {
+                b3_2.BackColor = Color.Green;
+            }
+        }
+        private void Start_InOut3()
+        {
+            b3_3.BackColor = Color.Yellow;
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_inout(3);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("出入库：码分机存在故障", listBox1);
+                b3_3.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                InOutData.InOutDataList3 = Errors;
+            }
+            else
+            {
+                b3_3.BackColor = Color.Green;
+            }
+        }
+        private void Start_InOut4()
+        {
+            b3_4.BackColor = Color.Yellow;
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_inout(4);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("出入库：入库队列存在故障", listBox1);
+                b3_4.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                InOutData.InOutDataList4 = Errors;
+            }
+            else
+            {
+                b3_4.BackColor = Color.Green;
+            }
+        }
+        #endregion
+
+        #region  调用方法
         private void Start_Click()
         {
             try
             {
                 HandleDelegate task1 = Start_FJ1;
                 task1.BeginInvoke(null, null);
-
+            }
+            catch (Exception)
+            {
+                updateListBox("第一组预分拣连接PLC失败！", listBox1);
+            }
+            try
+            {
                 HandleDelegate task2 = Start_FJ2;
                 task2.BeginInvoke(null, null);
+            }
+            catch (Exception)
+            {
+                updateListBox("第二组预分拣连接PLC失败！", listBox1);
+            }
 
+            try
+            {
                 HandleDelegate task3 = Start_FJ3;
                 task3.BeginInvoke(null, null);
-
+            }
+            catch (Exception)
+            {
+                updateListBox("第三组预分拣连接PLC失败！", listBox1);
+            }
+            try
+            {
                 HandleDelegate task4 = Start_FJ4;
                 task4.BeginInvoke(null, null);
             }
             catch (Exception)
             {
-                MessageBox.Show("连接PLC失败！");
+                updateListBox("第四组预分拣连接PLC失败！", listBox1);
             }
-          
+            try
+            {
+                HandleDelegate task1 = Start_InOut1;
+                task1.BeginInvoke(null, null);
+
+                HandleDelegate task2 = Start_InOut2;
+                task2.BeginInvoke(null, null);
+
+                HandleDelegate task3 = Start_InOut3;
+                task3.BeginInvoke(null, null);
+
+                HandleDelegate task4 = Start_InOut4;
+                task4.BeginInvoke(null, null);
+            }
+            catch (Exception)
+            {
+                updateListBox("出入库连接PLC失败！", listBox1); 
+            }
+
         }
+        #endregion
+
 
         private void Start_Click1()
         {
-            //循环读取4个分拣plc 
-            #region
+            #region  循环读取4个分拣plc
             for (int i = 1; i < 5; i++)
             {
                 List<string> sortlist = ass.ReadDBinfo(i);
@@ -301,14 +437,14 @@ namespace FollowTask.ErrorStart
                     if (item == "-1")
                     {
                         ErrorDates ed = new ErrorDates();
-                        ed.FJIndex = falg;
+                        ed.Index = falg;
                         using (Entities et = new Entities())
                         {
                             var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                            ed.FJError = FJErrors;
+                            ed.ErrorMsg = FJErrors;
                             ed.ErrorTime = DateTime.Now.ToShortTimeString();
                         }
-                        ed.FJValue = item;
+                        ed.Value = item;
                         Errorlist.Add(ed);
                     }
                     falg++;
@@ -502,6 +638,8 @@ namespace FollowTask.ErrorStart
             }
 
         }
+
+     
 
 
 

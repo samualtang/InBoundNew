@@ -83,8 +83,10 @@
     <Compile Include="DataModle\Abnormallists.cs" />
     <Compile Include="DataModle\AllPlcState.cs" />
     <Compile Include="DataModle\DicForm.cs" />
+    <Compile Include="DataModle\ErrorDates.cs" />
     <Compile Include="DataModle\ErrorInfo.cs" />
     <Compile Include="DataModle\ErrorState.cs" />
+    <Compile Include="DataModle\InOutData.cs" />
     <Compile Include="DataModle\SortData.cs" />
     <Compile Include="DeviceState.cs" />
     <Compile Include="ErrorStart\AllSystemStart.cs" />

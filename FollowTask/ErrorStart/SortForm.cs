@@ -210,28 +210,28 @@ namespace FollowTask.ErrorStart
             { 
                 foreach (var item in SortData.FJList1)
                 {
-                    updateListBox(item.FJError, listBox1);
+                    updateListBox(item.ErrorMsg, listBox1);
                 }
             }
             if (SortData.FJList2 != null )
 	        {
 		        foreach (var item in SortData.FJList2)
                     {
-                        updateListBox(item.FJError, listBox2);
+                        updateListBox(item.ErrorMsg, listBox2);
                     }
 	        }
             if (SortData.FJList3 != null)
 	        { 
                 foreach (var item in SortData.FJList3)
                 {
-                    updateListBox(item.FJError, listBox3);
+                    updateListBox(item.ErrorMsg, listBox3);
                 }
 	        }
             if (SortData.FJList4 != null)
 	        {
 		        foreach (var item in SortData.FJList4)
                     {
-                        updateListBox(item.FJError, listBox4);
+                        updateListBox(item.ErrorMsg, listBox4);
                     }
 
 	        } 

@@ -13,12 +13,5 @@ namespace FollowTask.DataModle
         public static List<ErrorDates> FJList4 { get; set; }
 
     }
-    public class ErrorDates
-    {
-        public int FJIndex { get; set; }
-        public string ErrorTime { get; set; }
-        public string FJValue { get; set; }
-        public string FJError { get; set; } 
-
-    }
+    
 }

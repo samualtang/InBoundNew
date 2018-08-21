@@ -129,13 +129,13 @@ namespace FollowTask.ErrorStart
         }
 
         /// <summary>
-        /// 出入库读取PLC 电机
+        /// 出入库读取PLC数据：电机  1电机、2输送带、3码分机、4入库队列
         /// </summary>
         /// <returns>发生的故障</returns>
-        public List<ErrorInfo> ReadDBinfo_inout()
+        public List<ErrorInfo> ReadDBinfo_inout(int no)
         {
             List<ErrorInfo> str = new List<ErrorInfo>();
-            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress(1);
+            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress(no);
             List<string> DBlist = new List<string>();
             foreach (var item in AdressAndMsg.Select(X=>X.DBAdress).ToList())
             {
@@ -161,43 +161,8 @@ namespace FollowTask.ErrorStart
             }
             return str;
         }
-        /// <summary>
-        /// 出入库读取PLC 输送线
-        /// </summary>
-        /// <returns>发生的故障</returns>
-        public List<ErrorInfo> ReadDBinfo_outbelt()
-        {
+       
 
-            List<ErrorInfo> str = new List<ErrorInfo>();
-            List<ErrorInfo> AdressAndMsg = GetInOutPlcAdress(2);
-            List<string> DBlist = new List<string>();
-            foreach (var item in AdressAndMsg.Select(X => X.DBAdress).ToList())
-            {
-                DBlist.Add(InOutOpcServerName + item);
-            }
-            Connction();
-
-            InOutcServer.addItem(DBlist);
-
-            try
-            {
-                for (int i = 0; i < DBlist.Count(); i++)
-                {
-                    ErrorInfo info = new ErrorInfo();
-                    info.DBAdress = DBlist[i];
-                    info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
-                    info.Value = InOutcServer.ReadD(i).ToString();//从电控读取数据 
-                    str.Add(info);
-                }
-                AllPlcState.InOutState = 1;
-            }
-            catch (Exception)
-            {
-                AllPlcState.InOutState = 0;
-            }
-
-            return str;
-        }
 
       
         /// <summary>
@@ -262,6 +227,30 @@ namespace FollowTask.ErrorStart
                     }).ToList();
                     DBList = list;
                 }
+                if (tag == 3)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => (x.AREANAME == "一楼码分机" || x.AREANAME == "二楼码分机") && x.AREAPLC == "S7:[InOutConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG =  x.AREANAME + ","+x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    DBList = list;
+                }
+                if (tag == 4)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "入库异常" && x.AREAPLC == "S7:[InOutConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    DBList = list;
+                }
                 return DBList;
             }
         }
@@ -303,7 +292,11 @@ namespace FollowTask.ErrorStart
             }
             return list;
         }
-
+        /// <summary>
+        ///    1电机、2输送带、3码分机、4入库队列
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public List<ErrorInfo> GetInOutPlcAdress(int tag)
         {
             List<ErrorInfo> list = new List<ErrorInfo>();

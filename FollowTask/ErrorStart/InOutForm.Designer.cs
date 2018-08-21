@@ -179,6 +179,7 @@
             this.Controls.Add(this.Btn_Start);
             this.Name = "InOutForm";
             this.Text = "InOutForm";
+            this.Load += new System.EventHandler(this.InOutForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
