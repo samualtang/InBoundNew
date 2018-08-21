@@ -161,7 +161,41 @@ namespace FollowTask.ErrorStart
             }
             return str;
         }
-       
+
+
+        /// <summary>
+        /// 补货区读取PLC数据：电机  1大拔杆、2中心带、3通道机、4输送带
+        /// </summary>
+        /// <returns>发生的故障</returns>
+        public List<ErrorInfo> ReadDBinfo_Replenishment(int no)
+        {
+            List<ErrorInfo> str = new List<ErrorInfo>();
+            List<ErrorInfo> AdressAndMsg = GetReplenishmentPlcAdress(no);
+            List<string> DBlist = new List<string>();
+            foreach (var item in AdressAndMsg.Select(X => X.DBAdress).ToList())
+            {
+                DBlist.Add(InOutOpcServerName + item);
+            }
+            Connction();
+            InOutcServer.addItem(DBlist);
+            try
+            {
+                for (int i = 0; i < DBlist.Count(); i++)
+                {
+                    ErrorInfo info = new ErrorInfo();
+                    info.DBAdress = DBlist[i];
+                    info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
+                    info.Value = InOutcServer.ReadD(i).ToString();//从电控读取数据 
+                    str.Add(info);
+                }
+                AllPlcState.InOutState = 1;
+            }
+            catch (Exception)
+            {
+                AllPlcState.InOutState = 0;
+            }
+            return str;
+        }
 
 
       
@@ -255,6 +289,47 @@ namespace FollowTask.ErrorStart
             }
         }
 
+
+         /// <summary>
+        /// 数据库获取 补货区 故障信息地址
+       /// </summary>
+       /// <param name="tag">1大拔杆、2中心带、3通道机、4输送带</param>
+        /// <returns>出入库 地址集合</returns>
+        public List<Abnormallists> GetReplenishmentOpcServerItem(int tag)
+        {
+            List<Abnormallists> DBList = new List<Abnormallists>();
+            using (Entities et = new Entities())
+            {
+                if (tag == 1)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    List<Abnormallists> content = list.Where(x => x.TYPE == "1").Select(x => x).ToList();
+                    List<Abnormallists> head = list.Where(x => x.TYPE == "2").Select(x => x).ToList();
+                    foreach (var item in head)
+                    {
+                        foreach (var it in content)
+                        {
+                            Abnormallists data = new Abnormallists();
+                            string DB = ((Convert.ToDouble(item.MACHINESEQ) - 1000) * 2 + Convert.ToDouble(it.OFFSET)).ToString();
+                            data.DECICENO = it.DECICENO + "," + DB;
+                            data.ERRORMSG = item.MACHINESEQ+""+item.ERRORMSG + "" + it.ERRORMSG;
+                            DBList.Add(data);
+                        }
+                    }
+                }
+
+                return DBList;
+            }
+        }
+
         /// <summary>
         /// 预分拣 每组plc的故障地址
         /// </summary>
@@ -309,6 +384,23 @@ namespace FollowTask.ErrorStart
             }
             return list;
         }
-      
+        /// <summary>
+        ///    1大拔杆、2中心带、3通道机、4输送带
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public List<ErrorInfo> GetReplenishmentPlcAdress(int tag)
+        {
+            List<ErrorInfo> list = new List<ErrorInfo>();
+            foreach (var item in GetReplenishmentOpcServerItem(tag))
+            {
+                ErrorInfo info = new ErrorInfo();
+                info.DBAdress = item.DECICENO+","+item.OFFSET;
+                info.ErrorMsg = item.ERRORMSG;
+                list.Add(info);
+            }
+            return list;
+        }
+
     }
 }

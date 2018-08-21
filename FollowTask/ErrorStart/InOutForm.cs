@@ -66,7 +66,7 @@ namespace FollowTask.ErrorStart
             {
                 if (item.Value!="0")
                 {
-                    updateListBox(item.DBAdress + "  " + item.ErrorMsg, listBox1);
+                    updateListBox(item.ErrorMsg, listBox1);
                 } 
             }
             updateListBox("本次自检结束......", listBox1); 
@@ -165,6 +165,11 @@ namespace FollowTask.ErrorStart
                 }
 
             } 
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

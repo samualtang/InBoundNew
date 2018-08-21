@@ -118,7 +118,7 @@
     <EmbeddedResource Include="w_pass.resx">
       <DependentUpon>w_pass.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config">
+    <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">

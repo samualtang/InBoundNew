@@ -97,7 +97,7 @@
     <EmbeddedResource Include="UnNormalFm_New.resx">
       <DependentUpon>UnNormalFm_New.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config">
+    <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
