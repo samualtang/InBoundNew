@@ -20,7 +20,9 @@ namespace FollowTask.ErrorStart
         private void Btn_Start_Click(object sender, EventArgs e)
         {
             HandleDelegate task1 = GetListBoxItems1;
-            task1.BeginInvoke(null, null); 
+            task1.BeginInvoke(null, null);
+            HandleDelegate task2 = GetListBoxItems2;
+            task2.BeginInvoke(null, null); 
         }
         private delegate void HandleDelegate();
         private delegate void HandleDelegateError(string strshow, ListBox list);
@@ -62,6 +64,26 @@ namespace FollowTask.ErrorStart
             }
             updateListBox("本次自检结束......", listBox1);
         }
-       
+
+
+        /// <summary>
+        /// 获取读取的DB块集合与故障信息  中心带
+        /// </summary>
+        private void GetListBoxItems1()
+        {
+            updateListBox(System.DateTime.Now.ToString() + "开始自检", listBox1);
+            updateListBox("自检中,请等待......", listBox1);
+            AllSystemStart ass1 = new AllSystemStart();
+            List<ErrorInfo> li = ass1.ReadDBinfo_Replenishment(1);
+
+            foreach (var item in li)
+            {
+                if (item.Value != "0")
+                {
+                    updateListBox(item.DBAdress + "  " + item.ErrorMsg, listBox1);
+                }
+            }
+            updateListBox("本次自检结束......", listBox1);
+        }
     }
 }

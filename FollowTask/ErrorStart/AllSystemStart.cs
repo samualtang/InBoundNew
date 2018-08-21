@@ -302,7 +302,7 @@ namespace FollowTask.ErrorStart
             {
                 if (tag == 1)
                 {
-                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]" && x.ERRORMSG == "大拨杆虚拟设备").Select(x => new Abnormallists
                     {
                         AREANAME = x.AREANAME,
                         ERRORMSG = x.ERRORMSG,
