@@ -15,14 +15,14 @@ using System.Configuration;
 using OpcRcw.Da;
 using OpcRcw.Comn;
 using System.Runtime.InteropServices;
-using UnNormal_New.Model;
+using UnNormal_Test.Model;
 using InBound.Model;
 using InBound.Business;
 using InBound;
-using UnNormal_New;
+using UnNormal_Test;
 
 
-namespace UnNormal_New 
+namespace UnNormal_Test 
 {
     public partial class UnNormalFm : Form
     {
@@ -294,51 +294,51 @@ namespace UnNormal_New
 
                 int flag = SpyChangeGroup.ReadD(1).CastTo<int>(-1);
                 writeLog.Write("烟仓二线发送数据前读标志位：" + flag);
-                List<decimal> sortNumList = new List<decimal>();//任务号
-                List<decimal> zqNumList = new List<decimal>();//抓烟数
+               // List<decimal> sortNumList = new List<decimal>();//任务号
+               // List<decimal> zqNumList = new List<decimal>();//抓烟数
                 if (flag == 0)
                 {
-                    int pcgm = 8;
-                    while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
-                    {
-                        decimal sortnum, xyqty;
-                        for (int i = 1; i <= 8; i++)
-                        {
+                    //int pcgm = 8;
+                    //while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
+                    //{
+                    //    decimal sortnum, xyqty;
+                    //    for (int i = 1; i <= 8; i++)
+                    //    {
 
-                            try
-                            {
-                                sortnum = 0;//读DB块 任务号
-                                xyqty = 0;//读DB块 吸烟数量s
-                            } 
-                            catch
-                            {
-                                sortnum = 0;
-                                xyqty = 0;
-                            }
-                            if (!UnPokeService.CheckExistTaskNo(sortnum))
-                            {
-                                xyqty = 0;
-                            }
-                            sortNumList.Add(sortnum);
-                            zqNumList.Add(xyqty);
-                        }
-                            decimal DISPATCHESIZE = 0;
-                            pcgm = UnPokeService.GetSendPackageMachineYC(2, sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
-                            if (packagemachine > 0)
-                            {
-                                UnPokeService.UpdateSendtasknumByPM(pcgm, (int)DISPATCHESIZE);
-                            }
-                            if (pcgm - 4 > 0)
-                            {
-                                pcgm -= 1;
-                            }
-                            else
-                            {
-                                pcgm = 8;
-                            }
-                            Thread.Sleep(100);
+                    //        try
+                    //        {
+                    //            sortnum = 0;//读DB块 任务号
+                    //            xyqty = 0;//读DB块 吸烟数量s
+                    //        } 
+                    //        catch
+                    //        {
+                    //            sortnum = 0;
+                    //            xyqty = 0;
+                    //        }
+                    //        if (!UnPokeService.CheckExistTaskNo(sortnum))
+                    //        {
+                    //            xyqty = 0;
+                    //        }
+                    //        sortNumList.Add(sortnum);
+                    //        zqNumList.Add(xyqty);
+                    //    }
+                    //        decimal DISPATCHESIZE = 0;
+                    //        pcgm = UnPokeService.GetSendPackageMachineYC(2, sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
+                    //        if (packagemachine > 0)
+                    //        {
+                    //            UnPokeService.UpdateSendtasknumByPM(pcgm, (int)DISPATCHESIZE);
+                    //        }
+                    //        if (pcgm - 4 > 0)
+                    //        {
+                    //            pcgm -= 1;
+                    //        }
+                    //        else
+                    //        {
+                    //            pcgm = 8;
+                    //        }
+                    //        Thread.Sleep(100);
                         
-                    }
+                    //}
                     string OutStr = ""; 
                     object[] datas = UnPokeService.getYCTask(packagemachine, "2",1, out list2, out OutStr);
                     if (int.Parse(datas[0].ToString())== 0)
@@ -377,52 +377,52 @@ namespace UnNormal_New
             {
                 issendone = true; 
                 int flag = SpyChangeGroup.ReadD(0).CastTo<int>(-1);
-                 List<decimal> sortNumList = new List<decimal>();//任务号
-                 List<decimal> zqNumList = new List<decimal>();//抓烟数
+                 //List<decimal> sortNumList = new List<decimal>();//任务号
+                 //List<decimal> zqNumList = new List<decimal>();//抓烟数
                 writeLog.Write("烟仓一线发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
-                    int pcgm = 4;
-                    while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
-                    { 
-                        decimal sortnum, xyqty;
-                        for (int i = 1; i <= 8; i++)
-                        {
+                    //int pcgm = 4;
+                    //while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
+                    //{ 
+                    //    decimal sortnum, xyqty;
+                    //    for (int i = 1; i <= 8; i++)
+                    //    {
 
-                            try
-                            {
-                                sortnum = 0;
-                                xyqty = 0;
-                            }
-                            catch
-                            {
-                                sortnum = 0;
-                                xyqty = 0;
-                            }
-                            if (!UnPokeService.CheckExistTaskNo(sortnum))
-                            {
-                                xyqty = 0;
-                            }
-                            sortNumList.Add(sortnum);
-                            zqNumList.Add(xyqty);
-                        }
-                            decimal DISPATCHESIZE = 0;
-                            pcgm = UnPokeService.GetSendPackageMachineYC(1, sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
-                            if (packagemachine > 0)
-                            {
-                                UnPokeService.UpdateSendtasknumByPM(pcgm, (int)DISPATCHESIZE);//计算可发送任务
-                            }
-                            if (pcgm - 1 > 0)
-                            {
-                                pcgm -= 1;
-                            }
-                            else
-                            {
-                                pcgm = 4;
-                            }
-                            Thread.Sleep(100);
+                    //        try
+                    //        {
+                    //            sortnum = 0;
+                    //            xyqty = 0;
+                    //        }
+                    //        catch
+                    //        {
+                    //            sortnum = 0;
+                    //            xyqty = 0;
+                    //        }
+                    //        if (!UnPokeService.CheckExistTaskNo(sortnum))
+                    //        {
+                    //            xyqty = 0;
+                    //        }
+                    //        sortNumList.Add(sortnum);
+                    //        zqNumList.Add(xyqty);
+                    //    }
+                    //        decimal DISPATCHESIZE = 0;
+                    //        pcgm = UnPokeService.GetSendPackageMachineYC(1, sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
+                    //        if (packagemachine > 0)
+                    //        {
+                    //            UnPokeService.UpdateSendtasknumByPM(pcgm, (int)DISPATCHESIZE);//计算可发送任务
+                    //        }
+                    //        if (pcgm - 1 > 0)
+                    //        {
+                    //            pcgm -= 1;
+                    //        }
+                    //        else
+                    //        {
+                    //            pcgm = 4;
+                    //        }
+                    //        Thread.Sleep(100);
                       
-                    }
+                    //}
                     string OutStr = "";
                     object[] datas = UnPokeService.getYCTask(packagemachine, "1", 1,out list1, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
@@ -511,45 +511,45 @@ namespace UnNormal_New
                 writeLog.Write("烟柜发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
-                    while (!UnPokeService.CheckExistPreSendTask("1", 2, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 2))
-                    {
-                        decimal sortnum, xyqty;
-                        for (int i = 1; i <= 8; i++)
-                        {
+                    //while (!UnPokeService.CheckExistPreSendTask("1", 2, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 2))
+                    //{
+                    //    decimal sortnum, xyqty;
+                    //    for (int i = 1; i <= 8; i++)
+                    //    {
 
-                            try
-                            {
-                                sortnum = 0;
-                                xyqty = 0;
-                            }
-                            catch
-                            {
-                                sortnum = 0;
-                                xyqty = 0;
-                            }
-                            if (!UnPokeService.CheckExistTaskNo(sortnum))
-                            {
-                                xyqty = 0;
-                            }
-                            sortNumList.Add(sortnum);
-                            zqNumList.Add(xyqty);
-                            decimal DISPATCHESIZE = 0;
-                            packagemachine = UnPokeService.GetSendPackageMachine(sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
-                            if (packagemachine > 0)
-                            {
-                                UnPokeService.UpdateSendtasknumByPM(packagemachine, (int)DISPATCHESIZE);
-                            }
-                            if (packagemachine - 1 > 0)
-                            {
-                                packagemachine -= 1;
-                            }
-                            else
-                            {
-                                packagemachine = 8;
-                            }
-                            Thread.Sleep(100);
-                        }
-                    }
+                    //        try
+                    //        {
+                    //            sortnum = 0;
+                    //            xyqty = 0;
+                    //        }
+                    //        catch
+                    //        {
+                    //            sortnum = 0;
+                    //            xyqty = 0;
+                    //        }
+                    //        if (!UnPokeService.CheckExistTaskNo(sortnum))
+                    //        {
+                    //            xyqty = 0;
+                    //        }
+                    //        sortNumList.Add(sortnum);
+                    //        zqNumList.Add(xyqty);
+                    //        decimal DISPATCHESIZE = 0;
+                    //        packagemachine = UnPokeService.GetSendPackageMachine(sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
+                    //        if (packagemachine > 0)
+                    //        {
+                    //            UnPokeService.UpdateSendtasknumByPM(packagemachine, (int)DISPATCHESIZE);
+                    //        }
+                    //        if (packagemachine - 1 > 0)
+                    //        {
+                    //            packagemachine -= 1;
+                    //        }
+                    //        else
+                    //        {
+                    //            packagemachine = 8;
+                    //        }
+                    //        Thread.Sleep(100);
+                    //    }
+                    //}
                     object[] datas = UnPokeService.getYGTask(packagemachine, 2, out listCabinet, out OutStr);
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
@@ -711,10 +711,12 @@ namespace UnNormal_New
                                 writeLog.Write("第一组烟仓任务号:" + logstr + "已接收");
                                 updateListBox("第一组烟仓任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(list1, 15);
-                                UnPokeService.UpdateStroageInout(list1);
+                              //  UnPokeService.UpdateStroageInout(list1);
                             }
-                            delSendTask task = sendTask1;
-                            task.BeginInvoke(null, null);
+                            sendTask1();
+                            //delSendTask task = sendTask1;
+                        
+                            //task.BeginInvoke(null, null);
                            
                         }
                         break;
@@ -738,10 +740,11 @@ namespace UnNormal_New
                                 writeLog.Write("第二组烟仓任务号:" + logstr + "已接收");
                                 updateListBox("第二组烟仓任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(list1, 15);
-                                UnPokeService.UpdateStroageInout(list1);
+                                //UnPokeService.UpdateStroageInout(list1);
                             }
-                            delSendTask task = sendTask2;
-                            task.BeginInvoke(null, null); 
+                            sendTask2();
+                            //delSendTask task = sendTask2;
+                            //task.BeginInvoke(null, null); 
                         }
                         break;
                     }
@@ -764,10 +767,11 @@ namespace UnNormal_New
                                 writeLog.Write("烟柜数据任务号:" + logstr + "已接收");
                                 updateListBox("烟柜数据任务号:" + logstr + "已接收");
                                 UnPokeService.UpdateTask(list1, 15);
-                                UnPokeService.UpdateStroageInout(list1);
+                               // UnPokeService.UpdateStroageInout(list1);
                             }
-                            delSendTask task = sendSixCabineTask;
-                            task.BeginInvoke(null, null); 
+                            sendSixCabineTask();
+                            //delSendTask task = sendSixCabineTask;
+                            //task.BeginInvoke(null, null); 
                         }
                         break;
                     }
@@ -791,8 +795,9 @@ namespace UnNormal_New
                                 updateListBox("合流数据:" + logstr + "已接收"); 
                             }
                             UnPokeService.UpdateUnionTask(listUnion, 15);
-                            delSendTask task = sendUnionTask;
-                            task.BeginInvoke(null, null); 
+                            sendUnionTask();
+                            //delSendTask task = sendUnionTask;
+                            //task.BeginInvoke(null, null); 
                         }
                         break;
                     }

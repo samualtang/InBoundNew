@@ -21,19 +21,19 @@ namespace SortingControlSys
             toolStripStatusLabel3.Text = "登录时间："+System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             toolStripStatusLabel4.Text = "";
 
-            UnNormalFm w_SortingControlMain = new UnNormalFm();
-            if (CheckExist(w_SortingControlMain) == true)
-            {
-                w_SortingControlMain.Dispose();
-                w_SortingControlMain = null;
-                return;
-            }
-            w_SortingControlMain.MdiParent = this;
-            //w_SortingControlMain.WindowState = FormWindowState.Maximized;
-            w_SortingControlMain.FormBorderStyle = FormBorderStyle.None;
-            w_SortingControlMain.Width = 1920;
-            w_SortingControlMain.Height = 700;
-            w_SortingControlMain.Show();
+           //// UnNormalFm_New w_SortingControlMain = new UnNormalFm();
+           // if (CheckExist(w_SortingControlMain) == true)
+           // {
+           //     w_SortingControlMain.Dispose();
+           //     w_SortingControlMain = null;
+           //     return;
+           // }
+           // w_SortingControlMain.MdiParent = this;
+           // //w_SortingControlMain.WindowState = FormWindowState.Maximized;
+           // w_SortingControlMain.FormBorderStyle = FormBorderStyle.None;
+           // w_SortingControlMain.Width = 1920;
+           // w_SortingControlMain.Height = 700;
+           // w_SortingControlMain.Show();
         }
 
         #region 查找是否已经打开

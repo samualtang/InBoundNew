@@ -1,4 +1,4 @@
-﻿namespace UnNormal_New
+﻿namespace UnNormal_Test
 {
     partial class UnNormalFm
     {
@@ -106,7 +106,7 @@
             // 
             // button7
             // 
-            this.button7.BackgroundImage = global::UnNormal_New.Properties.Resources.GetDataOnline;
+            this.button7.BackgroundImage = global::UnNormal_Test.Properties.Resources.GetDataOnline;
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button7.Location = new System.Drawing.Point(406, 0);
             this.button7.Name = "button7";
@@ -117,7 +117,7 @@
             // 
             // button6
             // 
-            this.button6.BackgroundImage = global::UnNormal_New.Properties.Resources.edit;
+            this.button6.BackgroundImage = global::UnNormal_Test.Properties.Resources.edit;
             this.button6.Location = new System.Drawing.Point(299, 0);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(101, 43);
@@ -127,7 +127,7 @@
             // 
             // button12
             // 
-            this.button12.BackgroundImage = global::UnNormal_New.Properties.Resources.stop;
+            this.button12.BackgroundImage = global::UnNormal_Test.Properties.Resources.stop;
             this.button12.Location = new System.Drawing.Point(97, 0);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(99, 43);
@@ -136,7 +136,7 @@
             // 
             // button11
             // 
-            this.button11.BackgroundImage = global::UnNormal_New.Properties.Resources.rfresh;
+            this.button11.BackgroundImage = global::UnNormal_Test.Properties.Resources.rfresh;
             this.button11.Location = new System.Drawing.Point(194, 0);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(99, 43);
