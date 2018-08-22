@@ -7,144 +7,6 @@ namespace UnNormal_Test.Model
 {
    public static class ItemCollection
    {
-       /// <summary>
-       /// 异形烟1线DB地址
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetTask1ALineItem()
-       {
-           List<string> list = new List<string>();
-
-           list.Add("S7:[UnnormalConnection]DB1,DBD0");
-           for (int i = 0; i < 130; i = i + 2)
-           {
-               list.Add("S7:[UnnormalConnection]DB1,DBW" + (i + 4));
-           } 
-           return list;
-
-       }
-
-       /// <summary>
-       /// 一线任务结束回应
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetFinishTaskStatusItem1()
-       {
-           List<string> list = new List<string>();
-           for (int i = 0; i < 20; i++)
-           {
-               list.Add("S7:[UnnormalConnection]DB50,DBD" + (i * 4));
-           }
-
-           return list;
-       }
-
-       /// <summary>
-       /// 异形烟2线DB地址
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetTask2ALineItem()
-       {
-           List<string> list = new List<string>();
-
-           list.Add("S7:[UnnormalConnection]DB101,DBD0");
-           for (int i = 0; i < 130; i = i + 2)
-           {
-               list.Add("S7:[UnnormalConnection]DB101,DBW" + (i + 4));
-           }
-           return list;
-       }
-
-       /// <summary>
-       /// 二线任务结束回应
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetFinishTaskStatusItem2()
-       {
-           List<string> list = new List<string>();
-           for (int i = 0; i < 20; i++)
-           {
-               list.Add("S7:[UnnormalConnection]DB150,DBD" + (i * 4));
-           }  
-           return list;
-       }
-      
-       /// <summary>
-       /// 烟柜任务DB地址
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetCabinetTaskItem()
-       {
-           List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB910,DBD0");
-           for (int i = 0; i < 18; i = i + 2)
-           {
-               list.Add("S7:[UnnormalConnection]DB910,DBD" + (i + 4));
-           }
-           list.Add("S7:[UnnormalConnection]DB901,DBW22");
-           return list;
-       }
-
-
-       /// <summary>
-       /// 烟柜任务结束回应
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetCabinetTaskFinishStatusItem()
-       {
-           List<string> list = new List<string>();
-           for (int i = 0; i < 20; i++)
-           {
-               list.Add("S7:[UnnormalConnection]DB950,DBD" + (i * 4));
-           }
-           return list;
-       }
-
-
-       /// <summary>
-       /// 监控标志位
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetSpyDbChangeItem()
-       {
-           List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB1,DBD132");//一线任务发送标志位  1上位写入 0电控取走 
-           list.Add("S7:[UnnormalConnection]DB101,DBD132");//二线任务发送标志位
-           list.Add("S7:[UnnormalConnection]DB901,DBW22");//烟柜任务发送标志位
-           list.Add("S7:[UnnormalConnection]DB501,DBW16");//合流处任务发送标志位
-           return list;
-       }
-       /// <summary>
-       /// 合流处通讯DB地址
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetUnUnionItem()
-       {
-           List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB501,DBD0");
-           for (int i = 0; i < 11; i = i + 2)
-           {
-               list.Add("S7:[UnnormalConnection]DB501,DBD" + (i + 4));
-           }
-           list.Add("S7:[UnnormalConnection]DB501,DBW16");
-           return list; 
-       }
-
-
-       /// <summary>
-       /// 合流处任务结束回应
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetUnUnionTaskFinishStatusItem()
-       {
-           List<string> list = new List<string>();
-           for (int i = 0; i < 20; i++)
-           {
-               list.Add("S7:[UnnormalConnection]DB550,DBD" + (i * 4));
-           }
-           return list;
-       }
-
 
 
        public static List<string> GetTaskError()
@@ -183,5 +45,49 @@ namespace UnNormal_Test.Model
            return list;
        }
 
+       /// <summary>
+       /// 一个DB交互区
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetOnlyLineItem()
+       {
+           List<string> list = new List<string>();
+
+           list.Add("S7:[UnnormalConnection]DB30,DINT0");
+           list.Add("S7:[UnnormalConnection]DB30,DINT4");
+           list.Add("S7:[UnnormalConnection]DB30,W8");
+           for (int i = 2; i < 143; i = i + 2)
+           {
+               list.Add("S7:[UnnormalConnection]DB30,W" + (i + 8));
+           }
+           return list;
+       }
+       /// <summary>
+       /// 监控标志位
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSpyOnlyLineItem()
+       {
+           List<string> list = new List<string>();
+
+           list.Add("S7:[UnnormalConnection]DB30,W150");
+         
+           return list;
+       }
+
+       /// <summary>
+       /// 一个DB任务结束回应
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetOnlyLineFinishTaskItem()
+       {
+           List<string> list = new List<string>();
+           for (int i = 0; i < 20; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB50,DINT" + (i * 4));
+           }
+
+           return list;
+       }
    }
 }

@@ -552,6 +552,71 @@ namespace InBound.Business
         }
 
         /// <summary>
+        /// 烟仓数据
+        /// </summary>
+        /// <param name="takeSize"></param>
+        /// <param name="lineNum"></param>
+        /// <param name="outlist"></param>
+        /// <returns></returns>
+        public static object[] getAllLineTask( out List<T_UN_POKE> outlist, out string outStr)
+        {
+            object[] values = new object[74];
+            String needDatas = "";
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
+                var query = (from item in data.T_UN_POKE where item.SENDTASKNUM == Sendtasknum.SENDTASKNUM orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
+                if (query == null)
+                {
+                    outlist = new List<T_UN_POKE>();
+                    outStr = null;
+                    return values;
+                }
+                decimal machineseq = 0;
+                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.STATUS == 10  orderby task.SORTNUM select task).Take(15).ToList();
+               // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
+                outlist = query1;
+                values[0] = query.SORTNUM;
+                values[1] = query.SENDTASKNUM;
+                values[2] = 1;
+                values[3] =query.PACKAGEMACHINE; 
+                foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())
+                {
+                    machineseq = (item.MACHINESEQ ?? 0);
+                    if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
+                    {
+                        machineseq = (item.MACHINESEQ ?? 0) - 1000;
+                    }
+                    else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)
+                    {
+                        machineseq = (item.MACHINESEQ ?? 0) - 2000;
+                    }
+                    else if (item.MACHINESEQ > 3000)
+                    {
+                        machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
+                    }
+                    values[((int)machineseq + 3)] = item.QTY;
+                    //values[((int)machineseq + 3)] = query1.Where(a => a.MACHINESEQ == item.MACHINESEQ).GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).FirstOrDefault().QTY;
+                } 
+                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 || a.MACHINESEQ != 2061)).Sum(a => a.POKENUM);//烟仓出烟数量
+                values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM);//烟柜出烟数量
+                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量
+                values[73] = 1;//标志位
+                for (int i = 0; i < values.Length; i++)
+                {
+                    needDatas += i + ":" + values[i] + ",";
+                }
+                outStr = needDatas;
+                return values;
+            }
+        }
+
+        /// <summary>
         /// 烟柜数据
         /// </summary>
         /// <param name="takeSize"></param>
@@ -1451,7 +1516,7 @@ namespace InBound.Business
                         query.STATUS = status;
                     } 
                 }
-               // data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
             }
         }

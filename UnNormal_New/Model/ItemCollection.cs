@@ -15,10 +15,10 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add("S7:[UnnormalConnection]DB1,DBD0");
+           list.Add("S7:[UnnormalConnection]DB1,DINT0");
            for (int i = 0; i < 130; i = i + 2)
            {
-               list.Add("S7:[UnnormalConnection]DB1,DBW" + (i + 4));
+               list.Add("S7:[UnnormalConnection]DB1,W" + (i + 4));
            } 
            return list;
 
@@ -33,7 +33,7 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB50,DBD" + (i * 4));
+               list.Add("S7:[UnnormalConnection]DB50,DINT" + (i * 4));
            }
 
            return list;
@@ -47,10 +47,10 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add("S7:[UnnormalConnection]DB101,DBD0");
+           list.Add("S7:[UnnormalConnection]DB101,DINT0");
            for (int i = 0; i < 130; i = i + 2)
            {
-               list.Add("S7:[UnnormalConnection]DB101,DBW" + (i + 4));
+               list.Add("S7:[UnnormalConnection]DB101,W" + (i + 4));
            }
            return list;
        }
@@ -64,7 +64,7 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB150,DBD" + (i * 4));
+               list.Add("S7:[UnnormalConnection]DB150,DINT" + (i * 4));
            }  
            return list;
        }
@@ -76,12 +76,12 @@ namespace UnNormal_New.Model
        public static List<string> GetCabinetTaskItem()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB910,DBD0");
+           list.Add("S7:[UnnormalConnection]DB910,DINT0");
            for (int i = 0; i < 18; i = i + 2)
            {
-               list.Add("S7:[UnnormalConnection]DB910,DBD" + (i + 4));
+               list.Add("S7:[UnnormalConnection]DB910,W" + (i + 4));
            }
-           list.Add("S7:[UnnormalConnection]DB901,DBW22");
+           list.Add("S7:[UnnormalConnection]DB901,W");
            return list;
        }
 
@@ -95,7 +95,7 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB950,DBD" + (i * 4));
+               list.Add("S7:[UnnormalConnection]DB950,DINT" + (i * 4));
            }
            return list;
        }
@@ -108,10 +108,10 @@ namespace UnNormal_New.Model
        public static List<string> GetSpyDbChangeItem()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB1,DBD132");//一线任务发送标志位  1上位写入 0电控取走 
-           list.Add("S7:[UnnormalConnection]DB101,DBD132");//二线任务发送标志位
-           list.Add("S7:[UnnormalConnection]DB901,DBW22");//烟柜任务发送标志位
-           list.Add("S7:[UnnormalConnection]DB501,DBW16");//合流处任务发送标志位
+           list.Add("S7:[UnnormalConnection]DB1,W132");//一线任务发送标志位  1上位写入 0电控取走 
+           list.Add("S7:[UnnormalConnection]DB101,W132");//二线任务发送标志位
+           list.Add("S7:[UnnormalConnection]DB901,W22");//烟柜任务发送标志位
+           list.Add("S7:[UnnormalConnection]DB501,W16");//合流处任务发送标志位
            return list;
        }
        /// <summary>
@@ -121,12 +121,12 @@ namespace UnNormal_New.Model
        public static List<string> GetUnUnionItem()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB501,DBD0");
+           list.Add("S7:[UnnormalConnection]DB501,DINT0");
            for (int i = 0; i < 11; i = i + 2)
            {
-               list.Add("S7:[UnnormalConnection]DB501,DBD" + (i + 4));
+               list.Add("S7:[UnnormalConnection]DB501,W" + (i + 4));
            }
-           list.Add("S7:[UnnormalConnection]DB501,DBW16");
+           list.Add("S7:[UnnormalConnection]DB501,W16");
            return list; 
        }
 
@@ -140,7 +140,7 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB550,DBD" + (i * 4));
+               list.Add("S7:[UnnormalConnection]DB550,DINT" + (i * 4));
            }
            return list;
        }

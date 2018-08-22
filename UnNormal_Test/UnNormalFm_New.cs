@@ -130,32 +130,17 @@ namespace UnNormal_Test
         private void timerSendTask_Tick(object sender, EventArgs e)
         {
             updateListBox("触发定时器");
-            if (TaskGroup1.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            if (SpyBiaozhiGroup.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
             {
-                TaskGroup1.Write(1, 0);
-                TaskGroup1.Write(0, 0);
-            }
-            else if (TaskGroup2.Read(1).ToString() != "0" && !issendtwo)
-            {
-                TaskGroup2.Write(1, 1);
-                TaskGroup2.Write(0, 1);
-            }
-            else if (CabinetTaskGroup.Read(2).ToString() != "0" && !issendsixtwo)
-            {
-                CabinetTaskGroup.Write(1, 2);
-                CabinetTaskGroup.Write(0, 2);
-            }
-            else if (UnUnionTaskGroup.Read(3).ToString() != "0" && !issendsixone)
-            {
-                UnUnionTaskGroup.Write(1, 3);
-                UnUnionTaskGroup.Write(0, 3);
+                SpyBiaozhiGroup.Write(1, 0);
+                SpyBiaozhiGroup.Write(0, 0);
             }
             timerSendTask.Stop();
         }
  
-        Group TaskGroup1, TaskGroup2, CabinetTaskGroup, UnUnionTaskGroup, TaskFinishGroup1, TaskFinishGroup2, CabinetFinishTaskGroup, UnionTaskFinishGroup, SpyChangeGroup;
-        //一线烟仓任务组，二线烟仓任务组，烟柜任务组，合流（烟仓，烟柜，特异型烟）任务组，一线烟仓完成任务组，二线烟仓完成任务组，烟柜完成，合流完成，监视三组标志位
-        Group errgroup, statusGroup2, statusGroup3;
+      
+      
+        Group OnlyTaskGorup,FinishOnlyGoroup,SpyBiaozhiGroup;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -165,42 +150,23 @@ namespace UnNormal_Test
             {
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-                TaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);//立式一组
-                TaskGroup2 = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//立式二组 
-                CabinetTaskGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//烟柜
-                UnUnionTaskGroup = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//合流
 
-                TaskFinishGroup1 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//立式一组完成信号
-                TaskFinishGroup2 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//立式一组完成信号
-                CabinetFinishTaskGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//烟柜完成信号
-                UnionTaskFinishGroup = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//合流 完成信号 
-                SpyChangeGroup = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//监控标志位
-                errgroup = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);
-                statusGroup2 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);
-                statusGroup3 = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID); 
+                OnlyTaskGorup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
+                FinishOnlyGoroup = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//完成信号
+                SpyBiaozhiGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//监控标志位
+               
+               
                 //任务交互区
-                TaskGroup1.addItem(ItemCollection.GetTask1ALineItem());
-                TaskGroup2.addItem(ItemCollection.GetTask2ALineItem());
-                CabinetTaskGroup.addItem(ItemCollection.GetCabinetTaskItem()); 
-                UnUnionTaskGroup.addItem(ItemCollection.GetUnUnionItem());
-                SpyChangeGroup.addItem(ItemCollection.GetSpyDbChangeItem());
-                //完成信号交互区
-                TaskFinishGroup1.addItem(ItemCollection.GetFinishTaskStatusItem1()); //4
-                TaskFinishGroup2.addItem(ItemCollection.GetFinishTaskStatusItem2());//5
-                CabinetTaskGroup.addItem(ItemCollection.GetCabinetTaskFinishStatusItem());//6
-                UnionTaskFinishGroup.addItem(ItemCollection.GetUnUnionTaskFinishStatusItem());// 7
-                //异常
-                errgroup.addItem(ItemCollection.GetTaskError()); 
-                statusGroup2.addItem(ItemCollection.GetTaskItem2());
-                statusGroup3.addItem(ItemCollection.GetTaskItem3());
-
+                OnlyTaskGorup.addItem(ItemCollection.GetOnlyLineItem());//一个交互区
+                SpyBiaozhiGroup.addItem(ItemCollection.GetSpyOnlyLineItem());//监控任务标识位
+                //完成信号交互区 
+                FinishOnlyGoroup.addItem(ItemCollection.GetOnlyLineFinishTaskItem());//一个交互区完成信号
+              
                 //回调 
-                errgroup.callback += OnDataChange;
-                SpyChangeGroup.callback += OnDataChange; //监控发送标志位
-                TaskFinishGroup1.callback += OnDataChange;
-                TaskFinishGroup2.callback += OnDataChange;
-                CabinetTaskGroup.callback += OnDataChange;
-                UnionTaskFinishGroup.callback += OnDataChange;
+
+                SpyBiaozhiGroup.callback += OnDataChange;
+                FinishOnlyGoroup.callback += OnDataChange; 
+              
 
                 checkConnection();
             
@@ -212,7 +178,7 @@ namespace UnNormal_Test
         }
         public void checkConnection()
         {
-            int flag = SpyChangeGroup.ReadD(0).CastTo<int>(-1);
+            int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
             if (flag == -1)
             {
                 updateListBox("连接服务器失败,请检查网络.");
@@ -229,7 +195,7 @@ namespace UnNormal_Test
         Boolean CheckCanSend(int targetPort)
         {
             writeLog.Write("出口号：" + targetPort);
-            int value = statusGroup3.Read(targetPort - 1).CastTo<int>(-1);
+            int value = FinishOnlyGoroup.Read(targetPort - 1).CastTo<int>(-1);
             writeLog.Write(" value=" + value);
             if (value == 1)
             {
@@ -282,106 +248,23 @@ namespace UnNormal_Test
         List<T_UN_POKE> listCabinet = new List<T_UN_POKE>();//烟柜1线（B）订单信息
         List<T_UN_POKE> listUnion = new List<T_UN_POKE>();//合流数据
       
-
-        /// <summary>
-        /// 第二组烟仓
-        /// </summary>
-        void sendTask2()
-        { 
-            try
-            {
-                issendtwo = false;
-
-                int flag = SpyChangeGroup.ReadD(1).CastTo<int>(-1);
-                writeLog.Write("烟仓二线发送数据前读标志位：" + flag);
-               // List<decimal> sortNumList = new List<decimal>();//任务号
-               // List<decimal> zqNumList = new List<decimal>();//抓烟数
-                if (flag == 0)
-                {
-                    //int pcgm = 8;
-                    //while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
-                    //{
-                    //    decimal sortnum, xyqty;
-                    //    for (int i = 1; i <= 8; i++)
-                    //    {
-
-                    //        try
-                    //        {
-                    //            sortnum = 0;//读DB块 任务号
-                    //            xyqty = 0;//读DB块 吸烟数量s
-                    //        } 
-                    //        catch
-                    //        {
-                    //            sortnum = 0;
-                    //            xyqty = 0;
-                    //        }
-                    //        if (!UnPokeService.CheckExistTaskNo(sortnum))
-                    //        {
-                    //            xyqty = 0;
-                    //        }
-                    //        sortNumList.Add(sortnum);
-                    //        zqNumList.Add(xyqty);
-                    //    }
-                    //        decimal DISPATCHESIZE = 0;
-                    //        pcgm = UnPokeService.GetSendPackageMachineYC(2, sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
-                    //        if (packagemachine > 0)
-                    //        {
-                    //            UnPokeService.UpdateSendtasknumByPM(pcgm, (int)DISPATCHESIZE);
-                    //        }
-                    //        if (pcgm - 4 > 0)
-                    //        {
-                    //            pcgm -= 1;
-                    //        }
-                    //        else
-                    //        {
-                    //            pcgm = 8;
-                    //        }
-                    //        Thread.Sleep(100);
-                        
-                    //}
-                    string OutStr = ""; 
-                    object[] datas = UnPokeService.getYCTask(packagemachine, "2",1, out list2, out OutStr);
-                    if (int.Parse(datas[0].ToString())== 0)
-                    {
-                        updateListBox("烟仓二线分拣数据发送完毕");
-                        return;
-                    }
-                    writeLog.Write("烟仓分拣二线:" + OutStr);
-                    updateListBox("烟仓分拣二线:" + OutStr);
-                    TaskGroup2.SyncWrite(datas);
-                }
-            }
-            catch (Exception ex)
-            {
-                writeLog.Write(ex.Message);
-                updateListBox(ex.Message);
-                Thread.Sleep(10000);
-                if (ex.InnerException != null && ex.InnerException.Message != null)
-                {
-                    writeLog.Write(ex.InnerException.Message);
-                    updateListBox(ex.InnerException.Message);
-                }
-                sendTask2();//异常后重新发送
-            }
-        }
-
-
+           List<T_UN_POKE> listOnly = new List<T_UN_POKE>();
         bool issendone = false, issendtwo = false, issendsixone = false, issendsixtwo = false;
-        int packagemachine = 8;
+         
         /// <summary>
-        /// 第一组烟仓
+        /// 一组交互
         /// </summary> 
-        void sendTask1()
-        { 
+        void sendOnlyTask()
+        {
             try
             {
-                issendone = true; 
-                int flag = SpyChangeGroup.ReadD(0).CastTo<int>(-1);
-                 //List<decimal> sortNumList = new List<decimal>();//任务号
-                 //List<decimal> zqNumList = new List<decimal>();//抓烟数
-                writeLog.Write("烟仓一线发送数据前读标志位：" + flag);
+                
+                issendone = true;
+                int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
+                writeLog.Write("发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
+                    #region
                     //int pcgm = 4;
                     //while (!UnPokeService.CheckExistPreSendTask("1", 1, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 1))
                     //{ 
@@ -421,65 +304,19 @@ namespace UnNormal_Test
                     //            pcgm = 4;
                     //        }
                     //        Thread.Sleep(100);
-                      
+
                     //}
+                    #endregion
                     string OutStr = "";
-                    object[] datas = UnPokeService.getYCTask(packagemachine, "1", 1,out list1, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.getAllLineTask(out listOnly, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("烟仓一线分拣数据发送完毕");
+                        updateListBox("分拣数据发送完毕");
                         return;
                     } 
-
-                    writeLog.Write("分拣烟仓一线:" + OutStr);
-                    updateListBox("分拣烟仓一线:" + OutStr);
-
-                    TaskGroup1.SyncWrite(datas);  
-                  
-                    
-                }
-            }
-            catch(Exception ex)
-            {
-                writeLog.Write(ex.Message);
-                updateListBox(ex.Message);
-                Thread.Sleep(10000);
-                if (ex.InnerException != null && ex.InnerException.Message != null)
-                {
-                    writeLog.Write(ex.InnerException.Message);
-                    updateListBox(ex.InnerException.Message);
-                }
-                sendTask1();//异常后重新发送
-
-            }
-        }
-        /// <summary>
-        /// 发送合流信息
-        /// </summary>
-        void sendUnionTask()
-        { 
-            try
-            {
-                issendsixtwo = false; 
-                int flag = SpyChangeGroup.ReadD(3).CastTo<int>(-1);
-                writeLog.Write("异形烟合流数据发前读标志位：" + flag);
-                if (flag == 0)
-                {
-                    string OutStr = "";
-                    object[] datas = UnPokeService.GetUnionTask(out listUnion);
-                    if (int.Parse(datas[0].ToString()) == 0)
-                    {
-                        updateListBox("异形烟合流数据发送完毕");
-                        return;
-                    }
-                    for (int i = 0; i < datas.Length; i++)
-                    {
-                        OutStr += i + "：" + datas[i]+"，";
-                    }
-                    writeLog.Write("异形烟合流数据:" + OutStr);
-                    updateListBox("异形烟合流数据:" + OutStr);
-                    //写电控 
-                    UnUnionTaskGroup.SyncWrite(datas);  
+                    writeLog.Write("分拣线:" + OutStr);
+                    updateListBox("分拣线:" + OutStr); 
+                    OnlyTaskGorup.SyncWrite(datas); 
                 }
             }
             catch (Exception ex)
@@ -492,339 +329,301 @@ namespace UnNormal_Test
                     writeLog.Write(ex.InnerException.Message);
                     updateListBox(ex.InnerException.Message);
                 }
-                sendUnionTask();//异常后重新发送
+                sendOnlyTask();//异常后重新发送
+
             }
         }
-
-        /// <summary>
-        /// 烟柜订单信息
-        /// </summary>
-        void sendSixCabineTask()
-        {
-            try
-            {
-                issendsixone = false;
-                string OutStr = ""; 
-                int flag = SpyChangeGroup.ReadD(2).CastTo<int>(-1);
-                List<decimal> sortNumList = new List<decimal>();//任务号
-                List<decimal> zqNumList = new List<decimal>();//抓烟数
-                writeLog.Write("烟柜发送数据前读标志位：" + flag);
-                if (flag == 0)
-                {
-                    //while (!UnPokeService.CheckExistPreSendTask("1", 2, 12) && UnPokeService.CheckExistCanSendPackeMachine("1", 2))
-                    //{
-                    //    decimal sortnum, xyqty;
-                    //    for (int i = 1; i <= 8; i++)
-                    //    {
-
-                    //        try
-                    //        {
-                    //            sortnum = 0;
-                    //            xyqty = 0;
-                    //        }
-                    //        catch
-                    //        {
-                    //            sortnum = 0;
-                    //            xyqty = 0;
-                    //        }
-                    //        if (!UnPokeService.CheckExistTaskNo(sortnum))
-                    //        {
-                    //            xyqty = 0;
-                    //        }
-                    //        sortNumList.Add(sortnum);
-                    //        zqNumList.Add(xyqty);
-                    //        decimal DISPATCHESIZE = 0;
-                    //        packagemachine = UnPokeService.GetSendPackageMachine(sortNumList, zqNumList, out DISPATCHESIZE);//获取包装机
-                    //        if (packagemachine > 0)
-                    //        {
-                    //            UnPokeService.UpdateSendtasknumByPM(packagemachine, (int)DISPATCHESIZE);
-                    //        }
-                    //        if (packagemachine - 1 > 0)
-                    //        {
-                    //            packagemachine -= 1;
-                    //        }
-                    //        else
-                    //        {
-                    //            packagemachine = 8;
-                    //        }
-                    //        Thread.Sleep(100);
-                    //    }
-                    //}
-                    object[] datas = UnPokeService.getYGTask(packagemachine, 2, out listCabinet, out OutStr);
-                    if (int.Parse(datas[0].ToString()) == 0)
-                    {
-                        updateListBox("烟柜分拣数据发送完毕");
-                        return;
-                    }
-                    writeLog.Write("烟柜分拣发送数据:" + OutStr);
-                    updateListBox("烟柜分拣发送数据:" + OutStr);
-                    //写电控 
-                    CabinetTaskGroup.SyncWrite(datas);
-                }
-            }
-            catch (Exception ex)
-            {
-                writeLog.Write(ex.Message);
-                updateListBox(ex.Message);
-                Thread.Sleep(10000);
-                if (ex.InnerException != null && ex.InnerException.Message != null)
-                {
-                    writeLog.Write(ex.InnerException.Message);
-                    updateListBox(ex.InnerException.Message);
-                }
-                sendSixCabineTask();//异常后重新发送
-            }
-        }
-
         public static Object lockFlag = new Object();
         public void OnDataChange(int group, int[] clientId, object[] values)
         {
-            if (group == 4)//第一组烟仓完成信号
-            {
-                for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
-                {
-                    int tempvalue = int.Parse((values[i].ToString()));
-                    if (tempvalue >= 1)//分拣完成
-                    {
+            #region
+            // if (group == 4)//第一组烟仓完成信号
+           // {
+           //     for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
+           //     {
+           //         int tempvalue = int.Parse((values[i].ToString()));
+           //         if (tempvalue >= 1)//分拣完成
+           //         {
 
-                        TaskFinishGroup1.Write(1, clientId[i] - 1); 
-                        writeLog.Write("从电控读取第一组出口号：" + clientId[i] + ";任务号:" + tempvalue); 
-                        UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                        writeLog.Write("任务号" + tempvalue + "数据库更新完成"); 
-                        if (tempvalue != 0)
-                        {
-                            updateListBox("第一组:" + tempvalue + "号任务已完成");
-                            writeLog.Write("第一组:" + tempvalue + "号任务已完成");
-                        }
-                       // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+           //             TaskFinishGroup1.Write(1, clientId[i] - 1); 
+           //             writeLog.Write("从电控读取第一组出口号：" + clientId[i] + ";任务号:" + tempvalue); 
+           //             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+           //             writeLog.Write("任务号" + tempvalue + "数据库更新完成"); 
+           //             if (tempvalue != 0)
+           //             {
+           //                 updateListBox("第一组:" + tempvalue + "号任务已完成");
+           //                 writeLog.Write("第一组:" + tempvalue + "号任务已完成");
+           //             }
+           //            // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
                       
-                    }
-                    else
-                    {
-                        TaskFinishGroup1.Write(0, clientId[i] - 1);
-                    }
-                }
-            }
-            else if (group == 5)//第二组烟仓完成信号
-            {
-                for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
-                {
-                    int tempvalue = int.Parse((values[i].ToString()));
-                    if (tempvalue >= 1)//分拣完成
-                    { 
-                        TaskFinishGroup2.Write(1, clientId[i] - 1);
-                        writeLog.Write("从电控读取第二组出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                        UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                        writeLog.Write("任务号" + tempvalue + "数据库更新完成");
-                        if (tempvalue != 0)
-                        {
-                            updateListBox("第二组:" + tempvalue + "号任务已完成");
-                            writeLog.Write("第二组:" + tempvalue + "号任务已完成");
-                        }
-                        //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+           //         }
+           //         else
+           //         {
+           //             TaskFinishGroup1.Write(0, clientId[i] - 1);
+           //         }
+           //     }
+           // }
+           // else if (group == 5)//第二组烟仓完成信号
+           // {
+           //     for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
+           //     {
+           //         int tempvalue = int.Parse((values[i].ToString()));
+           //         if (tempvalue >= 1)//分拣完成
+           //         { 
+           //             TaskFinishGroup2.Write(1, clientId[i] - 1);
+           //             writeLog.Write("从电控读取第二组出口号：" + clientId[i] + ";任务号:" + tempvalue);
+           //             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+           //             writeLog.Write("任务号" + tempvalue + "数据库更新完成");
+           //             if (tempvalue != 0)
+           //             {
+           //                 updateListBox("第二组:" + tempvalue + "号任务已完成");
+           //                 writeLog.Write("第二组:" + tempvalue + "号任务已完成");
+           //             }
+           //             //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
 
-                    }
-                    else
-                    {
-                        TaskFinishGroup2.Write(0, clientId[i] - 1);
-                    }
-                }
-            }
-            else if (group == 6)//烟柜完成信号
-            {
-                for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
-                {
-                    int tempvalue = int.Parse((values[i].ToString()));
-                    if (tempvalue >= 1)//分拣完成
-                    {
+           //         }
+           //         else
+           //         {
+           //             TaskFinishGroup2.Write(0, clientId[i] - 1);
+           //         }
+           //     }
+           // }
+           // else if (group == 6)//烟柜完成信号
+           // {
+           //     for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
+           //     {
+           //         int tempvalue = int.Parse((values[i].ToString()));
+           //         if (tempvalue >= 1)//分拣完成
+           //         {
 
-                        CabinetFinishTaskGroup.Write(1, clientId[i] - 1);
-                        writeLog.Write("从电控读取异形烟烟柜出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                        UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                        writeLog.Write("任务号" + tempvalue + "数据库更新完成");
-                        if (tempvalue != 0)
-                        {
-                            //try
-                            //{
-                            //    PreSortInfoService.Add((decimal)tempvalue, sortgroupno2);
-                            //}
-                            //catch (Exception ex)
-                            //{ }
-                            updateListBox("异形烟烟柜:" + tempvalue + "号任务已完成");
-                            writeLog.Write("异形烟烟柜:" + tempvalue + "号任务已完成");
-                        }
-                       // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+           //             CabinetFinishTaskGroup.Write(1, clientId[i] - 1);
+           //             writeLog.Write("从电控读取异形烟烟柜出口号：" + clientId[i] + ";任务号:" + tempvalue);
+           //             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+           //             writeLog.Write("任务号" + tempvalue + "数据库更新完成");
+           //             if (tempvalue != 0)
+           //             {
+           //                 //try
+           //                 //{
+           //                 //    PreSortInfoService.Add((decimal)tempvalue, sortgroupno2);
+           //                 //}
+           //                 //catch (Exception ex)
+           //                 //{ }
+           //                 updateListBox("异形烟烟柜:" + tempvalue + "号任务已完成");
+           //                 writeLog.Write("异形烟烟柜:" + tempvalue + "号任务已完成");
+           //             }
+           //            // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
 
-                    }
-                    else
-                    {
-                        CabinetFinishTaskGroup.Write(0, clientId[i] - 1);
-                    }
-                }
-            }
-            else if (group == 7)//合流完成信号
-            {
-                for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
-                {
-                    int tempvalue = int.Parse((values[i].ToString()));
-                    if (tempvalue >= 1)//分拣完成
-                    {
+           //         }
+           //         else
+           //         {
+           //             CabinetFinishTaskGroup.Write(0, clientId[i] - 1);
+           //         }
+           //     }
+           // }
+           // else if (group == 7)//合流完成信号
+           // {
+           //     for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
+           //     {
+           //         int tempvalue = int.Parse((values[i].ToString()));
+           //         if (tempvalue >= 1)//分拣完成
+           //         {
 
-                        UnionTaskFinishGroup.Write(1, clientId[i] - 1);
-                        writeLog.Write("从电控读取第一组出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                        UnPokeService.UpdateUnionTask(listUnion,20);
-                        writeLog.Write("任务号" + tempvalue + "合流数据数据库更新完成");
-                        if (tempvalue != 0)
-                        {
-                            updateListBox("合流数据:" + tempvalue + "号任务已完成");
-                            writeLog.Write("合流数据:" + tempvalue + "号任务已完成");
-                        }
-                        //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+           //             UnionTaskFinishGroup.Write(1, clientId[i] - 1);
+           //             writeLog.Write("从电控读取第一组出口号：" + clientId[i] + ";任务号:" + tempvalue);
+           //             UnPokeService.UpdateUnionTask(listUnion,20);
+           //             writeLog.Write("任务号" + tempvalue + "合流数据数据库更新完成");
+           //             if (tempvalue != 0)
+           //             {
+           //                 updateListBox("合流数据:" + tempvalue + "号任务已完成");
+           //                 writeLog.Write("合流数据:" + tempvalue + "号任务已完成");
+           //             }
+           //             //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
 
-                    }
-                    else
-                    {
-                        UnionTaskFinishGroup.Write(0, clientId[i] - 1);
-                    }
-                }
-            }
-           else if (group == 8) //监控标志位
-            {
-                for (int i = 0; i < clientId.Length; i++)
-                {
-                    if (clientId[i] ==1)//一组烟仓
-                    {
+           //         }
+           //         else
+           //         {
+           //             UnionTaskFinishGroup.Write(0, clientId[i] - 1);
+           //         }
+           //     }
+           // }
+           //else if (group == 8) //监控标志位
+           // {
+           //     for (int i = 0; i < clientId.Length; i++)
+           //     {
+           //         if (clientId[i] ==1)//一组烟仓
+           //         {
 
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-                        {
-                            while (!isInit)
-                            {
-                                Thread.Sleep(100);
-                            }
-                            String logstr = "";
-                            foreach (var item in list1)
-                            {
-                                logstr += item.POKEID + ";";
-                            }
-                            if (logstr != null && logstr.Length > 0)
-                            {
-                                writeLog.Write("第一组烟仓任务号:" + logstr + "已接收");
-                                updateListBox("第一组烟仓任务号:" + logstr + "已接收");
-                                UnPokeService.UpdateTask(list1, 15);
-                              //  UnPokeService.UpdateStroageInout(list1);
-                            }
-                            sendTask1();
-                            //delSendTask task = sendTask1;
+           //             if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+           //             {
+           //                 while (!isInit)
+           //                 {
+           //                     Thread.Sleep(100);
+           //                 }
+           //                 String logstr = "";
+           //                 foreach (var item in list1)
+           //                 {
+           //                     logstr += item.POKEID + ";";
+           //                 }
+           //                 if (logstr != null && logstr.Length > 0)
+           //                 {
+           //                     writeLog.Write("第一组烟仓任务号:" + logstr + "已接收");
+           //                     updateListBox("第一组烟仓任务号:" + logstr + "已接收");
+           //                     UnPokeService.UpdateTask(list1, 15);
+           //                   //  UnPokeService.UpdateStroageInout(list1);
+           //                 }
+           //                 sendTask1();
+           //                 //delSendTask task = sendTask1;
                         
-                            //task.BeginInvoke(null, null);
+           //                 //task.BeginInvoke(null, null);
                            
-                        }
-                        break;
-                    }
-                    if (clientId[i] == 2)//二组烟仓
-                    {
+           //             }
+           //             break;
+           //         }
+           //         if (clientId[i] == 2)//二组烟仓
+           //         {
 
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-                        {
-                            while (!isInit)
-                            {
-                                Thread.Sleep(100);
-                            }
-                            String logstr = "";
-                            foreach (var item in list2)
-                            {
-                                logstr += item.POKEID + ";";
-                            }
-                            if (logstr != null && logstr.Length > 0)
-                            {
-                                writeLog.Write("第二组烟仓任务号:" + logstr + "已接收");
-                                updateListBox("第二组烟仓任务号:" + logstr + "已接收");
-                                UnPokeService.UpdateTask(list1, 15);
-                                //UnPokeService.UpdateStroageInout(list1);
-                            }
-                            sendTask2();
-                            //delSendTask task = sendTask2;
-                            //task.BeginInvoke(null, null); 
-                        }
-                        break;
-                    }
-                    if (clientId[i] == 3)//烟柜
-                    {
+           //             if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+           //             {
+           //                 while (!isInit)
+           //                 {
+           //                     Thread.Sleep(100);
+           //                 }
+           //                 String logstr = "";
+           //                 foreach (var item in list2)
+           //                 {
+           //                     logstr += item.POKEID + ";";
+           //                 }
+           //                 if (logstr != null && logstr.Length > 0)
+           //                 {
+           //                     writeLog.Write("第二组烟仓任务号:" + logstr + "已接收");
+           //                     updateListBox("第二组烟仓任务号:" + logstr + "已接收");
+           //                     UnPokeService.UpdateTask(list1, 15);
+           //                     //UnPokeService.UpdateStroageInout(list1);
+           //                 }
+           //                 sendTask2();
+           //                 //delSendTask task = sendTask2;
+           //                 //task.BeginInvoke(null, null); 
+           //             }
+           //             break;
+           //         }
+           //         if (clientId[i] == 3)//烟柜
+           //         {
 
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-                        {
-                            while (!isInit)
-                            {
-                                Thread.Sleep(100);
-                            }
-                            String logstr = "";
-                            foreach (var item in listCabinet)
-                            {
-                                logstr += item.POKEID + ";";
-                            }
-                            if (logstr != null && logstr.Length > 0)
-                            {
-                                writeLog.Write("烟柜数据任务号:" + logstr + "已接收");
-                                updateListBox("烟柜数据任务号:" + logstr + "已接收");
-                                UnPokeService.UpdateTask(list1, 15);
-                               // UnPokeService.UpdateStroageInout(list1);
-                            }
-                            sendSixCabineTask();
-                            //delSendTask task = sendSixCabineTask;
-                            //task.BeginInvoke(null, null); 
-                        }
-                        break;
-                    }
-                    if (clientId[i] == 4)//合流
-                    {
+           //             if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+           //             {
+           //                 while (!isInit)
+           //                 {
+           //                     Thread.Sleep(100);
+           //                 }
+           //                 String logstr = "";
+           //                 foreach (var item in listCabinet)
+           //                 {
+           //                     logstr += item.POKEID + ";";
+           //                 }
+           //                 if (logstr != null && logstr.Length > 0)
+           //                 {
+           //                     writeLog.Write("烟柜数据任务号:" + logstr + "已接收");
+           //                     updateListBox("烟柜数据任务号:" + logstr + "已接收");
+           //                     UnPokeService.UpdateTask(list1, 15);
+           //                    // UnPokeService.UpdateStroageInout(list1);
+           //                 }
+           //                 sendSixCabineTask();
+           //                 //delSendTask task = sendSixCabineTask;
+           //                 //task.BeginInvoke(null, null); 
+           //             }
+           //             break;
+           //         }
+           //         if (clientId[i] == 4)//合流
+           //         {
 
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-                        {
-                            while (!isInit)
-                            {
-                                Thread.Sleep(100);
-                            }
-                            String logstr = "";
-                            foreach (var item in listUnion)
-                            {
-                                logstr += item.POKEID + ";";
-                            }
-                            if (logstr != null && logstr.Length > 0)
-                            {
-                                writeLog.Write("合流数据:" + logstr + "已接收");
-                                updateListBox("合流数据:" + logstr + "已接收"); 
-                            }
-                            UnPokeService.UpdateUnionTask(listUnion, 15);
-                            sendUnionTask();
-                            //delSendTask task = sendUnionTask;
-                            //task.BeginInvoke(null, null); 
-                        }
-                        break;
-                    }
-                }
-            } 
-            else if (group == 9)
+           //             if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+           //             {
+           //                 while (!isInit)
+           //                 {
+           //                     Thread.Sleep(100);
+           //                 }
+           //                 String logstr = "";
+           //                 foreach (var item in listUnion)
+           //                 {
+           //                     logstr += item.POKEID + ";";
+           //                 }
+           //                 if (logstr != null && logstr.Length > 0)
+           //                 {
+           //                     writeLog.Write("合流数据:" + logstr + "已接收");
+           //                     updateListBox("合流数据:" + logstr + "已接收"); 
+           //                 }
+           //                 UnPokeService.UpdateUnionTask(listUnion, 15);
+           //                 sendUnionTask();
+           //                 //delSendTask task = sendUnionTask;
+           //                 //task.BeginInvoke(null, null); 
+           //             }
+           //             break;
+           //         }
+           //     }
+           // } 
+            //else
+#endregion
+            if (group == 2)//完成信号
+            {
+                 for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
+                 {
+                     int tempvalue = int.Parse((values[i].ToString()));
+                     if (tempvalue >= 1)//分拣完成
+                     {
+
+                         FinishOnlyGoroup.Write(1, clientId[i] - 1);
+                         writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                         UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+                         writeLog.Write("任务号" + tempvalue + "数据库更新完成");
+                         if (tempvalue != 0)
+                         {
+                             updateListBox(" :" + tempvalue + "号任务已完成");
+                             writeLog.Write(" :" + tempvalue + "号任务已完成");
+                         }
+                         // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+
+                     }
+                     else
+                     { 
+                         FinishOnlyGoroup.Write(0, clientId[i] - 1);
+                     }
+                 }
+
+            }
+            else if (group == 3)//接收标志
             {
                 for (int i = 0; i < clientId.Length; i++)
                 {
-
-                    // clientId[i]//序号
-                    // values[i]//值
-
-                    lock (lockFlag)
+                    if (clientId[i] == 1)
                     {
-                        if (values[i] != null)
-                        {
-                            stateManager.WriteErrWithCheck(Math.Abs(int.Parse(values[i].ToString())).ToString(), clientId[i].ToString(), lineNum);
-                            stateManager.AlarmsHandler += (obj) =>
-                            {
-                                updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
-                            };
-                        }
-                    }
 
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            String logstr = "";
+                            foreach (var item in listOnly)
+                            {
+                                logstr += item.POKEID + ";";
+                            }
+                            if (logstr != null && logstr.Length > 0)
+                            {
+                                writeLog.Write("任务号:" + logstr + "已接收");
+                                updateListBox("任务号:" + logstr + "已接收");
+                                UnPokeService.UpdateTask(listOnly, 15);
+                            }
+                            sendOnlyTask();
+                            //delSendTask task = sendTask1; 
+                            //task.BeginInvoke(null, null); 
+                        }
+                        break;
+                    }
                 }
             }
+            
+
 
         }
 
@@ -838,29 +637,17 @@ namespace UnNormal_Test
                 Marshal.ReleaseComObject(pIOPCServer);
                 pIOPCServer = null;
             }
-            if (TaskGroup2 != null)
+            if (OnlyTaskGorup != null)
             {
-                TaskGroup2.Release();
+                OnlyTaskGorup.Release();
             }
-            if (TaskGroup1 != null)
+            if (FinishOnlyGoroup != null)
             {
-                TaskGroup1.Release();
+                FinishOnlyGoroup.Release();
             }
-            if (CabinetTaskGroup != null)
+            if (SpyBiaozhiGroup != null)
             {
-                CabinetTaskGroup.Release();
-            }
-            if (UnUnionTaskGroup != null)
-            {
-                UnUnionTaskGroup.Release();
-            }
-            if (statusGroup2 != null)
-            {
-                statusGroup2.Release();
-            }
-            if (statusGroup3 != null)
-            {
-                statusGroup3.Release();
+                SpyBiaozhiGroup.Release();
             }
             
         }
