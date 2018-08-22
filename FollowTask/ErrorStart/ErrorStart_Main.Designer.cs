@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.b3_3 = new System.Windows.Forms.Button();
+            this.b3_2 = new System.Windows.Forms.Button();
+            this.b3_4 = new System.Windows.Forms.Button();
+            this.b3_1 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -43,7 +47,6 @@
             this.b5 = new System.Windows.Forms.Button();
             this.b4 = new System.Windows.Forms.Button();
             this.btn_inout = new System.Windows.Forms.Button();
-            this.b3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.b2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -67,6 +70,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.b3_3);
+            this.splitContainer1.Panel1.Controls.Add(this.b3_2);
+            this.splitContainer1.Panel1.Controls.Add(this.b3_4);
+            this.splitContainer1.Panel1.Controls.Add(this.b3_1);
             this.splitContainer1.Panel1.Controls.Add(this.button9);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.listBox1);
@@ -84,7 +91,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.b4);
             this.splitContainer1.Panel1.Controls.Add(this.btn_inout);
-            this.splitContainer1.Panel1.Controls.Add(this.b3);
             this.splitContainer1.Panel1.Controls.Add(this.button4);
             this.splitContainer1.Panel1.Controls.Add(this.b2);
             this.splitContainer1.Panel1.Controls.Add(this.button5);
@@ -97,6 +103,38 @@
             this.splitContainer1.Size = new System.Drawing.Size(1233, 644);
             this.splitContainer1.SplitterDistance = 452;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // b3_3
+            // 
+            this.b3_3.Location = new System.Drawing.Point(187, 317);
+            this.b3_3.Name = "b3_3";
+            this.b3_3.Size = new System.Drawing.Size(29, 13);
+            this.b3_3.TabIndex = 25;
+            this.b3_3.UseVisualStyleBackColor = true;
+            // 
+            // b3_2
+            // 
+            this.b3_2.Location = new System.Drawing.Point(187, 304);
+            this.b3_2.Name = "b3_2";
+            this.b3_2.Size = new System.Drawing.Size(29, 13);
+            this.b3_2.TabIndex = 24;
+            this.b3_2.UseVisualStyleBackColor = true;
+            // 
+            // b3_4
+            // 
+            this.b3_4.Location = new System.Drawing.Point(187, 330);
+            this.b3_4.Name = "b3_4";
+            this.b3_4.Size = new System.Drawing.Size(29, 13);
+            this.b3_4.TabIndex = 23;
+            this.b3_4.UseVisualStyleBackColor = true;
+            // 
+            // b3_1
+            // 
+            this.b3_1.Location = new System.Drawing.Point(187, 291);
+            this.b3_1.Name = "b3_1";
+            this.b3_1.Size = new System.Drawing.Size(29, 13);
+            this.b3_1.TabIndex = 22;
+            this.b3_1.UseVisualStyleBackColor = true;
             // 
             // button9
             // 
@@ -217,21 +255,15 @@
             this.btn_inout.UseVisualStyleBackColor = true;
             this.btn_inout.Click += new System.EventHandler(this.btn_inout_Click);
             // 
-            // b3
-            // 
-            this.b3.Location = new System.Drawing.Point(188, 291);
-            this.b3.Name = "b3";
-            this.b3.Size = new System.Drawing.Size(29, 52);
-            this.b3.TabIndex = 12;
-            this.b3.UseVisualStyleBackColor = true;
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(12, 351);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(176, 52);
             this.button4.TabIndex = 5;
+            this.button4.Text = "补货区";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // b2
             // 
@@ -333,7 +365,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button b4;
         private System.Windows.Forms.Button btn_inout;
-        private System.Windows.Forms.Button b3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button b2;
         private System.Windows.Forms.Button button5;
@@ -341,6 +372,10 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button b3_3;
+        private System.Windows.Forms.Button b3_2;
+        private System.Windows.Forms.Button b3_4;
+        private System.Windows.Forms.Button b3_1;
 
 
     }

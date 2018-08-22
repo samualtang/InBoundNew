@@ -74,7 +74,7 @@ namespace highSpeed.baseData
 
         private void seek()
         {
-            String strsql = "select itemno,itemname,shortname,fullcount,cdtype,bigbox_bar,weight,iscanscancode || ''iscanscancodes ,dxtype,outtype from t_wms_item where length(itemno)=7";
+            String strsql = "select itemno,itemname,shortname,fullcount,cdtype,bigbox_bar,weight,ilength,iwidth,iscanscancode || ''iscanscancodes ,dxtype,outtype from t_wms_item where length(itemno)=7";
 
             string types = this.box_type.SelectedValue + "";
             string keywd = this.txt_keywd.Text.Trim();
@@ -230,9 +230,11 @@ namespace highSpeed.baseData
                 String fullcount = this.dataGridView1.CurrentRow.Cells[4].Value.ToString();
                 String cdtype = this.dataGridView1.CurrentRow.Cells[5].EditedFormattedValue.ToString();
                 String weight = this.dataGridView1.CurrentRow.Cells[6].Value.ToString();
-                String dx = this.dataGridView1.CurrentRow.Cells[7].EditedFormattedValue.ToString();
-                String iscanscancodes = this.dataGridView1.CurrentRow.Cells[8].EditedFormattedValue.ToString();
-                String outType = this.dataGridView1.CurrentRow.Cells[9].EditedFormattedValue.ToString();
+                String ilength = this.dataGridView1.CurrentRow.Cells[7].Value.ToString();
+                String iwidth = this.dataGridView1.CurrentRow.Cells[8].Value.ToString(); 
+                String dx = this.dataGridView1.CurrentRow.Cells[9].EditedFormattedValue.ToString();
+                String iscanscancodes = this.dataGridView1.CurrentRow.Cells[10].EditedFormattedValue.ToString();
+                String outType = this.dataGridView1.CurrentRow.Cells[11].EditedFormattedValue.ToString();
                 if (cdtype == "人工拆垛")
                 {
                     cdtype = "0";
@@ -252,7 +254,7 @@ namespace highSpeed.baseData
                 try
                 {
                     Db.Open();
-                    String sql = "update t_wms_item set  iscanscancode="+iscanscancodes+", dxtype="+dx+",outtype="+outType+ ",weight="+weight+",bigbox_bar='" + barcode + "', fullcount="+fullcount+",cdtype="+cdtype+" where itemno='" + itemno + "'" ;
+                    String sql = "update t_wms_item set  iscanscancode=" + iscanscancodes + ", dxtype=" + dx + ",outtype=" + outType + ",weight=" + weight + ",bigbox_bar='" + barcode + "', fullcount=" + fullcount + ",cdtype=" + cdtype + ",ilength=" + ilength + ",iwidth=" + iwidth + " where itemno='" + itemno + "'";
                    // String batchcodesql = "select count(*) from highspeed.t_produce_brandcoderelative where cigarettecode='" + itemno + "'";
 
                     int len = Db.ExecuteNonQuery(sql);
@@ -278,7 +280,7 @@ namespace highSpeed.baseData
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-          
+
             if (e.ColumnIndex == 5)
             {
                 if (ds.Tables[0].Rows[e.RowIndex][4].ToString() == "10")
@@ -291,30 +293,30 @@ namespace highSpeed.baseData
                     e.Value = "人工拆垛";
                 }
             }
-            if (e.ColumnIndex == 7)
-            {
-                e.Value = ds.Tables[0].Rows[e.RowIndex][8].ToString();
-
-            }
             if (e.ColumnIndex == 9)
             {
-                e.Value = ds.Tables[0].Rows[e.RowIndex][9].ToString();
+                e.Value = ds.Tables[0].Rows[e.RowIndex][10].ToString();
 
             }
-                if (e.ColumnIndex == 8)
+            if (e.ColumnIndex == 11)
+            {
+                e.Value = ds.Tables[0].Rows[e.RowIndex][11].ToString();
+
+            }
+            if (e.ColumnIndex == 10)
+            {
+
+                if (ds.Tables[0].Rows[e.RowIndex][9].ToString() == "10")
                 {
 
-                    if (ds.Tables[0].Rows[e.RowIndex][7].ToString() == "10")
-                    {
-
-                        e.Value = "Yes";
-                    }
-                    else
-                    {
-                        e.Value = "No";
-                    }
+                    e.Value = "Yes";
                 }
-           
+                else
+                {
+                    e.Value = "No";
+                }
+            }
+
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
