@@ -567,25 +567,36 @@ namespace UnNormal_Test
             {
                  for (int i = 0; i < clientId.Length; i++)//"出口号：" + clientId[i] + ";任务号:" + taskno
                  {
-                     int tempvalue = int.Parse((values[i].ToString()));
-                     if (tempvalue >= 1)//分拣完成
+                     try
                      {
-
-                         FinishOnlyGoroup.Write(1, clientId[i] - 1);
-                         writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                         UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                         writeLog.Write("任务号" + tempvalue + "数据库更新完成");
-                         if (tempvalue != 0)
+                         int tempvalue = int.Parse((values[i].ToString()));
+                         if (tempvalue >= 1)//分拣完成
                          {
-                             updateListBox(" :" + tempvalue + "号任务已完成");
-                             writeLog.Write(" :" + tempvalue + "号任务已完成");
-                         }
-                         // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
 
+                             FinishOnlyGoroup.Write(1, clientId[i] - 1);
+                             writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
+                             writeLog.Write("任务号" + tempvalue + "数据库更新完成");
+                             if (tempvalue != 0)
+                             {
+                                 updateListBox(" :" + tempvalue + "号任务已完成");
+                                 writeLog.Write(" :" + tempvalue + "号任务已完成");
+                             }
+                             // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
+
+                         }
+                         else
+                         {
+                             FinishOnlyGoroup.Write(0, clientId[i] - 1);
+                         }
                      }
-                     else
+                     catch (NullReferenceException nullex)
+                     {
+                         writeLog.Write("空引用异常：" + nullex.Message);
+                     }
+                     catch (Exception ex)
                      { 
-                         FinishOnlyGoroup.Write(0, clientId[i] - 1);
+                         writeLog.Write("集成错误 ：" + ex.Message);
                      }
                  }
 
@@ -606,7 +617,7 @@ namespace UnNormal_Test
                             String logstr = "";
                             foreach (var item in listOnly)
                             {
-                                logstr += item.POKEID + ";";
+                                logstr += item.SORTNUM + ";";
                             }
                             if (logstr != null && logstr.Length > 0)
                             {
