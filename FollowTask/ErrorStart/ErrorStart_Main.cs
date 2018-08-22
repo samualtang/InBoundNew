@@ -28,15 +28,15 @@ namespace FollowTask.ErrorStart
         SortForm sort; 
         InOutForm Inout;
         ReplenishmentForm Replenishment;
-    
+        StorageForm Storage;
         Group FJPlcAdress;
         Thread td;
         private void Btn_start_Click(object sender, EventArgs e)
         {  
             b2.BackColor = Color.Yellow;
            
-            b4.BackColor = Color.Yellow;
-            b5.BackColor = Color.Yellow;
+         
+            b5_1.BackColor = Color.Yellow;
             b6.BackColor = Color.Yellow;
             b7.BackColor = Color.Yellow;
             b8.BackColor = Color.Yellow;
@@ -247,8 +247,6 @@ namespace FollowTask.ErrorStart
         #region  出入库
         private void Start_InOut1()
         {
-            b3_1.BackColor = Color.Yellow;
-
             List<string> InOutlist = new List<string>();
             List<ErrorDates> Errors = new List<ErrorDates>();
             AllSystemStart ass = new AllSystemStart();
@@ -277,7 +275,6 @@ namespace FollowTask.ErrorStart
         }
         private void Start_InOut2()
         {
-            b3_2.BackColor = Color.Yellow;
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
             AllSystemStart ass = new AllSystemStart();
@@ -305,7 +302,6 @@ namespace FollowTask.ErrorStart
         }
         private void Start_InOut3()
         {
-            b3_3.BackColor = Color.Yellow;
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
             AllSystemStart ass = new AllSystemStart();
@@ -333,7 +329,6 @@ namespace FollowTask.ErrorStart
         }
         private void Start_InOut4()
         {
-            b3_4.BackColor = Color.Yellow;
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
             AllSystemStart ass = new AllSystemStart();
@@ -360,6 +355,127 @@ namespace FollowTask.ErrorStart
             }
         }
         #endregion
+
+
+
+
+        #region  补货区
+        private void Start_Replenishment1()
+        {
+            List<string> InOutlist = new List<string>();
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(1);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("补货区：大拔杆存在故障", listBox1);
+                b4_1.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                ReplenishmentData.ReplenishmentList1 = Errors;
+            }
+            else
+            {
+                b4_1.BackColor = Color.Green;
+            }
+
+        }
+        private void Start_Replenishment2()
+        {
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(2);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("补货区：中心带存在故障", listBox1);
+                b4_2.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                ReplenishmentData.ReplenishmentList2 = Errors;
+            }
+            else
+            {
+                b4_2.BackColor = Color.Green;
+            }
+        }
+        private void Start_Replenishment3()
+        {
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(3);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("补货区：通道机存在故障", listBox1);
+                b4_3.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                ReplenishmentData.ReplenishmentList3 = Errors;
+            }
+            else
+            {
+                b4_3.BackColor = Color.Green;
+            }
+        }
+        private void Start_Replenishment4()
+        {
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            List<string> InOutlist = new List<string>();
+            AllSystemStart ass = new AllSystemStart();
+            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(4);
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("补货区：输送线存在故障", listBox1);
+                b4_4.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                ReplenishmentData.ReplenishmentList4 = Errors;
+            }
+            else
+            {
+                b4_4.BackColor = Color.Green;
+            }
+        }
+        #endregion
+
+
+
+
+
+
 
         #region  调用方法
         private void Start_Click()
@@ -403,6 +519,32 @@ namespace FollowTask.ErrorStart
             }
             try
             {
+                b4_1.BackColor = Color.Yellow;
+                b4_2.BackColor = Color.Yellow;
+                b4_3.BackColor = Color.Yellow;
+                b4_4.BackColor = Color.Yellow;
+                HandleDelegate task1 = Start_Replenishment1;
+                task1.BeginInvoke(null, null);
+
+                HandleDelegate task2 = Start_Replenishment2;
+                task2.BeginInvoke(null, null);
+
+                HandleDelegate task3 = Start_Replenishment3;
+                task3.BeginInvoke(null, null);
+
+                HandleDelegate task4 = Start_Replenishment4;
+                task4.BeginInvoke(null, null);
+            }
+            catch (Exception)
+            {
+                updateListBox("补货区连接PLC失败！", listBox1); 
+            }
+            try
+            {
+                b3_1.BackColor = Color.Yellow;
+                b3_2.BackColor = Color.Yellow;
+                b3_3.BackColor = Color.Yellow;
+                b3_4.BackColor = Color.Yellow;
                 HandleDelegate task1 = Start_InOut1;
                 task1.BeginInvoke(null, null);
 
@@ -417,7 +559,7 @@ namespace FollowTask.ErrorStart
             }
             catch (Exception)
             {
-                updateListBox("出入库连接PLC失败！", listBox1); 
+                updateListBox("出入库连接PLC失败！", listBox1);
             }
 
         }
@@ -654,6 +796,24 @@ namespace FollowTask.ErrorStart
                 Replenishment.WindowState = FormWindowState.Maximized;
                 Replenishment.Show();
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+             if (Controls.Contains(Inout))
+            {
+                Storage.WindowState = FormWindowState.Maximized;
+                Storage.Show();
+            }
+            else
+            {
+                Storage = new StorageForm();
+                Storage.TopLevel = false;
+                Storage.Parent = splitContainer1.Panel2;
+                Storage.WindowState = FormWindowState.Maximized;
+                Storage.Show();
+            }
+            
         }
 
      

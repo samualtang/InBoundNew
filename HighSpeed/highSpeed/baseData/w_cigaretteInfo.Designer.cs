@@ -39,10 +39,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dgVprint1 = new VBprinter.DGVprint(this.components);
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.ItemNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShortName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +51,10 @@
             this.垛形 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.能否扫码 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.出库位置 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -175,10 +175,113 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1268, 345);
             this.dataGridView1.TabIndex = 30;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             this.dataGridView1.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView1_RowsAdded);
+            // 
+            // ItemNo
+            // 
+            this.ItemNo.DataPropertyName = "ItemNo";
+            this.ItemNo.HeaderText = "卷烟编号";
+            this.ItemNo.Name = "ItemNo";
+            this.ItemNo.ReadOnly = true;
+            this.ItemNo.Width = 200;
+            // 
+            // ItemName
+            // 
+            this.ItemName.DataPropertyName = "ItemName";
+            this.ItemName.HeaderText = "名称";
+            this.ItemName.Name = "ItemName";
+            this.ItemName.ReadOnly = true;
+            // 
+            // ShortName
+            // 
+            this.ShortName.DataPropertyName = "ShortName";
+            this.ShortName.HeaderText = "简称";
+            this.ShortName.Name = "ShortName";
+            this.ShortName.ReadOnly = true;
+            this.ShortName.Width = 200;
+            // 
+            // 件码
+            // 
+            this.件码.DataPropertyName = "bigbox_bar";
+            this.件码.HeaderText = "件码";
+            this.件码.Name = "件码";
+            // 
+            // 满盘数量
+            // 
+            this.满盘数量.DataPropertyName = "fullcount";
+            this.满盘数量.HeaderText = "满盘数量";
+            this.满盘数量.Name = "满盘数量";
+            // 
+            // 拆垛类型
+            // 
+            this.拆垛类型.HeaderText = "拆垛类型";
+            this.拆垛类型.Items.AddRange(new object[] {
+            "自动拆垛",
+            "人工拆垛"});
+            this.拆垛类型.Name = "拆垛类型";
+            this.拆垛类型.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.拆垛类型.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // 重量
+            // 
+            this.重量.DataPropertyName = "weight";
+            this.重量.HeaderText = "重量";
+            this.重量.Name = "重量";
+            // 
+            // 长度
+            // 
+            this.长度.DataPropertyName = "ILENGTH";
+            this.长度.HeaderText = "长度";
+            this.长度.Name = "长度";
+            // 
+            // 宽度
+            // 
+            this.宽度.DataPropertyName = "IWIDTH";
+            this.宽度.HeaderText = "宽度";
+            this.宽度.Name = "宽度";
+            // 
+            // 垛形
+            // 
+            this.垛形.DataPropertyName = "dxtype";
+            this.垛形.HeaderText = "垛形";
+            this.垛形.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"});
+            this.垛形.Name = "垛形";
+            this.垛形.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.垛形.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // 能否扫码
+            // 
+            this.能否扫码.DataPropertyName = "iscanscancodes";
+            this.能否扫码.HeaderText = "能否扫码";
+            this.能否扫码.Items.AddRange(new object[] {
+            "Yes",
+            "No"});
+            this.能否扫码.Name = "能否扫码";
+            // 
+            // 出库位置
+            // 
+            this.出库位置.DataPropertyName = "outtype";
+            this.出库位置.HeaderText = "出库位置";
+            this.出库位置.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.出库位置.Name = "出库位置";
+            this.出库位置.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // dgVprint1
             // 
@@ -331,108 +434,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "正在读取数据...";
             this.label2.Visible = false;
-            // 
-            // ItemNo
-            // 
-            this.ItemNo.DataPropertyName = "ItemNo";
-            this.ItemNo.HeaderText = "卷烟编号";
-            this.ItemNo.Name = "ItemNo";
-            this.ItemNo.ReadOnly = true;
-            this.ItemNo.Width = 200;
-            // 
-            // ItemName
-            // 
-            this.ItemName.DataPropertyName = "ItemName";
-            this.ItemName.HeaderText = "名称";
-            this.ItemName.Name = "ItemName";
-            this.ItemName.ReadOnly = true;
-            // 
-            // ShortName
-            // 
-            this.ShortName.DataPropertyName = "ShortName";
-            this.ShortName.HeaderText = "简称";
-            this.ShortName.Name = "ShortName";
-            this.ShortName.ReadOnly = true;
-            this.ShortName.Width = 200;
-            // 
-            // 件码
-            // 
-            this.件码.DataPropertyName = "bigbox_bar";
-            this.件码.HeaderText = "件码";
-            this.件码.Name = "件码";
-            // 
-            // 满盘数量
-            // 
-            this.满盘数量.DataPropertyName = "fullcount";
-            this.满盘数量.HeaderText = "满盘数量";
-            this.满盘数量.Name = "满盘数量";
-            // 
-            // 拆垛类型
-            // 
-            this.拆垛类型.HeaderText = "拆垛类型";
-            this.拆垛类型.Items.AddRange(new object[] {
-            "自动拆垛",
-            "人工拆垛"});
-            this.拆垛类型.Name = "拆垛类型";
-            this.拆垛类型.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.拆垛类型.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 重量
-            // 
-            this.重量.DataPropertyName = "weight";
-            this.重量.HeaderText = "重量";
-            this.重量.Name = "重量";
-            // 
-            // 长度
-            // 
-            this.长度.DataPropertyName = "ILENGTH";
-            this.长度.HeaderText = "长度";
-            this.长度.Name = "长度";
-            // 
-            // 宽度
-            // 
-            this.宽度.DataPropertyName = "IWIDTH";
-            this.宽度.HeaderText = "宽度";
-            this.宽度.Name = "宽度";
-            // 
-            // 垛形
-            // 
-            this.垛形.DataPropertyName = "dxtype";
-            this.垛形.HeaderText = "垛形";
-            this.垛形.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11"});
-            this.垛形.Name = "垛形";
-            this.垛形.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.垛形.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 能否扫码
-            // 
-            this.能否扫码.DataPropertyName = "iscanscancodes";
-            this.能否扫码.HeaderText = "能否扫码";
-            this.能否扫码.Items.AddRange(new object[] {
-            "Yes",
-            "No"});
-            this.能否扫码.Name = "能否扫码";
-            // 
-            // 出库位置
-            // 
-            this.出库位置.DataPropertyName = "outtype";
-            this.出库位置.HeaderText = "出库位置";
-            this.出库位置.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.出库位置.Name = "出库位置";
-            this.出库位置.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // w_cigaretteInfo
             // 

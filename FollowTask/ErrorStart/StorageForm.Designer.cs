@@ -1,6 +1,6 @@
 ﻿namespace FollowTask.ErrorStart
 {
-    partial class InOutForm
+    partial class StorageForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.Btn_Start = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -40,24 +37,13 @@
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.listBox4 = new System.Windows.Forms.ListBox();
+            this.Btn_Start = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Btn_Start
-            // 
-            this.Btn_Start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Btn_Start.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Start.Location = new System.Drawing.Point(27, 46);
-            this.Btn_Start.Name = "Btn_Start";
-            this.Btn_Start.Size = new System.Drawing.Size(121, 52);
-            this.Btn_Start.TabIndex = 21;
-            this.Btn_Start.Text = "开  始";
-            this.Btn_Start.UseVisualStyleBackColor = true;
-            this.Btn_Start.Click += new System.EventHandler(this.Btn_Start_Click);
             // 
             // tabControl1
             // 
@@ -68,11 +54,11 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(177, 25);
+            this.tabControl1.Location = new System.Drawing.Point(161, 70);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(399, 139);
-            this.tabControl1.TabIndex = 22;
+            this.tabControl1.Size = new System.Drawing.Size(618, 176);
+            this.tabControl1.TabIndex = 29;
             // 
             // tabPage1
             // 
@@ -81,9 +67,9 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(391, 113);
+            this.tabPage1.Size = new System.Drawing.Size(610, 150);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "   电  机   ";
+            this.tabPage1.Text = " 大 拔 杆  ";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // listBox1
@@ -93,9 +79,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(3, 2);
+            this.listBox1.Location = new System.Drawing.Point(1, 6);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(387, 100);
+            this.listBox1.Size = new System.Drawing.Size(606, 132);
             this.listBox1.TabIndex = 1;
             // 
             // tabPage2
@@ -105,9 +91,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(391, 113);
+            this.tabPage2.Size = new System.Drawing.Size(610, 150);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "   输 送 线   ";
+            this.tabPage2.Text = " 中 心 带 ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // listBox2
@@ -117,9 +103,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox2.FormattingEnabled = true;
             this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(3, 2);
+            this.listBox2.Location = new System.Drawing.Point(1, 6);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(387, 100);
+            this.listBox2.Size = new System.Drawing.Size(606, 132);
             this.listBox2.TabIndex = 8;
             // 
             // tabPage3
@@ -129,9 +115,9 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(391, 113);
+            this.tabPage3.Size = new System.Drawing.Size(610, 150);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "   码 分 机   ";
+            this.tabPage3.Text = " 通 道 机 ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // listBox3
@@ -141,9 +127,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox3.FormattingEnabled = true;
             this.listBox3.ItemHeight = 16;
-            this.listBox3.Location = new System.Drawing.Point(3, 2);
+            this.listBox3.Location = new System.Drawing.Point(1, 6);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(387, 100);
+            this.listBox3.Size = new System.Drawing.Size(606, 132);
             this.listBox3.TabIndex = 7;
             // 
             // tabPage4
@@ -153,9 +139,9 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(391, 113);
+            this.tabPage4.Size = new System.Drawing.Size(610, 150);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "   入 库 队 列   ";
+            this.tabPage4.Text = " 输 送 线 ";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // listBox4
@@ -165,21 +151,31 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox4.FormattingEnabled = true;
             this.listBox4.ItemHeight = 16;
-            this.listBox4.Location = new System.Drawing.Point(3, 2);
+            this.listBox4.Location = new System.Drawing.Point(1, 6);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(387, 100);
+            this.listBox4.Size = new System.Drawing.Size(606, 132);
             this.listBox4.TabIndex = 7;
             // 
-            // InOutForm
+            // Btn_Start
+            // 
+            this.Btn_Start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Btn_Start.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Start.Location = new System.Drawing.Point(25, 93);
+            this.Btn_Start.Name = "Btn_Start";
+            this.Btn_Start.Size = new System.Drawing.Size(121, 45);
+            this.Btn_Start.TabIndex = 28;
+            this.Btn_Start.Text = "开  始";
+            this.Btn_Start.UseVisualStyleBackColor = true;
+            // 
+            // StorageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 218);
+            this.ClientSize = new System.Drawing.Size(805, 316);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.Btn_Start);
-            this.Name = "InOutForm";
-            this.Text = "InOutForm";
-            this.Load += new System.EventHandler(this.InOutForm_Load);
+            this.Name = "StorageForm";
+            this.Text = "StorageForm";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -191,8 +187,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button Btn_Start;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ListBox listBox1;
@@ -202,7 +196,6 @@
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListBox listBox4;
-
-
+        private System.Windows.Forms.Button Btn_Start;
     }
 }

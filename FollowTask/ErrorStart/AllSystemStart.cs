@@ -34,6 +34,7 @@ namespace FollowTask.ErrorStart
         public static String FJOpcServer3Name = "S7:[FJConnectionGroup3]";
         public static String FJOpcServer4Name = "S7:[FJConnectionGroup4]";
         public static String InOutOpcServerName = "S7:[InOutConnection]";
+        public static String ReplenishmentOpcServerName = "S7:[ReplenishmentConnection]";
         List<Group> ListSort = new List<Group>();
 
         List<string> str1 = new List<string>();
@@ -42,7 +43,7 @@ namespace FollowTask.ErrorStart
         List<string> str4 = new List<string>();
 
         Group FJOpcServer1, FJOpcServer2, FJOpcServer3, FJOpcServer4;
-        Group InOutcServer;
+        Group InOutcServer, ReplenishmentServer;
 
         public void Connction()
         {
@@ -67,6 +68,8 @@ namespace FollowTask.ErrorStart
             FJOpcServer3 = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);
             FJOpcServer4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
             InOutcServer = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
+            ReplenishmentServer = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
+            
         }
 
         /// <summary>
@@ -293,7 +296,7 @@ namespace FollowTask.ErrorStart
          /// <summary>
         /// 数据库获取 补货区 故障信息地址
        /// </summary>
-       /// <param name="tag">1大拔杆、2中心带、3通道机、4输送带</param>
+       /// <param name="tag">1大拔杆、2中心带、3通道机、4输送带、5一组重力式货架、6二组重力式货架</param>
         /// <returns>出入库 地址集合</returns>
         public List<Abnormallists> GetReplenishmentOpcServerItem(int tag)
         {
@@ -302,7 +305,57 @@ namespace FollowTask.ErrorStart
             {
                 if (tag == 1)
                 {
-                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]" && x.ERRORMSG == "大拨杆虚拟设备").Select(x => new Abnormallists
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    List<Abnormallists> content = list.Where(x => x.TYPE == "1" ).Select(x => x).ToList();
+                    List<Abnormallists> head = list.Where(x => x.TYPE == "2" && x.ERRORMSG == "大拨杆虚拟设备").Select(x => x).ToList();
+                    foreach (var item in head)
+                    {
+                        foreach (var it in content)
+                        {
+                            Abnormallists data = new Abnormallists();
+                            string DB = ((Convert.ToDouble(item.MACHINESEQ) - 1000) * 2 + Convert.ToDouble(it.OFFSET)).ToString();
+                            data.DECICENO = it.DECICENO + "," + DB;
+                            data.ERRORMSG = item.MACHINESEQ+""+item.ERRORMSG + "," + it.ERRORMSG;
+                            DBList.Add(data);
+                        }
+                    }
+                }
+                if (tag == 2)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "补货区" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    List<Abnormallists> content = list.Where(x => x.TYPE == "1").Select(x => x).ToList();
+                    List<Abnormallists> head = list.Where(x => x.TYPE == "2" && x.ERRORMSG == "中心带虚拟设备号").Select(x => x).ToList();
+                    foreach (var item in head)
+                    {
+                        foreach (var it in content)
+                        {
+                            Abnormallists data = new Abnormallists();
+                            string DB = ((Convert.ToDouble(item.MACHINESEQ) - 1000) * 2 + Convert.ToDouble(it.OFFSET)).ToString();
+                            data.DECICENO = it.DECICENO + "," + DB;
+                            data.ERRORMSG = item.ERRORMSG + "" + item.MACHINESEQ + "," + it.ERRORMSG;
+                            DBList.Add(data);
+                        }
+                    }
+                }
+                if (tag == 3)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "通道机" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
                     {
                         AREANAME = x.AREANAME,
                         ERRORMSG = x.ERRORMSG,
@@ -320,14 +373,67 @@ namespace FollowTask.ErrorStart
                             Abnormallists data = new Abnormallists();
                             string DB = ((Convert.ToDouble(item.MACHINESEQ) - 1000) * 2 + Convert.ToDouble(it.OFFSET)).ToString();
                             data.DECICENO = it.DECICENO + "," + DB;
-                            data.ERRORMSG = item.MACHINESEQ+""+item.ERRORMSG + "" + it.ERRORMSG;
+                            data.ERRORMSG = item.ERRORMSG + "," + it.ERRORMSG;
                             DBList.Add(data);
                         }
                     }
                 }
+                if (tag == 4)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "输送线" && x.AREAPLC == "S7:[ReplenishmentConnection]").Select(x => new Abnormallists
+                                    {
+                                        AREANAME = x.AREANAME,
+                                        ERRORMSG = x.ERRORMSG,
+                                        DECICENO = x.DECICENO,
+                                        OFFSET = x.OFFSET,
+                                        MACHINESEQ = x.MACHINESEQ,
+                                        TYPE = x.TYPE
+                                    }).ToList();
 
+                    DBList = list; 
+                }
                 return DBList;
             }
+        }
+
+        /// <summary>
+        /// 重力式货架地址
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public List<Abnormallists> GetStorageOpcServerItem(int tag)
+        {
+            List<Abnormallists> DBList = new List<Abnormallists>();
+            using (Entities et = new Entities())
+            {
+                if (tag == 1)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "一组重力式货架" && x.AREAPLC == "S7:[StorageConnection1]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    DBList = list;
+                }
+                if (tag == 2)
+                {
+                    var list = et.T_WMS_ABNORMALLIST.Where(x => x.AREANAME == "二组重力式货架" && x.AREAPLC == "S7:[StorageConnection2]").Select(x => new Abnormallists
+                    {
+                        AREANAME = x.AREANAME,
+                        ERRORMSG = x.ERRORMSG,
+                        DECICENO = x.DECICENO,
+                        OFFSET = x.OFFSET,
+                        MACHINESEQ = x.MACHINESEQ,
+                        TYPE = x.TYPE
+                    }).ToList();
+                    DBList = list;
+                }
+            } 
+            return DBList;
         }
 
         /// <summary>
@@ -385,7 +491,7 @@ namespace FollowTask.ErrorStart
             return list;
         }
         /// <summary>
-        ///    1大拔杆、2中心带、3通道机、4输送带
+        ///    补货区
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
@@ -401,6 +507,23 @@ namespace FollowTask.ErrorStart
             }
             return list;
         }
-
+        /// <summary>
+        ///  重力式货架
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public List<ErrorInfo> GetStoragePlcAdress(int tag)
+        {
+            List<ErrorInfo> list = new List<ErrorInfo>();
+            foreach (var item in GetStorageOpcServerItem(tag))
+            {
+                ErrorInfo info = new ErrorInfo();
+                info.DBAdress = item.DECICENO + "," + item.OFFSET;
+                info.ErrorMsg = item.ERRORMSG;
+                list.Add(info);
+            }
+            return list;
+        }
+      
     }
 }

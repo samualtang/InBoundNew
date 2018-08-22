@@ -87,6 +87,7 @@
     <Compile Include="DataModle\ErrorInfo.cs" />
     <Compile Include="DataModle\ErrorState.cs" />
     <Compile Include="DataModle\InOutData.cs" />
+    <Compile Include="DataModle\ReplenishmentData.cs" />
     <Compile Include="DataModle\SortData.cs" />
     <Compile Include="DeviceState.cs" />
     <Compile Include="ErrorStart\AllSystemStart.cs" />
@@ -119,6 +120,12 @@
     </Compile>
     <Compile Include="ErrorStart\SortForm.Designer.cs">
       <DependentUpon>SortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStart\StorageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\StorageForm.Designer.cs">
+      <DependentUpon>StorageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorStart\UnionForm.cs">
       <SubType>Form</SubType>
@@ -253,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\SortForm.resx">
       <DependentUpon>SortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStart\StorageForm.resx">
+      <DependentUpon>StorageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\UnionForm.resx">
       <DependentUpon>UnionForm.cs</DependentUpon>
