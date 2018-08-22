@@ -27,7 +27,7 @@ namespace FollowTask.ErrorStart
        IOPCServer pIOPCServer;     */
         SortForm sort; 
         InOutForm Inout;
-
+        ReplenishmentForm Replenishment;
     
         Group FJPlcAdress;
         Thread td;
@@ -637,6 +637,23 @@ namespace FollowTask.ErrorStart
                 Inout.Show();
             }
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (Controls.Contains(Inout))
+            {
+                Replenishment.WindowState = FormWindowState.Maximized;
+                Replenishment.Show();
+            }
+            else
+            {
+                Replenishment = new ReplenishmentForm();
+                Replenishment.TopLevel = false;
+                Replenishment.Parent = splitContainer1.Panel2;
+                Replenishment.WindowState = FormWindowState.Maximized;
+                Replenishment.Show();
+            }
         }
 
      

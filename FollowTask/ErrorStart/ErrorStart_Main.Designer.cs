@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.b3_3 = new System.Windows.Forms.Button();
+            this.b3_2 = new System.Windows.Forms.Button();
+            this.b3_4 = new System.Windows.Forms.Button();
+            this.b3_1 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -38,12 +42,9 @@
             this.b1_f2 = new System.Windows.Forms.Button();
             this.b7 = new System.Windows.Forms.Button();
             this.b1_f4 = new System.Windows.Forms.Button();
-            this.Btn_start = new System.Windows.Forms.Button();
             this.b1_f1 = new System.Windows.Forms.Button();
             this.b6 = new System.Windows.Forms.Button();
-            this.btn_sort = new System.Windows.Forms.Button();
             this.b5 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.b4 = new System.Windows.Forms.Button();
             this.btn_inout = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -51,10 +52,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.b3_3 = new System.Windows.Forms.Button();
-            this.b3_2 = new System.Windows.Forms.Button();
-            this.b3_4 = new System.Windows.Forms.Button();
-            this.b3_1 = new System.Windows.Forms.Button();
+            this.Btn_start = new System.Windows.Forms.Button();
+            this.btn_sort = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -103,6 +103,38 @@
             this.splitContainer1.Size = new System.Drawing.Size(1233, 644);
             this.splitContainer1.SplitterDistance = 452;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // b3_3
+            // 
+            this.b3_3.Location = new System.Drawing.Point(187, 317);
+            this.b3_3.Name = "b3_3";
+            this.b3_3.Size = new System.Drawing.Size(29, 13);
+            this.b3_3.TabIndex = 25;
+            this.b3_3.UseVisualStyleBackColor = true;
+            // 
+            // b3_2
+            // 
+            this.b3_2.Location = new System.Drawing.Point(187, 304);
+            this.b3_2.Name = "b3_2";
+            this.b3_2.Size = new System.Drawing.Size(29, 13);
+            this.b3_2.TabIndex = 24;
+            this.b3_2.UseVisualStyleBackColor = true;
+            // 
+            // b3_4
+            // 
+            this.b3_4.Location = new System.Drawing.Point(187, 330);
+            this.b3_4.Name = "b3_4";
+            this.b3_4.Size = new System.Drawing.Size(29, 13);
+            this.b3_4.TabIndex = 23;
+            this.b3_4.UseVisualStyleBackColor = true;
+            // 
+            // b3_1
+            // 
+            this.b3_1.Location = new System.Drawing.Point(187, 291);
+            this.b3_1.Name = "b3_1";
+            this.b3_1.Size = new System.Drawing.Size(29, 13);
+            this.b3_1.TabIndex = 22;
+            this.b3_1.UseVisualStyleBackColor = true;
             // 
             // button9
             // 
@@ -181,17 +213,6 @@
             this.b1_f4.TabIndex = 18;
             this.b1_f4.UseVisualStyleBackColor = true;
             // 
-            // Btn_start
-            // 
-            this.Btn_start.BackgroundImage = global::FollowTask.Properties.Resources.自检;
-            this.Btn_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Btn_start.Location = new System.Drawing.Point(38, 28);
-            this.Btn_start.Name = "Btn_start";
-            this.Btn_start.Size = new System.Drawing.Size(340, 84);
-            this.Btn_start.TabIndex = 1;
-            this.Btn_start.UseVisualStyleBackColor = true;
-            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
-            // 
             // b1_f1
             // 
             this.b1_f1.Location = new System.Drawing.Point(187, 172);
@@ -208,17 +229,6 @@
             this.b6.TabIndex = 15;
             this.b6.UseVisualStyleBackColor = true;
             // 
-            // btn_sort
-            // 
-            this.btn_sort.BackgroundImage = global::FollowTask.Properties.Resources.预分拣;
-            this.btn_sort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_sort.Location = new System.Drawing.Point(12, 172);
-            this.btn_sort.Name = "btn_sort";
-            this.btn_sort.Size = new System.Drawing.Size(176, 52);
-            this.btn_sort.TabIndex = 2;
-            this.btn_sort.UseVisualStyleBackColor = true;
-            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
-            // 
             // b5
             // 
             this.b5.Location = new System.Drawing.Point(188, 409);
@@ -226,16 +236,6 @@
             this.b5.Size = new System.Drawing.Size(29, 52);
             this.b5.TabIndex = 14;
             this.b5.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.BackgroundImage = global::FollowTask.Properties.Resources.合流;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Location = new System.Drawing.Point(12, 231);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(176, 52);
-            this.button2.TabIndex = 3;
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // b4
             // 
@@ -261,7 +261,9 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(176, 52);
             this.button4.TabIndex = 5;
+            this.button4.Text = "补货区";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // b2
             // 
@@ -297,37 +299,37 @@
             this.button8.Text = "备烟区域";
             this.button8.UseVisualStyleBackColor = true;
             // 
-            // b3_3
+            // Btn_start
             // 
-            this.b3_3.Location = new System.Drawing.Point(187, 317);
-            this.b3_3.Name = "b3_3";
-            this.b3_3.Size = new System.Drawing.Size(29, 13);
-            this.b3_3.TabIndex = 25;
-            this.b3_3.UseVisualStyleBackColor = true;
+            this.Btn_start.BackgroundImage = global::FollowTask.Properties.Resources.自检;
+            this.Btn_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_start.Location = new System.Drawing.Point(38, 28);
+            this.Btn_start.Name = "Btn_start";
+            this.Btn_start.Size = new System.Drawing.Size(340, 84);
+            this.Btn_start.TabIndex = 1;
+            this.Btn_start.UseVisualStyleBackColor = true;
+            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
             // 
-            // b3_2
+            // btn_sort
             // 
-            this.b3_2.Location = new System.Drawing.Point(187, 304);
-            this.b3_2.Name = "b3_2";
-            this.b3_2.Size = new System.Drawing.Size(29, 13);
-            this.b3_2.TabIndex = 24;
-            this.b3_2.UseVisualStyleBackColor = true;
+            this.btn_sort.BackgroundImage = global::FollowTask.Properties.Resources.预分拣;
+            this.btn_sort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_sort.Location = new System.Drawing.Point(12, 172);
+            this.btn_sort.Name = "btn_sort";
+            this.btn_sort.Size = new System.Drawing.Size(176, 52);
+            this.btn_sort.TabIndex = 2;
+            this.btn_sort.UseVisualStyleBackColor = true;
+            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
             // 
-            // b3_4
+            // button2
             // 
-            this.b3_4.Location = new System.Drawing.Point(187, 330);
-            this.b3_4.Name = "b3_4";
-            this.b3_4.Size = new System.Drawing.Size(29, 13);
-            this.b3_4.TabIndex = 23;
-            this.b3_4.UseVisualStyleBackColor = true;
-            // 
-            // b3_1
-            // 
-            this.b3_1.Location = new System.Drawing.Point(187, 291);
-            this.b3_1.Name = "b3_1";
-            this.b3_1.Size = new System.Drawing.Size(29, 13);
-            this.b3_1.TabIndex = 22;
-            this.b3_1.UseVisualStyleBackColor = true;
+            this.button2.BackgroundImage = global::FollowTask.Properties.Resources.合流;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(12, 231);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(176, 52);
+            this.button2.TabIndex = 3;
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // ErrorStart_Main
             // 
