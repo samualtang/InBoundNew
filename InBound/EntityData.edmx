@@ -380,6 +380,7 @@
           <Property Name="WORKSOURCE" Type="varchar2" MaxLength="20" />
           <Property Name="ROLEID" Type="number" Precision="6" />
           <Property Name="WECHATUSERID" Type="varchar2" MaxLength="50" />
+          <Property Name="DINGTALKUSERID" Type="varchar2" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
       警告 6002: 表/视图“ZOOMTEL.T_UN_CACHE”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
@@ -706,6 +707,8 @@
           <Property Name="JT_SIZE" Type="number" Precision="20" Scale="2" />
           <Property Name="WZ_SIZE" Type="number" Precision="20" Scale="2" />
           <Property Name="OUTTYPE" Type="number" />
+          <Property Name="ILENGTH" Type="number" />
+          <Property Name="IWIDTH" Type="number" />
         </EntityType>
         <EntityType Name="T_WMS_LANEWAY">
           <Key>
@@ -887,7 +890,6 @@
       <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_WMS_CONSIGNOR" EntityType="Model.T_WMS_CONSIGNOR" />
-          <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
           <EntitySet Name="T_WMS_LANEWAY" EntityType="Model.T_WMS_LANEWAY" />
           <EntitySet Name="T_WMS_OUTBOUND_LINE" EntityType="Model.T_WMS_OUTBOUND_LINE" />
           <EntitySet Name="T_WMS_REF_PALLET_RFID" EntityType="Model.T_WMS_REF_PALLET_RFID" />
@@ -942,6 +944,7 @@
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.T_PRODUCE_POKESEQ" />
           <EntitySet Name="T_UN_CACHE" EntityType="Model.T_UN_CACHE" />
           <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.T_WMS_ABNORMALLIST" />
+          <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -952,55 +955,6 @@
           <Property Type="String" Name="COMAPANY" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CONTACT" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PHONE" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="T_WMS_ITEM">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="String" Name="ID" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DCNO" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="SHIPPER_ID" Precision="38" Scale="0" />
-          <Property Type="String" Name="ITEMNO" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ITEMNAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SHORTNAME" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SPEC" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ABCCODE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="ITEMPRICE" Precision="18" Scale="6" />
-          <Property Type="String" Name="SHIPTYPE" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="ITEMTYPE_ID" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PRODUCEAREA" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="MANUFACTURER_ID" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="VENDOR_ID" Precision="38" Scale="0" />
-          <Property Type="String" Name="BASEUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DEFAULTUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="STORAGECONDITION" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ISLOTCTRL" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="SHELFLIFE" Precision="38" Scale="0" />
-          <Property Type="String" Name="SHELFLIFETYPE" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Type="Int16" Name="PALLETRATIO" />
-          <Property Type="DateTime" Name="CREATETIME" />
-          <Property Type="String" Name="CREATEUSER" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="MODIFYTIME" />
-          <Property Type="String" Name="MODIFYUSER" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ROWSTATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="CATID" Precision="38" Scale="0" />
-          <Property Type="String" Name="BIGBOX_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PACK_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ITEM_KIND" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="KIND" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="H_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="T_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="J_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="W_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="X_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="WEIGHT" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="FULLCOUNT" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="CDTYPE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="ISCANSCANCODE" Precision="38" Scale="0" />
-          <Property Type="String" Name="DXTYPE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="JT_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="WZ_SIZE" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="OUTTYPE" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="T_WMS_LANEWAY">
           <Key>
@@ -1494,6 +1448,7 @@
           <Property Type="String" Name="WORKSOURCE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="ROLEID" />
           <Property Type="String" Name="WECHATUSERID" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DINGTALKUSERID" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -1746,6 +1701,57 @@
           <Property Type="String" Name="MACHINESEQ" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TYPE" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="T_WMS_ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DCNO" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SHIPPER_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="ITEMNO" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ITEMNAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SHORTNAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SPEC" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ABCCODE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ITEMPRICE" Precision="18" Scale="6" />
+          <Property Type="String" Name="SHIPTYPE" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="ITEMTYPE_ID" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PRODUCEAREA" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="MANUFACTURER_ID" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="VENDOR_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="BASEUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DEFAULTUOM_ID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STORAGECONDITION" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ISLOTCTRL" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SHELFLIFE" Precision="38" Scale="0" />
+          <Property Type="String" Name="SHELFLIFETYPE" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="PALLETRATIO" />
+          <Property Type="DateTime" Name="CREATETIME" />
+          <Property Type="String" Name="CREATEUSER" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="MODIFYTIME" />
+          <Property Type="String" Name="MODIFYUSER" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ROWSTATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CATID" Precision="38" Scale="0" />
+          <Property Type="String" Name="BIGBOX_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PACK_BAR" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ITEM_KIND" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="KIND" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="H_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="T_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="J_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="W_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="X_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="WEIGHT" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="FULLCOUNT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="CDTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ISCANSCANCODE" Precision="38" Scale="0" />
+          <Property Type="String" Name="DXTYPE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="JT_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="WZ_SIZE" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="OUTTYPE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ILENGTH" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="IWIDTH" Precision="38" Scale="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1759,56 +1765,6 @@
                 <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
                 <ScalarProperty Name="COMAPANY" ColumnName="COMAPANY" />
                 <ScalarProperty Name="CODE" ColumnName="CODE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="T_WMS_ITEM">
-            <EntityTypeMapping TypeName="Model.T_WMS_ITEM">
-              <MappingFragment StoreEntitySet="T_WMS_ITEM">
-                <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />
-                <ScalarProperty Name="WZ_SIZE" ColumnName="WZ_SIZE" />
-                <ScalarProperty Name="JT_SIZE" ColumnName="JT_SIZE" />
-                <ScalarProperty Name="DXTYPE" ColumnName="DXTYPE" />
-                <ScalarProperty Name="ISCANSCANCODE" ColumnName="ISCANSCANCODE" />
-                <ScalarProperty Name="CDTYPE" ColumnName="CDTYPE" />
-                <ScalarProperty Name="FULLCOUNT" ColumnName="FULLCOUNT" />
-                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
-                <ScalarProperty Name="X_SIZE" ColumnName="X_SIZE" />
-                <ScalarProperty Name="W_SIZE" ColumnName="W_SIZE" />
-                <ScalarProperty Name="J_SIZE" ColumnName="J_SIZE" />
-                <ScalarProperty Name="T_SIZE" ColumnName="T_SIZE" />
-                <ScalarProperty Name="H_SIZE" ColumnName="H_SIZE" />
-                <ScalarProperty Name="KIND" ColumnName="KIND" />
-                <ScalarProperty Name="ITEM_KIND" ColumnName="ITEM_KIND" />
-                <ScalarProperty Name="PACK_BAR" ColumnName="PACK_BAR" />
-                <ScalarProperty Name="BIGBOX_BAR" ColumnName="BIGBOX_BAR" />
-                <ScalarProperty Name="CATID" ColumnName="CATID" />
-                <ScalarProperty Name="ROWSTATUS" ColumnName="ROWSTATUS" />
-                <ScalarProperty Name="MODIFYUSER" ColumnName="MODIFYUSER" />
-                <ScalarProperty Name="MODIFYTIME" ColumnName="MODIFYTIME" />
-                <ScalarProperty Name="CREATEUSER" ColumnName="CREATEUSER" />
-                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
-                <ScalarProperty Name="PALLETRATIO" ColumnName="PALLETRATIO" />
-                <ScalarProperty Name="SHELFLIFETYPE" ColumnName="SHELFLIFETYPE" />
-                <ScalarProperty Name="SHELFLIFE" ColumnName="SHELFLIFE" />
-                <ScalarProperty Name="ISLOTCTRL" ColumnName="ISLOTCTRL" />
-                <ScalarProperty Name="STORAGECONDITION" ColumnName="STORAGECONDITION" />
-                <ScalarProperty Name="DEFAULTUOM_ID" ColumnName="DEFAULTUOM_ID" />
-                <ScalarProperty Name="BASEUOM_ID" ColumnName="BASEUOM_ID" />
-                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
-                <ScalarProperty Name="MANUFACTURER_ID" ColumnName="MANUFACTURER_ID" />
-                <ScalarProperty Name="PRODUCEAREA" ColumnName="PRODUCEAREA" />
-                <ScalarProperty Name="ITEMTYPE_ID" ColumnName="ITEMTYPE_ID" />
-                <ScalarProperty Name="SHIPTYPE" ColumnName="SHIPTYPE" />
-                <ScalarProperty Name="ITEMPRICE" ColumnName="ITEMPRICE" />
-                <ScalarProperty Name="ABCCODE" ColumnName="ABCCODE" />
-                <ScalarProperty Name="SPEC" ColumnName="SPEC" />
-                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
-                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
-                <ScalarProperty Name="ITEMNO" ColumnName="ITEMNO" />
-                <ScalarProperty Name="SHIPPER_ID" ColumnName="SHIPPER_ID" />
-                <ScalarProperty Name="DCNO" ColumnName="DCNO" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2268,6 +2224,7 @@
           <EntitySetMapping Name="T_SYS_USER">
             <EntityTypeMapping TypeName="Model.T_SYS_USER">
               <MappingFragment StoreEntitySet="T_SYS_USER">
+                <ScalarProperty Name="DINGTALKUSERID" ColumnName="DINGTALKUSERID" />
                 <ScalarProperty Name="WECHATUSERID" ColumnName="WECHATUSERID" />
                 <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
                 <ScalarProperty Name="WORKSOURCE" ColumnName="WORKSOURCE" />
@@ -2595,6 +2552,58 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_WMS_ITEM">
+            <EntityTypeMapping TypeName="Model.T_WMS_ITEM">
+              <MappingFragment StoreEntitySet="T_WMS_ITEM">
+                <ScalarProperty Name="IWIDTH" ColumnName="IWIDTH" />
+                <ScalarProperty Name="ILENGTH" ColumnName="ILENGTH" />
+                <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />
+                <ScalarProperty Name="WZ_SIZE" ColumnName="WZ_SIZE" />
+                <ScalarProperty Name="JT_SIZE" ColumnName="JT_SIZE" />
+                <ScalarProperty Name="DXTYPE" ColumnName="DXTYPE" />
+                <ScalarProperty Name="ISCANSCANCODE" ColumnName="ISCANSCANCODE" />
+                <ScalarProperty Name="CDTYPE" ColumnName="CDTYPE" />
+                <ScalarProperty Name="FULLCOUNT" ColumnName="FULLCOUNT" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="X_SIZE" ColumnName="X_SIZE" />
+                <ScalarProperty Name="W_SIZE" ColumnName="W_SIZE" />
+                <ScalarProperty Name="J_SIZE" ColumnName="J_SIZE" />
+                <ScalarProperty Name="T_SIZE" ColumnName="T_SIZE" />
+                <ScalarProperty Name="H_SIZE" ColumnName="H_SIZE" />
+                <ScalarProperty Name="KIND" ColumnName="KIND" />
+                <ScalarProperty Name="ITEM_KIND" ColumnName="ITEM_KIND" />
+                <ScalarProperty Name="PACK_BAR" ColumnName="PACK_BAR" />
+                <ScalarProperty Name="BIGBOX_BAR" ColumnName="BIGBOX_BAR" />
+                <ScalarProperty Name="CATID" ColumnName="CATID" />
+                <ScalarProperty Name="ROWSTATUS" ColumnName="ROWSTATUS" />
+                <ScalarProperty Name="MODIFYUSER" ColumnName="MODIFYUSER" />
+                <ScalarProperty Name="MODIFYTIME" ColumnName="MODIFYTIME" />
+                <ScalarProperty Name="CREATEUSER" ColumnName="CREATEUSER" />
+                <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+                <ScalarProperty Name="PALLETRATIO" ColumnName="PALLETRATIO" />
+                <ScalarProperty Name="SHELFLIFETYPE" ColumnName="SHELFLIFETYPE" />
+                <ScalarProperty Name="SHELFLIFE" ColumnName="SHELFLIFE" />
+                <ScalarProperty Name="ISLOTCTRL" ColumnName="ISLOTCTRL" />
+                <ScalarProperty Name="STORAGECONDITION" ColumnName="STORAGECONDITION" />
+                <ScalarProperty Name="DEFAULTUOM_ID" ColumnName="DEFAULTUOM_ID" />
+                <ScalarProperty Name="BASEUOM_ID" ColumnName="BASEUOM_ID" />
+                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
+                <ScalarProperty Name="MANUFACTURER_ID" ColumnName="MANUFACTURER_ID" />
+                <ScalarProperty Name="PRODUCEAREA" ColumnName="PRODUCEAREA" />
+                <ScalarProperty Name="ITEMTYPE_ID" ColumnName="ITEMTYPE_ID" />
+                <ScalarProperty Name="SHIPTYPE" ColumnName="SHIPTYPE" />
+                <ScalarProperty Name="ITEMPRICE" ColumnName="ITEMPRICE" />
+                <ScalarProperty Name="ABCCODE" ColumnName="ABCCODE" />
+                <ScalarProperty Name="SPEC" ColumnName="SPEC" />
+                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+                <ScalarProperty Name="ITEMNO" ColumnName="ITEMNO" />
+                <ScalarProperty Name="SHIPPER_ID" ColumnName="SHIPPER_ID" />
+                <ScalarProperty Name="DCNO" ColumnName="DCNO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2617,7 +2626,6 @@
     <Diagrams>
       <Diagram Name="EntityData" ZoomLevel="55">
         <EntityTypeShape EntityType="Model.T_WMS_CONSIGNOR" Width="1.5" PointX="6.75" PointY="6.75" Height="1.9202278645833246" />
-        <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="4.75" PointY="9.75" Height="7.8336393229166674" />
         <EntityTypeShape EntityType="Model.T_WMS_LANEWAY" Width="1.5" PointX="10.75" PointY="0.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.T_WMS_OUTBOUND_LINE" Width="1.5" PointX="10.75" PointY="7.75" Height="2.1050219726562602" />
         <EntityTypeShape EntityType="Model.T_WMS_REF_PALLET_RFID" Width="1.5" PointX="10.75" PointY="10.75" Height="1.5506396484375102" />
@@ -2655,6 +2663,7 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_POKESEQ" Width="1.5" PointX="9.375" PointY="19.75" Height="3.5833748372395746" />
         <EntityTypeShape EntityType="Model.T_UN_CACHE" Width="1.5" PointX="22.375" PointY="19.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_WMS_ABNORMALLIST" Width="1.5" PointX="7.375" PointY="9.75" Height="1.9202278645833246" />
+        <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="3.375" PointY="7.75" Height="9.4967862955729174" />
       </Diagram>
     </Diagrams>
   </Designer>

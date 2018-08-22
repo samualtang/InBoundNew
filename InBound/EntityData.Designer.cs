@@ -84,22 +84,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_WMS_ITEM> T_WMS_ITEM
-        {
-            get
-            {
-                if ((_T_WMS_ITEM == null))
-                {
-                    _T_WMS_ITEM = base.CreateObjectSet<T_WMS_ITEM>("T_WMS_ITEM");
-                }
-                return _T_WMS_ITEM;
-            }
-        }
-        private ObjectSet<T_WMS_ITEM> _T_WMS_ITEM;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_LANEWAY> T_WMS_LANEWAY
         {
             get
@@ -688,6 +672,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_WMS_ABNORMALLIST> _T_WMS_ABNORMALLIST;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_WMS_ITEM> T_WMS_ITEM
+        {
+            get
+            {
+                if ((_T_WMS_ITEM == null))
+                {
+                    _T_WMS_ITEM = base.CreateObjectSet<T_WMS_ITEM>("T_WMS_ITEM");
+                }
+                return _T_WMS_ITEM;
+            }
+        }
+        private ObjectSet<T_WMS_ITEM> _T_WMS_ITEM;
 
         #endregion
 
@@ -699,14 +699,6 @@ namespace InBound
         public void AddToT_WMS_CONSIGNOR(T_WMS_CONSIGNOR t_WMS_CONSIGNOR)
         {
             base.AddObject("T_WMS_CONSIGNOR", t_WMS_CONSIGNOR);
-        }
-    
-        /// <summary>
-        /// 用于向 T_WMS_ITEM EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_WMS_ITEM(T_WMS_ITEM t_WMS_ITEM)
-        {
-            base.AddObject("T_WMS_ITEM", t_WMS_ITEM);
         }
     
         /// <summary>
@@ -1003,6 +995,14 @@ namespace InBound
         public void AddToT_WMS_ABNORMALLIST(T_WMS_ABNORMALLIST t_WMS_ABNORMALLIST)
         {
             base.AddObject("T_WMS_ABNORMALLIST", t_WMS_ABNORMALLIST);
+        }
+    
+        /// <summary>
+        /// 用于向 T_WMS_ITEM EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_WMS_ITEM(T_WMS_ITEM t_WMS_ITEM)
+        {
+            base.AddObject("T_WMS_ITEM", t_WMS_ITEM);
         }
 
         #endregion
@@ -7526,6 +7526,30 @@ namespace InBound
         private global::System.String _WECHATUSERID;
         partial void OnWECHATUSERIDChanging(global::System.String value);
         partial void OnWECHATUSERIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DINGTALKUSERID
+        {
+            get
+            {
+                return _DINGTALKUSERID;
+            }
+            set
+            {
+                OnDINGTALKUSERIDChanging(value);
+                ReportPropertyChanging("DINGTALKUSERID");
+                _DINGTALKUSERID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DINGTALKUSERID");
+                OnDINGTALKUSERIDChanged();
+            }
+        }
+        private global::System.String _DINGTALKUSERID;
+        partial void OnDINGTALKUSERIDChanging(global::System.String value);
+        partial void OnDINGTALKUSERIDChanged();
 
         #endregion
 
@@ -13699,6 +13723,54 @@ namespace InBound
         private Nullable<global::System.Decimal> _OUTTYPE;
         partial void OnOUTTYPEChanging(Nullable<global::System.Decimal> value);
         partial void OnOUTTYPEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ILENGTH
+        {
+            get
+            {
+                return _ILENGTH;
+            }
+            set
+            {
+                OnILENGTHChanging(value);
+                ReportPropertyChanging("ILENGTH");
+                _ILENGTH = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ILENGTH");
+                OnILENGTHChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ILENGTH;
+        partial void OnILENGTHChanging(Nullable<global::System.Decimal> value);
+        partial void OnILENGTHChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> IWIDTH
+        {
+            get
+            {
+                return _IWIDTH;
+            }
+            set
+            {
+                OnIWIDTHChanging(value);
+                ReportPropertyChanging("IWIDTH");
+                _IWIDTH = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IWIDTH");
+                OnIWIDTHChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _IWIDTH;
+        partial void OnIWIDTHChanging(Nullable<global::System.Decimal> value);
+        partial void OnIWIDTHChanged();
 
         #endregion
 
