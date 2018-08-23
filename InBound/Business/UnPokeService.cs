@@ -552,7 +552,7 @@ namespace InBound.Business
         }
 
         /// <summary>
-        /// 烟仓数据
+        /// 异形烟数据
         /// </summary>
         /// <param name="takeSize"></param>
         /// <param name="lineNum"></param>
@@ -569,53 +569,155 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
-                var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-                var query = (from item in data.T_UN_POKE where item.SENDTASKNUM == Sendtasknum.SENDTASKNUM orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
-                if (query == null)
+                //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
+                var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
+                if (query == null)//如果没有则 无任务s
                 {
                     outlist = new List<T_UN_POKE>();
                     outStr = null;
                     return values;
                 }
                 decimal machineseq = 0;
-                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.STATUS == 10  orderby task.SORTNUM select task).Take(15).ToList();
+                //获取任务
+                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.STATUS == 10 orderby task.SORTNUM select task).Take(15).ToList();
+                //获取整个任务有多少包数
+                //var sendtasklist = (from item in data.T_UN_POKE select item).Where(a => a.SORTNUM == query.SORTNUM).GroupBy(a => a.SENDTASKNUM).Select(a => new { Count = a.Key }).ToList();
                // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
                 outlist = query1;
-                values[0] = query.SORTNUM;
-                values[1] = query.SENDTASKNUM;
-                values[2] = 1;
-                values[3] =query.PACKAGEMACHINE; 
-                foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())
+                values[0] = query.SORTNUM;//任务号
+                values[1] = query.SENDTASKNUM;//包号
+                values[2] = 1;//出口号
+                values[3] =query.PACKAGEMACHINE; //包装机号
+                foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())//1-60烟仓 + 6 烟柜
                 {
                     machineseq = (item.MACHINESEQ ?? 0);
-                    if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)
+                    if (machineseq != 1061 && machineseq != 2061)//不包括特异形烟道
                     {
-                        machineseq = (item.MACHINESEQ ?? 0) - 1000;
+                        if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
+                        {
+                            machineseq = (item.MACHINESEQ ?? 0) - 1000;
+                        }
+                        else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)//二线烟仓
+                        {
+                            machineseq = (item.MACHINESEQ ?? 0) - 2000;
+                        }
+                        else if (item.MACHINESEQ > 3000)
+                        {
+                            machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
+                        }
+                        values[((int)machineseq + 3)] = item.QTY;
                     }
-                    else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)
-                    {
-                        machineseq = (item.MACHINESEQ ?? 0) - 2000;
-                    }
-                    else if (item.MACHINESEQ > 3000)
-                    {
-                        machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
-                    }
-                    values[((int)machineseq + 3)] = item.QTY;
                     //values[((int)machineseq + 3)] = query1.Where(a => a.MACHINESEQ == item.MACHINESEQ).GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).FirstOrDefault().QTY;
-                } 
-                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 || a.MACHINESEQ != 2061)).Sum(a => a.POKENUM);//烟仓出烟数量
-                values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM);//烟柜出烟数量
-                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量
+                }
+                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 && a.MACHINESEQ != 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟仓出烟数量
+                values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟柜出烟数量 
+                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//特异性烟出烟数量 
+                //if (sendtasklist.Count > 1)//拆包的情况下 第二次或者第三。。特异形烟数量 给0
+                //{
+                //    if ((query1[0].SENDTASKNUM ?? 0) == Convert.ToDecimal(sendtasklist[0]))
+                //    {
+                //        values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量 
+                //    }
+                //    else
+                //    { 
+                //        values[72] = 0;
+                //    }
+                //}
+                //else
+                //{
+                //    values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量
+                //}
                 values[73] = 1;//标志位
-                for (int i = 0; i < values.Length; i++)
+                object[] date = values.Where(a => Convert.ToInt32(a) != 0).ToArray();
+                for (int i = 0; i < date.Length; i++)
                 {
-                    needDatas += i + ":" + values[i] + ",";
+                    needDatas += i + ":" + date[i] + ",";
                 }
                 outStr = needDatas;
                 return values;
             }
         }
+        /// <summary>
+        /// 特异形烟数据
+        /// </summary>
+        /// <param name="outStr"></param>
+        /// <returns></returns>
+        public static object[] GetSpecialSmokeData(out List<T_UN_POKE> outlist, out string outStr)
+        {
+            object[] values = new object[35];
+            String needDatas = "";
+            values.ToList().ForEach(a => a = 0);
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
+                if (sendtasknum == null)
+                {
+                    outlist = new List<T_UN_POKE>();
+                    outStr = null; 
+                    return values;
+                }
+                var query = (from item in data.T_UN_POKE
+                             join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
+                             where item.SENDTASKNUM == sendtasknum.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
+                             orderby item.SORTNUM, item.MACHINESEQ descending
+                             select new { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ, SORTNUM = item.SORTNUM, SENDTASKNUM = item.SENDTASKNUM, PACKAGEMACHINE = item.PACKAGEMACHINE, POKENUM = item.POKENUM, LENGHT = item2.ILENGTH, WIDTH = item2.IWIDTH }).Take(10).ToList();
+                outlist = (from it in data.T_UN_POKE where it.SENDTASKNUM == sendtasknum.SENDTASKNUM && (it.MACHINESEQ == 1061 || it.MACHINESEQ == 2061) select it).ToList();
+                int index =4;//索引
+                values[0] = 1;//顺序号累加
+                values[1] = query.FirstOrDefault().SORTNUM;//任务号
+                values[2] = GetLineNum((query.FirstOrDefault().PACKAGEMACHINE ?? 0));//获取烟柜号
+                values[3] = query.Where(a=> (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//订单数量
+                foreach (var item in query)
+                {
+                    if (index <= 34)
+                    {
+                        values[index] = item.CIGARETTECODE;//卷烟编码
+                        values[index + 1] = item.LENGHT;//条烟长度
+                        values[index + 2] = item.WIDTH;//条烟宽度
+                        index = index + 3;
+                    }
+                }
+                values[34] = 1;
+             
+            }
+            object[] date = values.Where(a => Convert.ToInt32(a) != 0).ToArray();
+            for (int i = 0; i < date.Length; i++)
+            {
+                needDatas += i + ":" + date[i] + ",";
+            }
+            outStr = needDatas;
+            return values;
 
+        }
+        /// <summary>
+        /// 获取烟柜号
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+       static int GetLineNum(decimal index)
+        {
+            if (index == 1 || index == 2)
+            {
+                return 61;
+            }
+            if (index == 3 || index == 4)
+            {
+                return 62;
+            }
+            if (index == 5 || index == 6)
+            {
+                return 63;
+            }
+            if (index == 7 || index == 8)
+            {
+                return 64;
+            }
+            return 1;
+        }
         /// <summary>
         /// 烟柜数据
         /// </summary>
@@ -1520,6 +1622,26 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
+
+         public static void UpdateSSTask(List<T_UN_POKE> task, int status)
+        {
+            using (Entities data = new Entities())
+            {
+                if (task != null)
+                {
+                    foreach (var item in task)//将已经发送的特异形烟标识位置15
+                    {
+                        var isSendS = (from pokeid in data.T_UN_POKE where pokeid.POKEID == item.POKEID select pokeid).FirstOrDefault();
+                        if (isSendS.GRIDNUM == 10)
+                        {
+                            isSendS.GRIDNUM = status;
+                        }
+                    }
+                    data.SaveChanges();
+                } 
+            }
+        }
+          
         /// <summary>
         /// 更新合流任务状态
         /// </summary>

@@ -263,7 +263,7 @@
             this.task_data.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(579, 239);
+            this.task_data.Size = new System.Drawing.Size(592, 239);
             this.task_data.TabIndex = 30;
             // 
             // Column1
@@ -361,7 +361,7 @@
             this.list_data.ItemHeight = 12;
             this.list_data.Location = new System.Drawing.Point(0, 288);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(1038, 112);
+            this.list_data.Size = new System.Drawing.Size(598, 112);
             this.list_data.TabIndex = 39;
             // 
             // groupboxErr
@@ -371,7 +371,7 @@
             this.groupboxErr.Font = new System.Drawing.Font("宋体", 11F);
             this.groupboxErr.Location = new System.Drawing.Point(598, 43);
             this.groupboxErr.Name = "groupboxErr";
-            this.groupboxErr.Size = new System.Drawing.Size(440, 245);
+            this.groupboxErr.Size = new System.Drawing.Size(440, 357);
             this.groupboxErr.TabIndex = 40;
             this.groupboxErr.TabStop = false;
             this.groupboxErr.Text = "故障信息";
@@ -383,7 +383,7 @@
             this.listError.ItemHeight = 15;
             this.listError.Location = new System.Drawing.Point(3, 20);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(434, 222);
+            this.listError.Size = new System.Drawing.Size(434, 334);
             this.listError.TabIndex = 0;
             // 
             // timerSendTask
@@ -394,9 +394,9 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
+            this.Controls.Add(this.list_data);
             this.Controls.Add(this.task_data);
             this.Controls.Add(this.groupboxErr);
-            this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "UnNormalFm";
