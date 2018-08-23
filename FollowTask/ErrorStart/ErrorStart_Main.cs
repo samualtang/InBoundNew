@@ -31,12 +31,15 @@ namespace FollowTask.ErrorStart
         StorageForm Storage;
         Group FJPlcAdress;
         Thread td;
+        HJStoreForm HJStore;
+
         private void Btn_start_Click(object sender, EventArgs e)
         {  
             b2.BackColor = Color.Yellow;
-           
-         
-            b5_1.BackColor = Color.Yellow;
+
+
+            b5_1.BackColor = Color.Yellow; 
+            b5_2.BackColor = Color.Yellow;
             b6.BackColor = Color.Yellow;
             b7.BackColor = Color.Yellow;
             b8.BackColor = Color.Yellow;
@@ -46,7 +49,7 @@ namespace FollowTask.ErrorStart
             task.BeginInvoke(null, Btn_start);
 
             listBox1.Items.Clear();
-
+ 
         }
         private delegate void HandleDelegateError(string strshow, ListBox list);
         /// <summary>
@@ -84,10 +87,17 @@ namespace FollowTask.ErrorStart
         /// </summary>
         private void Start_FJ1()
         {
-            b1_f1.BackColor = Color.Yellow; 
             List<string> sortlist =new List<string>();
             AllSystemStart ass1 = new AllSystemStart();
-            sortlist = ass1.ReadDBinfo(1);
+            try
+            {
+                sortlist = ass1.ReadDBinfo(1);
+            }
+            catch (Exception)
+            {
+                updateListBox("第一组预分拣PLC连接失败", listBox1);
+                return; 
+            }
             List<ErrorDates> Errorlist = new List<ErrorDates>();
             int falg = 1;
             foreach (var item in sortlist)
@@ -117,47 +127,55 @@ namespace FollowTask.ErrorStart
             {
                 b1_f1.BackColor = Color.Green;
             }
-          //  GetState();
         }
         /// <summary>
         /// 开始分拣2组
         /// </summary>
         private void Start_FJ2()
         {
-            b1_f2.BackColor = Color.Yellow;
-
             List<string> sortlist = new List<string>();
-            AllSystemStart ass2 = new AllSystemStart();
-            sortlist = ass2.ReadDBinfo(2);
-            List<ErrorDates> Errorlist = new List<ErrorDates>();
-            int falg = 1;
-            foreach (var item in sortlist)
+            try
             {
-                if (item == "-1")
+                AllSystemStart ass2 = new AllSystemStart();
+                sortlist = ass2.ReadDBinfo(2);
+            }
+            catch (Exception)
+            {
+                updateListBox("第二组预分拣PLC连接失败", listBox1);
+                return;
+            }
+                List<ErrorDates> Errorlist = new List<ErrorDates>();
+                int falg = 1;
+                foreach (var item in sortlist)
                 {
-                    ErrorDates ed = new ErrorDates();
-                    ed.Index = falg;
-                    using (Entities et = new Entities())
+                    if (item == "-1")
                     {
-                        var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
-                        ed.ErrorMsg = FJErrors;
-                        ed.ErrorTime = DateTime.Now.ToShortTimeString();
+                        ErrorDates ed = new ErrorDates();
+                        ed.Index = falg;
+                        using (Entities et = new Entities())
+                        {
+                            var FJErrors = et.T_WMS_ABNORMALLIST.Where(x => x.AREAPLC == "S7:[FJConnectionGroup-]" && x.PLCINDEX == falg).Select(x => x.ERRORMSG).FirstOrDefault();
+                            ed.ErrorMsg = FJErrors;
+                            ed.ErrorTime = DateTime.Now.ToShortTimeString();
+                        }
+                        ed.Value = item;
+                        Errorlist.Add(ed);
                     }
-                    ed.Value = item;
-                    Errorlist.Add(ed);
+                    falg++;
                 }
-                falg++;
-            }
-            SortData.FJList2 = Errorlist;
-            if (Errorlist.Count > 0)
-            {
-                b1_f2.BackColor = Color.Red;
-                updateListBox("预分拣第二组存在故障", listBox1);
-            }
-            else
-            {
-                b1_f2.BackColor = Color.Green;
-            }
+                SortData.FJList2 = Errorlist;
+                if (Errorlist.Count > 0)
+                {
+                    b1_f2.BackColor = Color.Red;
+                    updateListBox("预分拣第二组存在故障", listBox1);
+                }
+                else
+                {
+                    b1_f2.BackColor = Color.Green;
+                }
+            
+            
+           
           //  GetState();
         }
         /// <summary>
@@ -165,11 +183,19 @@ namespace FollowTask.ErrorStart
         /// </summary>
         private void Start_FJ3()
         {
-            b1_f3.BackColor = Color.Yellow;
-
             List<string> sortlist = new List<string>();
-            AllSystemStart ass3 = new AllSystemStart();
-            sortlist = ass3.ReadDBinfo(3);
+        
+            try
+            {
+                AllSystemStart ass3 = new AllSystemStart();
+                sortlist = ass3.ReadDBinfo(3);
+            }
+            catch (Exception)
+            {
+                updateListBox("第三组预分拣PLC连接失败", listBox1);
+                return;
+            }
+
             List<ErrorDates> Errorlist = new List<ErrorDates>();
             int falg = 1;
             foreach (var item in sortlist)
@@ -206,11 +232,17 @@ namespace FollowTask.ErrorStart
         /// </summary>
         private void Start_FJ4()
         {
-            b1_f4.BackColor = Color.Yellow;
-
-            List<string> sortlist = new List<string>();
-            AllSystemStart ass4 = new AllSystemStart();
-            sortlist = ass4.ReadDBinfo(4);
+            List<string> sortlist = new List<string>(); 
+            try
+            {
+                AllSystemStart ass4 = new AllSystemStart();
+                sortlist = ass4.ReadDBinfo(4);
+            }
+            catch (Exception)
+            {
+                updateListBox("第四组预分拣PLC连接失败", listBox1);
+                return;
+            }
             List<ErrorDates> Errorlist = new List<ErrorDates>();
             int falg = 1;
             foreach (var item in sortlist)
@@ -249,8 +281,18 @@ namespace FollowTask.ErrorStart
         {
             List<string> InOutlist = new List<string>();
             List<ErrorDates> Errors = new List<ErrorDates>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_inout(1);
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_inout(1);
+            }
+            catch (Exception)
+            {
+                updateListBox("churukuPLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("出入库：电机存在故障", listBox1);
@@ -276,9 +318,19 @@ namespace FollowTask.ErrorStart
         private void Start_InOut2()
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
-            List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_inout(2);
+            List<string> InOutlist = new List<string>(); 
+             List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_inout(2);
+            }
+            catch (Exception)
+            {
+                updateListBox("出入库PLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("出入库：输送带存在故障", listBox1);
@@ -304,8 +356,19 @@ namespace FollowTask.ErrorStart
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_inout(3);
+
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_inout(3);
+            }
+            catch (Exception)
+            {
+                updateListBox("出入库PLC连接失败", listBox1);
+                return;
+            }
+           
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("出入库：码分机存在故障", listBox1);
@@ -331,8 +394,19 @@ namespace FollowTask.ErrorStart
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_inout(4);
+          
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_inout(4);
+            }
+            catch (Exception)
+            {
+                updateListBox("出入库PLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("出入库：入库队列存在故障", listBox1);
@@ -357,15 +431,25 @@ namespace FollowTask.ErrorStart
         #endregion
 
 
-
-
         #region  补货区
         private void Start_Replenishment1()
         {
             List<string> InOutlist = new List<string>();
             List<ErrorDates> Errors = new List<ErrorDates>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(1);
+           
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Replenishment(1);
+
+            }
+            catch (Exception)
+            {
+                updateListBox("补货区PLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("补货区：大拔杆存在故障", listBox1);
@@ -392,8 +476,21 @@ namespace FollowTask.ErrorStart
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(2);
+          
+
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Replenishment(2);
+
+            }
+            catch (Exception)
+            {
+                updateListBox("补货区PLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("补货区：中心带存在故障", listBox1);
@@ -419,8 +516,19 @@ namespace FollowTask.ErrorStart
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(3);
+          
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Replenishment(3);
+            }
+            catch (Exception)
+            {
+                updateListBox("补货区PLC连接失败", listBox1);
+                return;
+            }
+
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("补货区：通道机存在故障", listBox1);
@@ -446,8 +554,19 @@ namespace FollowTask.ErrorStart
         {
             List<ErrorDates> Errors = new List<ErrorDates>();
             List<string> InOutlist = new List<string>();
-            AllSystemStart ass = new AllSystemStart();
-            List<ErrorInfo> info = ass.ReadDBinfo_Replenishment(4);
+      
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Replenishment(4);
+
+            }
+            catch (Exception)
+            {
+                updateListBox("补货区PLC连接失败", listBox1);
+                return;
+            }
             if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
             {
                 updateListBox("补货区：输送线存在故障", listBox1);
@@ -471,7 +590,83 @@ namespace FollowTask.ErrorStart
         }
         #endregion
 
+        private void Start_HJStorage1()
+        { 
+            List<ErrorDates> Errors = new List<ErrorDates>();
+           
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Storage(1);
 
+            }
+            catch (Exception)
+            {
+                updateListBox("第一组重力式货架PLC连接失败", listBox1);
+                return;
+            }
+
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("第一组重力式货架存在故障", listBox1);
+                b5_1.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                HJStorage.HJStorageList1 = Errors;
+            }
+            else
+            {
+                b5_1.BackColor = Color.Green;
+            } 
+        }
+        private void Start_HJStorage2()
+        { 
+            List<ErrorDates> Errors = new List<ErrorDates>();
+            
+
+            List<ErrorInfo> info;
+            try
+            {
+                AllSystemStart ass = new AllSystemStart();
+                info = ass.ReadDBinfo_Storage(1);
+
+            }
+            catch (Exception)
+            {
+                updateListBox("第二组重力式货架PLC连接失败", listBox1);
+                return;
+            }
+
+            if (info.Where(x => x.Value != "0").Count() != 0 ? true : false)
+            {
+                updateListBox("第二组重力式货架存在故障", listBox1);
+                b5_2.BackColor = Color.Red;
+                foreach (var item in info)
+                {
+                    if (item.Value != "0")
+                    {
+                        ErrorDates ed = new ErrorDates();
+                        ed.Value = item.Value;
+                        ed.ErrorMsg = item.ErrorMsg;
+                        Errors.Add(ed);
+                    }
+                }
+                HJStorage.HJStorageList2 = Errors;
+            }
+            else
+            {
+                b5_2.BackColor = Color.Green;
+            }
+        }
 
 
 
@@ -480,87 +675,54 @@ namespace FollowTask.ErrorStart
         #region  调用方法
         private void Start_Click()
         {
-            try
-            {
-                HandleDelegate task1 = Start_FJ1;
-                task1.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("第一组预分拣连接PLC失败！", listBox1);
-            }
-            try
-            {
-                HandleDelegate task2 = Start_FJ2;
-                task2.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("第二组预分拣连接PLC失败！", listBox1);
-            }
 
-            try
-            {
-                HandleDelegate task3 = Start_FJ3;
-                task3.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("第三组预分拣连接PLC失败！", listBox1);
-            }
-            try
-            {
-                HandleDelegate task4 = Start_FJ4;
-                task4.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("第四组预分拣连接PLC失败！", listBox1);
-            }
-            try
-            {
-                b4_1.BackColor = Color.Yellow;
-                b4_2.BackColor = Color.Yellow;
-                b4_3.BackColor = Color.Yellow;
-                b4_4.BackColor = Color.Yellow;
-                HandleDelegate task1 = Start_Replenishment1;
-                task1.BeginInvoke(null, null);
+            b1_f1.BackColor = Color.Yellow;
+            b1_f2.BackColor = Color.Yellow;
+            b1_f3.BackColor = Color.Yellow;
+            b1_f4.BackColor = Color.Yellow;
+            HandleDelegate task1 = Start_FJ1;
+            task1.BeginInvoke(null, null);
+            HandleDelegate task2 = Start_FJ2;
+            task2.BeginInvoke(null, null);
+            HandleDelegate task3 = Start_FJ3;
+            task3.BeginInvoke(null, null);
+            HandleDelegate task4 = Start_FJ4;
+            task4.BeginInvoke(null, null);
 
-                HandleDelegate task2 = Start_Replenishment2;
-                task2.BeginInvoke(null, null);
 
-                HandleDelegate task3 = Start_Replenishment3;
-                task3.BeginInvoke(null, null);
+            b4_1.BackColor = Color.Yellow;
+            b4_2.BackColor = Color.Yellow;
+            b4_3.BackColor = Color.Yellow;
+            b4_4.BackColor = Color.Yellow;
+            HandleDelegate task5 = Start_Replenishment1;
+            task5.BeginInvoke(null, null);
+            HandleDelegate task6 = Start_Replenishment2;
+            task6.BeginInvoke(null, null);
+            HandleDelegate task7 = Start_Replenishment3;
+            task7.BeginInvoke(null, null);
+            HandleDelegate task8 = Start_Replenishment4;
+            task8.BeginInvoke(null, null);
 
-                HandleDelegate task4 = Start_Replenishment4;
-                task4.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("补货区连接PLC失败！", listBox1); 
-            }
-            try
-            {
-                b3_1.BackColor = Color.Yellow;
-                b3_2.BackColor = Color.Yellow;
-                b3_3.BackColor = Color.Yellow;
-                b3_4.BackColor = Color.Yellow;
-                HandleDelegate task1 = Start_InOut1;
-                task1.BeginInvoke(null, null);
 
-                HandleDelegate task2 = Start_InOut2;
-                task2.BeginInvoke(null, null);
+            b3_1.BackColor = Color.Yellow;
+            b3_2.BackColor = Color.Yellow;
+            b3_3.BackColor = Color.Yellow;
+            b3_4.BackColor = Color.Yellow;
+            HandleDelegate task9 = Start_InOut1;
+            task9.BeginInvoke(null, null);
+            HandleDelegate task10 = Start_InOut2;
+            task10.BeginInvoke(null, null);
+            HandleDelegate task11 = Start_InOut3;
+            task11.BeginInvoke(null, null);
+            HandleDelegate task12 = Start_InOut4;
+            task12.BeginInvoke(null, null);
 
-                HandleDelegate task3 = Start_InOut3;
-                task3.BeginInvoke(null, null);
 
-                HandleDelegate task4 = Start_InOut4;
-                task4.BeginInvoke(null, null);
-            }
-            catch (Exception)
-            {
-                updateListBox("出入库连接PLC失败！", listBox1);
-            }
+            HandleDelegate task13 = Start_HJStorage1;
+            task13.BeginInvoke(null, null);
+            HandleDelegate task14 = Start_HJStorage2;
+            task14.BeginInvoke(null, null);
+
 
         }
         #endregion
@@ -672,11 +834,13 @@ namespace FollowTask.ErrorStart
         
         private void ErrorStart_Main_Load(object sender, EventArgs e)
         {
-            
+           
         }
 
         private void GetState()
-        { 
+        {
+            ass.Connction();
+
             if (AllPlcState.FJState1 == 0)
             {
                 updateListBox("预分拣第一组plc未连接", listBox1);
@@ -802,18 +966,23 @@ namespace FollowTask.ErrorStart
         {
              if (Controls.Contains(Inout))
             {
-                Storage.WindowState = FormWindowState.Maximized;
-                Storage.Show();
+                HJStore.WindowState = FormWindowState.Maximized;
+                HJStore.Show();
             }
             else
             {
-                Storage = new StorageForm();
-                Storage.TopLevel = false;
-                Storage.Parent = splitContainer1.Panel2;
-                Storage.WindowState = FormWindowState.Maximized;
-                Storage.Show();
+                HJStore = new HJStoreForm();
+                HJStore.TopLevel = false;
+                HJStore.Parent = splitContainer1.Panel2;
+                HJStore.WindowState = FormWindowState.Maximized;
+                HJStore.Show();
             }
             
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        { 
+            GetState();
         }
 
      

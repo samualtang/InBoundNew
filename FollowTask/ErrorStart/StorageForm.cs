@@ -15,5 +15,10 @@ namespace FollowTask.ErrorStart
         {
             InitializeComponent();
         }
+
+        private void Btn_Start_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

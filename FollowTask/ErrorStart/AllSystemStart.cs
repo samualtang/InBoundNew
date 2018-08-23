@@ -35,6 +35,8 @@ namespace FollowTask.ErrorStart
         public static String FJOpcServer4Name = "S7:[FJConnectionGroup4]";
         public static String InOutOpcServerName = "S7:[InOutConnection]";
         public static String ReplenishmentOpcServerName = "S7:[ReplenishmentConnection]";
+        public static String StorageOpcServerName1 = "S7:[StorageConnection1]";
+        public static String StorageOpcServerName2 = "S7:[StorageConnection2]";
         List<Group> ListSort = new List<Group>();
 
         List<string> str1 = new List<string>();
@@ -43,7 +45,7 @@ namespace FollowTask.ErrorStart
         List<string> str4 = new List<string>();
 
         Group FJOpcServer1, FJOpcServer2, FJOpcServer3, FJOpcServer4;
-        Group InOutcServer, ReplenishmentServer;
+        Group InOutcServer, ReplenishmentServer, StorageServer1, StorageServer2;
 
         public void Connction()
         {
@@ -69,7 +71,8 @@ namespace FollowTask.ErrorStart
             FJOpcServer4 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);
             InOutcServer = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);
             ReplenishmentServer = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);
-            
+            StorageServer1 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);
+            StorageServer2 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);
         }
 
         /// <summary>
@@ -292,11 +295,70 @@ namespace FollowTask.ErrorStart
             }
         }
 
+        /// <summary>
+        /// 重力式货架
+        /// </summary>
+        /// <param name="no"></param>
+        /// <returns></returns>
+        public List<ErrorInfo> ReadDBinfo_Storage(int no)
+        {
+            List<ErrorInfo> str = new List<ErrorInfo>();
+            List<ErrorInfo> AdressAndMsg = GetStoragePlcAdress(no);
+            List<string> DBlist = new List<string>();
+
+            Connction();
+            try
+            {
+                if (no == 1)
+                {
+                    foreach (var item in AdressAndMsg.Select(X => X.DBAdress).ToList())
+                    {
+                        DBlist.Add(StorageOpcServerName1 + item);
+                    }
+                    StorageServer1.addItem(DBlist);
+                    for (int i = 0; i < DBlist.Count(); i++)
+                    {
+                        ErrorInfo info = new ErrorInfo();
+                        info.DBAdress = DBlist[i];
+                        info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
+                        info.Value = (StorageServer1.ReadD(i).ToString());//从电控读取数据 
+                        str.Add(info);
+                    }
+                    AllPlcState.HJStorageState1 = 1;
+                }
+                else
+                {
+                    foreach (var item in AdressAndMsg.Select(X => X.DBAdress).ToList())
+                    {
+                        DBlist.Add(StorageOpcServerName2 + item);
+                    }
+                    StorageServer2.addItem(DBlist);
+                    for (int i = 0; i < DBlist.Count(); i++)
+                    {
+                        ErrorInfo info = new ErrorInfo();
+                        info.DBAdress = DBlist[i];
+                        info.ErrorMsg = AdressAndMsg[i].ErrorMsg;
+                        info.Value = (StorageServer2.ReadD(i).ToString());//从电控读取数据 
+                        str.Add(info);
+                    }
+                    AllPlcState.HJStorageState2 = 1;
+                }
+
+                
+            }
+            catch (Exception)
+            {
+                AllPlcState.InOutState = 0;
+            }
+            return str;
+        }
+
+
 
          /// <summary>
         /// 数据库获取 补货区 故障信息地址
        /// </summary>
-       /// <param name="tag">1大拔杆、2中心带、3通道机、4输送带、5一组重力式货架、6二组重力式货架</param>
+       /// <param name="tag">1大拔杆、2中心带、3通道机、4输送带</param>
         /// <returns>出入库 地址集合</returns>
         public List<Abnormallists> GetReplenishmentOpcServerItem(int tag)
         {
@@ -507,6 +569,7 @@ namespace FollowTask.ErrorStart
             }
             return list;
         }
+
         /// <summary>
         ///  重力式货架
         /// </summary>

@@ -28,7 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.b5_2 = new System.Windows.Forms.Button();
+            this.b4_3 = new System.Windows.Forms.Button();
+            this.b4_2 = new System.Windows.Forms.Button();
+            this.b4_4 = new System.Windows.Forms.Button();
+            this.b4_1 = new System.Windows.Forms.Button();
             this.b3_3 = new System.Windows.Forms.Button();
             this.b3_2 = new System.Windows.Forms.Button();
             this.b3_4 = new System.Windows.Forms.Button();
@@ -54,11 +60,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.b4_3 = new System.Windows.Forms.Button();
-            this.b4_2 = new System.Windows.Forms.Button();
-            this.b4_4 = new System.Windows.Forms.Button();
-            this.b4_1 = new System.Windows.Forms.Button();
-            this.b5_2 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -111,6 +113,46 @@
             this.splitContainer1.Size = new System.Drawing.Size(1233, 644);
             this.splitContainer1.SplitterDistance = 452;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // b5_2
+            // 
+            this.b5_2.Location = new System.Drawing.Point(188, 436);
+            this.b5_2.Name = "b5_2";
+            this.b5_2.Size = new System.Drawing.Size(29, 25);
+            this.b5_2.TabIndex = 30;
+            this.b5_2.UseVisualStyleBackColor = true;
+            // 
+            // b4_3
+            // 
+            this.b4_3.Location = new System.Drawing.Point(188, 377);
+            this.b4_3.Name = "b4_3";
+            this.b4_3.Size = new System.Drawing.Size(29, 13);
+            this.b4_3.TabIndex = 29;
+            this.b4_3.UseVisualStyleBackColor = true;
+            // 
+            // b4_2
+            // 
+            this.b4_2.Location = new System.Drawing.Point(188, 364);
+            this.b4_2.Name = "b4_2";
+            this.b4_2.Size = new System.Drawing.Size(29, 13);
+            this.b4_2.TabIndex = 28;
+            this.b4_2.UseVisualStyleBackColor = true;
+            // 
+            // b4_4
+            // 
+            this.b4_4.Location = new System.Drawing.Point(188, 390);
+            this.b4_4.Name = "b4_4";
+            this.b4_4.Size = new System.Drawing.Size(29, 13);
+            this.b4_4.TabIndex = 27;
+            this.b4_4.UseVisualStyleBackColor = true;
+            // 
+            // b4_1
+            // 
+            this.b4_1.Location = new System.Drawing.Point(188, 351);
+            this.b4_1.Name = "b4_1";
+            this.b4_1.Size = new System.Drawing.Size(29, 13);
+            this.b4_1.TabIndex = 26;
+            this.b4_1.UseVisualStyleBackColor = true;
             // 
             // b3_3
             // 
@@ -333,45 +375,9 @@
             this.button8.Text = "备烟区域";
             this.button8.UseVisualStyleBackColor = true;
             // 
-            // b4_3
+            // timer1
             // 
-            this.b4_3.Location = new System.Drawing.Point(188, 377);
-            this.b4_3.Name = "b4_3";
-            this.b4_3.Size = new System.Drawing.Size(29, 13);
-            this.b4_3.TabIndex = 29;
-            this.b4_3.UseVisualStyleBackColor = true;
-            // 
-            // b4_2
-            // 
-            this.b4_2.Location = new System.Drawing.Point(188, 364);
-            this.b4_2.Name = "b4_2";
-            this.b4_2.Size = new System.Drawing.Size(29, 13);
-            this.b4_2.TabIndex = 28;
-            this.b4_2.UseVisualStyleBackColor = true;
-            // 
-            // b4_4
-            // 
-            this.b4_4.Location = new System.Drawing.Point(188, 390);
-            this.b4_4.Name = "b4_4";
-            this.b4_4.Size = new System.Drawing.Size(29, 13);
-            this.b4_4.TabIndex = 27;
-            this.b4_4.UseVisualStyleBackColor = true;
-            // 
-            // b4_1
-            // 
-            this.b4_1.Location = new System.Drawing.Point(188, 351);
-            this.b4_1.Name = "b4_1";
-            this.b4_1.Size = new System.Drawing.Size(29, 13);
-            this.b4_1.TabIndex = 26;
-            this.b4_1.UseVisualStyleBackColor = true;
-            // 
-            // b5_2
-            // 
-            this.b5_2.Location = new System.Drawing.Point(188, 436);
-            this.b5_2.Name = "b5_2";
-            this.b5_2.Size = new System.Drawing.Size(29, 25);
-            this.b5_2.TabIndex = 30;
-            this.b5_2.UseVisualStyleBackColor = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ErrorStart_Main
             // 
@@ -422,6 +428,7 @@
         private System.Windows.Forms.Button b4_2;
         private System.Windows.Forms.Button b4_4;
         private System.Windows.Forms.Button b4_1;
+        private System.Windows.Forms.Timer timer1;
 
 
     }

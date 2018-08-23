@@ -86,6 +86,7 @@
     <Compile Include="DataModle\ErrorDates.cs" />
     <Compile Include="DataModle\ErrorInfo.cs" />
     <Compile Include="DataModle\ErrorState.cs" />
+    <Compile Include="DataModle\HJStorage.cs" />
     <Compile Include="DataModle\InOutData.cs" />
     <Compile Include="DataModle\ReplenishmentData.cs" />
     <Compile Include="DataModle\SortData.cs" />
@@ -102,6 +103,12 @@
     </Compile>
     <Compile Include="ErrorStart\ErrorStart_Main.Designer.cs">
       <DependentUpon>ErrorStart_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStart\HJStoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStart\HJStoreForm.Designer.cs">
+      <DependentUpon>HJStoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorStart\InOutForm.cs">
       <SubType>Form</SubType>
@@ -251,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\ErrorStart_Main.resx">
       <DependentUpon>ErrorStart_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStart\HJStoreForm.resx">
+      <DependentUpon>HJStoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\InOutForm.resx">
       <DependentUpon>InOutForm.cs</DependentUpon>

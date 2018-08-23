@@ -32,21 +32,31 @@ namespace FollowTask.Modle
         int[] ItemSvrHandleArray;
         public Group(IOPCServer server, int cliengGroup, string groupName, int isActive, int LOCALE_ID)
         {
-            pIOPCServer = server;
-        hTimeBias = GCHandle.Alloc(TimeBias, GCHandleType.Pinned);
-        hDeadband = GCHandle.Alloc(deadband, GCHandleType.Pinned);
-        pIOPCServer.AddGroup(groupName,
-                isActive,
-                dwRequestedUpdateRate,
-                cliengGroup,
-                hTimeBias.AddrOfPinnedObject(),
-                hDeadband.AddrOfPinnedObject(),
-                LOCALE_ID,
-                out pSvrGroupHandle,
-                out pRevUpdateRate,
-                ref iidRequiredInterface,
-                out pobjGroup1);
-        InitReqIOInterfaces();
+            try
+            {
+
+
+                pIOPCServer = server;
+                hTimeBias = GCHandle.Alloc(TimeBias, GCHandleType.Pinned);
+                hDeadband = GCHandle.Alloc(deadband, GCHandleType.Pinned);
+                pIOPCServer.AddGroup(groupName,
+                        isActive,
+                        dwRequestedUpdateRate,
+                        cliengGroup,
+                        hTimeBias.AddrOfPinnedObject(),
+                        hDeadband.AddrOfPinnedObject(),
+                        LOCALE_ID,
+                        out pSvrGroupHandle,
+                        out pRevUpdateRate,
+                        ref iidRequiredInterface,
+                        out pobjGroup1);
+                InitReqIOInterfaces();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public void RemovedItem()
         { 
