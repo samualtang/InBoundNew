@@ -846,15 +846,15 @@ namespace UnNormal_Test
        {
            //UnPokeService.getName();
         
-           if (statusGroup2 != null)
-           {
-               statusGroup2.SyncWrite(UnPokeService.getCode());
-               statusGroup3.SyncWrite(UnPokeService.getName());
-           }
-           else
-           {
-               MessageBox.Show("连接未建立,请稍后同步!");
-           }
+           //if (statusGroup2 != null)
+           //{
+           //    statusGroup2.SyncWrite(UnPokeService.getCode());
+           //    statusGroup3.SyncWrite(UnPokeService.getName());
+           //}
+           //else
+           //{
+           //    MessageBox.Show("连接未建立,请稍后同步!");
+           //}
        }
 
        private void button6_Click_1(object sender, EventArgs e)

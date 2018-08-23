@@ -230,8 +230,20 @@ namespace highSpeed.baseData
                 String fullcount = this.dataGridView1.CurrentRow.Cells[4].Value.ToString();
                 String cdtype = this.dataGridView1.CurrentRow.Cells[5].EditedFormattedValue.ToString();
                 String weight = this.dataGridView1.CurrentRow.Cells[6].Value.ToString();
+                if (weight=="")
+                {
+                    weight = "0";
+                }
                 String ilength = this.dataGridView1.CurrentRow.Cells[7].Value.ToString();
-                String iwidth = this.dataGridView1.CurrentRow.Cells[8].Value.ToString(); 
+                if (ilength == "")
+                {
+                    ilength = "0";
+                }
+                String iwidth = this.dataGridView1.CurrentRow.Cells[8].Value.ToString();
+                if (iwidth == "")
+                {
+                    iwidth = "0";
+                }
                 String dx = this.dataGridView1.CurrentRow.Cells[9].EditedFormattedValue.ToString();
                 String iscanscancodes = this.dataGridView1.CurrentRow.Cells[10].EditedFormattedValue.ToString();
                 String outType = this.dataGridView1.CurrentRow.Cells[11].EditedFormattedValue.ToString();
