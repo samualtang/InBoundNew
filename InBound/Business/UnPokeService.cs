@@ -642,10 +642,9 @@ namespace InBound.Business
         /// </summary>
         /// <param name="outStr"></param>
         /// <returns></returns>
-        public static object[] GetSpecialSmokeData(decimal Export, out List<T_UN_POKE> outlist, out string outStr)
+        public static object[] GetSpecialSmokeData(string lineNum, out List<T_UN_POKE> outlist, out string outStr)
         {
-            object[] values = new object[36];
-            decimal[] pckmch = GetPackageMachine(Export);
+            object[] values = new object[36]; 
             String needDatas = "";
             values.ToList().ForEach(a => a = 0);
             for (int i = 0; i < values.Length; i++)
@@ -654,8 +653,8 @@ namespace InBound.Business
             }
             using (Entities data = new Entities())
             {
-                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && (item.PACKAGEMACHINE==pckmch[0] || item.PACKAGEMACHINE == pckmch[1]) orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
-                if (sendtasknum == null || pckmch .Sum() < 0)
+                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
+                if (sendtasknum == null  )
                 {
                     outlist = new List<T_UN_POKE>();
                     outStr = null; 
@@ -670,7 +669,7 @@ namespace InBound.Business
                 int index =4;//索引
                 values[0] = query.FirstOrDefault().SENDTASKNUM;//顺序号累加
                 values[1] = query.FirstOrDefault().SORTNUM;//任务号
-                values[2] = Export; // GetLineNum((query.FirstOrDefault().PACKAGEMACHINE ?? 0));//获取烟柜号
+                values[2] = GetLineNum((query.FirstOrDefault().PACKAGEMACHINE ?? 0));//获取烟柜号
                 values[3] = query.Where(a=> (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//订单数量
                 foreach (var item in query)
                 {
@@ -721,37 +720,7 @@ namespace InBound.Business
             return 1;
         }
 
-       static decimal[] GetPackageMachine(decimal Export)
-       {
-           decimal[] PackageMachine = new decimal[2];
-           if (Export == 61)
-           {
-               PackageMachine[0] = 1;
-               PackageMachine[1] = 2;
-               return PackageMachine;
-           }
-           if (Export == 62)
-           {
-               PackageMachine[0] = 3;
-               PackageMachine[1] = 4;
-               return PackageMachine;
-           }
-           if (Export == 63)
-           {
-               PackageMachine[0] = 5;
-               PackageMachine[1] = 6;
-               return PackageMachine;
-           }
-           if (Export == 64)
-           {
-               PackageMachine[0] = 7;
-               PackageMachine[1] = 8;
-               return PackageMachine;
-           }
-           PackageMachine[0] = -1;
-           PackageMachine[1] = -1;
-           return PackageMachine; 
-       }
+     
         /// <summary>
         /// 烟柜数据
         /// </summary>
