@@ -15,7 +15,7 @@ namespace SpecialShapeSmoke
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainScreen1());
+            Application.Run(new MainScreen1_new());
             //Application.Run(new Form1());
         }
     }

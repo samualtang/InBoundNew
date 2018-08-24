@@ -62,6 +62,7 @@
     <Compile Include="Business\BaseService.cs" />
     <Compile Include="Business\FolloTaskService.cs" />
     <Compile Include="Business\MainBeltInfoService.cs" />
+    <Compile Include="Business\HunHeService_new.cs" />
     <Compile Include="Model\HUNHENOWVIEW.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />
@@ -138,7 +139,9 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\Entities.datasource" />
   </ItemGroup>
   <ItemGroup>

@@ -23,10 +23,10 @@ namespace SpecialShapeSmoke
             switch (comboBox1.Text)
             {
                 case "卷烟名称":
-                    DgvNowView.DataSource = HunHeService.GetSearchCigarette(txt_search.Text,1);
+                    DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text,1);
                     break;
                 case "商户名称":
-                    DgvNowView.DataSource = HunHeService.GetSearchCigarette(txt_search.Text,2);
+                    DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text,2);
                     break;
             }
             

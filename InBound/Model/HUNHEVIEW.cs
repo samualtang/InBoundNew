@@ -22,6 +22,8 @@ namespace InBound.Model
        public decimal? QUANTITY { get; set; }
        public string CIGARETTECODE { get; set; }
        public decimal? MACHINESEQ { get; set; }
+
+       public decimal? SORTNUM { get; set; }
     }
 
    public class HUNHEVIEW1

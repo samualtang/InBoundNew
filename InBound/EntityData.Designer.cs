@@ -8465,6 +8465,78 @@ namespace InBound
         private Nullable<global::System.Decimal> _PULLSTATUS;
         partial void OnPULLSTATUSChanging(Nullable<global::System.Decimal> value);
         partial void OnPULLSTATUSChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SENDTASKNUM
+        {
+            get
+            {
+                return _SENDTASKNUM;
+            }
+            set
+            {
+                OnSENDTASKNUMChanging(value);
+                ReportPropertyChanging("SENDTASKNUM");
+                _SENDTASKNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SENDTASKNUM");
+                OnSENDTASKNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SENDTASKNUM;
+        partial void OnSENDTASKNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSENDTASKNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PACKMACHINESEQ
+        {
+            get
+            {
+                return _PACKMACHINESEQ;
+            }
+            set
+            {
+                OnPACKMACHINESEQChanging(value);
+                ReportPropertyChanging("PACKMACHINESEQ");
+                _PACKMACHINESEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PACKMACHINESEQ");
+                OnPACKMACHINESEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PACKMACHINESEQ;
+        partial void OnPACKMACHINESEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnPACKMACHINESEQChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> TROUGHNUM
+        {
+            get
+            {
+                return _TROUGHNUM;
+            }
+            set
+            {
+                OnTROUGHNUMChanging(value);
+                ReportPropertyChanging("TROUGHNUM");
+                _TROUGHNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TROUGHNUM");
+                OnTROUGHNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _TROUGHNUM;
+        partial void OnTROUGHNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnTROUGHNUMChanged();
 
         #endregion
 

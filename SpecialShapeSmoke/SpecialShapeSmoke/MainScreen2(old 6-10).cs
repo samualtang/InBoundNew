@@ -557,19 +557,13 @@ namespace SpecialShapeSmoke
             {
                 machineseq2 = machineseq1;
             }
-            fNowView = new NowView(machineseq1, machineseq2, finishNo);
+            //fNowView = new NowView(machineseq1, machineseq2, finishNo);/*暂 注*/
 
             fNowView.Show();
             fNowView.Activate();
 
             SearchWinForm(fNowView);
-            //finishNo[0] = 244;
-            //t1.Tick += new EventHandler(t1_Tick);
-            ////t2.Tick += new EventHandler(t2_Tick);
-            //t1.Stop();
-            //t2.Stop();
-            //t1.Interval = 10000;
-            //t1.Start();
+          
 
         }
         public void SearchWinForm(Form fname)

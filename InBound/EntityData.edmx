@@ -433,6 +433,9 @@
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
           <Property Name="MACHINESEQ" Type="number" />
           <Property Name="PULLSTATUS" Type="number" />
+          <Property Name="SENDTASKNUM" Type="number" />
+          <Property Name="PACKMACHINESEQ" Type="number" />
+          <Property Name="TROUGHNUM" Type="number" />
         </EntityType>
         <EntityType Name="T_UN_TASK">
           <Key>
@@ -1651,6 +1654,9 @@
           <Property Type="String" Name="CIGARETTECODE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="MACHINESEQ" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="PULLSTATUS" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SENDTASKNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKMACHINESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="TROUGHNUM" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="T_PRODUCE_POKESEQ">
           <Key>
@@ -2491,6 +2497,9 @@
           <EntitySetMapping Name="T_UN_POKE_HUNHE">
             <EntityTypeMapping TypeName="Model.T_UN_POKE_HUNHE">
               <MappingFragment StoreEntitySet="T_UN_POKE_HUNHE">
+                <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
+                <ScalarProperty Name="PACKMACHINESEQ" ColumnName="PACKMACHINESEQ" />
+                <ScalarProperty Name="SENDTASKNUM" ColumnName="SENDTASKNUM" />
                 <ScalarProperty Name="PULLSTATUS" ColumnName="PULLSTATUS" />
                 <ScalarProperty Name="MACHINESEQ" ColumnName="MACHINESEQ" />
                 <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />

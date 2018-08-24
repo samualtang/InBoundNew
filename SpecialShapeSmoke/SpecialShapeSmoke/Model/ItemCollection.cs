@@ -23,6 +23,8 @@ namespace SpecialShapeSmoke.Model
             list.Add("S7:[UnnormalConnection]DB33,DINT48");//第二组60号烟仓  2060 8
             list.Add("S7:[UnnormalConnection]DB33,DINT52");//第二组61号烟仓  2061 9       
 
+            // list.Add("S7:[UnnormalConnection]DB33,DINT48");//第一组62号烟仓  1062 10
+            // list.Add("S7:[UnnormalConnection]DB33,DINT52");//第二组61号烟仓  2062 11 
             return list;
         }
 

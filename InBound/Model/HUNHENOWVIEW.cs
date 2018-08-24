@@ -12,11 +12,13 @@ namespace InBound.Model
         public string customername { get; set; }
         public string regioncode { get; set; }
         public decimal? TROUGHNUM { get; set; }
+        public string CIGARETTECODE { get; set; }
         public string CIGARETTENAME { get; set; }
         public decimal? pokenum { get; set; }
         public decimal? status { get; set; }
         public decimal? pokeid { get; set; }
         public decimal? tasksort { get; set; }
+        public decimal? packmachineseq { get; set; }
     }
 
     /// <summary>
@@ -35,6 +37,7 @@ namespace InBound.Model
         public decimal? status { get; set; }
         public decimal? pokeid { get; set; }
         public decimal? PULLSTATUS { get; set; }
+        public decimal? packmachineseq { get; set; }
     }
     /// <summary>
     /// 混合道条码

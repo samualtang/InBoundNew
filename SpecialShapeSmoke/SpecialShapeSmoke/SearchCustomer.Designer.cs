@@ -36,8 +36,9 @@
             this.CustomerNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.包装机 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cigarettecode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,7 +50,7 @@
             // btn_search
             // 
             this.btn_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btn_search.Location = new System.Drawing.Point(840, 13);
+            this.btn_search.Location = new System.Drawing.Point(855, 13);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(109, 35);
             this.btn_search.TabIndex = 0;
@@ -60,7 +61,7 @@
             // txt_search
             // 
             this.txt_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txt_search.Location = new System.Drawing.Point(501, 21);
+            this.txt_search.Location = new System.Drawing.Point(516, 21);
             this.txt_search.Name = "txt_search";
             this.txt_search.Size = new System.Drawing.Size(296, 21);
             this.txt_search.TabIndex = 1;
@@ -69,17 +70,18 @@
             // 
             this.DgvNowView.AllowUserToAddRows = false;
             this.DgvNowView.AllowUserToDeleteRows = false;
-            this.DgvNowView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvNowView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvNowView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvNowView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TaskNum,
             this.CustomerNo,
             this.SortNum,
             this.Code,
-            this.TroughNum,
+            this.包装机,
             this.CustomerName,
+            this.TroughNum,
             this.cigarettecode,
             this.CIGARETTENAME,
             this.PokeNum,
@@ -90,7 +92,7 @@
             this.DgvNowView.ReadOnly = true;
             this.DgvNowView.RowTemplate.Height = 23;
             this.DgvNowView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvNowView.Size = new System.Drawing.Size(1268, 545);
+            this.DgvNowView.Size = new System.Drawing.Size(1298, 545);
             this.DgvNowView.TabIndex = 3;
             // 
             // comboBox1
@@ -101,7 +103,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "卷烟名称",
             "商户名称"});
-            this.comboBox1.Location = new System.Drawing.Point(351, 21);
+            this.comboBox1.Location = new System.Drawing.Point(366, 21);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 4;
@@ -137,13 +139,12 @@
             this.Code.ReadOnly = true;
             this.Code.Width = 60;
             // 
-            // TroughNum
+            // 包装机
             // 
-            this.TroughNum.DataPropertyName = "TroughNum";
-            this.TroughNum.HeaderText = "通道号";
-            this.TroughNum.Name = "TroughNum";
-            this.TroughNum.ReadOnly = true;
-            this.TroughNum.Width = 70;
+            this.包装机.DataPropertyName = "packmachineseq";
+            this.包装机.HeaderText = "包装机";
+            this.包装机.Name = "包装机";
+            this.包装机.ReadOnly = true;
             // 
             // CustomerName
             // 
@@ -152,6 +153,14 @@
             this.CustomerName.Name = "CustomerName";
             this.CustomerName.ReadOnly = true;
             this.CustomerName.Width = 230;
+            // 
+            // TroughNum
+            // 
+            this.TroughNum.DataPropertyName = "TroughNum";
+            this.TroughNum.HeaderText = "通道号";
+            this.TroughNum.Name = "TroughNum";
+            this.TroughNum.ReadOnly = true;
+            this.TroughNum.Width = 70;
             // 
             // cigarettecode
             // 
@@ -194,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1281, 607);
+            this.ClientSize = new System.Drawing.Size(1311, 607);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.DgvNowView);
             this.Controls.Add(this.txt_search);
@@ -218,8 +227,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TroughNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 包装机;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TroughNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettecode;
         private System.Windows.Forms.DataGridViewTextBoxColumn CIGARETTENAME;
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeNum;
