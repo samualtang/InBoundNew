@@ -579,7 +579,7 @@ namespace InBound.Business
                 }
                 decimal machineseq = 0;
                 //获取任务
-                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.STATUS == 10 orderby task.SORTNUM select task).Take(15).ToList();
+                var query1 = (from task in data.T_UN_POKE where task.SORTNUM == query.SORTNUM && task.STATUS == 10 orderby task.SORTNUM select task).Take(12).ToList();
                 //获取整个任务有多少包数
                 //var sendtasklist = (from item in data.T_UN_POKE select item).Where(a => a.SORTNUM == query.SORTNUM).GroupBy(a => a.SENDTASKNUM).Select(a => new { Count = a.Key }).ToList();
                // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
@@ -642,9 +642,10 @@ namespace InBound.Business
         /// </summary>
         /// <param name="outStr"></param>
         /// <returns></returns>
-        public static object[] GetSpecialSmokeData(out List<T_UN_POKE> outlist, out string outStr)
+        public static object[] GetSpecialSmokeData(decimal Export, out List<T_UN_POKE> outlist, out string outStr)
         {
-            object[] values = new object[35];
+            object[] values = new object[36];
+            decimal[] pckmch = GetPackageMachine(Export);
             String needDatas = "";
             values.ToList().ForEach(a => a = 0);
             for (int i = 0; i < values.Length; i++)
@@ -653,8 +654,8 @@ namespace InBound.Business
             }
             using (Entities data = new Entities())
             {
-                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
-                if (sendtasknum == null)
+                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && (item.PACKAGEMACHINE==pckmch[0] || item.PACKAGEMACHINE == pckmch[1]) orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
+                if (sendtasknum == null || pckmch .Sum() < 0)
                 {
                     outlist = new List<T_UN_POKE>();
                     outStr = null; 
@@ -667,9 +668,9 @@ namespace InBound.Business
                              select new { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ, SORTNUM = item.SORTNUM, SENDTASKNUM = item.SENDTASKNUM, PACKAGEMACHINE = item.PACKAGEMACHINE, POKENUM = item.POKENUM, LENGHT = item2.ILENGTH, WIDTH = item2.IWIDTH }).Take(10).ToList();
                 outlist = (from it in data.T_UN_POKE where it.SENDTASKNUM == sendtasknum.SENDTASKNUM && (it.MACHINESEQ == 1061 || it.MACHINESEQ == 2061) select it).ToList();
                 int index =4;//索引
-                values[0] = 1;//顺序号累加
+                values[0] = query.FirstOrDefault().SENDTASKNUM;//顺序号累加
                 values[1] = query.FirstOrDefault().SORTNUM;//任务号
-                values[2] = GetLineNum((query.FirstOrDefault().PACKAGEMACHINE ?? 0));//获取烟柜号
+                values[2] = Export; // GetLineNum((query.FirstOrDefault().PACKAGEMACHINE ?? 0));//获取烟柜号
                 values[3] = query.Where(a=> (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//订单数量
                 foreach (var item in query)
                 {
@@ -681,7 +682,8 @@ namespace InBound.Business
                         index = index + 3;
                     }
                 }
-                values[34] = 1;
+                values[34] = 1;//特异形烟出口号
+                values[35] = 1;//标志位
              
             }
             object[] date = values.Where(a => Convert.ToInt32(a) != 0).ToArray();
@@ -718,6 +720,38 @@ namespace InBound.Business
             }
             return 1;
         }
+
+       static decimal[] GetPackageMachine(decimal Export)
+       {
+           decimal[] PackageMachine = new decimal[2];
+           if (Export == 61)
+           {
+               PackageMachine[0] = 1;
+               PackageMachine[1] = 2;
+               return PackageMachine;
+           }
+           if (Export == 62)
+           {
+               PackageMachine[0] = 3;
+               PackageMachine[1] = 4;
+               return PackageMachine;
+           }
+           if (Export == 63)
+           {
+               PackageMachine[0] = 5;
+               PackageMachine[1] = 6;
+               return PackageMachine;
+           }
+           if (Export == 64)
+           {
+               PackageMachine[0] = 7;
+               PackageMachine[1] = 8;
+               return PackageMachine;
+           }
+           PackageMachine[0] = -1;
+           PackageMachine[1] = -1;
+           return PackageMachine; 
+       }
         /// <summary>
         /// 烟柜数据
         /// </summary>
@@ -1623,23 +1657,21 @@ namespace InBound.Business
             }
         }
 
-         public static void UpdateSSTask(List<T_UN_POKE> task, int status)
+         public static void UpdateSSTask( List<T_UN_POKE> list, int status)
         {
             using (Entities data = new Entities())
             {
-                if (task != null)
+
+                foreach (var item in list)
                 {
-                    foreach (var item in task)//将已经发送的特异形烟标识位置15
+                    var isSendS = (from pokeid in data.T_UN_POKE where pokeid.POKEID == item.POKEID select pokeid).FirstOrDefault();
+                    if (isSendS.SORTNUM == 10)
                     {
-                        var isSendS = (from pokeid in data.T_UN_POKE where pokeid.POKEID == item.POKEID select pokeid).FirstOrDefault();
-                        if (isSendS.GRIDNUM == 10)
-                        {
-                            isSendS.GRIDNUM = status;
-                        }
+                        isSendS.SORTNUM = 15;
                     }
-                    data.SaveChanges();
                 } 
-            }
+                data.SaveChanges();
+            } 
         }
           
         /// <summary>

@@ -140,7 +140,7 @@ namespace UnNormal_Test
 
 
 
-        Group OnlyTaskGorup, FinishOnlyGoroup, SpyBiaozhiGroup, SpecialSmokeGroup;
+        Group OnlyTaskGorup, FinishOnlyGoroup, SpyBiaozhiGroup, SpecialSmokeGroup1, SpecialSmokeGroup2, SpecialSmokeGroup3, SpecialSmokeGroup4;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -154,12 +154,19 @@ namespace UnNormal_Test
                 OnlyTaskGorup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
                 FinishOnlyGoroup = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//完成信号
                 SpyBiaozhiGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//监控标志位
-                SpecialSmokeGroup = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//特异形烟
+                SpecialSmokeGroup1 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//特异形烟 61道
+                SpecialSmokeGroup2 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//特异形烟 62道
+                SpecialSmokeGroup3 = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//特异形烟 63道
+                SpecialSmokeGroup4 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//特异形烟 64道
                
                 //任务交互区
                 OnlyTaskGorup.addItem(ItemCollection.GetOnlyLineItem());//一个交互区
                 SpyBiaozhiGroup.addItem(ItemCollection.GetSpyOnlyLineItem());//监控任务标识位
-                SpecialSmokeGroup.addItem(ItemCollection.GetSpecialSmokeItem());//特异形烟
+                SpecialSmokeGroup1.addItem(ItemCollection.GetSpecialSmokeItem1());//特异形烟 61道
+                SpecialSmokeGroup2.addItem(ItemCollection.GetSpecialSmokeItem2());//特异形烟 62道
+                SpecialSmokeGroup3.addItem(ItemCollection.GetSpecialSmokeItem3());//特异形烟 63道
+                SpecialSmokeGroup4.addItem(ItemCollection.GetSpecialSmokeItem4());//特异形烟 64道
+
                 //完成信号交互区 
                 FinishOnlyGoroup.addItem(ItemCollection.GetOnlyLineFinishTaskItem());//一个交互区完成信号
               
@@ -250,7 +257,10 @@ namespace UnNormal_Test
         //List<T_UN_POKE> listUnion = new List<T_UN_POKE>();//合流数据
       
            List<T_UN_POKE> listOnly = new List<T_UN_POKE>();
-           List<T_UN_POKE> listSS = new List<T_UN_POKE>();
+           List<T_UN_POKE> listSS61 = new List<T_UN_POKE>();
+           List<T_UN_POKE> listSS62 = new List<T_UN_POKE>();
+           List<T_UN_POKE> listSS63 = new List<T_UN_POKE>();
+           List<T_UN_POKE> listSS64 = new List<T_UN_POKE>();
         bool issendone = false, issendtwo = false, issendsixone = false, issendsixtwo = false;
          
         /// <summary>
@@ -338,13 +348,13 @@ namespace UnNormal_Test
         /// <summary>
         ///特异形烟
         /// </summary> 
-        void sendSSTask()
+        void sendSSTask(decimal export,out  List<T_UN_POKE> outlist)
         {
             try
             {
 
                 issendone = true;
-                int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);
+                int flag = SpyBiaozhiGroup.ReadD(2).CastTo<int>(-1);//发送数据前读标志位
                 writeLog.Write("特异形烟发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
@@ -391,16 +401,22 @@ namespace UnNormal_Test
 
                     //}
                     #endregion
+
                     string OutStr = "";
-                    object[] datas = UnPokeService.GetSpecialSmokeData(out listSS, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.GetSpecialSmokeData(export, out outlist, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("特异形烟分拣数据发送完毕");
+                        outlist = new List<T_UN_POKE>();
                         return;
                     }
                     writeLog.Write("特异形烟分拣线:" + OutStr);
                     updateListBox("特异形烟分拣线:" + OutStr);
-                    OnlyTaskGorup.SyncWrite(datas);
+                    OnlyTaskGorup.SyncWrite(datas); 
+                }
+                else
+                {
+                    outlist = new List<T_UN_POKE>();
                 }
             }
             catch (Exception ex)
@@ -413,7 +429,7 @@ namespace UnNormal_Test
                     writeLog.Write(ex.InnerException.Message);
                     updateListBox(ex.InnerException.Message);
                 }
-                sendSSTask();//异常后重新发送
+                sendSSTask(export, out outlist);//异常后重新发送
 
             }
         }
@@ -716,7 +732,27 @@ namespace UnNormal_Test
                         }
                         break;
                     }
-                    if (clientId[i] == 2)//特异形烟
+                    if (clientId[i] == 2)//特异形烟 61道
+                    {
+
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            } 
+                            int sortnum = int.Parse(SpecialSmokeGroup1.ReadD(1).ToString());//获取任务号
+                            if (sortnum != null && sortnum  > 0)
+                            {
+                                writeLog.Write("特异形烟任务号:" + sortnum + "已接收");
+                                updateListBox("特异形烟:" + sortnum + "已接收");
+                                UnPokeService.UpdateSSTask(listSS61, 15);
+                            }
+                            sendSSTask(61,out listSS61); 
+                        }
+                        break;
+                    }
+                    if (clientId[i] == 3)//特异形烟 62道
                     {
 
                         if (values[i] != null && int.Parse(values[i].ToString()) == 0)
@@ -725,18 +761,54 @@ namespace UnNormal_Test
                             {
                                 Thread.Sleep(100);
                             }
-                            String logstr = "";
-                            foreach (var item in listSS.Distinct())
+                            int sortnum = int.Parse(SpecialSmokeGroup2.ReadD(1).ToString());//获取任务号
+                            if (sortnum != null && sortnum > 0)
                             {
-                                logstr += item.SORTNUM + ";";
+                                writeLog.Write("特异形烟任务号:" + sortnum + "已接收");
+                                updateListBox("特异形烟:" + sortnum + "已接收");
+                                UnPokeService.UpdateSSTask(listSS62, 15);
                             }
-                            if (logstr != null && logstr.Length > 0)
+                            sendSSTask(62,out listSS62);
+                        }
+                        break;
+                    }
+                    if (clientId[i] == 4)//特异形烟 63道
+                    {
+
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        {
+                            while (!isInit)
                             {
-                                writeLog.Write("特异形烟任务号:" + logstr + "已接收");
-                                updateListBox("特异形烟:" + logstr + "已接收");
-                                UnPokeService.UpdateSSTask(listSS, 15);
+                                Thread.Sleep(100);
                             }
-                            sendSSTask(); 
+                            int sortnum = int.Parse(SpecialSmokeGroup3.ReadD(1).ToString());//获取任务号
+                            if (sortnum != null && sortnum > 0)
+                            {
+                                writeLog.Write("特异形烟任务号:" + sortnum + "已接收");
+                                updateListBox("特异形烟:" + sortnum + "已接收");
+                                UnPokeService.UpdateSSTask(listSS63, 15);
+                            }
+                            sendSSTask(63,out listSS63);
+                        }
+                        break;
+                    }
+                    if (clientId[i] == 5)//特异形烟 64道
+                    {
+
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        {
+                            while (!isInit)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            int sortnum = int.Parse(SpecialSmokeGroup4.ReadD(1).ToString());//获取任务号
+                            if (sortnum != null && sortnum > 0)
+                            {
+                                writeLog.Write("特异形烟任务号:" + sortnum + "已接收");
+                                updateListBox("特异形烟:" + sortnum + "已接收");
+                                UnPokeService.UpdateSSTask(listSS64, 15);
+                            }
+                            sendSSTask(64,out listSS64);
                         }
                         break;
                     }

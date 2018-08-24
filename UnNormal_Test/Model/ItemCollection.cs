@@ -70,8 +70,11 @@ namespace UnNormal_Test.Model
        {
            List<string> list = new List<string>();
 
-           list.Add("S7:[UnnormalConnection]DB30,W150");//异形烟交互标志
-           list.Add("S7:[UnnormalConnection]DB11,W52");//特异形烟交互标志
+           list.Add("S7:[UnnormalConnection]DB30,W150");//异形烟交互标志 0
+           list.Add("S7:[UnnormalConnection]DB101,W92");//特异形烟该发送皮带 1
+           list.Add("S7:[UnnormalConnection]DB102,W92");//特异形烟该发送皮带 2
+           list.Add("S7:[UnnormalConnection]DB103,W92");//特异形烟该发送皮带 3
+           list.Add("S7:[UnnormalConnection]DB104,W92");//特异形烟该发送皮带 4
            return list;
        }
 
@@ -91,24 +94,86 @@ namespace UnNormal_Test.Model
        }
 
        /// <summary>
-       /// 特异性烟交互区
+       /// 特异性烟交互区61道
        /// </summary>
        /// <returns></returns>
-       public static List<string> GetSpecialSmokeItem()
+       public static List<string> GetSpecialSmokeItem1()
        {
            List<string> list = new List<string>();
-           list.Add("S7:[UnnormalConnection]DB11,DINT0");
-           list.Add("S7:[UnnormalConnection]DB11,DINT4");
-           list.Add("S7:[UnnormalConnection]DB11,W8");//烟仓号
-           list.Add("S7:[UnnormalConnection]DB11,W10");//订单数量
+           list.Add("S7:[UnnormalConnection]DB101,DINT0");//顺序号
+           list.Add("S7:[UnnormalConnection]DB101,DINT4");//任务号
+           list.Add("S7:[UnnormalConnection]DB101,W8");//烟仓号
+           list.Add("S7:[UnnormalConnection]DB101,W10");//订单数量
            for (int i = 0; i < 10; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB11,DINT" + (12 + (i * 8)));//条烟编码
-               list.Add("S7:[UnnormalConnection]DB11,W" + (16 + (i * 8)));//长度
-               list.Add("S7:[UnnormalConnection]DB11,W" + (18 + (i * 8)));//宽度
+               list.Add("S7:[UnnormalConnection]DB101,DINT" + (12 + (i * 8)));//条烟编码
+               list.Add("S7:[UnnormalConnection]DB101,W" + (16 + (i * 8)));//长度
+               list.Add("S7:[UnnormalConnection]DB101,W" + (18 + (i * 8)));//宽度
            }
-           list.Add("S7:[UnnormalConnection]DB11,W92");//标志位
+           list.Add("S7:[UnnormalConnection]DB101,W92");//标志位 
            return list;
        }
+
+       /// <summary>
+       /// 特异性烟交互区62道
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSpecialSmokeItem2()
+       {
+           List<string> list = new List<string>();
+           list.Add("S7:[UnnormalConnection]DB102,DINT0");//顺序号
+           list.Add("S7:[UnnormalConnection]DB102,DINT4");//任务号
+           list.Add("S7:[UnnormalConnection]DB102,W8");//烟仓号
+           list.Add("S7:[UnnormalConnection]DB102,W10");//订单数量
+           for (int i = 0; i < 10; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB102,DINT" + (12 + (i * 8)));//条烟编码
+               list.Add("S7:[UnnormalConnection]DB102,W" + (16 + (i * 8)));//长度
+               list.Add("S7:[UnnormalConnection]DB102,W" + (18 + (i * 8)));//宽度
+           }
+           list.Add("S7:[UnnormalConnection]DB102,W92");//标志位 
+           return list;
+       }
+       /// <summary>
+       /// 特异性烟交互区63道
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSpecialSmokeItem3()
+       {
+           List<string> list = new List<string>();
+           list.Add("S7:[UnnormalConnection]DB103,DINT0");//顺序号
+           list.Add("S7:[UnnormalConnection]DB103,DINT4");//任务号
+           list.Add("S7:[UnnormalConnection]DB103,W8");//烟仓号
+           list.Add("S7:[UnnormalConnection]DB103,W10");//订单数量
+           for (int i = 0; i < 10; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB103,DINT" + (12 + (i * 8)));//条烟编码
+               list.Add("S7:[UnnormalConnection]DB103,W" + (16 + (i * 8)));//长度
+               list.Add("S7:[UnnormalConnection]DB103,W" + (18 + (i * 8)));//宽度
+           }
+           list.Add("S7:[UnnormalConnection]DB103,W92");//标志位 
+           return list;
+       }
+       /// <summary>
+       /// 特异性烟交互区64道
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetSpecialSmokeItem4()
+       {
+           List<string> list = new List<string>();
+           list.Add("S7:[UnnormalConnection]DB104,DINT0");//顺序号
+           list.Add("S7:[UnnormalConnection]DB104,DINT4");//任务号
+           list.Add("S7:[UnnormalConnection]DB104,W8");//烟仓号
+           list.Add("S7:[UnnormalConnection]DB104,W10");//订单数量
+           for (int i = 0; i < 10; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB104,DINT" + (12 + (i * 8)));//条烟编码
+               list.Add("S7:[UnnormalConnection]DB104,W" + (16 + (i * 8)));//长度
+               list.Add("S7:[UnnormalConnection]DB104,W" + (18 + (i * 8)));//宽度
+           }
+           list.Add("S7:[UnnormalConnection]DB104,W92");//标志位 
+           return list;
+       }
+
    }
 }
