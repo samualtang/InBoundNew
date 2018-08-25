@@ -255,8 +255,8 @@ namespace UnNormal_Test
         //List<T_UN_POKE> listUnion = new List<T_UN_POKE>();//合流数据
       
            List<T_UN_POKE> listOnly = new List<T_UN_POKE>();
-           List<T_UN_POKE> listSS1B = new List<T_UN_POKE>();
-           List<T_UN_POKE> listSS2A = new List<T_UN_POKE>(); 
+           List<T_UN_SpecialSmoke> listSS1B = new List<T_UN_SpecialSmoke>();
+           List<T_UN_SpecialSmoke> listSS2A = new List<T_UN_SpecialSmoke>(); 
         bool issendone = false, issendtwo = false, issendsixone = false, issendsixtwo = false;
          
         /// <summary>
@@ -671,7 +671,6 @@ namespace UnNormal_Test
                          if (tempvalue >= 1)//分拣完成
                          {
 
-                             FinishOnlyGoroup.Write(1, clientId[i] - 1);
                              writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
                              UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
                              writeLog.Write("任务号" + tempvalue + "数据库更新完成");
@@ -679,14 +678,12 @@ namespace UnNormal_Test
                              {
                                  updateListBox(" :" + tempvalue + "号任务已完成");
                                  writeLog.Write(" :" + tempvalue + "号任务已完成");
-                             }
+                             } 
+                             FinishOnlyGoroup.Write(1, clientId[i] - 1);
                              // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
 
                          }
-                         else
-                         {
-                             FinishOnlyGoroup.Write(0, clientId[i] - 1);
-                         }
+                    
                      }
                      catch (NullReferenceException nullex)
                      {
