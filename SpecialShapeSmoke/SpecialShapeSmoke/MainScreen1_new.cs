@@ -443,11 +443,11 @@ namespace SpecialShapeSmoke
 
                 if (checkConnection()) //连接服务器成功 
                 {
-                    while (true)
-                    {
-                        getData();
-                        Thread.Sleep(RefreshTime * 1000);//配置秒数
-                    }
+                    //while (true)
+                    //{
+                    //    getData();
+                    //    Thread.Sleep(RefreshTime * 1000);//配置秒数
+                    //}
                 }
             }
             catch (Exception e)
@@ -466,7 +466,7 @@ namespace SpecialShapeSmoke
 
         public bool checkConnection()
         {
-            int flag = ShapeGroup.Read(0).CastTo<int>(-1);
+            int flag = ShapeGroup.ReadD(0).CastTo<int>(-1);
             if (flag == -1)
             {
                 MessageBox.Show("连接服务器失败,请检查网络");
@@ -587,7 +587,6 @@ namespace SpecialShapeSmoke
         /// 
         public void getData(bool Refresh = false)
         {
-           
             try
             {
 
@@ -602,16 +601,16 @@ namespace SpecialShapeSmoke
                     if (dbIndex.Count()==2)//  是1061 和2061 单个通道？
                     {
                         countnum = 2; 
-                        finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
-                        finishNo[1] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);
+                        finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                        finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);
                     }
                     else
                     {
                         countnum = 4;
-                        finishNo[0] = ShapeGroup.Read((int)dbIndex[0]).CastTo<int>(-1);
-                        finishNo[1] = ShapeGroup.Read((int)dbIndex[1]).CastTo<int>(-1);//两个通道
-                        finishNo[2] = ShapeGroup.Read((int)dbIndex[2]).CastTo<int>(-1);
-                        finishNo[3] = ShapeGroup.Read((int)dbIndex[3]).CastTo<int>(-1);
+                        finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);
+                        finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);//两个通道
+                        finishNo[2] = ShapeGroup.ReadD((int)dbIndex[2]).CastTo<int>(-1);
+                        finishNo[3] = ShapeGroup.ReadD((int)dbIndex[3]).CastTo<int>(-1);
                     } 
                     #endregion
                 }
@@ -1588,11 +1587,13 @@ namespace SpecialShapeSmoke
         {
 
 
-            finishNo[0] = Convert.ToDecimal(txtbox4.Text);
-            finishNo[1] = Convert.ToDecimal(txtbox3.Text);
-            
-            lblpack.Text = finishNo[0].ToString();
+            //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
+            //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
+             
             getData(true);
+            txtbox4.Text = finishNo[0].ToString();
+            txtbox3.Text = finishNo[1].ToString();
+
             befoerFinishNo = finishNo;
         }
         
