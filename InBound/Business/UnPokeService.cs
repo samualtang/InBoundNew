@@ -646,14 +646,13 @@ namespace InBound.Business
         {
             object[] values = new object[36]; 
             String needDatas = "";
-            values.ToList().ForEach(a => a = 0);
             for (int i = 0; i < values.Length; i++)
             {
                 values[i] = 0;
             }
             using (Entities data = new Entities())
             {
-                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
+                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SORTNUM select item).FirstOrDefault();//获取特异形烟任务
                 if (sendtasknum == null  )
                 {
                     outlist = new List<T_UN_POKE>();
@@ -662,10 +661,10 @@ namespace InBound.Business
                 }
                 var query = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                             where item.SENDTASKNUM == sendtasknum.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
-                             orderby item.SORTNUM, item.MACHINESEQ descending
+                             where item.SORTNUM == sendtasknum.SORTNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
+                             orderby item.SORTNUM,item.POKEID
                              select new { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ, SORTNUM = item.SORTNUM, SENDTASKNUM = item.SENDTASKNUM, PACKAGEMACHINE = item.PACKAGEMACHINE, POKENUM = item.POKENUM, LENGHT = item2.ILENGTH, WIDTH = item2.IWIDTH }).Take(10).ToList();
-                outlist = (from it in data.T_UN_POKE where it.SENDTASKNUM == sendtasknum.SENDTASKNUM && (it.MACHINESEQ == 1061 || it.MACHINESEQ == 2061) select it).ToList();
+                outlist = (from it in data.T_UN_POKE where it.GRIDNUM == 10 && it.SORTNUM == sendtasknum.SORTNUM && (it.MACHINESEQ == 1061 || it.MACHINESEQ == 2061) select it).Take(10).ToList();
                 int index =4;//索引
                 values[0] = query.FirstOrDefault().SENDTASKNUM;//顺序号累加
                 values[1] = query.FirstOrDefault().SORTNUM;//任务号

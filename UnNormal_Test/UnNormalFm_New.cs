@@ -350,7 +350,7 @@ namespace UnNormal_Test
             {
 
                 issendone = true;
-                int flag = SpyBiaozhiGroup.ReadD(2).CastTo<int>(-1);//发送数据前读标志位
+                int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);//发送数据前读标志位
                 writeLog.Write("特异形烟发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
