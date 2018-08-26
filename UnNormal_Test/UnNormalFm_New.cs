@@ -130,10 +130,24 @@ namespace UnNormal_Test
         private void timerSendTask_Tick(object sender, EventArgs e)
         {
             updateListBox("触发定时器");
+            SpyBiaozhiGroup.Write(1, 1);
+            SpyBiaozhiGroup.Write(0, 1);
+            SpyBiaozhiGroup.Write(1, 2);
+            SpyBiaozhiGroup.Write(0, 2);
             if (SpyBiaozhiGroup.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
             {
-                SpyBiaozhiGroup.Write(1, 0);
+                SpyBiaozhiGroup.Write(2, 0);
                 SpyBiaozhiGroup.Write(0, 0);
+            }
+            if (SpyBiaozhiGroup.Read(1).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            {
+                SpyBiaozhiGroup.Write(2, 1);
+                SpyBiaozhiGroup.Write(0, 1);
+            }
+            if (SpyBiaozhiGroup.Read(2).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            {
+                SpyBiaozhiGroup.Write(2, 2);
+                SpyBiaozhiGroup.Write(0, 2);
             }
             timerSendTask.Stop();
         }
@@ -191,9 +205,16 @@ namespace UnNormal_Test
                 writeLog.Write(" 连接服务器失败,请检查网络." );
             }
             else
-            {   
+            {
+               
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......");
+                SpyBiaozhiGroup.Write(1, 0);
+                SpyBiaozhiGroup.Write(0, 0);
+                SpyBiaozhiGroup.Write(1, 1);
+                SpyBiaozhiGroup.Write(0, 1);
+                SpyBiaozhiGroup.Write(1, 2);
+                SpyBiaozhiGroup.Write(0, 2);
                 updateControlEnable(false, button10);
                 isInit = true;
             }
@@ -269,7 +290,7 @@ namespace UnNormal_Test
                 
                 issendone = true;
                 int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
-                writeLog.Write("发送数据前读标志位：" + flag);
+                writeLog.Write("烟仓烟柜发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     #region
@@ -319,11 +340,11 @@ namespace UnNormal_Test
                     object[] datas = UnPokeService.getAllLineTask(out listOnly, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("分拣数据发送完毕");
+                        updateListBox("烟仓烟柜分拣数据发送完毕");
                         return;
                     } 
-                    writeLog.Write("分拣线:" + OutStr);
-                    updateListBox("分拣线:" + OutStr); 
+                    writeLog.Write("烟仓烟柜分拣线:" + OutStr);
+                    updateListBox("烟仓烟柜分拣线:" + OutStr); 
                     OnlyTaskGorup.SyncWrite(datas); 
                 }
             }
@@ -351,25 +372,25 @@ namespace UnNormal_Test
 
                 issendone = true;
                 int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);//发送数据前读标志位
-                writeLog.Write("特异形烟发送数据前读标志位：" + flag);
+                writeLog.Write("1线特异形烟发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     string OutStr = "";
                     object[] datas = UnPokeService.GetSpecialSmokeData("1", out listSS1B, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("特异形烟分拣数据发送完毕");
+                        updateListBox("1线特异形烟分拣数据发送完毕");
                        
                         return;
                     }
-                    writeLog.Write("特异形烟分拣线:" + OutStr);
-                    updateListBox("特异形烟分拣线:" + OutStr);
-                    OnlyTaskGorup.SyncWrite(datas); 
+                    writeLog.Write("1线特异形烟分拣线:" + OutStr);
+                    updateListBox("1线特异形烟分拣线:" + OutStr);
+                    SpecialSmokeGroup1.SyncWrite(datas); 
                 }
                 else
-                { 
-                    writeLog.Write("标志位读取到异常:" + flag);
-                    updateListBox("标志位读取到异常:" + flag);
+                {
+                    writeLog.Write("1线特异形烟标志位读取到异常:" + flag);
+                    updateListBox("1线特异形烟标志位读取到异常:" + flag);
                 }
             }
             catch (Exception ex)
@@ -397,24 +418,24 @@ namespace UnNormal_Test
 
                 issendone = true;
                 int flag = SpyBiaozhiGroup.ReadD(2).CastTo<int>(-1);//发送数据前读标志位
-                writeLog.Write("特异形烟发送数据前读标志位：" + flag);
+                writeLog.Write("2线特异形烟发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     string OutStr = "";
                     object[] datas = UnPokeService.GetSpecialSmokeData("2", out listSS2A, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("特异形烟分拣数据发送完毕"); 
+                        updateListBox("2线特异形烟分拣数据发送完毕"); 
                         return;
                     }
-                    writeLog.Write("特异形烟分拣线:" + OutStr);
-                    updateListBox("特异形烟分拣线:" + OutStr);
-                    OnlyTaskGorup.SyncWrite(datas);
+                    writeLog.Write("2线特异形烟分拣线:" + OutStr);
+                    updateListBox("2线特异形烟分拣线:" + OutStr);
+                    SpecialSmokeGroup2.SyncWrite(datas);
                 }
                 else
-                { 
-                    writeLog.Write("标志位读取到异常:" + flag);
-                    updateListBox("标志位读取到异常:" + flag);
+                {
+                    writeLog.Write("2线特异形烟标志位读取到异常:" + flag);
+                    updateListBox("2线特异形烟标志位读取到异常:" + flag);
                 }
             }
             catch (Exception ex)
@@ -673,7 +694,7 @@ namespace UnNormal_Test
 
                              writeLog.Write("从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
                              UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                             writeLog.Write("任务号" + tempvalue + "数据库更新完成");
+                             writeLog.Write("烟仓烟柜任务号" + tempvalue + "数据库更新完成");
                              if (tempvalue != 0)
                              {
                                  updateListBox(" :" + tempvalue + "号任务已完成");
@@ -702,78 +723,98 @@ namespace UnNormal_Test
                 {
                     if (clientId[i] == 1)
                     {
-
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        try
+                        { 
+                            if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                            {
+                                while (!isInit)
+                                {
+                                    Thread.Sleep(100);
+                                }
+                                String logstr = "";
+                                var list = listOnly.FirstOrDefault();
+                                if (list != null)
+                                {
+                                    logstr += list.SORTNUM + ";";
+                                }
+                                if (logstr != null && logstr.Length > 0)
+                                {
+                                    writeLog.Write("烟仓烟柜任务号:" + logstr + "已接收");
+                                    updateListBox("烟仓烟柜任务号:" + logstr + "已接收");
+                                    UnPokeService.UpdateTask(listOnly, 15);
+                                }
+                                // sendOnlyTask();
+                                //delSendTask task = sendTask1; 
+                                //task.BeginInvoke(null, null); 
+                            }
+                        }
+                        catch (Exception ex)
                         {
-                            while (!isInit)
-                            {
-                                Thread.Sleep(100);
-                            }
-                            String logstr = "";
-                            foreach (var item in listOnly.Distinct())
-                            {
-                                logstr += item.SORTNUM + ";";
-                                
-                            }
-                            if (logstr != null && logstr.Length > 0)
-                            {
-                                writeLog.Write("任务号:" + logstr + "已接收");
-                                updateListBox("任务号:" + logstr + "已接收");
-                                UnPokeService.UpdateTask(listOnly, 15);
-                            }
-                            sendOnlyTask();
-                            //delSendTask task = sendTask1; 
-                            //task.BeginInvoke(null, null); 
+                            WriteLog.GetLog().Write("烟仓烟柜异常信息" + ex.Message);
                         }
                         break;
                     }
                     if (clientId[i] == 2)//特异形烟 61,62道
                     {
-
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        try
                         {
-                            while (!isInit)
+
+
+                            if (values[i] != null && int.Parse(values[i].ToString()) == 0)
                             {
-                                Thread.Sleep(100);
+                                while (!isInit)
+                                {
+                                    Thread.Sleep(100);
+                                }
+                                string STR = "";
+
+                                foreach (var item in listSS1B)
+                                {
+                                    STR += item.POKEID + "，";
+                                }
+                                if (STR != null && STR.Length > 0)
+                                {
+                                    writeLog.Write("1线61,62特异形烟任务号:" + STR + "已接收");
+                                    updateListBox("1线61,62特异形烟:" + STR + "已接收");
+                                    UnPokeService.UpdateSSTask(listSS1B, 15);
+                                }
+                                sendSSTask1();
                             }
-                            string STR = "";
-                         
-                            foreach (var item in listSS1B)
-                            {
-                                STR += item.POKEID + "，";
-                            }
-                            if (STR != null && STR.Length > 0)
-                            {
-                                writeLog.Write("特异形烟任务号:" + STR + "已接收");
-                                updateListBox("特异形烟:" + STR + "已接收");
-                                UnPokeService.UpdateSSTask(listSS1B, 15);
-                            }
-                            sendSSTask1(); 
+                        }
+                        catch (Exception ex)
+                        {
+                            WriteLog.GetLog().Write("1线61,62特异形烟异常信息" + ex.Message);
                         }
                         break;
                     }
                     if (clientId[i] == 3)//特异形烟 63,64道
                     {
-
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)
+                        try
                         {
-                            while (!isInit)
+                            if (values[i] != null && int.Parse(values[i].ToString()) == 0)
                             {
-                                Thread.Sleep(100);
-                            }
-                            string STR = "";
+                                while (!isInit)
+                                {
+                                    Thread.Sleep(100);
+                                }
+                                string STR = "";
 
-                            foreach (var item in listSS2A)
-                            {
-                                STR += item.POKEID + "，";
+                                foreach (var item in listSS2A)
+                                {
+                                    STR += item.POKEID + "，";
+                                }
+                                if (STR != null && STR.Length > 0)
+                                {
+                                    writeLog.Write("2线63,64特异形烟任务号:" + STR + "已接收");
+                                    updateListBox("2线63,64特异形烟:" + STR + "已接收");
+                                    UnPokeService.UpdateSSTask(listSS2A, 15);
+                                }
+                                sendSSTask2();
                             }
-                            if (STR != null && STR.Length > 0)
-                            {
-                                writeLog.Write("特异形烟任务号:" + STR + "已接收");
-                                updateListBox("特异形烟:" + STR + "已接收");
-                                UnPokeService.UpdateSSTask(listSS2A, 15);
-                            }
-                            sendSSTask2();
+                        }
+                        catch (Exception ex)
+                        {
+                            WriteLog.GetLog().Write("2线63,64特异形烟异常信息" + ex.Message);
                         }
                         break;
                     }

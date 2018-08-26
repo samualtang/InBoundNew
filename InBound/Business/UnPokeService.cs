@@ -550,7 +550,7 @@ namespace InBound.Business
                 return values;
             }
         }
-       static int export = 0;
+       static int export = 1;
         /// <summary>
         /// 异形烟数据
         /// </summary>
@@ -560,10 +560,6 @@ namespace InBound.Business
         /// <returns></returns>
         public static object[] getAllLineTask( out List<T_UN_POKE> outlist, out string outStr)
         {
-            if (export >= 20)
-            {
-                export = 0;
-            }
             object[] values = new object[74];
             String needDatas = "";
             for (int i = 0; i < values.Length; i++)
@@ -590,7 +586,7 @@ namespace InBound.Business
                 outlist = query1;
                 values[0] = query.SORTNUM;//任务号
                 values[1] = query.SENDTASKNUM;//包号
-                values[2] = export++;//出口号
+                values[2] =query.STORENUM;//出口号
                 values[3] =query.PACKAGEMACHINE; //包装机号
                 foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())//1-60烟仓 + 6 烟柜
                 {
@@ -656,7 +652,7 @@ namespace InBound.Business
             }
             using (Entities data = new Entities())
             {
-                var sendtasknum = (from item in data.T_UN_POKE where item.STATUS == 10 && item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SORTNUM select item).FirstOrDefault();//获取特异形烟任务
+                var sendtasknum = (from item in data.T_UN_POKE where  item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SORTNUM select item).FirstOrDefault();//获取特异形烟任务
                 if (sendtasknum == null)
                 {
                     outlist = new List<T_UN_SpecialSmoke>();
@@ -665,12 +661,12 @@ namespace InBound.Business
                 }
                 var query = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                             where item.SORTNUM == sendtasknum.SORTNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
+                             where item.SORTNUM == sendtasknum.SORTNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.GRIDNUM == 10
                              orderby item.SORTNUM, item.POKEID
                              select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).Take(10).ToList();
                 outlist = query;
                 int index = 4;//索引  
-                values[0] = sendtasknum.SENDTASKNUM;//顺序号累加
+                values[0] = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");//顺序号累加
                 values[1] = sendtasknum.SORTNUM;//任务号
                 values[2] = GetLineNum((sendtasknum.PACKAGEMACHINE ?? 0));//获取烟仓号
                 values[3] = query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//订单数量
@@ -687,10 +683,9 @@ namespace InBound.Business
                 values[34] = 1;//标志位
 
             }
-            object[] date = values.Where(a => Convert.ToInt32(a) != 0).ToArray();
-            for (int i = 0; i < date.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
-                needDatas += i + ":" + date[i] + ",";
+                needDatas += i + ":" + values[i] + ",";
             }
             outStr = needDatas;
             return values;
@@ -1636,9 +1631,9 @@ namespace InBound.Business
                 foreach (var item in list)
                 {
                     var isSendS = (from pokeid in data.T_UN_POKE where pokeid.POKEID == item.POKEID select pokeid).FirstOrDefault();
-                    if (isSendS.SORTNUM == 10)
+                    if (isSendS.GRIDNUM == 10)
                     {
-                        isSendS.SORTNUM = 15;
+                        isSendS.GRIDNUM = 15;
                     }
                 } 
                 data.SaveChanges();

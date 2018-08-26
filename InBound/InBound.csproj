@@ -105,6 +105,7 @@
     <Compile Include="Model\HUNHEVIEW.cs" />
     <Compile Include="Model\LaneWayTaskCount.cs" />
     <Compile Include="Model\OrderGroupDetail.cs" />
+    <Compile Include="Model\T_UN_SpecialSmoke.cs" />
     <Compile Include="Model\UnionCaChe.cs" />
     <Compile Include="Model\UnionTaskInfo.cs" />
     <Compile Include="Model\UnTaskInfo.cs" />
