@@ -14,7 +14,26 @@ namespace WcfServiceLib
         [OperationContract]
         string GetMainBelt(int value);
 
-      
+        /// <summary>
+        /// 获取合流机械手的数据
+        /// </summary>
+        /// <param name="mainbelt">主皮带</param>
+        /// <param name="MachineNo"></param>
+        /// <returns></returns>
+        [OperationContract]
+        string GetUnionMachine(int MachineNo);
+
+
+        [OperationContract]
+        string GetUnionCaChe(int MachineNo);
+
+
+          [OperationContract]
+        string GetSortBelt(int MachineNo);
+
+        
+
+
         // TODO: 在此添加您的服务操作
     }
 

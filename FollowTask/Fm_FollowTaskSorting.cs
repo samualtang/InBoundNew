@@ -51,6 +51,7 @@ namespace FollowTask
         /// </summary>
         static int ReadIndex = 0;
         delegate void HandleThreadRead(decimal group);
+
         public void GetSoringBeltInfo(string text, List<Group> list, bool isonline)
         {
             Text = text + "预分拣";

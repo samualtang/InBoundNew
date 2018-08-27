@@ -65,50 +65,52 @@ namespace highSpeed.orderHandle
 
                 //进度条显示
 
-
-
-                panel2.Visible = true;
-                label2.Visible = true;
-                progressBar1.Visible = true;
-                int rcounts = ds.Tables[0].Rows.Count;
-                progressBar1.Value = 0;
-                for (int i = 0; i < rcounts; i++)
-                {
-                    Application.DoEvents();
-                    progressBar1.Value = ((i + 1) * 100 / rcounts);
-                    progressBar1.Refresh();
-                    label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
-                    label2.Refresh();
-                }
-                panel2.Visible = false;
-                label2.Visible = false;
-                progressBar1.Visible = false;
-
-                this.orderdata.DataSource = ds.Tables[0];
-                orderdata.Sort(orderdata.Columns[1], ListSortDirection.Ascending);//默认车组排序
-                this.orderdata.AutoGenerateColumns = false;
-
-                string columnwidths = pub.IniReadValue(this.Name, this.orderdata.Name);
-                if (columnwidths != "")
-                {
-                    string[] columns = columnwidths.Split(',');
-                    int j = 0;
-                    for (int i = 0; i < columns.Length; i++)
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                { 
+                    panel2.Visible = true;
+                    label2.Visible = true;
+                    progressBar1.Visible = true;
+                    int rcounts = ds.Tables[0].Rows.Count;
+                    progressBar1.Value = 0;
+                    for (int i = 0; i < rcounts; i++)
                     {
-                        if (orderdata.Columns[i].Visible == true)
+                        Application.DoEvents();
+                        progressBar1.Value = ((i + 1) * 100 / rcounts);
+                        progressBar1.Refresh();
+                        label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                        label2.Refresh();
+                    }
+                    panel2.Visible = false;
+                    label2.Visible = false;
+                    progressBar1.Visible = false;
+
+                    this.orderdata.DataSource = ds.Tables[0];
+                    orderdata.Sort(orderdata.Columns[1], ListSortDirection.Ascending);//默认车组排序
+                    this.orderdata.AutoGenerateColumns = false;
+
+                    string columnwidths = pub.IniReadValue(this.Name, this.orderdata.Name);
+                    if (columnwidths != "")
+                    {
+                        string[] columns = columnwidths.Split(',');
+                        int j = 0;
+                        for (int i = 0; i < columns.Length; i++)
                         {
-                            orderdata.Columns[j].Width = Convert.ToInt32(columns[i]);
-                            j = j + 1;
+                            if (orderdata.Columns[i].Visible == true)
+                            {
+                                orderdata.Columns[j].Width = Convert.ToInt32(columns[i]);
+                                j = j + 1;
+                            }
                         }
                     }
+                    orderdata.ClearSelection();
+                    Db.Close();
                 }
-                orderdata.ClearSelection();
-                Db.Close();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
         }
         #endregion
 

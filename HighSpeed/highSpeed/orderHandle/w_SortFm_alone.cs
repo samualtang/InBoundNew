@@ -104,42 +104,45 @@ namespace highSpeed.orderHandle
             Db.Open();
             ds.Clear();
             ds = Db.QueryDs(sql);
-            panel2.Visible = true;
-            label2.Visible = true;
-            progressBar1.Visible = false;
-            int rcounts = ds.Tables[0].Rows.Count;
-            progressBar1.Value = 0;
-            for (int i = 0; i < rcounts; i++)
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                Application.DoEvents();
-                progressBar1.Value = ((i + 1) * 100 / rcounts);
-                progressBar1.Refresh();
-                label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
-                label2.Refresh();
-            }
-
-            panel2.Visible = false;
-            label2.Visible = false;
-            progressBar1.Visible = false;
-            lblTime.Visible = false;//时间
-
-            dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
-            this.dgvSortInfo.DataSource = ds.Tables[0];
-            //dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
-            //this.dgvSortInfo.AutoGenerateColumns = false;
-
-
-            string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
-            if (columnwidths != "")
-            {
-                string[] columns = columnwidths.Split(',');
-                int j = 0;
-                for (int i = 0; i < columns.Length; i++)
+                panel2.Visible = true;
+                label2.Visible = true;
+                progressBar1.Visible = false;
+                int rcounts = ds.Tables[0].Rows.Count;
+                progressBar1.Value = 0;
+                for (int i = 0; i < rcounts; i++)
                 {
-                    if (dgvSortInfo.Columns[i].Visible == true)
+                    Application.DoEvents();
+                    progressBar1.Value = ((i + 1) * 100 / rcounts);
+                    progressBar1.Refresh();
+                    label2.Text = "正在读取数据..." + ((i + 1) * 100 / rcounts).ToString() + "%";
+                    label2.Refresh();
+                }
+
+                panel2.Visible = false;
+                label2.Visible = false;
+                progressBar1.Visible = false;
+                lblTime.Visible = false;//时间
+
+                dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
+                this.dgvSortInfo.DataSource = ds.Tables[0];
+                //dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
+                //this.dgvSortInfo.AutoGenerateColumns = false;
+
+
+                string columnwidths = pub.IniReadValue(this.Name, this.dgvSortInfo.Name);
+                if (columnwidths != "")
+                {
+                    string[] columns = columnwidths.Split(',');
+                    int j = 0;
+                    for (int i = 0; i < columns.Length; i++)
                     {
-                        dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
-                        j = j + 1;
+                        if (dgvSortInfo.Columns[i].Visible == true)
+                        {
+                            dgvSortInfo.Columns[j].Width = Convert.ToInt32(columns[i]);
+                            j = j + 1;
+                        }
                     }
                 }
             }
@@ -397,6 +400,22 @@ namespace highSpeed.orderHandle
             int list = UnionTaskInfoService.GetPokeCount();
 
             MessageBox.Show(list.ToString());
+        }
+
+        private void btn_validation_Click(object sender, EventArgs e)
+        {
+
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100); 
+           
+            Db.Open();
+            Db.ExecuteNonQueryWithProc("P_UN_SCHEDULEVALIDATION_ALONE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
+            Db.Close();
+
+            String errcode = sqlpara[0].Value.ToString();
+            String errmsg = sqlpara[1].Value.ToString();
         }
 
 

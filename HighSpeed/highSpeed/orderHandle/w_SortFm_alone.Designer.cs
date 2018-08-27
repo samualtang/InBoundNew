@@ -43,6 +43,7 @@
             this.lblInFO = new System.Windows.Forms.Label();
             this.btnRef = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_validation = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.panel2.SuspendLayout();
@@ -128,7 +129,7 @@
             // btnSort
             // 
             this.btnSort.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnSort.Location = new System.Drawing.Point(661, 12);
+            this.btnSort.Location = new System.Drawing.Point(637, 12);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(75, 23);
             this.btnSort.TabIndex = 0;
@@ -158,7 +159,7 @@
             // 
             // btnPokeSeq
             // 
-            this.btnPokeSeq.Location = new System.Drawing.Point(756, 12);
+            this.btnPokeSeq.Location = new System.Drawing.Point(732, 12);
             this.btnPokeSeq.Name = "btnPokeSeq";
             this.btnPokeSeq.Size = new System.Drawing.Size(75, 23);
             this.btnPokeSeq.TabIndex = 4;
@@ -178,7 +179,7 @@
             // 
             // btnRef
             // 
-            this.btnRef.Location = new System.Drawing.Point(561, 12);
+            this.btnRef.Location = new System.Drawing.Point(537, 12);
             this.btnRef.Name = "btnRef";
             this.btnRef.Size = new System.Drawing.Size(75, 23);
             this.btnRef.TabIndex = 3;
@@ -188,6 +189,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_validation);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.lblInFO);
@@ -197,6 +199,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(918, 48);
             this.panel1.TabIndex = 7;
+            // 
+            // btn_validation
+            // 
+            this.btn_validation.Location = new System.Drawing.Point(831, 12);
+            this.btn_validation.Name = "btn_validation";
+            this.btn_validation.Size = new System.Drawing.Size(84, 23);
+            this.btn_validation.TabIndex = 5;
+            this.btn_validation.Text = "数据验证";
+            this.btn_validation.UseVisualStyleBackColor = true;
+            this.btn_validation.Click += new System.EventHandler(this.btn_validation_Click);
             // 
             // w_SortFm_alone
             // 
@@ -238,5 +250,6 @@
         private System.Windows.Forms.Label lblInFO;
         private System.Windows.Forms.Button btnRef;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_validation;
     }
 }
