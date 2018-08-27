@@ -37,7 +37,7 @@ namespace highSpeed.orderHandle
             //this.pager1.ExportAll += new WHC.Pager.WinControl.ExportAllEventHandler(pager1_ExportAll);
             handlesort += wm.GetSonFormState;
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
-            
+
             dgvSortInfo.AllowUserToAddRows = false;
             panel3.VisibleChanged += new EventHandler(panel3_VisibleChanged);
             //this.pager1.GetChildAtPoint(7).Visible = false;
@@ -188,7 +188,7 @@ namespace highSpeed.orderHandle
                 sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
                 sqlpara[0].Direction = ParameterDirection.Output;
                 sqlpara[1].Direction = ParameterDirection.Output;
-          
+
                 Db.Open();
                 Db.ExecuteNonQueryWithProc("P_PRODUCE_SCHEDULE_ALONE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
                 Db.Close();
@@ -404,20 +404,38 @@ namespace highSpeed.orderHandle
 
         private void btn_validation_Click(object sender, EventArgs e)
         {
-
+            panel4.Visible = true; 
+            HandleSort task1 = datacheck; //新的
+            task1.BeginInvoke(null, null);
+        }
+         
+        private void datacheck()
+        {
+            Db.Open();
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
-            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100); 
-           
-            Db.Open();
-            Db.ExecuteNonQueryWithProc("P_UN_SCHEDULEVALIDATION_ALONE", sqlpara);//修改前的存储过程 P_PRODUCE_updatesortnum 
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("P_PRO_SCHEDULEVALIDATION_ALONE", sqlpara);
+
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
             Db.Close();
-
-            String errcode = sqlpara[0].Value.ToString();
-            String errmsg = sqlpara[1].Value.ToString();
+            panel4.Visible = false;
+            if (errcode == "1")
+            {
+                MessageBox.Show("常规烟排程数据正常");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
+            } 
         }
-
 
     }
 }

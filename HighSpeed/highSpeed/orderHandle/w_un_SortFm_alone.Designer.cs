@@ -40,9 +40,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.TimerByTime = new System.Windows.Forms.Timer(this.components);
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvSortInfo
@@ -72,9 +77,8 @@
             this.btnPokeSeq.Name = "btnPokeSeq";
             this.btnPokeSeq.Size = new System.Drawing.Size(75, 23);
             this.btnPokeSeq.TabIndex = 4;
-            this.btnPokeSeq.Text = "条烟顺序";
+            this.btnPokeSeq.Text = "数据检验";
             this.btnPokeSeq.UseVisualStyleBackColor = true;
-            this.btnPokeSeq.Visible = false;
             this.btnPokeSeq.Click += new System.EventHandler(this.btnPokeSeq_Click);
             // 
             // btnRef
@@ -165,11 +169,43 @@
             this.TimerByTime.Interval = 1000;
             this.TimerByTime.Tick += new System.EventHandler(this.Timer_Tick);
             // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Controls.Add(this.pictureBox1);
+            this.panel4.Font = new System.Drawing.Font("宋体", 11F);
+            this.panel4.Location = new System.Drawing.Point(526, 61);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(359, 100);
+            this.panel4.TabIndex = 14;
+            this.panel4.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(210, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 15);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "数据校验中.....";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::highSpeed.Properties.Resources.loading;
+            this.pictureBox1.Location = new System.Drawing.Point(-2, -2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(206, 100);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 27;
+            this.pictureBox1.TabStop = false;
+            // 
             // w_un_SortFm_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 437);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvSortInfo);
@@ -180,6 +216,9 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -197,6 +236,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Timer TimerByTime;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
 
     }
 }

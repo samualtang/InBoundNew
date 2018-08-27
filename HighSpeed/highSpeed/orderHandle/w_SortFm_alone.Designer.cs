@@ -44,11 +44,16 @@
             this.btnRef = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_validation = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -206,15 +211,47 @@
             this.btn_validation.Name = "btn_validation";
             this.btn_validation.Size = new System.Drawing.Size(84, 23);
             this.btn_validation.TabIndex = 5;
-            this.btn_validation.Text = "数据验证";
+            this.btn_validation.Text = "数据检验";
             this.btn_validation.UseVisualStyleBackColor = true;
             this.btn_validation.Click += new System.EventHandler(this.btn_validation_Click);
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Controls.Add(this.pictureBox1);
+            this.panel4.Font = new System.Drawing.Font("宋体", 11F);
+            this.panel4.Location = new System.Drawing.Point(537, 69);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(359, 100);
+            this.panel4.TabIndex = 11;
+            this.panel4.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(210, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 15);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "数据校验中.....";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::highSpeed.Properties.Resources.loading;
+            this.pictureBox1.Location = new System.Drawing.Point(-2, -2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(206, 100);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 27;
+            this.pictureBox1.TabStop = false;
             // 
             // w_SortFm_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(918, 438);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.dgvSortInfo);
@@ -230,6 +267,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -251,5 +291,8 @@
         private System.Windows.Forms.Button btnRef;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_validation;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

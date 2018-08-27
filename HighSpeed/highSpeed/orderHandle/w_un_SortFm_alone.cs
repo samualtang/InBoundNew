@@ -129,7 +129,15 @@ namespace highSpeed.orderHandle
                 lblTime.Visible = false;//时间
 
                 dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
+                try
+                {
+                    
                 this.dgvSortInfo.DataSource = ds.Tables[0];
+                }
+                catch (Exception e)
+                {
+                    writeLog.Write("Dgv异常：----"+e.Message);
+                }
                 //dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
                 //this.dgvSortInfo.AutoGenerateColumns = false;
 
@@ -353,8 +361,41 @@ namespace highSpeed.orderHandle
         delegate void HandleSortPokeseq();
         private void btnPokeSeq_Click(object sender, EventArgs e)
         {
-           
+            panel4.Visible = true;
+            HandleSort task1 = datacheck; //新的
+            task1.BeginInvoke(null, null);
+        } 
+
+        private void datacheck()
+        {
+            Db.Open();
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("P_UN_SCHEDULEVALIDATION_ALONE", sqlpara);
+
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
+            Db.Close();
+            panel4.Visible = false;
+            if (errcode == "1")
+            {
+                MessageBox.Show("异型烟排程数据正常");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
+            } 
         }
+
+
+
 
 
 
