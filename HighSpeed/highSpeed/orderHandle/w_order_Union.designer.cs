@@ -48,6 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvUnionOrderINfo = new System.Windows.Forms.DataGridView();
+            this.btnVli = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -56,6 +57,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnVli);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.cmbCigerType);
             this.panel1.Controls.Add(this.btn_all);
@@ -141,7 +143,7 @@
             // lab_showinfo
             // 
             this.lab_showinfo.AutoSize = true;
-            this.lab_showinfo.Location = new System.Drawing.Point(615, 14);
+            this.lab_showinfo.Location = new System.Drawing.Point(686, 16);
             this.lab_showinfo.Name = "lab_showinfo";
             this.lab_showinfo.Size = new System.Drawing.Size(365, 12);
             this.lab_showinfo.TabIndex = 2;
@@ -266,6 +268,16 @@
             this.dgvUnionOrderINfo.Size = new System.Drawing.Size(637, 220);
             this.dgvUnionOrderINfo.TabIndex = 3;
             // 
+            // btnVli
+            // 
+            this.btnVli.Location = new System.Drawing.Point(605, 10);
+            this.btnVli.Name = "btnVli";
+            this.btnVli.Size = new System.Drawing.Size(75, 23);
+            this.btnVli.TabIndex = 12;
+            this.btnVli.Text = "校验长宽";
+            this.btnVli.UseVisualStyleBackColor = true;
+            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
+            // 
             // win_order_Union
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -278,6 +290,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "win_order_Union";
             this.Text = "订单接收";
+            this.Activated += new System.EventHandler(this.win_order_Union_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.win_order_recieve_FormClosing);
             this.Load += new System.EventHandler(this.win_order_Union_Load);
             this.panel1.ResumeLayout(false);
@@ -312,5 +325,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbCigerType;
         private System.Windows.Forms.DataGridView dgvUnionOrderINfo;
+        private System.Windows.Forms.Button btnVli;
     }
 }

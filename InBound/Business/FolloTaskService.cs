@@ -202,7 +202,7 @@ namespace InBound.Business
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                              where item.SORTNUM == sortnum && item.MAINBELT == mainbelt && item.GROUPNO == groupno
-                            orderby item.SORTNUM
+                            orderby item.TROUGHNUM
                             select new FollowTaskDeail()
                             {
                                 SortNum = item.SORTNUM ?? 0,

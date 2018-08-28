@@ -294,5 +294,16 @@ namespace highSpeed.orderHandle
         {
             cmbCigerType.SelectedIndex = 0;
         }
+
+        private void btnVli_Click(object sender, EventArgs e)
+        {
+          string Str=  InBound.Business.UnPokeService.GetNullLWSomke(); 
+          MessageBox.Show(Str); 
+        }
+
+        private void win_order_Union_Activated(object sender, EventArgs e)
+        {
+
+        }
     }
 }
