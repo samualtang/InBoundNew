@@ -29,11 +29,14 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.cmb_line = new System.Windows.Forms.ComboBox();
+            this.btn_recieve = new System.Windows.Forms.Button();
+            this.btnVli = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbCigerType = new System.Windows.Forms.ComboBox();
             this.btn_all = new System.Windows.Forms.Button();
             this.txt_codestr = new System.Windows.Forms.TextBox();
-            this.btn_recieve = new System.Windows.Forms.Button();
             this.btn_search = new System.Windows.Forms.Button();
             this.lab_showinfo = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,7 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dgvUnionOrderINfo = new System.Windows.Forms.DataGridView();
-            this.btnVli = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -57,12 +60,15 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.cmb_line);
+            this.panel1.Controls.Add(this.btn_recieve);
             this.panel1.Controls.Add(this.btnVli);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.cmbCigerType);
             this.panel1.Controls.Add(this.btn_all);
             this.panel1.Controls.Add(this.txt_codestr);
-            this.panel1.Controls.Add(this.btn_recieve);
             this.panel1.Controls.Add(this.btn_search);
             this.panel1.Controls.Add(this.lab_showinfo);
             this.panel1.Controls.Add(this.label1);
@@ -71,13 +77,57 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1190, 42);
+            this.panel1.Size = new System.Drawing.Size(1190, 60);
             this.panel1.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(779, 15);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 22);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "打  印";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // cmb_line
+            // 
+            this.cmb_line.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_line.FormattingEnabled = true;
+            this.cmb_line.Items.AddRange(new object[] {
+            "常规烟",
+            "异型烟 1线",
+            "异型烟 2线"});
+            this.cmb_line.Location = new System.Drawing.Point(542, 14);
+            this.cmb_line.Name = "cmb_line";
+            this.cmb_line.Size = new System.Drawing.Size(109, 20);
+            this.cmb_line.TabIndex = 15;
+            // 
+            // btn_recieve
+            // 
+            this.btn_recieve.Location = new System.Drawing.Point(657, 13);
+            this.btn_recieve.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_recieve.Name = "btn_recieve";
+            this.btn_recieve.Size = new System.Drawing.Size(75, 22);
+            this.btn_recieve.TabIndex = 14;
+            this.btn_recieve.Text = "汇  总";
+            this.btn_recieve.UseVisualStyleBackColor = true;
+            this.btn_recieve.Click += new System.EventHandler(this.btn_recieve_Click);
+            // 
+            // btnVli
+            // 
+            this.btnVli.Location = new System.Drawing.Point(979, 14);
+            this.btnVli.Name = "btnVli";
+            this.btnVli.Size = new System.Drawing.Size(75, 23);
+            this.btnVli.TabIndex = 12;
+            this.btnVli.Text = "校验长宽";
+            this.btnVli.UseVisualStyleBackColor = true;
+            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(295, 14);
+            this.label3.Location = new System.Drawing.Point(495, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 11;
@@ -91,15 +141,16 @@
             "全部",
             "常规烟",
             "异形烟"});
-            this.cmbCigerType.Location = new System.Drawing.Point(342, 10);
+            this.cmbCigerType.Location = new System.Drawing.Point(879, 34);
             this.cmbCigerType.Name = "cmbCigerType";
             this.cmbCigerType.Size = new System.Drawing.Size(94, 20);
             this.cmbCigerType.TabIndex = 10;
+            this.cmbCigerType.Visible = false;
             this.cmbCigerType.SelectedIndexChanged += new System.EventHandler(this.cmbCigerType_SelectedIndexChanged);
             // 
             // btn_all
             // 
-            this.btn_all.Location = new System.Drawing.Point(442, 9);
+            this.btn_all.Location = new System.Drawing.Point(381, 13);
             this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_all.Name = "btn_all";
             this.btn_all.Size = new System.Drawing.Size(75, 22);
@@ -118,20 +169,9 @@
             this.txt_codestr.TabIndex = 8;
             this.txt_codestr.Visible = false;
             // 
-            // btn_recieve
-            // 
-            this.btn_recieve.Location = new System.Drawing.Point(523, 9);
-            this.btn_recieve.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_recieve.Name = "btn_recieve";
-            this.btn_recieve.Size = new System.Drawing.Size(75, 22);
-            this.btn_recieve.TabIndex = 4;
-            this.btn_recieve.Text = "汇总";
-            this.btn_recieve.UseVisualStyleBackColor = true;
-            this.btn_recieve.Click += new System.EventHandler(this.btn_recieve_Click);
-            // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(186, 9);
+            this.btn_search.Location = new System.Drawing.Point(186, 12);
             this.btn_search.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(75, 22);
@@ -143,7 +183,7 @@
             // lab_showinfo
             // 
             this.lab_showinfo.AutoSize = true;
-            this.lab_showinfo.Location = new System.Drawing.Point(686, 16);
+            this.lab_showinfo.Location = new System.Drawing.Point(3, 45);
             this.lab_showinfo.Name = "lab_showinfo";
             this.lab_showinfo.Size = new System.Drawing.Size(365, 12);
             this.lab_showinfo.TabIndex = 2;
@@ -152,7 +192,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 14);
+            this.label1.Location = new System.Drawing.Point(12, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 1;
@@ -162,7 +202,7 @@
             // 
             this.datePick.CustomFormat = "yyyy-MM-dd";
             this.datePick.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.datePick.Location = new System.Drawing.Point(70, 10);
+            this.datePick.Location = new System.Drawing.Point(70, 13);
             this.datePick.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.datePick.Name = "datePick";
             this.datePick.Size = new System.Drawing.Size(97, 21);
@@ -180,12 +220,12 @@
             this.count_hs,
             this.order_qty});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Left;
-            this.orderdata.Location = new System.Drawing.Point(0, 42);
+            this.orderdata.Location = new System.Drawing.Point(0, 60);
             this.orderdata.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(553, 220);
+            this.orderdata.Size = new System.Drawing.Size(553, 202);
             this.orderdata.TabIndex = 1;
             this.orderdata.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellEndEdit);
             // 
@@ -261,22 +301,22 @@
             this.dgvUnionOrderINfo.AllowUserToDeleteRows = false;
             this.dgvUnionOrderINfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnionOrderINfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUnionOrderINfo.Location = new System.Drawing.Point(553, 42);
+            this.dgvUnionOrderINfo.Location = new System.Drawing.Point(553, 60);
             this.dgvUnionOrderINfo.Name = "dgvUnionOrderINfo";
             this.dgvUnionOrderINfo.ReadOnly = true;
             this.dgvUnionOrderINfo.RowTemplate.Height = 23;
-            this.dgvUnionOrderINfo.Size = new System.Drawing.Size(637, 220);
+            this.dgvUnionOrderINfo.Size = new System.Drawing.Size(637, 202);
             this.dgvUnionOrderINfo.TabIndex = 3;
             // 
-            // btnVli
+            // label4
             // 
-            this.btnVli.Location = new System.Drawing.Point(605, 10);
-            this.btnVli.Name = "btnVli";
-            this.btnVli.Size = new System.Drawing.Size(75, 23);
-            this.btnVli.TabIndex = 12;
-            this.btnVli.Text = "校验长宽";
-            this.btnVli.UseVisualStyleBackColor = true;
-            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(659, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "总量：";
+            this.label4.Visible = false;
             // 
             // win_order_Union
             // 
@@ -306,7 +346,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btn_recieve;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.Label lab_showinfo;
         private System.Windows.Forms.Label label1;
@@ -326,5 +365,9 @@
         private System.Windows.Forms.ComboBox cmbCigerType;
         private System.Windows.Forms.DataGridView dgvUnionOrderINfo;
         private System.Windows.Forms.Button btnVli;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cmb_line;
+        private System.Windows.Forms.Button btn_recieve;
+        private System.Windows.Forms.Label label4;
     }
 }

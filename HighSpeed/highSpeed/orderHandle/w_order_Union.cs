@@ -182,31 +182,78 @@ namespace highSpeed.orderHandle
         private void btn_recieve_Click(object sender, EventArgs e)
         {
             try
-            {
-
+            { 
                 if (!string.IsNullOrWhiteSpace(txt_codestr.Text))
                 {
-                     String codestr = this.txt_codestr.Text.Trim().Substring(1); //获取选中的车组
-                 
-
-          
-                 
+                    String codestr = this.txt_codestr.Text.Trim().Substring(1); //获取选中的车组
 
                     string time = this.datePick.Text;//获取选中的时间
-                    string strsql = "select  count( ship.orderno) 户数, sum(qty ) 销量 ,shiline.itemname 卷烟名称,sorts.machineseq 物理通道号, sorts.troughnum 通道号  from t_wms_shiporder ship , t_wms_shiporderline shiline , t_produce_sorttrough sorts " +
-     " where ship.orderno = shiline.orderno and shiline.item_id = sorts.cigarettecode and ship.orderdate = to_date('" + time + "','yyyy-mm-dd') and routecode in(" + codestr + ") " +
-     " and sorts.troughtype  = 10 and sorts.cigarettetype  in(" + cigerType + ") and sorts.groupno in (1,2,3,4,5,6,7,8) and sorts.state = 10  " +
-     " and (sorts.machineseq > 3000 or sorts.machineseq <2000) " +
-    " group by shiline.itemname, sorts.troughnum ,sorts.machineseq,sorts.cigarettetype " +
-    " order by 销量 desc ,sorts.machineseq ";
+                    string strsql = "";
+                    string sumqty = "";
+                    switch (cmb_line.SelectedIndex)
+                    {
+                        case 0:
+                            cigerType = "20";
+                            strsql = "select  count( ship.orderno) 户数, sum(qty ) 销量 ,shiline.itemname 卷烟名称,sorts.machineseq 物理通道号, sorts.troughnum 通道号  from t_wms_shiporder ship , t_wms_shiporderline shiline , t_produce_sorttrough sorts " +
+             " where ship.orderno = shiline.orderno and shiline.item_id = sorts.cigarettecode and ship.orderdate = to_date('" + time + "','yyyy-mm-dd') and routecode in(" + codestr + ") " +
+             " and sorts.troughtype  = 10 and sorts.cigarettetype  in(" + cigerType + ") and sorts.groupno in (1,2,3,4,5,6,7,8) and sorts.state = 10  " +
+             " and (sorts.machineseq > 3000 or sorts.machineseq <2000) " +
+            " group by shiline.itemname, sorts.troughnum ,sorts.machineseq,sorts.cigarettetype " +
+            " order by 销量 desc ,sorts.machineseq ";
+                            sumqty = "select sum(e.qty) sumqty from t_wms_shiporderline e where e.item_id in (select distinct h.cigarettecode from t_produce_sorttrough h where h.state=10 and h.cigarettetype in (" 
+                                + cigerType + ")) and e.orderno in ( select r.orderno from t_wms_shiporder r where r.routecode in ("
+                                + codestr + ") and r.orderdate = to_date('" + time + "','yyyy-mm-dd'))";
+                            break;
+                        case 1:
+                            cigerType = "30,40";
+                            strsql = "select  count( ship.orderno) 户数, sum(qty ) 销量 ,shiline.itemname 卷烟名称,sorts.machineseq 物理通道号, sorts.troughnum 通道号  from t_wms_shiporder ship , t_wms_shiporderline shiline , t_produce_sorttrough sorts " +
+          " where ship.orderno = shiline.orderno and shiline.item_id = sorts.cigarettecode and ship.orderdate = to_date('" + time + "','yyyy-mm-dd') and routecode in(" + codestr + ") " +
+          " and sorts.troughtype  = 10 and sorts.cigarettetype  in(" + cigerType + ") and sorts.groupno in (1,2,3,4,5,6,7,8) and sorts.state = 10  " +
+          " and (sorts.machineseq > 3000 or sorts.machineseq <2000) " +
+         " group by shiline.itemname, sorts.troughnum ,sorts.machineseq,sorts.cigarettetype " +
+         " order by sorts.machineseq,销量 desc ";
+                            sumqty = "select sum(e.qty) sumqty from t_wms_shiporderline e where e.item_id in (select distinct h.cigarettecode from t_produce_sorttrough h where h.state=10 and h.cigarettetype in ("
+                           + cigerType + ")) and e.orderno in ( select r.orderno from t_wms_shiporder r where r.routecode in ("
+                           + codestr + ") and r.orderdate = to_date('" + time + "','yyyy-mm-dd'))";
+                            break;
+                        case 2:
+                            cigerType = "30,40";
+                            strsql = "select  count( ship.orderno) 户数, sum(qty ) 销量 ,shiline.itemname 卷烟名称,sorts.machineseq 物理通道号, sorts.troughnum 通道号  from t_wms_shiporder ship , t_wms_shiporderline shiline , t_produce_sorttrough sorts " +
+          " where ship.orderno = shiline.orderno and shiline.item_id = sorts.cigarettecode and ship.orderdate = to_date('" + time + "','yyyy-mm-dd') and routecode in(" + codestr + ") " +
+          " and sorts.troughtype  = 10 and sorts.cigarettetype  in(" + cigerType + ") and sorts.groupno in (1,2,3,4,5,6,7,8) and sorts.state = 10  " +
+          " and (sorts.machineseq > 3000 or sorts.machineseq >2000) " +
+         " group by shiline.itemname, sorts.troughnum ,sorts.machineseq,sorts.cigarettetype " +
+         " order by sorts.machineseq  ,销量 desc";
+                            sumqty = "select sum(e.qty) sumqty from t_wms_shiporderline e where e.item_id in (select distinct h.cigarettecode from t_produce_sorttrough h where h.state=10 and h.cigarettetype in ("
+                           + cigerType + ")) and e.orderno in ( select r.orderno from t_wms_shiporder r where r.routecode in ("
+                           + codestr + ") and r.orderdate = to_date('" + time + "','yyyy-mm-dd'))";
+                            break;
+
+                    }
                     Bind2(strsql);
                     lab_showinfo.Text = "查询了  " + codestr + "    车组";
+
+                    try
+                    {
+                        DataBase dbbase = new DataBase();
+                        dbbase.Open();
+                        label4.Text = "总量：" + dbbase.ExecuteScalar(sumqty).ToString(); 
+                        label4.Visible = true;
+                        dbbase.Close();
+                    }
+                    catch (Exception)
+                    {
+                        label4.Text = "总量统计失败!";
+                        label4.Visible = true;
+                    }
+                  
                 }
+
                 else
                 {
                     MessageBox.Show("请至少选择一个要查询的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -305,5 +352,7 @@ namespace highSpeed.orderHandle
         {
 
         }
+
+         
     }
 }
