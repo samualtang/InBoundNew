@@ -301,6 +301,8 @@ namespace SpecialShapeSmoke
             txtbox3.Location = new Point(660, 30); 
             p.Controls.Add(txtbox3);
             txtbox3.Text = "0";
+            txtbox3.Visible = false;
+
 
             txtbox4 = new TextBox();
             txtbox4.Width = 120;
@@ -308,10 +310,10 @@ namespace SpecialShapeSmoke
             txtbox4.Location = new Point(660,5);
             p.Controls.Add(txtbox4);
             txtbox4.Text = "0";
-
-
-            timer1.Start();
-            timer1.Interval = 3000;
+            txtbox4.Visible = false;
+             
+            //timer1.Start();
+            //timer1.Interval = 30000;
         }
         Label lblpack;
 

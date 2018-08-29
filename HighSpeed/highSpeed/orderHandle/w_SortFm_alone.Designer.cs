@@ -161,6 +161,7 @@
             this.dgvSortInfo.TabIndex = 9;
             this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
             this.dgvSortInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortInfo_CellFormatting);
+            this.dgvSortInfo.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSortInfo_DataError_1);
             // 
             // btnPokeSeq
             // 

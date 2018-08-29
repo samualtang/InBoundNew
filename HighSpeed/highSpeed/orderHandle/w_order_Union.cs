@@ -29,7 +29,7 @@ namespace highSpeed.orderHandle
             handlerecieve += wm.GetSonFormState;
             string weekstr = DateTime.Now.DayOfWeek.ToString();
             this.datePick.Value = DateTime.Today;
-            
+            cmb_line.SelectedIndex = 0;
         }
 
         private void seek()
@@ -352,6 +352,18 @@ namespace highSpeed.orderHandle
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dgVprint1.MainTitle = "今日订单烟预汇总"; 
+
+            dgVprint1.TableHeaderLeft = "长株潭烟草物流配送中心";
+            dgVprint1.TableHeaderRight = "分拣日期：" + DateTime.Now.Date.ToShortDateString();
+            //dgVprint1.PaperLandscape = true;//用横向打印，默认是纵向哦
+            dgVprint1.Print(dgvUnionOrderINfo);
+        }
+
+        
 
          
     }

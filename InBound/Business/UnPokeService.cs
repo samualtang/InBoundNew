@@ -570,7 +570,8 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-                var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
+                //var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
+                var query = (from item in data.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)                
                 if (query == null)//如果没有则 无任务s
                 {
                     outlist = new List<T_UN_POKE>();

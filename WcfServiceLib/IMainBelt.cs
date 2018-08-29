@@ -28,7 +28,7 @@ namespace WcfServiceLib
         string GetUnionCaChe(int MachineNo);
 
 
-          [OperationContract]
+        [OperationContract]
         string GetSortBelt(int MachineNo);
 
         

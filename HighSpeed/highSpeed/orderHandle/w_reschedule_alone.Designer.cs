@@ -116,6 +116,7 @@
             // orderdata
             // 
             this.orderdata.AllowUserToAddRows = false;
+            this.orderdata.AllowUserToDeleteRows = false;
             this.orderdata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderdata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkbox,
@@ -131,6 +132,7 @@
             this.orderdata.Size = new System.Drawing.Size(1125, 253);
             this.orderdata.TabIndex = 5;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
+            this.orderdata.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.orderdata_DataError);
             // 
             // btn_all
             // 

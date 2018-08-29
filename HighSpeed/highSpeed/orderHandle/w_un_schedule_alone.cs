@@ -9,17 +9,20 @@ using System.Windows.Forms;
 using highSpeed.PubFunc;
 using System.Data.SqlClient;
 using System.Data.OracleClient;
+using InBound;
 
 namespace highSpeed.orderHandle
 {
     public partial class w_un_schedule_alone : Form
     {
+        public WriteLog writeLog = WriteLog.GetLog();
         DataSet ds = new DataSet();
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
         public w_un_schedule_alone()
         {
             InitializeComponent();
+            orderdata.AllowUserToAddRows = false;
             seek();
         }
 
@@ -76,6 +79,7 @@ namespace highSpeed.orderHandle
                     label2.Visible = false;
                     progressBar1.Visible = false;
 
+                    this.orderdata.AllowUserToAddRows = false;
                     this.orderdata.DataSource = ds.Tables[0];
                     this.orderdata.AutoGenerateColumns = false;
 
@@ -312,6 +316,16 @@ namespace highSpeed.orderHandle
                 czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[1].Value + "";
             }
             this.txt_codestr.Text = czcodestr;
+        }
+
+        private void orderdata_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            writeLog.Write(this.Text + "Dgv异常" + e.ToString());
+            if (e.Exception.InnerException is System.IndexOutOfRangeException)
+            {
+                // MessageBox.Show("出现异常，请查看后台日志，该异常不影响排程！");
+                writeLog.Write(this.Text + "Dgv:System.IndexOutOfRangeException异常");
+            }
         }
 
     }

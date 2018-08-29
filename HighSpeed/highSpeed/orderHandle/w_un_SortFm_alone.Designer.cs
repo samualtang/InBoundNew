@@ -43,6 +43,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnVli = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -70,6 +71,7 @@
             this.dgvSortInfo.Size = new System.Drawing.Size(982, 383);
             this.dgvSortInfo.TabIndex = 13;
             this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
+            this.dgvSortInfo.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSortInfo_DataError_1);
             // 
             // btnPokeSeq
             // 
@@ -93,6 +95,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnVli);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.lblInFO);
@@ -200,6 +203,16 @@
             this.pictureBox1.TabIndex = 27;
             this.pictureBox1.TabStop = false;
             // 
+            // btnVli
+            // 
+            this.btnVli.Location = new System.Drawing.Point(869, 12);
+            this.btnVli.Name = "btnVli";
+            this.btnVli.Size = new System.Drawing.Size(75, 23);
+            this.btnVli.TabIndex = 13;
+            this.btnVli.Text = "校验长宽";
+            this.btnVli.UseVisualStyleBackColor = true;
+            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
+            // 
             // w_un_SortFm_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -239,6 +252,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnVli;
 
     }
 }

@@ -13,6 +13,7 @@ namespace WebService
        public static IOPCServer pIOPCServer;  //定义opcServer对象
        internal const string SERVER_NAME = "OPC.SimaticNET";
        public static Group UnionTaskGroup1,MachineGroup, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup;
+       public static Group SortGroupA, SortGroupB;
        internal const int LOCALE_ID = 0x409;  
           public static  List<Group> listUnionTaskGroup = new List<Group>();
         public static void Connect()
@@ -26,7 +27,8 @@ namespace WebService
               AddUnionTaskGroup();
             }
         }
-      
+        public static string FJConnectionGroup { get; set; }
+
         public static void AddUnionTaskGroup()
         {
             UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);//一号主皮带
@@ -36,8 +38,11 @@ namespace WebService
             UnionMachineTaskGroup = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//合流机械手任务号抓数
             UnionMachineNowTaskGroup = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//合流机械手当前任务号和抓数
             MachineGroup= new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//合流机械手当前任务号和抓数
-            
 
+
+            SortGroupA = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);// A组预分拣
+            SortGroupB = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);// B组预分拣 
+            /********************************************************************************/
             UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
             UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
             UnionTaskGroup3.addItem(ItemCollection.GetTaskGroupItem3());
@@ -46,6 +51,13 @@ namespace WebService
             UnionMachineNowTaskGroup.addItem(ItemCollection.GetUnionMachinNowTaskeItem());
             MachineGroup.addItem(ItemCollection.GetMachineGroup());
 
+            SortGroupA.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//A组预分拣
+            SortGroupB.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//B组预分拣
+           
+
+             
+
+            
           //  UnionMachineTaskGroup.callback += OnDataChange;
             //UnionMachineNowTaskGroup.callback += OnDataChange;
           
@@ -58,6 +70,8 @@ namespace WebService
             listUnionTaskGroup.Add(UnionMachineTaskGroup);//4
             listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
             listUnionTaskGroup.Add(MachineGroup);//6
+            listUnionTaskGroup.Add(SortGroupA);//7
+            listUnionTaskGroup.Add(SortGroupB);//8
          
         }
     }

@@ -125,8 +125,13 @@ namespace highSpeed.orderHandle
                 progressBar1.Visible = false;
                 lblTime.Visible = false;//时间
 
+                dgvSortInfo.AllowUserToAddRows = false;
                 dgvSortInfo.DataSource = null;//处理IndexOutOfRangeException异常
-                this.dgvSortInfo.DataSource = ds.Tables[0];
+                if ( ds.Tables[0].Rows.Count>0)
+                {
+                    this.dgvSortInfo.DataSource = ds.Tables[0];
+                }
+               
                 //dgvSortInfo.Sort(dgvSortInfo.Columns[0], ListSortDirection.Ascending);//默认车组排序
                 //this.dgvSortInfo.AutoGenerateColumns = false;
 
@@ -145,9 +150,13 @@ namespace highSpeed.orderHandle
                         }
                     }
                 }
+                dgvSortInfo.ClearSelection();
             }
-            dgvSortInfo.ClearSelection();
-            Db.Close();
+            else
+            {
+                dgvSortInfo.DataSource = null;
+            }
+            Db.Close(); 
 
         }
         delegate void HandleSort();
@@ -232,22 +241,22 @@ namespace highSpeed.orderHandle
             }
             catch (DataException dataex)
             {
-                writeLog.Write("排程异常:" + dataex.Message);
+                writeLog.Write(this.Text + "排程异常:" + dataex.Message);
             }
             catch (NullReferenceException nullex)
             {
                 MessageBox.Show("排程OK:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                writeLog.Write("排程异常:" + nullex.Message);
+                writeLog.Write(this.Text + "排程异常:" + nullex.Message);
             }
             catch (IndexOutOfRangeException iore)
             {
                 MessageBox.Show("排程OK:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                writeLog.Write("排程异常索引越界:" + iore.Message);
+                writeLog.Write(this.Text + "排程异常索引越界:" + iore.Message);
             }
             catch (Exception e)
             {
                 MessageBox.Show("排程OK:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                writeLog.Write("排程异常:" + e.Message);
+                writeLog.Write(this.Text + "排程异常:" + e.Message);
             }
             finally
             {
@@ -303,12 +312,12 @@ namespace highSpeed.orderHandle
             }
             catch (NullReferenceException nullref)
             {
-                writeLog.Write("排程异常NullReferenceException:" + nullref.Message);
+                writeLog.Write(this.Text + "排程异常NullReferenceException:" + nullref.Message);
             }
             catch (Exception ex)
             {
 
-                writeLog.Write("排程异常Exception:" + ex.Message);
+                writeLog.Write(this.Text + "排程异常Exception:" + ex.Message);
             }
         }
 
@@ -436,6 +445,17 @@ namespace highSpeed.orderHandle
                 MessageBox.Show(errmsg);
             } 
         }
+         
+        private void dgvSortInfo_DataError_1(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            writeLog.Write(this.Text+"Dgv异常" + e.ToString());
+            if (e.Exception.InnerException is System.IndexOutOfRangeException)
+            {
+                // MessageBox.Show("出现异常，请查看后台日志，该异常不影响排程！");
+                writeLog.Write(this.Text + "Dgv:System.IndexOutOfRangeException异常");
+            }
+        } 
+      
 
     }
 }

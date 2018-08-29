@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_all = new System.Windows.Forms.Button();
             this.rBtn_Line2 = new System.Windows.Forms.RadioButton();
             this.rbtn_Line1 = new System.Windows.Forms.RadioButton();
             this.txt_splitval = new System.Windows.Forms.TextBox();
@@ -44,7 +45,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.btn_all = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -65,6 +65,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
+            // 
+            // btn_all
+            // 
+            this.btn_all.Location = new System.Drawing.Point(618, 13);
+            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_all.Name = "btn_all";
+            this.btn_all.Size = new System.Drawing.Size(75, 22);
+            this.btn_all.TabIndex = 15;
+            this.btn_all.Text = "全选";
+            this.btn_all.UseVisualStyleBackColor = true;
+            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
             // 
             // rBtn_Line2
             // 
@@ -152,6 +163,7 @@
             this.orderdata.Size = new System.Drawing.Size(1118, 215);
             this.orderdata.TabIndex = 1;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
+            this.orderdata.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.orderdata_DataError);
             // 
             // checkbox
             // 
@@ -209,17 +221,6 @@
             this.progressBar1.Size = new System.Drawing.Size(741, 23);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
-            // 
-            // btn_all
-            // 
-            this.btn_all.Location = new System.Drawing.Point(618, 13);
-            this.btn_all.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_all.Name = "btn_all";
-            this.btn_all.Size = new System.Drawing.Size(75, 22);
-            this.btn_all.TabIndex = 15;
-            this.btn_all.Text = "全选";
-            this.btn_all.UseVisualStyleBackColor = true;
-            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
             // 
             // w_un_schedule_alone
             // 

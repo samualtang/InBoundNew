@@ -29,6 +29,7 @@ namespace highSpeed.orderHandle
         {
             InitializeComponent();
             handleschedule += wm.GetSonFormState;
+            orderdata.AllowUserToAddRows = false;
             seek();
         }
 
@@ -84,7 +85,11 @@ namespace highSpeed.orderHandle
                     label2.Visible = false;
                     progressBar1.Visible = false;
 
-                    this.orderdata.DataSource = ds.Tables[0];
+                    this.orderdata.AllowUserToAddRows = false;
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        this.orderdata.DataSource = ds.Tables[0];
+                    } 
                     orderdata.Sort(orderdata.Columns[1], ListSortDirection.Ascending);//默认车组排序
                     this.orderdata.AutoGenerateColumns = false;
 
@@ -105,10 +110,14 @@ namespace highSpeed.orderHandle
                     orderdata.ClearSelection();
                     Db.Close();
                 }
+                else
+                {
+                    this.orderdata.DataSource = null;
+                }
             }
             catch (Exception ex)
             {
-                throw ex;
+                MessageBox.Show("捕捉异常：" + ex.ToString());
             }
 
         }
@@ -291,8 +300,8 @@ namespace highSpeed.orderHandle
                                     //MessageBox.Show(indexArr[indexArr.Length - 1 - j]);
                                 }
 
-                                this.orderdata.DataSource = dt_new;
                                 this.orderdata.AutoGenerateColumns = false;
+                                this.orderdata.DataSource = dt_new;
                             }
                         }
 
@@ -427,6 +436,16 @@ namespace highSpeed.orderHandle
                 e.Cancel = true;
                 MessageBox.Show("正在预排程！请等待预排程结束！");
                 return;
+            }
+        }
+
+        private void orderdata_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            writeLog.Write(this.Text + "Dgv异常" + e.ToString());
+            if (e.Exception.InnerException is System.IndexOutOfRangeException)
+            {
+                //MessageBox.Show("出现异常，请查看后台日志，该异常不影响排程！");
+                writeLog.Write(this.Text + "Dgv:System.IndexOutOfRangeException异常");
             }
         } 
       
