@@ -26,13 +26,13 @@ namespace WcfServiceLib
 
         [OperationContract]
         string GetUnionCaChe(int MachineNo);
-
+        
 
         [OperationContract]
         string GetSortBelt(int MachineNo);
 
         
-
+        
 
         // TODO: 在此添加您的服务操作
     }

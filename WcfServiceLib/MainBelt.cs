@@ -190,21 +190,23 @@ namespace WcfServiceLib
             {
                 mainbelt = 1;
             }
-            else if (MachineNo >= 9 || MachineNo <= 16)
+            else if (MachineNo >= 9 && MachineNo <= 16)
             {
                 mainbelt = 2;
             }
-            else if (MachineNo >= 17 || MachineNo <= 24)
+            else if (MachineNo >= 17 && MachineNo <= 24)
             {
                 mainbelt = 3;
             }
-            else if (MachineNo >= 25 || MachineNo <= 32)
+            else if (MachineNo >= 25 && MachineNo <= 32)
             {
                 mainbelt = 4;
             }
             return mainbelt;
         }
           
+
+        
         /// <summary>
         /// 预分拣皮带
         /// </summary>
@@ -237,9 +239,8 @@ namespace WcfServiceLib
             {
                 return "远程连接失败,请检查网络";
             }
-
-            List<MainBeltInfo> ListmbInfo = new List<MainBeltInfo>(); 
-            if (GroupNo==1||GroupNo==3||GroupNo==5||GroupNo==7)
+            List<MainBeltInfo> ListmbInfo = new List<MainBeltInfo>();
+            if (GroupNo == 1 || GroupNo == 3 || GroupNo == 5 || GroupNo == 7)
             {
                 int ReadIndex = 0;
                 for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
@@ -256,7 +257,7 @@ namespace WcfServiceLib
                         ListmbInfo.Add(info);
                     }
                     ReadIndex = ReadIndex + 4;
-                } 
+                }
             }
             else
             {
@@ -279,9 +280,27 @@ namespace WcfServiceLib
                         ListmbInfo.Add(info);
                     }
                     ReadIndex = ReadIndex + 4;
-                } 
+                }
             }
-         
+
+            //decimal Sortnum = 114769;
+            //MainBeltInfo info = new MainBeltInfo();
+            //info.SortNum = Sortnum;//任务号
+            //info.Place = 21;
+            //info.Quantity = 6;
+            //info.GroupNO = GroupNo;//组号
+            //ListmbInfo.Add(info);
+
+            //for (int i = 0; i < 39; i++)
+            //{
+            //      MainBeltInfo ii = new MainBeltInfo();
+            //      ii.SortNum = 0;//任务号
+            //      ii.Place = 0;
+            //      ii.Quantity = 0;
+            //      ii.GroupNO = GroupNo;//组号
+            //      ListmbInfo.Add(ii);
+            //}
+        
             MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
              
@@ -289,7 +308,7 @@ namespace WcfServiceLib
             {
                 if (ListmbInfo != null && ListmbInfo.Count > 0)
                 {
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MainBeltInfo>));
                     using (MemoryStream ms = new MemoryStream())
                     {
                         ser.WriteObject(ms, ListmbInfo);
@@ -315,7 +334,7 @@ namespace WcfServiceLib
 
 
 
-
+        
 
     }
 }
