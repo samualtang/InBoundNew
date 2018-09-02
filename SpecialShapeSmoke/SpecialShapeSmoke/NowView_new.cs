@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound.Business;
 using System.Threading;
 using InBound.Model;
+using System.Configuration;
 
 namespace SpecialShapeSmoke
 {
@@ -18,6 +19,7 @@ namespace SpecialShapeSmoke
         int machineseq2;
         static int NowMachineseq;
         decimal[] nowpokeids;
+        string cigarettesort;
         System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         decimal[] lastpokeids = new decimal[] { -1, -1 };
         decimal nowpokeid;
@@ -29,7 +31,7 @@ namespace SpecialShapeSmoke
             this.machineseq1 = machineseq1;
             this.machineseq2 = machineseq2;
             this.nowpokeids = nowpokeids;
-
+            cigarettesort = ConfigurationManager.AppSettings["cigarettesort"].ToString();
             //btnMachineSeq1.Text = machineseq1 + "混合道";
             //btnMachineSeq2.Text = machineseq2 + "混合道";
             labMachineSeq.Text = machineseq1 + "混合道";
@@ -163,7 +165,7 @@ namespace SpecialShapeSmoke
         public void DateBind(decimal Seq, string pokeid = null)
         {
             HunHeService_new HunHeNowCigarette = new HunHeService_new();
-            List<HUNHENOWVIEW1> hunhelist = HunHeNowCigarette.GetALLCigarette(Seq,packmachineseq);
+            List<HUNHENOWVIEW1> hunhelist = HunHeNowCigarette.GetALLCigarette(Seq, packmachineseq, cigarettesort);
             if (hunhelist.Count < 1)
             {
                 labMachineSeq.Text = Seq + "通道没有分拣数据，请选择其他通道！";

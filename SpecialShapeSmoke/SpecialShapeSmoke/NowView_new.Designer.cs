@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.DgvNowView = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnNowPoke = new System.Windows.Forms.Button();
+            this.btnMachineSeq1 = new System.Windows.Forms.Button();
+            this.btnMachineSeq2 = new System.Windows.Forms.Button();
+            this.labMachineSeq = new System.Windows.Forms.Label();
             this.TaskNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,11 +46,7 @@
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnNowPoke = new System.Windows.Forms.Button();
-            this.btnMachineSeq1 = new System.Windows.Forms.Button();
-            this.btnMachineSeq2 = new System.Windows.Forms.Button();
-            this.labMachineSeq = new System.Windows.Forms.Label();
+            this.任务包号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +68,8 @@
             this.PokeNum,
             this.status,
             this.PokeId,
-            this.PULLSTATUS});
+            this.PULLSTATUS,
+            this.任务包号});
             this.DgvNowView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvNowView.Location = new System.Drawing.Point(3, 17);
             this.DgvNowView.Name = "DgvNowView";
@@ -77,6 +79,66 @@
             this.DgvNowView.Size = new System.Drawing.Size(1237, 499);
             this.DgvNowView.TabIndex = 0;
             this.DgvNowView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvNowView_CellFormatting);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.DgvNowView);
+            this.groupBox1.Location = new System.Drawing.Point(4, 63);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1243, 519);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            // 
+            // btnNowPoke
+            // 
+            this.btnNowPoke.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNowPoke.Font = new System.Drawing.Font("宋体", 20F);
+            this.btnNowPoke.Location = new System.Drawing.Point(933, 12);
+            this.btnNowPoke.Name = "btnNowPoke";
+            this.btnNowPoke.Size = new System.Drawing.Size(152, 45);
+            this.btnNowPoke.TabIndex = 2;
+            this.btnNowPoke.Text = "定位当前";
+            this.btnNowPoke.UseVisualStyleBackColor = true;
+            this.btnNowPoke.Click += new System.EventHandler(this.btnNowPoke_Click);
+            // 
+            // btnMachineSeq1
+            // 
+            this.btnMachineSeq1.Font = new System.Drawing.Font("宋体", 18F);
+            this.btnMachineSeq1.Location = new System.Drawing.Point(7, 12);
+            this.btnMachineSeq1.Name = "btnMachineSeq1";
+            this.btnMachineSeq1.Size = new System.Drawing.Size(154, 45);
+            this.btnMachineSeq1.TabIndex = 3;
+            this.btnMachineSeq1.Text = "通道1";
+            this.btnMachineSeq1.UseVisualStyleBackColor = true;
+            this.btnMachineSeq1.Visible = false;
+            this.btnMachineSeq1.Click += new System.EventHandler(this.btnMachineSeq1_Click);
+            // 
+            // btnMachineSeq2
+            // 
+            this.btnMachineSeq2.Font = new System.Drawing.Font("宋体", 18F);
+            this.btnMachineSeq2.Location = new System.Drawing.Point(167, 12);
+            this.btnMachineSeq2.Name = "btnMachineSeq2";
+            this.btnMachineSeq2.Size = new System.Drawing.Size(154, 45);
+            this.btnMachineSeq2.TabIndex = 4;
+            this.btnMachineSeq2.Text = "通道2";
+            this.btnMachineSeq2.UseVisualStyleBackColor = true;
+            this.btnMachineSeq2.Visible = false;
+            this.btnMachineSeq2.Click += new System.EventHandler(this.btnMachineSeq2_Click);
+            // 
+            // labMachineSeq
+            // 
+            this.labMachineSeq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labMachineSeq.AutoSize = true;
+            this.labMachineSeq.Font = new System.Drawing.Font("宋体", 20F);
+            this.labMachineSeq.Location = new System.Drawing.Point(432, 21);
+            this.labMachineSeq.Name = "labMachineSeq";
+            this.labMachineSeq.Size = new System.Drawing.Size(80, 27);
+            this.labMachineSeq.TabIndex = 5;
+            this.labMachineSeq.Text = "通道1";
             // 
             // TaskNum
             // 
@@ -171,65 +233,12 @@
             this.PULLSTATUS.Name = "PULLSTATUS";
             this.PULLSTATUS.ReadOnly = true;
             // 
-            // groupBox1
+            // 任务包号
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.DgvNowView);
-            this.groupBox1.Location = new System.Drawing.Point(4, 63);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1243, 519);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            // 
-            // btnNowPoke
-            // 
-            this.btnNowPoke.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNowPoke.Font = new System.Drawing.Font("宋体", 20F);
-            this.btnNowPoke.Location = new System.Drawing.Point(933, 12);
-            this.btnNowPoke.Name = "btnNowPoke";
-            this.btnNowPoke.Size = new System.Drawing.Size(152, 45);
-            this.btnNowPoke.TabIndex = 2;
-            this.btnNowPoke.Text = "定位当前";
-            this.btnNowPoke.UseVisualStyleBackColor = true;
-            this.btnNowPoke.Click += new System.EventHandler(this.btnNowPoke_Click);
-            // 
-            // btnMachineSeq1
-            // 
-            this.btnMachineSeq1.Font = new System.Drawing.Font("宋体", 18F);
-            this.btnMachineSeq1.Location = new System.Drawing.Point(7, 12);
-            this.btnMachineSeq1.Name = "btnMachineSeq1";
-            this.btnMachineSeq1.Size = new System.Drawing.Size(154, 45);
-            this.btnMachineSeq1.TabIndex = 3;
-            this.btnMachineSeq1.Text = "通道1";
-            this.btnMachineSeq1.UseVisualStyleBackColor = true;
-            this.btnMachineSeq1.Visible = false;
-            this.btnMachineSeq1.Click += new System.EventHandler(this.btnMachineSeq1_Click);
-            // 
-            // btnMachineSeq2
-            // 
-            this.btnMachineSeq2.Font = new System.Drawing.Font("宋体", 18F);
-            this.btnMachineSeq2.Location = new System.Drawing.Point(167, 12);
-            this.btnMachineSeq2.Name = "btnMachineSeq2";
-            this.btnMachineSeq2.Size = new System.Drawing.Size(154, 45);
-            this.btnMachineSeq2.TabIndex = 4;
-            this.btnMachineSeq2.Text = "通道2";
-            this.btnMachineSeq2.UseVisualStyleBackColor = true;
-            this.btnMachineSeq2.Visible = false;
-            this.btnMachineSeq2.Click += new System.EventHandler(this.btnMachineSeq2_Click);
-            // 
-            // labMachineSeq
-            // 
-            this.labMachineSeq.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.labMachineSeq.AutoSize = true;
-            this.labMachineSeq.Font = new System.Drawing.Font("宋体", 20F);
-            this.labMachineSeq.Location = new System.Drawing.Point(432, 21);
-            this.labMachineSeq.Name = "labMachineSeq";
-            this.labMachineSeq.Size = new System.Drawing.Size(80, 27);
-            this.labMachineSeq.TabIndex = 5;
-            this.labMachineSeq.Text = "通道1";
+            this.任务包号.DataPropertyName = "sendtasknum";
+            this.任务包号.HeaderText = "任务包号";
+            this.任务包号.Name = "任务包号";
+            this.任务包号.ReadOnly = true;
             // 
             // NowView_new
             // 
@@ -274,5 +283,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 任务包号;
     }
 }

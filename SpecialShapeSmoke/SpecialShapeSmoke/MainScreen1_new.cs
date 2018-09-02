@@ -63,6 +63,7 @@ namespace SpecialShapeSmoke
         static int HavePullLabelNum;//已放烟的显示条目
         decimal[] PackMachineSeq;
         string plcvalvestag;
+        string cigarettesort;
         /// <summary>
         ///  通道编号
         /// </summary>
@@ -111,6 +112,7 @@ namespace SpecialShapeSmoke
                 sp1_name = ConfigurationManager.AppSettings["sp1_name"].ToString();////扫码端口2
 
                 plcvalvestag = ConfigurationManager.AppSettings["plcvalves"].ToString();
+                cigarettesort = ConfigurationManager.AppSettings["cigarettesort"].ToString();
             }
             catch (Exception)
             {
@@ -675,12 +677,12 @@ namespace SpecialShapeSmoke
                                 {
                                     if (j == 0)
                                     {
-                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 300, PackMachineSeq,true));
+                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 300, PackMachineSeq, true, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[j], labelnum, true);
                                     }
                                     else
                                     {
-                                        throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), PackMachineSeq));
+                                        throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), PackMachineSeq, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[0], labelnum, true);
                                     }
                                 }
@@ -1612,7 +1614,7 @@ namespace SpecialShapeSmoke
             //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
             //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
              
-            getData(true);
+            //getData(true);
             txtbox4.Text = finishNo[0].ToString();
             txtbox3.Text = finishNo[1].ToString();
 
