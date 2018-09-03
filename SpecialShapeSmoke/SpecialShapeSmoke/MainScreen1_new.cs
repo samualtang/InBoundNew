@@ -62,6 +62,8 @@ namespace SpecialShapeSmoke
         static int UnPullLabelNum;//待放烟的显示条目
         static int HavePullLabelNum;//已放烟的显示条目
         decimal[] PackMachineSeq;
+        string plcvalvestag;
+        string cigarettesort;
         /// <summary>
         ///  通道编号
         /// </summary>
@@ -108,6 +110,9 @@ namespace SpecialShapeSmoke
                 } 
                 sp_name = ConfigurationManager.AppSettings["sp_name"].ToString();//扫码端口1
                 sp1_name = ConfigurationManager.AppSettings["sp1_name"].ToString();////扫码端口2
+
+                plcvalvestag = ConfigurationManager.AppSettings["plcvalves"].ToString();
+                cigarettesort = ConfigurationManager.AppSettings["cigarettesort"].ToString();
             }
             catch (Exception)
             {
@@ -290,7 +295,7 @@ namespace SpecialShapeSmoke
             
             lblpack.Name = "lblpack";
             lblpack.Text = PackMachineSeq[0].ToString() + "、" + PackMachineSeq[1].ToString() + "包装机补烟顺序";
-            lblpack.Location = new Point(280, 10);
+            lblpack.Location = new Point(Convert.ToInt32(p.Width *(0.17)), 10);
             lblpack.Size =new Size(350,40);
             p.Controls.Add(lblpack);
             //lblpack.ForeColor = Color.Red;
@@ -298,22 +303,34 @@ namespace SpecialShapeSmoke
             txtbox3 = new TextBox();
             txtbox3.Width = 120;
             txtbox3.Height = 20;
-            txtbox3.Location = new Point(660, 30); 
+            txtbox3.Location = new Point(690, 30); 
             p.Controls.Add(txtbox3);
             txtbox3.Text = "0";
-            txtbox3.Visible = false;
+           // txtbox3.Visible = false;
 
 
             txtbox4 = new TextBox();
             txtbox4.Width = 120;
             txtbox4.Height = 20;
-            txtbox4.Location = new Point(660,5);
+            txtbox4.Location = new Point(690,5);
             p.Controls.Add(txtbox4);
             txtbox4.Text = "0";
-            txtbox4.Visible = false;
-             
-            //timer1.Start();
-            //timer1.Interval = 30000;
+           // txtbox4.Visible = false;
+            if (plcvalvestag == "1")
+            {
+                txtbox4.Visible = true;
+                txtbox3.Visible = true;
+            }
+            else
+            {
+                txtbox4.Visible = false;
+                txtbox3.Visible = false;
+            }
+            
+
+
+            timer1.Start();
+            timer1.Interval = RefreshTime * 1000;
         }
         Label lblpack;
 
@@ -445,9 +462,10 @@ namespace SpecialShapeSmoke
 
                 if (checkConnection()) //连接服务器成功 
                 {
+                   
                     //while (true)
                     //{
-                    //    getData();
+                    //    getData(true);
                     //    Thread.Sleep(RefreshTime * 1000);//配置秒数
                     //}
                 }
@@ -620,7 +638,10 @@ namespace SpecialShapeSmoke
                 {
                     writeLog.Write("Plc读取完成信号失败！" + ex.Message);
                 }
-         
+
+                txtbox4.Text = finishNo[0].ToString();
+                txtbox3.Text = finishNo[1].ToString();
+
 
                 if (finishNo[0] != -1 || finishNo[1] != -1 || Refresh)
                 {
@@ -628,7 +649,8 @@ namespace SpecialShapeSmoke
                     {
                         for (int i = 0; i < boxText.Length; i++)
                         {
-                            Log += "通道 " + boxText[i] + " 接收DB块值:" + finishNo[i] + "\r\n";
+                            Log += "通道 " + boxText[i] + ";包装机 "+PackMachineSeq[0].ToString()+"、"
+                                +PackMachineSeq[1].ToString()+": 接收DB块值:分拣任务号" + finishNo[i]+ ",已出烟"+finishNo[1]+ "条\r\n";
                         }
                         writeLog.Write(Log);
 
@@ -655,12 +677,12 @@ namespace SpecialShapeSmoke
                                 {
                                     if (j == 0)
                                     {
-                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 300, PackMachineSeq,true));
+                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 300, PackMachineSeq, true, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[j], labelnum, true);
                                     }
                                     else
                                     {
-                                        throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), PackMachineSeq));
+                                        throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), PackMachineSeq, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[0], labelnum, true);
                                     }
                                 }
@@ -1592,7 +1614,7 @@ namespace SpecialShapeSmoke
             //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
             //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
              
-            getData(true);
+            //getData(true);
             txtbox4.Text = finishNo[0].ToString();
             txtbox3.Text = finishNo[1].ToString();
 

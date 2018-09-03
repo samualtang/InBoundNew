@@ -9,6 +9,7 @@ namespace InBound.Business
 {
     public class HunHeService_new
     {
+       
         /// <summary>
         /// 读取混合道数据
         /// </summary>
@@ -17,28 +18,27 @@ namespace InBound.Business
         /// <param name="qty">前*行记录</param>
         /// <param name="tag">false 为已放烟未出烟，(true为点击版本使用的)</param>
         /// <returns>通道烟数据</returns>
-        public List<HUNHEVIEW> GetTroughCigarette(decimal seq, decimal[] finishno, int qty,decimal[] packmachineseq, bool tag = false)
+        public List<HUNHEVIEW> GetTroughCigarette(decimal seq, decimal[] finishno, int qty,decimal[] packmachineseq, bool tag = false,string cigarettesort = "0" )
         {
             decimal packmachine1 = packmachineseq[0];
             decimal packmachine2 = packmachineseq[1];
             decimal? finishno1 = finishno[0];
             int finishno2 = Convert.ToInt32(finishno[1] < 0 ? 0 : finishno[1]);
-
+           
             using (Entities entity = new Entities())
             {
                 try
                 {
                     if (tag)
-                    { 
-                       var query111 = entity.T_UN_POKE_HUNHE.Where(x=>x.PACKMACHINESEQ==1).Count();
-
+                    {
+                        //处理前的数据表
                         var query = (from item in entity.T_UN_POKE
                                      join item2 in entity.T_PRODUCE_SORTTROUGH
                                          on item.TROUGHNUM equals item2.TROUGHNUM
                                      join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
                                      where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
                                          && item2.MACHINESEQ == seq && item3.PULLSTATUS == 1 && (item.PACKAGEMACHINE == packmachine1
-                                         || item.PACKAGEMACHINE == packmachine2 )
+                                         || item.PACKAGEMACHINE == packmachine2)
                                      orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHEVIEW()
                                      {
@@ -47,9 +47,19 @@ namespace InBound.Business
                                          CIGARETTENAME = item2.CIGARETTENAME,
                                          MACHINESEQ = item.MACHINESEQ,
                                          QUANTITY = item.POKENUM,
-                                          SORTNUM=item.SORTNUM
+                                         SORTNUM = item.SORTNUM,
+                                         SENDTASKNUM=item.SENDTASKNUM, 
                                      }).Skip(finishno2).Take(qty).ToList();
-                        return query;
+                     
+                        if (cigarettesort=="")
+                        { 
+                                return query; 
+                        }
+                        else
+                        {
+                            return updown(query, cigarettesort);
+                        }      
+                       
                     }
                     else
                     {
@@ -68,9 +78,18 @@ namespace InBound.Business
                                          CIGARETTENAME = item2.CIGARETTENAME,                                        
                                          MACHINESEQ = item.MACHINESEQ,
                                          QUANTITY = item.POKENUM,
+                                         SENDTASKNUM=item.SENDTASKNUM,
                                           SORTNUM=item.SORTNUM
                                      }).Skip(finishno2).Take(qty).ToList();
-                        return query;
+                        if (cigarettesort == "")
+                        {
+                            return query;
+                        }
+                        else
+                        {
+                            return updown(query, cigarettesort);
+                        }      
+                       
                     }
                 }
                 catch (Exception e)
@@ -81,11 +100,181 @@ namespace InBound.Business
         }
 
         /// <summary>
+        /// 包内顺序切换（烟宽度）
+        /// </summary>
+        /// <param name="query">原数据</param>
+        /// <param name="cigarettesort">最大宽度</param>
+        /// <returns>重新排序后的数据</returns>
+        public List<HUNHEVIEW> updown(List<HUNHEVIEW> query, string cigarettesort)
+        {
+            //重新排序后的数据表
+            List<HUNHEVIEW> table = new List<HUNHEVIEW>();
+            using (Entities entity= new Entities())
+            {
+                WriteLog writeLog = WriteLog.GetLog();
+                //包号顺序表 
+                List<HUNHEVIEW> table1 = query.GroupBy(x => x.SENDTASKNUM).Select(x => new HUNHEVIEW { SENDTASKNUM = x.Key }).ToList();
+                //每包内顺序表（未修改顺序—>修改顺序）
+                foreach (var item in table1)
+                {
+                    //包号表
+                    List<HUNHEVIEW> table2 = query.Where(x => x.SENDTASKNUM == item.SENDTASKNUM).Select(x => x).ToList();
+                    //最大宽度
+                    decimal maxwidth = 0;
+                    //当前计算的宽度
+                    decimal nowwidth = 0;
+                    try
+                    {
+                        maxwidth = Convert.ToDecimal(cigarettesort);
+                    }
+                    catch (Exception)
+                    {
+                        writeLog.Write("最大出烟宽度转化失败！");
+                    }
+                    //重新排序后的包
+                    List<HUNHEVIEW> table3 = new List<HUNHEVIEW>();
+                    //重新排序后的临时包（反转前的一节烟数据）
+                    List<HUNHEVIEW> table4 = new List<HUNHEVIEW>();
+                    int countindex = 0;
+                    int index = 0;
+                    //遍历每包内数据
+                    foreach (var item2 in table2)
+                    {
+                        countindex++;
+                        index++;
+                        //条烟宽度
+                        decimal width = Convert.ToDecimal(entity.T_WMS_ITEM.Where(x => x.ITEMNO == item2.CIGARETTECODE).Select(x => x.IWIDTH).FirstOrDefault());
+                        //计算宽度小于最大宽度
+                        if (nowwidth + width < maxwidth)
+                        {
+                            table4.Add(item2);
+                            nowwidth = nowwidth + width;
+                            if (table2.Count == countindex)
+                            {
+                                //反转后的一节烟数据
+                                List<HUNHEVIEW> table5 = new List<HUNHEVIEW>();
+                                for (int i = table4.Count; i > 0; i--)
+                                {
+                                    table5.Add(table4[i - 1]);
+                                }
+                                table3.AddRange(table5);
+                                table4 = null;
+                            }
+                        }
+                        else
+                        {
+                            //反转后的一节烟数据
+                            List<HUNHEVIEW> table5 = new List<HUNHEVIEW>();
+                            for (int i = index -1; i > 0; i--)
+                            {
+                                table5.Add(table4[i - 1]);
+                            }
+                            table3.AddRange(table5);
+                            table4.Clear();
+
+                            nowwidth = width;
+                            table4.Add(item2);
+                            index = 1;
+                        }  
+                    }
+                    table.AddRange(table3); 
+                }
+            } 
+            return table;
+        }
+
+        #region  定位
+        /// <summary>
+        /// 包内顺序切换（烟宽度）
+        /// </summary>
+        /// <param name="query">原数据</param>
+        /// <param name="cigarettesort">最大宽度</param>
+        /// <returns>重新排序后的数据</returns>
+        public List<HUNHENOWVIEW1> updown_now(List<HUNHENOWVIEW1> query, string cigarettesort)
+        {
+            //重新排序后的数据表
+            List<HUNHENOWVIEW1> table = new List<HUNHENOWVIEW1>();
+            using (Entities entity = new Entities())
+            {
+                WriteLog writeLog = WriteLog.GetLog();
+                //包号顺序表 
+                List<HUNHENOWVIEW1> table1 = query.GroupBy(x => x.sendtasknum).Select(x => new HUNHENOWVIEW1 { sendtasknum = x.Key }).ToList();
+                //每包内顺序表（未修改顺序—>修改顺序）
+                foreach (var item in table1)
+                {
+                    //包号表
+                    List<HUNHENOWVIEW1> table2 = query.Where(x => x.sendtasknum == item.sendtasknum).Select(x => x).ToList();
+                    //最大宽度
+                    decimal maxwidth = 0;
+                    //当前计算的宽度
+                    decimal nowwidth = 0;
+                    try
+                    {
+                        maxwidth = Convert.ToDecimal(cigarettesort);
+                    }
+                    catch (Exception)
+                    {
+                        writeLog.Write("最大出烟宽度转化失败！");
+                    }
+                    //重新排序后的包
+                    List<HUNHENOWVIEW1> table3 = new List<HUNHENOWVIEW1>();
+                    //重新排序后的临时包（反转前的一节烟数据）
+                    List<HUNHENOWVIEW1> table4 = new List<HUNHENOWVIEW1>();
+                    int countindex = 0;
+                    int index = 0;
+                    //遍历每包内数据
+                    foreach (var item2 in table2)
+                    {
+                        countindex++;
+                        index++;
+                        //条烟宽度
+                        decimal width = Convert.ToDecimal(entity.T_WMS_ITEM.Where(x => x.ITEMNO == item2.CIGARETTECODE).Select(x => x.IWIDTH).FirstOrDefault());
+                        //计算宽度小于最大宽度
+                        if (nowwidth + width < maxwidth)
+                        {
+                            table4.Add(item2);
+                            nowwidth = nowwidth + width;
+                            if (table2.Count == countindex)
+                            {
+                                //反转后的一节烟数据
+                                List<HUNHENOWVIEW1> table5 = new List<HUNHENOWVIEW1>();
+                                for (int i = table4.Count; i > 0; i--)
+                                {
+                                    table5.Add(table4[i - 1]);
+                                }
+                                table3.AddRange(table5);
+                                table4 = null;
+                            }
+                        }
+                        else
+                        {
+                            //反转后的一节烟数据
+                            List<HUNHENOWVIEW1> table5 = new List<HUNHENOWVIEW1>();
+                            for (int i = index - 1; i > 0; i--)
+                            {
+                                table5.Add(table4[i - 1]);
+                            }
+                            table3.AddRange(table5);
+                            table4.Clear();
+
+                            nowwidth = width;
+                            table4.Add(item2);
+                            index = 1;
+                        }
+                    }
+                    table.AddRange(table3);
+                }
+            }
+            return table;
+        }
+#endregion 
+
+        /// <summary>
         /// 读取混合道的待放烟品脾
         /// </summary>
         /// <param name="seq"></param>
         /// <returns></returns>
-        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] packmachineseq)
+        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] packmachineseq,string cigarettesort = "0")
         {
             decimal packmachine1 = packmachineseq[0];
             decimal packmachine2 = packmachineseq[1];
@@ -101,8 +290,15 @@ namespace InBound.Business
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2 )
                                  && item4.PULLSTATUS == 0
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHEVIEW() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM }).ToList();
-                    return query;
+                                 select new HUNHEVIEW() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM,SENDTASKNUM=item.SENDTASKNUM }).ToList();
+                    if (cigarettesort == "")
+                    {
+                        return query;
+                    }
+                    else
+                    {
+                        return updown(query, cigarettesort);
+                    }      
                 }
                 catch (Exception e)
                 {
@@ -117,7 +313,7 @@ namespace InBound.Business
         /// </summary>
         /// <param name="seq">通道号</param>
         /// <returns></returns>
-        public List<HUNHENOWVIEW1> GetALLCigarette(decimal seq, decimal[] packmachineseq)
+        public List<HUNHENOWVIEW1> GetALLCigarette(decimal seq, decimal[] packmachineseq, string cigarettesort="0")
         {
             decimal pack1 = packmachineseq[0];
             decimal pack2 = packmachineseq[1];
@@ -133,8 +329,15 @@ namespace InBound.Business
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq &&
                                  (item.PACKAGEMACHINE == pack1 || item.PACKAGEMACHINE == pack2)
                                  orderby item.SORTNUM, item.POKEID
-                                 select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq=item.PACKAGEMACHINE }).ToList();
-                    return query;
+                                 select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq=item.PACKAGEMACHINE, sendtasknum=item.SENDTASKNUM }).ToList();
+                    if (cigarettesort == "")
+                    {
+                        return query;
+                    }
+                    else
+                    {
+                        return updown_now(query, cigarettesort);
+                    }      
                 }
                 catch (Exception e)
                 {

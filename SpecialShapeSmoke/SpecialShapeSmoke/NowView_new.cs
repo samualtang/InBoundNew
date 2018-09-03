@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound.Business;
 using System.Threading;
 using InBound.Model;
+using System.Configuration;
 
 namespace SpecialShapeSmoke
 {
@@ -18,6 +19,7 @@ namespace SpecialShapeSmoke
         int machineseq2;
         static int NowMachineseq;
         decimal[] nowpokeids;
+        string cigarettesort;
         System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         decimal[] lastpokeids = new decimal[] { -1, -1 };
         decimal nowpokeid;
@@ -29,28 +31,28 @@ namespace SpecialShapeSmoke
             this.machineseq1 = machineseq1;
             this.machineseq2 = machineseq2;
             this.nowpokeids = nowpokeids;
-
-            btnMachineSeq1.Text = machineseq1 + "混合道";
-            btnMachineSeq2.Text = machineseq2 + "混合道";
+            cigarettesort = ConfigurationManager.AppSettings["cigarettesort"].ToString();
+            //btnMachineSeq1.Text = machineseq1 + "混合道";
+            //btnMachineSeq2.Text = machineseq2 + "混合道";
             labMachineSeq.Text = machineseq1 + "混合道";
 
-            if (machineseq1 == machineseq2)
-            {
+            //if (machineseq1 == machineseq2)
+            //{
                 btnMachineSeq2.Visible = false;
-            }
-            if (labMachineSeq.Text == machineseq1.ToString())
-            {
+            //}
+            //if (labMachineSeq.Text == machineseq1.ToString())
+            //{
                 nowpokeid = nowpokeids[0];
-            }
-            else
-            {
-                nowpokeid = nowpokeids[1];
-            }
+            //}
+            //else
+            //{
+            //    nowpokeid = nowpokeids[1];
+            //}
             NowPoke(nowpokeids, true);
             NowMachineseq = machineseq1;
             t1.Tick += new EventHandler(t1_Tick);
             t1.Interval = 500;
-            t1.Start();
+           // t1.Start();
 
 
         }
@@ -89,8 +91,8 @@ namespace SpecialShapeSmoke
         //定位当前
         private void btnNowPoke_Click(object sender, EventArgs e)
         {
-            string pokeid = Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString();
-            DateBind(Convert.ToDecimal(labMachineSeq.Text.Substring(0, 4)), pokeid);
+            string sortnum = Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString();
+            DateBind(Convert.ToDecimal(labMachineSeq.Text.Substring(0, 4)), sortnum);
             NowPoke(nowpokeids, true);
 
         }
@@ -131,7 +133,7 @@ namespace SpecialShapeSmoke
 
                 for (int i = 0; i < DgvNowView.RowCount; i++)
                 {
-                    if (DgvNowView.Rows[i].Cells["PokeId"].Value.ToString().Trim() == pokeid)
+                    if (DgvNowView.Rows[i].Cells["sortnum"].Value.ToString().Trim() == pokeid)
                     {
                         foreach (DataGridViewRow row in DgvNowView.Rows)
                         {
@@ -139,8 +141,7 @@ namespace SpecialShapeSmoke
                         }
                         DgvNowView.Rows[i].Selected = true;
                         DgvNowView.FirstDisplayedScrollingRowIndex = i;
-
-                        break;
+                         
                     }
                 }
                 if (labMachineSeq.Text.Substring(0, 4) == machineseq1.ToString())
@@ -164,7 +165,7 @@ namespace SpecialShapeSmoke
         public void DateBind(decimal Seq, string pokeid = null)
         {
             HunHeService_new HunHeNowCigarette = new HunHeService_new();
-            List<HUNHENOWVIEW1> hunhelist = HunHeNowCigarette.GetALLCigarette(Seq,packmachineseq);
+            List<HUNHENOWVIEW1> hunhelist = HunHeNowCigarette.GetALLCigarette(Seq, packmachineseq, cigarettesort);
             if (hunhelist.Count < 1)
             {
                 labMachineSeq.Text = Seq + "通道没有分拣数据，请选择其他通道！";
@@ -189,44 +190,24 @@ namespace SpecialShapeSmoke
         private void DgvNowView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             //重绘状态单元格显示
-            if (e.ColumnIndex == 8)
-            {
-                string Status = "";
-                switch (e.Value.ToString())
-                {
+            //if (e.ColumnIndex == 8)
+            //{
+            //    string Status = "";
+            //    switch (e.Value.ToString())
+            //    { 
 
-
-                    //foreach (DataGridViewRow item in DgvNowView.Rows)
-                    //{
-                    //    if (Convert.ToDecimal(item.Cells[9].Value) <= Convert.ToDecimal(Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString()))
-                    //    {
-                    //        Status = "分拣完成";
-                    //    }
-                    //    else
-                    //    {
-                    //        Status = "";
-                    //    }
-                    //}
-
-                    case "10":
-                        Status = "未出烟";
-                        break;
-                    case "15":
-                        Status = "已出烟";
-                        foreach (DataGridViewRow item in DgvNowView.Rows)
-                        {
-                            if (Convert.ToDecimal(item.Cells[8].Value) < Convert.ToDecimal(Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString()))
-                            {
-                                Status = "分拣完成";
-                            }
-                        }
-                        break;
-                    case "20":
-                        Status = "已出烟";
-                        break;
-                }
-                e.Value = Status;
-            }
+            //        //case "10":
+            //        //    Status = "未出烟";
+            //        //    break;
+            //        case "15":
+            //            Status = "已出烟";
+            //            break;
+            //        case "20":
+            //            Status = "已出烟";
+            //            break;
+            //    }
+            //    e.Value = Status;
+            //}
 
             if (e.ColumnIndex == 10)
             {

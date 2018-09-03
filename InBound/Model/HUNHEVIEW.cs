@@ -24,6 +24,8 @@ namespace InBound.Model
        public decimal? MACHINESEQ { get; set; }
 
        public decimal? SORTNUM { get; set; }
+
+       public decimal? SENDTASKNUM { get; set; }
     }
 
    public class HUNHEVIEW1
@@ -44,5 +46,7 @@ namespace InBound.Model
        public string CIGARETTECODE { get; set; }
        public decimal? MACHINESEQ { get; set; }
        public string PACK_BAR { get; set; }
+
+       public decimal? SENDTASKNUM { get; set; }
    }
 }

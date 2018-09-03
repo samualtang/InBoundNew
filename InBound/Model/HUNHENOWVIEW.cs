@@ -38,6 +38,7 @@ namespace InBound.Model
         public decimal? pokeid { get; set; }
         public decimal? PULLSTATUS { get; set; }
         public decimal? packmachineseq { get; set; }
+        public decimal? sendtasknum { get; set; }
     }
     /// <summary>
     /// 混合道条码

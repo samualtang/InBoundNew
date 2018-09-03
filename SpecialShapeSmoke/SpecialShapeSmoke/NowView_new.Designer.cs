@@ -46,6 +46,7 @@
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.任务包号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +68,8 @@
             this.PokeNum,
             this.status,
             this.PokeId,
-            this.PULLSTATUS});
+            this.PULLSTATUS,
+            this.任务包号});
             this.DgvNowView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvNowView.Location = new System.Drawing.Point(3, 17);
             this.DgvNowView.Name = "DgvNowView";
@@ -111,6 +113,7 @@
             this.btnMachineSeq1.TabIndex = 3;
             this.btnMachineSeq1.Text = "通道1";
             this.btnMachineSeq1.UseVisualStyleBackColor = true;
+            this.btnMachineSeq1.Visible = false;
             this.btnMachineSeq1.Click += new System.EventHandler(this.btnMachineSeq1_Click);
             // 
             // btnMachineSeq2
@@ -122,6 +125,7 @@
             this.btnMachineSeq2.TabIndex = 4;
             this.btnMachineSeq2.Text = "通道2";
             this.btnMachineSeq2.UseVisualStyleBackColor = true;
+            this.btnMachineSeq2.Visible = false;
             this.btnMachineSeq2.Click += new System.EventHandler(this.btnMachineSeq2_Click);
             // 
             // labMachineSeq
@@ -130,7 +134,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.labMachineSeq.AutoSize = true;
             this.labMachineSeq.Font = new System.Drawing.Font("宋体", 20F);
-            this.labMachineSeq.Location = new System.Drawing.Point(432, 30);
+            this.labMachineSeq.Location = new System.Drawing.Point(432, 21);
             this.labMachineSeq.Name = "labMachineSeq";
             this.labMachineSeq.Size = new System.Drawing.Size(80, 27);
             this.labMachineSeq.TabIndex = 5;
@@ -229,7 +233,14 @@
             this.PULLSTATUS.Name = "PULLSTATUS";
             this.PULLSTATUS.ReadOnly = true;
             // 
-            // NowView
+            // 任务包号
+            // 
+            this.任务包号.DataPropertyName = "sendtasknum";
+            this.任务包号.HeaderText = "任务包号";
+            this.任务包号.Name = "任务包号";
+            this.任务包号.ReadOnly = true;
+            // 
+            // NowView_new
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -240,7 +251,7 @@
             this.Controls.Add(this.btnNowPoke);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "NowView";
+            this.Name = "NowView_new";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "混合道分拣详情";
             this.Deactivate += new System.EventHandler(this.NowView_Deactivate);
@@ -272,5 +283,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn PokeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 任务包号;
     }
 }
