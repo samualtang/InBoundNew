@@ -32,8 +32,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceLib", "WcfService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfApp", "WcfApp\WcfApp.csproj", "{49A48524-D7D5-4E47-B9F7-E7AFE054E45F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapperView", "WrapperView\WrapperView.csproj", "{01DD675F-7099-4F67-9C72-B2B530A9BA62}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnNormal_New", "UnNormal_New\UnNormal_New.csproj", "{0E41D785-025F-4755-852A-681265DEB273}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnNormal_Test", "UnNormal_Test\UnNormal_Test.csproj", "{302AC593-28AD-4C94-A3D2-AD582F8CD045}"

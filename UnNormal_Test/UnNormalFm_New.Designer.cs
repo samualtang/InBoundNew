@@ -65,7 +65,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.groupboxErr = new System.Windows.Forms.GroupBox();
-            this.listError = new System.Windows.Forms.ListBox();
+            this.labelleftcutCou = new System.Windows.Forms.Label();
+            this.labelCUtFishCOu = new System.Windows.Forms.Label();
+            this.labelAllCustomerC = new System.Windows.Forms.Label();
+            this.labeleftCOunt = new System.Windows.Forms.Label();
+            this.labelFIinshCOunt = new System.Windows.Forms.Label();
+            this.labelALLcount = new System.Windows.Forms.Label();
             this.timerSendTask = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -113,6 +118,7 @@
             this.button7.Size = new System.Drawing.Size(108, 43);
             this.button7.TabIndex = 10;
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
@@ -133,6 +139,7 @@
             this.button12.Size = new System.Drawing.Size(99, 43);
             this.button12.TabIndex = 8;
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button11
             // 
@@ -142,6 +149,7 @@
             this.button11.Size = new System.Drawing.Size(99, 43);
             this.button11.TabIndex = 7;
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button10
             // 
@@ -247,6 +255,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.task_data.DefaultCellStyle = dataGridViewCellStyle3;
+            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
             this.task_data.Location = new System.Drawing.Point(0, 43);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
@@ -263,7 +272,7 @@
             this.task_data.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(592, 239);
+            this.task_data.Size = new System.Drawing.Size(598, 137);
             this.task_data.TabIndex = 30;
             // 
             // Column1
@@ -359,32 +368,88 @@
             this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.list_data.FormattingEnabled = true;
             this.list_data.ItemHeight = 12;
-            this.list_data.Location = new System.Drawing.Point(0, 288);
+            this.list_data.Location = new System.Drawing.Point(0, 180);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(598, 112);
+            this.list_data.Size = new System.Drawing.Size(598, 220);
             this.list_data.TabIndex = 39;
             // 
             // groupboxErr
             // 
-            this.groupboxErr.Controls.Add(this.listError);
+            this.groupboxErr.Controls.Add(this.labelleftcutCou);
+            this.groupboxErr.Controls.Add(this.labelCUtFishCOu);
+            this.groupboxErr.Controls.Add(this.labelAllCustomerC);
+            this.groupboxErr.Controls.Add(this.labeleftCOunt);
+            this.groupboxErr.Controls.Add(this.labelFIinshCOunt);
+            this.groupboxErr.Controls.Add(this.labelALLcount);
             this.groupboxErr.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupboxErr.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupboxErr.Font = new System.Drawing.Font("宋体", 11F);
             this.groupboxErr.Location = new System.Drawing.Point(598, 43);
             this.groupboxErr.Name = "groupboxErr";
             this.groupboxErr.Size = new System.Drawing.Size(440, 357);
             this.groupboxErr.TabIndex = 40;
             this.groupboxErr.TabStop = false;
-            this.groupboxErr.Text = "故障信息";
+            this.groupboxErr.Text = "任务信息";
             // 
-            // listError
+            // labelleftcutCou
             // 
-            this.listError.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listError.FormattingEnabled = true;
-            this.listError.ItemHeight = 15;
-            this.listError.Location = new System.Drawing.Point(3, 20);
-            this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(434, 334);
-            this.listError.TabIndex = 0;
+            this.labelleftcutCou.AutoSize = true;
+            this.labelleftcutCou.Location = new System.Drawing.Point(21, 173);
+            this.labelleftcutCou.Name = "labelleftcutCou";
+            this.labelleftcutCou.Size = new System.Drawing.Size(67, 15);
+            this.labelleftcutCou.TabIndex = 0;
+            this.labelleftcutCou.Text = "剩余户数";
+            this.labelleftcutCou.Visible = false;
+            // 
+            // labelCUtFishCOu
+            // 
+            this.labelCUtFishCOu.AutoSize = true;
+            this.labelCUtFishCOu.Location = new System.Drawing.Point(21, 147);
+            this.labelCUtFishCOu.Name = "labelCUtFishCOu";
+            this.labelCUtFishCOu.Size = new System.Drawing.Size(75, 15);
+            this.labelCUtFishCOu.TabIndex = 0;
+            this.labelCUtFishCOu.Text = "完成户数 ";
+            this.labelCUtFishCOu.Visible = false;
+            // 
+            // labelAllCustomerC
+            // 
+            this.labelAllCustomerC.AutoSize = true;
+            this.labelAllCustomerC.Location = new System.Drawing.Point(21, 122);
+            this.labelAllCustomerC.Name = "labelAllCustomerC";
+            this.labelAllCustomerC.Size = new System.Drawing.Size(52, 15);
+            this.labelAllCustomerC.TabIndex = 0;
+            this.labelAllCustomerC.Text = "总户数";
+            this.labelAllCustomerC.Visible = false;
+            // 
+            // labeleftCOunt
+            // 
+            this.labeleftCOunt.AutoSize = true;
+            this.labeleftCOunt.Location = new System.Drawing.Point(21, 92);
+            this.labeleftCOunt.Name = "labeleftCOunt";
+            this.labeleftCOunt.Size = new System.Drawing.Size(67, 15);
+            this.labeleftCOunt.TabIndex = 0;
+            this.labeleftCOunt.Text = "剩余数量";
+            this.labeleftCOunt.Visible = false;
+            // 
+            // labelFIinshCOunt
+            // 
+            this.labelFIinshCOunt.AutoSize = true;
+            this.labelFIinshCOunt.Location = new System.Drawing.Point(21, 63);
+            this.labelFIinshCOunt.Name = "labelFIinshCOunt";
+            this.labelFIinshCOunt.Size = new System.Drawing.Size(67, 15);
+            this.labelFIinshCOunt.TabIndex = 0;
+            this.labelFIinshCOunt.Text = "完成数量";
+            this.labelFIinshCOunt.Visible = false;
+            // 
+            // labelALLcount
+            // 
+            this.labelALLcount.AutoSize = true;
+            this.labelALLcount.Location = new System.Drawing.Point(21, 35);
+            this.labelALLcount.Name = "labelALLcount";
+            this.labelALLcount.Size = new System.Drawing.Size(67, 15);
+            this.labelALLcount.TabIndex = 0;
+            this.labelALLcount.Text = "任务总数";
+            this.labelALLcount.Visible = false;
             // 
             // timerSendTask
             // 
@@ -394,8 +459,8 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.Controls.Add(this.list_data);
             this.Controls.Add(this.task_data);
+            this.Controls.Add(this.list_data);
             this.Controls.Add(this.groupboxErr);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -412,6 +477,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.groupboxErr.ResumeLayout(false);
+            this.groupboxErr.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -438,7 +504,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.GroupBox groupboxErr;
-        private System.Windows.Forms.ListBox listError;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -450,5 +515,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 分拣线;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
         private System.Windows.Forms.Timer timerSendTask;
+        private System.Windows.Forms.Label labelCUtFishCOu;
+        private System.Windows.Forms.Label labelAllCustomerC;
+        private System.Windows.Forms.Label labeleftCOunt;
+        private System.Windows.Forms.Label labelFIinshCOunt;
+        private System.Windows.Forms.Label labelALLcount;
+        private System.Windows.Forms.Label labelleftcutCou;
     }
 }

@@ -85,7 +85,7 @@ namespace UnNormal_Test.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add("S7:[UnnormalConnection]DB50,DINT" + (i * 4));
+               list.Add("S7:[UnnormalConnection]DB550,DINT" + (i * 4));
            }
 
            return list;

@@ -87,14 +87,14 @@ namespace InBound.Business
             {
                 var query = (from item in data.T_UN_POKE
                              where item.SORTNUM > sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
-                             select item).Sum(x => x.POKENUM??0);
-                if (query != null)
+                             select item).ToList();
+                if (query != null&& query.Count>0)
                 {
-                    return maxCount - (query + xynum);
+                    return maxCount - (query.Sum(x => x.POKENUM ?? 0) + xynum);
                 }
                 else
                 {
-                    return query;
+                    return maxCount;
                 }
             }  
         }
@@ -570,8 +570,7 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-                //var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
-                var query = (from item in data.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)                
+                var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
                 if (query == null)//如果没有则 无任务s
                 {
                     outlist = new List<T_UN_POKE>();
@@ -589,6 +588,7 @@ namespace InBound.Business
                 values[1] = query.SENDTASKNUM;//包号
                 values[2] =query.STORENUM;//出口号
                 values[3] =query.PACKAGEMACHINE; //包装机号
+                needDatas += "\r\n任务号：" + values[0] + "，任务包号：" + values[1] + "，出口号：" + values[2] + "，包装机号：" + values[3];
                 foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())//1-60烟仓 + 6 烟柜
                 {
                     machineseq = (item.MACHINESEQ ?? 0);
@@ -597,15 +597,18 @@ namespace InBound.Business
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 1000;
+                            needDatas += "\r\n一线 " + ((int)machineseq + 3) + " 号烟仓，出烟数量：" + item.QTY;
                         }
                         else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)//二线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 2000;
+                            needDatas += "\r\n二线 " + ((int)machineseq + 3) + " 号烟仓，出烟数量：" + item.QTY;
                         }
-                        else if (item.MACHINESEQ > 3000)
+                        else if (item.MACHINESEQ > 3000)//烟柜
                         {
                             machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
-                        }
+                            needDatas += "\r\n烟柜 " + ((int)machineseq + 3) + " 号，出烟数量：" + item.QTY;
+                        } 
                         values[((int)machineseq + 3)] = item.QTY;
                     }
                     //values[((int)machineseq + 3)] = query1.Where(a => a.MACHINESEQ == item.MACHINESEQ).GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).FirstOrDefault().QTY;
@@ -613,27 +616,8 @@ namespace InBound.Business
                 values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 && a.MACHINESEQ != 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟仓出烟数量
                 values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟柜出烟数量 
                 values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//特异性烟出烟数量 
-                //if (sendtasklist.Count > 1)//拆包的情况下 第二次或者第三。。特异形烟数量 给0
-                //{
-                //    if ((query1[0].SENDTASKNUM ?? 0) == Convert.ToDecimal(sendtasklist[0]))
-                //    {
-                //        values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量 
-                //    }
-                //    else
-                //    { 
-                //        values[72] = 0;
-                //    }
-                //}
-                //else
-                //{
-                //    values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//特异性烟出烟数量
-                //}
                 values[73] = 1;//标志位
-                object[] date = values.Where(a => Convert.ToInt32(a) != 0).ToArray();
-                for (int i = 0; i < date.Length; i++)
-                {
-                    needDatas += i + ":" + date[i] + ",";
-                }
+                needDatas += "\r\n烟仓出烟数量：" + values[70] + "，烟柜出烟数量：" + values[71] + "，特异形烟出烟数量：" + values[72] + "，任务发送标志位：" + values[73];
                 outStr = needDatas;
                 return values;
             }
@@ -689,7 +673,7 @@ namespace InBound.Business
             }
             using (Entities data = new Entities())
             {
-                var sendtasknum = (from item in data.T_UN_POKE where  item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SORTNUM select item).FirstOrDefault();//获取特异形烟任务
+                var sendtasknum = (from item in data.T_UN_POKE where  item.GRIDNUM == 10 && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.LINENUM == lineNum orderby item.SORTNUM,item.SENDTASKNUM select item).FirstOrDefault();//获取特异形烟任务
                 if (sendtasknum == null)
                 {
                     outlist = new List<T_UN_SpecialSmoke>();
@@ -698,15 +682,16 @@ namespace InBound.Business
                 }
                 var query = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                             where item.SORTNUM == sendtasknum.SORTNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.GRIDNUM == 10
+                             where item.SENDTASKNUM == sendtasknum.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.GRIDNUM == 10
                              orderby item.SORTNUM, item.POKEID
-                             select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).Take(10).ToList();
+                             select new T_UN_SpecialSmoke { POKEID = item.POKEID,CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).Take(10).ToList();
                 outlist = query;
                 int index = 4;//索引  
                 values[0] = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");//顺序号累加
                 values[1] = sendtasknum.SORTNUM;//任务号
                 values[2] = GetLineNum((sendtasknum.PACKAGEMACHINE ?? 0));//获取烟仓号
                 values[3] = query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM);//订单数量
+                needDatas += "\r\n顺序号：" + values[0] + "，任务号：" + values[1] + "，出烟地址：" + values[2] + "，订单数量：" + values[3] + "，包装机号：" + (sendtasknum.PACKAGEMACHINE ?? 0);
                 foreach (var item in query)
                 {
                     if (index <= 34)
@@ -714,16 +699,13 @@ namespace InBound.Business
                         values[index] = item.CIGARETTECODE;//卷烟编码
                         values[index + 1] = item.LENGHT;//条烟长度
                         values[index + 2] = item.WIDTH;//条烟宽度
-                        index = index + 3;
+                        needDatas += "\r\n卷烟编码：" + values[index] +"，卷烟名称 "+ item.CIGARETTENAME+"，卷烟长度" + values[index + 1] + "，卷烟宽度" + values[index + 2];
+                        index = index + 3; 
                     }
                 }
                 values[34] = 1;//标志位
-
-            }
-            for (int i = 0; i < values.Length; i++)
-            {
-                needDatas += i + ":" + values[i] + ",";
-            }
+                needDatas += "\r\n标志位：" + values[34];
+            } 
             outStr = needDatas;
             return values;
 
@@ -830,49 +812,97 @@ namespace InBound.Business
             }
         }
         /// <summary>
-        /// 获取可发任务的包装机
+        /// 以主皮带获取发送的包装机
         /// </summary>
-        /// <param name="lineNum">线路</param>
-        /// <param name="sortNum">四个包装机的任务号</param>
-        /// <param name="xyNum">四个包装机的抓眼数量</param>
-        /// <param name="DISPATCHESIZE">下任务阀值</param>
-        /// <returns>包装机号</returns>
-        public static int GetSendPackageMachine(decimal lineNum,List<decimal> sortNum, List<decimal> xyNum,out decimal DISPATCHESIZE)
+        /// <param name="mainbelt">主皮带</param>
+        /// <returns>包装机</returns>
+        public static decimal GetPackMacByMainbelt(decimal mainbelt)
         {
-            int packagemachine = 0;//包装几号
-            int start = 0;//起点
-            int end = 0;//终点
-            DISPATCHESIZE = 0;//空出多少开始下任务 （阈值）
-            if (lineNum == 1)//一线对应 1-4号包装机
+            using (Entities date = new Entities())
             {
-                start = 1;
-                end = 4;
-            }
-            else//二线对应 5-8包装机
-            {
-                start = 5;
-                end = 8;
-            }
-            for (int i = start; i < end; i++)//在四个包装机找可以发送任务的包装机
-            {
-                int index = 0;
-                if (!CheckExistCanSendPackeMachine(i))//当前包装机无任务跳到下个包装机
+                var query = (from item in date.T_UN_POKE join item2 in date.T_UN_TASK on item.BILLCODE equals item2.BILLCODE where item2.MAINBELT == mainbelt && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                if (query != null)
                 {
-                    index++;
-                    continue;
+                    return query.PACKAGEMACHINE ?? 0;
                 }
-                T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
-                decimal currentNum = GetCacheCount(i, sortNum[index], xyNum[index],cache.CACHESIZE??0);//获取缓存剩余量
-                WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[index] + " 已抓烟数量:" + xyNum[index]);
-                if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
+                else
                 {
-                    WriteLog.GetLog().Write("包装机号:" + i + "当前发送主皮带:" + i);
-                    index++;
-                    return i; 
+                    return 0;
                 }
 
-                index++;
             }
+
+        }
+        public static void UpdateTaskByPackMachine(decimal packagemchine)
+        {
+            using (Entities date = new Entities())
+            { 
+                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SENDTASKNUM select item).ToList();
+                decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
+                if (sendtasknum > 0 && sendtasknum != null)
+                {
+                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
+                    date.SaveChanges();
+                }
+                else
+                {
+                    WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12");
+                }
+            }
+        }
+        /// <summary>
+        /// 获取可发任务的包装机
+        /// </summary> 
+        /// <param name="sortNum">四个包装机的任务号</param>
+        /// <param name="xyNum">四个包装机的抓烟数量</param>
+        /// <param name="DISPATCHESIZE">下任务阀值</param>
+        /// <returns>包装机号</returns>
+        public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum,out decimal DISPATCHESIZE)
+        {
+            decimal packagemachine = 0;//包装几号 
+            int maxOrder = 100;
+            decimal  leftnum = 0;
+            DISPATCHESIZE = 0;//空出多少开始下任务 （阈值）
+            List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
+            for (int i = 1; i <= 4; i++)
+            {
+                listpm.Add(GetPackMacByMainbelt(i));
+            } 
+            foreach (var i in listpm)
+            {
+                if (i != 0)//i是包装机号
+                {
+                    T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
+                    decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                    WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
+                    if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
+                    {
+                        DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                        WriteLog.GetLog().Write( "当前发送包装机号:" + i);
+                        return i;
+                    }
+                    if (currentNum >= (cache.DISPATCHENUM ?? 0))//都需要补的情况下 则计算所能支持的订单数量
+                    {
+                        int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量
+                        if (tempOrderCount < maxOrder)
+                        {
+                            packagemachine = i;
+                            maxOrder = tempOrderCount;
+                            DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                            leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                        }
+                        else
+                        {
+                            if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                            {
+                                packagemachine = i;
+                                DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                            }
+                        }
+                    } 
+                }
+            } 
             return packagemachine;
         }
         public static bool CheckExistCanSendPackeMachine(decimal packmachine)
@@ -1745,7 +1775,7 @@ namespace InBound.Business
                         }
                     }
                     data.SaveChanges();
-                    data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                    data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum  in (select tasknum from t_un_poke where status = 20)");
                     data.SaveChanges();
                 }
                 catch (Exception e)
@@ -1820,6 +1850,15 @@ namespace InBound.Business
                 foreach (var item in query)
                 {
                     item.STATUS = status;
+                    if (status == 20)
+                    {
+                        item.STATUS = 15;
+                    }
+                    else
+                    {
+                        item.STATUS = status;
+                    }
+                    
                 }
                 var query2 = (from item in data.T_UN_TASK where item.SORTNUM >= sortnumFrom && item.SORTNUM <= sortnumTo select item).ToList() ;
                 foreach (var item in query2)
@@ -1830,12 +1869,11 @@ namespace InBound.Business
                     }
                     else
                     {
-                        item.STATE = "20";
-                    }
-                }
-             
+                        item.STATE = "15";
 
-                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=15)");
+                    }
+                } 
+               //  data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum   in (select tasknum from t_un_poke where status =20)");
                 data.SaveChanges();
             }
         }
@@ -1850,11 +1888,11 @@ namespace InBound.Business
                 //            group item by new { item.BILLCODE, item.SORTNUM, item.SECSORTNUM,item.STATE } into g
                 //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SecSortNum = g.Key.SECSORTNUM ?? 0, tNum = g.Sum(x => x.ORDERQUANTITY ?? 0), Billcode = g.Key.BILLCODE, CIGARETTDECODE = g.Key.STATE };
                 var query = from item in dataentity.T_UN_POKE
-                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
-                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH on item.TROUGHNUM equals item2.TROUGHNUM
+                            join item3 in dataentity.T_UN_TASK on item.BILLCODE equals item3.BILLCODE  
                             where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10&& item.SORTNUM == sortnum
-                            orderby item.SORTNUM, item2.SEQ, item.MACHINESEQ, item.SENDTASKNUM
-                            select new TaskDetail() { POKENUM = item.POKENUM ?? 0, STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, Billcode = item.BILLCODE, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, LINENUM = item.LINENUM, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0 };
+                            orderby item.TASKNUM
+                            select new TaskDetail() { REGIONCODE = item3.REGIONCODE, SORTSEQ = item3.SORTSEQ ?? 0, CUSTOMERNAME = item3.CUSTOMERNAME, POKENUM = item.POKENUM ?? 0, STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, Billcode = item.BILLCODE, CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME, LINENUM = item.LINENUM, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0 };
 
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();
@@ -1875,12 +1913,16 @@ namespace InBound.Business
                 //            orderby item.SORTNUM
                 //            group item by new { item.BILLCODE, item.SORTNUM, item.STATUS, item.SENDTASKNUM } into g
                 //            select new TaskDetail() { SortNum = g.Key.SORTNUM ?? 0, SENDTASKNUM = g.Key.SENDTASKNUM ?? 0, tNum = g.Sum(x => x.POKENUM ?? 0), Billcode = g.Key.BILLCODE, STATUS = g.Key.STATUS ?? 0 };
+
+                 //join trough in data.T_PRODUCE_SORTTROUGH on item.ITEMNO equals trough .CIGARETTECODE
+                 //           join task in data.T_UN_TASKLINE on trough.CIGARETTECODE equals task.CIGARETTECODE
+                 //           where (trough.CIGARETTETYPE ==30 || trough.CIGARETTETYPE ==40) && trough.TROUGHTYPE ==1
                 var query = from item in dataentity.T_UN_POKE
-                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
-                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH  on item.TROUGHNUM equals item2.TROUGHNUM
+                            join item3 in dataentity.T_UN_TASK on item.BILLCODE equals item3.BILLCODE 
                             where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10
-                            orderby item.SORTNUM, item2.SEQ, item.MACHINESEQ, item.SENDTASKNUM
-                            select new TaskDetail() {POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 };
+                            orderby item.TASKNUM
+                            select new TaskDetail() {REGIONCODE = item3.REGIONCODE, SORTSEQ = item3.SORTSEQ ??0,CUSTOMERNAME =item3.CUSTOMERNAME, POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 };
 
                 if (query != null)
                     return query.OrderBy(x => x.SortNum).ToList();

@@ -59,5 +59,7 @@ namespace InBound.Model
        public decimal SORTSEQ { get; set; }
        public string TROUGHNUM { get; set; }
        public decimal TASKQTY { get; set; }
+       public string REGIONCODE { get; set; }
+       public decimal GRIDNUM { get; set; }
     }
 }

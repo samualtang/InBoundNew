@@ -70,10 +70,10 @@ namespace UnNormal_Test
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            stateManager.AlarmsHandler += (obj) =>
-            {
-                updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
-            };
+            //stateManager.AlarmsHandler += (obj) =>
+            //{
+            //    updateListBox(string.Format("{0}号设备发生故障,故障名称{1}", obj.DeviceNo, obj.ErrInfo), listError);
+            //};
 
            // this.task_data.BeginInvoke(new Action(() => { initdata(); }));
             if (tempList == null)
@@ -735,7 +735,7 @@ namespace UnNormal_Test
                                 var list = listOnly.FirstOrDefault();
                                 if (list != null)
                                 {
-                                    logstr += list.SORTNUM + ";";
+                                    logstr += list.SORTNUM + "，任务包号：" + list.SENDTASKNUM + "，数量：" + list.TASKQTY + "，包装机：" + list.PACKAGEMACHINE;
                                 }
                                 if (logstr != null && logstr.Length > 0)
                                 {
@@ -743,7 +743,7 @@ namespace UnNormal_Test
                                     updateListBox("烟仓烟柜任务号:" + logstr + "已接收");
                                     UnPokeService.UpdateTask(listOnly, 15);
                                 }
-                                // sendOnlyTask();
+                                 sendOnlyTask();
                                 //delSendTask task = sendTask1; 
                                 //task.BeginInvoke(null, null); 
                             }
@@ -770,8 +770,9 @@ namespace UnNormal_Test
 
                                 foreach (var item in listSS1B)
                                 {
-                                    STR += item.POKEID + "，";
+                                    STR +="\r\n任务号："+ item.SORTNUM+",任务包号："+item.SENDTASKNUM+"，条烟流水号："+ item.POKEID + "";
                                 }
+                                
                                 if (STR != null && STR.Length > 0)
                                 {
                                     writeLog.Write("1线61,62特异形烟任务号:" + STR + "已接收");
@@ -801,7 +802,7 @@ namespace UnNormal_Test
 
                                 foreach (var item in listSS2A)
                                 {
-                                    STR += item.POKEID + "，";
+                                    STR += "\r\n任务号：" + item.SORTNUM + ",任务包号：" + item.SENDTASKNUM + "，条烟流水号：" + item.POKEID + "，";
                                 }
                                 if (STR != null && STR.Length > 0)
                                 {
@@ -928,6 +929,7 @@ namespace UnNormal_Test
                        {
                            this.task_data.Rows[index].Cells[9].Style = dgvStyle;
                        }
+                        
                    }
                    task_data.Sort(task_data.Columns[0], ListSortDirection.Ascending); 
                }
@@ -1021,8 +1023,47 @@ namespace UnNormal_Test
        }
        private void button12_Click(object sender, EventArgs e)
        {
-           
-           updateControlEnable(true, button10);
+           DialogResult MsgBoxResult = MessageBox.Show("确定要退出程序?",//对话框的显示内容 
+                                                         "操作提示",//对话框的标题 
+                                                         MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                         MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                         MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+
+
+           if (MsgBoxResult == DialogResult.Yes)
+           {
+               if (pIOPCServer != null)
+               {
+                   Marshal.ReleaseComObject(pIOPCServer);
+                   pIOPCServer = null;
+               }
+               if (OnlyTaskGorup != null)
+               {
+                   OnlyTaskGorup.Release();
+               }
+               if (FinishOnlyGoroup != null)
+               {
+                   FinishOnlyGoroup.Release();
+               }
+               if (SpyBiaozhiGroup != null)
+               {
+                   SpyBiaozhiGroup.Release();
+               }
+               if (SpecialSmokeGroup1 != null)
+               {
+                   SpecialSmokeGroup1.Release();
+               }
+               if (SpecialSmokeGroup2 != null)
+               {
+                   SpecialSmokeGroup2.Release();
+               }
+               updateControlEnable(true, button10);
+           }
+           else
+           {
+               return;
+           }
+         //  updateControlEnable(true, button10);
            
        }
        private void button6_Click(object sender, EventArgs e)
@@ -1047,22 +1088,29 @@ namespace UnNormal_Test
 
        private void button6_Click_1(object sender, EventArgs e)
        {
-           //w_pass pass = new w_pass();
-           //pass.StartPosition = FormStartPosition.CenterScreen;
+           //StatusManager sm = new StatusManager();
+           //sm.StartPosition = FormStartPosition.CenterScreen;
+           //sm.Show();
+           w_pass pass = new w_pass();
+           pass.StartPosition = FormStartPosition.CenterScreen;
 
-           //pass.Show();
+           pass.Show();
        }
-
+       List<TaskInfo> list2 = TaskService.GetUNCustomer();
        private void UnNormalFm_Load(object sender, EventArgs e)
        {
+           //labelALLcount.Text = "任务总数：" + list2.Sum(a => a.POKENUM);
+           //labelFIinshCOunt.Text = "完成数量：" + list2.Sum(a=> a.FinishQTY);
+           
+           //labelAllCustomerC.Text = "总户数：" + list2.Sum(a=>a.Count);
            AutoSizeColumn(task_data);
            this.task_data.DoubleBufferedDataGirdView(true);
        }
 
        private void UnNormalFm_SizeChanged(object sender, EventArgs e)
        {
-           task_data.Height = this.Size.Height - list_data.Size.Height;
-           task_data.Width = this.Size.Width - groupboxErr.Width;
+           //task_data.Height = this.Size.Height - list_data.Size.Height;
+           //task_data.Width = this.Size.Width - groupboxErr.Width;
         
        }
        /// <summary>
@@ -1103,6 +1151,7 @@ namespace UnNormal_Test
        {
            MessageBox.Show(e.RowIndex + "");
        }
+
 
     
       
