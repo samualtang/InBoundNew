@@ -71,8 +71,10 @@ namespace UnNormal_Test.Model
            List<string> list = new List<string>();
 
            list.Add("S7:[UnnormalConnection]DB30,W150");//异形烟交互标志 0
-           list.Add("S7:[UnnormalConnection]DB101,W92");//特异形烟该发送皮带 1
-           list.Add("S7:[UnnormalConnection]DB103,W92");//特异形烟该发送皮带 2
+           list.Add("S7:[UnnormalConnection]DB101,W108");//特异形烟该发送皮带 1
+           list.Add("S7:[UnnormalConnection]DB103,W108");//特异形烟该发送皮带 2
+           //list.Add("S7:[UnnormalConnection]DB101,W92");//特异形烟该发送皮带 1
+           //list.Add("S7:[UnnormalConnection]DB103,W92");//特异形烟该发送皮带 2
            return list;
        }
 
@@ -102,13 +104,15 @@ namespace UnNormal_Test.Model
            list.Add("S7:[UnnormalConnection]DB101,DINT4");//任务号
            list.Add("S7:[UnnormalConnection]DB101,W8");//烟仓号
            list.Add("S7:[UnnormalConnection]DB101,W10");//订单数量
-           for (int i = 0; i < 10; i++)
+           //for (int i = 0; i < 10; i++)
+           for (int i = 0; i < 12; i++)
            {
                list.Add("S7:[UnnormalConnection]DB101,DINT" + (12 + (i * 8)));//条烟编码
                list.Add("S7:[UnnormalConnection]DB101,W" + (16 + (i * 8)));//长度
                list.Add("S7:[UnnormalConnection]DB101,W" + (18 + (i * 8)));//宽度
            }
-           list.Add("S7:[UnnormalConnection]DB101,W92");//标志位 
+           //list.Add("S7:[UnnormalConnection]DB101,W92");//标志位 
+           list.Add("S7:[UnnormalConnection]DB101,W108");//标志位 
            return list;
        }
 
@@ -124,13 +128,15 @@ namespace UnNormal_Test.Model
            list.Add("S7:[UnnormalConnection]DB103,DINT4");//任务号
            list.Add("S7:[UnnormalConnection]DB103,W8");//烟仓号
            list.Add("S7:[UnnormalConnection]DB103,W10");//订单数量
-           for (int i = 0; i < 10; i++)
+           //  for (int i = 0; i < 12; i++)
+           for (int i = 0; i < 12; i++)
            {
                list.Add("S7:[UnnormalConnection]DB103,DINT" + (12 + (i * 8)));//条烟编码
                list.Add("S7:[UnnormalConnection]DB103,W" + (16 + (i * 8)));//长度
                list.Add("S7:[UnnormalConnection]DB103,W" + (18 + (i * 8)));//宽度
            }
-           list.Add("S7:[UnnormalConnection]DB103,W92");//标志位 
+           list.Add("S7:[UnnormalConnection]DB103,W108");//标志位 
+           //list.Add("S7:[UnnormalConnection]DB103,W92");//标志位 
            return list;
        }
       

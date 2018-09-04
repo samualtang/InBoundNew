@@ -272,7 +272,7 @@
             this.task_data.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.task_data.RowTemplate.Height = 35;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(598, 137);
+            this.task_data.Size = new System.Drawing.Size(598, 357);
             this.task_data.TabIndex = 30;
             // 
             // Column1
@@ -459,8 +459,8 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
-            this.Controls.Add(this.task_data);
             this.Controls.Add(this.list_data);
+            this.Controls.Add(this.task_data);
             this.Controls.Add(this.groupboxErr);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

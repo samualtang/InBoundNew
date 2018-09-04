@@ -67,6 +67,7 @@ namespace UnNormal_Test
             try
             {
                 String status = "";
+                string ssStatus = "";
                 foreach (var item in list)
                 {
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
@@ -84,7 +85,7 @@ namespace UnNormal_Test
                     this.task_data.Rows[index].Cells[7].Value = item.LINENUM;//分拣线
                     this.task_data.Rows[index].Cells[8].Value = item.POKENUM;//抓烟数量
                     this.task_data.Rows[index].Cells[9].Value = item.STATUS;//状态位
-                    this.task_data.Rows[index].Cells[10].Value = item.GRIDNUM;//包装机
+                    this.task_data.Rows[index].Cells[10].Value = item.GRIDNUM;//特异性烟标志位
                     this.task_data.Rows[index].Cells[11].Value = item.PACKAGEMACHINE;//包装机
                     this.task_data.Rows[index].Cells[12].Value = item.Billcode;//订单号
                   
@@ -100,10 +101,28 @@ namespace UnNormal_Test
                     {
                         status="完成";
                     }
+                    if (item.GRIDNUM == 10)
+                    {
+                        ssStatus = "新增";
+                    }
+                    else if (item.GRIDNUM == 15)
+                    {
+                        ssStatus = "已发送";
+                    }
+                    else
+                    {
+                        ssStatus = "完成";
+                    }
                     this.task_data.Rows[index].Cells[9].Value = status;//状态位
+                    this.task_data.Rows[index].Cells[10].Value = ssStatus;//特异性烟标志位
                     if (status == "完成")
                     {
                         this.task_data.Rows[index].Cells[9].Style = dgvStyle;
+                      
+                    }
+                    if (ssStatus == "完成")
+                    {
+                        this.task_data.Rows[index].Cells[10].Style = dgvStyle;//特异性烟标志位
                     }
                 }
            

@@ -87,14 +87,14 @@ namespace InBound.Business
             {
                 var query = (from item in data.T_UN_POKE
                              where item.SORTNUM > sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
-                             select item).ToList();
-                if (query != null&& query.Count>0)
+                             select item).ToList().Sum(x => x.POKENUM) ?? 0;
+                if (query != null && query > 0)
                 {
-                    return maxCount - (query.Sum(x => x.POKENUM ?? 0) + xynum);
+                    return maxCount - (query + xynum);
                 }
                 else
                 {
-                    return maxCount;
+                    return query;
                 }
             }  
         }
@@ -131,6 +131,7 @@ namespace InBound.Business
                 } 
             } 
         }
+        #region 暂时无用 两个获取包装机的方法
         /// <summary>
         /// 获取可发任务的包装机
         /// </summary>
@@ -237,7 +238,7 @@ namespace InBound.Business
             //WriteLog.GetLog().Write( "当前发送主皮带:" + packagemachine);
            // return packagemachine;
         }
-
+     
         /// <summary>
         /// 获取可发任务的包装机 烟仓
         /// </summary>
@@ -358,7 +359,7 @@ namespace InBound.Business
             //WriteLog.GetLog().Write( "当前发送主皮带:" + packagemachine);
             // return packagemachine;
         }
-
+        #endregion
         /// <summary>
         /// 计算Sendtasknum可以用于发送任务
         /// </summary>
@@ -570,7 +571,7 @@ namespace InBound.Business
             {
                 List<T_UN_POKE> list = new List<T_UN_POKE>();
                 //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-                var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM select item).FirstOrDefault();//取出可以发送的客户)
+                var query = (from item in data.T_UN_POKE where item.STATUS == 10  orderby item.SORTNUM,item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)
                 if (query == null)//如果没有则 无任务s
                 {
                     outlist = new List<T_UN_POKE>();
@@ -597,17 +598,17 @@ namespace InBound.Business
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 1000;
-                            needDatas += "\r\n一线 " + ((int)machineseq + 3) + " 号烟仓，出烟数量：" + item.QTY;
+                            needDatas += "\r\n一线 " + ((int)machineseq ) + " 号烟仓，出烟数量：" + item.QTY;
                         }
                         else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)//二线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 2000;
-                            needDatas += "\r\n二线 " + ((int)machineseq + 3) + " 号烟仓，出烟数量：" + item.QTY;
+                            needDatas += "\r\n二线 " + ((int)machineseq ) + " 号烟仓，出烟数量：" + item.QTY;
                         }
                         else if (item.MACHINESEQ > 3000)//烟柜
                         {
                             machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
-                            needDatas += "\r\n烟柜 " + ((int)machineseq + 3) + " 号，出烟数量：" + item.QTY;
+                            needDatas += "\r\n烟柜 " + ((int)(item.MACHINESEQ) ) + " 号，出烟数量：" + item.QTY;
                         } 
                         values[((int)machineseq + 3)] = item.QTY;
                     }
@@ -640,7 +641,7 @@ namespace InBound.Business
                 var query =( from item in data.T_WMS_ITEM
                             join trough in data.T_PRODUCE_SORTTROUGH on item.ITEMNO equals trough .CIGARETTECODE
                             join task in data.T_UN_TASKLINE on trough.CIGARETTECODE equals task.CIGARETTECODE
-                            where (trough.CIGARETTETYPE ==30 || trough.CIGARETTETYPE ==40) && trough.TROUGHTYPE ==10 && (trough.MACHINESEQ ==1061 || trough.MACHINESEQ ==2061) && (item.ILENGTH ==null  || item.IWIDTH == null)
+                             where (trough.CIGARETTETYPE == 30 || trough.CIGARETTETYPE == 40) && trough.TROUGHTYPE == 10 && (trough.MACHINESEQ == 1061 || trough.MACHINESEQ == 2061) && ((item.ILENGTH == null || item.IWIDTH == null) || (item.ILENGTH == 0 || item.IWIDTH == 0))
                             group item by new { trough.CIGARETTECODE,trough.CIGARETTENAME} into g
                             select g).ToList();
                 if (query == null || query .Count ==0)
@@ -665,7 +666,8 @@ namespace InBound.Business
         /// <returns></returns>
         public static object[] GetSpecialSmokeData(string lineNum, out List<T_UN_SpecialSmoke> outlist, out string outStr)
         {
-            object[] values = new object[35]; 
+            object[] values = new object[41];
+            //object[] values = new object[37]; 
             String needDatas = "";
             for (int i = 0; i < values.Length; i++)
             {
@@ -683,8 +685,10 @@ namespace InBound.Business
                 var query = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
                              where item.SENDTASKNUM == sendtasknum.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) && item.GRIDNUM == 10
-                             orderby item.SORTNUM, item.POKEID
-                             select new T_UN_SpecialSmoke { POKEID = item.POKEID,CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).Take(10).ToList();
+                             //orderby item.SORTNUM, item.POKEID
+                             //select new T_UN_SpecialSmoke { POKEID = item.POKEID,CIGARETTENAME=item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).Take(10).ToList();
+                             orderby item.SORTNUM, item.SENDTASKNUM, item.POKEID
+                             select new T_UN_SpecialSmoke { POKEID = item.POKEID,CIGARETTENAME=item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).ToList();
                 outlist = query;
                 int index = 4;//索引  
                 values[0] = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");//顺序号累加
@@ -694,17 +698,18 @@ namespace InBound.Business
                 needDatas += "\r\n顺序号：" + values[0] + "，任务号：" + values[1] + "，出烟地址：" + values[2] + "，订单数量：" + values[3] + "，包装机号：" + (sendtasknum.PACKAGEMACHINE ?? 0);
                 foreach (var item in query)
                 {
-                    if (index <= 34)
+                    //if (index <= 36)
+                    if (index < 40)
                     {
                         values[index] = item.CIGARETTECODE;//卷烟编码
                         values[index + 1] = item.LENGHT;//条烟长度
                         values[index + 2] = item.WIDTH;//条烟宽度
-                        needDatas += "\r\n卷烟编码：" + values[index] +"，卷烟名称 "+ item.CIGARETTENAME+"，卷烟长度" + values[index + 1] + "，卷烟宽度" + values[index + 2];
+                        needDatas += "\r\n卷烟编码：" + values[index] + "，卷烟名称：" + item.CIGARETTENAME + "，卷烟长度" + values[index + 1] + "，卷烟宽度" + values[index + 2];
                         index = index + 3; 
                     }
-                }
-                values[34] = 1;//标志位
-                needDatas += "\r\n标志位：" + values[34];
+                } 
+                values[40] = 1;//标志位
+                needDatas += "\r\n标志位：" + values[40];
             } 
             outStr = needDatas;
             return values;
@@ -833,13 +838,17 @@ namespace InBound.Business
             }
 
         }
+        /// <summary>
+        /// 更新该包装机可发送的任务标志位为12
+        /// </summary>
+        /// <param name="packagemchine">包装机</param>
         public static void UpdateTaskByPackMachine(decimal packagemchine)
         {
             using (Entities date = new Entities())
             { 
-                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SENDTASKNUM select item).ToList();
+                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
                 decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
-                if (sendtasknum > 0 && sendtasknum != null)
+                if (sendtasknum > 0 )
                 {
                     query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
                     date.SaveChanges();
@@ -864,7 +873,7 @@ namespace InBound.Business
             decimal  leftnum = 0;
             DISPATCHESIZE = 0;//空出多少开始下任务 （阈值）
             List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
             {
                 listpm.Add(GetPackMacByMainbelt(i));
             } 
@@ -1850,13 +1859,15 @@ namespace InBound.Business
                 foreach (var item in query)
                 {
                     item.STATUS = status;
-                    if (status == 20)
+                    if (status == 20 || status == 15)
                     {
-                        item.STATUS = 15;
+                        item.GRIDNUM = 15;
+                        item.STATUS = status;
                     }
                     else
                     {
                         item.STATUS = status;
+                        item.GRIDNUM = status;
                     }
                     
                 }
