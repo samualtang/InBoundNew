@@ -21,8 +21,11 @@ namespace InBound.Business
         public List<HUNHEVIEW> GetTroughCigarette(decimal seq, decimal[] finishno, int qty,decimal[] packmachineseq, bool tag = false,string cigarettesort = "0" )
         {
             decimal packmachine1 = packmachineseq[0];
+            
+
             decimal packmachine2 = packmachineseq[1];
             decimal? finishno1 = finishno[0];
+            //decimal? finishno1 = 119601;
             int finishno2 = Convert.ToInt32(finishno[1] < 0 ? 0 : finishno[1]);
            
             using (Entities entity = new Entities())
@@ -31,33 +34,61 @@ namespace InBound.Business
                 {
                     if (tag)
                     {
-                        //处理前的数据表
-                        var query = (from item in entity.T_UN_POKE
-                                     join item2 in entity.T_PRODUCE_SORTTROUGH
-                                         on item.TROUGHNUM equals item2.TROUGHNUM
-                                     join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                     where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
-                                         && item2.MACHINESEQ == seq && item3.PULLSTATUS == 1 && (item.PACKAGEMACHINE == packmachine1
-                                         || item.PACKAGEMACHINE == packmachine2)
-                                     orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
-                                     select new HUNHEVIEW()
-                                     {
-                                         POKEID = item.POKEID,
-                                         CIGARETTECODE = item.CIGARETTECODE,
-                                         CIGARETTENAME = item2.CIGARETTENAME,
-                                         MACHINESEQ = item.MACHINESEQ,
-                                         QUANTITY = item.POKENUM,
-                                         SORTNUM = item.SORTNUM,
-                                         SENDTASKNUM=item.SENDTASKNUM, 
-                                     }).Skip(finishno2).Take(qty).ToList();
+                        
                      
-                        if (cigarettesort=="")
-                        { 
+                        if (cigarettesort=="0")
+                        {
+                            //处理前的数据表
+                            var query = (from item in entity.T_UN_POKE
+                                         join item2 in entity.T_PRODUCE_SORTTROUGH
+                                             on item.TROUGHNUM equals item2.TROUGHNUM
+                                         join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
+                                             && item2.MACHINESEQ == seq
+                                             && item3.PULLSTATUS == 1
+                                             && (item.PACKAGEMACHINE == packmachine1
+                                             || item.PACKAGEMACHINE == packmachine2)
+                                         orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
+                                         select new HUNHEVIEW()
+                                         {
+                                             POKEID = item.POKEID,
+                                             CIGARETTECODE = item.CIGARETTECODE,
+                                             CIGARETTENAME = item2.CIGARETTENAME,
+                                             MACHINESEQ = item.MACHINESEQ,
+                                             QUANTITY = item.POKENUM,
+                                             SORTNUM = item.SORTNUM,
+                                             SENDTASKNUM = item.SENDTASKNUM,
+                                             PULLSTATUS = item3.PULLSTATUS
+                                         }).Skip(finishno2).Take(qty).ToList();
                                 return query; 
                         }
                         else
                         {
-                            return updown(query, cigarettesort);
+                            //处理前的数据表
+                            var query = (from item in entity.T_UN_POKE
+                                         join item2 in entity.T_PRODUCE_SORTTROUGH
+                                             on item.TROUGHNUM equals item2.TROUGHNUM
+                                         join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
+                                             && item2.MACHINESEQ == seq
+                                             //&& item3.PULLSTATUS == 1
+
+                                             && (item.PACKAGEMACHINE == packmachine1
+                                             || item.PACKAGEMACHINE == packmachine2)
+                                         orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
+                                         select new HUNHEVIEW()
+                                         {
+                                             POKEID = item.POKEID,
+                                             CIGARETTECODE = item.CIGARETTECODE,
+                                             CIGARETTENAME = item2.CIGARETTENAME,
+                                             MACHINESEQ = item.MACHINESEQ,
+                                             QUANTITY = item.POKENUM,
+                                             SORTNUM = item.SORTNUM,
+                                             SENDTASKNUM = item.SENDTASKNUM,
+                                             PULLSTATUS = item3.PULLSTATUS
+                                         }).Skip(finishno2).Take(qty).ToList();
+
+                            return updown(query, cigarettesort,2);
                         }      
                        
                     }
@@ -70,6 +101,7 @@ namespace InBound.Business
                                      where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
                                      && (item.PACKAGEMACHINE == packmachine1
                                          || item.PACKAGEMACHINE == packmachine2)
+                                        && item3.PULLSTATUS == 1
                                      orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHEVIEW()
                                      {
@@ -81,7 +113,7 @@ namespace InBound.Business
                                          SENDTASKNUM=item.SENDTASKNUM,
                                           SORTNUM=item.SORTNUM
                                      }).Skip(finishno2).Take(qty).ToList();
-                        if (cigarettesort == "")
+                        if (cigarettesort == "0")
                         {
                             return query;
                         }
@@ -89,7 +121,6 @@ namespace InBound.Business
                         {
                             return updown(query, cigarettesort);
                         }      
-                       
                     }
                 }
                 catch (Exception e)
@@ -98,14 +129,14 @@ namespace InBound.Business
                 }
             }
         }
-
+        #region  烟序处理算法
         /// <summary>
         /// 包内顺序切换（烟宽度）
         /// </summary>
         /// <param name="query">原数据</param>
         /// <param name="cigarettesort">最大宽度</param>
         /// <returns>重新排序后的数据</returns>
-        public List<HUNHEVIEW> updown(List<HUNHEVIEW> query, string cigarettesort)
+        public List<HUNHEVIEW> updown(List<HUNHEVIEW> query, string cigarettesort,int tag = 0)
         {
             //重新排序后的数据表
             List<HUNHEVIEW> table = new List<HUNHEVIEW>();
@@ -158,7 +189,7 @@ namespace InBound.Business
                                     table5.Add(table4[i - 1]);
                                 }
                                 table3.AddRange(table5);
-                                table4 = null;
+                                table4.Clear();
                             }
                         }
                         else
@@ -175,14 +206,33 @@ namespace InBound.Business
                             nowwidth = width;
                             table4.Add(item2);
                             index = 1;
+                            if (table2.Count == countindex)
+                            {
+                                //反转后的一节烟数据
+                                List<HUNHEVIEW> table6 = new List<HUNHEVIEW>();
+                                for (int i = table4.Count; i > 0; i--)
+                                {
+                                    table6.Add(table4[i - 1]);
+                                }
+                                table3.AddRange(table6);
+                                table4.Clear();
+                            }
                         }  
                     }
                     table.AddRange(table3); 
                 }
-            } 
+            }
+            if (tag==1)
+            {
+                table.RemoveAll(x => x.PULLSTATUS == 1);
+            }
+            if (tag == 2)
+            {
+                table.RemoveAll(x => x.PULLSTATUS == 0);
+            }
             return table;
         }
-
+        #endregion
         #region  定位
         /// <summary>
         /// 包内顺序切换（烟宽度）
@@ -260,6 +310,17 @@ namespace InBound.Business
                             nowwidth = width;
                             table4.Add(item2);
                             index = 1;
+                            if (table2.Count == countindex)
+                            {
+                                //反转后的一节烟数据
+                                List<HUNHENOWVIEW1> table6 = new List<HUNHENOWVIEW1>();
+                                for (int i = table4.Count; i > 0; i--)
+                                {
+                                    table6.Add(table4[i - 1]);
+                                }
+                                table3.AddRange(table6);
+                                table4 = null;
+                            }
                         }
                     }
                     table.AddRange(table3);
@@ -274,30 +335,44 @@ namespace InBound.Business
         /// </summary>
         /// <param name="seq"></param>
         /// <returns></returns>
-        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] packmachineseq,string cigarettesort = "0")
+        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] finishno,decimal[] packmachineseq,string cigarettesort = "0")
         {
             decimal packmachine1 = packmachineseq[0];
             decimal packmachine2 = packmachineseq[1];
+               decimal finishno1  = finishno[0];
             using (Entities entity = new Entities())
             {
                 try
                 {
-                    var query = (from item in entity.T_UN_POKE
-                                 join item2 in entity.T_PRODUCE_SORTTROUGH
-                                 on item.TROUGHNUM equals item2.TROUGHNUM
-                                 join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
-                                 join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
-                                 where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2 )
-                                 && item4.PULLSTATUS == 0
-                                 orderby item.SORTNUM, item.POKEID
-                                 select new HUNHEVIEW() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM,SENDTASKNUM=item.SENDTASKNUM }).ToList();
-                    if (cigarettesort == "")
+                     if (cigarettesort == "0")
                     {
+                        var query = (from item in entity.T_UN_POKE
+                                     join item2 in entity.T_PRODUCE_SORTTROUGH
+                                     on item.TROUGHNUM equals item2.TROUGHNUM
+                                     join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
+                                     join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
+                                     where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
+                                     && item.SORTNUM >= finishno1
+                                     && item4.PULLSTATUS == 0
+                                     orderby item.SORTNUM, item.POKEID
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).ToList();
+                   
                         return query;
                     }
                     else
                     {
-                        return updown(query, cigarettesort);
+                        var query = (from item in entity.T_UN_POKE
+                                     join item2 in entity.T_PRODUCE_SORTTROUGH
+                                     on item.TROUGHNUM equals item2.TROUGHNUM
+                                     join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
+                                     join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
+                                     where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
+                                     && item.SORTNUM >= finishno1
+                                     //&& item4.PULLSTATUS == 0
+                                     orderby item.SORTNUM, item.POKEID
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).ToList();
+                   
+                        return updown(query, cigarettesort,1);
                     }      
                 }
                 catch (Exception e)
@@ -321,7 +396,9 @@ namespace InBound.Business
             {
                 try
                 {
-                    var query = (from item in entity.T_UN_POKE
+                    if (cigarettesort=="0")
+                    {
+                        var query = (from item in entity.T_UN_POKE
                                  join item2 in entity.T_PRODUCE_SORTTROUGH
                                  on item.TROUGHNUM equals item2.TROUGHNUM
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
@@ -330,14 +407,29 @@ namespace InBound.Business
                                  (item.PACKAGEMACHINE == pack1 || item.PACKAGEMACHINE == pack2)
                                  orderby item.SORTNUM, item.POKEID
                                  select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq=item.PACKAGEMACHINE, sendtasknum=item.SENDTASKNUM }).ToList();
-                    if (cigarettesort == "")
-                    {
                         return query;
                     }
                     else
                     {
-                        return updown_now(query, cigarettesort);
-                    }      
+                        var query = (from item in entity.T_UN_POKE
+                                     join item2 in entity.T_PRODUCE_SORTTROUGH
+                                     on item.TROUGHNUM equals item2.TROUGHNUM
+                                     join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
+                                     join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
+                                     where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq &&
+                                     (item.PACKAGEMACHINE == pack1 || item.PACKAGEMACHINE == pack2)
+                                     orderby item.SORTNUM, item.POKEID
+                                     select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq = item.PACKAGEMACHINE, sendtasknum = item.SENDTASKNUM }).ToList();
+                        if (cigarettesort == "0")
+                        {
+                            return query;
+                        }
+                        else
+                        {
+                            return updown_now(query, cigarettesort);
+                        }    
+                    }
+                   
                 }
                 catch (Exception e)
                 {

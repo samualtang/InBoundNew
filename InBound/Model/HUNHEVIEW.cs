@@ -26,6 +26,8 @@ namespace InBound.Model
        public decimal? SORTNUM { get; set; }
 
        public decimal? SENDTASKNUM { get; set; }
+       public decimal? PULLSTATUS { get; set; }
+       
     }
 
    public class HUNHEVIEW1
