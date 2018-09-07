@@ -916,23 +916,27 @@ namespace InBound.Business
                             WriteLog.GetLog().Write("当前发送包装机号:" + i);
                             return i;
                         }
+
                         if (currentNum >= (cache.DISPATCHENUM ?? 0))//都需要补的情况下 则计算所能支持的订单数量
                         {
-                            int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量
-                            if (tempOrderCount < maxOrder)
+                            int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量   
+                            if (tempOrderCount <= maxOrder)//如果第二次的订单量小于或等于上一次的订单量 进入 
                             {
-                                packagemachine = i;
-                                maxOrder = tempOrderCount;
-                                // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
-                                leftnum = (cache.CACHESIZE ?? 0) - currentNum;
-                            }
-                            else
-                            {
-                                if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                                if (tempOrderCount < maxOrder)//如果第二次的订单量小于上一次订单量
                                 {
                                     packagemachine = i;
+                                    maxOrder = tempOrderCount;
                                     // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
                                     leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                                }
+                                else//如果订单数相同
+                                {
+                                    if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                                    {
+                                        packagemachine = i;
+                                        // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                        leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                                    }
                                 }
                             }
                         }
