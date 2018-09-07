@@ -151,6 +151,7 @@ namespace UnNormal_Test
 
 
         Group OnlyTaskGorup, FinishOnlyGoroup, SpyBiaozhiGroup, SpecialSmokeGroup1, SpecialSmokeGroup2;
+        Group PackageMachineGroup1, PackageMachineGroup2, PackageMachineGroup3, PackageMachineGroup4, PackageMachineGroup5, PackageMachineGroup6, PackageMachineGroup7, PackageMachineGroup8;
         public void Connect()
         {
             Type svrComponenttyp;
@@ -166,7 +167,26 @@ namespace UnNormal_Test
                 SpyBiaozhiGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//监控标志位
                 SpecialSmokeGroup1 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//特异形烟 61,62道
                 SpecialSmokeGroup2 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//特异形烟 63,64道
-              
+
+                PackageMachineGroup1 = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//包装机
+                PackageMachineGroup2 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//包装机
+                PackageMachineGroup3 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//包装机
+                PackageMachineGroup4 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);//包装机
+                PackageMachineGroup5 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);//包装机
+                PackageMachineGroup6 = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);//包装机
+                PackageMachineGroup7 = new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//包装机
+                PackageMachineGroup8 = new Group(pIOPCServer, 13, "group13", 1, LOCALE_ID);//包装机
+                for (int i = 1; i <= 8; i++)
+                {
+                    if (i == 1) { PackageMachineGroup1.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 2) { PackageMachineGroup2.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 3) { PackageMachineGroup3.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 4) { PackageMachineGroup4.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 5) { PackageMachineGroup5.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 6) { PackageMachineGroup6.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 7) { PackageMachineGroup7.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                    if (i == 8) { PackageMachineGroup8.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                }
                
                 //任务交互区
                 OnlyTaskGorup.addItem(ItemCollection.GetOnlyLineItem());//一个交互区
@@ -333,7 +353,7 @@ namespace UnNormal_Test
                     //}
                     #endregion
                     string OutStr = "";
-                    object[] datas = UnPokeService.getAllLineTask(out listOnly, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.getAllLineTask(10,out listOnly, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟仓烟柜分拣数据发送完毕");
@@ -372,7 +392,7 @@ namespace UnNormal_Test
                 if (flag == 0)
                 {
                     string OutStr = "";
-                    object[] datas = UnPokeService.GetSpecialSmokeData("1", out listSS1B, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.GetSpecialSmokeData(10,"1", out listSS1B, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("1线特异形烟分拣数据发送完毕");
@@ -418,7 +438,7 @@ namespace UnNormal_Test
                 if (flag == 0)
                 {
                     string OutStr = "";
-                    object[] datas = UnPokeService.GetSpecialSmokeData("2", out listSS2A, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.GetSpecialSmokeData(10,"2", out listSS2A, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("2线特异形烟分拣数据发送完毕"); 
@@ -1100,17 +1120,38 @@ namespace UnNormal_Test
 
            pass.Show();
        }
-       List<TaskInfo> list2 = TaskService.GetUNCustomer();
+      // delegate void HandleGetNewinfo();
        private void UnNormalFm_Load(object sender, EventArgs e)
        {
-           //labelALLcount.Text = "任务总数：" + list2.Sum(a => a.POKENUM);
-           //labelFIinshCOunt.Text = "完成数量：" + list2.Sum(a=> a.FinishQTY);
-           
+          //HandleGetNewinfo task =  GetNewInfo ;
+          //task.BeginInvoke(null, null);
+           TimeToClike.Start();
            //labelAllCustomerC.Text = "总户数：" + list2.Sum(a=>a.Count);
            AutoSizeColumn(task_data);
            this.task_data.DoubleBufferedDataGirdView(true);
+          
        }
+       void GetNewInfo()
+       {
+           try
+           {
+               while (true)
+               {  
+                   List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
+                   labelALLcount.Text = "任务总数：" +( list2.Sum(a => a.POKENUM)??0);
+                   labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ??0);
+                   labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ??0);
+                   if ((list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM)??0) == 0)
+                   { 
+                       break;
+                   }
+               } 
+           }
+           catch
+           {
 
+           }
+       }
        private void UnNormalFm_SizeChanged(object sender, EventArgs e)
        {
            //task_data.Height = this.Size.Height - list_data.Size.Height;
@@ -1154,6 +1195,18 @@ namespace UnNormal_Test
        private void task_data_CellClick(object sender, DataGridViewCellEventArgs e)
        {
            MessageBox.Show(e.RowIndex + "");
+       }
+
+       private void TimeToClike_Tick(object sender, EventArgs e)
+       {
+           List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
+           labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
+           labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ?? 0);
+           labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0);
+           if ((list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0) == 0)
+           {
+               TimeToClike.Stop();
+           }
        }
 
 

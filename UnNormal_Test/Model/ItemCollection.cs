@@ -139,6 +139,20 @@ namespace UnNormal_Test.Model
            //list.Add("S7:[UnnormalConnection]DB103,W92");//标志位 
            return list;
        }
+       /// <summary>
+       /// 包装机
+       /// </summary>
+       /// <param name="no">包装机号</param>
+       /// <returns></returns>
+       public static List<string> GetPackageMachineItem(int no)
+       {
+           List<string> list = new List<string>();
+           list.Add("S7:[PackageMachine" + no + "]DB1,D500");//顺序号
+           list.Add("S7:[PackageMachine" + no + "]DB1,W504");//顺序号
+           list.Add("S7:[PackageMachine" + no + "]DB1,D506");//顺序号
+           list.Add("S7:[PackageMachine" + no + "]DB1,W510");//顺序号
+           return list;
+       }
       
    }
 }

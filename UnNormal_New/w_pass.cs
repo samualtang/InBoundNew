@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 
-namespace SortingControlSys.SortingControl
+namespace UnNormal_New
 {
     
     public partial class w_pass : Form

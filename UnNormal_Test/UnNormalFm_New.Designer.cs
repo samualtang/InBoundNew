@@ -65,13 +65,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.list_data = new System.Windows.Forms.ListBox();
             this.groupboxErr = new System.Windows.Forms.GroupBox();
-            this.labelleftcutCou = new System.Windows.Forms.Label();
-            this.labelCUtFishCOu = new System.Windows.Forms.Label();
-            this.labelAllCustomerC = new System.Windows.Forms.Label();
             this.labeleftCOunt = new System.Windows.Forms.Label();
             this.labelFIinshCOunt = new System.Windows.Forms.Label();
             this.labelALLcount = new System.Windows.Forms.Label();
             this.timerSendTask = new System.Windows.Forms.Timer(this.components);
+            this.TimeToClike = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -375,9 +373,6 @@
             // 
             // groupboxErr
             // 
-            this.groupboxErr.Controls.Add(this.labelleftcutCou);
-            this.groupboxErr.Controls.Add(this.labelCUtFishCOu);
-            this.groupboxErr.Controls.Add(this.labelAllCustomerC);
             this.groupboxErr.Controls.Add(this.labeleftCOunt);
             this.groupboxErr.Controls.Add(this.labelFIinshCOunt);
             this.groupboxErr.Controls.Add(this.labelALLcount);
@@ -391,69 +386,44 @@
             this.groupboxErr.TabStop = false;
             this.groupboxErr.Text = "任务信息";
             // 
-            // labelleftcutCou
-            // 
-            this.labelleftcutCou.AutoSize = true;
-            this.labelleftcutCou.Location = new System.Drawing.Point(21, 173);
-            this.labelleftcutCou.Name = "labelleftcutCou";
-            this.labelleftcutCou.Size = new System.Drawing.Size(67, 15);
-            this.labelleftcutCou.TabIndex = 0;
-            this.labelleftcutCou.Text = "剩余户数";
-            this.labelleftcutCou.Visible = false;
-            // 
-            // labelCUtFishCOu
-            // 
-            this.labelCUtFishCOu.AutoSize = true;
-            this.labelCUtFishCOu.Location = new System.Drawing.Point(21, 147);
-            this.labelCUtFishCOu.Name = "labelCUtFishCOu";
-            this.labelCUtFishCOu.Size = new System.Drawing.Size(75, 15);
-            this.labelCUtFishCOu.TabIndex = 0;
-            this.labelCUtFishCOu.Text = "完成户数 ";
-            this.labelCUtFishCOu.Visible = false;
-            // 
-            // labelAllCustomerC
-            // 
-            this.labelAllCustomerC.AutoSize = true;
-            this.labelAllCustomerC.Location = new System.Drawing.Point(21, 122);
-            this.labelAllCustomerC.Name = "labelAllCustomerC";
-            this.labelAllCustomerC.Size = new System.Drawing.Size(52, 15);
-            this.labelAllCustomerC.TabIndex = 0;
-            this.labelAllCustomerC.Text = "总户数";
-            this.labelAllCustomerC.Visible = false;
-            // 
             // labeleftCOunt
             // 
             this.labeleftCOunt.AutoSize = true;
-            this.labeleftCOunt.Location = new System.Drawing.Point(21, 92);
+            this.labeleftCOunt.Font = new System.Drawing.Font("宋体", 31F);
+            this.labeleftCOunt.Location = new System.Drawing.Point(21, 137);
             this.labeleftCOunt.Name = "labeleftCOunt";
-            this.labeleftCOunt.Size = new System.Drawing.Size(67, 15);
+            this.labeleftCOunt.Size = new System.Drawing.Size(186, 42);
             this.labeleftCOunt.TabIndex = 0;
             this.labeleftCOunt.Text = "剩余数量";
-            this.labeleftCOunt.Visible = false;
             // 
             // labelFIinshCOunt
             // 
             this.labelFIinshCOunt.AutoSize = true;
-            this.labelFIinshCOunt.Location = new System.Drawing.Point(21, 63);
+            this.labelFIinshCOunt.Font = new System.Drawing.Font("宋体", 31F);
+            this.labelFIinshCOunt.Location = new System.Drawing.Point(21, 84);
             this.labelFIinshCOunt.Name = "labelFIinshCOunt";
-            this.labelFIinshCOunt.Size = new System.Drawing.Size(67, 15);
+            this.labelFIinshCOunt.Size = new System.Drawing.Size(186, 42);
             this.labelFIinshCOunt.TabIndex = 0;
             this.labelFIinshCOunt.Text = "完成数量";
-            this.labelFIinshCOunt.Visible = false;
             // 
             // labelALLcount
             // 
             this.labelALLcount.AutoSize = true;
+            this.labelALLcount.Font = new System.Drawing.Font("宋体", 31F);
             this.labelALLcount.Location = new System.Drawing.Point(21, 35);
             this.labelALLcount.Name = "labelALLcount";
-            this.labelALLcount.Size = new System.Drawing.Size(67, 15);
+            this.labelALLcount.Size = new System.Drawing.Size(186, 42);
             this.labelALLcount.TabIndex = 0;
             this.labelALLcount.Text = "任务总数";
-            this.labelALLcount.Visible = false;
             // 
             // timerSendTask
             // 
             this.timerSendTask.Tick += new System.EventHandler(this.timerSendTask_Tick);
+            // 
+            // TimeToClike
+            // 
+            this.TimeToClike.Interval = 1000;
+            this.TimeToClike.Tick += new System.EventHandler(this.TimeToClike_Tick);
             // 
             // UnNormalFm
             // 
@@ -515,11 +485,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 分拣线;
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
         private System.Windows.Forms.Timer timerSendTask;
-        private System.Windows.Forms.Label labelCUtFishCOu;
-        private System.Windows.Forms.Label labelAllCustomerC;
         private System.Windows.Forms.Label labeleftCOunt;
         private System.Windows.Forms.Label labelFIinshCOunt;
         private System.Windows.Forms.Label labelALLcount;
-        private System.Windows.Forms.Label labelleftcutCou;
+        private System.Windows.Forms.Timer TimeToClike;
     }
 }

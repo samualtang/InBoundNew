@@ -1,4 +1,4 @@
-﻿namespace SortingControlSys.SortingControl
+﻿namespace UnNormal_New
 {
     partial class w_pass
     {

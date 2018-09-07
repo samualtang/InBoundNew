@@ -1,4 +1,4 @@
-﻿namespace SortingControlSys.SortingControl
+﻿namespace UnNormal_New
 {
     partial class StatusManager
     {
@@ -28,29 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtregioncode = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTo = new System.Windows.Forms.TextBox();
             this.txtFrom = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.task_data = new System.Windows.Forms.DataGridView();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.第二任务号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.卷烟编号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label3 = new System.Windows.Forms.Label();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -101,6 +108,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtregioncode);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtTo);
@@ -109,12 +121,55 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Location = new System.Drawing.Point(16, 26);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1051, 76);
+            this.groupBox1.Size = new System.Drawing.Size(1129, 133);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " 状态管理";
+            // 
+            // txtregioncode
+            // 
+            this.txtregioncode.Location = new System.Drawing.Point(520, 84);
+            this.txtregioncode.Name = "txtregioncode";
+            this.txtregioncode.Size = new System.Drawing.Size(100, 21);
+            this.txtregioncode.TabIndex = 23;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(359, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(131, 12);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "请输入车组号进行查询:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(948, 83);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "查询";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(184, 84);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
+            this.textBox3.TabIndex = 20;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(155, 12);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "请输入分拣任务号进行查询:";
             // 
             // label2
             // 
@@ -150,56 +205,51 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.task_data);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(16, 108);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 133);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1051, 621);
+            this.groupBox2.Size = new System.Drawing.Size(1129, 599);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "任务查询";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(948, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "查询";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(172, 30);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 21);
-            this.textBox3.TabIndex = 17;
+            this.groupBox2.Text = "数据结果";
             // 
             // task_data
             // 
             this.task_data.AllowUserToAddRows = false;
             this.task_data.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column8,
             this.Column1,
             this.第二任务号,
-            this.Column2,
+            this.Column9,
+            this.Column10,
             this.卷烟编号,
             this.Column5,
             this.Column6,
             this.Column3,
+            this.Column4,
+            this.Column11,
             this.Column7,
-            this.Column4});
-            this.task_data.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.task_data.Location = new System.Drawing.Point(3, 68);
+            this.Column2});
+            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.task_data.Location = new System.Drawing.Point(3, 17);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
+            this.task_data.RowHeadersVisible = false;
             this.task_data.RowTemplate.Height = 23;
-            this.task_data.Size = new System.Drawing.Size(1045, 550);
+            this.task_data.Size = new System.Drawing.Size(1123, 579);
             this.task_data.TabIndex = 16;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "户序";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 60;
             // 
             // Column1
             // 
@@ -213,14 +263,21 @@
             this.第二任务号.HeaderText = "发送任务包号";
             this.第二任务号.Name = "第二任务号";
             this.第二任务号.ReadOnly = true;
+            this.第二任务号.Width = 110;
             // 
-            // Column2
+            // Column9
             // 
-            this.Column2.DataPropertyName = "billcode";
-            this.Column2.HeaderText = "订单号";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 140;
+            this.Column9.HeaderText = "车组号";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 70;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "客户名称";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 130;
             // 
             // 卷烟编号
             // 
@@ -233,26 +290,22 @@
             this.Column5.HeaderText = "卷烟名称";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
-            this.Column5.Width = 160;
+            this.Column5.Width = 150;
             // 
             // Column6
             // 
             this.Column6.HeaderText = "分拣线";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
+            this.Column6.Width = 70;
             // 
             // Column3
             // 
             this.Column3.DataPropertyName = "pokenum";
-            this.Column3.HeaderText = "抓烟数量";
+            this.Column3.HeaderText = "数量";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "包装机";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
+            this.Column3.Width = 40;
             // 
             // Column4
             // 
@@ -260,29 +313,42 @@
             this.Column4.HeaderText = "状态位";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            this.Column4.Width = 70;
             // 
-            // label3
+            // Column11
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(155, 12);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "请输入分拣任务号进行查询:";
+            this.Column11.HeaderText = "SP标志";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 70;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "包装机";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 70;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "billcode";
+            this.Column2.HeaderText = "订单号";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
             // StatusManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 742);
+            this.ClientSize = new System.Drawing.Size(1129, 732);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "StatusManager";
             this.Text = "异形烟状态管理";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatusManager_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).EndInit();
             this.ResumeLayout(false);
 
@@ -300,18 +366,24 @@
         private System.Windows.Forms.TextBox txtFrom;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView task_data;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DataGridView task_data;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtregioncode;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn 第二任务号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn 卷烟编号;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

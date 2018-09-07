@@ -531,6 +531,16 @@ namespace InBound.Business
             //    }
             //}
         }
+        public static List<T_UN_POKE> GetUNTaskInfo()
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_UN_POKE
+                             select  item  ).ToList();
+                return query;
+            }
+           
+        }
         public static List<TaskInfo> GetUNCustomer()
         {
             using (Entities entity = new Entities())
