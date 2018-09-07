@@ -338,8 +338,8 @@ namespace UnNormal_New
                         {
                             try
                             {
-                                sortNum = Convert.ToDecimal(listPM[i].Read(2));//包装机读取出来的任务号
-                                xyNum = Convert.ToDecimal(listPM[i].Read(3));//包装机读取出来的数量
+                                sortNum = listPM[i].Read(2).CastTo<decimal>(-1);//包装机读取出来的任务号
+                                xyNum = listPM[i].Read(3).CastTo<decimal>(-1);//包装机读取出来的数量
                             }
                             catch
                             {
@@ -352,10 +352,10 @@ namespace UnNormal_New
                             xyNumList.Add(xyNum);
                         }
                         // decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, sortNumList);
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, sortNumList, SendWay);
                         if (packagemachine > 0)
                         {
-                            UnPokeService.UpdateTaskByPackMachine(packagemachine,SendWay);
+                            UnPokeService.UpdateTaskByPackMachine(packagemachine);
                         }
                         Thread.Sleep(100);
 
@@ -766,9 +766,9 @@ namespace UnNormal_New
                                     updateListBox("烟仓烟柜任务号:" + logstr + "已接收");
                                     UnPokeService.UpdateTask(listOnly, 15);
                                 }
-                                sendOnlyTask(); 
-                                //delSendTask task = sendOnlyTask;
-                                //task.BeginInvoke(null, null); 
+                                //sendOnlyTask();
+                                delSendTask task = sendOnlyTask;
+                                task.BeginInvoke(null, null); 
                             }
                         }
                         catch (Exception ex)

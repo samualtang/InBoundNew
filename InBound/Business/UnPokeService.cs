@@ -803,7 +803,7 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 var query = (from item in data.T_UN_POKE
-                             where item.SORTNUM >= sortnum && item.PACKAGEMACHINE == packagemachine
+                             where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
                              select item).Distinct().Count();
                 if (query != null && query != 0)
                 {
@@ -841,92 +841,99 @@ namespace InBound.Business
         /// <summary>
         /// 更新该包装机可发送的任务标志位为12
         /// </summary>
-        /// <param name="packagemchine">包装机</param>
-        /// <param name="sendway">生成任务方式 1为顺序生成 2为动态生成</param>
-        public static void UpdateTaskByPackMachine(decimal packagemchine,decimal sendway)
+        /// <param name="packagemchine">包装机</param> 
+        public static void UpdateTaskByPackMachine(decimal packagemchine )
+        {
+            using (Entities date = new Entities())
+            { 
+                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
+                decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
+                if (sendtasknum > 0)
+                {
+                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
+                    query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
+                    date.SaveChanges();
+                }
+                else
+                {
+                    WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12（动态发送）");
+                }
+
+            }
+        }
+        /// <summary>
+        /// 获取包装机
+        /// </summary>
+        /// <returns></returns>
+        public static decimal GetNormalPM()
         {
             using (Entities date = new Entities())
             {
-                if (sendway == 1)// 1为顺序生成
+                var query = (from item in date.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();
+                if (query != null)
                 {
-                    var query = (from item in date.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
-                    decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
-                    if (sendtasknum > 0)
-                    {
-                        query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
-                        query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
-                        date.SaveChanges();
-                    }
-                    else
-                    {
-                        WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12(顺序发送)");
-                    }
+                    return query.PACKAGEMACHINE ?? 0;
                 }
-                else if (sendway == 2)//2为动态生成
+                else
                 {
-                    var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
-                    decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
-                    if (sendtasknum > 0)
-                    {
-                        query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
-                        query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
-                        date.SaveChanges();
-                    }
-                    else
-                    {
-                        WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12（动态发送）");
-                    }
+                    return 0;
                 }
             }
         }
         /// <summary>
         /// 获取可发任务的包装机
         /// </summary> 
-        /// <param name="sortNum">四个包装机的任务号</param>
-        /// <param name="xyNum">四个包装机的抓烟数量</param>
-        /// <param name="DISPATCHESIZE">下任务阀值</param>
+        /// <param name="sortNum">八个包装机的任务号</param>
+        /// <param name="xyNum">八个包装机的抓烟数量</param>
+        /// <param name="sendway">  1为顺序生成 2为动态生成</param>
         /// <returns>包装机号</returns>
-        public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum)
+        public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum, decimal sendWay)
         {
-            decimal packagemachine = 0;//包装几号 
-            int maxOrder = 100;
-            decimal  leftnum = 0;
-           // DISPATCHESIZE = 0;//空出多少开始下任务 （阈值）
-            List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-            for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
+            decimal packagemachine = 0;//包装几号  
+            if (sendWay == 1)// 1为顺序生成
             {
-                listpm.Add(GetPackMacByMainbelt(i));
+                packagemachine = GetNormalPM();
             }
-            foreach (var i in listpm)
+            else if (sendWay == 2)// 2为动态生成
             {
-                if (i != 0)//i是包装机号
+                int maxOrder = 100;
+                decimal leftnum = 0;
+                List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
+                for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
                 {
-                    T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
-                    decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
-                    WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
-                    if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
+                    listpm.Add(GetPackMacByMainbelt(i));
+                }
+                foreach (var i in listpm)
+                {
+                    if (i != 0)//i是包装机号
                     {
-                        //DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
-                        WriteLog.GetLog().Write("当前发送包装机号:" + i);
-                        return i;
-                    }
-                    if (currentNum >= (cache.DISPATCHENUM ?? 0))//都需要补的情况下 则计算所能支持的订单数量
-                    {
-                        int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量
-                        if (tempOrderCount < maxOrder)
+                        T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
+                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                        WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
+                        if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
                         {
-                            packagemachine = i;
-                            maxOrder = tempOrderCount;
-                            // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
-                            leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                            //DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                            WriteLog.GetLog().Write("当前发送包装机号:" + i);
+                            return i;
                         }
-                        else
+                        if (currentNum >= (cache.DISPATCHENUM ?? 0))//都需要补的情况下 则计算所能支持的订单数量
                         {
-                            if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                            int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量
+                            if (tempOrderCount < maxOrder)
                             {
                                 packagemachine = i;
+                                maxOrder = tempOrderCount;
                                 // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
                                 leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                            }
+                            else
+                            {
+                                if (leftnum > ((cache.CACHESIZE ?? 0) - currentNum))
+                                {
+                                    packagemachine = i;
+                                    // DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
+                                    leftnum = (cache.CACHESIZE ?? 0) - currentNum;
+                                }
                             }
                         }
                     }
@@ -962,8 +969,6 @@ namespace InBound.Business
         {
             using (Entities data = new Entities())
             {
-                T_UN_POKE t = new T_UN_POKE();
-
                 var query = (from item in data.T_UN_POKE
                              where item.STATUS == status
                              select item).ToList();
