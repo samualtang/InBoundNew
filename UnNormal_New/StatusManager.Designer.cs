@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -56,6 +56,7 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
@@ -218,8 +219,8 @@
             // 
             this.task_data.AllowUserToAddRows = false;
             this.task_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column8,
@@ -233,6 +234,7 @@
             this.Column3,
             this.Column4,
             this.Column11,
+            this.Column12,
             this.Column7,
             this.Column2});
             this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -322,6 +324,12 @@
             this.Column11.ReadOnly = true;
             this.Column11.Width = 70;
             // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "通道";
+            this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
+            // 
             // Column7
             // 
             this.Column7.HeaderText = "包装机";
@@ -346,6 +354,7 @@
             this.Name = "StatusManager";
             this.Text = "异形烟状态管理";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatusManager_FormClosing);
+            this.SizeChanged += new System.EventHandler(this.StatusManager_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -383,6 +392,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }

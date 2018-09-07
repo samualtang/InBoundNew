@@ -86,8 +86,9 @@ namespace UnNormal_New
                     this.task_data.Rows[index].Cells[8].Value = item.POKENUM;//抓烟数量
                     this.task_data.Rows[index].Cells[9].Value = item.STATUS;//状态位
                     this.task_data.Rows[index].Cells[10].Value = item.GRIDNUM;//特异性烟标志位
-                    this.task_data.Rows[index].Cells[11].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[12].Value = item.Billcode;//订单号
+                    this.task_data.Rows[index].Cells[11].Value = item.Machineseq;//物理通道号
+                    this.task_data.Rows[index].Cells[12].Value = item.PACKAGEMACHINE;//包装机
+                    this.task_data.Rows[index].Cells[13].Value = item.Billcode;//订单号
                   
                     if (item.STATUS == 10)
                     {
@@ -101,29 +102,38 @@ namespace UnNormal_New
                     {
                         status="完成";
                     }
-                    if (item.GRIDNUM == 10)
+                    if (item.Machineseq == 1061 || item.Machineseq == 2061)
                     {
-                        ssStatus = "新增";
-                    }
-                    else if (item.GRIDNUM == 15)
-                    {
-                        ssStatus = "已发送";
+                        if (item.GRIDNUM == 10)
+                        {
+                            ssStatus = "新增";
+                        }
+                        else if (item.GRIDNUM == 15)
+                        {
+                            ssStatus = "完成";
+                        }
+                        else
+                        {
+                            ssStatus = "";
+                        }
+                        this.task_data.Rows[index].Cells[10].Value = ssStatus;//特异性烟标志位
+                        if (ssStatus == "完成")
+                        {
+                            this.task_data.Rows[index].Cells[10].Style = dgvStyle;//特异性烟标志位
+                        }
                     }
                     else
                     {
-                        ssStatus = "完成";
+                        this.task_data.Rows[index].Cells[10].Value = "";
                     }
                     this.task_data.Rows[index].Cells[9].Value = status;//状态位
-                    this.task_data.Rows[index].Cells[10].Value = ssStatus;//特异性烟标志位
+                  
                     if (status == "完成")
                     {
                         this.task_data.Rows[index].Cells[9].Style = dgvStyle;
                       
                     }
-                    if (ssStatus == "完成")
-                    {
-                        this.task_data.Rows[index].Cells[10].Style = dgvStyle;//特异性烟标志位
-                    }
+                 
                 }
            
 
@@ -230,12 +240,48 @@ namespace UnNormal_New
                 WriteLog.GetLog().Write("任务更新失败：" + ex.Message);
             }
         }
+        /// <summary>
+        /// 使DataGridView的列自适应宽度
+        /// </summary>
+        /// <param name="dgViewFiles"></param>
+        private void AutoSizeColumn(DataGridView dgViewFiles)
+        {
+            int width = 0;
+            //使列自使用宽度
+            //对于DataGridView的每一个列都调整
+            for (int i = 0; i < dgViewFiles.Columns.Count; i++)
+            {
 
+                //将每一列都调整为自动适应模式
+                dgViewFiles.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCells);
+                //记录整个DataGridView的宽度
+                width += dgViewFiles.Columns[i].Width;
+
+            }
+            //判断调整后的宽度与原来设定的宽度的关系，如果是调整后的宽度大于原来设定的宽度，
+            //则将DataGridView的列自动调整模式设置为显示的列即可，
+            //如果是小于原来设定的宽度，将模式改为填充。
+            if (width > dgViewFiles.Size.Width)
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            }
+            else
+            {
+                dgViewFiles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            //冻结某列 从左开始 0，1，2
+            dgViewFiles.Columns[0].Width = 45;
+            dgViewFiles.Columns[0].Frozen = true;
+        }
         private void StatusManager_FormClosing(object sender, FormClosingEventArgs e)
         {
             WriteLog.GetLog().Write("状态修改关闭");
         }
 
-
+        private void StatusManager_SizeChanged(object sender, EventArgs e)
+        {
+            AutoSizeColumn(task_data);
+           
+        } 
     }
 }

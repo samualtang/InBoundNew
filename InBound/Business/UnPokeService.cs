@@ -86,15 +86,15 @@ namespace InBound.Business
             using (Entities data = new Entities())
             {
                 var query = (from item in data.T_UN_POKE
-                             where item.SORTNUM > sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
+                             where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
                              select item).ToList().Sum(x => x.POKENUM) ?? 0;
-                if (query != null && query > 0)
+                if (query != null )
                 {
                     return maxCount - (query + xynum);
                 }
                 else
                 {
-                    return query;
+                    return maxCount;
                 }
             }  
         }
@@ -842,21 +842,40 @@ namespace InBound.Business
         /// 更新该包装机可发送的任务标志位为12
         /// </summary>
         /// <param name="packagemchine">包装机</param>
-        public static void UpdateTaskByPackMachine(decimal packagemchine)
+        /// <param name="sendway">生成任务方式 1为顺序生成 2为动态生成</param>
+        public static void UpdateTaskByPackMachine(decimal packagemchine,decimal sendway)
         {
             using (Entities date = new Entities())
-            { 
-                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
-                decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
-                if (sendtasknum > 0 )
+            {
+                if (sendway == 1)// 1为顺序生成
                 {
-                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
-                    query.Where( a=> (a.MACHINESEQ ==1061|| a.MACHINESEQ ==2061) && a.SENDTASKNUM == sendtasknum  ).ToList().ForEach(f=> {f.GRIDNUM =12;});
-                    date.SaveChanges();
+                    var query = (from item in date.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
+                    decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
+                    if (sendtasknum > 0)
+                    {
+                        query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
+                        query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
+                        date.SaveChanges();
+                    }
+                    else
+                    {
+                        WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12(顺序发送)");
+                    }
                 }
-                else
+                else if (sendway == 2)//2为动态生成
                 {
-                    WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12");
+                    var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == packagemchine && item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item).ToList();
+                    decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
+                    if (sendtasknum > 0)
+                    {
+                        query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
+                        query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
+                        date.SaveChanges();
+                    }
+                    else
+                    {
+                        WriteLog.GetLog().Write("任务计算失败，未将任务包号更新为12（动态发送）");
+                    }
                 }
             }
         }
@@ -939,24 +958,17 @@ namespace InBound.Business
         /// <param name="linenum"></param>
         /// <param name="ctype"></param>
         /// <returns></returns>
-        public static bool CheckExistCanSendPackeMachine(string linenum , decimal ctype)
+        public static bool CheckExistCanSendTask(decimal status)
         {
             using (Entities data = new Entities())
             {
                 T_UN_POKE t = new T_UN_POKE();
-                if (ctype == 1)
-                {
-                    t = (from item in data.T_UN_POKE
-                                 where item.LINENUM == linenum && item.STATUS == 10 && item.CTYPE == ctype
-                                 select item).FirstOrDefault();
-                }
-                else
-                {
-                   t = (from item in data.T_UN_POKE
-                                 where  item.STATUS == 10 && item.CTYPE == ctype
-                                 select item).FirstOrDefault();
-                }
-                if (t != null  )
+
+                var query = (from item in data.T_UN_POKE
+                             where item.STATUS == status
+                             select item).ToList();
+
+                if (query != null && query.Count > 0)
                 {
                     return true;
                 }
@@ -1860,16 +1872,22 @@ namespace InBound.Business
 
                 foreach (var item in query)
                 {
-                    item.STATUS = status;
+                    //item.STATUS = status;
                     if (status == 20 || status == 15)
                     {
-                        item.GRIDNUM = 15;
+                        if (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
+                        {
+                            item.GRIDNUM = 15;
+                        }
                         item.STATUS = status;
                     }
                     else
                     {
                         item.STATUS = status;
-                        item.GRIDNUM = status;
+                        if (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
+                        {
+                            item.GRIDNUM = status;
+                        }
                     }
                     
                 }
@@ -1935,7 +1953,7 @@ namespace InBound.Business
                             join item3 in dataentity.T_UN_TASK on item.BILLCODE equals item3.BILLCODE 
                             where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10
                             orderby item.TASKNUM
-                            select new TaskDetail() {GRIDNUM = item.GRIDNUM ??0, REGIONCODE = item3.REGIONCODE, SORTSEQ = item3.SORTSEQ ??0,CUSTOMERNAME =item3.CUSTOMERNAME, POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 }).ToList();
+                            select new TaskDetail() {Machineseq = item.MACHINESEQ ?? 0 , GRIDNUM = item.GRIDNUM ??0, REGIONCODE = item3.REGIONCODE, SORTSEQ = item3.SORTSEQ ??0,CUSTOMERNAME =item3.CUSTOMERNAME, POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 }).ToList();
 
                 if (query != null)
                     return query ;

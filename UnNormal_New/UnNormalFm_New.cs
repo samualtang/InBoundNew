@@ -313,17 +313,7 @@ namespace UnNormal_New
            List<T_UN_SpecialSmoke> listSS1B = new List<T_UN_SpecialSmoke>();
            List<T_UN_SpecialSmoke> listSS2A = new List<T_UN_SpecialSmoke>(); 
         bool issendone = false, issendtwo = false, issendsixone = false, issendsixtwo = false;
-        void GetWay()
-        {
-            if (SendWay == 1)//顺序调度
-            {
-                Status = 10;
-            }
-            else if (SendWay == 2)//动态调度
-            {
-                Status = 12;
-            }
-        }
+       
         /// <summary>
         /// 一组交互
         /// </summary> 
@@ -331,15 +321,14 @@ namespace UnNormal_New
         {
             try
             {
-                GetWay();
                 issendone = true; 
                 List<decimal> sortNumList = new List<decimal>();//当前任务号集合
                 List<decimal> xyNumList = new List<decimal>();//当前吸烟数量集合 
                 int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
                 writeLog.Write("烟仓烟柜发送数据前读标志位：" + flag);
                 if (flag == 0)
-                {
-                    if (SendWay == 2)//是动态发送任务的是 才启用算法
+                { 
+                    while (!UnPokeService.CheckExistCanSendTask(12) && UnPokeService.CheckExistCanSendTask(10))
                     {
                         sortNumList.Clear();
                         xyNumList.Clear();
@@ -349,7 +338,7 @@ namespace UnNormal_New
                         {
                             try
                             {
-                                sortNum =Convert.ToDecimal(listPM[i].Read(2));//包装机读取出来的任务号
+                                sortNum = Convert.ToDecimal(listPM[i].Read(2));//包装机读取出来的任务号
                                 xyNum = Convert.ToDecimal(listPM[i].Read(3));//包装机读取出来的数量
                             }
                             catch
@@ -362,15 +351,17 @@ namespace UnNormal_New
                             sortNumList.Add(sortNum);
                             xyNumList.Add(xyNum);
                         }
-                        decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, sortNumList, out DISPATCHESIZE);
+                        // decimal DISPATCHESIZE = 0;
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, sortNumList);
                         if (packagemachine > 0)
                         {
-                            UnPokeService.UpdateTaskByPackMachine(packagemachine);
+                            UnPokeService.UpdateTaskByPackMachine(packagemachine,SendWay);
                         }
+                        Thread.Sleep(100);
+
                     }
                     string OutStr = "";
-                    object[] datas = UnPokeService.getAllLineTask(Status,out listOnly, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.getAllLineTask(12,out listOnly, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("烟仓烟柜分拣数据发送完毕");
@@ -402,7 +393,6 @@ namespace UnNormal_New
         {
             try
             {
-                GetWay();
                 issendone = true; 
                 int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);//发送数据前读标志位
                 writeLog.Write("1线特异形烟发送数据前读标志位：" + flag);
@@ -410,7 +400,7 @@ namespace UnNormal_New
                 {
                  
                     string OutStr = "";
-                    object[] datas = UnPokeService.GetSpecialSmokeData(Status, "1", out listSS1B, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.GetSpecialSmokeData(12, "1", out listSS1B, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("1线特异形烟分拣数据发送完毕");
@@ -449,14 +439,13 @@ namespace UnNormal_New
         {
             try
             {
-                GetWay();
                 issendone = true;
                 int flag = SpyBiaozhiGroup.ReadD(2).CastTo<int>(-1);//发送数据前读标志位
                 writeLog.Write("2线特异形烟发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
                     string OutStr = "";
-                    object[] datas = UnPokeService.GetSpecialSmokeData(Status, "2", out listSS2A, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.GetSpecialSmokeData(12, "2", out listSS2A, out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
                         updateListBox("2线特异形烟分拣数据发送完毕"); 
@@ -1146,16 +1135,8 @@ namespace UnNormal_New
                lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();//线路
 
                SendWay = Convert.ToInt32(ConfigurationManager.AppSettings["SendWay"]);//1为顺序 2为动态
-               if (SendWay == 1)
-               {
-                   Status = 10;
-               }
-               else if (SendWay == 2)
-               {
-                   Status = 12;
-               }
-               else
-               {
+               if (SendWay != 1 && SendWay != 2)
+               { 
                    MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
                    WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
                    button10.Enabled = false; 
