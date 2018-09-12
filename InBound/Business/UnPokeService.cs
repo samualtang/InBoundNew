@@ -623,6 +623,95 @@ namespace InBound.Business
                 return values;
             }
         }
+
+        /// <summary>
+        /// 异形烟烟柜烟仓特异形烟数据
+        /// </summary>
+        /// <param name="status">状态（10为普通 ，12为动态）</param>
+        /// <param name="outlist">接收完成任务集合</param>
+        /// <param name="outStr">任务日记字符串</param>
+        /// <returns></returns>
+        public static object[] getOneDateBaseTask(decimal status, out List<T_UN_POKE> outlist, out string outStr)
+        {
+            object[] values = new object[104];
+            String needDatas = "";
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = 0;
+            }
+            using (Entities data = new Entities())
+            {
+                List<T_UN_POKE> list = new List<T_UN_POKE>();
+                //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
+                var query = (from item in data.T_UN_POKE where item.STATUS == status orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)
+                if (query == null)//如果没有则 无任务s
+                {
+                    outlist = new List<T_UN_POKE>();
+                    outStr = null;
+                    return values;
+                }
+                decimal machineseq = 0;
+                //获取烟柜烟仓任务
+                var query1 = (from task in data.T_UN_POKE where task.SENDTASKNUM == query.SENDTASKNUM && task.STATUS ==status orderby task.SORTNUM select task).ToList();
+                //特异形烟
+                var querySS = (from item in data.T_UN_POKE
+                             join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
+                               where item.SENDTASKNUM == query.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) //&& item.GRIDNUM == status
+                             orderby item.SORTNUM, item.SENDTASKNUM, item.POKEID
+                             select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).ToList();
+               
+                // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
+                outlist = query1;
+                values[0] = query.SORTNUM;
+                values[1] = query.SENDTASKNUM;//包号
+                values[2] = query.STORENUM;//出口号
+                values[3] = query.PACKAGEMACHINE; //包装机号
+                needDatas += "\r\n任务号：" + values[0] + "，任务包号：" + values[1] + "，出口号：" + values[2] + "，包装机号：" + values[3];
+                foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())//1-60烟仓 + 6 烟柜
+                {
+                    machineseq = (item.MACHINESEQ ?? 0);
+                    if (machineseq != 1061 && machineseq != 2061)//不包括特异形烟道
+                    {
+                        if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
+                        {
+                            machineseq = (item.MACHINESEQ ?? 0) - 1000;
+                            needDatas += "\r\n一线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
+                        }
+                        else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)//二线烟仓
+                        {
+                            machineseq = (item.MACHINESEQ ?? 0) - 2000;
+                            needDatas += "\r\n二线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
+                        }
+                        else if (item.MACHINESEQ > 3000)//烟柜
+                        {
+                            machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
+                            needDatas += "\r\n烟柜 " + ((int)(item.MACHINESEQ)) + " 号，出烟数量：" + item.QTY;
+                        }
+                        values[((int)machineseq + 3)] = item.QTY;
+                    }
+                    //values[((int)machineseq + 3)] = query1.Where(a => a.MACHINESEQ == item.MACHINESEQ).GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).FirstOrDefault().QTY;
+                }
+                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 && a.MACHINESEQ != 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟仓出烟数量
+                values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟柜出烟数量 
+                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//特异性烟出烟数量 
+                int index = 73;//索引  
+                foreach (var item in querySS)
+                {
+                    if (index <= 100)
+                    {
+                        values[index] = item.CIGARETTECODE;//卷烟编码
+                        values[index + 1] = item.LENGHT;//条烟长度
+                        values[index + 2] = item.WIDTH;//条烟宽度
+                        needDatas += "\r\n卷烟编码：" + values[index] + "，卷烟名称：" + item.CIGARETTENAME + "，卷烟长度" + values[index + 1] + "，卷烟宽度" + values[index + 2];
+                        index = index + 3;
+                    }
+                }
+                values[103] = 1;//标志位
+                needDatas += "\r\n烟仓出烟数量：" + values[70] + "，烟柜出烟数量：" + values[71] + "，特异形烟出烟数量：" + values[72] + "，任务发送标志位：" + values[103];
+                outStr = needDatas;
+                return values;
+            }
+        }
         /// <summary>
         /// 校验特异形烟是否录入长宽
         /// </summary>
@@ -851,7 +940,7 @@ namespace InBound.Business
                 if (sendtasknum > 0)
                 {
                     query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
-                    query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
+                    //query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
                     date.SaveChanges();
                 }
                 else
@@ -902,15 +991,17 @@ namespace InBound.Business
                 for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
                 {
                     listpm.Add(GetPackMacByMainbelt(i));
+                   // listpm.Add(i);
                 }
+               
                 foreach (var i in listpm)
                 {
                     if (i != 0)//i是包装机号
                     {
                         T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
-                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取当前缓存空出数量
                         WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
-                        if ((cache.CACHESIZE ?? 0) - currentNum < 10)//缓存量少于10 
+                        if ((cache.CACHESIZE ?? 0) - currentNum < 10)//拿最大的容纳量减去空出数量 =当前缓存数量 
                         {
                             //DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
                             WriteLog.GetLog().Write("当前发送包装机号:" + i);
@@ -975,6 +1066,29 @@ namespace InBound.Business
             {
                 var query = (from item in data.T_UN_POKE
                              where item.STATUS == status
+                             select item).ToList();
+
+                if (query != null && query.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        /// <summary>
+        /// 查看特异性还有没有任务
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static bool CheckExistSSCanSendTask(decimal status)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             where item.GRIDNUM == status
                              select item).ToList();
 
                 if (query != null && query.Count > 0)
@@ -1789,7 +1903,34 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
-        
+        public static object[] GetEnablePackageMachine()
+        {
+            object[] pm = new object[8]; 
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    pm[i] = null;
+            //}
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE where item.STATUS == 10 orderby item.SORTNUM, item.SENDTASKNUM select item ).GroupBy(a=> new { pamck = a.PACKAGEMACHINE}).ToList();
+                if (query.Count <= 8 && query != null)
+                {
+                    for (int i = 0; i < query.Count; i++)
+                    {
+                        pm[i] =Convert.ToInt32( query[i].Key.pamck ?? 0);
+                    }
+                    return pm;
+                }
+                else
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        pm[i] = i+1;
+                    }
+                    return pm;
+                }
+            } 
+        }
         // 根据异形烟整包任务号更新poke表中状态
         public static void UpdateunTask(decimal sendtasknum, int status)
         {

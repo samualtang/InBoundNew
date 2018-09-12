@@ -203,6 +203,30 @@ namespace UnNormal_New.Model
            return list;
        }
        /// <summary>
+       /// 一个DB区包含特异形烟交互
+       /// </summary>
+       /// <returns></returns>
+       public static List<string> GetOnlyDBItem()
+       {
+           List<string> list = new List<string>();
+
+           list.Add("S7:[UnnormalConnection]DB30,DINT0");
+           list.Add("S7:[UnnormalConnection]DB30,DINT4");
+           list.Add("S7:[UnnormalConnection]DB30,W8");
+           for (int i = 2; i < 142; i = i + 2)
+           {
+               list.Add("S7:[UnnormalConnection]DB30,W" + (i + 8));
+           }
+           for (int i = 0; i < 7; i++)
+           {
+               list.Add("S7:[UnnormalConnection]DB30,DINT" + (152 + (i * 8)));//条烟编码
+               list.Add("S7:[UnnormalConnection]DB30,W" + (154 + (i * 8)));//长度
+               list.Add("S7:[UnnormalConnection]DB30,W" + (156 + (i * 8)));//宽度
+           }
+           list.Add("S7:[UnnormalConnection]DB30,W206");
+           return list;
+       }
+       /// <summary>
        /// 监控标志位
        /// </summary>
        /// <returns></returns>
@@ -210,9 +234,9 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add("S7:[UnnormalConnection]DB30,W150");//异形烟交互标志 0
-           list.Add("S7:[UnnormalConnection]DB101,W108");//特异形烟该发送皮带 1
-           list.Add("S7:[UnnormalConnection]DB103,W108");//特异形烟该发送皮带 2
+           list.Add("S7:[UnnormalConnection]DB30,W206");//异形烟交互标志 0
+           //list.Add("S7:[UnnormalConnection]DB101,W108");//特异形烟该发送皮带 1
+           //list.Add("S7:[UnnormalConnection]DB103,W108");//特异形烟该发送皮带 2
            //list.Add("S7:[UnnormalConnection]DB101,W92");//特异形烟该发送皮带 1
            //list.Add("S7:[UnnormalConnection]DB103,W92");//特异形烟该发送皮带 2
            return list;
