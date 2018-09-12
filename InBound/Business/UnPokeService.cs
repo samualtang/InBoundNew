@@ -90,7 +90,7 @@ namespace InBound.Business
                              select item).ToList().Sum(x => x.POKENUM) ?? 0;
                 if (query != null )
                 {
-                    return maxCount - (query + xynum);
+                    return maxCount - query + xynum;
                 }
                 else
                 {
@@ -913,8 +913,24 @@ namespace InBound.Business
         public static decimal GetPackMacByMainbelt(decimal mainbelt)
         {
             using (Entities date = new Entities())
-            {
-                var query = (from item in date.T_UN_POKE join item2 in date.T_UN_TASK on item.BILLCODE equals item2.BILLCODE where item2.MAINBELT == mainbelt && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+            { 
+                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == 1 && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault(); ;
+                if (mainbelt == 1)
+                {
+                    query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 1 || item.PACKAGEMACHINE == 2) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                }
+                else if (mainbelt == 2)
+                {
+                    query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 3 || item.PACKAGEMACHINE == 4) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                }
+                else if (mainbelt == 3)
+                {
+                    query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 5 || item.PACKAGEMACHINE == 6) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                }
+                else
+                {
+                    query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 7 || item.PACKAGEMACHINE == 8) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                }
                 if (query != null)
                 {
                     return query.PACKAGEMACHINE ?? 0;
