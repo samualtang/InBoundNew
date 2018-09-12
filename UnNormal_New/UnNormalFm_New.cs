@@ -307,12 +307,20 @@ namespace UnNormal_New
                         xyNumList.Clear(); 
                         decimal sortNum, xyNum;
                         decimal packagemachine = 0;
-                        for (int i =0; i < 4; i++)
+                        for (int i =0; i < 8; i++)
                         {
                             try
                             {
+                                if(UnPokeService.checkExist(i+1))
+                                {
                                 sortNum = listPM[i].ReadD(2).CastTo<decimal>(-1);//包装机读取出来的任务号
                                 xyNum = listPM[i].ReadD(3).CastTo<decimal>(-1);//包装机读取出来的数量
+                                }
+                                else
+                                {
+                                 sortNum=0;
+                                 xyNum=0;
+                                }
                             }
                             catch
                             {
@@ -518,16 +526,18 @@ namespace UnNormal_New
                                     Thread.Sleep(100);
                                 }
                                 String logstr = "";
-                                var list = listOnly.FirstOrDefault();
-                                if (list != null)
-                                {
-                                    logstr += list.SORTNUM + ";";
-                                }
-                                if (logstr != null && logstr.Length > 0)
+                               // var list = listOnly.FirstOrDefault();
+                                // 
+                                int receivePackage = int.Parse(OnlyTaskGorup.ReadD(1).ToString());
+                                //if (list != null)
+                                //{
+                                //    logstr += list.SORTNUM + ";";
+                                //}
+                                if ( receivePackage!= 0)
                                 {
                                     writeLog.Write("烟仓烟柜任务号:" + logstr + "已接收");
                                     updateListBox("烟仓烟柜任务号:" + logstr + "已接收");
-                                    UnPokeService.UpdateTask(listOnly, 15);
+                                    UnPokeService.UpdateTask(receivePackage, 15);
                                 }
                                 if (!issendone)
                                 {

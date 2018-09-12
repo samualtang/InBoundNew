@@ -955,7 +955,7 @@ namespace InBound.Business
                 decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
                 if (sendtasknum > 0)
                 {
-                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; });
+                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; f.SENDSEQ = DateTime.Now.Ticks; });//要更新顺序号
                     //query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
                     date.SaveChanges();
                 }
@@ -1851,7 +1851,24 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
-
+        public static void UpdateTask(decimal packageNo, int status)
+        {
+            using (Entities data = new Entities())
+            {
+              
+                   
+                        var query = (from items in data.T_UN_POKE where items.SECSORTNUM == packageNo select items).ToList();
+                        if (query != null)
+                        {
+                            query.ForEach(x => { x.STATUS = status; });
+                        }
+                      
+                    
+                
+                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+                data.SaveChanges();
+            }
+        }
         public static void UpdateSSTask(List<T_UN_SpecialSmoke> list, int status)
         {
             using (Entities data = new Entities())
@@ -1917,6 +1934,21 @@ namespace InBound.Business
                 }
                 data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
                 data.SaveChanges();
+            }
+        }
+        public static bool checkExist(decimal packageNO)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE where item.PACKAGEMACHINE == packageNO select item).FirstOrDefault();
+                if (query != null && query.PACKAGEMACHINE != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         public static object[] GetEnablePackageMachine()
