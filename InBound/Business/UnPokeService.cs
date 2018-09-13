@@ -891,9 +891,12 @@ namespace InBound.Business
         {
             using (Entities data = new Entities())
             {
+                //var query = (from item in data.T_UN_POKE
+                //             where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
+                //             select item).Distinct().Count();
                 var query = (from item in data.T_UN_POKE
                              where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
-                             select item).Distinct().Count();
+                             select item).Select(a=> new { SENDTASKNUM = a.SENDTASKNUM}).Distinct().Count();
                 if (query != null && query != 0)
                 {
                     return query;
@@ -1001,7 +1004,7 @@ namespace InBound.Business
             }
             else if (sendWay == 2)// 2为动态生成
             {
-                int maxOrder = 100;
+                int maxOrder = 100000;
                 decimal leftnum = 0;
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
                 for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
@@ -1857,10 +1860,10 @@ namespace InBound.Business
             {
               
                    
-                        var query = (from items in data.T_UN_POKE where items.SECSORTNUM == packageNo select items).ToList();
+                        var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == packageNo select items).ToList();
                         if (query != null)
                         {
-                            query.ForEach(x => { x.STATUS = status; });
+                            query.ForEach(x => { x.STATUS = status; x.SENDSEQ = DateTime.Now.Ticks; });
                         }
                       
                     
