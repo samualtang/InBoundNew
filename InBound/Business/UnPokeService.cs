@@ -896,7 +896,7 @@ namespace InBound.Business
                 //             select item).Distinct().Count();
                 var query = (from item in data.T_UN_POKE
                              where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
-                             select item).Select(a=> new { SENDTASKNUM = a.SENDTASKNUM}).Distinct().Count();
+                             select item.SENDTASKNUM).Distinct().Count();
                 if (query != null && query != 0)
                 {
                     return query;
