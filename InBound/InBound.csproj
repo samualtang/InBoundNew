@@ -63,6 +63,7 @@
     <Compile Include="Business\FolloTaskService.cs" />
     <Compile Include="Business\MainBeltInfoService.cs" />
     <Compile Include="Business\HunHeService_new.cs" />
+    <Compile Include="Business\UserService.cs" />
     <Compile Include="Model\HUNHENOWVIEW.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />

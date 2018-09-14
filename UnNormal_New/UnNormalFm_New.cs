@@ -665,6 +665,7 @@ namespace UnNormal_New
             timerSendTask.Interval = 1000 * 10;
             timerSendTask.Start();
             updateListBox("启动定时器");
+            updateControlEnable(false, button10);
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 

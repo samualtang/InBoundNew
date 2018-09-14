@@ -114,6 +114,32 @@ namespace InBound.Business
                
             }
         }
+        /// <summary>
+        /// 根据组号和主皮带号获取合流机械手号
+        /// </summary>
+        /// <param name="groupno">组号</param>
+        /// <param name="mainbelt">主皮带号</param>
+        /// <returns></returns>
+        public static decimal GetUnionMachineNoBYGroupNoAndMainBelt(decimal groupno, decimal mainbelt)
+        {
+            if (mainbelt == 1)
+            {
+                return groupno;
+            }
+           else if (mainbelt == 2)
+            {
+                return (groupno + 8);
+            }
+            else if (mainbelt == 3)
+            {
+                return (groupno + 16);
+            }
+            else if (mainbelt == 4)
+            {
+                return (groupno + 24);
+            }
+            return 1;
+        }
         public static List<UnionTaskInfo> GetUnionAllTaskInfo()
         {
             List<UnionTaskInfo> list = new List<UnionTaskInfo>();

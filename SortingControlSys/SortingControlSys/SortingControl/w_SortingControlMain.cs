@@ -1242,6 +1242,7 @@ namespace SortingControlSys.SortingControl
             this.timerSendData.Interval = 1000 * 10;
             this.timerSendData.Start();//10秒刷新
             updateListBox("启动定时器");
+            updateControlEnable(false,button10);
             Thread thread = new Thread(new ThreadStart(startFenJian));
             thread.Start();
 

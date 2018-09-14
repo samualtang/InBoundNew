@@ -62,8 +62,8 @@ namespace SortingControlSys
                  * */
                 try
                 {
-                    w_SortingControlMain form1 = new w_SortingControlMain();
-                    form1.WindowState = FormWindowState.Maximized;
+                    w_user form1 = new w_user();
+                    //form1.WindowState = FormWindowState.Maximized;
                     Application.Run(form1);
                 }
                 catch (Exception ex)
