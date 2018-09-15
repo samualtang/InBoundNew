@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using InBound.Model;
+using System.Threading;
 
 namespace InBound.Business
 {
@@ -395,203 +396,217 @@ namespace InBound.Business
 
             return values;
         }
-
+        private static ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
        
         public static void UpdatePokeByGroupNo(decimal groupno, int orderAmount,int mainbelt)
         {
-            using (Entities entity = new Entities())
-            {
-               // int count = 0;
 
-                
-                decimal beginSortnum = 0;
-                decimal totalCount = 0;
-                List<Decimal> sortnum = new List<decimal>();
-                int countNum = 0;
-                while (totalCount < orderAmount)
+            cacheLock.EnterWriteLock();
+            try
+            {
+                #region
+                using (Entities entity = new Entities())
                 {
-                    countNum += 1;
-                    var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.MAINBELT==mainbelt && item.SORTNUM > beginSortnum orderby item.SORTNUM select item).FirstOrDefault();
-                    if (query != null)
+                    // int count = 0;
+
+
+                    decimal beginSortnum = 0;
+                    decimal totalCount = 0;
+                    List<Decimal> sortnum = new List<decimal>();
+                    int countNum = 0;
+                    while (totalCount < orderAmount)
                     {
-                        var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM  && item.MAINBELT==mainbelt select item).Sum(x => x.POKENUM )??0;
-                        totalCount += query2;
-                        if (totalCount <= orderAmount)
+                        countNum += 1;
+                        var query = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.MAINBELT == mainbelt && item.SORTNUM > beginSortnum orderby item.SORTNUM select item).FirstOrDefault();
+                        if (query != null)
                         {
-                            sortnum.Add(query.SORTNUM ?? 0);
-                            beginSortnum = query.SORTNUM ?? 0;
-                        }
-                        else
-                        {
-                            if (countNum == 1)
+                            var query2 = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTNUM == query.SORTNUM && item.MAINBELT == mainbelt select item).Sum(x => x.POKENUM) ?? 0;
+                            totalCount += query2;
+                            if (totalCount <= orderAmount)
                             {
                                 sortnum.Add(query.SORTNUM ?? 0);
                                 beginSortnum = query.SORTNUM ?? 0;
                             }
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                   
-                }
-                //开始算合单 生成合单号
-                var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM??0) select item1).ToList();
-                var troughnums = query3.Select(x => x.TROUGHNUM).Distinct().ToList();
-                var sendOrder = ((from task in entity.T_PRODUCE_POKE  select task ).Max(x => x.SECSORTNUM)??0)+1;
-                foreach (var troughnum in troughnums)
-                {
-                    var templist = query3.Where(x => x.TROUGHNUM == troughnum).OrderBy(x=>x.SORTNUM).ToList();
-                    decimal tempCount = 0;
-                    int size = 0;
-
-                    foreach (var record in templist)
-                    {
-                        size++;
-                        record.SORTSTATE = 12;
-                        if (tempCount + record.POKENUM < 10)
-                        {
-                           
-                            tempCount += (record.POKENUM ?? 0);
-                            record.POKEPLACE =tempCount;
-                            record.SECSORTNUM = sendOrder;
-                            sendOrder += 1;
-                            if (size == templist.Count)
+                            else
                             {
-                                var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
-                              var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
-                                var pnum=tempCount;
-                                WriteLog.GetLog().Write("1机械手任务号:" + unionnum +"meragenum:"+pnum);
-                               foreach (var t in temp)
-                               {
-                                  
-                                  t.MERAGENUM = tempCount;
-                                  t.UNIONTASKNUM = unionnum;
-                                  if (pnum > 10)
-                                  {
-                                      t.POKEPLACE = pnum % 10;
-                                      if (t.POKEPLACE == 0)
-                                      {
-                                          t.POKEPLACE = 10;
-                                      }
-                                  }
-                                  else
-                                  {
-                                      t.POKEPLACE = pnum;
-                                  }
-                                  pnum -= (t.POKENUM??0);
-                                  WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
-                              }
-                                //uniontasknum += 1;
+                                if (countNum == 1)
+                                {
+                                    sortnum.Add(query.SORTNUM ?? 0);
+                                    beginSortnum = query.SORTNUM ?? 0;
+                                }
+                                break;
                             }
                         }
                         else
                         {
-                            if (tempCount == 0)
+                            break;
+                        }
+
+                    }
+                    //开始算合单 生成合单号
+                    var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM ?? 0) select item1).ToList();
+                    var troughnums = query3.Select(x => x.TROUGHNUM).Distinct().ToList();
+                    var sendOrder = ((from task in entity.T_PRODUCE_POKE select task).Max(x => x.SECSORTNUM) ?? 0) + 1;
+                    foreach (var troughnum in troughnums)
+                    {
+                        var templist = query3.Where(x => x.TROUGHNUM == troughnum).OrderBy(x => x.SORTNUM).ToList();
+                        decimal tempCount = 0;
+                        int size = 0;
+
+                        foreach (var record in templist)
+                        {
+                            size++;
+                            record.SORTSTATE = 12;
+                            if (tempCount + record.POKENUM < 10)
                             {
-                                tempCount = record.POKENUM ?? 0;
-                                if (tempCount <= 10)
-                                {
-                                    record.POKEPLACE =  tempCount;
-                                }
-                                else
-                                {
-                                    record.POKEPLACE = record.POKENUM % 10;
-                                    if (record.POKEPLACE == 0)
-                                    {
-                                        record.POKEPLACE = 10;
-                                    }
-                                }
+
+                                tempCount += (record.POKENUM ?? 0);
+                                record.POKEPLACE = tempCount;
                                 record.SECSORTNUM = sendOrder;
                                 sendOrder += 1;
-                                record.MERAGENUM = tempCount;
-                                record.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum.Nextval from dual"); 
-                               // uniontasknum += 1;
+                                if (size == templist.Count)
+                                {
+                                    var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                                    var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                                    var pnum = tempCount;
+                                    WriteLog.GetLog().Write("1机械手任务号:" + unionnum + "meragenum:" + pnum);
+                                    foreach (var t in temp)
+                                    {
+
+                                        t.MERAGENUM = tempCount;
+                                        t.UNIONTASKNUM = unionnum;
+                                        if (pnum > 10)
+                                        {
+                                            t.POKEPLACE = pnum % 10;
+                                            if (t.POKEPLACE == 0)
+                                            {
+                                                t.POKEPLACE = 10;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            t.POKEPLACE = pnum;
+                                        }
+                                        pnum -= (t.POKENUM ?? 0);
+                                        WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
+                                    }
+                                    //uniontasknum += 1;
+                                }
                             }
                             else
                             {
-                               var temp= templist.Where(x => x.SORTNUM < record.SORTNUM && x.UNIONTASKNUM==0 ).OrderBy(x=>x.SORTNUM).ToList();
-                              // temp.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
-                                //uniontasknum += 1;
-                               var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
-                               var pnum = tempCount;
-                               WriteLog.GetLog().Write("2机械手任务号:" + unionnum + "meragenum:" + pnum);
-                               foreach (var t in temp)
-                               {
-                                  
-                                   t.MERAGENUM = tempCount;
-                                   t.UNIONTASKNUM = unionnum;
-                                   if (pnum > 10)
-                                   {
-                                       t.POKEPLACE = pnum % 10;
-                                       if (t.POKEPLACE == 0)
-                                       {
-                                           t.POKEPLACE = 10;
-                                       }
-                                   }
-                                   else
-                                   {
-                                       t.POKEPLACE = pnum;
-                                   }
-                                   pnum -= (t.POKENUM ?? 0);
-                                   WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
-                               }
-                                
-                                tempCount = record.POKENUM??0;
-                                record.SECSORTNUM = sendOrder;
-                                sendOrder += 1;
-                                if (tempCount <= 10)
+                                if (tempCount == 0)
                                 {
-                                    record.POKEPLACE = tempCount;
+                                    tempCount = record.POKENUM ?? 0;
+                                    if (tempCount <= 10)
+                                    {
+                                        record.POKEPLACE = tempCount;
+                                    }
+                                    else
+                                    {
+                                        record.POKEPLACE = record.POKENUM % 10;
+                                        if (record.POKEPLACE == 0)
+                                        {
+                                            record.POKEPLACE = 10;
+                                        }
+                                    }
+                                    record.SECSORTNUM = sendOrder;
+                                    sendOrder += 1;
+                                    record.MERAGENUM = tempCount;
+                                    record.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                                    // uniontasknum += 1;
                                 }
                                 else
                                 {
-                                    record.POKEPLACE =tempCount%10;
-                                    if (record.POKEPLACE == 0)
+                                    var temp = templist.Where(x => x.SORTNUM < record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();
+                                    // temp.ForEach(x => { x.MERAGENUM = tempCount; x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                                    //uniontasknum += 1;
+                                    var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                                    var pnum = tempCount;
+                                    WriteLog.GetLog().Write("2机械手任务号:" + unionnum + "meragenum:" + pnum);
+                                    foreach (var t in temp)
                                     {
-                                        record.POKEPLACE = 10;
+
+                                        t.MERAGENUM = tempCount;
+                                        t.UNIONTASKNUM = unionnum;
+                                        if (pnum > 10)
+                                        {
+                                            t.POKEPLACE = pnum % 10;
+                                            if (t.POKEPLACE == 0)
+                                            {
+                                                t.POKEPLACE = 10;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            t.POKEPLACE = pnum;
+                                        }
+                                        pnum -= (t.POKENUM ?? 0);
+                                        WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
                                     }
+
+                                    tempCount = record.POKENUM ?? 0;
+                                    record.SECSORTNUM = sendOrder;
+                                    sendOrder += 1;
+                                    if (tempCount <= 10)
+                                    {
+                                        record.POKEPLACE = tempCount;
+                                    }
+                                    else
+                                    {
+                                        record.POKEPLACE = tempCount % 10;
+                                        if (record.POKEPLACE == 0)
+                                        {
+                                            record.POKEPLACE = 10;
+                                        }
+                                    }
+
                                 }
-                                
+
+                                if (size == templist.Count)
+                                {
+                                    var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount;  x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
+                                    var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
+                                    var pnum = tempCount;
+
+                                    WriteLog.GetLog().Write("3机械手任务号:" + unionnum + "meragenum:" + pnum);
+                                    foreach (var t in temp)
+                                    {
+
+                                        t.MERAGENUM = tempCount;
+                                        t.UNIONTASKNUM = unionnum;
+                                        if (pnum > 10)
+                                        {
+                                            t.POKEPLACE = pnum % 10;
+                                            if (t.POKEPLACE == 0)
+                                            {
+                                                t.POKEPLACE = 10;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            t.POKEPLACE = pnum;
+                                        }
+                                        pnum -= (t.POKENUM ?? 0);
+                                        WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
+                                    }
+                                    // uniontasknum += 1;
+                                }
+
                             }
 
-                            if (size == templist.Count)
-                            {
-                                var temp = templist.Where(x => x.SORTNUM <= record.SORTNUM && x.UNIONTASKNUM == 0).OrderBy(x => x.SORTNUM).ToList();//.ForEach(x => { x.MERAGENUM = tempCount;  x.UNIONTASKNUM = GetSeq("select S_produce_uniontasknum..Nextval from dual");  });
-                               var unionnum = GetSeq("select S_produce_uniontasknum.Nextval from dual");
-                               var pnum = tempCount;
-                            
-                               WriteLog.GetLog().Write("3机械手任务号:" + unionnum + "meragenum:" + pnum);
-                               foreach (var t in temp)
-                               {
-                                  
-                                   t.MERAGENUM = tempCount;
-                                   t.UNIONTASKNUM = unionnum;
-                                   if (pnum > 10)
-                                   {
-                                       t.POKEPLACE = pnum % 10;
-                                       if (t.POKEPLACE == 0)
-                                       {
-                                           t.POKEPLACE = 10;
-                                       }
-                                   }
-                                   else
-                                   {
-                                       t.POKEPLACE = pnum;
-                                   }
-                                   pnum -= (t.POKENUM ?? 0);
-                                   WriteLog.GetLog().Write("sortnum" + t.SORTNUM + "pokeplace:" + t.POKEPLACE);
-                               }
-                                // uniontasknum += 1;
-                            }
                           
                         }
+
                     }
-                    
+                    entity.SaveChanges();
                 }
-                entity.SaveChanges();
+                #endregion
+            }
+            
+            finally
+            {
+                cacheLock.ExitWriteLock();
             }
         }
         public static void FetchTaskByTroughNo(string troughNo, string standbyNo)
