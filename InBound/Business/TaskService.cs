@@ -1619,7 +1619,10 @@ namespace InBound.Business
                 {
                     foreach (var item in query)
                     {
-                        item.UNIONSTATE = stage;
+                        if (item.UNIONSTATE == 10)
+                        {
+                            item.UNIONSTATE = stage;
+                        }
                     }
                     //如果是合流完成,则将task表状态置为完成
                     if (stage == 20)
