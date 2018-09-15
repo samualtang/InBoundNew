@@ -25,21 +25,22 @@ namespace highSpeed.orderHandle
 
         protected override void OnLoad(EventArgs e)
         {
+            
             base.OnLoad(e);
-            loadData.LoadDatas<List<T_PRODUCE_SORTTROUGH>>(() =>
-            {
-                var list = SortTroughService.GetTrough(10, 20).GroupBy(g => g.GROUPNO).Select(s => new T_PRODUCE_SORTTROUGH { GROUPNO = s.Key.Value }).ToList();
-                return list;
-            }, (list) =>
-            {
-                cmb_GroupList.DataSource = list;
-                cmb_GroupList.DisplayMember = "GROUPNO";
-                cmb_GroupList.ValueMember = "GROUPNO";
-            }, (exceptionInfo) =>
-            {
-                MessageBox.Show(exceptionInfo);
-            });
-
+            //loadData.LoadDatas<List<T_PRODUCE_SORTTROUGH>>(() =>
+            //{
+            //    var list = SortTroughService.GetTrough(10, 20).GroupBy(g => g.GROUPNO).Select(s => new T_PRODUCE_SORTTROUGH { GROUPNO = s.Key.Value }).OrderBy(x=>x.GROUPNO).ToList();
+            //    return list;
+            //}, (list) =>
+            //{
+            //    cmb_GroupList.DataSource = list;
+            //    cmb_GroupList.DisplayMember = "GROUPNO";
+            //    cmb_GroupList.ValueMember = "GROUPNO";
+            //}, (exceptionInfo) =>
+            //{
+            //    MessageBox.Show(exceptionInfo);
+            //});
+            
             groupnoBox.SelectedIndex = 0;
         }
 
@@ -345,32 +346,35 @@ namespace highSpeed.orderHandle
                 using (Entities et = new Entities())
                 {
                     var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 3).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x=>x.MACHINESEQ).ToList();
-
                     foreach (var item in result)
                     {
                         comboBox_yg.Items.Add(item.MACHINESEQ);
                     }
                     comboBox_yg.SelectedIndex = 0; 
-                }
-                using (Entities et = new Entities())
-                {
-                    var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 1).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x => x.MACHINESEQ).ToList();
-
-                    foreach (var item in result)
+               
+                    var result1 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 1).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x => x.MACHINESEQ).ToList();
+                    foreach (var item in result1)
                     {
                         comboBox_yc1.Items.Add(item.MACHINESEQ);
                     }
                     comboBox_yc1.SelectedIndex = -1;
-                }
-                using (Entities et = new Entities())
-                {
-                    var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 2).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x => x.MACHINESEQ).ToList();
-
-                    foreach (var item in result)
+                
+                    var result2 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 2).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x => x.MACHINESEQ).ToList();
+                    foreach (var item in result2)
                     {
                         comboBox_yc2.Items.Add(item.MACHINESEQ);
                     }
                     comboBox_yc2.SelectedIndex = -1;
+                
+
+
+                    var result3 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10).GroupBy(x => x.GROUPNO).OrderBy(x=>x.Key).ToList();
+                    foreach (var item in result3)
+                    {
+                        comboBox_group.Items.Add(item.Key);
+                    }
+                    comboBox_group.SelectedIndex = 0 ;
+
                 }
             }
             catch (Exception)
@@ -453,7 +457,6 @@ namespace highSpeed.orderHandle
 
 
 
-        #endregion
 
         private void button2_Click_1(object sender, EventArgs e)
         {
@@ -581,6 +584,140 @@ namespace highSpeed.orderHandle
         private void button4_Click(object sender, EventArgs e)
         {
             troughcheck();
+        }
+
+        #endregion
+
+
+        #region  常规烟烟柜
+        private void comboBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                decimal txt = Convert.ToDecimal(comboBox_group.Text).CastTo(0);
+                comboBox4.Items.Clear();
+                comboBox5.Items.Clear();
+                using (Entities et = new Entities())
+                {
+                    var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.GROUPNO == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.GROUPNO,x.STATE }).OrderBy(x => x.MACHINESEQ).ToList();
+                    foreach (var item in result4)
+                    {
+                        comboBox4.Items.Add(item.TROUGHNUM);
+                        if (item.STATE=="0")
+                        {
+                            comboBox5.Items.Add(item.TROUGHNUM);
+                        } 
+                    }
+                    comboBox4.SelectedIndex = -1;
+                    comboBox5.SelectedIndex = -1;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedIndex>-1)
+            {
+                try
+                {
+                    string txt = comboBox4.Text;
+                    using (Entities et = new Entities())
+                    {
+                        var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.TROUGHNUM == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.CIGARETTENAME }).FirstOrDefault();
+                        label22.Text = result4.CIGARETTENAME;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                } 
+            } 
+        }
+
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox5.SelectedIndex > -1)
+            {
+                try
+                {
+                    string txt = comboBox5.Text;
+                    using (Entities et = new Entities())
+                    {
+                        var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.TROUGHNUM == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.CIGARETTENAME }).FirstOrDefault();
+                        label18.Text = result4.CIGARETTENAME;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            } 
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (comboBox5.Text.Length <= 0)
+            {
+                MessageBox.Show("请选择原通道");
+                return;
+            }
+            if (comboBox4.Text.Length <= 0)
+            {
+                MessageBox.Show("请选择目标通道");
+                return;
+            }
+
+            DialogResult re = MessageBox.Show("请确认：分拣组" + comboBox_group.Text + "\r" + comboBox5.Text + "" + label18.Text + "\r与\r" + comboBox4.Text + "" + label22.Text + "\r换道？", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            if (re == DialogResult.OK)
+            {
+                try
+                {
+                    ProducePokeService.FetchPokeByTroughNo(comboBox5.Text, comboBox4.Text);
+                    MessageBox.Show("换道成功，请检查数据");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("换道失败，请重试");
+                }
+              
+            }
+        }
+
+
+
+
+        #endregion
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Db.Open();
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("p_produce_wms_sorttrough", sqlpara);
+ 
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
+            Db.Close();
+            if (errcode == "1")
+            {
+                MessageBox.Show("数据已同步");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
+            }
         }
     }
 }

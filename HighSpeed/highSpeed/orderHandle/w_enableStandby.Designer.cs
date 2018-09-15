@@ -68,9 +68,22 @@
             this.label12 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.comboBox_group = new System.Windows.Forms.ComboBox();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -83,12 +96,13 @@
             this.groupBox1.Controls.Add(this.cbsource);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnEnableStandby);
-            this.groupBox1.Location = new System.Drawing.Point(10, 34);
+            this.groupBox1.Location = new System.Drawing.Point(918, 30);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(855, 138);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "启用常规烟备用通道";
+            this.groupBox1.Visible = false;
             // 
             // label1
             // 
@@ -184,7 +198,7 @@
             this.groupBox2.Size = new System.Drawing.Size(855, 173);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "异型烟分拣过程中烟仓换道";
+            this.groupBox2.Text = "异型烟分拣过程中 烟仓换道";
             // 
             // button3
             // 
@@ -323,7 +337,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(743, 94);
+            this.button1.Location = new System.Drawing.Point(743, 74);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -350,7 +364,7 @@
             this.groupBox3.Size = new System.Drawing.Size(855, 166);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "异型烟分拣过程中烟柜换烟仓";
+            this.groupBox3.Text = "异型烟分拣过程中 烟柜换烟仓";
             // 
             // button2
             // 
@@ -373,7 +387,7 @@
             // 
             // button_update
             // 
-            this.button_update.Location = new System.Drawing.Point(743, 95);
+            this.button_update.Location = new System.Drawing.Point(743, 71);
             this.button_update.Name = "button_update";
             this.button_update.Size = new System.Drawing.Size(75, 23);
             this.button_update.TabIndex = 13;
@@ -467,7 +481,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(662, 5);
+            this.button4.Location = new System.Drawing.Point(655, 5);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 6;
@@ -485,11 +499,136 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(557, 5);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 8;
+            this.button6.Text = "烟柜同步";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label22);
+            this.groupBox4.Controls.Add(this.label21);
+            this.groupBox4.Controls.Add(this.label18);
+            this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.comboBox_group);
+            this.groupBox4.Controls.Add(this.comboBox4);
+            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Controls.Add(this.comboBox5);
+            this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.Controls.Add(this.button7);
+            this.groupBox4.Location = new System.Drawing.Point(10, 30);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(855, 138);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "常规烟分拣过程中 换柜";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(257, 83);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(29, 12);
+            this.label22.TabIndex = 15;
+            this.label22.Text = "烟柜";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(520, 12);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(329, 12);
+            this.label21.TabIndex = 14;
+            this.label21.Text = "提示：烟柜换道前，请先同步烟柜，然后更换分拣任务的通道";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(298, 33);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(29, 12);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "烟柜";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(127, 34);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 12);
+            this.label17.TabIndex = 10;
+            this.label17.Text = "组";
+            // 
+            // comboBox_group
+            // 
+            this.comboBox_group.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_group.FormattingEnabled = true;
+            this.comboBox_group.Location = new System.Drawing.Point(78, 30);
+            this.comboBox_group.Name = "comboBox_group";
+            this.comboBox_group.Size = new System.Drawing.Size(47, 20);
+            this.comboBox_group.TabIndex = 9;
+            this.comboBox_group.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged_1);
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(78, 80);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(158, 20);
+            this.comboBox4.TabIndex = 6;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(16, 82);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(59, 12);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "目标通道:";
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Location = new System.Drawing.Point(190, 31);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(96, 20);
+            this.comboBox5.TabIndex = 4;
+            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(20, 30);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(47, 12);
+            this.label20.TabIndex = 3;
+            this.label20.Text = "源通道:";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(743, 63);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 29);
+            this.button7.TabIndex = 2;
+            this.button7.Text = "更换";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // w_enableStandby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 547);
+            this.ClientSize = new System.Drawing.Size(1248, 547);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.groupBox3);
@@ -497,7 +636,7 @@
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "w_enableStandby";
-            this.Text = "启用备用";
+            this.Text = "分拣换道";
             this.Load += new System.EventHandler(this.w_enableStandby_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -505,6 +644,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -551,5 +692,17 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox comboBox_group;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label22;
     }
 }

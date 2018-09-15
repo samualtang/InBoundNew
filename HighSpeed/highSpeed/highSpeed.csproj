@@ -85,6 +85,12 @@
     <Compile Include="baseData\w_cigarette_handle.Designer.cs">
       <DependentUpon>w_cigarette_handle.cs</DependentUpon>
     </Compile>
+    <Compile Include="baseData\w_trough_2line.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_trough_2line.Designer.cs">
+      <DependentUpon>w_trough_2line.cs</DependentUpon>
+    </Compile>
     <Compile Include="baseData\w_unhunhetrough.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -478,6 +484,9 @@
     </Compile>
     <EmbeddedResource Include="baseData\w_cigarette_handle.resx">
       <DependentUpon>w_cigarette_handle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="baseData\w_trough_2line.resx">
+      <DependentUpon>w_trough_2line.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="baseData\w_unhunhetrough.resx">
       <DependentUpon>w_unhunhetrough.cs</DependentUpon>

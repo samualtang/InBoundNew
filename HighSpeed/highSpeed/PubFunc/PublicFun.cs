@@ -212,7 +212,7 @@ namespace highSpeed.PubFunc
                 try
                 {
 
-                    connect = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=" + ServerName + ")(PORT=10001))(CONNECT_DATA=(SERVICE_NAME=" + DataName + ")));User Id=" + userId + ";Password=" + sPwd + ";";
+                    connect = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=" + ServerName + ")(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=" + DataName + ")));User Id=" + userId + ";Password=" + sPwd + ";";
                     Console.WriteLine(connect);
 
                     OracleConnection cn = new OracleConnection();

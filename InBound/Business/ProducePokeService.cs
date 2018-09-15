@@ -691,5 +691,46 @@ namespace InBound.Business
                 entity.SaveChanges();
             }
         }
+
+
+        public static void FetchPokeByTroughNo(string troughNo, string standbyNo)
+        {
+            using (Entities entity = new Entities())
+            {
+
+                var query = (from poke in entity.T_PRODUCE_POKE
+                             where poke.TROUGHNUM == troughNo
+                             select poke).ToList();
+
+                var tempquery = (from poke in entity.T_PRODUCE_SORTTROUGH
+                                 where poke.TROUGHNUM == standbyNo
+                                 select poke).FirstOrDefault(); 
+                decimal groupno = 0;
+                if (query != null)
+                {
+                    query.ForEach(f =>
+                    {
+                        f.TROUGHNUM = standbyNo;
+                        f.MACHINESEQ = tempquery.MACHINESEQ;
+                    });
+                    groupno = query[0].GROUPNO ?? 0;
+
+                    var querytemp = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE > 10 && item.SORTSTATE <= 15 select item).ToList();
+                    if (querytemp != null)
+                    {
+                        foreach (var record in querytemp)
+                        {
+                            record.SORTSTATE = 10;
+                            record.POKEPLACE = 0;
+                            record.MERAGENUM = 0;
+                            record.MACHINESTATE = 10;
+                            record.UNIONTASKNUM = 0;
+                        }
+                    }
+                }
+
+                entity.SaveChanges();
+            }
+        }
     }
 }

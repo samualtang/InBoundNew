@@ -62,13 +62,16 @@
             this.groupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.button3 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnsyncData);
+            this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.cbctype);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.button2);
@@ -87,16 +90,16 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1217, 50);
+            this.panel1.Size = new System.Drawing.Size(1252, 69);
             this.panel1.TabIndex = 0;
             // 
             // btnsyncData
             // 
-            this.btnsyncData.Location = new System.Drawing.Point(1136, 12);
+            this.btnsyncData.Location = new System.Drawing.Point(20, 23);
             this.btnsyncData.Name = "btnsyncData";
-            this.btnsyncData.Size = new System.Drawing.Size(52, 23);
+            this.btnsyncData.Size = new System.Drawing.Size(48, 23);
             this.btnsyncData.TabIndex = 18;
-            this.btnsyncData.Text = "同步";
+            this.btnsyncData.Text = "烟柜";
             this.btnsyncData.UseVisualStyleBackColor = true;
             this.btnsyncData.Click += new System.EventHandler(this.btnsyncData_Click);
             // 
@@ -108,7 +111,7 @@
             "标准烟",
             "异型烟",
             "异型混合"});
-            this.cbctype.Location = new System.Drawing.Point(504, 16);
+            this.cbctype.Location = new System.Drawing.Point(504, 26);
             this.cbctype.Margin = new System.Windows.Forms.Padding(2);
             this.cbctype.Name = "cbctype";
             this.cbctype.Size = new System.Drawing.Size(102, 20);
@@ -117,7 +120,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(441, 21);
+            this.label3.Location = new System.Drawing.Point(441, 31);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 12);
@@ -126,7 +129,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(825, 13);
+            this.button2.Location = new System.Drawing.Point(814, 23);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(51, 23);
@@ -138,7 +141,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(269, 21);
+            this.label1.Location = new System.Drawing.Point(269, 31);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
@@ -153,7 +156,7 @@
             "重力式货架",
             "皮带机",
             "分拣出口"});
-            this.cbtype.Location = new System.Drawing.Point(340, 17);
+            this.cbtype.Location = new System.Drawing.Point(340, 27);
             this.cbtype.Margin = new System.Windows.Forms.Padding(2);
             this.cbtype.Name = "cbtype";
             this.cbtype.Size = new System.Drawing.Size(97, 20);
@@ -161,7 +164,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1081, 13);
+            this.button1.Location = new System.Drawing.Point(1052, 23);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 12;
@@ -171,7 +174,7 @@
             // 
             // btn_toexcel
             // 
-            this.btn_toexcel.Location = new System.Drawing.Point(1022, 13);
+            this.btn_toexcel.Location = new System.Drawing.Point(998, 23);
             this.btn_toexcel.Name = "btn_toexcel";
             this.btn_toexcel.Size = new System.Drawing.Size(44, 23);
             this.btn_toexcel.TabIndex = 11;
@@ -181,7 +184,7 @@
             // 
             // btn_print
             // 
-            this.btn_print.Location = new System.Drawing.Point(953, 13);
+            this.btn_print.Location = new System.Drawing.Point(940, 23);
             this.btn_print.Name = "btn_print";
             this.btn_print.Size = new System.Drawing.Size(51, 23);
             this.btn_print.TabIndex = 10;
@@ -191,7 +194,7 @@
             // 
             // btn_amend
             // 
-            this.btn_amend.Location = new System.Drawing.Point(887, 13);
+            this.btn_amend.Location = new System.Drawing.Point(872, 23);
             this.btn_amend.Name = "btn_amend";
             this.btn_amend.Size = new System.Drawing.Size(54, 23);
             this.btn_amend.TabIndex = 8;
@@ -201,7 +204,7 @@
             // 
             // btn_qy
             // 
-            this.btn_qy.Location = new System.Drawing.Point(688, 13);
+            this.btn_qy.Location = new System.Drawing.Point(687, 23);
             this.btn_qy.Name = "btn_qy";
             this.btn_qy.Size = new System.Drawing.Size(56, 23);
             this.btn_qy.TabIndex = 7;
@@ -211,7 +214,7 @@
             // 
             // btn_jy
             // 
-            this.btn_jy.Location = new System.Drawing.Point(755, 13);
+            this.btn_jy.Location = new System.Drawing.Point(750, 23);
             this.btn_jy.Name = "btn_jy";
             this.btn_jy.Size = new System.Drawing.Size(56, 23);
             this.btn_jy.TabIndex = 6;
@@ -221,7 +224,7 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(631, 13);
+            this.btn_search.Location = new System.Drawing.Point(631, 23);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(51, 23);
             this.btn_search.TabIndex = 5;
@@ -231,7 +234,7 @@
             // 
             // txt_keywd
             // 
-            this.txt_keywd.Location = new System.Drawing.Point(165, 15);
+            this.txt_keywd.Location = new System.Drawing.Point(165, 25);
             this.txt_keywd.Name = "txt_keywd";
             this.txt_keywd.Size = new System.Drawing.Size(100, 21);
             this.txt_keywd.TabIndex = 4;
@@ -241,7 +244,7 @@
             // 
             this.box_condition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.box_condition.FormattingEnabled = true;
-            this.box_condition.Location = new System.Drawing.Point(59, 16);
+            this.box_condition.Location = new System.Drawing.Point(59, 26);
             this.box_condition.Name = "box_condition";
             this.box_condition.Size = new System.Drawing.Size(100, 20);
             this.box_condition.TabIndex = 3;
@@ -250,7 +253,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 19);
+            this.label2.Location = new System.Drawing.Point(3, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 1;
@@ -276,13 +279,13 @@
             this.ctype,
             this.id,
             this.groupno});
-            this.troughdata.Location = new System.Drawing.Point(0, 50);
+            this.troughdata.Location = new System.Drawing.Point(0, 68);
             this.troughdata.MultiSelect = false;
             this.troughdata.Name = "troughdata";
             this.troughdata.ReadOnly = true;
             this.troughdata.RowTemplate.Height = 23;
             this.troughdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.troughdata.Size = new System.Drawing.Size(1205, 594);
+            this.troughdata.Size = new System.Drawing.Size(1252, 576);
             this.troughdata.TabIndex = 0;
             this.troughdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.troughdata_CellClick);
             this.troughdata.MouseClick += new System.Windows.Forms.MouseEventHandler(this.troughdata_MouseClick);
@@ -523,11 +526,32 @@
             this.pager1.Size = new System.Drawing.Size(1099, 45);
             this.pager1.TabIndex = 1;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(80, 23);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(48, 23);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "烟仓";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnsyncData);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Location = new System.Drawing.Point(1106, 2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(143, 64);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "同步";
+            // 
             // win_trough
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1217, 559);
+            this.ClientSize = new System.Drawing.Size(1252, 559);
             this.Controls.Add(this.pager1);
             this.Controls.Add(this.troughdata);
             this.Controls.Add(this.panel1);
@@ -537,6 +561,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -576,5 +601,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ctype;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn groupno;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

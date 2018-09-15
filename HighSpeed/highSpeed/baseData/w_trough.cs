@@ -486,5 +486,11 @@ namespace highSpeed.baseData
                 MessageBox.Show(errmsg);
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            w_trough_2line m = new w_trough_2line();
+            m.ShowDialog();
+        }
     }
 }
