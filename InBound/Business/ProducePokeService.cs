@@ -401,9 +401,10 @@ namespace InBound.Business
         public static void UpdatePokeByGroupNo(decimal groupno, int orderAmount,int mainbelt)
         {
 
-            cacheLock.EnterWriteLock();
+           
             try
             {
+                cacheLock.EnterWriteLock();
                 #region
                 using (Entities entity = new Entities())
                 {
