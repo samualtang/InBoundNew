@@ -181,19 +181,23 @@ namespace InBound.Business
 
                 else return null;
             }
-        }
+        } 
+      static decimal  yjZqNum = 0;
+      static decimal lastZqNum = 0;
+      static decimal lastSortnum = 0;
         /// <summary>
         /// 获取合流机械手信息
         /// </summary>
         /// <param name="sortnum">任务号</param>
         /// <param name="mainbelt">主皮带</param>
         /// <param name="groupno">组号</param>
-        /// <param name="xynum">吸烟数量</param>
+        /// <param name="Allxynum">吸烟数量</param>
         /// <returns></returns>
-        public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno,decimal xynum)
+        public static List<FollowTaskDeail> GetUnionMachineInfo(decimal sortnum, int mainbelt,int groupno,decimal Allxynum,decimal yjxyNum)
         {
             using (Entities dataentity  = new Entities())
             {
+                 
                 if (groupno == 4) { groupno = 3; } else if (groupno == 3) { groupno = 4; }
                 //由于机械手第7组分出来的烟对应的是合流第八组机械手，这里7和8组对应有个对调
                 if (groupno == 8) { groupno = 7; } else if (groupno == 7) { groupno = 8; }
@@ -214,9 +218,11 @@ namespace InBound.Business
                                 GroupNO = item.GROUPNO ?? 0,
                                 Machineseq = item.MACHINESEQ ?? 0
                             }).ToList();
+
+                Allxynum = Allxynum - yjxyNum;
                 if (query != null)
                 {
-                    return ChaiFenList(query, xynum);
+                    return ChaiFenList(query, Allxynum);
                 }
                 else
                 {
@@ -228,41 +234,28 @@ namespace InBound.Business
         public static List<FollowTaskDeail> ChaiFenList(List<FollowTaskDeail> list, decimal xynum)
         {
             List<FollowTaskDeail> newlist = new List<FollowTaskDeail>();
-            if (list.Count > 0 && list != null)
+            foreach (var item in list)
             {
-                foreach (var item in list)
+                if (item.POKENUM > 1)
                 {
-                    if (item.POKENUM > 1)
-                    {
-                        for (int i = 0; i < item.POKENUM; i++)
-                        {
-                            xynum--;
-                            newlist.Add(item);
-                            if (xynum < 1)
-                            {
-                                break;
-                            }
-                           
-                        }
-                    }
-                    else
+                    for (int i = 0; i < item.POKENUM; i++)
                     {
                         newlist.Add(item);
-                        xynum--; 
                     }
-                   
                 }
-                foreach (var item in newlist)
+                else
                 {
-                    item.POKENUM = 1; 
+                    newlist.Add(item);
                 }
-                return newlist.OrderBy(a=> a.SortNum).ToList();
-
             }
-            else
+            newlist = newlist.Skip((int)xynum).ToList(); 
+            foreach (var item in newlist)
             {
-                return null;
-            } 
+                item.POKENUM = 1;
+            }
+            return newlist.OrderBy(a => a.SortNum).Take(10).ToList();
+
+
         }
         /// <summary>
         /// 查询机械手任务

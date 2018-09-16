@@ -144,13 +144,16 @@ namespace FollowTask
         }
         void Bind()
         {
-            
-            decimal sortnum = ReadDbInFo(MainBelt, MachineNo)[0];//当前任务号
-            decimal xynum = ReadDbInFo(MainBelt, MachineNo)[1];   //当前抓烟数 
+            decimal[] all = ReadDbInFo(MainBelt, MachineNo);//合流机械手 任务信息
+            decimal sortnum = all[0];//当前任务号
+            decimal xynum = all[1];   //当前抓烟数 
+            decimal sortNumAll = all[2];//任务号
+            decimal xynumAll = all[3];//当前任务总抓数
+
             txtPokenum.Text = xynum.ToString();
             txtSortnum.Text = sortnum.ToString(); ;
             int lablindex = 1;
-            List<InBound.Model.FollowTaskDeail> list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo, xynum);
+            List<InBound.Model.FollowTaskDeail> list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo, xynumAll, xynum);
             if (list != null)
             {
                 list = list.Take(10).ToList();
@@ -281,12 +284,12 @@ namespace FollowTask
         /// <returns></returns>
         decimal[] ReadDbInFo(int mainbelt, int machineno)
         {
-            decimal[] sortnumAndXYnum = new decimal[2];
+            decimal[] sortnumAndXYnum = new decimal[4];
 
             sortnumAndXYnum[0] = Listmachine[5].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//0  2   4
             sortnumAndXYnum[1] = Listmachine[5].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//1   3  5
-           
-
+            sortnumAndXYnum[2] = Listmachine[4].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//任务号
+            sortnumAndXYnum[3] = Listmachine[4].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//总抓数
             return sortnumAndXYnum;
         }
 

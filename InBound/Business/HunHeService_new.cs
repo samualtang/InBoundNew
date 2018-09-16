@@ -43,7 +43,7 @@ namespace InBound.Business
                                          join item2 in entity.T_PRODUCE_SORTTROUGH
                                              on item.TROUGHNUM equals item2.TROUGHNUM
                                          join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item3.PULLSTATUS == 1
                                              && (item.PACKAGEMACHINE == packmachine1
@@ -69,10 +69,9 @@ namespace InBound.Business
                                          join item2 in entity.T_PRODUCE_SORTTROUGH
                                              on item.TROUGHNUM equals item2.TROUGHNUM
                                          join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
                                              && item2.MACHINESEQ == seq
-                                             //&& item3.PULLSTATUS == 1
-
+                                             && item3.PULLSTATUS == 1//
                                              && (item.PACKAGEMACHINE == packmachine1
                                              || item.PACKAGEMACHINE == packmachine2)
                                          orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
@@ -87,8 +86,9 @@ namespace InBound.Business
                                              SENDTASKNUM = item.SENDTASKNUM,
                                              PULLSTATUS = item3.PULLSTATUS
                                          }).Skip(finishno2).Take(qty).ToList();
-
-                            return updown(query, cigarettesort,2);
+                            return updown_new(query, 0);
+                            //没有经过排程处理的数据使用的方法 不需要过滤放烟
+                            //return updown(query, cigarettesort,2);
                         }      
                        
                     }
@@ -98,7 +98,7 @@ namespace InBound.Business
                                      join item2 in entity.T_PRODUCE_SORTTROUGH
                                          on item.TROUGHNUM equals item2.TROUGHNUM
                                      join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                     where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SORTNUM >= finishno1//finishno  
+                                     where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
                                      && (item.PACKAGEMACHINE == packmachine1
                                          || item.PACKAGEMACHINE == packmachine2)
                                         && item3.PULLSTATUS == 1
@@ -119,7 +119,9 @@ namespace InBound.Business
                         }
                         else
                         {
-                            return updown(query, cigarettesort);
+                            return updown_new(query, 0);
+                            //没有经过排程处理的数据使用的方法 不需要过滤放烟
+                            //return updown(query, cigarettesort);
                         }      
                     }
                 }
@@ -129,6 +131,83 @@ namespace InBound.Business
                 }
             }
         }
+        /// <summary>
+        /// 包内顺序切换（不计算烟宽度）
+        /// </summary>
+        /// <param name="query">原数据(过滤放烟)</param>
+        /// <returns>重新排序后的数据</returns>
+        public List<HUNHEVIEW> updown_new(List<HUNHEVIEW> query, int tag = 0)
+        {
+            //重新排序后的数据表
+            List<HUNHEVIEW> table = new List<HUNHEVIEW>();
+            using (Entities entity = new Entities())
+            {
+                WriteLog writeLog = WriteLog.GetLog();
+                //包号顺序表 
+                List<HUNHEVIEW> table1 = query.GroupBy(x => x.SENDTASKNUM).Select(x => new HUNHEVIEW { SENDTASKNUM = x.Key }).OrderBy(x=>x.SENDTASKNUM).ToList();
+                //每包内顺序表（未修改顺序—>修改顺序）
+                foreach (var item in table1)
+                {
+                    //当前包号数据表
+                    List<HUNHEVIEW> table2 = query.Where(x => x.SENDTASKNUM == item.SENDTASKNUM).Select(x => x).ToList();
+                    //重新排序后的包
+                    List<HUNHEVIEW> table3 = new List<HUNHEVIEW>(); 
+                    int index = table2.Count;
+                    //遍历每包内数据
+                    foreach (var item2 in table2)
+                    {
+                        index--;
+                        table3.Add(table2[index]); 
+                    }
+                    table.AddRange(table3);
+                }
+            }
+            if (tag == 1)
+            {
+                table.RemoveAll(x => x.PULLSTATUS == 1);
+            }
+            if (tag == 2)
+            {
+                table.RemoveAll(x => x.PULLSTATUS == 0);
+            }
+            return table;
+        }
+
+        /// <summary>
+        /// 包内顺序切换（不计算烟宽度  定位）
+        /// </summary>
+        /// <param name="query">原数据(过滤放烟)</param>
+        /// <returns>重新排序后的数据</returns>
+        public List<HUNHENOWVIEW1> updown_now_new(List<HUNHENOWVIEW1> query, int tag = 0)
+        {
+            //重新排序后的数据表
+            List<HUNHENOWVIEW1> table = new List<HUNHENOWVIEW1>();
+            using (Entities entity = new Entities())
+            {
+                WriteLog writeLog = WriteLog.GetLog();
+                //包号顺序表 
+                List<HUNHENOWVIEW1> table1 = query.GroupBy(x => x.sendtasknum).Select(x => new HUNHENOWVIEW1 { sendtasknum = x.Key }).OrderBy(x => x.sendtasknum).ToList();
+                //每包内顺序表（未修改顺序—>修改顺序）
+                foreach (var item in table1)
+                {
+                    //当前包号数据表
+                    List<HUNHENOWVIEW1> table2 = query.Where(x => x.sendtasknum == item.sendtasknum).Select(x => x).ToList();
+                    //重新排序后的包
+                    List<HUNHENOWVIEW1> table3 = new List<HUNHENOWVIEW1>();
+                    int index = table2.Count;
+                    //遍历每包内数据
+                    foreach (var item2 in table2)
+                    {
+                        index--;
+                        table3.Add(table2[index]);
+                    }
+                    table.AddRange(table3);
+                }
+            } 
+            return table;
+        }
+
+
         #region  烟序处理算法
         /// <summary>
         /// 包内顺序切换（烟宽度）
@@ -335,7 +414,7 @@ namespace InBound.Business
         /// </summary>
         /// <param name="seq"></param>
         /// <returns></returns>
-        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] finishno,decimal[] packmachineseq,string cigarettesort = "0")
+        public List<HUNHEVIEW> GetUnPullCigarette(decimal seq,decimal[] finishno,decimal[] packmachineseq,int qty,string cigarettesort = "0")
         {
             decimal packmachine1 = packmachineseq[0];
             decimal packmachine2 = packmachineseq[1];
@@ -352,10 +431,10 @@ namespace InBound.Business
                                      join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                      join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                      where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
-                                     && item.SORTNUM >= finishno1
+                                     && item.SENDTASKNUM >= finishno1
                                      && item4.PULLSTATUS == 0
                                      orderby item.SORTNUM, item.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).ToList();
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).Take(qty).ToList();
                    
                         return query;
                     }
@@ -367,12 +446,14 @@ namespace InBound.Business
                                      join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                      join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                      where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
-                                     && item.SORTNUM >= finishno1
-                                     //&& item4.PULLSTATUS == 0
+                                     && item.SENDTASKNUM >= finishno1
+                                     && item4.PULLSTATUS == 0//
                                      orderby item.SORTNUM, item.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).ToList();
-                   
-                        return updown(query, cigarettesort,1);
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).Take(qty).ToList();
+
+                        return updown_new(query, 0);
+                        //没有经过排程处理的数据使用的方法  不需要过滤放烟
+                        //return updown(query, cigarettesort,1);
                     }      
                 }
                 catch (Exception e)
@@ -426,7 +507,9 @@ namespace InBound.Business
                         }
                         else
                         {
-                            return updown_now(query, cigarettesort);
+                            return updown_now_new(query,0);
+                            //没有经过排程处理的数据使用的方法 不需要过滤放烟
+                            //return updown_now(query, cigarettesort);
                         }    
                     }
                    

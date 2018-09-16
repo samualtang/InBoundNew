@@ -343,6 +343,15 @@ namespace WebService.Modle
             }
             return "";
         }
+        public void RemovedItem()
+        {
+            if (ItemDeffArray != null)
+            {
+                //RemovedItem
+                ItemDeffArray = null;
+                ItemSvrHandleArray = null;
+            }
+        }
         public object Read(int index)
         {
             // Access unmanaged COM memory

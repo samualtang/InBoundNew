@@ -338,6 +338,7 @@ namespace SpecialShapeSmoke
             //btnSearch.Enabled = false;
             //timer1.Start();
             timer1.Interval = RefreshTime * 1000;
+            timer1.Start();
         }
         Label lblpack;
 
@@ -354,7 +355,7 @@ namespace SpecialShapeSmoke
             clearAllText();
             for (int j = 0; j < boxText.Length; j++)//数据获取核心
             {
-                throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]),finishNo, 300,PackMachineSeq, true));//第二个 
+                throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo, 150, PackMachineSeq, true));//第二个 
                 //initText(panelList[j], throughList[j]);
                 initTextUpOrDn(panelList[j], throughList[j], 15, UpOrDn);
             }
@@ -515,7 +516,7 @@ namespace SpecialShapeSmoke
                         {
                             MessageBox.Show("没有已排程未分拣数据"); 
                         }
-                        timer1.Start();
+                       
                     }
                 }
                 catch (Exception)
@@ -679,9 +680,7 @@ namespace SpecialShapeSmoke
                 catch (Exception ex)
                 {
                     writeLog.Write("Plc读取完成信号失败！" + ex.Message);
-                } 
-                //txtbox4.Text = finishNo[0].ToString();
-                //txtbox3.Text = finishNo[1].ToString();
+                }
                 //if (befoerFinishNo[0] != finishNo[0] || befoerFinishNo[1] != finishNo[1])
                 //{
                 //    finishchange = true;
@@ -721,12 +720,12 @@ namespace SpecialShapeSmoke
                                 {
                                     if (j == 0)
                                     {
-                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 300, PackMachineSeq, true, cigarettesort));
+                                        throughList[j] = GroupList(service.GetTroughCigarette((Convert.ToDecimal(boxText[0])), finishNo, 150, PackMachineSeq, true, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[j], labelnum, true);
                                     }
                                     else
                                     {
-                                        throughList[j] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), finishNo, PackMachineSeq, cigarettesort));
+                                        throughList[j] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), finishNo, PackMachineSeq,150, cigarettesort));
                                         initTextUpOrDn(panelList[j], throughList[j], labelnum, true);
                                     }
                                 }
@@ -737,24 +736,24 @@ namespace SpecialShapeSmoke
                                 {
                                     if (j == 0)
                                     {
-                                        throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo, 300, PackMachineSeq, true));
+                                        throughList[j] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j]), finishNo, 150, PackMachineSeq, true));
                                         initTextUpOrDn(panelList[j], throughList[j], labelnum, true);
                                     }
                                     else if (j == 2)
                                     {
-                                        throughList[j - 1] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j - 1]), finishNo, 300, PackMachineSeq, true));
+                                        throughList[j - 1] = GroupList(service.GetTroughCigarette(Convert.ToDecimal(boxText[j - 1]), finishNo, 150, PackMachineSeq, true));
                                         initTextUpOrDn(panelList[j], throughList[j - 1], labelnum, true);
                                     }
                                     else
                                     {
                                         if (j == 1)
                                         {
-                                            throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), finishNo, PackMachineSeq));
+                                            throughList[0] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[0]), finishNo, PackMachineSeq,150));
                                             initTextUpOrDn(panelList[j], throughList[0], labelnum, true);
                                         }
                                         else
                                         {
-                                            throughList[1] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[1]), finishNo, PackMachineSeq));
+                                            throughList[1] = GroupList(service.GetUnPullCigarette(Convert.ToDecimal(boxText[1]), finishNo, PackMachineSeq,150));
                                             initTextUpOrDn(panelList[j], throughList[1], labelnum, true);
                                         }
                                     }
@@ -1204,7 +1203,7 @@ namespace SpecialShapeSmoke
                     {
                         lbl.Height = (panelList[index].Height - 2 * labelCount - boxTop - boxBottom) / labelCount + 20;
                         lbl.Location = new Point(padding, boxTop + (lbl.Height + 2) * i - 5);
-                        lbl.Font = new Font("宋体", 22, FontStyle.Bold);
+                        lbl.Font = new Font("宋体", 26, FontStyle.Bold);
                     }
                     else
                     {
@@ -1657,10 +1656,10 @@ namespace SpecialShapeSmoke
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+          
+                //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
+                //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
 
-
-            //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
-            //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
             getData(true);
             txtbox4.Text = finishNo[0].ToString();
             txtbox3.Text = finishNo[1].ToString();

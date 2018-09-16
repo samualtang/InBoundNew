@@ -90,19 +90,21 @@ namespace WcfServiceLib
             {
                 return "远程连接失败,请检查网络";
             }
-            decimal[] sortnumAndXYnum = new decimal[2];
+            decimal[] sortnumAndXYnum = new decimal[3];
             sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
             sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
+            sortnumAndXYnum[2] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//累计吸烟数量 
             if (sortnumAndXYnum.Sum() > 0)
             {
-                //List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(109891, 1, 1, 10);
-                List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(sortnumAndXYnum[0], GetMainBeltNo(MachineNo), GetGroupNo(MachineNo), sortnumAndXYnum[1]);
+                //List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(123903, 3, 5, 10);
+                List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(sortnumAndXYnum[0], GetMainBeltNo(MachineNo), GetGroupNo(MachineNo), sortnumAndXYnum[1], sortnumAndXYnum[2]);
+               
                 if (list != null && list.Count > 0)
                 {
                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        ser.WriteObject(ms, list);
+                        ser.WriteObject(ms,  list.Take(10));
                         string s = Encoding.UTF8.GetString(ms.ToArray());
                         s = s.Replace("\\", "");
                         return s;
@@ -214,26 +216,26 @@ namespace WcfServiceLib
         /// <returns></returns>
         public string GetSortBelt(int GroupNo)
         {
-            if (GroupNo == 1 || GroupNo == 2 )
+            string conncetionGroupStr = "S7:[FJConnectionGroup1]";//默认为第一组
+            if (GroupNo == 1 || GroupNo == 2)
             {
-                OpcServer.FJConnectionGroup = "S7:[FJConnectionGroup1]";
+                conncetionGroupStr = "S7:[FJConnectionGroup1]";
             }
-            else if (GroupNo == 3 || GroupNo == 4 )
+            else if (GroupNo == 3 || GroupNo == 4)
             {
-                OpcServer.FJConnectionGroup = "S7:[FJConnectionGroup2]";
+                conncetionGroupStr = "S7:[FJConnectionGroup2]";
             }
             else if (GroupNo == 5 || GroupNo == 6)
             {
-                OpcServer.FJConnectionGroup = "S7:[FJConnectionGroup3]";
+                conncetionGroupStr = "S7:[FJConnectionGroup3]";
             }
             else if (GroupNo == 7 || GroupNo == 8)
             {
-                OpcServer.FJConnectionGroup = "S7:[FJConnectionGroup4]";
-            }
-
+                conncetionGroupStr = "S7:[FJConnectionGroup4]";
+            } 
             try
             {
-                OpcServer.Connect();
+                OpcServer.Connect(conncetionGroupStr);
             }
             catch (Exception ex)
             {
@@ -262,19 +264,16 @@ namespace WcfServiceLib
             else
             {
                 int ReadIndex = 0;
-                for (int i = 0; i < 1; i++)//从电控读取数据 填充 listmbinfo
+                for (int i = 0; i < 40; i++)//从电控读取数据 填充 listmbinfo
                 {
-                    //decimal Sortnum = OpcServer.listUnionTaskGroup[8].ReadD(ReadIndex).CastTo<int>(0);//任务号
-                    decimal Sortnum = 109934;
+                    decimal Sortnum = OpcServer.listUnionTaskGroup[8].ReadD(ReadIndex).CastTo<int>(0);//任务号
+               
                     if (Sortnum > 0)//任务号不为0
                     {
                         MainBeltInfo info = new MainBeltInfo();
                         info.SortNum = Sortnum;//任务号
-                        //info.Place = (OpcServer.listUnionTaskGroup[8].ReadD((ReadIndex + 1)).CastTo<decimal>(-1) / 1000);//位置(米)
-                        //info.Quantity = OpcServer.listUnionTaskGroup[8].ReadD((ReadIndex + 2)).CastTo<int>(-1);//数量
-
-                        info.Place = 21;
-                        info.Quantity = 5;
+                        info.Place = (OpcServer.listUnionTaskGroup[8].ReadD((ReadIndex + 1)).CastTo<decimal>(-1) / 1000);//位置(米)
+                        info.Quantity = OpcServer.listUnionTaskGroup[8].ReadD((ReadIndex + 2)).CastTo<int>(-1);//数量
 
                         info.GroupNO = GroupNo;//组号
                         ListmbInfo.Add(info);
@@ -283,23 +282,6 @@ namespace WcfServiceLib
                 }
             }
 
-            //decimal Sortnum = 114769;
-            //MainBeltInfo info = new MainBeltInfo();
-            //info.SortNum = Sortnum;//任务号
-            //info.Place = 21;
-            //info.Quantity = 6;
-            //info.GroupNO = GroupNo;//组号
-            //ListmbInfo.Add(info);
-
-            //for (int i = 0; i < 39; i++)
-            //{
-            //      MainBeltInfo ii = new MainBeltInfo();
-            //      ii.SortNum = 0;//任务号
-            //      ii.Place = 0;
-            //      ii.Quantity = 0;
-            //      ii.GroupNO = GroupNo;//组号
-            //      ListmbInfo.Add(ii);
-            //}
         
             MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序

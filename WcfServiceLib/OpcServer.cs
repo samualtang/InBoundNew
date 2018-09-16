@@ -16,19 +16,33 @@ namespace WebService
        public static Group SortGroupA, SortGroupB;
        internal const int LOCALE_ID = 0x409;  
           public static  List<Group> listUnionTaskGroup = new List<Group>();
-        public static void Connect()
+          
+        public static void Connect(string groupConnectionGroup ="S7:[FJConnectionGroup1]")
         {
-            if(pIOPCServer==null)
+            if (pIOPCServer == null)
             {
-               Type svrComponenttyp;
-               Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
-               svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+                Type svrComponenttyp;
+                Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
-              AddUnionTaskGroup();
+                AddUnionTaskGroup();
+                AddSortGroup(groupConnectionGroup);
             }
+            else
+            { 
+               listUnionTaskGroup[7].RemovedItem();//第二次调用的时候清除重新添加
+               listUnionTaskGroup[8].RemovedItem();
+               AddSortGroup(groupConnectionGroup);
+            } 
         }
         public static string FJConnectionGroup { get; set; }
-
+        public static void AddSortGroup(string groupConnectionGroup)
+        {
+            
+            SortGroupA.addItem(ItemCollection.GetASortingItem(groupConnectionGroup));//A组预分拣
+            SortGroupB.addItem(ItemCollection.GetASortingItem(groupConnectionGroup));//B组预分拣
+             
+        }
         public static void AddUnionTaskGroup()
         {
             UnionTaskGroup1 = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);//一号主皮带
@@ -51,8 +65,8 @@ namespace WebService
             UnionMachineNowTaskGroup.addItem(ItemCollection.GetUnionMachinNowTaskeItem());
             MachineGroup.addItem(ItemCollection.GetMachineGroup());
 
-            SortGroupA.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//A组预分拣
-            SortGroupB.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//B组预分拣
+           // SortGroupA.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//A组预分拣
+           // SortGroupB.addItem(ItemCollection.GetASortingItem(FJConnectionGroup));//B组预分拣
            
 
              
@@ -69,7 +83,7 @@ namespace WebService
             listUnionTaskGroup.Add(UnionTaskGroup4);//3
             listUnionTaskGroup.Add(UnionMachineTaskGroup);//4
             listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
-            listUnionTaskGroup.Add(MachineGroup);//6
+            listUnionTaskGroup.Add(MachineGroup);//6 
             listUnionTaskGroup.Add(SortGroupA);//7
             listUnionTaskGroup.Add(SortGroupB);//8
          

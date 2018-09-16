@@ -133,7 +133,7 @@ namespace SpecialShapeSmoke
 
                 for (int i = 0; i < DgvNowView.RowCount; i++)
                 {
-                    if (DgvNowView.Rows[i].Cells["sortnum"].Value.ToString().Trim() == pokeid)
+                    if (DgvNowView.Rows[i].Cells["sendtasknum"].Value.ToString().Trim() == pokeid)
                     {
                         foreach (DataGridViewRow row in DgvNowView.Rows)
                         {
@@ -170,6 +170,7 @@ namespace SpecialShapeSmoke
             {
                 labMachineSeq.Text = Seq + "通道没有分拣数据，请选择其他通道！";
             }
+            //DgvNowView.DataSource = null;
             DgvNowView.DataSource = hunhelist;
 
 
@@ -189,25 +190,25 @@ namespace SpecialShapeSmoke
         /// <param name="e"></param>
         private void DgvNowView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //重绘状态单元格显示
-            //if (e.ColumnIndex == 8)
-            //{
-            //    string Status = "";
-            //    switch (e.Value.ToString())
-            //    { 
+           //重绘状态单元格显示
+            if (e.ColumnIndex == 8)
+            {
+                string Status = "";
+                switch (e.Value.ToString())
+                { 
 
-            //        //case "10":
-            //        //    Status = "未出烟";
-            //        //    break;
-            //        case "15":
-            //            Status = "已出烟";
-            //            break;
-            //        case "20":
-            //            Status = "已出烟";
-            //            break;
-            //    }
-            //    e.Value = Status;
-            //}
+                    //case "10":
+                    //    Status = "未出烟";
+                    //    break;
+                    case "15":
+                        Status = "已出烟";
+                        break;
+                    case "20":
+                        Status = "已出烟";
+                        break;
+                }
+                e.Value = Status;
+            }
 
             if (e.ColumnIndex == 10)
             {
@@ -225,11 +226,6 @@ namespace SpecialShapeSmoke
 
             }
 
-        }
-
-
-
-
-
+        }  
     }
 }
