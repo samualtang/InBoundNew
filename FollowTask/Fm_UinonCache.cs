@@ -56,8 +56,8 @@ namespace FollowTask
        void ReadDbInFo(int mainbelt, int machineno)
         { 
         
-            sortnumAndXYnum[0] = listUnionMachine[5].ReadD(((machineno * 2) - 2)).CastTo<int>(-1);//当前任务号
-            sortnumAndXYnum[1] = listUnionMachine[5].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
+            sortnumAndXYnum[0] = listUnionMachine[4].ReadD(((machineno * 2) - 2)).CastTo<int>(-1);//当前任务号
+            sortnumAndXYnum[1] = listUnionMachine[4].ReadD(((machineno * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
             
         }
        #region 暂时无用
@@ -132,6 +132,7 @@ namespace FollowTask
                     //ReadDBInfo(listUnionMachine[5], MainBelt);
                     txtSortnum.Text = sortnumAndXYnum[0] + "";
                     txtPokenum.Text = sortnumAndXYnum[1] + "";
+                    //list = FolloTaskService.getUnionCache(8, 1, 137595, 18);//获取数据
                     list = FolloTaskService.getUnionCache(groupno, MainBelt, sortnumAndXYnum[0], sortnumAndXYnum[1]);//获取数据
                     
                     ListViewBind(list);

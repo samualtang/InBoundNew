@@ -216,7 +216,8 @@ namespace InBound.Business
                                 CIGARETTDECODE = item2.CIGARETTECODE,
                                 CIGARETTDENAME = item2.CIGARETTENAME,
                                 GroupNO = item.GROUPNO ?? 0,
-                                Machineseq = item.MACHINESEQ ?? 0
+                                Machineseq = item.MACHINESEQ ?? 0,
+                                TROUGHNUM = item.TROUGHNUM   
                             }).ToList();
 
                 Allxynum = Allxynum - yjxyNum;
@@ -314,7 +315,7 @@ namespace InBound.Business
                 throw e;
             }
         }
-
+        
         /// <summary>
         /// 合流缓存区
         /// </summary>
@@ -325,19 +326,35 @@ namespace InBound.Business
         /// <returns></returns>
         private static List<FollowTaskDeail> GetUnionCacheByPokenum(List<FollowTaskDeail> list, decimal machineTaskExcuting, decimal machinePokeNum, decimal pokenumTotail)
         {
-            decimal TotailmachinePokeNum = Math.Ceiling(pokenumTotail / 10);//总数抓数 
-            if (pokenumTotail < 10 * machinePokeNum || TotailmachinePokeNum == machinePokeNum)//如果当前抓烟任务的订单总烟数 小于十   去掉前抓烟任务 (包括最后一个任务)
+            decimal TotailmachinePokeNum = Math.Ceiling(machinePokeNum / 10);//总数抓数 
+            decimal cutNum = 0;//总计数
+            if (pokenumTotail < 10   )//如果当前抓烟任务的订单总烟数 小于十   去掉前抓烟任务 (包括最后一个任务)
+            {
+                list.RemoveAll(a => a.SortNum == machineTaskExcuting); 
+            }
+            else if (machinePokeNum > pokenumTotail)
+            {
+                MyException mex = new MyException("DB块读取异型烟!机械手抓烟总数量：" + machinePokeNum + "大于当前任务的总数量：" + pokenumTotail);
+                throw mex; 
+            }
+            else if (pokenumTotail == machinePokeNum)//如果当前抓数等于总抓数 则直接
             {
                 list.RemoveAll(a => a.SortNum == machineTaskExcuting);
             }
             else
             {
-                for (int Count = 1; Count <= machinePokeNum; Count++)//根据当前抓数抓数
+                for (int Count = 1; Count <= TotailmachinePokeNum; Count++)//根据当前抓数抓数
                 {
                     var pokenum = list.Where(c => c.POKEID == list[0].POKEID).Select(a => new { pokeid = a.POKEID, pokenum = a.POKENUM }).FirstOrDefault();//获取当前任务抓烟数  
+
                     if (pokenum.pokenum == 10)//如果有一抓等于10  直接去掉 
                     {
-                        list.RemoveAll(a => a.SortNum == machineTaskExcuting && a.POKEID == list[0].POKEID);//
+                        list.RemoveAll(a => a.SortNum == machineTaskExcuting && a.POKEID == list[0].POKEID);// 
+                        pokenumTotail -= 10;
+                    }
+                    else if (pokenum.pokenum > 10)
+                    {
+                        list[0].POKENUM -= 10;  
                     }
                     else if (pokenum.pokenum < 10)//当第一个任务pokenum小于10 就和下一个任务的pokenum相加 直到大于等于10
                     {
@@ -345,31 +362,35 @@ namespace InBound.Business
                         decimal sum = 0;//和 
                         decimal lastNum = 0;//上一次 
                         decimal endNum = 0;//最后一次
+
                         for (int i = 0; i <= Listmachineseq.Length; i++)
                         {
                             sum += list[i].POKENUM;
                             if (sum == 10)
                             {
                                 Listmachineseq[i] = list[i].POKEID;
-                                for (int j = i; j >= 0; j--)
+                                for (int j = (i - 1); j >= 0; j--)
                                 {
                                     list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
                                 }
+
                                 break;
                             }
                             else if (sum > 10)
                             {
-                                endNum = list.Find(x => x.POKEID == list[i - 1].POKEID).POKENUM -= (list[i - 1].POKENUM - (10 - lastNum)); //对相加大于10最后一个pokenum的值 所取的数量 相减
+                                endNum = list.Find(x => x.POKEID == list[i - 1].POKEID).POKENUM - (list[i - 1].POKENUM - (10 - lastNum)); //对相加大于10最后一个pokenum的值 所取的数量 相减
                                 list.Find(z => z.POKEID == list[i].POKEID).POKENUM -= endNum;
-                                for (int j = i; j >= 0; j--)
+                                for (int j = (i - 1); j >= 0; j--)
                                 {
                                     list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
                                 }
                                 //return list;
                                 break;
                             }
+
                             lastNum = sum;
                             Listmachineseq[i] = list[i].POKEID;//存入当前pokeid
+
                         }
                     }
                 }

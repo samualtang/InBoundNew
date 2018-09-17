@@ -90,29 +90,38 @@ namespace WcfServiceLib
             {
                 return "远程连接失败,请检查网络";
             }
-            decimal[] sortnumAndXYnum = new decimal[3];
+            decimal[] sortnumAndXYnum = new decimal[4];
             sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
-            sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
-            sortnumAndXYnum[2] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//累计吸烟数量 
+            sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//累计总数数量 
+            sortnumAndXYnum[2] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量  
+            sortnumAndXYnum[3] = OpcServer.listUnionTaskGroup[6].ReadD(  MachineNo   + 31 ).CastTo<int>(-1);//当前机械手累计放烟数量
             if (sortnumAndXYnum.Sum() > 0)
             {
-                //List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(123903, 3, 5, 10);
-                List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(sortnumAndXYnum[0], GetMainBeltNo(MachineNo), GetGroupNo(MachineNo), sortnumAndXYnum[1], sortnumAndXYnum[2]);
-               
-                if (list != null && list.Count > 0)
+                if (sortnumAndXYnum[3] == sortnumAndXYnum[1])
                 {
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        ser.WriteObject(ms,  list.Take(10));
-                        string s = Encoding.UTF8.GetString(ms.ToArray());
-                        s = s.Replace("\\", "");
-                        return s;
-                    }
+                    return "当前机械手任务号:" + sortnumAndXYnum[0] + "，已放烟:" + sortnumAndXYnum[3]+"条";
                 }
+
                 else
                 {
-                    return "未读取到数据!";
+                    //List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(123903, 3, 5, 10);
+                    List<FollowTaskDeail> list = FolloTaskService.GetUnionMachineInfo(sortnumAndXYnum[0], GetMainBeltNo(MachineNo), GetGroupNo(MachineNo), sortnumAndXYnum[1], sortnumAndXYnum[2]) ;
+
+                    if (list != null && list.Count > 0)
+                    {
+                        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            ser.WriteObject(ms, list.OrderBy(a => a.TROUGHNUM).Take(10));
+                            string s = Encoding.UTF8.GetString(ms.ToArray());
+                            s = s.Replace("\\", "");
+                            return s;
+                        }
+                    }
+                    else
+                    {
+                        return "未读取到数据!";
+                    }
                 }
             }
             else
@@ -138,8 +147,8 @@ namespace WcfServiceLib
                 return "远程连接失败,请检查网络";
             }
             decimal[] sortnumAndXYnum = new decimal[2];
-            sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
-            sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
+            sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
+            sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
             List<FollowTaskDeail> date = FolloTaskService.getUnionCache(GetGroupNo(MachineNo), GetMainBeltNo(MachineNo), sortnumAndXYnum[0], sortnumAndXYnum[1]);
             if (date != null && date.Count > 0)
             {

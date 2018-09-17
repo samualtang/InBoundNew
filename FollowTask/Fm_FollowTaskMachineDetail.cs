@@ -145,36 +145,56 @@ namespace FollowTask
         void Bind()
         {
             decimal[] all = ReadDbInFo(MainBelt, MachineNo);//合流机械手 任务信息
-            decimal sortnum = all[0];//当前任务号
-            decimal xynum = all[1];   //当前抓烟数 
-            decimal sortNumAll = all[2];//任务号
-            decimal xynumAll = all[3];//当前任务总抓数
-
-            txtPokenum.Text = xynum.ToString();
-            txtSortnum.Text = sortnum.ToString(); ;
+            decimal sortnumAll = all[0];//当前任务号
+            decimal xynumAll = all[1];   //累计抓数  
+            decimal xynum = all[2];//当前已抓数 
+            decimal Dropxynum = all[3];//累计已放烟数量
+            txtPokenum.Text = xynum + "";
+            txtSortnum.Text = sortnumAll+"";
             int lablindex = 1;
-            List<InBound.Model.FollowTaskDeail> list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnum, MainBelt, GroupNo, xynumAll, xynum);
-            if (list != null)
+            if (Dropxynum ==  xynumAll  )
             {
-                list = list.Take(10).ToList();
-                foreach (var item in list)
-                {
-
-                    string lblName = "lblCig" + lablindex;               
-                    Control contr = (Label)Controls.Find(lblName, true)[0];
-                    contr.Text = item.CIGARETTDENAME;
-                    lablindex++;
-                }
-                BindXipan(list.Count);
-               // ListBind(list);
+                lblDropORnot.Text = "已放下";
+                BindXipan(0);
             }
             else
             {
+                lblDropORnot.Text = "正抓取";
                 BindXipan(0);
-            } 
+                List<InBound.Model.FollowTaskDeail> list = InBound.Business.FolloTaskService.GetUnionMachineInfo(sortnumAll, MainBelt, GroupNo, xynumAll, xynum);
+                if (list != null)
+                {
+                    list = list.Take(10).ToList();
+                    foreach (var item in list)
+                    {
+
+                        string lblName = "lblCig" + lablindex;
+                        Control contr = (Label)Controls.Find(lblName, true)[0];
+                        contr.Text = item.CIGARETTDENAME;
+                        lablindex++;
+                    }
+                    BindXipan(list.Count);
+                    // ListBind(list);
+                }
+                else
+                {
+                    BindXipan(0);
+                }
+            }
         }
         void BindXipan(int count)
-        { 
+        {
+            if (count == 0)
+            {
+                for (int i = 1; i <= 10; i++)
+                {
+                    string lblName = "lblCig" + i;
+                    Control contr = (Label)Controls.Find(lblName, true)[0];
+                    contr.Text = ""; 
+                } 
+           
+            }
+            
             int[] pan = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
             int[] state = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int[] zhua = new int[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -286,10 +306,10 @@ namespace FollowTask
         {
             decimal[] sortnumAndXYnum = new decimal[4];
 
-            sortnumAndXYnum[0] = Listmachine[5].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//0  2   4
-            sortnumAndXYnum[1] = Listmachine[5].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//1   3  5
-            sortnumAndXYnum[2] = Listmachine[4].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//任务号
-            sortnumAndXYnum[3] = Listmachine[4].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//总抓数
+            sortnumAndXYnum[0] = Listmachine[4].ReadD(((2 * machineno) - 2)).CastTo<int>(-1);//机械手的任务号  
+            sortnumAndXYnum[1] = Listmachine[4].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//总抓数 
+            sortnumAndXYnum[2] = Listmachine[5].ReadD(((2 * machineno) - 1)).CastTo<int>(-1);//当前抓数 
+            sortnumAndXYnum[3] = Listmachine[6].ReadD( machineno  + 31).CastTo<int>(-1);//当前机械手累计放烟数量
             return sortnumAndXYnum;
         }
 

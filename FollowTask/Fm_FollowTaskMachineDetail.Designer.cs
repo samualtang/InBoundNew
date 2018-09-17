@@ -84,6 +84,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.lblDropORnot = new System.Windows.Forms.Label();
             this.gbMachine.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBoxXiPanInfo.SuspendLayout();
@@ -122,6 +123,7 @@
             // 
             // gbMachine
             // 
+            this.gbMachine.Controls.Add(this.lblDropORnot);
             this.gbMachine.Controls.Add(this.txtSortnum);
             this.gbMachine.Controls.Add(this.label1);
             this.gbMachine.Controls.Add(this.label12);
@@ -658,6 +660,15 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // lblDropORnot
+            // 
+            this.lblDropORnot.AutoSize = true;
+            this.lblDropORnot.Location = new System.Drawing.Point(430, 29);
+            this.lblDropORnot.Name = "lblDropORnot";
+            this.lblDropORnot.Size = new System.Drawing.Size(17, 18);
+            this.lblDropORnot.TabIndex = 53;
+            this.lblDropORnot.Text = " ";
+            // 
             // Fm_FollowTaskMachineDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -760,5 +771,6 @@
         private System.Windows.Forms.TextBox txtPokenum;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Label lblmotion;
+        private System.Windows.Forms.Label lblDropORnot;
     }
 }

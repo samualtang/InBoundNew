@@ -39,13 +39,6 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvUnionCache = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnPrint = new System.Windows.Forms.Button();
             this.txtSortnum = new System.Windows.Forms.TextBox();
@@ -55,6 +48,13 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.lblCacheText = new System.Windows.Forms.Label();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnionCache)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -115,9 +115,9 @@
             this.groupBox1.Controls.Add(this.listViewUnionCache);
             this.groupBox1.Controls.Add(this.dgvUnionCache);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 11F);
-            this.groupBox1.Location = new System.Drawing.Point(26, 110);
+            this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(555, 356);
+            this.groupBox1.Size = new System.Drawing.Size(672, 392);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "缓存区信息";
@@ -126,6 +126,7 @@
             // 
             this.dgvUnionCache.AllowUserToAddRows = false;
             this.dgvUnionCache.AllowUserToDeleteRows = false;
+            this.dgvUnionCache.AllowUserToOrderColumns = true;
             this.dgvUnionCache.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnionCache.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column6,
@@ -139,55 +140,12 @@
             this.dgvUnionCache.Location = new System.Drawing.Point(3, 20);
             this.dgvUnionCache.MultiSelect = false;
             this.dgvUnionCache.Name = "dgvUnionCache";
+            this.dgvUnionCache.ReadOnly = true;
             this.dgvUnionCache.RowHeadersVisible = false;
             this.dgvUnionCache.RowTemplate.Height = 23;
             this.dgvUnionCache.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUnionCache.Size = new System.Drawing.Size(549, 333);
+            this.dgvUnionCache.Size = new System.Drawing.Size(666, 369);
             this.dgvUnionCache.TabIndex = 3;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "序号";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 55;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "mianbelt";
-            this.Column5.HeaderText = "主皮带";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 85;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "pokeid";
-            this.Column4.HeaderText = "任务号";
-            this.Column4.Name = "Column4";
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "组号";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 50;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "pokenum";
-            this.Column3.HeaderText = "数量";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 50;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "cigrcode";
-            this.Column1.HeaderText = "香烟编号";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "cigrname";
-            this.Column2.HeaderText = "香烟名称";
-            this.Column2.Name = "Column2";
             // 
             // groupBox2
             // 
@@ -198,9 +156,9 @@
             this.groupBox2.Controls.Add(this.txtPokenum);
             this.groupBox2.Controls.Add(this.btnRefresh);
             this.groupBox2.Controls.Add(this.lblCacheText);
-            this.groupBox2.Location = new System.Drawing.Point(26, 8);
+            this.groupBox2.Location = new System.Drawing.Point(12, 8);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(555, 101);
+            this.groupBox2.Size = new System.Drawing.Size(672, 101);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " ";
@@ -208,7 +166,7 @@
             // btnPrint
             // 
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPrint.Location = new System.Drawing.Point(468, 68);
+            this.btnPrint.Location = new System.Drawing.Point(591, 68);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 17;
@@ -253,7 +211,7 @@
             // btnRefresh
             // 
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnRefresh.Location = new System.Drawing.Point(371, 68);
+            this.btnRefresh.Location = new System.Drawing.Point(494, 68);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 11;
@@ -393,11 +351,63 @@
             this.dgVprint1.ZDXType = VBprinter.DGVprint.TheZDXTYPE.LEFT;
             this.dgVprint1.ZoomToPaperWidth = true;
             // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "序号";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 55;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "mianbelt";
+            this.Column5.HeaderText = "主皮带";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 85;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "pokeid";
+            this.Column4.HeaderText = "任务号";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "组号";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 70;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "pokenum";
+            this.Column3.HeaderText = "数量";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 70;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "cigrcode";
+            this.Column1.HeaderText = "香烟编号";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "cigrname";
+            this.Column2.HeaderText = "香烟名称";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 180;
+            // 
             // Fm_UinonCache
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 478);
+            this.ClientSize = new System.Drawing.Size(691, 513);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -426,13 +436,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvUnionCache;
         private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.TextBox txtSortnum;
@@ -442,5 +445,12 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Label lblCacheText;
         private VBprinter.DGVprint dgVprint1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

@@ -81,9 +81,9 @@ namespace WebService
             listUnionTaskGroup.Add(UnionTaskGroup2);//1
             listUnionTaskGroup.Add(UnionTaskGroup3);//2
             listUnionTaskGroup.Add(UnionTaskGroup4);//3
-            listUnionTaskGroup.Add(UnionMachineTaskGroup);//4
-            listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5
-            listUnionTaskGroup.Add(MachineGroup);//6 
+            listUnionTaskGroup.Add(UnionMachineTaskGroup);//4 累计抓烟数量
+            listUnionTaskGroup.Add(UnionMachineNowTaskGroup);//5 当前抓烟数量
+            listUnionTaskGroup.Add(MachineGroup);//6 累计放烟数量
             listUnionTaskGroup.Add(SortGroupA);//7
             listUnionTaskGroup.Add(SortGroupB);//8
          
