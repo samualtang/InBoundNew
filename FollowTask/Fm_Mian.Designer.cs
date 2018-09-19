@@ -45,7 +45,12 @@
             treeNode6,
             treeNode7,
             treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("合流");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("1线（B）");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("2线（A）");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("异形烟", new System.Windows.Forms.TreeNode[] {
+            treeNode10,
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("合流");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Fm_Mian));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,11 +203,18 @@
             treeNode8.Text = "第八组";
             treeNode9.Name = "readyTASK";
             treeNode9.Text = "预分拣";
-            treeNode10.Name = "UinonTask";
-            treeNode10.Text = "合流";
+            treeNode10.Name = "linenum1";
+            treeNode10.Text = "1线（B）";
+            treeNode11.Name = "linenum2";
+            treeNode11.Text = "2线（A）";
+            treeNode12.Name = "unnormal";
+            treeNode12.Text = "异形烟";
+            treeNode13.Name = "UinonTask";
+            treeNode13.Text = "合流";
             this.treeV.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode9,
-            treeNode10});
+            treeNode12,
+            treeNode13});
             this.treeV.ShowNodeToolTips = true;
             this.treeV.Size = new System.Drawing.Size(174, 480);
             this.treeV.TabIndex = 6;

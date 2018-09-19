@@ -117,7 +117,7 @@ namespace highSpeed.orderHandle
             String sql = " select * from ( " +
                         " SELECT aa.sortnum,aa.customercode,aa.customername,pp.machineseq,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname " +
                         " FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr " +
-                        " WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
+                        " WHERE aa.tasknum=pp.tasknum  and rr.groupno=aa.mainbelt and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
                         " and aa.synseq=" + synseq + " and rr.ctype=2 order by sortnum,sortname,machineseq ) ";
                         
 

@@ -427,10 +427,10 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1038, 419);
+            this.Controls.Add(this.task_data);
             this.Controls.Add(this.groupBoxErr);
             this.Controls.Add(this.list_data);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.task_data);
             this.Controls.Add(this.panel1);
             this.Name = "w_SortingControlMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

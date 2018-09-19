@@ -309,48 +309,7 @@ namespace FollowTask
             string nodeselect = treeV.SelectedNode.Name;//获取选择name 
             switch (nodeselect)
             {
-                #region 机械手
-                //case "MachineGroup1":
-                //    ShowMchineForm("机械手,第1组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第1组的机械手信息";
-                //    break;
-                //case "MachineGroup2":
-                //    ShowMchineForm("机械手,第2组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第2组的机械手信息";
-                //    break;
-                //case "MachineGroup3":
-                //    ShowMchineForm("机械手,第3组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第3组的机械手信息";
-                //    break;
-                //case "MachineGroup4":
-                //    ShowMchineForm("机械手,第4组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第4组的机械手信息";
-                //    break;
-                //case "MachineGroup5":
-                //    ShowMchineForm("机械手,第5组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第5组的机械手信息";
-                //    break;
-                //case "MachineGroup6":
-                //    ShowMchineForm("机械手,第6组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第6组的机械手信息";
-                //    break;
-                //case "MachineGroup7":
-                //    ShowMchineForm("机械手,第7组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第7组的机械手信息";
-                //    break;
-                //case "MachineGroup8":
-                //    ShowMchineForm("机械手,第8组");
-                //    txtMainInfo.Clear();
-                //    txtMainInfo.Text = "第8组的机械手信息";
-                //    break;
-                #endregion
+
                 #region 预分拣
                 case "fjBigGroup1":
                     ShowSortingForm("预分拣,第1组");
@@ -377,9 +336,18 @@ namespace FollowTask
                     ShowSortingForm("预分拣,第8组");
                     break;
                 #endregion
+                #region 异形烟
+                case "linenum1":
+
+                    break;
+
+                case "linenum2":
+
+                    break;
+                #endregion
                 #region 合流
                 case "UinonTask":
-                    ShowUinionFrom("合流"); 
+                    ShowUinionFrom("合流");
                     break;
                 //case "UinonBelt2":
                 //    ShowUinionFrom("合流,第2根");

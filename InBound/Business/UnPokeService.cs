@@ -1858,17 +1858,13 @@ namespace InBound.Business
         {
             using (Entities data = new Entities())
             {
-              
-                   
-                        var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == packageNo select items).ToList();
-                        if (query != null)
-                        {
-                            query.ForEach(x => { x.STATUS = status; x.SENDSEQ = DateTime.Now.Ticks; });
-                        }
-                      
-                    
-                
-                data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum not in (select tasknum from t_un_poke where status!=20)");
+
+                long sendseq = DateTime.Now.Ticks;//时间戳
+                var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == packageNo select items).ToList();
+                if (query != null)
+                {
+                    query.ForEach(x => { x.STATUS = status; x.SENDSEQ = sendseq; });
+                }
                 data.SaveChanges();
             }
         }
@@ -1943,7 +1939,7 @@ namespace InBound.Business
         {
             using (Entities data = new Entities())
             {
-                var query = (from item in data.T_UN_POKE where item.PACKAGEMACHINE == packageNO select item).FirstOrDefault();
+                var query = (from item in data.T_UN_POKE where item.PACKAGEMACHINE == packageNO && item.STATUS == 10 select item).FirstOrDefault();
                 if (query != null && query.PACKAGEMACHINE != 0)
                 {
                     return true;
@@ -1999,8 +1995,28 @@ namespace InBound.Business
                         }
                     }
                     data.SaveChanges();
-                    data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum  in (select tasknum from t_un_poke where status = 20)");
-                    data.SaveChanges();
+                    var taskfirst = query.FirstOrDefault() ;
+               
+                    if (taskfirst != null  )
+                    {
+                        var pokestate = (from item in data.T_UN_POKE where item.SORTNUM == taskfirst.SORTNUM && (item.STATUS == 15 ||  item.STATUS == 10 )select item).ToList();
+                        if (pokestate.Count == 0)
+                        { 
+                            var task = (from item in data.T_UN_TASK where item.TASKNUM == taskfirst.TASKNUM select item).ToList();
+                            foreach (var item in task)
+                            {
+                                if (item.STATE == "15")
+                                {
+                                    item.STATE = "30";
+                                    item.FINISHTIME = DateTime.Now;
+                                    data.SaveChanges();
+                                }
+                            }
+                        }
+                    }
+                    //data.SaveChanges();
+                    //data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum  in (select tasknum from t_un_poke where status = 20)");
+                
                 }
                 catch (Exception e)
                 {
