@@ -236,6 +236,7 @@ namespace FollowTask
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
                         IsOnBelt = x.IsOnMainBelt, 
+                        MACHINESEQ = x.MainBelt +((x.MainBelt -1) *8),
                         PLACE = ListmbInfo[index].Place +"米",
                     }).ToList();//根据索引读取相对应数据   
                     DgvBind();
@@ -262,7 +263,8 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
                 dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
                 dgvMainBeltInfo.Columns[5].HeaderCell.Value = "是否在主皮带";
-                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "位置";
+                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "机械手号";
+                dgvMainBeltInfo.Columns[7].HeaderCell.Value = "位置";
 
             }
             catch (ArgumentOutOfRangeException ex)
@@ -413,6 +415,8 @@ namespace FollowTask
                         QTY = x.POKENUM,
                         MAINBELT = x.MainBelt,
                         SORTNUM = x.SortNum,
+                       MACHINESEQ = x.groupno + (( x.MainBelt -1) * 8),
+                       ISONMAINBELT =  x.IsOnMainBelt > 0 ? "是":"否" ,
                       //  IsOnBelt = x.IsOnMainBelt,
                     }).ToList();//根据索引读取相对应数据  
                      // DgvBind();
@@ -426,6 +430,7 @@ namespace FollowTask
                 btnCx.Text = "查询";
             }
         }
+
         /// <summary>
         /// 绑定Dgv列头显示
         /// </summary>
@@ -438,7 +443,8 @@ namespace FollowTask
                 dgvMainBeltInfo.Columns[2].HeaderCell.Value = "数量";
                 dgvMainBeltInfo.Columns[3].HeaderCell.Value = "主皮带";
                 dgvMainBeltInfo.Columns[4].HeaderCell.Value = "任务号";
-               // dgvMainBeltInfo.Columns[5].HeaderCell.Value = "是否在主皮带";
+                dgvMainBeltInfo.Columns[5].HeaderCell.Value = "机械手号";
+                dgvMainBeltInfo.Columns[6].HeaderCell.Value = "是否在主皮带";
                // dgvMainBeltInfo.Columns[10].HeaderCell.Value = "是否在皮带";
             }
             catch (ArgumentOutOfRangeException ex)

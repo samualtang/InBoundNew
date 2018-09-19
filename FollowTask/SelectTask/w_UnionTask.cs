@@ -92,7 +92,8 @@ namespace FollowTask
                             QTY = x.POKENUM,
                             MAINBELT = x.MainBelt,
                             SORTNUM = x.SortNum,
-                            IsOnBelt = x.IsOnMainBelt, 
+                            IsOnBelt = x.IsOnMainBelt > 0 ? "是" : "否",
+                            MACHINESEQ = x.groupno + ((x.MainBelt - 1) * 8)
                         }).ToList();//根据索引读取相对应数据   
                           DgvBind();
                     break;
@@ -106,7 +107,8 @@ namespace FollowTask
                             QTY = x.POKENUM,
                             MAINBELT = x.MainBelt,
                             SORTNUM = x.SortNum,
-                            IsOnBelt = x.IsOnMainBelt, 
+                            IsOnBelt = x.IsOnMainBelt > 0 ? "是":"否", 
+                            MACHINESEQ = x.groupno +( (x.MainBelt -1)*8)
                         }).ToList();//根据索引读取相对应数据   
                         DgvBind();
                     }
@@ -131,6 +133,7 @@ namespace FollowTask
                 dgvTask.Columns[3].HeaderCell.Value = "主皮带号";
                 dgvTask.Columns[4].HeaderCell.Value = "任务号";
                 dgvTask.Columns[5].HeaderCell.Value = "是否在皮带上";
+                dgvTask.Columns[6].HeaderCell.Value = "机械手号";
                 //dgvTask.Columns[6].HeaderCell.Value = "烟柜号";
                 //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
                 //dgvTask.Columns[5].HeaderCell.Value = "订单号";
@@ -145,6 +148,7 @@ namespace FollowTask
                 dgvTask.Columns[3].HeaderCell.Value = "主皮带号";
                 dgvTask.Columns[4].HeaderCell.Value = "任务号";
                 dgvTask.Columns[5].HeaderCell.Value = "是否在皮带上";
+                dgvTask.Columns[6].HeaderCell.Value = "机械手号";
                 //dgvTask.Columns[4].HeaderCell.Value = "每次抓烟数量";
                 //dgvTask.Columns[5].HeaderCell.Value = "订单号";
                 //dgvTask.Columns[6].HeaderCell.Value = "抓烟状态";
@@ -159,21 +163,21 @@ namespace FollowTask
 
         private void dgvTask_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 5)
-            {
-                String statusText = "";
-                switch (e.Value.ToString())
-                {
-                    case "1":
-                        statusText = "是";
-                        break;
-                    case "0":
-                        statusText = "否";
-                        break;
+            //if (e.ColumnIndex == 5)
+            //{
+            //    String statusText = "";
+            //    switch (e.Value.ToString())
+            //    {
+            //        case "1":
+            //            statusText = "是";
+            //            break;
+            //        case "0":
+            //            statusText = "否";
+            //            break;
 
-                }
-                e.Value = statusText;
-            }
+            //    }
+            //    e.Value = statusText;
+            //}
         }
     }
 }

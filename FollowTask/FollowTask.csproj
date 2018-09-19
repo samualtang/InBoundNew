@@ -116,12 +116,6 @@
     <Compile Include="ErrorStart\InOutForm.Designer.cs">
       <DependentUpon>InOutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ErrorStart\PackageForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ErrorStart\PackageForm.Designer.cs">
-      <DependentUpon>PackageForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ErrorStart\ReplenishmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,9 +264,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\InOutForm.resx">
       <DependentUpon>InOutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ErrorStart\PackageForm.resx">
-      <DependentUpon>PackageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorStart\ReplenishmentForm.resx">
       <DependentUpon>ReplenishmentForm.cs</DependentUpon>

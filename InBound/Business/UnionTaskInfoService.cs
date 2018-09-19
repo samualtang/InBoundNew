@@ -145,7 +145,7 @@ namespace InBound.Business
             List<UnionTaskInfo> list = new List<UnionTaskInfo>();
             using (Entities entity = new Entities())
             { 
-                var listsortnum = GetAllSortnum();
+                var listsortnum = GetSortnum();
                 foreach (var item in listsortnum)
                 { 
                     List<UnionTaskInfo> info = GetUnionTaskInfo(item); 
@@ -161,7 +161,22 @@ namespace InBound.Business
                 }
             }
         }
-        
+        public static List<decimal> GetSortnum()
+        {
+            List<decimal> sortnum = new List<decimal>();
+            using (Entities entity = new Entities())
+            {
+                var sortquery = (from item in entity.T_PRODUCE_POKE
+                                 orderby item.SORTNUM
+                                 select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
+                foreach (var item in sortquery)
+                {
+                    sortnum.Add(item.SORTNUM);
+                }
+
+            }
+            return sortnum;
+        }
         /// <summary>
         /// 获取所有任务号
         /// </summary>
