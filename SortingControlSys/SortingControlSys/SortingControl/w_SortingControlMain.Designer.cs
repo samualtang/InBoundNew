@@ -281,6 +281,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.task_data.DefaultCellStyle = dataGridViewCellStyle2;
+            this.task_data.Dock = System.Windows.Forms.DockStyle.Fill;
             this.task_data.Location = new System.Drawing.Point(0, 48);
             this.task_data.Name = "task_data";
             this.task_data.ReadOnly = true;
@@ -294,7 +295,7 @@
             this.task_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.task_data.RowTemplate.Height = 40;
             this.task_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.task_data.Size = new System.Drawing.Size(592, 237);
+            this.task_data.Size = new System.Drawing.Size(598, 183);
             this.task_data.TabIndex = 30;
             // 
             // nums
@@ -384,9 +385,9 @@
             this.list_data.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.list_data.FormattingEnabled = true;
             this.list_data.ItemHeight = 12;
-            this.list_data.Location = new System.Drawing.Point(0, 291);
+            this.list_data.Location = new System.Drawing.Point(0, 231);
             this.list_data.Name = "list_data";
-            this.list_data.Size = new System.Drawing.Size(1038, 100);
+            this.list_data.Size = new System.Drawing.Size(1038, 160);
             this.list_data.TabIndex = 39;
             // 
             // listError
@@ -397,7 +398,7 @@
             this.listError.ItemHeight = 15;
             this.listError.Location = new System.Drawing.Point(3, 20);
             this.listError.Name = "listError";
-            this.listError.Size = new System.Drawing.Size(434, 220);
+            this.listError.Size = new System.Drawing.Size(434, 160);
             this.listError.TabIndex = 40;
             this.listError.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listError_DrawItem);
             this.listError.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listError_MeasureItem);
@@ -414,7 +415,7 @@
             this.groupBoxErr.Font = new System.Drawing.Font("宋体", 11F);
             this.groupBoxErr.Location = new System.Drawing.Point(598, 48);
             this.groupBoxErr.Name = "groupBoxErr";
-            this.groupBoxErr.Size = new System.Drawing.Size(440, 243);
+            this.groupBoxErr.Size = new System.Drawing.Size(440, 183);
             this.groupBoxErr.TabIndex = 41;
             this.groupBoxErr.TabStop = false;
             this.groupBoxErr.Text = "故障信息";

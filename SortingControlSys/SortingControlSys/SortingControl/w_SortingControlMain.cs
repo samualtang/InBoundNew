@@ -1125,30 +1125,37 @@ namespace SortingControlSys.SortingControl
                             {
                                 Thread.Sleep(100);
                             }
-                          decimal tasknum=  decimal.Parse(taskgroup1.ReadD(0).ToString());
+                            decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
 
                             //if (tempList.Count > 0)
                             //{
-                               // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
-                          if (tasknum != 0)
-                          {
-                              TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
-                              updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
-                              writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
-                          }
-                           // }
-                          //if (!isendingA)
-                          //{
-                              delSendTask task = sendTask;
+                            // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
+                            if (tasknum != 0)
+                            {
+                                TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
+                                writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                            }
+                            // }
+                            //if (!isendingA)
+                            //{
+                            delSendTask task = sendTask;
 
-                              task.BeginInvoke(null, null);
-                          //}
-                          //else
-                          //{
+                            task.BeginInvoke(null, null);
+                            //}
+                            //else
+                            //{
 
-                          //    writeLog.Write(sortgroupno1 + "组:有正在发送的任务,请关闭程序重新发送");
-                          //}
-                          //  this.BeginInvoke( new delSendTask(sendTask));
+                            //    writeLog.Write(sortgroupno1 + "组:有正在发送的任务,请关闭程序重新发送");
+                            //}
+                            //  this.BeginInvoke( new delSendTask(sendTask));
+                        }
+                        else
+                        {
+                            if (values[i] != null && int.Parse(values[i].ToString()) != 0)//0是电控已经接收
+                            {
+                                writeLog.Write(sortgroupno1 + "组: 读到标志位异常：" + values[i]);
+                            }
                         }
 
                     }
@@ -1186,6 +1193,13 @@ namespace SortingControlSys.SortingControl
 
                             //    writeLog.Write(sortgroupno2 + "组:有正在发送的任务,请关闭程序重新发送");
                             //}
+                        }
+                        else
+                        {
+                            if (values[i] != null && int.Parse(values[i].ToString()) != 0)//0是电控已经接收
+                            {
+                                writeLog.Write(sortgroupno2 + "组: 读到标志位异常：" + values[i]);
+                            }
                         }
                     }
                 }
