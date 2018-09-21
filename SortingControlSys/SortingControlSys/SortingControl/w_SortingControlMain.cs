@@ -1142,6 +1142,11 @@ namespace SortingControlSys.SortingControl
 
                               task.BeginInvoke(null, null);
                           }
+                          else
+                          {
+
+                              writeLog.Write(sortgroupno1 + "组:有正在发送的任务,请关闭程序重新发送");
+                          }
                           //  this.BeginInvoke( new delSendTask(sendTask));
                         }
 
@@ -1174,6 +1179,11 @@ namespace SortingControlSys.SortingControl
                             
 
                             task.BeginInvoke(null, null);
+                            }
+                            else
+                            {
+
+                                writeLog.Write(sortgroupno2 + "组:有正在发送的任务,请关闭程序重新发送");
                             }
                         }
                     }
