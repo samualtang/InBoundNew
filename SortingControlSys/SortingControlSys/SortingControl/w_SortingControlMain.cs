@@ -492,6 +492,7 @@ namespace SortingControlSys.SortingControl
                     //{
 
                     taskgroup2.SyncWrite(datas);//写任务
+                    isendingB = false;
                     string logstr = "";
                     string logcolumnname = "";
                     for (int i = 0; i < datas.Length; i++)
@@ -687,7 +688,7 @@ namespace SortingControlSys.SortingControl
                     //{
 
                     taskgroup1.SyncWrite(datas);//写任务
-
+                    isendingA = false;
                     //String p2 = taskgroup.Read(1).ToString();
                     //String p3 = taskgroup.Read(2).ToString();
                     //if (p2 == datas[1].ToString())
@@ -1136,17 +1137,17 @@ namespace SortingControlSys.SortingControl
                               writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                           }
                            // }
-                          if (!isendingA)
-                          {
+                          //if (!isendingA)
+                          //{
                               delSendTask task = sendTask;
 
                               task.BeginInvoke(null, null);
-                          }
-                          else
-                          {
+                          //}
+                          //else
+                          //{
 
-                              writeLog.Write(sortgroupno1 + "组:有正在发送的任务,请关闭程序重新发送");
-                          }
+                          //    writeLog.Write(sortgroupno1 + "组:有正在发送的任务,请关闭程序重新发送");
+                          //}
                           //  this.BeginInvoke( new delSendTask(sendTask));
                         }
 
@@ -1173,18 +1174,18 @@ namespace SortingControlSys.SortingControl
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                             }
                             //} 
-                            if (!isendingB)
-                            {
+                            //if (!isendingB)
+                            //{
                                 delSendTask task = sendTask1;
                             
 
                             task.BeginInvoke(null, null);
-                            }
-                            else
-                            {
+                            //}
+                            //else
+                            //{
 
-                                writeLog.Write(sortgroupno2 + "组:有正在发送的任务,请关闭程序重新发送");
-                            }
+                            //    writeLog.Write(sortgroupno2 + "组:有正在发送的任务,请关闭程序重新发送");
+                            //}
                         }
                     }
                 }
