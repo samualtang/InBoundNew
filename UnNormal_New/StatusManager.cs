@@ -67,7 +67,7 @@ namespace UnNormal_New
             try
             {
                 String status = "";
-                string ssStatus = "";
+               
                 foreach (var item in list)
                 {
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
@@ -85,10 +85,9 @@ namespace UnNormal_New
                     this.task_data.Rows[index].Cells[7].Value = item.LINENUM;//分拣线
                     this.task_data.Rows[index].Cells[8].Value = item.POKENUM;//抓烟数量
                     this.task_data.Rows[index].Cells[9].Value = item.STATUS;//状态位
-                    this.task_data.Rows[index].Cells[10].Value = item.GRIDNUM;//特异性烟标志位
-                    this.task_data.Rows[index].Cells[11].Value = item.Machineseq;//物理通道号
-                    this.task_data.Rows[index].Cells[12].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[13].Value = item.Billcode;//订单号
+                    this.task_data.Rows[index].Cells[10].Value = item.Machineseq;//物理通道号
+                    this.task_data.Rows[index].Cells[11].Value = item.PACKAGEMACHINE;//包装机
+                    this.task_data.Rows[index].Cells[12].Value = item.Billcode;//订单号
                   
                     if (item.STATUS == 10)
                     {
@@ -101,31 +100,7 @@ namespace UnNormal_New
                     else
                     {
                         status="完成";
-                    }
-                    if (item.Machineseq == 1061 || item.Machineseq == 2061)
-                    {
-                        if (item.GRIDNUM == 10)
-                        {
-                            ssStatus = "新增";
-                        }
-                        else if (item.GRIDNUM == 15)
-                        {
-                            ssStatus = "完成";
-                        }
-                        else
-                        {
-                            ssStatus = "";
-                        }
-                        this.task_data.Rows[index].Cells[10].Value = ssStatus;//特异性烟标志位
-                        if (ssStatus == "完成")
-                        {
-                            this.task_data.Rows[index].Cells[10].Style = dgvStyle;//特异性烟标志位
-                        }
-                    }
-                    else
-                    {
-                        this.task_data.Rows[index].Cells[10].Value = "";
-                    }
+                    } 
                     this.task_data.Rows[index].Cells[9].Value = status;//状态位
                   
                     if (status == "完成")
@@ -149,8 +124,17 @@ namespace UnNormal_New
         {
             try
             {
-
-
+                if (string.IsNullOrWhiteSpace(cmbLineNo.Text))
+                {
+                    MessageBox.Show("请选择分拣线");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(cmbPM.Text))
+                {
+                    MessageBox.Show("请选择包装机");
+                    return;
+                }
+            
                 if (string.IsNullOrWhiteSpace(txtFrom.Text) && string.IsNullOrWhiteSpace(txtTo.Text))
                 {
                     MessageBox.Show("请输入分拣任务号");
@@ -168,6 +152,9 @@ namespace UnNormal_New
                     string from = txtFrom.Text;
                     string to = txtTo.Text;
                     int status = 10;
+                    decimal packagemachine1 = Convert.ToDecimal(cmbPM.SelectedItem.ToString().Substring(0, 1));
+                    decimal packagemachine2 = packagemachine1 + 1;
+                    string linenum = cmbLineNo.SelectedItem.ToString();
                     if (string.IsNullOrWhiteSpace(txtTo.Text))//如果只输入第一个任号务 则其修改
                     {
                         to = from;
@@ -199,9 +186,10 @@ namespace UnNormal_New
                     //{
                     //    UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(decimal.Parse(from), decimal.Parse(to)));
                     //} 
-                    UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status);
+                    UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status,packagemachine1,packagemachine2,linenum);
 
-                    WriteLog.GetLog().Write("任务号从：" + from + "任务号到：" + to + "，修改状态为：" + status + "，任务更新完成!");
+                    WriteLog.GetLog().Write("任务号从：" + from + "任务号到：" + to + "，修改状态为：" + status + "，修改包装机为" + packagemachine1+
+                        "号，" + packagemachine2 + "号包装机，"+linenum+"线" + "，任务更新完成!");
                     /////////////////////////////////////////////////////////////////之前机制
                     //if (task_data.SelectedRows == null || task_data.SelectedRows.Count <= 0)
                     //{

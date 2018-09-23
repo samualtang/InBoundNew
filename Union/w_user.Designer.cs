@@ -73,14 +73,14 @@
             this.txtUserName.Location = new System.Drawing.Point(98, 128);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(110, 21);
-            this.txtUserName.TabIndex = 4;
+            this.txtUserName.TabIndex = 0;
             // 
             // w_user
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.BackgroundImage = global::Union.Properties.Resources.login2;
-            this.ClientSize = new System.Drawing.Size(320, 219);
+            this.ClientSize = new System.Drawing.Size(316, 215);
             this.ControlBox = false;
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.textBox2);

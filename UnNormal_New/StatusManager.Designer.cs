@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbPM = new System.Windows.Forms.ComboBox();
+            this.lblPm = new System.Windows.Forms.Label();
+            this.cmbLineNo = new System.Windows.Forms.ComboBox();
+            this.lblLineNo = new System.Windows.Forms.Label();
             this.txtregioncode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -55,7 +59,6 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,7 +70,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(25, 35);
+            this.radioButton1.Location = new System.Drawing.Point(25, 36);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(47, 16);
             this.radioButton1.TabIndex = 0;
@@ -78,7 +81,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(154, 35);
+            this.radioButton2.Location = new System.Drawing.Point(85, 36);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(59, 16);
             this.radioButton2.TabIndex = 1;
@@ -89,7 +92,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(294, 34);
+            this.radioButton3.Location = new System.Drawing.Point(164, 36);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(59, 16);
             this.radioButton3.TabIndex = 2;
@@ -99,7 +102,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(948, 32);
+            this.button2.Location = new System.Drawing.Point(1008, 32);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 8;
@@ -109,6 +112,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmbPM);
+            this.groupBox1.Controls.Add(this.lblPm);
+            this.groupBox1.Controls.Add(this.cmbLineNo);
+            this.groupBox1.Controls.Add(this.lblLineNo);
             this.groupBox1.Controls.Add(this.txtregioncode);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.button1);
@@ -130,17 +137,61 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " 状态管理";
             // 
+            // cmbPM
+            // 
+            this.cmbPM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPM.FormattingEnabled = true;
+            this.cmbPM.Items.AddRange(new object[] {
+            "1，2",
+            "3，4",
+            "5，6",
+            "7，8"});
+            this.cmbPM.Location = new System.Drawing.Point(478, 34);
+            this.cmbPM.Name = "cmbPM";
+            this.cmbPM.Size = new System.Drawing.Size(62, 20);
+            this.cmbPM.TabIndex = 27;
+            // 
+            // lblPm
+            // 
+            this.lblPm.AutoSize = true;
+            this.lblPm.Location = new System.Drawing.Point(428, 38);
+            this.lblPm.Name = "lblPm";
+            this.lblPm.Size = new System.Drawing.Size(131, 12);
+            this.lblPm.TabIndex = 26;
+            this.lblPm.Text = "包装机：           号";
+            // 
+            // cmbLineNo
+            // 
+            this.cmbLineNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLineNo.FormattingEnabled = true;
+            this.cmbLineNo.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cmbLineNo.Location = new System.Drawing.Point(319, 35);
+            this.cmbLineNo.Name = "cmbLineNo";
+            this.cmbLineNo.Size = new System.Drawing.Size(49, 20);
+            this.cmbLineNo.TabIndex = 25;
+            // 
+            // lblLineNo
+            // 
+            this.lblLineNo.AutoSize = true;
+            this.lblLineNo.Location = new System.Drawing.Point(272, 38);
+            this.lblLineNo.Name = "lblLineNo";
+            this.lblLineNo.Size = new System.Drawing.Size(113, 12);
+            this.lblLineNo.TabIndex = 24;
+            this.lblLineNo.Text = "分拣线：        线";
+            // 
             // txtregioncode
             // 
-            this.txtregioncode.Location = new System.Drawing.Point(520, 84);
+            this.txtregioncode.Location = new System.Drawing.Point(478, 96);
             this.txtregioncode.Name = "txtregioncode";
-            this.txtregioncode.Size = new System.Drawing.Size(100, 21);
+            this.txtregioncode.Size = new System.Drawing.Size(62, 21);
             this.txtregioncode.TabIndex = 23;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(359, 88);
+            this.label4.Location = new System.Drawing.Point(317, 100);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(131, 12);
             this.label4.TabIndex = 22;
@@ -148,7 +199,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(948, 83);
+            this.button1.Location = new System.Drawing.Point(1008, 94);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 21;
@@ -158,7 +209,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(184, 84);
+            this.textBox3.Location = new System.Drawing.Point(184, 97);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 21);
             this.textBox3.TabIndex = 20;
@@ -166,7 +217,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 88);
+            this.label3.Location = new System.Drawing.Point(23, 101);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(155, 12);
             this.label3.TabIndex = 19;
@@ -175,7 +226,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(749, 37);
+            this.label2.Location = new System.Drawing.Point(818, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(17, 12);
             this.label2.TabIndex = 10;
@@ -184,7 +235,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(531, 38);
+            this.label1.Location = new System.Drawing.Point(623, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 10;
@@ -192,16 +243,16 @@
             // 
             // txtTo
             // 
-            this.txtTo.Location = new System.Drawing.Point(785, 33);
+            this.txtTo.Location = new System.Drawing.Point(841, 34);
             this.txtTo.Name = "txtTo";
-            this.txtTo.Size = new System.Drawing.Size(100, 21);
+            this.txtTo.Size = new System.Drawing.Size(89, 21);
             this.txtTo.TabIndex = 9;
             // 
             // txtFrom
             // 
-            this.txtFrom.Location = new System.Drawing.Point(626, 33);
+            this.txtFrom.Location = new System.Drawing.Point(718, 34);
             this.txtFrom.Name = "txtFrom";
-            this.txtFrom.Size = new System.Drawing.Size(100, 21);
+            this.txtFrom.Size = new System.Drawing.Size(94, 21);
             this.txtFrom.TabIndex = 9;
             // 
             // groupBox2
@@ -219,8 +270,8 @@
             // 
             this.task_data.AllowUserToAddRows = false;
             this.task_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column8,
@@ -233,7 +284,6 @@
             this.Column6,
             this.Column3,
             this.Column4,
-            this.Column11,
             this.Column12,
             this.Column7,
             this.Column2});
@@ -317,13 +367,6 @@
             this.Column4.ReadOnly = true;
             this.Column4.Width = 70;
             // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "SP标志";
-            this.Column11.Name = "Column11";
-            this.Column11.ReadOnly = true;
-            this.Column11.Width = 70;
-            // 
             // Column12
             // 
             this.Column12.HeaderText = "通道";
@@ -381,6 +424,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtregioncode;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmbLineNo;
+        private System.Windows.Forms.Label lblLineNo;
+        private System.Windows.Forms.Label lblPm;
+        private System.Windows.Forms.ComboBox cmbPM;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn 第二任务号;
@@ -391,7 +438,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;

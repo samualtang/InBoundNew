@@ -631,7 +631,7 @@ namespace InBound.Business
         /// <param name="outlist">接收完成任务集合</param>
         /// <param name="outStr">任务日记字符串</param>
         /// <returns></returns>
-        public static object[] getOneDateBaseTask(decimal status, out List<T_UN_POKE> outlist, out string outStr)
+        public static object[] getOneDateBaseTask(decimal status,string linenum, out List<T_UN_POKE> outlist, out string outStr)
         {
             object[] values = new object[104];
             String needDatas = "";
@@ -641,9 +641,8 @@ namespace InBound.Business
             }
             using (Entities data = new Entities())
             {
-                List<T_UN_POKE> list = new List<T_UN_POKE>();
-                //var Sendtasknum = (from item in data.T_UN_POKE where  item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();//取出第一行的sendtasknum(最新的客户)
-                var query = (from item in data.T_UN_POKE where item.STATUS == status orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)
+                List<T_UN_POKE> list = new List<T_UN_POKE>(); 
+                var query = (from item in data.T_UN_POKE where item.STATUS == status && item.LINENUM == linenum orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)
                 if (query == null)//如果没有则 无任务s
                 {
                     outlist = new List<T_UN_POKE>();
@@ -657,7 +656,7 @@ namespace InBound.Business
                 var querySS = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
                                where item.SENDTASKNUM == query.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) //&& item.GRIDNUM == status
-                             orderby item.SORTNUM, item.SENDTASKNUM, item.POKEID
+                             orderby item.SORTNUM, item.SENDTASKNUM,item.MACHINESEQ,item.TROUGHNUM
                              select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).ToList();
                
                 // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
@@ -958,7 +957,7 @@ namespace InBound.Business
                 decimal sendtasknum = query.FirstOrDefault().SENDTASKNUM ?? 0;
                 if (sendtasknum > 0)
                 {
-                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12; f.SENDSEQ = DateTime.Now.Ticks; });//要更新顺序号
+                    query.Where(a => a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.STATUS = 12;  });//要更新顺序号
                     //query.Where(a => (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061) && a.SENDTASKNUM == sendtasknum).ToList().ForEach(f => { f.GRIDNUM = 12; });
                     date.SaveChanges();
                 }
@@ -1097,6 +1096,31 @@ namespace InBound.Business
                 }
             }
         }
+        /// <summary>
+        /// 查看改线还有没有任务
+        /// </summary>
+        /// <param name="linenum"></param>
+        /// <param name="ctype"></param>
+        /// <returns></returns>
+        public static bool CheckExistCanSendTask(decimal status,string linenum)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE
+                             where item.STATUS == status && item.LINENUM == linenum
+                             select item).ToList();
+
+                if (query != null && query.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// 查看特异性还有没有任务
         /// </summary>
@@ -1950,6 +1974,21 @@ namespace InBound.Business
                 }
             }
         }
+        public static bool checkExist(decimal packageNO,string linenum)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from item in data.T_UN_POKE where item.PACKAGEMACHINE == packageNO && item.STATUS == 10 && item.LINENUM ==linenum  select item).FirstOrDefault();
+                if (query != null && query.PACKAGEMACHINE != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         public static object[] GetEnablePackageMachine()
         {
             object[] pm = new object[8]; 
@@ -2081,32 +2120,17 @@ namespace InBound.Business
         /// <param name="sortnumFrom">起始任务号</param>
         /// <param name="sortnumTo">结束任务号</param>
         /// <param name="status"></param>
-        public static void UpdateTask(decimal sortnumFrom, decimal sortnumTo, decimal status)
+        public static void UpdateTask(decimal sortnumFrom, decimal sortnumTo, decimal status,decimal pm1,decimal pm2 ,string linenum)
         {
             using (Entities data = new Entities())
             {
-                var query = (from items in data.T_UN_POKE where items.SORTNUM >= sortnumFrom && items.SORTNUM <= sortnumTo select items).ToList();
-
+                var query = (from items in data.T_UN_POKE
+                             where items.SORTNUM >= sortnumFrom && items.SORTNUM <= sortnumTo 
+                             && (items.PACKAGEMACHINE == pm1 || items.PACKAGEMACHINE == pm2) && items.LINENUM == linenum
+                             select items).ToList(); 
                 foreach (var item in query)
                 {
-                    //item.STATUS = status;
-                    if (status == 20 || status == 15)
-                    {
-                        if (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
-                        {
-                            item.GRIDNUM = 15;
-                        }
-                        item.STATUS = status;
-                    }
-                    else
-                    {
-                        item.STATUS = status;
-                        if (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061)
-                        {
-                            item.GRIDNUM = status;
-                        }
-                    }
-                    
+                    item.STATUS = status; 
                 }
                 var query2 = (from item in data.T_UN_TASK where item.SORTNUM >= sortnumFrom && item.SORTNUM <= sortnumTo select item).ToList() ;
                 foreach (var item in query2)

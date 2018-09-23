@@ -1610,6 +1610,30 @@ namespace InBound.Business
             //    }
             //}
         }
+        /// <summary>
+        /// 合流任务接收
+        /// </summary>
+        /// <param name="stage"></param>
+        /// <param name="sortnum"></param>
+        public static void UpdateUnionState(decimal stage, int sortnum)//更新合流状态
+        {
+            using (Entities entity = new Entities())
+            {
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).ToList();
+                if (query != null && query.Count > 0)
+                {
+                    foreach (var item in query)
+                    {
+                        if (item.UNIONSTATE == 10)//未发送的情况下才会接收
+                        {
+                            item.UNIONSTATE = stage;
+                        }
+                    }
+                    entity.SaveChanges();
+                }
+            }
+
+        }
         public static void UpdateUnionStatus(decimal stage, int sortnum)//更新合流状态
         {
             using (Entities entity = new Entities())

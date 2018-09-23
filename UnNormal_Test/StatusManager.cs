@@ -189,9 +189,9 @@ namespace UnNormal_Test
                     //{
                     //    UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(decimal.Parse(from), decimal.Parse(to)));
                     //} 
-                    UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status);
+                   // UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status);
 
-                    WriteLog.GetLog().Write("任务号从：" + from + "任务号到：" + to + "，修改状态为：" + status + "，任务更新完成!");
+                    WriteLog.GetLog().Write("任务号从：" + from + "任务号到：" + to + "，修改状态为：" + status + "，任务更新失败!");
                     /////////////////////////////////////////////////////////////////之前机制
                     //if (task_data.SelectedRows == null || task_data.SelectedRows.Count <= 0)
                     //{
