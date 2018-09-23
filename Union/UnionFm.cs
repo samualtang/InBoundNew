@@ -680,7 +680,7 @@ namespace SortingControlSys.SortingControl
                             //if (UnionList[0].Count > 0)
                             //{
                                 //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionStatus(15,sortnum);
+                            TaskService.UpdateUnionState(15, sortnum);
                                 updateListBox("一号主皮带任务:" + sortnum + "已接收");
                                 writeLog.Write("一号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -695,7 +695,7 @@ namespace SortingControlSys.SortingControl
                             //if (UnionList[1].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionStatus(15, sortnum);
+                            TaskService.UpdateUnionState(15, sortnum);
                             updateListBox("二号主皮带任务:" + sortnum + "已接收");
                             writeLog.Write("二号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -711,7 +711,7 @@ namespace SortingControlSys.SortingControl
                             //if (UnionList[2].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionStatus(15, sortnum);
+                            TaskService.UpdateUnionState(15, sortnum);
                             updateListBox("三号主皮带任务:" + sortnum + "已接收");
                             writeLog.Write("三号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -726,9 +726,9 @@ namespace SortingControlSys.SortingControl
                             //if (UnionList[3].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionStatus(15, sortnum);
-                            updateListBox("三号主皮带任务:" + sortnum + "已接收");
-                            writeLog.Write("三号主皮带任务:" + sortnum + "已接收");
+                            TaskService.UpdateUnionState(15, sortnum);
+                            updateListBox("四号主皮带任务:" + sortnum + "已接收");
+                            writeLog.Write("四号主皮带任务:" + sortnum + "已接收");
                             //} 
                             sendTask(4);
                             

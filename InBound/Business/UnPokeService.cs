@@ -972,6 +972,25 @@ namespace InBound.Business
         /// 获取包装机
         /// </summary>
         /// <returns></returns>
+        public static decimal GetNormalPM(string linenum)
+        {
+            using (Entities date = new Entities())
+            {
+                var query = (from item in date.T_UN_POKE where item.STATUS == 10 && item.LINENUM == linenum orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();
+                if (query != null)
+                {
+                    return query.PACKAGEMACHINE ?? 0;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        /// <summary>
+        /// 获取包装机
+        /// </summary>
+        /// <returns></returns>
         public static decimal GetNormalPM()
         {
             using (Entities date = new Entities())
@@ -999,14 +1018,14 @@ namespace InBound.Business
             decimal packagemachine = 0;//包装几号  
             if (sendWay == 1)// 1为顺序生成
             {
-                packagemachine = GetNormalPM();
+                packagemachine = GetNormalPM("2");
             }
             else if (sendWay == 2)// 2为动态生成
             {
                 int maxOrder = 100000;
                 decimal leftnum = 0;
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-                for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
+                for (int i = 1; i <= 2; i++)//以主皮带获取发送的包装机
                 {
                     listpm.Add(GetPackMacByMainbelt(i));
                    // listpm.Add(i);

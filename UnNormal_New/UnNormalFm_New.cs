@@ -135,16 +135,6 @@ namespace UnNormal_New
                 SpyBiaozhiGroup.Write(2, 1);
                 SpyBiaozhiGroup.Write(0, 1);
             }
-            if (SpyBiaozhiGroup.Read(2).ToString() != "0" && !issendone)//监控标志位第三组 产生跳变
-            {
-                SpyBiaozhiGroup.Write(2, 2);
-                SpyBiaozhiGroup.Write(0, 2);
-            }
-            if (SpyBiaozhiGroup.Read(2).ToString() != "0" && !issendone)//监控标志位第四组 产生跳变
-            {
-                SpyBiaozhiGroup.Write(2, 3);
-                SpyBiaozhiGroup.Write(0, 3);
-            }
             timerSendTask.Stop();
         }
 
@@ -229,8 +219,8 @@ namespace UnNormal_New
         public void checkConnection()
         {
             int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
-          
-            if (flag != -1)
+            int flag2 = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);
+            if (flag != -1 && flag2 != -1)
             {
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......"); 
@@ -345,7 +335,7 @@ namespace UnNormal_New
                 issendone = true;
                 List<decimal> sortNumList = new List<decimal>();//当前任务号集合
                 List<decimal> xyNumList = new List<decimal>();//当前吸烟数量集合 
-                int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
+                int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);
                 writeLog.Write("二线烟仓发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
