@@ -42,20 +42,20 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add(OPCserverStr+"DB31,DINT0");
-           list.Add(OPCserverStr+"DB31,DINT4");
-           list.Add(OPCserverStr+"DB31,W8");
+           list.Add(OPCserverStr+"DB105,DINT0");
+           list.Add(OPCserverStr + "DB105,DINT4");
+           list.Add(OPCserverStr + "DB105,W8");
            for (int i = 2; i < 142; i = i + 2)
            {
-               list.Add(OPCserverStr+"DB31,W" + (i + 8));
+               list.Add(OPCserverStr + "DB105,W" + (i + 8));
            }
            for (int i = 0; i < 7; i++)
            {
-               list.Add(OPCserverStr+"DB31,DINT" + (152 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr+"DB31,W" + (154 + (i * 8)));//长度
-               list.Add(OPCserverStr+"DB31,W" + (156 + (i * 8)));//宽度
+               list.Add(OPCserverStr + "DB105,DINT" + (152 + (i * 8)));//条烟编码
+               list.Add(OPCserverStr + "DB1051,W" + (154 + (i * 8)));//长度
+               list.Add(OPCserverStr + "DB105,W" + (156 + (i * 8)));//宽度
            }
-           list.Add(OPCserverStr+"DB31,W230");
+           list.Add(OPCserverStr + "DB105,W230");
            return list;
        }
 
@@ -68,7 +68,7 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
 
            list.Add(OPCserverStr+"DB30,W230");//一线异形烟交互标志 0
-           list.Add(OPCserverStr+"DB31,W230");//二线异形烟交互标志 1
+           list.Add(OPCserverStr + "DB105,W230");//二线异形烟交互标志 1
            return list;
        }
 
