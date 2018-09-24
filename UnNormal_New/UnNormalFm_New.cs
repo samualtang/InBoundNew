@@ -599,12 +599,12 @@ namespace UnNormal_New
                                     updateListBox("一线烟仓任务包号:" + receivePackage + "已接收");
                                     UnPokeService.UpdateTask(receivePackage, 15);
                                 }
-                                if (!issendone)
-                                {
+                                //if (!issendone)
+                                //{
                                     //sendOnlyTask();
                                     delSendTask task = sendOnlyTask1;
                                     task.BeginInvoke(null, null);
-                                }
+                                //}
                             }
                             else
                             {
@@ -637,12 +637,12 @@ namespace UnNormal_New
                                     updateListBox("二线烟仓任务包号:" + receivePackage + "已接收");
                                     UnPokeService.UpdateTask(receivePackage, 15);
                                 }
-                                if (!issendone)
-                                {
+                                //if (!issendone)
+                                //{
                                     //sendOnlyTask();
                                     delSendTask task = sendOnlyTask2;
                                     task.BeginInvoke(null, null);
-                                }
+                                //}
                             }
                             else
                             {
