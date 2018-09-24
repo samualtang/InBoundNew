@@ -1070,12 +1070,20 @@ namespace InBound.Business
                 int maxOrder = 100000;
                 decimal leftnum = 0;
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-                for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
+                if (linenum == "1")
                 {
-                    listpm.Add(GetPackMacByMainbelt(i,linenum));
-                   // listpm.Add(i);
+                    for (int i = 1; i <= 2; i++)//以主皮带获取发送的包装机
+                    {
+                        listpm.Add(GetPackMacByMainbelt(i)); 
+                    }
                 }
-               
+                else if (linenum == "2")
+                {
+                    for (int i = 3; i <= 4; i++)//以主皮带获取发送的包装机
+                    {
+                        listpm.Add(GetPackMacByMainbelt(i)); 
+                    }
+                } 
                 foreach (var i in listpm)
                 {
                     if (i != 0)//i是包装机号
