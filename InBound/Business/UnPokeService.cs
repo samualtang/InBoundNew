@@ -81,12 +81,12 @@ namespace InBound.Business
         /// <param name="sortnum">当前任务号</param>
         /// <param name="xynum">以抓烟数量</param>
         /// <returns>剩余量</returns>
-        public static decimal GetCacheCount(decimal packagemachine,decimal sortnum , decimal xynum,decimal maxCount)
+        public static decimal GetCacheCount(decimal packagemachine,decimal sortnum , decimal xynum,decimal maxCount , string linenum)
         {
             using (Entities data = new Entities())
             {
                 var query = (from item in data.T_UN_POKE
-                             where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine
+                             where item.SORTNUM >= sortnum && item.STATUS >= 15 && item.PACKAGEMACHINE == packagemachine && item .LINENUM == linenum
                              select item).ToList().Sum(x => x.POKENUM) ?? 0;
                 if (query != null )
                 {
@@ -945,6 +945,51 @@ namespace InBound.Business
             }
 
         }
+
+        /// <summary>
+        /// 以主皮带获取发送的包装机
+        /// </summary>
+        /// <param name="mainbelt">主皮带</param>
+        /// <returns>包装机</returns>
+        public static decimal GetPackMacByMainbelt(decimal mainbelt,string linenum)
+        {
+            using (Entities date = new Entities())
+            {
+                var query = (from item in date.T_UN_POKE where item.PACKAGEMACHINE == 1 && item.STATUS == 10 && item.LINENUM == linenum orderby item.SENDTASKNUM select item).FirstOrDefault();
+                if (linenum == "1")
+                {
+                    if (mainbelt == 1)
+                    {
+                        query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 1 || item.PACKAGEMACHINE == 2) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                    }
+                    else if (mainbelt == 2)
+                    {
+                        query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 3 || item.PACKAGEMACHINE == 4) && item.STATUS == 10orderby item.SENDTASKNUM select item).FirstOrDefault();
+                    }
+                }
+                else if (linenum == "2")
+                {
+                    if (mainbelt == 3)
+                    {
+                        query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 5 || item.PACKAGEMACHINE == 6) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                    }
+                    else if (mainbelt == 4)
+                    {
+                        query = (from item in date.T_UN_POKE where (item.PACKAGEMACHINE == 7 || item.PACKAGEMACHINE == 8) && item.STATUS == 10 orderby item.SENDTASKNUM select item).FirstOrDefault();
+                    }
+                }
+                if (query != null)
+                {
+                    return query.PACKAGEMACHINE ?? 0;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+
+        }
         /// <summary>
         /// 更新该包装机可发送的任务标志位为12
         /// </summary>
@@ -1013,21 +1058,21 @@ namespace InBound.Business
         /// <param name="xyNum">八个包装机的抓烟数量</param>
         /// <param name="sendway">  1为顺序生成 2为动态生成</param>
         /// <returns>包装机号</returns>
-        public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum, decimal sendWay)
+        public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum, decimal sendWay,string linenum)
         {
             decimal packagemachine = 0;//包装几号  
             if (sendWay == 1)// 1为顺序生成
             {
-                packagemachine = GetNormalPM("2");
+                packagemachine = GetNormalPM(linenum);
             }
             else if (sendWay == 2)// 2为动态生成
             {
                 int maxOrder = 100000;
                 decimal leftnum = 0;
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-                for (int i = 1; i <= 2; i++)//以主皮带获取发送的包装机
+                for (int i = 1; i <= 4; i++)//以主皮带获取发送的包装机
                 {
-                    listpm.Add(GetPackMacByMainbelt(i));
+                    listpm.Add(GetPackMacByMainbelt(i,linenum));
                    // listpm.Add(i);
                 }
                
@@ -1036,7 +1081,7 @@ namespace InBound.Business
                     if (i != 0)//i是包装机号
                     {
                         T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
-                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0);//获取当前缓存空出数量
+                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0,linenum);//获取当前缓存空出数量
                         WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
                         if ((cache.CACHESIZE ?? 0) - currentNum < 10)//拿最大的容纳量减去空出数量 =当前缓存数量 
                         {

@@ -290,7 +290,7 @@ namespace UnNormal_New
                             xyNumList.Add(xyNum);
                         }
                         // decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, SendWay); 
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, SendWay,"1"); 
                         if (packagemachine > 0)
                         {
                             UnPokeService.UpdateTaskByPackMachine(packagemachine);
@@ -371,7 +371,7 @@ namespace UnNormal_New
                             xyNumList.Add(xyNum);
                         }
                         // decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, 1);
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList,SendWay,"2");
                         if (packagemachine > 0)
                         {
                             UnPokeService.UpdateTaskByPackMachine(packagemachine);
