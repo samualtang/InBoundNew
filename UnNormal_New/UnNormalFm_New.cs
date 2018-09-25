@@ -1102,8 +1102,16 @@ namespace UnNormal_New
                        }
                        else
                        {
+                           decimal? cacheSize = 0;
                            decimal xynum = listPM[i - 1].ReadD(3).CastTo<decimal>(-1);//以包数量
-                           decimal? cacheSize = cache.CACHESIZE - UnPokeService.GetCacheCount((decimal)i, sortnum, xynum, (cache.CACHESIZE ?? 0));//可容纳烟条大小
+                           if (i >= 1 && i <= 4)
+                           {
+                               cacheSize = cache.CACHESIZE - UnPokeService.GetCacheCount((decimal)i, sortnum, xynum, (cache.CACHESIZE ?? 0), "1");//可容纳烟条大小
+                           }
+                           else
+                           {
+                               cacheSize = cache.CACHESIZE - UnPokeService.GetCacheCount((decimal)i, sortnum, xynum, (cache.CACHESIZE ?? 0), "2");//可容纳烟条大小
+                           }
                            if (cacheSize < 0)
                            {
                                cacheSize = 0;

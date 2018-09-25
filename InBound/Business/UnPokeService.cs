@@ -159,12 +159,12 @@ namespace InBound.Business
                     continue;
                 }
                 T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);//获取包装机缓存
-                decimal currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                decimal currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0,"1");//获取缓存剩余量
                 //WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[i - 1] + " 已抓烟数量:" + xyNum[i - 1]);  
                 for ( j = j+0; j <= 8; j++)//第一波的时候  缓存量少于10 这个次循环只会执行一次
                 {
                     cache = ProduceCacheService.GetUnCache(i);//获取包装机缓存
-                     currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                    currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0, "1");//获取缓存剩余量
                      if (((cache.CACHESIZE ?? 0) - currentNum) < 10)//缓存量少于10 
                      {
                          flage = false;
@@ -280,12 +280,12 @@ namespace InBound.Business
                     continue;
                 }
                 T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);//获取包装机缓存
-                decimal currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                decimal currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0, "1");//获取缓存剩余量
                 //WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[i - 1] + " 已抓烟数量:" + xyNum[i - 1]);  
                 for (j = j + 0; j <= end; j++)//第一波的时候  缓存量少于10 这个次循环只会执行一次
                 {
                     cache = ProduceCacheService.GetUnCache(i);//获取包装机缓存
-                    currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0);//获取缓存剩余量
+                    currentNum = GetCacheCount(i, sortNum[i - 1], xyNum[i - 1], cache.CACHESIZE ?? 0, "1");//获取缓存剩余量
                     if (((cache.CACHESIZE ?? 0) - currentNum) < 10)//缓存量少于10 
                     {
                         flage = false;
@@ -1061,6 +1061,7 @@ namespace InBound.Business
         public static decimal GetSendPackageMachine_New(List<decimal> sortNum, List<decimal> xyNum, decimal sendWay,string linenum)
         {
             decimal packagemachine = 0;//包装几号  
+            int index = 0;
             if (sendWay == 1)// 1为顺序生成
             {
                 packagemachine = GetNormalPM(linenum);
@@ -1089,8 +1090,13 @@ namespace InBound.Business
                     if (i != 0)//i是包装机号
                     {
                         T_UN_CACHE cache = ProduceCacheService.GetUnCache(i);
-                        decimal currentNum = GetCacheCount(i, sortNum[(int)i - 1], xyNum[(int)i - 1], cache.CACHESIZE ?? 0,linenum);//获取当前缓存空出数量
-                        WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[(int)i - 1] + " 已抓烟数量:" + xyNum[(int)i - 1]);
+                        index = (int)i;
+                        if (i >= 5)
+                        {
+                            index = index - 4;
+                        }
+                        decimal currentNum = GetCacheCount(i, sortNum[index - 1], xyNum[index - 1], cache.CACHESIZE ?? 0, linenum);//获取当前缓存空出数量
+                        WriteLog.GetLog().Write("包装机号:" + i + "剩余空间:" + currentNum + "当前任务号:" + sortNum[index - 1] + " 已抓烟数量:" + xyNum[index - 1]);
                         if ((cache.CACHESIZE ?? 0) - currentNum < 10)//拿最大的容纳量减去空出数量 =当前缓存数量 
                         {
                             //DISPATCHESIZE = cache.DISPATCHESIZE ?? 0;
@@ -1100,7 +1106,7 @@ namespace InBound.Business
 
                         if (currentNum >= (cache.DISPATCHENUM ?? 0))//都需要补的情况下 则计算所能支持的订单数量
                         {
-                            int tempOrderCount = GetLeftOrderCount((int)i, sortNum[(int)i - 1]);//获取当前包装机剩余订单数量   
+                            int tempOrderCount = GetLeftOrderCount((int)i, sortNum[index - 1]);//获取当前包装机剩余订单数量   
                             if (tempOrderCount <= maxOrder)//如果第二次的订单量小于或等于上一次的订单量 进入 
                             {
                                 if (tempOrderCount < maxOrder)//如果第二次的订单量小于上一次订单量

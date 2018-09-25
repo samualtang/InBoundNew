@@ -25,9 +25,9 @@ namespace UnNormal_New.Model
            {
                list.Add(OPCserverStr+"DB30,W" + (i + 8));
            }
-           for (int i = 0; i < 7; i++)
+           for (int i = 0; i < 10; i++)
            {
-               list.Add(OPCserverStr+"DB30,DINT" + (152 + (i * 8)));//条烟编码
+               list.Add(OPCserverStr+"DB30,DINT" + (150 + (i * 8)));//条烟编码
                list.Add(OPCserverStr+"DB30,W" + (154 + (i * 8)));//长度
                list.Add(OPCserverStr+"DB30,W" + (156 + (i * 8)));//宽度
            }
@@ -49,10 +49,10 @@ namespace UnNormal_New.Model
            {
                list.Add(OPCserverStr + "DB105,W" + (i + 8));
            }
-           for (int i = 0; i < 7; i++)
+           for (int i = 0; i < 10; i++)
            {
-               list.Add(OPCserverStr + "DB105,DINT" + (152 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr + "DB1051,W" + (154 + (i * 8)));//长度
+               list.Add(OPCserverStr + "DB105,DINT" + (150 + (i * 8)));//条烟编码
+               list.Add(OPCserverStr + "DB105,W" + (154 + (i * 8)));//长度
                list.Add(OPCserverStr + "DB105,W" + (156 + (i * 8)));//宽度
            }
            list.Add(OPCserverStr + "DB105,W230");

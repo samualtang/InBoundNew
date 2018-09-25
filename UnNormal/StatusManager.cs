@@ -136,7 +136,7 @@ namespace SortingControlSys.SortingControl
                         UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(decimal.Parse(from), decimal.Parse(to)));
                     }
 
-                    UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status);
+                    //UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status);
                    
                 }
                 /////////////////////////////////////////////////////////////////之前机制
