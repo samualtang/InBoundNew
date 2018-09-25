@@ -20,15 +20,24 @@ namespace SpecialShapeSmoke
 
         private void btn_search_Click(object sender, EventArgs e)
         {
-            switch (comboBox1.Text)
+            try
             {
-                case "卷烟名称":
-                    DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text,1);
-                    break;
-                case "商户名称":
-                    DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text,2);
-                    break;
+                switch (comboBox1.Text)
+                {
+                    case "卷烟名称":
+                        DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text, 1);
+                        break;
+                    case "商户名称":
+                        DgvNowView.DataSource = HunHeService_new.GetSearchCigarette(txt_search.Text, 2);
+                        break;
+                }
             }
+            catch (Exception)
+            {
+                label1.Visible = true;
+                label1.Text = "数据库连接失败！请检查连接后重新打开程序！";
+            }
+        
             
         }
 

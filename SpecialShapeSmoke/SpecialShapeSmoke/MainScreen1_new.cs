@@ -657,8 +657,8 @@ namespace SpecialShapeSmoke
                         }
                         else
                         {
-                            finishNo[0] = -1;
-                            finishNo[1] = -1;
+                            finishNo[0] = -2;
+                            finishNo[1] = -2;
                             if (Refresh && result == DialogResult.Cancel)
                             {
                                 result = DialogResult.OK;
@@ -788,13 +788,23 @@ namespace SpecialShapeSmoke
                     Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
                     updateLabel("服务器断开连接,请重新连接!", lbl2);
                     
-                }
-                //writeLog.Write("Receive Resend Data:" + data);
-                
+                }  
             }
             catch(Exception ex)   
-            {
+            { 
                 writeLog.Write("getData()数据获取失败！"+ex.Message);
+                if (ex.Message == "基础提供程序在 Open 上失败。")
+                {
+                    lblpack.Text = "数据库连接失败！请检查网络，重新打开程序！";
+                    lblpack.Location = new Point(0, 10);
+                    lblpack.Width = 750;
+                    lblpack.BackColor = Color.Red;
+                    search.Enabled = false;
+                    btnSearch.Enabled = false;
+                    btnView.Enabled = false;
+                    timer1.Stop(); 
+                }
+                
             }
         }
         NowView_new fNowView;
@@ -823,8 +833,7 @@ namespace SpecialShapeSmoke
             }
             catch (Exception)
             {
-                 MessageBox.Show("数据库连接失败！请检查网络");
-                throw;
+                 MessageBox.Show("数据库连接失败！请检查网络"); 
             }
      
 

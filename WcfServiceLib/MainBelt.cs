@@ -16,8 +16,10 @@ namespace WcfServiceLib
     // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码和配置文件中的类名“Service1”。
     public class MainBelt : IMainBelt
     {
+        WriteLog writeLog = WriteLog.GetLog();
         public string GetMainBelt(int mainBelt)
         {
+            WriteLog writeLog = WriteLog.GetLog();
             try
             {
                 OpcServer.Connect();
@@ -66,6 +68,7 @@ namespace WcfServiceLib
                 ser.WriteObject(ms, ListmbInfo);
                 string s = Encoding.UTF8.GetString(ms.ToArray());
                 s = s.Replace("\\", "");
+                writeLog.Write("\r合流：" + mainBelt + "号主皮带\r" + s);
                 return s;
             }
 
@@ -112,21 +115,24 @@ namespace WcfServiceLib
                         DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
                         using (MemoryStream ms = new MemoryStream())
                         {
-                            ser.WriteObject(ms, list.OrderBy(a => a.TROUGHNUM).Take(10));
+                            ser.WriteObject(ms, list.Take(10));
                             string s = Encoding.UTF8.GetString(ms.ToArray());
                             s = s.Replace("\\", "");
+                            writeLog.Write("\r合流：" + MachineNo + "号机械手\r" + s);
                             return s;
                         }
                     }
                     else
                     {
-                        return "未读取到数据!";
+                        writeLog.Write("GetUnionMachine(" + MachineNo + ")查询结果集为空");
+                        return "01,未读取到数据,请重新查询!";
                     }
                 }
             }
             else
             {
-                return "DB块读取异常";
+                writeLog.Write("GetUnionMachine(" + MachineNo + ")读取DB块异常");
+                return "02,未读取到数据,DB块无数据";
             }
         }
 
@@ -158,13 +164,15 @@ namespace WcfServiceLib
                     ser.WriteObject(ms, date);
                     string s = Encoding.UTF8.GetString(ms.ToArray());
                     s = s.Replace("\\", "");
+                    writeLog.Write("\r合流：" + MachineNo + "号S缓存\r" + s);
                     return s;
                 }
 
             }
             else
             {
-                return "未读取到数据!";
+                writeLog.Write("GetUnionCaChe(" + MachineNo + ")查询结果集为空");
+                return "01,未读取到数据,请重新查询!";
             }
         }
         /// <summary>
@@ -294,7 +302,10 @@ namespace WcfServiceLib
         
             MainBeltInfoService.GetSortMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(a => a.Place).ToList();//对距离任务号进行排序
-             
+
+
+            
+           
             if (ListmbInfo.Count > 0)
             {
                 if (ListmbInfo != null && ListmbInfo.Count > 0)
@@ -305,17 +316,20 @@ namespace WcfServiceLib
                         ser.WriteObject(ms, ListmbInfo);
                         string s = Encoding.UTF8.GetString(ms.ToArray());
                         s = s.Replace("\\", "");
+                        writeLog.Write("\r分拣：第" + GroupNo + "组\r" + s);
                         return s;
                     }
                 }
                 else
                 {
-                    return "未读取到数据!";
+                    writeLog.Write("GetSortBelt(" + GroupNo + ")查询结果集为空");
+                    return "01,未读取到数据,请重新查询!"; 
                 }
             }
             else
             {
-                return "DB块读取异常";
+                writeLog.Write("GetSortBelt(" + GroupNo + ")读取DB块异常");
+                return "02,未读取到数据,DB块无数据";
             }
 
 

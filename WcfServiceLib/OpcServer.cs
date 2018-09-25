@@ -40,7 +40,7 @@ namespace WebService
         {
             
             SortGroupA.addItem(ItemCollection.GetASortingItem(groupConnectionGroup));//A组预分拣
-            SortGroupB.addItem(ItemCollection.GetASortingItem(groupConnectionGroup));//B组预分拣
+            SortGroupB.addItem(ItemCollection.GetBSortingItem(groupConnectionGroup));//B组预分拣
              
         }
         public static void AddUnionTaskGroup()
