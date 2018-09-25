@@ -48,7 +48,7 @@ namespace InBound.Business
                                              && item3.PULLSTATUS == 1
                                              && (item.PACKAGEMACHINE == packmachine1
                                              || item.PACKAGEMACHINE == packmachine2)
-                                         orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
+                                         orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
                                          select new HUNHEVIEW()
                                          {
                                              POKEID = item.POKEID,
@@ -74,7 +74,7 @@ namespace InBound.Business
                                              && item3.PULLSTATUS == 1//
                                              && (item.PACKAGEMACHINE == packmachine1
                                              || item.PACKAGEMACHINE == packmachine2)
-                                         orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
+                                         orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
                                          select new HUNHEVIEW()
                                          {
                                              POKEID = item.POKEID,
@@ -102,7 +102,7 @@ namespace InBound.Business
                                      && (item.PACKAGEMACHINE == packmachine1
                                          || item.PACKAGEMACHINE == packmachine2)
                                         && item3.PULLSTATUS == 1
-                                     orderby item.SORTNUM, item.POKEID, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM
+                                     orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
                                      select new HUNHEVIEW()
                                      {
                                          POKEID = item.POKEID,
@@ -433,7 +433,7 @@ namespace InBound.Business
                                      where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
                                      && item.SENDTASKNUM >= finishno1
                                      && item4.PULLSTATUS == 0
-                                     orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ,item2.TROUGHNUM
                                      select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).Take(qty).ToList();
                    
                         return query;
@@ -448,7 +448,7 @@ namespace InBound.Business
                                      where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq && (item.PACKAGEMACHINE == packmachine1 || item.PACKAGEMACHINE == packmachine2)
                                      && item.SENDTASKNUM >= finishno1
                                      && item4.PULLSTATUS == 0//
-                                     orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM, SENDTASKNUM = item.SENDTASKNUM }).Take(qty).ToList();
 
                         return updown_new(query, 0);
@@ -486,7 +486,7 @@ namespace InBound.Business
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq &&
                                  (item.PACKAGEMACHINE == pack1 || item.PACKAGEMACHINE == pack2)
-                                 orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                  select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq=item.PACKAGEMACHINE, sendtasknum=item.SENDTASKNUM }).ToList();
                         return query;
                     }
@@ -499,7 +499,7 @@ namespace InBound.Business
                                      join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                      where item2.CIGARETTETYPE == 40 && item.MACHINESEQ == seq &&
                                      (item.PACKAGEMACHINE == pack1 || item.PACKAGEMACHINE == pack2)
-                                     orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHENOWVIEW1() { PULLSTATUS = item4.PULLSTATUS, tasknum = item.TASKNUM, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTECODE = item2.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID, packmachineseq = item.PACKAGEMACHINE, sendtasknum = item.SENDTASKNUM }).ToList();
                         if (cigarettesort == "0")
                         {
@@ -668,7 +668,7 @@ namespace InBound.Business
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item2.CIGARETTETYPE == 40 && item.POKEID == pokeid
                                  && item4.PULLSTATUS == 0
-                                 orderby item.SORTNUM, item.POKEID
+                                 orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                  select new HUNHEVIEW() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM }).FirstOrDefault();
                     return query;
                 }
@@ -696,7 +696,7 @@ namespace InBound.Business
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item2.CIGARETTETYPE == 40 && item.POKEID == pokeid
                                  && item4.PULLSTATUS == 1
-                                 orderby item.SORTNUM, item.POKEID
+                                 orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                  select new HUNHEVIEW() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = item.POKENUM }).FirstOrDefault();
                     return query;
                 }
@@ -725,8 +725,7 @@ namespace InBound.Business
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item.POKEID == pokeid
-                                 && item4.PULLSTATUS == 0
-                                 orderby item.SORTNUM, item.POKEID
+                                 && item4.PULLSTATUS == 0 
                                  select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNO, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM, PACK_BAR = item2.PACK_BAR }).FirstOrDefault();
                     return query;
                 }
@@ -753,8 +752,7 @@ namespace InBound.Business
                                  join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item.POKEID == pokeid
-                                 && item4.PULLSTATUS == 1
-                                 orderby item.SORTNUM, item.POKEID
+                                 && item4.PULLSTATUS == 1 
                                  select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNO, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM, PACK_BAR = item2.PACK_BAR }).FirstOrDefault();
                     return query;
                 }
@@ -778,7 +776,7 @@ namespace InBound.Business
                                      on item.TROUGHNUM equals item2.TROUGHNUM
                                      join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                      where item2.CIGARETTETYPE == 40 && (item2.CIGARETTENAME.Contains(cname))
-                                     orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHENOWVIEW() {  packmachineseq=item.PACKAGEMACHINE,tasksort = item3.SORTSEQ, tasknum = item.TASKNUM, CIGARETTECODE=item.CIGARETTECODE, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
                         return query;
                     }
@@ -789,7 +787,7 @@ namespace InBound.Business
                                      on item.TROUGHNUM equals item2.TROUGHNUM
                                      join item3 in entity.T_UN_TASK on item.TASKNUM equals item3.TASKNUM
                                      where item2.CIGARETTETYPE == 40 && (item3.CUSTOMERNAME.Contains(cname))
-                                     orderby item.SORTNUM, item.POKEID
+                                     orderby item.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM
                                      select new HUNHENOWVIEW() { packmachineseq = item.PACKAGEMACHINE,tasksort = item3.SORTSEQ, tasknum = item.TASKNUM, CIGARETTECODE = item.CIGARETTECODE, sortnum = item.SORTNUM, customername = item3.CUSTOMERNAME, regioncode = item3.REGIONCODE, TROUGHNUM = item.MACHINESEQ, CIGARETTENAME = item2.CIGARETTENAME, pokenum = item.POKENUM, status = item.STATUS, pokeid = item.POKEID }).ToList();
                         return query;
                     }
