@@ -610,7 +610,7 @@ namespace UnNormal_New
                             {
                                 if (values[i] != null && int.Parse(values[i].ToString()) != 0)
                                 {
-                                    writeLog.Write("一线烟仓读到标志位异常:" + values[i]);
+                                    writeLog.Write("一线烟仓读到标志位:" + values[i]);
                                 }
                             }
                         }
@@ -648,7 +648,7 @@ namespace UnNormal_New
                             {
                                 if (values[i] != null && int.Parse(values[i].ToString()) != 0)
                                 {
-                                    writeLog.Write("二线烟仓读到标志位异常:" + values[i]);
+                                    writeLog.Write("二线烟仓读到标志位:" + values[i]);
                                 }
                             }
                         }
@@ -950,11 +950,23 @@ namespace UnNormal_New
                lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();//线路
                ItemCollection.OPCserverStr = ConfigurationManager.AppSettings["OpcPresortServer"].ToString(); 
                SendWay = Convert.ToInt32(ConfigurationManager.AppSettings["SendWay"]);//1为顺序 2为动态
-               if (SendWay != 1 && SendWay != 2 && lineNum != "1" && lineNum != "2")
-               { 
+               if (SendWay != 1 && SendWay != 2 || lineNum != "1" && lineNum != "2")
+               {
                    MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
                    WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
-                   button10.Enabled = false; 
+                   button10.Enabled = false;
+               }
+               else
+               {
+                   if (SendWay == 1)
+                   {
+
+                       btnDynamic.Text = "顺序调度";
+                   }
+                   else if (SendWay == 2)
+                   {
+                       btnDynamic.Text = "动态调度";
+                   }
                }
                AutoSizeColumn(task_data);
               

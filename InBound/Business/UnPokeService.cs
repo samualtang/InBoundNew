@@ -1965,7 +1965,14 @@ namespace InBound.Business
                 var query = (from items in data.T_UN_POKE where items.SENDTASKNUM == packageNo select items).ToList();
                 if (query != null)
                 {
-                    query.ForEach(x => { x.STATUS = status; x.SENDSEQ = sendseq; });
+                    foreach (var item in query)
+                    {
+                        if (item.STATUS == 10)
+                        {
+                            item.STATUS = status;
+                            item.SENDSEQ = sendseq;
+                        }
+                    } 
                 }
                 data.SaveChanges();
             }
@@ -2320,6 +2327,6 @@ namespace InBound.Business
                 return query.ToList();
             }
         }
-
+       
     }
 }

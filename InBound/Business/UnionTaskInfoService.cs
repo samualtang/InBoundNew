@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using InBound.Model;
+using System.Threading;
 
 namespace InBound.Business
 {
@@ -76,20 +77,14 @@ namespace InBound.Business
                 return Convert.ToInt32(count);
             }
         }
-        /// <summary>
-        /// 条烟识别
-        /// </summary>
-        public static void InsertPokeseqInfo()
+      public static void insertinfo(List<decimal> list)
         {
             using (Entities entity = new Entities())
             {
-              
-               
-                var listsortnum = GetAllSortnum();
-                foreach (var item in listsortnum)
+                foreach (var item in list)
                 {
-
-                    List<UnionTaskInfo> info = GetUnionTaskInfo(item).ToList();
+                    List<UnionTaskInfo> info = UnionTaskInfoService.GetUnionTaskInfo(item);
+                 
                     foreach (var union in info)
                     {
                         T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
@@ -107,11 +102,83 @@ namespace InBound.Business
                         poke.BILLCODE = union.BILLCODE;
                         poke.CIGARETTECODE = union.CIGARETTDECODE;
                         poke.CIGARETTENAME = union.CIGARETTDENAME;
-                        entity.AddToT_PRODUCE_POKESEQ(poke); 
+                        entity.AddToT_PRODUCE_POKESEQ(poke);
                     }
                     entity.SaveChanges();
                 }
-               
+           
+            }
+        }
+
+      delegate void delInsert(List<UnionTaskInfo> info);
+      public static void insertInfo(List<UnionTaskInfo> info)
+      {
+        
+          using (Entities entity = new Entities())
+          {
+              foreach (var union in info)
+              {
+                  T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
+                  poke.POKEID = GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
+                  poke.TROUGHNUM = union.TROUGHNUM;
+                  poke.POKENUM = union.POKENUM;
+                  poke.SORTSTATE = 20;
+                  poke.TASKQTY = union.TASKQTY;
+                  poke.TASKNUM = union.TASKNUM;
+                  poke.MACHINESEQ = union.machineseq;
+                  poke.MAINBELT = union.MainBelt;
+                  poke.GROUPNO = union.groupno;
+                  poke.PACKAGEMACHINE = union.PACKAGEMACHINE;
+                  poke.SORTNUM = union.SortNum;
+                  poke.BILLCODE = union.BILLCODE;
+                  poke.CIGARETTECODE = union.CIGARETTDECODE;
+                  poke.CIGARETTENAME = union.CIGARETTDENAME;
+                  entity.AddToT_PRODUCE_POKESEQ(poke);
+                 
+                     // WriteLog.GetLog().Write("循环：" + index + "结束时间");
+
+                  
+                    
+              }
+              entity.SaveChanges();
+          }
+      }
+        /// <summary>
+        /// 条烟识别
+        /// </summary>
+        public static void InsertPokeseqInfo()
+        {
+            using (Entities entity = new Entities())
+            {
+               List<T_PRODUCE_POKESEQ> list=new List<T_PRODUCE_POKESEQ>();
+                int index =1;
+                var listsortnum = GetAllSortnum();
+                foreach (var item in listsortnum)
+                { 
+                    List<UnionTaskInfo> info = GetUnionTaskInfo(item, entity).ToList();
+                    foreach (var union in info)
+                    {
+                        T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
+                        poke.POKEID = index;//GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
+                        poke.TROUGHNUM = union.TROUGHNUM;
+                        poke.POKENUM = union.POKENUM;
+                        poke.SORTSTATE = 20;
+                        poke.TASKQTY = union.TASKQTY;
+                        poke.TASKNUM = union.TASKNUM;
+                        poke.MACHINESEQ = union.machineseq;
+                        poke.MAINBELT = union.MainBelt;
+                        poke.GROUPNO = union.groupno;
+                        poke.PACKAGEMACHINE = union.PACKAGEMACHINE;
+                        poke.SORTNUM = union.SortNum;
+                        poke.BILLCODE = union.BILLCODE;
+                        poke.CIGARETTECODE = union.CIGARETTDECODE;
+                        poke.CIGARETTENAME = union.CIGARETTDENAME;
+                        list.Add(poke);
+                        index++;
+                    }
+                }
+                entity.BulkInsert(list);
+                entity.BulkSaveChanges();
             }
         }
         /// <summary>
@@ -189,11 +256,11 @@ namespace InBound.Business
                 var sortquery = (from item in entity.T_PRODUCE_POKE
                                  orderby item.SORTNUM
                                  select item).Select(a=>  new {SORTNUM = a.SORTNUM ??0}).Distinct().OrderBy(x=> x.SORTNUM ).ToList();
-                var sortpokeseq = (from item in entity.T_PRODUCE_POKESEQ
-                                  orderby item.SORTNUM
-                                   select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
-                var fnailySortpoke = sortquery.Except(sortpokeseq).ToList();
-                foreach (var item in fnailySortpoke)
+                //var sortpokeseq = (from item in entity.T_PRODUCE_POKESEQ
+                //                  orderby item.SORTNUM
+                //                   select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
+                //var fnailySortpoke = sortquery.Except(sortpokeseq).ToList();
+                foreach (var item in sortquery)
                 {
                     sortnum.Add(item.SORTNUM);
                 }
@@ -343,6 +410,147 @@ namespace InBound.Business
  
         }
 
+
+        public static List<UnionTaskInfo> GetUnionTaskInfo(decimal sortnum, Entities entity)
+        {
+             List<UnionTaskInfo> info = new List<UnionTaskInfo>();
+
+                var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).FirstOrDefault();
+
+                if (query != null)
+                {
+                    //foreach (var queryitem in query)
+                    //{
+                    var task = (from item in entity.T_PRODUCE_POKE
+                                join item2 in entity.T_PRODUCE_SORTTROUGH
+                                    on item.TROUGHNUM equals item2.TROUGHNUM
+                                join item3 in entity.T_PRODUCE_TASK on item.BILLCODE equals item3.BILLCODE
+                                where item.SORTNUM == query.SORTNUM && item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+                                orderby item.MACHINESEQ
+                                select
+                                    new TaskDetail()
+                                    {
+                                        Billcode = item3.BILLCODE,
+                                        CUSTOMERNAME = item3.CUSTOMERNAME,
+                                        SORTSEQ = item3.SORTSEQ ?? 0,
+                                        CIGARETTDECODE = item2.CIGARETTECODE,
+                                        CIGARETTDENAME = item2.CIGARETTENAME,
+                                        GroupNO = item.GROUPNO ?? 0,
+                                        Machineseq = item.MACHINESEQ ?? 0,
+                                        MainBelt = item.MAINBELT ?? 0,
+                                        SortNum = item.SORTNUM ?? 0,
+                                        POKENUM = item.POKENUM ?? 0,
+                                        MachineState = item.MACHINESTATE ?? 0,
+                                        PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0,
+                                        TROUGHNUM = item.TROUGHNUM,
+                                        TaskNum = item.TASKNUM ?? 0,
+                                        TASKQTY = item.TASKQTY ?? 0,
+                                    }).ToList();
+
+                    var exitLoop = false;
+                    while (!exitLoop)
+                    {
+                        for (int i = 1; i <= 8; i++)
+                        {
+                            if (i == 1)
+                            {
+                                exitLoop = true;
+                            }
+                            int tempgroupno = i;
+                            if (i == 3)
+                            {
+                                tempgroupno = 4;
+                            }
+                            else if (i == 4)
+                            {
+                                tempgroupno = 3;
+                            }
+                            else if (i == 7)
+                            {
+                                tempgroupno = 8;
+                            }
+                            else if (i == 8)
+                            {
+                                tempgroupno = 7;
+                            }
+
+                            var temptask = task.Where(x => x.GroupNO == tempgroupno && x.MachineState != 30).OrderBy(y => y.Machineseq).ToList();
+                            if (temptask != null && temptask.Count > 0)
+                            {
+                                exitLoop = false;
+                                decimal tempcount = 0;
+                                foreach (var titem in temptask)
+                                {
+                                    if (tempcount + titem.POKENUM <= 10)
+                                    {
+                                        info.Add(new UnionTaskInfo()
+                                        {
+                                            CUSTOMERNAME = titem.CUSTOMERNAME,
+                                            BILLCODE = titem.Billcode,
+                                            SORTSEQ = titem.SORTSEQ,
+                                            CIGARETTDECODE = titem.CIGARETTDECODE,
+                                            CIGARETTDENAME = titem.CIGARETTDENAME,
+                                            MainBelt = titem.MainBelt,
+                                            SortNum = titem.SortNum,
+                                            POKENUM = titem.POKENUM,
+                                            groupno = titem.GroupNO,
+                                            machineseq = titem.Machineseq,
+                                            IsOnMainBelt = 0,
+                                            PACKAGEMACHINE = titem.PACKAGEMACHINE,
+                                            TASKNUM = titem.TaskNum,
+                                            TASKQTY = titem.TASKQTY,
+                                            TROUGHNUM = titem.TROUGHNUM,
+                                        });
+                                        titem.MachineState = 30;
+                                        tempcount += titem.POKENUM;
+                                    }
+                                    else
+                                    {
+                                        if (tempcount < 10)
+                                        {
+                                            info.Add(new UnionTaskInfo()
+                                            {
+                                                CUSTOMERNAME = titem.CUSTOMERNAME,
+                                                BILLCODE = titem.Billcode,
+                                                SORTSEQ = titem.SORTSEQ,
+                                                CIGARETTDECODE = titem.CIGARETTDECODE,
+                                                CIGARETTDENAME = titem.CIGARETTDENAME,
+                                                MainBelt = titem.MainBelt,
+                                                SortNum = titem.SortNum,
+                                                POKENUM = 10 - tempcount,
+                                                groupno = titem.GroupNO,
+                                                machineseq = titem.Machineseq,
+                                                IsOnMainBelt = 0,
+                                                PACKAGEMACHINE = titem.PACKAGEMACHINE,
+                                                TASKNUM = titem.TaskNum,
+                                                TASKQTY = titem.TASKQTY,
+                                                TROUGHNUM = titem.TROUGHNUM,
+                                            });
+                                            titem.POKENUM = titem.POKENUM - (10 - tempcount);
+                                        }
+                                        //else
+                                        //{
+                                        break;
+                                        //}
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                    //}
+
+
+                    return info;
+                }
+                else
+                
+                {
+                    return null;
+                }
+
+        }
         public static List<UnionTaskInfo> GetUnionTaskInfoAfter(int mainbelt, int groupno, decimal sortnum, decimal xyNum, int orderNum)
         {
             List<UnionTaskInfo> info = new List<UnionTaskInfo>();
