@@ -879,6 +879,21 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void 车组重排ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReHihgSpeedForm frm = new ReHihgSpeedForm();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+              
+        }
  
 
     

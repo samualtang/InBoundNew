@@ -68,6 +68,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.车组重排ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -168,6 +169,7 @@
             this.任务导出ToolStripMenuItem,
             this.分拣进度ToolStripMenuItem,
             this.tsmi_enablestandby,
+            this.车组重排ToolStripMenuItem,
             this.合流任务查询ToolStripMenuItem});
             this.订单处理ToolStripMenuItem.Name = "订单处理ToolStripMenuItem";
             this.订单处理ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
@@ -397,6 +399,13 @@
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // 车组重排ToolStripMenuItem
+            // 
+            this.车组重排ToolStripMenuItem.Name = "车组重排ToolStripMenuItem";
+            this.车组重排ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.车组重排ToolStripMenuItem.Text = "车组重排";
+            this.车组重排ToolStripMenuItem.Click += new System.EventHandler(this.车组重排ToolStripMenuItem_Click);
+            // 
             // w_main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -461,5 +470,6 @@
         private System.Windows.Forms.ToolStripMenuItem 异型烟排程ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 任务导出异型烟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 任务导出异型烟ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 车组重排ToolStripMenuItem;
     }
 }

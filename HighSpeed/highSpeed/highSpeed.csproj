@@ -433,6 +433,12 @@
     <Compile Include="orderHandle\w_order_Union.designer.cs">
       <DependentUpon>w_order_Union.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\ReHihgSpeedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\ReHihgSpeedForm.Designer.cs">
+      <DependentUpon>ReHihgSpeedForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="progressBar.cs">
       <SubType>Form</SubType>
@@ -658,6 +664,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_order_Union.resx">
       <DependentUpon>w_order_Union.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\ReHihgSpeedForm.resx">
+      <DependentUpon>ReHihgSpeedForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="progressBar.resx">
       <DependentUpon>progressBar.cs</DependentUpon>
