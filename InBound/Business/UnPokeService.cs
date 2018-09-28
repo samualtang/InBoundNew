@@ -1967,7 +1967,7 @@ namespace InBound.Business
                 {
                     foreach (var item in query)
                     {
-                        if (item.STATUS == 10)
+                        if (item.STATUS == 12)
                         {
                             item.STATUS = status;
                             item.SENDSEQ = sendseq;

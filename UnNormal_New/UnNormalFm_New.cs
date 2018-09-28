@@ -225,6 +225,7 @@ namespace UnNormal_New
                 updateListBox("连接服务器成功......");
                 writeLog.Write(" 连接服务器成功......"); 
                 updateControlEnable(false, button10);
+                strat = true;
                 isInit = true;
             }
             else
@@ -1142,7 +1143,7 @@ namespace UnNormal_New
                Thread.Sleep(500);
            }
        }
-       bool strat = true;
+       bool strat = false;
     
        private void btnStratRead_Click(object sender, EventArgs e)
        {
