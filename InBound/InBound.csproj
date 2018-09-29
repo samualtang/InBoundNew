@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Encrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Encrypt.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -159,6 +163,7 @@
   <ItemGroup>
     <Content Include="bin\Debug\InBound.dll" />
     <Content Include="bin\Debug\InBound.pdb" />
+    <Content Include="lib\Encrypt.dll" />
     <Content Include="lib\opcrcw.comn.dll" />
     <Content Include="lib\opcrcw.da.dll" />
     <Content Include="lib\System.Data.OracleClient.dll" />

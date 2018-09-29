@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.Configuration;
+using Encrypt;
 
 namespace InBound.Pub
 {
@@ -23,5 +25,21 @@ namespace InBound.Pub
         {
             return MD5Encrypt(text, Encoding.UTF8);
         }
+ 
+     /// <summary>
+        /// 获取连接字符串
+        /// </summary>
+        public static string ConnectionString
+        {
+            get
+            {
+                string _connectionString = ConfigurationManager.ConnectionStrings["Entities"].ConnectionString; ;
+               
+                _connectionString = new SymmetricMethod().Decrypto( _connectionString);
+          
+                return _connectionString;
+            }
+        }
+ 
     }
 }

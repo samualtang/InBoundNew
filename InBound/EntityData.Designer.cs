@@ -15,6 +15,7 @@ using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using InBound.Pub;
 
 [assembly: EdmSchemaAttribute()]
 namespace InBound
@@ -31,9 +32,11 @@ namespace InBound
         /// <summary>
         /// 请使用应用程序配置文件的“Entities”部分中的连接字符串初始化新 Entities 对象。
         /// </summary>
-        public Entities() : base("name=Entities", "Entities")
+        public Entities()
+            : base(Security.ConnectionString, "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+  
             OnContextCreated();
         }
     
