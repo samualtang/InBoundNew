@@ -93,6 +93,10 @@ namespace UnNormal_New
                     {
                         status = "新增";
                     }
+                    else if (item.STATUS == 12)
+                    {
+                        status = "已计算";
+                    }
                     else if (item.STATUS ==  15)
                     {
                         status = "已发送";

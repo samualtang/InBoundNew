@@ -2223,11 +2223,12 @@ namespace InBound.Business
                     if (status == 20)
                     {
                         item.STATE = "30";
+                        item.FINISHTIME = DateTime.Now;
                     }
                     else
                     {
                         item.STATE = "15";
-
+                        item.FINISHTIME = null;
                     }
                 } 
                //  data.ExecuteStoreCommand("update t_un_task set state=30 where  tasknum   in (select tasknum from t_un_poke where status =20)");
