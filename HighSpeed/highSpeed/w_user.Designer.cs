@@ -44,7 +44,7 @@
             this.textBox2.Location = new System.Drawing.Point(95, 159);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(113, 23);
-            this.textBox2.TabIndex = 1;
+            this.textBox2.TabIndex = 2;
             this.textBox2.UseSystemPasswordChar = true;
             this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
@@ -54,7 +54,7 @@
             this.button2.Location = new System.Drawing.Point(222, 160);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(74, 22);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 4;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -64,7 +64,7 @@
             this.button1.Location = new System.Drawing.Point(224, 128);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(72, 22);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 3;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -73,14 +73,14 @@
             this.txtUserName.Location = new System.Drawing.Point(98, 128);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(110, 21);
-            this.txtUserName.TabIndex = 4;
+            this.txtUserName.TabIndex = 1;
             // 
             // w_user
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.BackgroundImage = global::highSpeed.Properties.Resources.login2;
-            this.ClientSize = new System.Drawing.Size(320, 219);
+            this.ClientSize = new System.Drawing.Size(316, 215);
             this.ControlBox = false;
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.textBox2);

@@ -228,6 +228,7 @@ namespace highSpeed.baseData
                 String itemno = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
                 String barcode = this.dataGridView1.CurrentRow.Cells[3].Value.ToString();
                 String fullcount = this.dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                fullcount=  fullcount == "" ? "15" : fullcount;
                 String cdtype = this.dataGridView1.CurrentRow.Cells[5].EditedFormattedValue.ToString();
                 String weight = this.dataGridView1.CurrentRow.Cells[6].Value.ToString();
                 if (weight=="")
