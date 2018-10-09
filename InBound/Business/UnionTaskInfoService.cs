@@ -151,15 +151,21 @@ namespace InBound.Business
             using (Entities entity = new Entities())
             {
                List<T_PRODUCE_POKESEQ> list=new List<T_PRODUCE_POKESEQ>();
-                int index =1;
+                decimal index =1;
+                 var query     = (from item in entity.T_PRODUCE_POKESEQ select item).ToList()  ;
+                 var allcount = (from item in entity.T_PRODUCE_POKE select item);
+                 if (query.Count > 0)
+                 {
+                     index = query.Max(a => a.POKEID);
+                 }
                 var listsortnum = GetAllSortnum();
                 foreach (var item in listsortnum)
-                { 
+                {
                     List<UnionTaskInfo> info = GetUnionTaskInfo(item, entity).ToList();
                     foreach (var union in info)
                     {
                         T_PRODUCE_POKESEQ poke = new T_PRODUCE_POKESEQ();
-                        poke.POKEID = index;//GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
+                        poke.POKEID = index++;//GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
                         poke.TROUGHNUM = union.TROUGHNUM;
                         poke.POKENUM = union.POKENUM;
                         poke.SORTSTATE = 20;
@@ -173,12 +179,13 @@ namespace InBound.Business
                         poke.BILLCODE = union.BILLCODE;
                         poke.CIGARETTECODE = union.CIGARETTDECODE;
                         poke.CIGARETTENAME = union.CIGARETTDENAME;
-                        list.Add(poke);
-                        index++;
+                        entity.AddToT_PRODUCE_POKESEQ(poke);
+
                     }
-                }
-                entity.BulkInsert(list);
-                entity.BulkSaveChanges();
+
+                    entity.SaveChanges();
+
+                } 
             }
         }
         /// <summary>
@@ -256,11 +263,11 @@ namespace InBound.Business
                 var sortquery = (from item in entity.T_PRODUCE_POKE
                                  orderby item.SORTNUM
                                  select item).Select(a=>  new {SORTNUM = a.SORTNUM ??0}).Distinct().OrderBy(x=> x.SORTNUM ).ToList();
-                //var sortpokeseq = (from item in entity.T_PRODUCE_POKESEQ
-                //                  orderby item.SORTNUM
-                //                   select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
-                //var fnailySortpoke = sortquery.Except(sortpokeseq).ToList();
-                foreach (var item in sortquery)
+                var sortpokeseq = (from item in entity.T_PRODUCE_POKESEQ
+                                   orderby item.SORTNUM
+                                   select item).Select(a => new { SORTNUM = a.SORTNUM ?? 0 }).Distinct().OrderBy(x => x.SORTNUM).ToList();
+                var fnailySortpoke = sortquery.Except(sortpokeseq).ToList();
+                foreach (var item in fnailySortpoke)
                 {
                     sortnum.Add(item.SORTNUM);
                 }
