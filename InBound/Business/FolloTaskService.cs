@@ -80,6 +80,33 @@ namespace InBound.Business
 
             }
         }
+        public static List<FollowTaskDeail> GetSrotingMachineInfo(decimal machineNo)
+        {
+            using (Entities dataentity = new Entities())
+            {
+                var query = from item2 in dataentity.T_PRODUCE_SORTTROUGH 
+                            where item2.MACHINESEQ == machineNo && item2.TROUGHTYPE == 10 &&  item2.CIGARETTETYPE ==20   
+                            select new FollowTaskDeail()
+                            {
+                                CIGARETTDECODE = item2.CIGARETTECODE,
+                                CIGARETTDENAME = item2.CIGARETTENAME, 
+                                //Machineseq = item.MACHINESEQ ?? 0,
+                                SortNum =  0,
+                               tNum =  0,
+                                //Billcode = item.BILLCODE,
+                                //SortState = item.SORTSTATE ?? 0
+                            };
+                if (query != null)
+                {
+                    return query.Distinct().ToList();
+                }
+                else
+                {
+                    return null;
+                } 
+            }             
+
+        }
         /// <summary>
         /// 所有分拣任务
         /// </summary>
@@ -206,7 +233,7 @@ namespace InBound.Business
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH
                             on item.TROUGHNUM equals item2.TROUGHNUM
                              where item.SORTNUM == sortnum && item.MAINBELT == mainbelt && item.GROUPNO == groupno
-                            orderby item.TROUGHNUM
+                            orderby  item.MACHINESEQ
                             select new FollowTaskDeail()
                             {
                                 SortNum = item.SORTNUM ?? 0,
@@ -217,7 +244,7 @@ namespace InBound.Business
                                 CIGARETTDENAME = item2.CIGARETTENAME,
                                 GroupNO = item.GROUPNO ?? 0,
                                 Machineseq = item.MACHINESEQ ?? 0,
-                                TROUGHNUM = item.TROUGHNUM   
+                                TROUGHNUM = item.TROUGHNUM                            
                             }).ToList();
 
                 Allxynum = Allxynum - yjxyNum;
@@ -297,7 +324,7 @@ namespace InBound.Business
                                  join t in dataentity.T_PRODUCE_SORTTROUGH
                                  on p.TROUGHNUM equals t.TROUGHNUM
                                  where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting && p.SORTSTATE == 20
-                                 orderby p.SORTNUM, p.MACHINESEQ
+                                 orderby p.SORTNUM,p.MACHINESEQ
                                  select new FollowTaskDeail() { CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME, POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0, POKEID = p.POKEID, MainBelt = p.MAINBELT ?? 0, SortNum = p.SORTNUM ?? 0, GroupNO = t.GROUPNO ?? 0 }).ToList();
                     if (query != null)
                     {

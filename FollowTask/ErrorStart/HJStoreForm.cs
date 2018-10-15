@@ -56,7 +56,7 @@ namespace FollowTask.ErrorStart
         {
             if (HJStorage.HJStorageList1 != null)
             {
-                foreach (var item in HJStorage.HJStorageList2)
+                foreach (var item in HJStorage.HJStorageList1)
                 {
                     updateListBox(item.ErrorMsg, listBox1);
                 }

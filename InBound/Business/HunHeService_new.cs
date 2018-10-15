@@ -46,6 +46,7 @@ namespace InBound.Business
                                          where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item3.PULLSTATUS == 1
+                                             && item.STATUS != 20
                                              && (item.PACKAGEMACHINE == packmachine1
                                              || item.PACKAGEMACHINE == packmachine2)
                                          orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
@@ -72,6 +73,7 @@ namespace InBound.Business
                                          where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item3.PULLSTATUS == 1//
+                                              && item.STATUS != 20
                                              && (item.PACKAGEMACHINE == packmachine1
                                              || item.PACKAGEMACHINE == packmachine2)
                                          orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
@@ -102,6 +104,7 @@ namespace InBound.Business
                                      && (item.PACKAGEMACHINE == packmachine1
                                          || item.PACKAGEMACHINE == packmachine2)
                                         && item3.PULLSTATUS == 1
+                                         && item.STATUS != 20
                                      orderby item.SORTNUM, item2.SEQ, item2.MACHINESEQ, item2.TROUGHNUM, item.POKEID
                                      select new HUNHEVIEW()
                                      {

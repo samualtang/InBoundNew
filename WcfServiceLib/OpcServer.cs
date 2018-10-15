@@ -14,10 +14,11 @@ namespace WebService
        internal const string SERVER_NAME = "OPC.SimaticNET";
        public static Group UnionTaskGroup1,MachineGroup, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup;
        public static Group SortGroupA, SortGroupB;
+       public static Group SortGroupMachineA, SortGroupMachineB;
        internal const int LOCALE_ID = 0x409;  
           public static  List<Group> listUnionTaskGroup = new List<Group>();
           
-        public static void Connect(string groupConnectionGroup ="S7:[FJConnectionGroup1]")
+        public static void Connect(int type = 1,string groupConnectionGroup ="S7:[FJConnectionGroup1]")
         {
             if (pIOPCServer == null)
             {
@@ -29,19 +30,36 @@ namespace WebService
                 AddSortGroup(groupConnectionGroup);
             }
             else
-            { 
-               listUnionTaskGroup[7].RemovedItem();//第二次调用的时候清除重新添加
-               listUnionTaskGroup[8].RemovedItem();
-               AddSortGroup(groupConnectionGroup);
+            {
+                if (type == 1)
+                {
+                    listUnionTaskGroup[7].RemovedItem();//第二次调用的时候清除重新添加
+                    listUnionTaskGroup[8].RemovedItem();
+                    AddSortGroup(groupConnectionGroup);
+                }
+                else if (type == 2)
+                {
+                    listUnionTaskGroup[9].RemovedItem();//第二次调用的时候清除重新添加
+                    listUnionTaskGroup[10].RemovedItem();
+                    AddMachineGroup(groupConnectionGroup);
+                }
             } 
         }
-        public static string FJConnectionGroup { get; set; }
+     
         public static void AddSortGroup(string groupConnectionGroup)
         {
             
             SortGroupA.addItem(ItemCollection.GetASortingItem(groupConnectionGroup));//A组预分拣
             SortGroupB.addItem(ItemCollection.GetBSortingItem(groupConnectionGroup));//B组预分拣
              
+        }
+
+        public static void AddMachineGroup(string groupConnectionGroup)
+        {
+
+            SortGroupMachineA.addItem(ItemCollection.GetASortingmachineItem(groupConnectionGroup));//A组预分拣
+            SortGroupMachineB.addItem(ItemCollection.GetBSortingmachineItem(groupConnectionGroup));//B组预分拣
+
         }
         public static void AddUnionTaskGroup()
         {
@@ -56,6 +74,9 @@ namespace WebService
 
             SortGroupA = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);// A组预分拣
             SortGroupB = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);// B组预分拣 
+
+            SortGroupMachineA = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);// A组预分拣
+            SortGroupMachineB =  new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);// B组预分拣
             /********************************************************************************/
             UnionTaskGroup1.addItem(ItemCollection.GetTaskGroupItem1());
             UnionTaskGroup2.addItem(ItemCollection.GetTaskGroupItem2());
@@ -86,6 +107,8 @@ namespace WebService
             listUnionTaskGroup.Add(MachineGroup);//6 累计放烟数量
             listUnionTaskGroup.Add(SortGroupA);//7
             listUnionTaskGroup.Add(SortGroupB);//8
+            listUnionTaskGroup.Add(SortGroupMachineA);//9
+            listUnionTaskGroup.Add(SortGroupMachineB);//10
          
         }
     }

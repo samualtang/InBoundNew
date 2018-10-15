@@ -1212,7 +1212,7 @@ namespace SpecialShapeSmoke
                     {
                         lbl.Height = (panelList[index].Height - 2 * labelCount - boxTop - boxBottom) / labelCount + 20;
                         lbl.Location = new Point(padding, boxTop + (lbl.Height + 2) * i - 5);
-                        lbl.Font = new Font("宋体", 26, FontStyle.Bold);
+                        lbl.Font = new Font("宋体", 28, FontStyle.Bold);
                     }
                     else
                     {
@@ -1435,12 +1435,17 @@ namespace SpecialShapeSmoke
 
         private void TextboxFZ3(int id, string str)
         {
+
+             
             try
             {
                 if (this.txtbox2.InvokeRequired)
                 {
                     FlushClient fc = new FlushClient(TextboxFZ3);
                     this.Invoke(fc, id, str); //通过代理调用刷新方法
+                    String text = this.txtbox2.Text;
+                   // txtbox2.BeginInvoke(fc, new Object[] { id, str });
+                   // text = this.txtbox2.Text;
                 }
                 else
                 {
@@ -1451,9 +1456,11 @@ namespace SpecialShapeSmoke
                     }
                     if (id == 1)
                     {
+                       
+                        
                         this.txtbox1.Text = str;
                         pullcigarette(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));
-
+                       
                     }
                 }
             }
@@ -1669,7 +1676,9 @@ namespace SpecialShapeSmoke
                 //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
                 //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
 
+          
             getData(true);
+           
             txtbox4.Text = finishNo[0].ToString();
             txtbox3.Text = finishNo[1].ToString();
 

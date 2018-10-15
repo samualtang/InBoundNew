@@ -180,10 +180,6 @@
       <Project>{17D610AF-2478-4E66-B576-0EB21F117081}</Project>
       <Name>InBound</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Union\Union.csproj">
-      <Project>{E8AF3672-8E09-4451-B63F-3A6F322C2EE1}</Project>
-      <Name>Union</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

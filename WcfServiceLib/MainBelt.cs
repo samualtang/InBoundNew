@@ -62,15 +62,24 @@ namespace WcfServiceLib
             }
             MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(x => x.Place).ToList();
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MainBeltInfo>));
-            using (MemoryStream ms = new MemoryStream())
+            if (ListmbInfo.Count>0)
             {
-                ser.WriteObject(ms, ListmbInfo);
-                string s = Encoding.UTF8.GetString(ms.ToArray());
-                s = s.Replace("\\", "");
-                writeLog.Write("\r合流：" + mainBelt + "号主皮带\r" + s);
-                return s;
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MainBeltInfo>));
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    ser.WriteObject(ms, ListmbInfo);
+                    string s = Encoding.UTF8.GetString(ms.ToArray());
+                    s = s.Replace("\\", "");
+                    writeLog.Write("\r查询合流：" + mainBelt + "号主皮带\r");
+                    return s;
+                }
             }
+            else
+            {
+                writeLog.Write("GetMainBelt(" + mainBelt + ")查询结果集为空");
+                return "当前主皮带无数据,请重新查询!";
+            }
+           
 
 
         }
@@ -91,18 +100,21 @@ namespace WcfServiceLib
             }
             catch (Exception ex)
             {
-                return "远程连接失败,请检查网络";
+                return "与电控连接失败,请检查网络";
             }
             decimal[] sortnumAndXYnum = new decimal[4];
             sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
             sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//累计总数数量 
             sortnumAndXYnum[2] = OpcServer.listUnionTaskGroup[5].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量  
             sortnumAndXYnum[3] = OpcServer.listUnionTaskGroup[6].ReadD(  MachineNo   + 31 ).CastTo<int>(-1);//当前机械手累计放烟数量
-            if (sortnumAndXYnum.Sum() > 0)
+            writeLog.Write("\r查询合流：" + MachineNo + "号机械手\r当前任务号：" + sortnumAndXYnum[0] + "\r累计抓烟数量:" + sortnumAndXYnum[1] + "\r当前吸烟数量：" + sortnumAndXYnum[2] + "\r当前累计放烟数量：" + sortnumAndXYnum[3]);
+            if (sortnumAndXYnum.Sum() >= 0)
             {
                 if (sortnumAndXYnum[3] == sortnumAndXYnum[1])
                 {
-                    return "当前机械手任务号:" + sortnumAndXYnum[0] + "，已放烟:" + sortnumAndXYnum[3]+"条";
+                    return "当前机械手无抓烟数据";
+
+
                 }
 
                 else
@@ -118,21 +130,21 @@ namespace WcfServiceLib
                             ser.WriteObject(ms, list.Take(10));
                             string s = Encoding.UTF8.GetString(ms.ToArray());
                             s = s.Replace("\\", "");
-                            writeLog.Write("\r合流：" + MachineNo + "号机械手\r" + s);
+                            writeLog.Write("\r查询合流：" + MachineNo + "号机械手\r");
                             return s;
                         }
                     }
                     else
                     {
                         writeLog.Write("GetUnionMachine(" + MachineNo + ")查询结果集为空");
-                        return "01,未读取到数据,请重新查询!";
+                        return "当前机械手无抓烟数据,请重新查询!";
                     }
                 }
             }
             else
             {
-                writeLog.Write("GetUnionMachine(" + MachineNo + ")读取DB块异常");
-                return "02,未读取到数据,DB块无数据";
+                writeLog.Write("GetUnionMachine(" + MachineNo + ")读取DB块数据异常");
+                return "从电控获取数据失败，请重新查询!";
             }
         }
 
@@ -155,25 +167,35 @@ namespace WcfServiceLib
             decimal[] sortnumAndXYnum = new decimal[2];
             sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
             sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
-            List<FollowTaskDeail> date = FolloTaskService.getUnionCache(GetGroupNo(MachineNo), GetMainBeltNo(MachineNo), sortnumAndXYnum[0], sortnumAndXYnum[1]);
-            if (date != null && date.Count > 0)
+            writeLog.Write("\r查询合流缓存，任务号：" + sortnumAndXYnum[0] + "\r当前抓烟数量：" + sortnumAndXYnum[1]);
+            if (sortnumAndXYnum.Sum()>=0)
             {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
-                using (MemoryStream ms = new MemoryStream())
+                List<FollowTaskDeail> date = FolloTaskService.getUnionCache(GetGroupNo(MachineNo), GetMainBeltNo(MachineNo), sortnumAndXYnum[0], sortnumAndXYnum[1]);
+                if (date != null && date.Count > 0)
                 {
-                    ser.WriteObject(ms, date);
-                    string s = Encoding.UTF8.GetString(ms.ToArray());
-                    s = s.Replace("\\", "");
-                    writeLog.Write("\r合流：" + MachineNo + "号S缓存\r" + s);
-                    return s;
-                }
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        ser.WriteObject(ms, date);
+                        string s = Encoding.UTF8.GetString(ms.ToArray());
+                        s = s.Replace("\\", "");
+                        writeLog.Write("\r查询合流：" + MachineNo + "号S缓存\r");
+                        return s;
+                    }
 
+                }
+                else
+                {
+                    writeLog.Write("GetUnionCaChe(" + MachineNo + ")查询结果集为空");
+                    return "当前S缓存无数据,请重新查询!";
+                }
             }
             else
             {
-                writeLog.Write("GetUnionCaChe(" + MachineNo + ")查询结果集为空");
-                return "01,未读取到数据,请重新查询!";
+                writeLog.Write("GetUnionCaChe(" + MachineNo + ")读取DB块数据异常");
+                return "从电控获取数据失败，请重新查询!";
             }
+           
         }
         /// <summary>
         /// 获取组号
@@ -252,7 +274,7 @@ namespace WcfServiceLib
             } 
             try
             {
-                OpcServer.Connect(conncetionGroupStr);
+                OpcServer.Connect(1,conncetionGroupStr);
             }
             catch (Exception ex)
             {
@@ -316,28 +338,117 @@ namespace WcfServiceLib
                         ser.WriteObject(ms, ListmbInfo);
                         string s = Encoding.UTF8.GetString(ms.ToArray());
                         s = s.Replace("\\", "");
-                        writeLog.Write("\r分拣：第" + GroupNo + "组\r" + s);
+                        writeLog.Write("\r查询分拣：第" + GroupNo + "组\r");
                         return s;
                     }
                 }
                 else
                 {
                     writeLog.Write("GetSortBelt(" + GroupNo + ")查询结果集为空");
-                    return "01,未读取到数据,请重新查询!"; 
+                    return "当前分拣组无数据,请重新查询!"; 
                 }
             }
             else
             {
-                writeLog.Write("GetSortBelt(" + GroupNo + ")读取DB块异常");
-                return "02,未读取到数据,DB块无数据";
+                writeLog.Write("GetSortBelt(" + GroupNo + ")读取DB块数据异常");
+                return "从电控获取数据失败，请重新查询";
             }
 
 
 
 
         }
+        decimal GetSortingMachineGroup(int machineno,int biggroup)
+        {
+            decimal groupno = 0;
+            if (Convert.ToInt32(machineno) - biggroup < 12)
+            {
+                groupno = 1;
+            }
+            else
+            {
+                groupno = 2;
+            }
+            return groupno;
+        }
+        public string GetSortMachine(int machineNo)
+        {
+            string conncetionGroupStr = "S7:[FJConnectionGroup1]";//默认为第一组
+            decimal groupno = 0;
+            decimal MachineNo = 0;
+            if (machineNo.ToString().Substring(0, 1) == "1")
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup1]";
+                groupno = GetSortingMachineGroup(machineNo, 1000);
+                MachineNo = machineNo - 1000;
+            }
+            else if (machineNo.ToString().Substring(0, 1) == "2")
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup2]";
+                groupno = GetSortingMachineGroup(machineNo, 2000);
+                MachineNo = machineNo -2000;
+            }
+            else if (machineNo.ToString().Substring(0, 1) == "3")
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup3]";
+                groupno = GetSortingMachineGroup(machineNo, 3000);
+                MachineNo = machineNo - 3000;
+            }
+            else if (machineNo.ToString().Substring(0, 1) == "4")
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup4]";
+                groupno = GetSortingMachineGroup(machineNo, 4000);
+                MachineNo = machineNo - 4000;
+            }
+            else
+            {
+                return "请勿输入错的设备号！";
+            }
+            try
+            {
+                OpcServer.Connect(2, conncetionGroupStr);
+            }
+            catch (Exception ex)
+            {
+                return "远程连接失败,请检查网络";
+                
+            }
+            decimal sortnum = 0;
+            decimal xynum = 0;
+            if (groupno == 1)
+            {
+              sortnum=  OpcServer.listUnionTaskGroup[9].ReadD((((int)MachineNo * 2) - 2)).CastTo<decimal>(-1); //A 任务号
+              xynum = OpcServer.listUnionTaskGroup[9].ReadD((((int)MachineNo * 2) - 1)).CastTo<decimal>(-1); //A 数量
+            }
+            else
+            {
+                sortnum = OpcServer.listUnionTaskGroup[10].ReadD((((int)MachineNo * 2) - 2)).CastTo<decimal>(-1); //B 任务号
+                xynum = OpcServer.listUnionTaskGroup[10].ReadD((((int)MachineNo * 2) - 1)).CastTo<decimal>(-1); //B 数量
+            }
+            var machineinfo = FolloTaskService.GetSrotingMachineInfo(MachineNo).FirstOrDefault();
+           
+             
+            if (machineinfo != null)
+            {
+                List<string> list = new List<string>();
+                string str = "数量:" + xynum + "，卷烟名称:" + machineinfo.CIGARETTDENAME;
+                list.Add(str);
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MainBeltInfo>));
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    ser.WriteObject(ms, list);
+                    string s = Encoding.UTF8.GetString(ms.ToArray());
+                    s = s.Replace("\\", "");
+                    writeLog.Write("\r查询预分拣：第" + MachineNo + "号机械手\r");
+                    return s;
+                } 
+            }
+            else
+            { 
+                return "未读取到数据！";
+            }
 
-
+        }
 
         
 

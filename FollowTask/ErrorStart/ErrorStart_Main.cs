@@ -637,7 +637,7 @@ namespace FollowTask.ErrorStart
             try
             {
                 AllSystemStart ass = new AllSystemStart();
-                info = ass.ReadDBinfo_Storage(1);
+                info = ass.ReadDBinfo_Storage(2);
 
             }
             catch (Exception)
@@ -984,10 +984,6 @@ namespace FollowTask.ErrorStart
         { 
             GetState();
         }
-
-     
-
-
-
+       
     }
 }

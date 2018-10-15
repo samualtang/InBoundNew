@@ -48,12 +48,9 @@
             this.b1_f2 = new System.Windows.Forms.Button();
             this.b7 = new System.Windows.Forms.Button();
             this.b1_f4 = new System.Windows.Forms.Button();
-            this.Btn_start = new System.Windows.Forms.Button();
             this.b1_f1 = new System.Windows.Forms.Button();
             this.b6 = new System.Windows.Forms.Button();
-            this.btn_sort = new System.Windows.Forms.Button();
             this.b5_1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.btn_inout = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.b2 = new System.Windows.Forms.Button();
@@ -61,6 +58,9 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.Btn_start = new System.Windows.Forms.Button();
+            this.btn_sort = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -194,6 +194,7 @@
             this.button9.TabIndex = 21;
             this.button9.Text = "button9";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button1
@@ -204,6 +205,7 @@
             this.button1.TabIndex = 20;
             this.button1.Text = "手动检查项";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox1
@@ -263,17 +265,6 @@
             this.b1_f4.TabIndex = 18;
             this.b1_f4.UseVisualStyleBackColor = true;
             // 
-            // Btn_start
-            // 
-            this.Btn_start.BackgroundImage = global::FollowTask.Properties.Resources.自检;
-            this.Btn_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Btn_start.Location = new System.Drawing.Point(38, 28);
-            this.Btn_start.Name = "Btn_start";
-            this.Btn_start.Size = new System.Drawing.Size(340, 84);
-            this.Btn_start.TabIndex = 1;
-            this.Btn_start.UseVisualStyleBackColor = true;
-            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
-            // 
             // b1_f1
             // 
             this.b1_f1.Location = new System.Drawing.Point(187, 172);
@@ -290,17 +281,6 @@
             this.b6.TabIndex = 15;
             this.b6.UseVisualStyleBackColor = true;
             // 
-            // btn_sort
-            // 
-            this.btn_sort.BackgroundImage = global::FollowTask.Properties.Resources.预分拣;
-            this.btn_sort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_sort.Location = new System.Drawing.Point(12, 172);
-            this.btn_sort.Name = "btn_sort";
-            this.btn_sort.Size = new System.Drawing.Size(176, 52);
-            this.btn_sort.TabIndex = 2;
-            this.btn_sort.UseVisualStyleBackColor = true;
-            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
-            // 
             // b5_1
             // 
             this.b5_1.Location = new System.Drawing.Point(188, 409);
@@ -308,16 +288,6 @@
             this.b5_1.Size = new System.Drawing.Size(29, 25);
             this.b5_1.TabIndex = 14;
             this.b5_1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.BackgroundImage = global::FollowTask.Properties.Resources.合流;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Location = new System.Drawing.Point(12, 231);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(176, 52);
-            this.button2.TabIndex = 3;
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // btn_inout
             // 
@@ -365,6 +335,7 @@
             this.button7.TabIndex = 8;
             this.button7.Text = "包装机区域";
             this.button7.UseVisualStyleBackColor = true;
+            //this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -378,6 +349,38 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // Btn_start
+            // 
+            this.Btn_start.BackgroundImage = global::FollowTask.Properties.Resources.自检;
+            this.Btn_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_start.Location = new System.Drawing.Point(38, 28);
+            this.Btn_start.Name = "Btn_start";
+            this.Btn_start.Size = new System.Drawing.Size(340, 84);
+            this.Btn_start.TabIndex = 1;
+            this.Btn_start.UseVisualStyleBackColor = true;
+            this.Btn_start.Click += new System.EventHandler(this.Btn_start_Click);
+            // 
+            // btn_sort
+            // 
+            this.btn_sort.BackgroundImage = global::FollowTask.Properties.Resources.预分拣;
+            this.btn_sort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_sort.Location = new System.Drawing.Point(12, 172);
+            this.btn_sort.Name = "btn_sort";
+            this.btn_sort.Size = new System.Drawing.Size(176, 52);
+            this.btn_sort.TabIndex = 2;
+            this.btn_sort.UseVisualStyleBackColor = true;
+            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::FollowTask.Properties.Resources.合流;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(12, 231);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(176, 52);
+            this.button2.TabIndex = 3;
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // ErrorStart_Main
             // 

@@ -200,9 +200,9 @@ namespace SpecialShapeSmoke
                     //case "10":
                     //    Status = "未出烟";
                     //    break;
-                    case "15":
-                        Status = "已出烟";
-                        break;
+                    //case "15":
+                    //    Status = "已出烟";
+                    //    break;
                     case "20":
                         Status = "已出烟";
                         break;

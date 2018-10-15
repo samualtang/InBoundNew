@@ -44,7 +44,7 @@ namespace InBound.Model
         public decimal POKENUM  { get; set; }
         public decimal POKEID { get; set; }
         public string TROUGHNUM { get; set; }
-    
+        public decimal PackMachineSeq { get; set; }
       //  public decimal mainBelt { get; set; }
 
 

@@ -136,7 +136,38 @@ namespace WebService.Modle
           
             return list;
         }
+        /// <summary>
+        ///  A组机械手DB
+        /// </summary>
+        /// <param name="opcSortingServer"></param>
+        /// <returns></returns>
+        public static List<string> GetASortingmachineItem(string opcSortingServer)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 11; i++)
+            {
+                list.Add(opcSortingServer + "DB1008,W" + (12 + (i * 20)));
+                list.Add(opcSortingServer + "DB1008,W" + (14 + (i * 20)));
+              
+            }
+            return list;
+        }
+        /// <summary>
+        /// B组机械手DB
+        /// </summary>
+        /// <param name="opcSortingServer"></param>
+        /// <returns></returns>
+        public static List<string> GetBSortingmachineItem(string opcSortingServer)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 11; i++)
+            {
+                list.Add(opcSortingServer + "DB1008,W" + (234 + (i * 20)));
+                list.Add(opcSortingServer + "DB1008,W" + (236 + (i * 20)));
 
+            }
+            return list;
+        }
         /// <summary>
         ///  读取合流任务和抓数
         /// </summary>
