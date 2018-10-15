@@ -112,6 +112,7 @@
             this.Name = "FM_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "小工具";
+            this.SizeChanged += new System.EventHandler(this.FM_Main_SizeChanged);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

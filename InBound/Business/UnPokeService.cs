@@ -2278,12 +2278,11 @@ namespace InBound.Business
                 var query = (from item in dataentity.T_UN_POKE
                             join item2 in dataentity.T_PRODUCE_SORTTROUGH  on item.TROUGHNUM equals item2.TROUGHNUM
                             join item3 in dataentity.T_UN_TASK on item.BILLCODE equals item3.BILLCODE 
-                            where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10
-                            orderby item.TASKNUM
+                            where (item2.CIGARETTETYPE == 30 || item2.CIGARETTETYPE == 40) && item2.TROUGHTYPE == 10  
                             select new TaskDetail() {Machineseq = item.MACHINESEQ ?? 0 , GRIDNUM = item.GRIDNUM ??0, REGIONCODE = item3.REGIONCODE, SORTSEQ = item3.SORTSEQ ??0,CUSTOMERNAME =item3.CUSTOMERNAME, POKENUM = item.POKENUM ??0 , STATUS = item.STATUS ?? 0, SortNum = item.SORTNUM??0,SENDTASKNUM = item.SENDTASKNUM??0, Billcode = item.BILLCODE , CIGARETTDECODE = item2.CIGARETTECODE, CIGARETTDENAME = item2.CIGARETTENAME,LINENUM = item.LINENUM ,PACKAGEMACHINE= item.PACKAGEMACHINE??0 }).ToList();
 
                 if (query != null)
-                    return query ;
+                    return query.OrderBy(a=> a.SortNum).ToList() ;
                 else return null;
             }
         }

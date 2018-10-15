@@ -318,20 +318,23 @@ namespace InBound.Business
         { 
             using (Entities dataentity = new Entities())
             {
-                var query = from item in dataentity.T_PRODUCE_POKE
-                             orderby item.SORTNUM
-                            group item by new { item.BILLCODE, item.SORTNUM, item.UNIONSTATE ,item.MAINBELT,item.PACKAGEMACHINE,item.GROUPNO } into g
+                var query = (from item in dataentity.T_PRODUCE_POKE
+                            join item2 in dataentity.T_PRODUCE_SORTTROUGH
+                            on item.TROUGHNUM equals item2.TROUGHNUM
+                            where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 20
+                             orderby item.SORTNUM 
                             select new TaskDetail() { 
-                                SortNum = g.Key.SORTNUM ?? 0,
-                                tNum = g.Sum(x => x.POKENUM ?? 0), 
-                                Billcode = g.Key.BILLCODE, 
-                                UnionState = g.Key.UNIONSTATE ?? 0 ,
-                                MainBelt = g.Key.MAINBELT ?? 0,
-                                PACKAGEMACHINE = g.Key.PACKAGEMACHINE ?? 0, 
-                                GroupNO = g.Key.GROUPNO ??0
-                            };
+                                SortNum =  item.SORTNUM ??0 ,
+                                tNum = item.POKENUM ?? 0, 
+                                Billcode = item.BILLCODE ,
+                                UnionState = item.UNIONSTATE ?? 0 ,
+                                MainBelt =item.MAINBELT ?? 0,
+                                PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, 
+                                GroupNO = item.GROUPNO ?? 0,
+                                CIGARETTDENAME= item2.CIGARETTENAME
+                            }).ToList();
                 if (query != null)
-                    return query.OrderBy(x => x.SortNum).ToList();
+                    return query;
                 else return null;
             }
         }
@@ -441,6 +444,55 @@ namespace InBound.Business
                 var query = (from items in data.T_PRODUCE_POKE where items.SORTNUM >= SortTaskNumFrom && items.SORTNUM <= SortTaskNumTo select items).ToList();
 
                 return query;
+            }
+        }
+        /// <summary>
+        /// 根据主皮带更新合流任务
+        /// </summary>
+        /// <param name="fromtasknum"></param>
+        /// <param name="totasknum"></param>
+        /// <param name="mainbelt"></param>
+        /// <param name="state"></param>
+        public static void updateUnionTask(decimal fromtasknum, decimal totasknum,decimal mainbelt, decimal state)
+        {
+            using (Entities data = new Entities())
+            {
+                var query = (from items in data.T_PRODUCE_POKE where items.SORTNUM >= fromtasknum && items.SORTNUM <= totasknum && items.MAINBELT == mainbelt select items).ToList();
+                if (query != null)
+                {
+                    foreach (var item in query)
+                    { 
+                        item.UNIONSTATE = state;
+                    }
+                    //更新Task表
+                    var queryTask = (from item in data.T_PRODUCE_TASK where item.SORTNUM >= fromtasknum && item.SORTNUM <= totasknum select item).ToList();
+                    if (queryTask != null)
+                    {
+                        if (state == 20)//如果是完成
+                        {
+                            foreach (var item in queryTask)//Task表置完成
+                            {
+                                if (item.STATE == "15")
+                                {
+                                    item.STATE = "30";
+                                    item.FINISHTIME = DateTime.Now;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in queryTask)//如果是新增或者发送 
+                            {
+                                if (item.STATE == "30")
+                                {
+                                    item.STATE = "15";
+                                    item.FINISHTIME = null;
+                                }
+                            }
+                        } 
+                    }
+                }
+                data.SaveChanges();
             }
         }
         public static void updateTask(decimal fromtasknum, decimal totasknum, decimal state)

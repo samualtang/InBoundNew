@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Encrypt;
+using InBound;
 
 namespace Tool
 {
@@ -15,8 +16,9 @@ namespace Tool
         public FM_Main()
         {
             InitializeComponent();
+            asc.controllInitializeSize(this); 
         }
-
+        AutoSizeFormClass asc = new AutoSizeFormClass();
         private void btnEn_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(rtbH.Text))
@@ -65,6 +67,11 @@ namespace Tool
         {
             rtbH.Clear();
             rtbF.Clear();
+        }
+
+        private void FM_Main_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
     }
 }

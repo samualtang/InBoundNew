@@ -156,7 +156,7 @@ namespace InBound.Business
                  var allcount = (from item in entity.T_PRODUCE_POKE select item);
                  if (query.Count > 0)
                  {
-                     index = query.Max(a => a.POKEID);
+                     index = query.Max(a => a.POKEID)+1  ; 
                  }
                 var listsortnum = GetAllSortnum();
                 foreach (var item in listsortnum)
