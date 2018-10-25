@@ -713,6 +713,8 @@
           <Property Name="OUTTYPE" Type="number" />
           <Property Name="ILENGTH" Type="number" />
           <Property Name="IWIDTH" Type="number" />
+          <Property Name="IHEIGHT" Type="number" />
+          <Property Name="DOUBLETAKE" Type="varchar2" MaxLength="100" />
         </EntityType>
         <EntityType Name="T_WMS_LANEWAY">
           <Key>
@@ -1734,6 +1736,8 @@
           <Property Type="Decimal" Name="OUTTYPE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="ILENGTH" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="IWIDTH" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="IHEIGHT" Precision="38" Scale="0" />
+          <Property Type="String" Name="DOUBLETAKE" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
@@ -2541,6 +2545,8 @@
           <EntitySetMapping Name="T_WMS_ITEM">
             <EntityTypeMapping TypeName="Model.T_WMS_ITEM">
               <MappingFragment StoreEntitySet="T_WMS_ITEM">
+                <ScalarProperty Name="DOUBLETAKE" ColumnName="DOUBLETAKE" />
+                <ScalarProperty Name="IHEIGHT" ColumnName="IHEIGHT" />
                 <ScalarProperty Name="IWIDTH" ColumnName="IWIDTH" />
                 <ScalarProperty Name="ILENGTH" ColumnName="ILENGTH" />
                 <ScalarProperty Name="OUTTYPE" ColumnName="OUTTYPE" />

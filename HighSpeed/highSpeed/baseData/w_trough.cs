@@ -492,5 +492,33 @@ namespace highSpeed.baseData
             w_trough_2line m = new w_trough_2line();
             m.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            InBound.Business.OrderCiTrough ic = new InBound.Business.OrderCiTrough();
+            DialogResult result = MessageBox.Show("是否进行混合道重新排序？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+            int tag = ic.UpdateCiTrough();
+            switch (tag)
+            {
+                case 0:
+                    MessageBox.Show("混合道重新排序失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case 1:
+                    MessageBox.Show("混合道重新排序1线成功、2线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case 2:
+                    MessageBox.Show("混合道重新排序2线成功、1线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case 3:
+                    MessageBox.Show("混合道重新排序成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

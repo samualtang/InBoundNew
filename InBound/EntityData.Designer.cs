@@ -15,7 +15,6 @@ using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using InBound.Pub;
 
 [assembly: EdmSchemaAttribute()]
 namespace InBound
@@ -32,11 +31,9 @@ namespace InBound
         /// <summary>
         /// 请使用应用程序配置文件的“Entities”部分中的连接字符串初始化新 Entities 对象。
         /// </summary>
-        public Entities()
-            : base(Security.ConnectionString, "Entities")
+        public Entities() : base("name=Entities", "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
-  
             OnContextCreated();
         }
     
@@ -13870,6 +13867,54 @@ namespace InBound
         private Nullable<global::System.Decimal> _IWIDTH;
         partial void OnIWIDTHChanging(Nullable<global::System.Decimal> value);
         partial void OnIWIDTHChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> IHEIGHT
+        {
+            get
+            {
+                return _IHEIGHT;
+            }
+            set
+            {
+                OnIHEIGHTChanging(value);
+                ReportPropertyChanging("IHEIGHT");
+                _IHEIGHT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IHEIGHT");
+                OnIHEIGHTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _IHEIGHT;
+        partial void OnIHEIGHTChanging(Nullable<global::System.Decimal> value);
+        partial void OnIHEIGHTChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DOUBLETAKE
+        {
+            get
+            {
+                return _DOUBLETAKE;
+            }
+            set
+            {
+                OnDOUBLETAKEChanging(value);
+                ReportPropertyChanging("DOUBLETAKE");
+                _DOUBLETAKE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DOUBLETAKE");
+                OnDOUBLETAKEChanged();
+            }
+        }
+        private global::System.String _DOUBLETAKE;
+        partial void OnDOUBLETAKEChanging(global::System.String value);
+        partial void OnDOUBLETAKEChanged();
 
         #endregion
 
