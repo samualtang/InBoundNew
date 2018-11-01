@@ -33,6 +33,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmb_mainbelt = new System.Windows.Forms.ComboBox();
             this.cbLineB = new System.Windows.Forms.CheckBox();
             this.cbLineA = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -47,6 +49,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbSelect = new System.Windows.Forms.ComboBox();
             this.task_data = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtMachine = new System.Windows.Forms.TextBox();
+            this.lblmachine = new System.Windows.Forms.Label();
+            this.txtsortnum = new System.Windows.Forms.TextBox();
+            this.lblsortnum = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,13 +64,6 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtMachine = new System.Windows.Forms.TextBox();
-            this.lblmachine = new System.Windows.Forms.Label();
-            this.txtsortnum = new System.Windows.Forms.TextBox();
-            this.lblsortnum = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmb_mainbelt = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -89,6 +89,24 @@
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "状态管理";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(757, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 12);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "主皮带:";
+            // 
+            // cmb_mainbelt
+            // 
+            this.cmb_mainbelt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_mainbelt.FormattingEnabled = true;
+            this.cmb_mainbelt.Location = new System.Drawing.Point(804, 25);
+            this.cmb_mainbelt.Name = "cmb_mainbelt";
+            this.cmb_mainbelt.Size = new System.Drawing.Size(121, 20);
+            this.cmb_mainbelt.TabIndex = 25;
             // 
             // cbLineB
             // 
@@ -266,6 +284,48 @@
             this.task_data.Size = new System.Drawing.Size(1054, 505);
             this.task_data.TabIndex = 16;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(953, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "查询";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // txtMachine
+            // 
+            this.txtMachine.Location = new System.Drawing.Point(847, 24);
+            this.txtMachine.Name = "txtMachine";
+            this.txtMachine.Size = new System.Drawing.Size(86, 21);
+            this.txtMachine.TabIndex = 14;
+            // 
+            // lblmachine
+            // 
+            this.lblmachine.AutoSize = true;
+            this.lblmachine.Location = new System.Drawing.Point(698, 29);
+            this.lblmachine.Name = "lblmachine";
+            this.lblmachine.Size = new System.Drawing.Size(143, 12);
+            this.lblmachine.TabIndex = 13;
+            this.lblmachine.Text = "请输入机械手号进行查询:";
+            // 
+            // txtsortnum
+            // 
+            this.txtsortnum.Location = new System.Drawing.Point(589, 24);
+            this.txtsortnum.Name = "txtsortnum";
+            this.txtsortnum.Size = new System.Drawing.Size(86, 21);
+            this.txtsortnum.TabIndex = 14;
+            // 
+            // lblsortnum
+            // 
+            this.lblsortnum.AutoSize = true;
+            this.lblsortnum.Location = new System.Drawing.Point(428, 29);
+            this.lblsortnum.Name = "lblsortnum";
+            this.lblsortnum.Size = new System.Drawing.Size(155, 12);
+            this.lblsortnum.TabIndex = 13;
+            this.lblsortnum.Text = "请输入分拣任务号进行查询:";
+            // 
             // Column1
             // 
             this.Column1.DataPropertyName = "SortNum";
@@ -275,7 +335,7 @@
             // 
             // Column6
             // 
-            this.Column6.HeaderText = "机械手任务号";
+            this.Column6.HeaderText = "合单任务号";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             // 
@@ -331,66 +391,6 @@
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(953, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "查询";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // txtMachine
-            // 
-            this.txtMachine.Location = new System.Drawing.Point(847, 24);
-            this.txtMachine.Name = "txtMachine";
-            this.txtMachine.Size = new System.Drawing.Size(86, 21);
-            this.txtMachine.TabIndex = 14;
-            // 
-            // lblmachine
-            // 
-            this.lblmachine.AutoSize = true;
-            this.lblmachine.Location = new System.Drawing.Point(698, 29);
-            this.lblmachine.Name = "lblmachine";
-            this.lblmachine.Size = new System.Drawing.Size(143, 12);
-            this.lblmachine.TabIndex = 13;
-            this.lblmachine.Text = "请输入机械手号进行查询:";
-            // 
-            // txtsortnum
-            // 
-            this.txtsortnum.Location = new System.Drawing.Point(589, 24);
-            this.txtsortnum.Name = "txtsortnum";
-            this.txtsortnum.Size = new System.Drawing.Size(86, 21);
-            this.txtsortnum.TabIndex = 14;
-            // 
-            // lblsortnum
-            // 
-            this.lblsortnum.AutoSize = true;
-            this.lblsortnum.Location = new System.Drawing.Point(428, 29);
-            this.lblsortnum.Name = "lblsortnum";
-            this.lblsortnum.Size = new System.Drawing.Size(155, 12);
-            this.lblsortnum.TabIndex = 13;
-            this.lblsortnum.Text = "请输入分拣任务号进行查询:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(757, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 12);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "主皮带:";
-            // 
-            // cmb_mainbelt
-            // 
-            this.cmb_mainbelt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_mainbelt.FormattingEnabled = true;
-            this.cmb_mainbelt.Location = new System.Drawing.Point(804, 25);
-            this.cmb_mainbelt.Name = "cmb_mainbelt";
-            this.cmb_mainbelt.Size = new System.Drawing.Size(121, 20);
-            this.cmb_mainbelt.TabIndex = 25;
-            // 
             // StatusManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -434,6 +434,8 @@
         private System.Windows.Forms.Label lblmachine;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbSelect;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmb_mainbelt;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
@@ -444,7 +446,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmb_mainbelt;
     }
 }

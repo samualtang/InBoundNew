@@ -51,21 +51,20 @@ namespace SortingControlSys.SortingControl
         {
 
             List<TaskDetail> list;
-            if (!string.IsNullOrWhiteSpace(txtsortnum.Text) && string.IsNullOrWhiteSpace(txtMachine.Text)  )//分拣任务号
+            if (!string.IsNullOrWhiteSpace(txtsortnum.Text)  )//分拣任务号
             { 
-               list = TaskService.getFJData(decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2); 
+             
+                list =  TaskService.getFJDataAll(sortgroupno1, sortgroupno2).Where(a=> a.SortNum == decimal.Parse(txtsortnum.Text)).ToList();
             }
-            else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && string.IsNullOrWhiteSpace(txtsortnum.Text) )//机械手号
+            else if (!string.IsNullOrWhiteSpace(txtMachine.Text)  )//机械手号
             {
-                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), sortgroupno1, sortgroupno2); 
-            } 
-            //else if (!string.IsNullOrWhiteSpace(txtTasknum.Text) && cmbSelect.SelectedIndex == 2)//任务号
-            //{
-            //    list = TaskService.getFJDataByTasknum(Convert.ToInt32(txtTasknum.Text), sortgroupno1, sortgroupno2);
-            //}
+             
+                list = TaskService.getFJDataAll(sortgroupno1, sortgroupno2).Where(a => a.Machineseq == decimal.Parse(txtMachine.Text)).ToList();
+            }  
             else if (!string.IsNullOrWhiteSpace(txtMachine.Text) && !string.IsNullOrWhiteSpace(txtsortnum.Text)  )//分拣任务号 机械手号
             {
-                list = TaskService.getFJData(Convert.ToInt32(txtMachine.Text), decimal.Parse(txtsortnum.Text), sortgroupno1, sortgroupno2);
+             
+                list = TaskService.getFJDataAll(sortgroupno1, sortgroupno2).Where(a => a.SortNum == decimal.Parse(txtsortnum.Text) && a.Machineseq == decimal.Parse(txtMachine.Text)).ToList();
             } 
             else
             {
@@ -80,11 +79,25 @@ namespace SortingControlSys.SortingControl
                     
                     status =item.SortState+"";
                     string groupline = "";
+                    string uniontasknum = "";
+                    string pokeplce = "";
+                    if (item.UnionTasknum == 0 && item.POCKPLACE == 0)
+                    {
+                        uniontasknum = "未计算";
+                        pokeplce = "未计算";
+                    }
+                    else
+                    {
+                        pokeplce = item.POCKPLACE.ToString();
+                        uniontasknum = item.UnionTasknum.ToString();
+                    }
+                    
                     DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
                     this.task_data.Rows[index].Cells[0].Value = item.SortNum;//预分拣任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.UnionTasknum;//机械手任务号
+                    this.task_data.Rows[index].Cells[1].Value = uniontasknum;//合单任务号
+                   
                     this.task_data.Rows[index].Cells[2].Value = item.Billcode;//订单号
                     this.task_data.Rows[index].Cells[3].Value = item.CIGARETTDECODE;//香烟编号
                     this.task_data.Rows[index].Cells[4].Value = item.CIGARETTDENAME;//香烟名称
@@ -99,7 +112,7 @@ namespace SortingControlSys.SortingControl
                     this.task_data.Rows[index].Cells[5].Value = groupline;//组号
                     this.task_data.Rows[index].Cells[6].Value = item.Machineseq;//机械手号
                     this.task_data.Rows[index].Cells[7].Value = item.POKENUM;//抓烟数量
-                    this.task_data.Rows[index].Cells[8].Value = item.POCKPLACE;//放烟位置
+                    this.task_data.Rows[index].Cells[8].Value = pokeplce;//放烟位置
                    
                     if (status == "10")
                     {
@@ -227,56 +240,24 @@ namespace SortingControlSys.SortingControl
                         }
                         decimal dFrom = decimal.Parse(from);
                         decimal tFrom = decimal.Parse(to);
-                        TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
+                       // TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
                         var listSortNum = TaskService.GetListBySortTaskNumToSortTaskNum(dFrom,  tFrom);
-                       
+
 
                         foreach (var item in listSortNum)
-	                    {
+                        {
                             if (cbLineA.Checked)
                             {
-                                //if (taskState == 20)//转到机械手负责
-                                //{
-                                //    InBoundService.UpdateInOut(i, sortgroupno1);
-                                //}
+
                                 UpdateStatus(sortgroupno1, taskState, item.SORTNUM ?? 0, Convert.ToInt32(cmb_mainbelt.Text));
                             }
                             if (cbLineB.Checked)
                             {
-                                //if (taskState == 20)
-                                //{
-                                //    InBoundService.UpdateInOut(i, sortgroupno2);
-                                //}
-                                
                                 UpdateStatus(sortgroupno2, taskState, item.SORTNUM ?? 0, Convert.ToInt32(cmb_mainbelt.Text));
                             }
-                        
-                        ////////////////////////////////////////////////////////////////////之前机制
-                        //for (decimal i = dFrom; i <= tFrom; i++)
-                        //{
-                        //    if (cbLineA.Checked)
-                        //    {
-                        //        //if (taskState == 20)//转到机械手负责
-                        //        //{
-                        //        //    InBoundService.UpdateInOut(i, sortgroupno1);
-                        //        //}
-                        //        TaskService.UpdateStatus(sortgroupno1, taskState, i);
-                        //    }
-                        //    if (cbLineB.Checked)
-                        //    {
-                        //        //if (taskState == 20)
-                        //        //{
-                        //        //    InBoundService.UpdateInOut(i, sortgroupno2);
-                        //        //}
-                        //        TaskService.UpdateStatus(sortgroupno2, taskState, i);
-                        //    }
-                        //}
-                        ////////////////////////////////////////////////////////////////////////
-                        
-
-                    }
+                        }
                         button1_Click(null, null);
-
+                     
                 }
             }
             catch (Exception ex)

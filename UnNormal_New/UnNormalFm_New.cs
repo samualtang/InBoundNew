@@ -125,12 +125,12 @@ namespace UnNormal_New
         private void timerSendTask_Tick(object sender, EventArgs e)
         {
             updateListBox("触发定时器");
-            if (SpyBiaozhiGroup.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            if (SpyBiaozhiGroup.Read(0).ToString() != "1" && !issendone)//监控标志位第一组 产生跳变
             {
                 SpyBiaozhiGroup.Write(2, 0);
                 SpyBiaozhiGroup.Write(0, 0);
             }
-            if (SpyBiaozhiGroup.Read(1).ToString() != "0" && !issendone)//监控标志位第二组 产生跳变
+            if (SpyBiaozhiGroup.Read(1).ToString() != "1" && !issendone)//监控标志位第二组 产生跳变
             {
                 SpyBiaozhiGroup.Write(2, 1);
                 SpyBiaozhiGroup.Write(0, 1);

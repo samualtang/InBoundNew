@@ -80,7 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.BackgroundImage = global::highSpeed.Properties.Resources.login2;
-            this.ClientSize = new System.Drawing.Size(316, 215);
+            this.ClientSize = new System.Drawing.Size(322, 211);
             this.ControlBox = false;
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.textBox2);

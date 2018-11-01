@@ -185,43 +185,12 @@ namespace UnNormal_New
                     {
                         status = 20;
                     }
-
-                    //if (status == 20)
-                    //{
-                    //    UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(decimal.Parse(from), decimal.Parse(to)));
-                    //} 
+                
                     UnPokeService.UpdateTask(decimal.Parse(from), decimal.Parse(to), status,packagemachine1,packagemachine2,linenum);
 
                     WriteLog.GetLog().Write("任务号从：" + from + "任务号到：" + to + "，修改状态为：" + status + "，修改包装机为" + packagemachine1+
                         "号，" + packagemachine2 + "号包装机，"+linenum+"线" + "，任务更新完成!");
-                    /////////////////////////////////////////////////////////////////之前机制
-                    //if (task_data.SelectedRows == null || task_data.SelectedRows.Count <= 0)
-                    //{
-                    //    MessageBox.Show("请选择一行更新");
-                    //    return;
-                    //}
-                    //else
-                    //{
-                    //    decimal taskState = 10;
-
-                    //    if (radioButton2.Checked)
-                    //    {
-                    //        taskState = 15;
-
-                    //    }
-                    //    else if (radioButton3.Checked)
-                    //    {
-
-                    //        taskState = 20;
-                    //    }
-                    //    if (taskState != 10)
-                    //    {
-                    //        UnPokeService.UpdateStroageInout(UnPokeService.GetListByBillCode(decimal.Parse(txtFrom.Text),decimal.Parse(txtTo.Text)));
-                    //    }
-
-                    //    UnPokeService.UpdateTask(decimal.Parse(txtFrom.Text), decimal.Parse(txtTo.Text), taskState);
-                    //}
-                    ////////////////////////////////////////////////////////////////////
+              
 
                     button1_Click(null, null); 
                 }

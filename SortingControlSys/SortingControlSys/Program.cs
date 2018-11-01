@@ -62,7 +62,7 @@ namespace SortingControlSys
                  * */
                 try
                 {
-                    w_user form1 = new w_user();
+                    StatusManager form1 = new StatusManager();
                     //form1.WindowState = FormWindowState.Maximized;
                     Application.Run(form1);
                 }

@@ -146,7 +146,7 @@ namespace FollowTask
         {
             decimal[] all = ReadDbInFo(MainBelt, MachineNo);//合流机械手 任务信息
             decimal sortnumAll = all[0];//当前任务号
-            decimal xynumAll = all[1];   //累计抓数  
+            decimal xynumAll = all[1];   //总抓数  
             decimal xynum = all[2];//当前已抓数 
             decimal Dropxynum = all[3];//累计已放烟数量
             txtPokenum.Text = xynum + "";

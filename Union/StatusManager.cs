@@ -11,6 +11,7 @@ using InBound.Business;
 using System.Configuration;
 using InBound.Model;
 
+
 namespace SortingControlSys.SortingControl
 {
     public partial class StatusManager : Form
@@ -30,165 +31,72 @@ namespace SortingControlSys.SortingControl
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+     
+          /// <summary>
+        /// 获取主皮带号
+        /// </summary>
+        /// <param name="MachineNo"></param>
+        /// <returns>主皮带</returns>
+        int GetMainBeltNo(decimal MachineNo)
         {
-
-            try
-            { 
-                if (string.IsNullOrWhiteSpace(txtMachineseq.Text) && string.IsNullOrWhiteSpace(textSortNum.Text))
-                {
-                    Bind();
-                    return;
-                }
-                if (!string.IsNullOrWhiteSpace(txtMachineseq.Text) && !string.IsNullOrWhiteSpace(textSortNum.Text))
-                {
-                    BindDoubleSelect();
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(txtMachineseq.Text))
-                {
-                    BindMachine();
-                  
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(textSortNum.Text))
-                {
-                    Bind();
-                    return;
-                }
-
-            }
-            catch (Exception ex)
+            int mainbelt = 0;
+            if (MachineNo <= 8)
             {
-                MessageBox.Show("错误信息:" + ex.Message);
+                mainbelt = 1;
             }
-              
-           
+            else if (MachineNo >= 9 && MachineNo <= 16)
+            {
+                mainbelt = 2;
+            }
+            else if (MachineNo >= 17 && MachineNo <= 24)
+            {
+                mainbelt = 3;
+            }
+            else if (MachineNo >= 25 && MachineNo <= 32)
+            {
+                mainbelt = 4;
+            }
+            return mainbelt;
         }
         /// <summary>
-        /// 双参数查询
+        /// 获取组号
         /// </summary>
-        private void BindDoubleSelect()
+        /// <param name="machineNo">机械手号</param>
+        /// <returns></returns>4   
+        decimal GetGroupNo(int machineNo)
         {
-            List<TaskDetail> list;
-            if (!string.IsNullOrWhiteSpace(txtMachineseq.Text) && !string.IsNullOrWhiteSpace(textSortNum.Text))
+            decimal groupno = 0;
+            if (machineNo >= 8)
             {
-                list = TaskService.getUnionData(Convert.ToDecimal(textSortNum.Text), Convert.ToDecimal(txtMachineseq.Text));
+                groupno = machineNo % 8;// Convert.ToDecimal(Math.IEEERemainder(machineNo, 8));//获得组号
             }
             else
             {
-                list = TaskService.getUnionDataAll();
+                groupno = machineNo;
             }
-            task_data.Rows.Clear();
-            try
+            if (groupno == 0)
             {
-                String status = "";
-                foreach (var item in list)
-                {
-                    status = item.UnionState + "";
-                    DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
-                    dgvStyle.BackColor = Color.LightGreen;
-                    int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
-
-                    this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
-                    this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量 
-                    if (status == "10")
-                    {
-                        status = "新增";
-                    }
-                    else if (status == "15")
-                    {
-                        status = "已发送";
-                    }
-                    else
-                    {
-                        status = "完成";
-                        this.task_data.Rows[index].Cells[6].Style = dgvStyle;
-                    }
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
-               
-                }
-
-
+                groupno = 8;
             }
-            finally
-            {
-
-            }
-
+            return groupno;
         }
-        /// <summary>
-        /// 合流机械手
-        /// </summary>
-        private void BindMachine()
-        {
-
-            List<TaskDetail> list;
-            if (!string.IsNullOrWhiteSpace(txtMachineseq.Text) )
-            {
-                list = TaskService.getUnionData(Convert.ToInt32(txtMachineseq.Text));
-            }
-            else
-            {
-                list = TaskService.getUnionDataAll();
-            }
-            task_data.Rows.Clear();
-            try
-            {
-                String status = "";
-                foreach (var item in list)
-                {
-                    status = item.UnionState + "";
-                    DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
-                    dgvStyle.BackColor = Color.LightGreen;
-                    int index = this.task_data.Rows.Add();
-                    this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
-
-                    this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
-                    this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
-                    this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量
-                   
-                    if (status == "10")
-                    {
-                        status = "新增";
-                    }
-                    else if (status == "15")
-                    {
-                        status = "已发送";
-                    }
-                    else
-                    {
-                        status = "完成";
-                        this.task_data.Rows[index].Cells[6].Style = dgvStyle;
-                    }
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
-                }
-
-
-            }
-            finally
-            {
-
-            }
-        }
-
+ 
         private void Bind()
         {
 
             List<TaskDetail> list;
             if (!string.IsNullOrWhiteSpace(textSortNum.Text))
-            { 
-                list = TaskService.getUnionData(decimal.Parse(textSortNum.Text));
+            {
+                list = TaskService.getUnionDataAll().Where(a=> a.SortNum  == Convert.ToDecimal( textSortNum.Text)).ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(txtMachineseq.Text))
+            {  
+                list = TaskService.getUnionDataAll().Where(a => a.GroupNO == GetGroupNo(Convert.ToInt32( txtMachineseq.Text))  && a.MainBelt == GetMainBeltNo(Convert.ToInt32( txtMachineseq.Text)) ).ToList();
             }
             else
             {
-                list = TaskService.getUnionDataAll();
+                list = TaskService.getUnionDataAll().Take(150).ToList();
             }
             task_data.Rows.Clear();
             try
@@ -201,12 +109,12 @@ namespace SortingControlSys.SortingControl
                     dgvStyle.BackColor = Color.LightGreen;
                     int index = this.task_data.Rows.Add();
                     this.task_data.Rows[index].Cells[0].Value = item.SortNum;//分拣任务号
-                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号  
-
+                    this.task_data.Rows[index].Cells[1].Value = item.Billcode;//订单号   
                     this.task_data.Rows[index].Cells[2].Value = item.MainBelt;//主皮带
                     this.task_data.Rows[index].Cells[3].Value = item.PACKAGEMACHINE;//包装机
-                    this.task_data.Rows[index].Cells[4].Value = item.GroupNO;//机械手号
+                    this.task_data.Rows[index].Cells[4].Value = (item.GroupNO + ((item.MainBelt - 1) * 8));//机械手号
                     this.task_data.Rows[index].Cells[5].Value = item.tNum;//吸烟数量 
+                    this.task_data.Rows[index].Cells[6].Value = item.CIGARETTDENAME;//卷烟名称 
                     if (status == "10")
                     {
                         status = "新增";
@@ -218,9 +126,9 @@ namespace SortingControlSys.SortingControl
                     else
                     {
                         status = "完成";
-                        this.task_data.Rows[index].Cells[6].Style = dgvStyle;
+                        this.task_data.Rows[index].Cells[7].Style = dgvStyle;
                     }
-                    this.task_data.Rows[index].Cells[6].Value = status;//状态位
+                    this.task_data.Rows[index].Cells[7].Value = status;//状态位
                 }
            
 
@@ -243,9 +151,9 @@ namespace SortingControlSys.SortingControl
                                                                 MessageBoxDefaultButton.Button2);//定义对话框的按钮式样 
                 if (MsgBoxResult == DialogResult.Yes)
                 {
-                    if (textBox1.Text.Equals(""))
+                    if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(cmbMainbelt.Text))
                     {
-                        MessageBox.Show("请输入任务号");
+                        MessageBox.Show("请输入任务号和主皮带号");
                         return;
                     }
                     else
@@ -271,16 +179,17 @@ namespace SortingControlSys.SortingControl
 
                             taskState = 20;
                         }
-                        TaskService.updateTask(decimal.Parse(from), decimal.Parse(to), taskState);
-                        int dFrom = int.Parse(from);
-                        int tFrom = int.Parse(to);
-                        for (int i = dFrom; i <= tFrom; i++)
-                        {
+                        decimal mainbelt = Convert.ToDecimal(cmbMainbelt.SelectedItem);
+                        TaskService.updateUnionTask(decimal.Parse(from), decimal.Parse(to), mainbelt, taskState);
+                        //int dFrom = int.Parse(from);
+                        //int tFrom = int.Parse(to);
+                        //for (int i = dFrom; i <= tFrom; i++)
+                        //{
 
-                            //InBoundService.UpdateInOut(i, sortgroupno1);
-                            TaskService.UpdateUnionStatus(taskState, i);
+                        //    //InBoundService.UpdateInOut(i, sortgroupno1);
+                        //    TaskService.UpdateUnionStatus(taskState, i);
 
-                        }
+                        //}
                         //button1_Click(null, null);
                         Bind();
 
@@ -361,6 +270,11 @@ namespace SortingControlSys.SortingControl
         private void StatusManager_FormClosing(object sender, FormClosingEventArgs e)
         {
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Bind();
         }
 
  
