@@ -45,6 +45,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.btnVid = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -54,6 +55,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnVid);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
             this.panel1.Controls.Add(this.rdbUnUnionDan);
@@ -63,7 +65,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(921, 48);
+            this.panel1.Size = new System.Drawing.Size(1012, 48);
             this.panel1.TabIndex = 0;
             // 
             // btnPokeSeq
@@ -183,7 +185,7 @@
             this.dgvSortInfo.ReadOnly = true;
             this.dgvSortInfo.RowTemplate.Height = 23;
             this.dgvSortInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSortInfo.Size = new System.Drawing.Size(921, 618);
+            this.dgvSortInfo.Size = new System.Drawing.Size(1012, 618);
             this.dgvSortInfo.TabIndex = 5;
             this.dgvSortInfo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortInfo_CellContentClick);
             this.dgvSortInfo.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortInfo_CellFormatting);
@@ -225,11 +227,21 @@
             this.pbLoading.TabIndex = 27;
             this.pbLoading.TabStop = false;
             // 
+            // btnVid
+            // 
+            this.btnVid.Location = new System.Drawing.Point(850, 12);
+            this.btnVid.Name = "btnVid";
+            this.btnVid.Size = new System.Drawing.Size(98, 23);
+            this.btnVid.TabIndex = 5;
+            this.btnVid.Text = "验证下游数据";
+            this.btnVid.UseVisualStyleBackColor = true;
+            this.btnVid.Click += new System.EventHandler(this.btnVid_Click);
+            // 
             // w_SortFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 666);
+            this.ClientSize = new System.Drawing.Size(1012, 666);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.dgvSortInfo);
@@ -269,5 +281,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbLoading;
+        private System.Windows.Forms.Button btnVid;
     }
 }

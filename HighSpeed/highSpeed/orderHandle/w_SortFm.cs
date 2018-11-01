@@ -361,6 +361,7 @@ namespace highSpeed.orderHandle
         delegate void HandleSortPokeseq();
         private void btnPokeSeq_Click(object sender, EventArgs e)
         {
+            writeLog.Write("进行条烟顺序生成");
             btnPokeSeq.Enabled = false;
             isSort = true;
             handlesort(3, true);
@@ -391,6 +392,7 @@ namespace highSpeed.orderHandle
             }
             finally
             {
+                writeLog.Write("条烟顺序生成结束");
                 handlesort(3, false);//告诉父窗体任务结束
                 btnPokeSeq.Enabled = false; 
                 isSort = false;
@@ -402,6 +404,41 @@ namespace highSpeed.orderHandle
         private void dgvSortInfo_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             dgvSortInfo.Visible = false;
+        }
+
+        private void btnVid_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                writeLog.Write("进行数据验证");
+                Db.Open();
+                double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_task "));//上位总数量
+                double usNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_produce_poke "));//上位常规烟数量
+                double usUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_un_poke "));//上位异型烟数量
+                double dsDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo "));//下位总数量
+                double dsNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq "));//下位常规烟数量
+                double dsUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq "));//下位异型烟数量
+
+                string msg = "\n上位任务总数量为:" + usDataNum + ",下位包装机总数量数据为:" + dsDataNum + "\n相差:" + (usDataNum - dsDataNum) +
+                                                "\n\n上位常规烟数量为:" + usNormalNum + ",下位常规烟条烟识别数量为:" + dsNormalNum + "\n相差:" + (usNormalNum - dsNormalNum) +
+                                                "\n\n上位异型烟数量为:" + usUnNormalNum + ",下位异型烟条烟识别数量为:" + dsUnNormalNum + "\n相差:" + (usUnNormalNum - dsUnNormalNum);
+                if (usDataNum - dsDataNum == 0 && usNormalNum - dsNormalNum == 0 && usUnNormalNum - dsUnNormalNum ==0)
+                {
+                    MessageBox.Show("无差异,"+msg);
+                }
+                else
+                {
+                    MessageBox.Show("数据存在差异,"+msg);   
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("错误:\n" + ex.Message);
+            }
+            finally
+            {
+                Db.Close();
+            }
         }
 
 
