@@ -143,7 +143,7 @@ namespace highSpeed.orderHandle
         private void update1()
         {
             Db = new DataBase();
-            var producedata = Db.Query("select t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_produce_task t group by t.regioncode,t.state");
+            var producedata = Db.Query("select t.regioncode,(select sum(taskquantity) from t_produce_task where regioncode = t.regioncode) allqty,decode(t.state, 0, '新增', 15, '已排程', 30, '分拣完成', t.state) status,decode(t.state, 0, sum(t.taskquantity)) untask,decode(t.state, 15, sum(t.taskquantity)) unpoke,decode(t.state, 30, sum(t.taskquantity)) havepoke from t_produce_task t group by t.regioncode, t.state");
             dataGridView1.DataSource = producedata; 
         }
         private void button2_Click(object sender, EventArgs e)
@@ -154,7 +154,7 @@ namespace highSpeed.orderHandle
         private void update2()
         {
             Db = new DataBase();
-            var producedata = Db.Query("select t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_un_task t group by t.regioncode,t.state");
+            var producedata = Db.Query("select t.regioncode,(select sum(taskquantity) from t_un_task where regioncode = t.regioncode) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_un_task t group by t.regioncode,t.state");
 
             dataGridView2.DataSource = producedata; 
         }

@@ -34,11 +34,19 @@
             this.state = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.txt_codestr1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btn_produce = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.txt_codestr2 = new System.Windows.Forms.TextBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btn_un = new System.Windows.Forms.Button();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,10 +54,6 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.txt_codestr2 = new System.Windows.Forms.TextBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,10 +61,6 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btn_un = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -127,6 +127,16 @@
             this.tabPage2.Text = "       常规烟重排       ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(768, 90);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(111, 35);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "全  选";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(768, 20);
@@ -141,6 +151,7 @@
             // 
             this.txt_codestr1.Location = new System.Drawing.Point(761, 383);
             this.txt_codestr1.Name = "txt_codestr1";
+            this.txt_codestr1.ReadOnly = true;
             this.txt_codestr1.Size = new System.Drawing.Size(118, 21);
             this.txt_codestr1.TabIndex = 6;
             // 
@@ -186,48 +197,6 @@
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
-            // dataGridViewCheckBoxColumn1
-            // 
-            this.dataGridViewCheckBoxColumn1.HeaderText = "选择";
-            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            this.dataGridViewCheckBoxColumn1.Width = 50;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "regioncode";
-            this.Column2.HeaderText = "车组号";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "status";
-            this.Column3.HeaderText = "分拣状态";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "allqty";
-            this.Column4.HeaderText = "订单烟总量";
-            this.Column4.Name = "Column4";
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "untask";
-            this.Column1.HeaderText = "未排程";
-            this.Column1.Name = "Column1";
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "unpoke";
-            this.Column5.HeaderText = "未分拣";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "havepoke";
-            this.Column6.HeaderText = "已分拣";
-            this.Column6.Name = "Column6";
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.button4);
@@ -243,6 +212,16 @@
             this.tabPage3.Text = "       异型烟重排       ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(768, 90);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(111, 35);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "全  选";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(768, 20);
@@ -257,6 +236,7 @@
             // 
             this.txt_codestr2.Location = new System.Drawing.Point(761, 383);
             this.txt_codestr2.Name = "txt_codestr2";
+            this.txt_codestr2.ReadOnly = true;
             this.txt_codestr2.Size = new System.Drawing.Size(118, 21);
             this.txt_codestr2.TabIndex = 8;
             // 
@@ -282,48 +262,6 @@
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
             // 
-            // dataGridViewCheckBoxColumn2
-            // 
-            this.dataGridViewCheckBoxColumn2.HeaderText = "选择";
-            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
-            this.dataGridViewCheckBoxColumn2.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "regioncode";
-            this.dataGridViewTextBoxColumn1.HeaderText = "车组号";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "status";
-            this.dataGridViewTextBoxColumn2.HeaderText = "分拣状态";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "allqty";
-            this.dataGridViewTextBoxColumn3.HeaderText = "订单烟总量";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "untask";
-            this.dataGridViewTextBoxColumn4.HeaderText = "未排程";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "unpoke";
-            this.dataGridViewTextBoxColumn5.HeaderText = "未分拣";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "havepoke";
-            this.dataGridViewTextBoxColumn6.HeaderText = "已分拣";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -344,25 +282,101 @@
             this.btn_un.UseVisualStyleBackColor = true;
             this.btn_un.Click += new System.EventHandler(this.btn_un_Click);
             // 
-            // button3
+            // dataGridViewCheckBoxColumn1
             // 
-            this.button3.Location = new System.Drawing.Point(768, 90);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(111, 35);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "全  选";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.dataGridViewCheckBoxColumn1.HeaderText = "选择";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.Width = 50;
             // 
-            // button4
+            // Column2
             // 
-            this.button4.Location = new System.Drawing.Point(768, 90);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(111, 35);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "全  选";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.Column2.DataPropertyName = "regioncode";
+            this.Column2.HeaderText = "车组号";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "status";
+            this.Column3.HeaderText = "分拣状态";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "allqty";
+            this.Column4.HeaderText = "订单烟总量";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "untask";
+            this.Column1.HeaderText = "未排程";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "unpoke";
+            this.Column5.HeaderText = "未分拣";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            this.Column6.DataPropertyName = "havepoke";
+            this.Column6.HeaderText = "已分拣";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            // 
+            // dataGridViewCheckBoxColumn2
+            // 
+            this.dataGridViewCheckBoxColumn2.HeaderText = "选择";
+            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+            this.dataGridViewCheckBoxColumn2.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "regioncode";
+            this.dataGridViewTextBoxColumn1.HeaderText = "车组号";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "status";
+            this.dataGridViewTextBoxColumn2.HeaderText = "分拣状态";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "allqty";
+            this.dataGridViewTextBoxColumn3.HeaderText = "订单烟总量";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "untask";
+            this.dataGridViewTextBoxColumn4.HeaderText = "未排程";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "unpoke";
+            this.dataGridViewTextBoxColumn5.HeaderText = "未分拣";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "havepoke";
+            this.dataGridViewTextBoxColumn6.HeaderText = "已分拣";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
             // ReHihgSpeedForm
             // 
@@ -398,6 +412,13 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_un;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.TextBox txt_codestr1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox txt_codestr2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -405,7 +426,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -413,12 +433,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.TextBox txt_codestr1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox txt_codestr2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
 
     }
 }

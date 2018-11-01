@@ -831,9 +831,9 @@ namespace SpecialShapeSmoke
                 SearchWinForm(fNowView);
             
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                 MessageBox.Show("数据库连接失败！请检查网络"); 
+                 MessageBox.Show(ex.ToString() + "数据库连接失败！请检查网络"); 
             }
      
 
@@ -1304,6 +1304,15 @@ namespace SpecialShapeSmoke
 
             }
         }
+        //点击版  放一行
+        void pullcigarette_dianjiline(string[] pokes, string no, decimal machineseq)
+        {
+            foreach (var item in pokes)
+            {
+                HunHeService.PullTag(Convert.ToDecimal(item), machineseq);
+            }
+            getData(true); 
+        }
 
         //点击版
         void pullcigarette_dianji(string ccode, string no, decimal machineseq)
@@ -1465,7 +1474,12 @@ namespace SpecialShapeSmoke
                 }
             }
             catch (Exception e)
-            {
+            { 
+                if (e.Message.ToString() =="索引超出了数组界限。")
+                {
+                    MessageBox.Show("请检查扫码头配置是否正确！");
+                    return;
+                }
                 Label lab = (Label)Controls.Find("orBox" + (id == 1 ? 1 : 3), true)[0].Controls.Find("lab0", true)[0];
                 lab.BackColor = Color.Blue;
                 writeLog.Write(id+"号数据区域异常，" + e.Message);
@@ -1497,7 +1511,7 @@ namespace SpecialShapeSmoke
             string labName = "lab" + ((Label)sender).Name.Substring(3);
             string lbltext = ((Label)sender).Text;
 
-
+            string[] pokeid;
             Label lbl = (Label)Controls.Find(ParentControl, true)[0].Controls.Find(lblName, true)[0];
             Label lab = (Label)Controls.Find(ParentControl, true)[0].Controls.Find(labName, true)[0];
 
@@ -1511,18 +1525,19 @@ namespace SpecialShapeSmoke
 
                 if (lab.Text != "")
                 {
-                    decimal pokeid;
+                    
                     if (lab.Text.Split('|').Length > 1)
                     {
-                        pokeid = Convert.ToDecimal(lab.Text.Split('|').First());
+                        pokeid = lab.Text.Split('|');
                     }
                     else
                     {
-                        pokeid = Convert.ToDecimal(lab.Text);
+                        pokeid=new string[1];
+                        pokeid[0] = lab.Text ;
                     }
-                    HUNHEVIEW hunhe = HunHeService.GetNextCigarette(pokeid);
+                    HUNHEVIEW hunhe = HunHeService.GetNextCigarette(Convert.ToDecimal(pokeid[0]));
 
-                    DialogResult dia = MessageBox.Show("确认放烟：" + hunhe.CIGARETTENAME + "一条？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    DialogResult dia = MessageBox.Show("确认放烟：" + lbl.Text + " ？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                     if (dia == DialogResult.Cancel)
                     {
                         return;
@@ -1531,7 +1546,8 @@ namespace SpecialShapeSmoke
                     if (ParentControl == "orBox3")
                     {
                         txtbox2.Text = hunhe.CIGARETTECODE;
-                        pullcigarette_dianji(txtbox2.Text, "3", Convert.ToDecimal(boxText.First()));//暂时使用 点击版
+                        //pullcigarette_dianji(txtbox2.Text, "3", Convert.ToDecimal(boxText.First()));//暂时使用 点击版
+                        pullcigarette_dianjiline(pokeid, "3", Convert.ToDecimal(boxText.First()));
                     }
                     if (ParentControl == "orBox1")
                     {
@@ -1539,8 +1555,8 @@ namespace SpecialShapeSmoke
 
                 //        MessageBox.Show(ParentControl + "  " + ((Label)sender).Name + "\r" + lbl.Name + " "
                 //+ lbl.Text + "\r" + lab.Name + " " + lab.Text + "\r" + hunhe.CIGARETTENAME + " " + hunhe.CIGARETTECODE + " pokeid为" + hunhe.POKEID);
-                        pullcigarette_dianji(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));//暂时使用 点击版
-                  
+                        //pullcigarette_dianji(txtbox1.Text, "1", Convert.ToDecimal(boxText.First()));//暂时使用 点击版
+                        pullcigarette_dianjiline(pokeid, "1", Convert.ToDecimal(boxText.First()));
                     }
 
                 
