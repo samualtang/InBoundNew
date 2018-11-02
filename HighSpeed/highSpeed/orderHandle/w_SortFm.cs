@@ -412,12 +412,12 @@ namespace highSpeed.orderHandle
             {
                 writeLog.Write("进行数据验证");
                 Db.Open();
-                double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_task ").ToString() == "{}" ? 0 : Db.ExecuteScalar("select sum(orderquantity) from t_produce_task "));//上位总数量
-                double usNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_produce_poke ").ToString() == "{}" ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_produce_poke "));//上位常规烟数量
-                double usUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_un_poke ").ToString() == "{}" ? 0 :Db.ExecuteScalar("select sum(pokenum) from t_un_poke "));//上位异型烟数量
-                double dsDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo ").ToString() == "{}" ? 0 : Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo "));//下位总数量
-                double dsNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq ").ToString() == "{}" ? 0 : Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq "));//下位常规烟数量
-                double dsUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq ").ToString() == "{}" ? 0 : Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq "));//下位异型烟数量
+                double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_task ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(orderquantity) from t_produce_task "));//上位总数量
+                double usNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_produce_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_produce_poke "));//上位常规烟数量
+                double usUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_un_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_un_poke "));//上位异型烟数量
+                double dsDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo "));//下位总数量
+                double dsNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq "));//下位常规烟数量
+                double dsUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq "));//下位异型烟数量
 
                 string msg = "\n上位任务总数量为:" + usDataNum + ",下位包装机总数量数据为:" + dsDataNum + "\n相差:" + (usDataNum - dsDataNum) +
                                                 "\n\n上位常规烟数量为:" + usNormalNum + ",下位常规烟条烟识别数量为:" + dsNormalNum + "\n相差:" + (usNormalNum - dsNormalNum) +
