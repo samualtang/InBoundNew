@@ -152,6 +152,7 @@ namespace highSpeed.orderHandle
         private void btnSort_Click(object sender, EventArgs e)
         { 
             this.btnSort.Enabled = false;//防止点击多下  
+            writeLog.Write("开始排程");
             isSort = true;
             handlesort(3,true);
             progressBar1.Maximum = 100;
@@ -190,10 +191,12 @@ namespace highSpeed.orderHandle
                 if (rdbUnionDan.Checked)//合单
                 {
                     sqlpara[2].Value = 1;
+                    writeLog.Write("排程选择了合单");
                 }
                 else if (rdbUnUnionDan.Checked)//不合单
                 {
                     sqlpara[2].Value = 2;
+                    writeLog.Write("排程选择了不合单");
                 }
                 else
                 {
@@ -242,25 +245,26 @@ namespace highSpeed.orderHandle
             } 
             catch (DataException dataex)
             {
-                writeLog.Write("排程异常:" + dataex.Message);
+                writeLog.Write("排程ADO.NET组件异常:" + dataex.Message);
             }
             catch (NullReferenceException nullex)
             {
-                MessageBox.Show("排程OK:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                writeLog.Write("排程异常:" + nullex.Message);
+                MessageBox.Show("排程异常:" + nullex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                writeLog.Write("排程空引用异常:" + nullex.Message);
             }
             catch (IndexOutOfRangeException iore)
             {
-                MessageBox.Show("排程OK:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("排程异常:" + iore.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 writeLog.Write("排程异常索引越界:" + iore.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show("排程OK:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("排程异常:" + e.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 writeLog.Write("排程异常:" + e.Message);
             }
             finally
             {
+                writeLog.Write("排程结束");
                 times = 1;
                 seek();
                 panel2.Visible = false;
@@ -325,7 +329,7 @@ namespace highSpeed.orderHandle
         private void btnRef_Click(object sender, EventArgs e)
         {
             seek();
-            
+            writeLog.Write("点击刷新按钮");
         }
 
         private void dgvSortInfo_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -425,10 +429,12 @@ namespace highSpeed.orderHandle
                 if (usDataNum - dsDataNum == 0 && usNormalNum - dsNormalNum == 0 && usUnNormalNum - dsUnNormalNum ==0)
                 {
                     MessageBox.Show("无差异,"+msg);
+                    writeLog.Write(msg);
                 }
                 else
                 {
-                    MessageBox.Show("数据存在差异,"+msg);   
+                    MessageBox.Show("数据存在差异,"+msg);
+                    writeLog.Write(msg);
                 }
             }
             catch (Exception ex)
@@ -438,6 +444,7 @@ namespace highSpeed.orderHandle
             finally
             {
                 Db.Close();
+                writeLog.Write("数据验证结束");
             }
         }
 
