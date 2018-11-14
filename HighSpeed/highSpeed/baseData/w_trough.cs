@@ -459,6 +459,11 @@ namespace highSpeed.baseData
 
         private void btnsyncData_Click(object sender, EventArgs e)
         {
+            DialogResult di = MessageBox.Show("是否进行烟柜同步操作？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (di==DialogResult.Cancel)
+            {
+                return;
+            }
             Db.Open();
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
@@ -494,31 +499,46 @@ namespace highSpeed.baseData
         }
 
         private void button4_Click(object sender, EventArgs e)
-        {
-            InBound.Business.OrderCiTrough ic = new InBound.Business.OrderCiTrough();
-            DialogResult result = MessageBox.Show("是否进行混合道重新排序？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Cancel)
+        { 
+            try
             {
-                return;
+                InBound.Business.OrderCiTrough ic = new InBound.Business.OrderCiTrough();
+                //判断是否为新批次 若不是新批次，不允许修改
+                if (!ic.CheckTrough())
+                {
+                    MessageBox.Show("当前非新批次，不允许进行混合道品牌排序！");
+                    return;
+                }
+                DialogResult result = MessageBox.Show("是否进行混合道重新排序？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+                //进行通道修改，排序
+                int tag = ic.UpdateCiTrough();
+                switch (tag)
+                {
+                    case 0:
+                        MessageBox.Show("混合道重新排序失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    case 1:
+                        MessageBox.Show("混合道重新排序1线成功、2线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    case 2:
+                        MessageBox.Show("混合道重新排序2线成功、1线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    case 3:
+                        MessageBox.Show("混合道重新排序成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+                    default:
+                        break;
+                }
             }
-            int tag = ic.UpdateCiTrough();
-            switch (tag)
+            catch (Exception)
             {
-                case 0:
-                    MessageBox.Show("混合道重新排序失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case 1:
-                    MessageBox.Show("混合道重新排序1线成功、2线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case 2:
-                    MessageBox.Show("混合道重新排序2线成功、1线失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
-                case 3:
-                    MessageBox.Show("混合道重新排序成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    break;
-                default:
-                    break;
+                MessageBox.Show("混合道重新排序失败！请重新操作。");
             }
+            
         }
     }
 }

@@ -8,6 +8,15 @@ namespace InBound.Business
 {
     public  class OrderCiTrough
     {
+        public bool CheckTrough()
+        {
+            using (Entities et = new Entities())
+            {
+                bool num = et.T_PRODUCE_TASK.Count() > 0 ? false : true;
+                return num;
+            }
+        }
+
         //更新通道
         public int UpdateCiTrough()
         {
@@ -18,12 +27,12 @@ namespace InBound.Business
                 List<TroughNumList> ListTroughNum = new List<TroughNumList>();//排序后的通道号 （1线）
                 ListTroughNum = list.OrderBy(x => x.troughnun).ToList();
 
-                List<TroughNumList> ListCigarette = new List<TroughNumList>();//排序后的品牌列表（1线）
+                List<CigaretteSortList> ListCigarette = new List<CigaretteSortList>();//排序后的品牌列表（1线）
                 ListCigarette = (from item in et.T_PRODUCE_SORTTROUGH
-                                join item2 in et.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                                where item.CIGARETTETYPE == 40 && item.TROUGHTYPE == 10 && item.STATE == "10" && item.GROUPNO == 1
-                                 orderby item2.IHEIGHT, item2.ILENGTH descending, item2.IWIDTH descending, item2.ITEMNO
-                                select new TroughNumList(){ troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME }).ToList();
+                                 join item2 in et.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
+                                 where item.CIGARETTETYPE == 40 && item.TROUGHTYPE == 10 && item.STATE == "10" && item.GROUPNO == 1
+                                 select new CigaretteSortList() { troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME, iheight = item2.IHEIGHT ?? 0, ilength = item2.ILENGTH ?? 0, iwidth = item2.IWIDTH ?? 0 })
+                                .OrderBy(x => x.iheight).ThenByDescending(x => x.ilength).ThenByDescending(x => x.iwidth).ToList();
 
                  //完成重新排序后的数据√ (1线)
                 var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 40 && x.TROUGHTYPE == 10 && x.STATE == "10" && x.GROUPNO == 1).Select(x => x).OrderBy(x => x.TROUGHNUM).ToList();
@@ -42,12 +51,12 @@ namespace InBound.Business
                 List<TroughNumList> ListTroughNum2 = new List<TroughNumList>();//排序后的通道号 （2线）
                 ListTroughNum = list.OrderBy(x => x.troughnun).ToList();
 
-                List<TroughNumList> ListCigarette2 = new List<TroughNumList>();//排序后的品牌列表（2线）
+                List<CigaretteSortList> ListCigarette2 = new List<CigaretteSortList>();//排序后的品牌列表（2线）
                 ListCigarette2 = (from item in et.T_PRODUCE_SORTTROUGH
                                  join item2 in et.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
                                  where item.CIGARETTETYPE == 40 && item.TROUGHTYPE == 10 && item.STATE == "10" && item.GROUPNO == 2
-                                 orderby item2.IHEIGHT, item2.ILENGTH descending, item2.IWIDTH descending,item2.ITEMNO
-                                 select new TroughNumList() { troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME }).ToList();
+                                 select new CigaretteSortList() { troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME, iheight = item2.IHEIGHT ?? 0, ilength = item2.ILENGTH ?? 0, iwidth = item2.IWIDTH ?? 0 })
+                                .OrderBy(x => x.iheight).ThenByDescending(x => x.ilength).ThenByDescending(x => x.iwidth).ToList();
 
                 //完成重新排序后的数据√ (2线)
                 var result2 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 40 && x.TROUGHTYPE == 10 && x.STATE == "10" && x.GROUPNO == 2).Select(x => x).OrderBy(x => x.TROUGHNUM).ToList();
@@ -60,7 +69,8 @@ namespace InBound.Business
                 }
 
                 int g2 = et.SaveChanges();
-
+                /************************************************************************************************************/
+                //可能有其他线路添加，待定添加
                 if ( g1 > 0 && g2 > 0 )
                 {
                     return 3;

@@ -12,4 +12,14 @@ namespace InBound.Model
         public string Cid { get; set; }
 
     }
+    public class CigaretteSortList
+    {
+        public string troughnun { get; set; }
+        public string cname { get; set; }
+        public string Cid { get; set; }
+        public decimal iheight { get; set; }
+        public decimal ilength { get; set; }
+        public decimal iwidth { get; set; }
+
+    }
 }
