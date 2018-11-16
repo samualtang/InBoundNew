@@ -10,6 +10,7 @@ using InBound.Business;
 using InBound;
 using highSpeed.PubFunc;
 using System.Data.OracleClient;
+using System.Threading;
 
 namespace highSpeed.orderHandle
 {
@@ -21,12 +22,14 @@ namespace highSpeed.orderHandle
         {
             InitializeComponent();
             loadData = new LoadDataHandler();
+            
         }
-
+        PublicFun pf = new PublicFun(Application.StartupPath + "\\intfile.ini");
         protected override void OnLoad(EventArgs e)
         {
             
             base.OnLoad(e);
+          
             //loadData.LoadDatas<List<T_PRODUCE_SORTTROUGH>>(() =>
             //{
             //    var list = SortTroughService.GetTrough(10, 20).GroupBy(g => g.GROUPNO).Select(s => new T_PRODUCE_SORTTROUGH { GROUPNO = s.Key.Value }).OrderBy(x=>x.GROUPNO).ToList();
@@ -343,6 +346,7 @@ namespace highSpeed.orderHandle
         {
             try
             {
+   
                 using (Entities et = new Entities())
                 {
                     var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 3).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x=>x.MACHINESEQ).ToList();
@@ -368,12 +372,12 @@ namespace highSpeed.orderHandle
                 
 
 
-                    var result3 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10).GroupBy(x => x.GROUPNO).OrderBy(x=>x.Key).ToList();
-                    foreach (var item in result3)
-                    {
-                        comboBox_group.Items.Add(item.Key);
-                    }
-                    comboBox_group.SelectedIndex = 0 ;
+                    //var result3 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10).GroupBy(x => x.GROUPNO).OrderBy(x=>x.Key).ToList();
+                    //foreach (var item in result3)
+                    //{
+                    //    comboBox_group.Items.Add(item.Key);
+                    //}
+                    //comboBox_group.SelectedIndex = 0 ;
 
                 }
             }
@@ -595,21 +599,21 @@ namespace highSpeed.orderHandle
             try
             {
                 decimal txt = Convert.ToDecimal(comboBox_group.Text).CastTo(0);
-                comboBox4.Items.Clear();
-                comboBox5.Items.Clear();
+                cmbTagYG.Items.Clear();
+                cmbSoucreYG.Items.Clear();
                 using (Entities et = new Entities())
                 {
                     var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.GROUPNO == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.GROUPNO,x.STATE }).OrderBy(x => x.MACHINESEQ).ToList();
                     foreach (var item in result4)
                     {
-                        comboBox4.Items.Add(item.TROUGHNUM);
+                        cmbTagYG.Items.Add(item.TROUGHNUM);
                         if (item.STATE=="0")
                         {
-                            comboBox5.Items.Add(item.TROUGHNUM);
+                            cmbSoucreYG.Items.Add(item.TROUGHNUM);
                         } 
                     }
-                    comboBox4.SelectedIndex = -1;
-                    comboBox5.SelectedIndex = -1;
+                    cmbTagYG.SelectedIndex = -1;
+                    cmbSoucreYG.SelectedIndex = -1;
                 }
             }
             catch (Exception ex)
@@ -621,11 +625,11 @@ namespace highSpeed.orderHandle
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox4.SelectedIndex>-1)
+            if (cmbTagYG.SelectedIndex>-1)
             {
                 try
                 {
-                    string txt = comboBox4.Text;
+                    string txt = cmbTagYG.Text;
                     using (Entities et = new Entities())
                     {
                         var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.TROUGHNUM == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.CIGARETTENAME }).FirstOrDefault();
@@ -641,11 +645,11 @@ namespace highSpeed.orderHandle
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox5.SelectedIndex > -1)
+            if (cmbSoucreYG.SelectedIndex > -1)
             {
                 try
                 {
-                    string txt = comboBox5.Text;
+                    string txt = cmbSoucreYG.Text;
                     using (Entities et = new Entities())
                     {
                         var result4 = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 20 && x.TROUGHTYPE == 10 && x.TROUGHNUM == txt).Select(x => new { x.MACHINESEQ, x.TROUGHNUM, x.CIGARETTENAME }).FirstOrDefault();
@@ -661,31 +665,59 @@ namespace highSpeed.orderHandle
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (comboBox5.Text.Length <= 0)
+            if (comboBox_group.SelectedIndex > -1 && cmbSoucreYG.SelectedIndex > -1 && cmbTagGroup.SelectedIndex > -1 && cmbTagYG.SelectedIndex > -1)
             {
-                MessageBox.Show("请选择原通道");
-                return;
+                DialogResult re = MessageBox.Show("请确认：分拣组" + comboBox_group.Text + "\r" + cmbSoucreYG.Text + "" + label18.Text + "\r与\r" + cmbTagYG.Text + "\r" + label22.Text + "\r换道？", "提示",  
+                                                        MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                        MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                        MessageBoxDefaultButton.Button2);//定义对话框的按钮式样);
+                if (re == DialogResult.OK)
+                {
+                    try
+                    {
+                        ProducePokeService.FetchPokeTroughByTroughNo(cmbSoucreYG.Text, cmbTagYG.Text);
+                        pf.IniWriteValue("分拣换柜", "isTrue", "4"); //写入4时,为换道成功
+                        WriteLog.log.Write("写入4时,为换道成功,通道" + cmbSoucreYG.Text + "与" + cmbTagYG.Text+"交换");
+                        MessageBox.Show("换道成功，请检查数据");
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("换道失败，请重试");
+                    }
+                }
             }
-            if (comboBox4.Text.Length <= 0)
+            else
             {
-                MessageBox.Show("请选择目标通道");
-                return;
+                MessageBox.Show("请把烟柜填写完整!");
             }
+            //if (cmbSoucreYG.Text.Length <= 0)
+            //{
+            //    MessageBox.Show("请选择原通道");
+            //    return;
+            //}
+            //if (cmbTagYG.Text.Length <= 0)
+            //{
+            //    MessageBox.Show("请选择目标通道");
+            //    return;
+            //}
 
-            DialogResult re = MessageBox.Show("请确认：分拣组" + comboBox_group.Text + "\r" + comboBox5.Text + "" + label18.Text + "\r与\r" + comboBox4.Text + "" + label22.Text + "\r换道？", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
-            if (re == DialogResult.OK)
-            {
-                try
-                {
-                    ProducePokeService.FetchPokeByTroughNo(comboBox5.Text, comboBox4.Text);
-                    MessageBox.Show("换道成功，请检查数据");
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("换道失败，请重试");
-                }
-              
-            }
+            //DialogResult re = MessageBox.Show("请确认：分拣组" + comboBox_group.Text + "\r" + cmbSoucreYG.Text + "烟柜\r与\r" + cmbTagYG.Text + "烟柜\r换道？", "提示" ,  
+            //                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+            //                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+            //                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样);
+            //if (re == DialogResult.OK)
+            //{
+            //    try
+            //    {
+            //        ProducePokeService.FetchPokeByTroughNo(cmbSoucreYG.Text, cmbTagYG.Text);
+            //        MessageBox.Show("换道成功，请检查数据");
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("换道失败，请重试");
+            //    }
+
+            //}
         }
 
 
@@ -695,6 +727,7 @@ namespace highSpeed.orderHandle
 
         private void button6_Click(object sender, EventArgs e)
         {
+
             Db.Open();
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
@@ -706,18 +739,158 @@ namespace highSpeed.orderHandle
             sqlpara[1].Direction = ParameterDirection.Output;
 
             Db.ExecuteNonQueryWithProc("p_produce_wms_sorttrough", sqlpara);
- 
+
             string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
             string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
             Db.Close();
             if (errcode == "1")
             {
                 MessageBox.Show("数据已同步");
+                pf.IniWriteValue("分拣换柜", "isTrue", "3");//写入3时,表示同步烟柜已经完成
+                WriteLog.log.Write("写入3,表示同步烟柜已经完成");
             }
             else
             {
                 MessageBox.Show(errmsg);
             }
+
         }
+        List<decimal> LsitMainSN = new List<decimal>();
+        private void btnSorntum_Click(object sender, EventArgs e)
+        {
+            LsitMainSN = ProducePokeService.GetSortnumByNotCalcu();//获取最大的没有发送且已计算的任务号
+            txtSortnum1.Text = LsitMainSN[0].ToString();
+            txtSortnum2.Text = LsitMainSN[1].ToString();
+            txtSortnum3.Text = LsitMainSN[2].ToString();
+            txtSortnum4.Text = LsitMainSN[3].ToString();
+            pf.IniWriteValue("分拣换柜", "maxSortNum1", txtSortnum1.Text);
+            pf.IniWriteValue("分拣换柜", "maxSortNum2", txtSortnum2.Text);
+            pf.IniWriteValue("分拣换柜", "maxSortNum3", txtSortnum3.Text);
+            pf.IniWriteValue("分拣换柜", "maxSortNum4", txtSortnum4.Text);
+            pf.IniWriteValue("分拣换柜", "isTrue", "1");//写入1时,为第一次获取
+            WriteLog.GetLog().Write("获取最大的没有发送且已计算的任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
+            WriteLog.GetLog().Write("写入1 ,为第一次获取最大的没有发送且已计算的任务号");
+
+        }
+
+ 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtSortnum1.Text) && !string.IsNullOrWhiteSpace(txtSortnum2.Text) && !string.IsNullOrWhiteSpace(txtSortnum3.Text) && !string.IsNullOrWhiteSpace(txtSortnum4.Text))
+            {
+                DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
+                                                        "操作提示",//对话框的标题 
+                                                        MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                        MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                        MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                if (MsgBoxResult == DialogResult.Yes)
+                {
+                    decimal status = 0;
+ 
+                    if (rbNew.Checked)//新增
+                    {
+                        status = 10;
+                        pf.IniWriteValue("分拣换柜", "isTrue", "0"); //写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
+                        WriteLog.log.Write("写入0时,为第一次更新最大任务号后面的为10 更新成功");
+                        for (int i = 0; i < 4; i++)
+                        {
+                            LsitMainSN[i] = Convert.ToDecimal(  pf.IniReadValue("分拣换柜", " maxSortNum"+(i+1)));//保存的任务号
+                        }
+                     
+                    }
+                    else  if (rbEnd.Checked)//完成
+                    {
+                        status = 20;
+                        pf.IniWriteValue("分拣换柜", "isTrue", "2"); //写入2时,为第一次更新最大任务号后面的为20 更新成功 
+                        WriteLog.log.Write("写入2时,为第二次更新最大任务号后面的为20 更新成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("请先选择任务状态! ");
+                        return;
+                    }
+                    foreach (var item in LsitMainSN)//判断任务号是否有效
+                    {
+                        if (item > 0)
+                        {
+                            if (!ProducePokeService.GetExistSortnum(item))
+                            {
+                                MessageBox.Show("更新失败,无效的任务号:" + item);
+                                WriteLog.log.Write("无效的任务号:" + item);
+                                return;
+                            }
+                        }
+                    }
+                    ProducePokeService.UpdateAfterBySortnum(LsitMainSN, status);
+                    WriteLog.log.Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                "\r\n状态更新为" + status);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("请输入任务号");
+            }
+
+        }
+        ToolTip p = new ToolTip();
+    
+        private void btnTips_Click(object sender, EventArgs e)
+        {
+             
+           p.SetToolTip(btnTips, "帮助");
+         
+        }
+
+        private void comboBox_group_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbBind(comboBox_group, cmbSoucreYG);
+          
+        }
+        void cmbBind(ComboBox source, ComboBox tag)
+        {
+            switch (source.SelectedIndex)
+            {
+                case 0:
+                    foreach (var item in ProducePokeService.GetYGtroughnum(1, 2))
+                    {
+                        tag.Items.Add(item);
+                    }
+                    break;
+                case 1:
+                    foreach (var item in ProducePokeService.GetYGtroughnum(3, 4))
+                    {
+                        tag.Items.Add(item);
+                    }
+                    break;
+                case 2:
+                    foreach (var item in ProducePokeService.GetYGtroughnum(5, 6))
+                    {
+                        tag.Items.Add(item);
+                    }
+                    break;
+                case 3:
+                    foreach (var item in ProducePokeService.GetYGtroughnum(7, 8))
+                    {
+                        tag.Items.Add(item);
+                    }
+                    break;
+
+            }
+        }
+        private void cmbTagGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbBind(cmbTagGroup, cmbTagYG);
+        }
+
+        private void btnSorntum_MouseEnter(object sender, EventArgs e)
+        {
+            p.SetToolTip(btnSorntum,"自动获取每根主皮带上已经发送和已计算的任务号的最大任务号");
+        }
+
+     
     }
 }

@@ -73,17 +73,35 @@
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.cmbTagGroup = new System.Windows.Forms.ComboBox();
             this.comboBox_group = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cmbTagYG = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cmbSoucreYG = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
+            this.gpSetTask = new System.Windows.Forms.GroupBox();
+            this.rbNew = new System.Windows.Forms.RadioButton();
+            this.rbEnd = new System.Windows.Forms.RadioButton();
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnSorntum = new System.Windows.Forms.Button();
+            this.lblSortnum5 = new System.Windows.Forms.Label();
+            this.lblSortnum4 = new System.Windows.Forms.Label();
+            this.lblSortnum2 = new System.Windows.Forms.Label();
+            this.lblSortnum1 = new System.Windows.Forms.Label();
+            this.txtSortnum4 = new System.Windows.Forms.TextBox();
+            this.txtSortnum3 = new System.Windows.Forms.TextBox();
+            this.txtSortnum2 = new System.Windows.Forms.TextBox();
+            this.txtSortnum1 = new System.Windows.Forms.TextBox();
+            this.btnTips = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.gpSetTask.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -193,15 +211,16 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Location = new System.Drawing.Point(10, 182);
+            this.groupBox2.Location = new System.Drawing.Point(11, 337);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(855, 173);
+            this.groupBox2.Size = new System.Drawing.Size(855, 197);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "异型烟分拣过程中 烟仓换道";
             // 
             // button3
             // 
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button3.Location = new System.Drawing.Point(578, 142);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(92, 23);
@@ -255,7 +274,7 @@
             this.label9.Size = new System.Drawing.Size(587, 12);
             this.label9.TabIndex = 9;
             this.label9.Text = "_________________________________________________________________________________" +
-                "________________";
+    "________________";
             // 
             // label8
             // 
@@ -337,7 +356,8 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(743, 74);
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Location = new System.Drawing.Point(743, 144);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -359,12 +379,13 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.comboBox_yc1);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Location = new System.Drawing.Point(10, 369);
+            this.groupBox3.Location = new System.Drawing.Point(918, 189);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(855, 166);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "异型烟分拣过程中 烟柜换烟仓";
+            this.groupBox3.Visible = false;
             // 
             // button2
             // 
@@ -481,7 +502,8 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(655, 5);
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button4.Location = new System.Drawing.Point(110, 5);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 6;
@@ -491,7 +513,8 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(753, 5);
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button5.Location = new System.Drawing.Point(208, 5);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 7;
@@ -501,7 +524,8 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(557, 5);
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button6.Location = new System.Drawing.Point(12, 5);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 8;
@@ -514,14 +538,16 @@
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.label21);
             this.groupBox4.Controls.Add(this.label18);
+            this.groupBox4.Controls.Add(this.label23);
             this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.cmbTagGroup);
             this.groupBox4.Controls.Add(this.comboBox_group);
-            this.groupBox4.Controls.Add(this.comboBox4);
+            this.groupBox4.Controls.Add(this.cmbTagYG);
             this.groupBox4.Controls.Add(this.label19);
-            this.groupBox4.Controls.Add(this.comboBox5);
+            this.groupBox4.Controls.Add(this.cmbSoucreYG);
             this.groupBox4.Controls.Add(this.label20);
             this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Location = new System.Drawing.Point(10, 30);
+            this.groupBox4.Location = new System.Drawing.Point(12, 193);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(855, 138);
             this.groupBox4.TabIndex = 11;
@@ -531,7 +557,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(257, 83);
+            this.label22.Location = new System.Drawing.Point(298, 84);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(29, 12);
             this.label22.TabIndex = 15;
@@ -555,6 +581,15 @@
             this.label18.TabIndex = 11;
             this.label18.Text = "烟柜";
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(134, 84);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 12);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "组";
+            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -564,25 +599,45 @@
             this.label17.TabIndex = 10;
             this.label17.Text = "组";
             // 
+            // cmbTagGroup
+            // 
+            this.cmbTagGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTagGroup.FormattingEnabled = true;
+            this.cmbTagGroup.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.cmbTagGroup.Location = new System.Drawing.Point(81, 81);
+            this.cmbTagGroup.Name = "cmbTagGroup";
+            this.cmbTagGroup.Size = new System.Drawing.Size(47, 20);
+            this.cmbTagGroup.TabIndex = 9;
+            this.cmbTagGroup.SelectedIndexChanged += new System.EventHandler(this.cmbTagGroup_SelectedIndexChanged);
+            // 
             // comboBox_group
             // 
             this.comboBox_group.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_group.FormattingEnabled = true;
+            this.comboBox_group.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
             this.comboBox_group.Location = new System.Drawing.Point(78, 30);
             this.comboBox_group.Name = "comboBox_group";
             this.comboBox_group.Size = new System.Drawing.Size(47, 20);
             this.comboBox_group.TabIndex = 9;
-            this.comboBox_group.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged_1);
+            this.comboBox_group.SelectedIndexChanged += new System.EventHandler(this.comboBox_group_SelectedIndexChanged);
             // 
-            // comboBox4
+            // cmbTagYG
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(78, 80);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(158, 20);
-            this.comboBox4.TabIndex = 6;
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.cmbTagYG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTagYG.FormattingEnabled = true;
+            this.cmbTagYG.Location = new System.Drawing.Point(190, 79);
+            this.cmbTagYG.Name = "cmbTagYG";
+            this.cmbTagYG.Size = new System.Drawing.Size(96, 20);
+            this.cmbTagYG.TabIndex = 6;
+            this.cmbTagYG.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // label19
             // 
@@ -593,15 +648,15 @@
             this.label19.TabIndex = 5;
             this.label19.Text = "目标通道:";
             // 
-            // comboBox5
+            // cmbSoucreYG
             // 
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(190, 31);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(96, 20);
-            this.comboBox5.TabIndex = 4;
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            this.cmbSoucreYG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSoucreYG.FormattingEnabled = true;
+            this.cmbSoucreYG.Location = new System.Drawing.Point(190, 31);
+            this.cmbSoucreYG.Name = "cmbSoucreYG";
+            this.cmbSoucreYG.Size = new System.Drawing.Size(96, 20);
+            this.cmbSoucreYG.TabIndex = 4;
+            this.cmbSoucreYG.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // label20
             // 
@@ -614,7 +669,8 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(743, 63);
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button7.Location = new System.Drawing.Point(743, 103);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 29);
             this.button7.TabIndex = 2;
@@ -622,11 +678,165 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // gpSetTask
+            // 
+            this.gpSetTask.Controls.Add(this.rbNew);
+            this.gpSetTask.Controls.Add(this.rbEnd);
+            this.gpSetTask.Controls.Add(this.lbStatus);
+            this.gpSetTask.Controls.Add(this.btnUpdate);
+            this.gpSetTask.Controls.Add(this.btnSorntum);
+            this.gpSetTask.Controls.Add(this.lblSortnum5);
+            this.gpSetTask.Controls.Add(this.lblSortnum4);
+            this.gpSetTask.Controls.Add(this.lblSortnum2);
+            this.gpSetTask.Controls.Add(this.lblSortnum1);
+            this.gpSetTask.Controls.Add(this.txtSortnum4);
+            this.gpSetTask.Controls.Add(this.txtSortnum3);
+            this.gpSetTask.Controls.Add(this.txtSortnum2);
+            this.gpSetTask.Controls.Add(this.txtSortnum1);
+            this.gpSetTask.Location = new System.Drawing.Point(12, 34);
+            this.gpSetTask.Name = "gpSetTask";
+            this.gpSetTask.Size = new System.Drawing.Size(854, 150);
+            this.gpSetTask.TabIndex = 12;
+            this.gpSetTask.TabStop = false;
+            this.gpSetTask.Text = "定位分拣任务";
+            // 
+            // rbNew
+            // 
+            this.rbNew.AutoSize = true;
+            this.rbNew.Location = new System.Drawing.Point(327, 114);
+            this.rbNew.Name = "rbNew";
+            this.rbNew.Size = new System.Drawing.Size(47, 16);
+            this.rbNew.TabIndex = 5;
+            this.rbNew.TabStop = true;
+            this.rbNew.Text = "新增";
+            this.rbNew.UseVisualStyleBackColor = true;
+            // 
+            // rbEnd
+            // 
+            this.rbEnd.AutoSize = true;
+            this.rbEnd.Checked = true;
+            this.rbEnd.Location = new System.Drawing.Point(391, 114);
+            this.rbEnd.Name = "rbEnd";
+            this.rbEnd.Size = new System.Drawing.Size(59, 16);
+            this.rbEnd.TabIndex = 7;
+            this.rbEnd.TabStop = true;
+            this.rbEnd.Text = "已完成";
+            this.rbEnd.UseVisualStyleBackColor = true;
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Location = new System.Drawing.Point(274, 116);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(35, 12);
+            this.lbStatus.TabIndex = 4;
+            this.lbStatus.Text = "状态:";
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnUpdate.Location = new System.Drawing.Point(545, 111);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "更新";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnSorntum
+            // 
+            this.btnSorntum.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSorntum.Location = new System.Drawing.Point(276, 21);
+            this.btnSorntum.Name = "btnSorntum";
+            this.btnSorntum.Size = new System.Drawing.Size(75, 23);
+            this.btnSorntum.TabIndex = 2;
+            this.btnSorntum.Text = "自动获取";
+            this.btnSorntum.UseVisualStyleBackColor = true;
+            this.btnSorntum.Click += new System.EventHandler(this.btnSorntum_Click);
+            this.btnSorntum.MouseEnter += new System.EventHandler(this.btnSorntum_MouseEnter);
+            // 
+            // lblSortnum5
+            // 
+            this.lblSortnum5.AutoSize = true;
+            this.lblSortnum5.Location = new System.Drawing.Point(9, 114);
+            this.lblSortnum5.Name = "lblSortnum5";
+            this.lblSortnum5.Size = new System.Drawing.Size(101, 12);
+            this.lblSortnum5.TabIndex = 1;
+            this.lblSortnum5.Text = "4号主皮带任务号:";
+            // 
+            // lblSortnum4
+            // 
+            this.lblSortnum4.AutoSize = true;
+            this.lblSortnum4.Location = new System.Drawing.Point(9, 87);
+            this.lblSortnum4.Name = "lblSortnum4";
+            this.lblSortnum4.Size = new System.Drawing.Size(101, 12);
+            this.lblSortnum4.TabIndex = 1;
+            this.lblSortnum4.Text = "3号主皮带任务号:";
+            // 
+            // lblSortnum2
+            // 
+            this.lblSortnum2.AutoSize = true;
+            this.lblSortnum2.Location = new System.Drawing.Point(10, 57);
+            this.lblSortnum2.Name = "lblSortnum2";
+            this.lblSortnum2.Size = new System.Drawing.Size(101, 12);
+            this.lblSortnum2.TabIndex = 1;
+            this.lblSortnum2.Text = "2号主皮带任务号:";
+            // 
+            // lblSortnum1
+            // 
+            this.lblSortnum1.AutoSize = true;
+            this.lblSortnum1.Location = new System.Drawing.Point(10, 30);
+            this.lblSortnum1.Name = "lblSortnum1";
+            this.lblSortnum1.Size = new System.Drawing.Size(101, 12);
+            this.lblSortnum1.TabIndex = 1;
+            this.lblSortnum1.Text = "1号主皮带任务号:";
+            // 
+            // txtSortnum4
+            // 
+            this.txtSortnum4.Location = new System.Drawing.Point(115, 111);
+            this.txtSortnum4.Name = "txtSortnum4";
+            this.txtSortnum4.Size = new System.Drawing.Size(100, 21);
+            this.txtSortnum4.TabIndex = 0;
+            // 
+            // txtSortnum3
+            // 
+            this.txtSortnum3.Location = new System.Drawing.Point(115, 84);
+            this.txtSortnum3.Name = "txtSortnum3";
+            this.txtSortnum3.Size = new System.Drawing.Size(100, 21);
+            this.txtSortnum3.TabIndex = 0;
+            // 
+            // txtSortnum2
+            // 
+            this.txtSortnum2.Location = new System.Drawing.Point(115, 54);
+            this.txtSortnum2.Name = "txtSortnum2";
+            this.txtSortnum2.Size = new System.Drawing.Size(100, 21);
+            this.txtSortnum2.TabIndex = 0;
+            // 
+            // txtSortnum1
+            // 
+            this.txtSortnum1.Location = new System.Drawing.Point(115, 27);
+            this.txtSortnum1.Name = "txtSortnum1";
+            this.txtSortnum1.Size = new System.Drawing.Size(100, 21);
+            this.txtSortnum1.TabIndex = 0;
+            // 
+            // btnTips
+            // 
+            this.btnTips.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnTips.Location = new System.Drawing.Point(785, 5);
+            this.btnTips.Name = "btnTips";
+            this.btnTips.Size = new System.Drawing.Size(75, 23);
+            this.btnTips.TabIndex = 13;
+            this.btnTips.Text = "帮 助";
+            this.btnTips.UseVisualStyleBackColor = true;
+            this.btnTips.Click += new System.EventHandler(this.btnTips_Click);
+            // 
             // w_enableStandby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1248, 547);
+            this.Controls.Add(this.btnTips);
+            this.Controls.Add(this.gpSetTask);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -646,6 +856,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.gpSetTask.ResumeLayout(false);
+            this.gpSetTask.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -696,13 +908,30 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox comboBox_group;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cmbTagYG;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cmbSoucreYG;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cmbTagGroup;
+        private System.Windows.Forms.GroupBox gpSetTask;
+        private System.Windows.Forms.Button btnSorntum;
+        private System.Windows.Forms.Label lblSortnum1;
+        private System.Windows.Forms.TextBox txtSortnum1;
+        private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.RadioButton rbNew;
+        private System.Windows.Forms.RadioButton rbEnd;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label lblSortnum5;
+        private System.Windows.Forms.Label lblSortnum4;
+        private System.Windows.Forms.Label lblSortnum2;
+        private System.Windows.Forms.TextBox txtSortnum4;
+        private System.Windows.Forms.TextBox txtSortnum3;
+        private System.Windows.Forms.TextBox txtSortnum2;
+        private System.Windows.Forms.Button btnTips;
     }
 }

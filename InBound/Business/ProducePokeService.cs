@@ -707,7 +707,31 @@ namespace InBound.Business
                 entity.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// 烟柜更换
+        /// </summary>
+        /// <param name="soucreTrougNum">源烟柜</param>
+        /// <param name="tagGroupNo">目标组</param>
+        /// <param name="tagTrougNum">目标烟柜</param>
+        public static void FetchPokeTroughByTroughNo(string soucreTrougNum,   string tagTrougNum)
+        {
+            using (Entities entity = new Entities())
+            {
+                var source = (from item in entity.T_PRODUCE_POKE where item.TROUGHNUM == soucreTrougNum select item).ToList();//获取源烟柜所有任务
+                var tag = (from item in entity.T_PRODUCE_SORTTROUGH where item.TROUGHNUM == tagTrougNum select item).FirstOrDefault();//获取目标烟柜通道信息
+                if (source != null && source.Count > 0 && tag != null)
+                {
+                    source.ForEach(f =>
+                        {
+                            f.TROUGHNUM = tagTrougNum;//将源烟柜通道更换为目标烟柜通道
+                            f.MACHINESTATE = tag.MACHINESEQ;// 将源烟柜物理通道号更换为物理通道号
+                            f.GROUPNO = tag.GROUPNO;//将源烟柜组更换为目标烟柜通组
+                        });
+                }
+                entity.SaveChanges();
+                
+            }
+        }
 
         public static void FetchPokeByTroughNo(string troughNo, string standbyNo)
         {
@@ -748,5 +772,88 @@ namespace InBound.Business
                 entity.SaveChanges();
             }
         }
+
+        public static List<decimal> GetSortnumByNotCalcu()
+        {
+            using (Entities entity = new Entities())
+            {
+                List<decimal> list = new List<decimal>();
+                for (int i = 1; i <= 4; i++)
+                {
+                    var sortnumMax = (from item in entity.T_PRODUCE_POKE
+                                      where item.SORTSTATE != 10 && item.MAINBELT == i
+                                      select item).ToList();
+                    if (sortnumMax.Count > 0 && sortnumMax != null)
+                    {
+                        list.Add(sortnumMax.Max(a => a.SORTNUM ?? 0));
+                    }
+                    else
+                    {
+                        list.Add(0);
+                    }
+                }
+                return list;
+            }
+        }
+        public static bool GetExistSortnum( decimal sortnum)
+        {
+            using (Entities entity = new Entities())
+            {
+                var isOrNot =( from item in entity.T_PRODUCE_POKE
+                              where item.SORTNUM == sortnum
+                              select item).ToList().Count();
+                if (isOrNot != null && isOrNot >0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        /// <summary>
+        /// 更新这个任务之后的任务状态
+        /// </summary>
+        /// <param name="sortnum">这个任务</param>
+        /// <param name="status">状态</param>
+        public static void UpdateAfterBySortnum(List<decimal> list,decimal status)
+        {
+            using (Entities entity = new Entities())
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (list[i - 1] > 0)
+                    {
+                        decimal sortnum = list[i - 1];
+                        var taskList = (from item in entity.T_PRODUCE_POKE
+                                        where item.SORTNUM > sortnum && item.MAINBELT == i
+                                        select item).ToList();//获取这个任务之后的所有任务
+                        foreach (var item in taskList)
+                        {
+                            item.UNIONSTATE = status;
+                            item.SORTSTATE = status;
+                        }
+                    }
+                }
+                entity.SaveChanges();
+            }
+        }
+
+        public static List<string> GetYGtroughnum(int groupno1, int groupno2)
+        {
+            using (Entities en = new Entities())
+            {
+                List<string> list = new List<string>();
+                var ygtrough = (from item in en.T_PRODUCE_SORTTROUGH
+                               where item.TROUGHTYPE == 10 && item.CIGARETTETYPE == 20 && (item.GROUPNO == groupno1 || item.GROUPNO == groupno2)
+                               orderby item.MACHINESEQ
+                               select item).ToList();
+                foreach (var item in ygtrough)
+                {
+                    list.Add(item.TROUGHNUM );
+                }
+                return list;
+
+            }
+        }
+
+
     }
 }
