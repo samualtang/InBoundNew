@@ -781,7 +781,7 @@ namespace InBound.Business
                 for (int i = 1; i <= 4; i++)
                 {
                     var sortnumMax = (from item in entity.T_PRODUCE_POKE
-                                      where item.SORTSTATE != 10 && item.MAINBELT == i
+                                      where item.SORTSTATE >= 15 && item.MAINBELT == i
                                       select item).ToList();
                     if (sortnumMax.Count > 0 && sortnumMax != null)
                     {
@@ -808,6 +808,32 @@ namespace InBound.Business
                     return false;
             }
         }
+        public static void RefSortByTiaoyan(List<decimal> list)
+        {
+            using (Entities entity = new Entities())
+            {
+                for (int i = 0; i <= 4; i++)
+                {
+                    if (list[i - 1] > 0)
+                    {
+                        decimal sortnum = list[i - 1];
+                        var taskList = (from item in entity.T_PRODUCE_POKESEQ
+                                       where item.MAINBELT == i
+                                        select item).ToList();//获取总共的任务
+                        var DrpoList = (from item in entity.T_PRODUCE_POKESEQ
+                                        where item.SORTNUM > sortnum && item.MAINBELT == i
+                                        select item).ToList();//获取这个任务之后的所有任务
+                        foreach (var item in DrpoList)
+                        {
+                            taskList.Remove(item);
+                        }
+                    }
+                }
+                entity.SaveChanges();
+
+            }
+
+        }
         /// <summary>
         /// 更新这个任务之后的任务状态
         /// </summary>
@@ -829,13 +855,20 @@ namespace InBound.Business
                         {
                             item.UNIONSTATE = status;
                             item.SORTSTATE = status;
+                            if (item.POKEPLACE > 0)
+                            {
+                                item.POKEPLACE = 0;
+                                item.MERAGENUM = 0;
+                                item.MACHINESTATE = 10;
+                                item.UNIONTASKNUM = 0;
+                            }
                         }
                     }
                 }
                 entity.SaveChanges();
             }
         }
-
+        
         public static List<string> GetYGtroughnum(int groupno1, int groupno2)
         {
             using (Entities en = new Entities())

@@ -97,11 +97,17 @@
             this.txtSortnum2 = new System.Windows.Forms.TextBox();
             this.txtSortnum1 = new System.Windows.Forms.TextBox();
             this.btnTips = new System.Windows.Forms.Button();
+            this.btnReTiaoyan = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.gpSetTask.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -357,7 +363,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Location = new System.Drawing.Point(743, 144);
+            this.button1.Location = new System.Drawing.Point(774, 142);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -670,7 +676,7 @@
             // button7
             // 
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button7.Location = new System.Drawing.Point(743, 103);
+            this.button7.Location = new System.Drawing.Point(773, 103);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 29);
             this.button7.TabIndex = 2;
@@ -680,6 +686,8 @@
             // 
             // gpSetTask
             // 
+            this.gpSetTask.Controls.Add(this.panel3);
+            this.gpSetTask.Controls.Add(this.btnReTiaoyan);
             this.gpSetTask.Controls.Add(this.rbNew);
             this.gpSetTask.Controls.Add(this.rbEnd);
             this.gpSetTask.Controls.Add(this.lbStatus);
@@ -703,7 +711,7 @@
             // rbNew
             // 
             this.rbNew.AutoSize = true;
-            this.rbNew.Location = new System.Drawing.Point(327, 114);
+            this.rbNew.Location = new System.Drawing.Point(613, 114);
             this.rbNew.Name = "rbNew";
             this.rbNew.Size = new System.Drawing.Size(47, 16);
             this.rbNew.TabIndex = 5;
@@ -715,7 +723,7 @@
             // 
             this.rbEnd.AutoSize = true;
             this.rbEnd.Checked = true;
-            this.rbEnd.Location = new System.Drawing.Point(391, 114);
+            this.rbEnd.Location = new System.Drawing.Point(677, 114);
             this.rbEnd.Name = "rbEnd";
             this.rbEnd.Size = new System.Drawing.Size(59, 16);
             this.rbEnd.TabIndex = 7;
@@ -726,7 +734,7 @@
             // lbStatus
             // 
             this.lbStatus.AutoSize = true;
-            this.lbStatus.Location = new System.Drawing.Point(274, 116);
+            this.lbStatus.Location = new System.Drawing.Point(560, 116);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(35, 12);
             this.lbStatus.TabIndex = 4;
@@ -735,7 +743,7 @@
             // btnUpdate
             // 
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnUpdate.Location = new System.Drawing.Point(545, 111);
+            this.btnUpdate.Location = new System.Drawing.Point(774, 111);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 3;
@@ -746,7 +754,7 @@
             // btnSorntum
             // 
             this.btnSorntum.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSorntum.Location = new System.Drawing.Point(276, 21);
+            this.btnSorntum.Location = new System.Drawing.Point(773, 17);
             this.btnSorntum.Name = "btnSorntum";
             this.btnSorntum.Size = new System.Drawing.Size(75, 23);
             this.btnSorntum.TabIndex = 2;
@@ -795,29 +803,37 @@
             // 
             this.txtSortnum4.Location = new System.Drawing.Point(115, 111);
             this.txtSortnum4.Name = "txtSortnum4";
+            this.txtSortnum4.ReadOnly = true;
             this.txtSortnum4.Size = new System.Drawing.Size(100, 21);
             this.txtSortnum4.TabIndex = 0;
+            this.txtSortnum4.TextChanged += new System.EventHandler(this.txtSortnum1_TextChanged);
             // 
             // txtSortnum3
             // 
             this.txtSortnum3.Location = new System.Drawing.Point(115, 84);
             this.txtSortnum3.Name = "txtSortnum3";
+            this.txtSortnum3.ReadOnly = true;
             this.txtSortnum3.Size = new System.Drawing.Size(100, 21);
             this.txtSortnum3.TabIndex = 0;
+            this.txtSortnum3.TextChanged += new System.EventHandler(this.txtSortnum1_TextChanged);
             // 
             // txtSortnum2
             // 
             this.txtSortnum2.Location = new System.Drawing.Point(115, 54);
             this.txtSortnum2.Name = "txtSortnum2";
+            this.txtSortnum2.ReadOnly = true;
             this.txtSortnum2.Size = new System.Drawing.Size(100, 21);
             this.txtSortnum2.TabIndex = 0;
+            this.txtSortnum2.TextChanged += new System.EventHandler(this.txtSortnum1_TextChanged);
             // 
             // txtSortnum1
             // 
             this.txtSortnum1.Location = new System.Drawing.Point(115, 27);
             this.txtSortnum1.Name = "txtSortnum1";
+            this.txtSortnum1.ReadOnly = true;
             this.txtSortnum1.Size = new System.Drawing.Size(100, 21);
             this.txtSortnum1.TabIndex = 0;
+            this.txtSortnum1.TextChanged += new System.EventHandler(this.txtSortnum1_TextChanged);
             // 
             // btnTips
             // 
@@ -829,6 +845,48 @@
             this.btnTips.Text = "帮 助";
             this.btnTips.UseVisualStyleBackColor = true;
             this.btnTips.Click += new System.EventHandler(this.btnTips_Click);
+            // 
+            // btnReTiaoyan
+            // 
+            this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReTiaoyan.Location = new System.Drawing.Point(773, 46);
+            this.btnReTiaoyan.Name = "btnReTiaoyan";
+            this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
+            this.btnReTiaoyan.TabIndex = 8;
+            this.btnReTiaoyan.Text = "条烟顺序";
+            this.btnReTiaoyan.UseVisualStyleBackColor = true;
+            this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.label24);
+            this.panel3.Controls.Add(this.pbLoading);
+            this.panel3.Font = new System.Drawing.Font("宋体", 11F);
+            this.panel3.Location = new System.Drawing.Point(408, 13);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(359, 100);
+            this.panel3.TabIndex = 9;
+            this.panel3.Visible = false;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(210, 17);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(142, 15);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "条烟顺序生成中。。";
+            // 
+            // pbLoading
+            // 
+            this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
+            this.pbLoading.Location = new System.Drawing.Point(-2, -2);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(206, 100);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 27;
+            this.pbLoading.TabStop = false;
             // 
             // w_enableStandby
             // 
@@ -858,6 +916,9 @@
             this.groupBox4.PerformLayout();
             this.gpSetTask.ResumeLayout(false);
             this.gpSetTask.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -933,5 +994,9 @@
         private System.Windows.Forms.TextBox txtSortnum3;
         private System.Windows.Forms.TextBox txtSortnum2;
         private System.Windows.Forms.Button btnTips;
+        private System.Windows.Forms.Button btnReTiaoyan;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.PictureBox pbLoading;
     }
 }

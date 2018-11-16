@@ -346,7 +346,10 @@ namespace highSpeed.orderHandle
         {
             try
             {
-   
+                for (int i = 0; i < 4; i++)
+                {
+                    LsitMainSN.Add(0);
+                }
                 using (Entities et = new Entities())
                 {
                     var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 3).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x=>x.MACHINESEQ).ToList();
@@ -673,16 +676,21 @@ namespace highSpeed.orderHandle
                                                         MessageBoxDefaultButton.Button2);//定义对话框的按钮式样);
                 if (re == DialogResult.OK)
                 {
+                    button7.Enabled = false;
                     try
                     {
                         ProducePokeService.FetchPokeTroughByTroughNo(cmbSoucreYG.Text, cmbTagYG.Text);
                         pf.IniWriteValue("分拣换柜", "isTrue", "4"); //写入4时,为换道成功
-                        WriteLog.log.Write("写入4时,为换道成功,通道" + cmbSoucreYG.Text + "与" + cmbTagYG.Text+"交换");
+                        WriteLog.GetLog().Write("写入4时,为换道成功,通道" + cmbSoucreYG.Text + "与" + cmbTagYG.Text + "交换");
                         MessageBox.Show("换道成功，请检查数据");
                     }
                     catch (Exception)
                     {
                         MessageBox.Show("换道失败，请重试");
+                    }
+                    finally
+                    {
+                        button7.Enabled = true;
                     }
                 }
             }
@@ -747,7 +755,7 @@ namespace highSpeed.orderHandle
             {
                 MessageBox.Show("数据已同步");
                 pf.IniWriteValue("分拣换柜", "isTrue", "3");//写入3时,表示同步烟柜已经完成
-                WriteLog.log.Write("写入3,表示同步烟柜已经完成");
+                WriteLog.GetLog().Write("写入3,表示同步烟柜已经完成");
             }
             else
             {
@@ -756,83 +764,135 @@ namespace highSpeed.orderHandle
 
         }
         List<decimal> LsitMainSN = new List<decimal>();
+       
         private void btnSorntum_Click(object sender, EventArgs e)
         {
-            LsitMainSN = ProducePokeService.GetSortnumByNotCalcu();//获取最大的没有发送且已计算的任务号
-            txtSortnum1.Text = LsitMainSN[0].ToString();
-            txtSortnum2.Text = LsitMainSN[1].ToString();
-            txtSortnum3.Text = LsitMainSN[2].ToString();
-            txtSortnum4.Text = LsitMainSN[3].ToString();
-            pf.IniWriteValue("分拣换柜", "maxSortNum1", txtSortnum1.Text);
-            pf.IniWriteValue("分拣换柜", "maxSortNum2", txtSortnum2.Text);
-            pf.IniWriteValue("分拣换柜", "maxSortNum3", txtSortnum3.Text);
-            pf.IniWriteValue("分拣换柜", "maxSortNum4", txtSortnum4.Text);
-            pf.IniWriteValue("分拣换柜", "isTrue", "1");//写入1时,为第一次获取
-            WriteLog.GetLog().Write("获取最大的没有发送且已计算的任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
-            WriteLog.GetLog().Write("写入1 ,为第一次获取最大的没有发送且已计算的任务号");
+             
+            try
+            {
+                btnSorntum.Enabled = false;
+                if (pf.IniReadValue("分拣换柜", "flag") == "1")//从本地文件获取任务号
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
+                    }
+                    WriteLog.GetLog().Write("从本地文件获取任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
+                    pf.IniWriteValue("分拣换柜", "flag", "0");//第二次获取后,将重新获取
+                }
+                else
+                {
+                    LsitMainSN = ProducePokeService.GetSortnumByNotCalcu();//获取最大的没有发送且已计算的任务号
+                    pf.IniWriteValue("分拣换柜", "maxSortNum1", LsitMainSN[0].ToString());
+                    pf.IniWriteValue("分拣换柜", "maxSortNum2", LsitMainSN[1].ToString());
+                    pf.IniWriteValue("分拣换柜", "maxSortNum3", LsitMainSN[2].ToString());
+                    pf.IniWriteValue("分拣换柜", "maxSortNum4", LsitMainSN[3].ToString());
+                    pf.IniWriteValue("分拣换柜", "isTrue", "1");//写入1时,为第一次获取
+                    pf.IniWriteValue("分拣换柜", "flag", "1");//写入1时,为第一次获取
+                    WriteLog.GetLog().Write("获取最大的没有发送且已计算的任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
+                    WriteLog.GetLog().Write("写入1 ,为第一次获取最大的没有发送且已计算的任务号");
+                }
+                txtSortnum1.Text = LsitMainSN[0].ToString();//一号主皮带任务号
+                txtSortnum2.Text = LsitMainSN[1].ToString();//二号主皮带任务号
+                txtSortnum3.Text = LsitMainSN[2].ToString();//三号主皮带任务号
+                txtSortnum4.Text = LsitMainSN[3].ToString();//四号主皮带任务号
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("获取失败,请查看日志");
+                WriteLog.GetLog().Write("自动获取任务失败,错误记录:" + ex.Message);
+            }
+            finally
+            {
 
+                btnSorntum.Enabled = true;
+            }
         }
 
  
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtSortnum1.Text) && !string.IsNullOrWhiteSpace(txtSortnum2.Text) && !string.IsNullOrWhiteSpace(txtSortnum3.Text) && !string.IsNullOrWhiteSpace(txtSortnum4.Text))
+            try
             {
-                DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
-                                                        "操作提示",//对话框的标题 
-                                                        MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
-                                                        MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
-                                                        MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
-                if (MsgBoxResult == DialogResult.Yes)
+                if (!string.IsNullOrWhiteSpace(txtSortnum1.Text) && !string.IsNullOrWhiteSpace(txtSortnum2.Text) && !string.IsNullOrWhiteSpace(txtSortnum3.Text) && !string.IsNullOrWhiteSpace(txtSortnum4.Text))
                 {
-                    decimal status = 0;
- 
-                    if (rbNew.Checked)//新增
+                    DialogResult MsgBoxResult = MessageBox.Show("确定要更新任务?",//对话框的显示内容 
+                                                            "操作提示",//对话框的标题 
+                                                            MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                            MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                            MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                    if (MsgBoxResult == DialogResult.Yes)
                     {
-                        status = 10;
-                        pf.IniWriteValue("分拣换柜", "isTrue", "0"); //写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
-                        WriteLog.log.Write("写入0时,为第一次更新最大任务号后面的为10 更新成功");
-                        for (int i = 0; i < 4; i++)
+                        decimal status = 0;
+                        btnUpdate.Enabled = false;
+                        if (rbNew.Checked)//新增
                         {
-                            LsitMainSN[i] = Convert.ToDecimal(  pf.IniReadValue("分拣换柜", " maxSortNum"+(i+1)));//保存的任务号
-                        }
-                     
-                    }
-                    else  if (rbEnd.Checked)//完成
-                    {
-                        status = 20;
-                        pf.IniWriteValue("分拣换柜", "isTrue", "2"); //写入2时,为第一次更新最大任务号后面的为20 更新成功 
-                        WriteLog.log.Write("写入2时,为第二次更新最大任务号后面的为20 更新成功");
-                    }
-                    else
-                    {
-                        MessageBox.Show("请先选择任务状态! ");
-                        return;
-                    }
-                    foreach (var item in LsitMainSN)//判断任务号是否有效
-                    {
-                        if (item > 0)
-                        {
-                            if (!ProducePokeService.GetExistSortnum(item))
+                            status = 10;
+                            for (int i = 0; i < 4; i++)
                             {
-                                MessageBox.Show("更新失败,无效的任务号:" + item);
-                                WriteLog.log.Write("无效的任务号:" + item);
-                                return;
+                                LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
+                            }
+                            //新增是最后一步 ,将清掉数据
+                            pf.IniWriteValue("分拣换柜", "maxSortNum1", "0");//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
+                            pf.IniWriteValue("分拣换柜", "maxSortNum2", "0");
+                            pf.IniWriteValue("分拣换柜", "maxSortNum3", "0");
+                            pf.IniWriteValue("分拣换柜", "maxSortNum4", "0");
+                            pf.IniWriteValue("分拣换柜", "isTrue", "0");
+                            pf.IniWriteValue("分拣换柜", "flag", "0");
+                            btnReTiaoyan.Visible = true;
+                            WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
+
+                        }
+                        else if (rbEnd.Checked)//完成
+                        {
+                            status = 20;
+                            pf.IniWriteValue("分拣换柜", "isTrue", "2"); //写入2时,为第一次更新最大任务号后面的为20 更新成功 
+                            WriteLog.GetLog().Write("写入2时,为第一次更新最大任务号后面的为20 更新成功");
+                        }
+                        else
+                        {
+                            MessageBox.Show("请先选择任务状态! ");
+                            return;
+                        }
+                        foreach (var item in LsitMainSN)//判断任务号是否有效
+                        {
+                            if (item > 0)
+                            {
+                                if (!ProducePokeService.GetExistSortnum(item))
+                                {
+                                    MessageBox.Show("更新失败,无效的任务号:" + item);
+                                    WriteLog.GetLog().Write("无效的任务号:" + item);
+                                    return;
+                                }
                             }
                         }
-                    }
-                    ProducePokeService.UpdateAfterBySortnum(LsitMainSN, status);
-                    WriteLog.log.Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
-                                                "\r\n2号主皮带任务号:" + txtSortnum2.Text +
-                                                "\r\n3号主皮带任务号:" + txtSortnum3.Text +
-                                                "\r\n4号主皮带任务号:" + txtSortnum4.Text +
-                                                "\r\n状态更新为" + status);
-                }
+                        ProducePokeService.UpdateAfterBySortnum(LsitMainSN, status);
+                        WriteLog.GetLog().Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                    "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                    "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                    "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                    "\r\n状态更新为" + status);
 
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("请输入任务号");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("请输入任务号");
+                MessageBox.Show("更新失败,未知异常,请查看日志");
+                WriteLog.GetLog().Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                            "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                            "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                            "\r\n4号主皮带任务号:" + txtSortnum4.Text + "失败," +
+                                            "\r\n异常:" + ex.Message);
+            }
+            finally
+            {
+                btnUpdate.Enabled = true;
             }
 
         }
@@ -888,9 +948,58 @@ namespace highSpeed.orderHandle
 
         private void btnSorntum_MouseEnter(object sender, EventArgs e)
         {
-            p.SetToolTip(btnSorntum,"自动获取每根主皮带上已经发送和已计算的任务号的最大任务号");
+            p.SetToolTip(btnSorntum,"自动获取每根主皮带上已经发送和已计算的任务号的最大任务号\r\n并且存入本地\r\n");
         }
 
+        private void txtSortnum1_TextChanged(object sender, EventArgs e)
+        {
+
+            //TextBox txt = ((TextBox)sender);//获取选中输入框的对象
+            //int index = Convert.ToInt32(txt.Name.Substring(txt.Name.Length - 1)) - 1;//获取索引
+            //LsitMainSN[index] = Convert.ToDecimal(txt.Text);
+
+        }
+        delegate void HandleSortPokeseq();
+        private void btnReTiaoyan_Click(object sender, EventArgs e)
+        {
+            if (LsitMainSN.Sum() == 0)
+            {
+                MessageBox.Show("请自动获取任务号");
+                return;
+            }
+            WriteLog.GetLog().Write("进行条烟顺序生成");
+            btnReTiaoyan.Enabled = false;
+            ProducePokeService.RefSortByTiaoyan(LsitMainSN);
+            panel3.Visible = true;
+            HandleSortPokeseq task = ThreadSortPokeseq;
+            task.BeginInvoke(null, null);
+        }
+        void ThreadSortPokeseq()
+        {
+            try
+            {
+                UnionTaskInfoService.InsertPokeseqInfo();
+                panel3.Visible = false;
+                MessageBox.Show("条烟顺序生成成功！");
+            }
+            catch (DataException date)
+            {
+                MessageBox.Show("条烟顺序失败：" + date.Message);
+                label24.Text = "条烟顺序失败：" + date.Message;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("条烟顺序失败：" + ex.Message);
+                label24.Text = "条烟顺序失败：" + ex.Message;
+            }
+            finally
+            {
+                btnReTiaoyan.Enabled = true;
+                WriteLog.GetLog().Write("条烟顺序生成结束");
+            }
+
+
+        }
      
     }
 }
