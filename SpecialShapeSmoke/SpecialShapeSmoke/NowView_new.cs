@@ -133,7 +133,8 @@ namespace SpecialShapeSmoke
 
                 for (int i = 0; i < DgvNowView.RowCount; i++)
                 {
-                    if (DgvNowView.Rows[i].Cells[0].Value.ToString().Trim() == pokeid)
+                    string sendtasknum1 = DgvNowView.Rows[i].Cells[12].Value.ToString().Trim();//sendtasknum 包号 
+                    if (sendtasknum1 == pokeid)
                     {
                         foreach (DataGridViewRow row in DgvNowView.Rows)
                         {

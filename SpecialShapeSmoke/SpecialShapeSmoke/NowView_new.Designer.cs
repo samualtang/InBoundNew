@@ -35,18 +35,18 @@
             this.btnMachineSeq2 = new System.Windows.Forms.Button();
             this.labMachineSeq = new System.Windows.Forms.Label();
             this.sendtasknum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TaskNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TroughNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tasknum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sortnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customername = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TROUGHNUM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIGARETTECODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIGARETTENAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PokeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pokenum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.包装机 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PokeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pokeid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.packagemachine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -58,18 +58,18 @@
             this.DgvNowView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvNowView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sendtasknum,
-            this.TaskNum,
-            this.SortNum,
-            this.CustomerName,
-            this.Code,
-            this.TroughNum,
+            this.tasknum,
+            this.sortnum,
+            this.customername,
+            this.regioncode,
+            this.TROUGHNUM,
             this.CIGARETTECODE,
             this.CIGARETTENAME,
-            this.PULLSTATUS,
-            this.PokeNum,
+            this.pokenum,
             this.status,
-            this.包装机,
-            this.PokeId});
+            this.pokeid,
+            this.PULLSTATUS,
+            this.packagemachine});
             this.DgvNowView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvNowView.Location = new System.Drawing.Point(3, 17);
             this.DgvNowView.Name = "DgvNowView";
@@ -146,76 +146,71 @@
             this.sendtasknum.HeaderText = "任务包号";
             this.sendtasknum.Name = "sendtasknum";
             this.sendtasknum.ReadOnly = true;
+            this.sendtasknum.Width = 80;
             // 
-            // TaskNum
+            // tasknum
             // 
-            this.TaskNum.DataPropertyName = "TaskNum";
-            this.TaskNum.HeaderText = "订单任务号";
-            this.TaskNum.Name = "TaskNum";
-            this.TaskNum.ReadOnly = true;
-            this.TaskNum.Width = 90;
+            this.tasknum.DataPropertyName = "tasknum";
+            this.tasknum.HeaderText = "订单任务号";
+            this.tasknum.Name = "tasknum";
+            this.tasknum.ReadOnly = true;
+            this.tasknum.Width = 90;
             // 
-            // SortNum
+            // sortnum
             // 
-            this.SortNum.DataPropertyName = "SortNum";
-            this.SortNum.HeaderText = "分拣任务号";
-            this.SortNum.Name = "SortNum";
-            this.SortNum.ReadOnly = true;
-            this.SortNum.Width = 90;
+            this.sortnum.DataPropertyName = "sortnum";
+            this.sortnum.HeaderText = "分拣任务号";
+            this.sortnum.Name = "sortnum";
+            this.sortnum.ReadOnly = true;
+            this.sortnum.Width = 90;
             // 
-            // CustomerName
+            // customername
             // 
-            this.CustomerName.DataPropertyName = "CustomerName";
-            this.CustomerName.HeaderText = "零售户";
-            this.CustomerName.Name = "CustomerName";
-            this.CustomerName.ReadOnly = true;
-            this.CustomerName.Width = 230;
+            this.customername.DataPropertyName = "customername";
+            this.customername.HeaderText = "零售户";
+            this.customername.Name = "customername";
+            this.customername.ReadOnly = true;
+            this.customername.Width = 270;
             // 
-            // Code
+            // regioncode
             // 
-            this.Code.DataPropertyName = "regioncode";
-            this.Code.HeaderText = "车组";
-            this.Code.Name = "Code";
-            this.Code.ReadOnly = true;
-            this.Code.Width = 60;
+            this.regioncode.DataPropertyName = "regioncode";
+            this.regioncode.HeaderText = "车组号";
+            this.regioncode.Name = "regioncode";
+            this.regioncode.ReadOnly = true;
+            this.regioncode.Width = 70;
             // 
-            // TroughNum
+            // TROUGHNUM
             // 
-            this.TroughNum.DataPropertyName = "TroughNum";
-            this.TroughNum.HeaderText = "通道号";
-            this.TroughNum.Name = "TroughNum";
-            this.TroughNum.ReadOnly = true;
-            this.TroughNum.Width = 70;
+            this.TROUGHNUM.DataPropertyName = "TROUGHNUM";
+            this.TROUGHNUM.HeaderText = "通道号";
+            this.TROUGHNUM.Name = "TROUGHNUM";
+            this.TROUGHNUM.ReadOnly = true;
+            this.TROUGHNUM.Width = 70;
             // 
             // CIGARETTECODE
             // 
             this.CIGARETTECODE.DataPropertyName = "CIGARETTECODE";
-            this.CIGARETTECODE.HeaderText = "品牌编码";
+            this.CIGARETTECODE.HeaderText = "卷烟编码";
             this.CIGARETTECODE.Name = "CIGARETTECODE";
             this.CIGARETTECODE.ReadOnly = true;
+            this.CIGARETTECODE.Width = 80;
             // 
             // CIGARETTENAME
             // 
             this.CIGARETTENAME.DataPropertyName = "CIGARETTENAME";
-            this.CIGARETTENAME.HeaderText = "品牌名称";
+            this.CIGARETTENAME.HeaderText = "卷烟名称";
             this.CIGARETTENAME.Name = "CIGARETTENAME";
             this.CIGARETTENAME.ReadOnly = true;
-            this.CIGARETTENAME.Width = 150;
+            this.CIGARETTENAME.Width = 120;
             // 
-            // PULLSTATUS
+            // pokenum
             // 
-            this.PULLSTATUS.DataPropertyName = "PULLSTATUS";
-            this.PULLSTATUS.HeaderText = "放烟标志";
-            this.PULLSTATUS.Name = "PULLSTATUS";
-            this.PULLSTATUS.ReadOnly = true;
-            // 
-            // PokeNum
-            // 
-            this.PokeNum.DataPropertyName = "PokeNum";
-            this.PokeNum.HeaderText = "数量";
-            this.PokeNum.Name = "PokeNum";
-            this.PokeNum.ReadOnly = true;
-            this.PokeNum.Width = 40;
+            this.pokenum.DataPropertyName = "pokenum";
+            this.pokenum.HeaderText = "数量";
+            this.pokenum.Name = "pokenum";
+            this.pokenum.ReadOnly = true;
+            this.pokenum.Width = 40;
             // 
             // status
             // 
@@ -223,22 +218,31 @@
             this.status.HeaderText = "分拣状态";
             this.status.Name = "status";
             this.status.ReadOnly = true;
+            this.status.Width = 90;
             // 
-            // 包装机
+            // pokeid
             // 
-            this.包装机.DataPropertyName = "packmachineseq";
-            this.包装机.HeaderText = "包装机";
-            this.包装机.Name = "包装机";
-            this.包装机.ReadOnly = true;
-            this.包装机.Width = 80;
+            this.pokeid.DataPropertyName = "pokeid";
+            this.pokeid.HeaderText = "流水号";
+            this.pokeid.Name = "pokeid";
+            this.pokeid.ReadOnly = true;
+            this.pokeid.Width = 70;
             // 
-            // PokeId
+            // PULLSTATUS
             // 
-            this.PokeId.DataPropertyName = "PokeId";
-            this.PokeId.HeaderText = "流水号";
-            this.PokeId.Name = "PokeId";
-            this.PokeId.ReadOnly = true;
-            this.PokeId.Width = 80;
+            this.PULLSTATUS.DataPropertyName = "PULLSTATUS";
+            this.PULLSTATUS.HeaderText = "放烟标志";
+            this.PULLSTATUS.Name = "PULLSTATUS";
+            this.PULLSTATUS.ReadOnly = true;
+            this.PULLSTATUS.Width = 90;
+            // 
+            // packagemachine
+            // 
+            this.packagemachine.DataPropertyName = "packmachineseq";
+            this.packagemachine.HeaderText = "包装机";
+            this.packagemachine.Name = "packagemachine";
+            this.packagemachine.ReadOnly = true;
+            this.packagemachine.Width = 70;
             // 
             // NowView_new
             // 
@@ -272,17 +276,17 @@
         private System.Windows.Forms.Button btnMachineSeq2;
         private System.Windows.Forms.Label labMachineSeq;
         private System.Windows.Forms.DataGridViewTextBoxColumn sendtasknum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TaskNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TroughNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tasknum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sortnum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customername;
+        private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TROUGHNUM;
         private System.Windows.Forms.DataGridViewTextBoxColumn CIGARETTECODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn CIGARETTENAME;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PokeNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pokenum;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 包装机;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PokeId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pokeid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn packagemachine;
     }
 }
