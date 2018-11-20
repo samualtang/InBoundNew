@@ -346,10 +346,12 @@ namespace highSpeed.orderHandle
         {
             try
             {
+
                 for (int i = 0; i < 4; i++)
                 {
                     LsitMainSN.Add(0);
                 }
+                System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false; 
                 using (Entities et = new Entities())
                 {
                     var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.GROUPNO == 3).Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE }).OrderBy(x=>x.MACHINESEQ).ToList();
@@ -778,7 +780,10 @@ namespace highSpeed.orderHandle
                         LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
                     }
                     WriteLog.GetLog().Write("从本地文件获取任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
-                    pf.IniWriteValue("分拣换柜", "flag", "0");//第二次获取后,将重新获取
+                    if (pf.IniReadValue("分拣换柜", "isTrue") == "0")//当更新换柜完成之后 重置本地存放任务号
+                    {
+                        pf.IniWriteValue("分拣换柜", "flag", "0");//重置获取标志
+                    }
                 }
                 else
                 {
@@ -867,7 +872,12 @@ namespace highSpeed.orderHandle
                             }
                         }
                         ProducePokeService.UpdateAfterBySortnum(LsitMainSN, status);
-                        WriteLog.GetLog().Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                        MessageBox.Show("更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                    "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                    "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                    "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                    "\r\n状态更新为" + status);
+                        WriteLog.GetLog().Write("更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
                                                     "\r\n2号主皮带任务号:" + txtSortnum2.Text +
                                                     "\r\n3号主皮带任务号:" + txtSortnum3.Text +
                                                     "\r\n4号主皮带任务号:" + txtSortnum4.Text +
@@ -948,7 +958,7 @@ namespace highSpeed.orderHandle
 
         private void btnSorntum_MouseEnter(object sender, EventArgs e)
         {
-            p.SetToolTip(btnSorntum,"自动获取每根主皮带上已经发送和已计算的任务号的最大任务号\r\n并且存入本地\r\n");
+            p.SetToolTip(btnSorntum,"自动获取每根主皮带上已经发送任务号的最大任务号\r\n并且存入本地\r\n");
         }
 
         private void txtSortnum1_TextChanged(object sender, EventArgs e)
@@ -969,7 +979,7 @@ namespace highSpeed.orderHandle
             }
             WriteLog.GetLog().Write("进行条烟顺序生成");
             btnReTiaoyan.Enabled = false;
-            ProducePokeService.RefSortByTiaoyan(LsitMainSN);
+         
             panel3.Visible = true;
             HandleSortPokeseq task = ThreadSortPokeseq;
             task.BeginInvoke(null, null);
@@ -978,6 +988,7 @@ namespace highSpeed.orderHandle
         {
             try
             {
+                ProducePokeService.RefSortByTiaoyan(LsitMainSN);
                 UnionTaskInfoService.InsertPokeseqInfo();
                 panel3.Visible = false;
                 MessageBox.Show("条烟顺序生成成功！");
@@ -995,6 +1006,7 @@ namespace highSpeed.orderHandle
             finally
             {
                 btnReTiaoyan.Enabled = true;
+                LsitMainSN.Clear();
                 WriteLog.GetLog().Write("条烟顺序生成结束");
             }
 

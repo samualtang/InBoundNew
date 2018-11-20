@@ -83,6 +83,10 @@
             this.label20 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.gpSetTask = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.btnReTiaoyan = new System.Windows.Forms.Button();
             this.rbNew = new System.Windows.Forms.RadioButton();
             this.rbEnd = new System.Windows.Forms.RadioButton();
             this.lbStatus = new System.Windows.Forms.Label();
@@ -97,10 +101,6 @@
             this.txtSortnum2 = new System.Windows.Forms.TextBox();
             this.txtSortnum1 = new System.Windows.Forms.TextBox();
             this.btnTips = new System.Windows.Forms.Button();
-            this.btnReTiaoyan = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
-            this.pbLoading = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -708,6 +708,49 @@
             this.gpSetTask.TabStop = false;
             this.gpSetTask.Text = "定位分拣任务";
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.label24);
+            this.panel3.Controls.Add(this.pbLoading);
+            this.panel3.Font = new System.Drawing.Font("宋体", 11F);
+            this.panel3.Location = new System.Drawing.Point(408, 8);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(359, 100);
+            this.panel3.TabIndex = 9;
+            this.panel3.Visible = false;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(3, 1);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(264, 15);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "条烟顺序生成中,这会需要一些时间...";
+            // 
+            // pbLoading
+            // 
+            this.pbLoading.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
+            this.pbLoading.Location = new System.Drawing.Point(0, 0);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(355, 96);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 27;
+            this.pbLoading.TabStop = false;
+            // 
+            // btnReTiaoyan
+            // 
+            this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReTiaoyan.Location = new System.Drawing.Point(773, 46);
+            this.btnReTiaoyan.Name = "btnReTiaoyan";
+            this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
+            this.btnReTiaoyan.TabIndex = 8;
+            this.btnReTiaoyan.Text = "条烟顺序";
+            this.btnReTiaoyan.UseVisualStyleBackColor = true;
+            this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
+            // 
             // rbNew
             // 
             this.rbNew.AutoSize = true;
@@ -845,48 +888,6 @@
             this.btnTips.Text = "帮 助";
             this.btnTips.UseVisualStyleBackColor = true;
             this.btnTips.Click += new System.EventHandler(this.btnTips_Click);
-            // 
-            // btnReTiaoyan
-            // 
-            this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReTiaoyan.Location = new System.Drawing.Point(773, 46);
-            this.btnReTiaoyan.Name = "btnReTiaoyan";
-            this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
-            this.btnReTiaoyan.TabIndex = 8;
-            this.btnReTiaoyan.Text = "条烟顺序";
-            this.btnReTiaoyan.UseVisualStyleBackColor = true;
-            this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.label24);
-            this.panel3.Controls.Add(this.pbLoading);
-            this.panel3.Font = new System.Drawing.Font("宋体", 11F);
-            this.panel3.Location = new System.Drawing.Point(408, 13);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(359, 100);
-            this.panel3.TabIndex = 9;
-            this.panel3.Visible = false;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(210, 17);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(142, 15);
-            this.label24.TabIndex = 28;
-            this.label24.Text = "条烟顺序生成中。。";
-            // 
-            // pbLoading
-            // 
-            this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
-            this.pbLoading.Location = new System.Drawing.Point(-2, -2);
-            this.pbLoading.Name = "pbLoading";
-            this.pbLoading.Size = new System.Drawing.Size(206, 100);
-            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLoading.TabIndex = 27;
-            this.pbLoading.TabStop = false;
             // 
             // w_enableStandby
             // 

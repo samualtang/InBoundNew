@@ -802,7 +802,7 @@ namespace InBound.Business
                 var isOrNot =( from item in entity.T_PRODUCE_POKE
                               where item.SORTNUM == sortnum
                               select item).ToList().Count();
-                if (isOrNot != null && isOrNot >0)
+                if (isOrNot >0)
                     return true;
                 else
                     return false;
@@ -810,9 +810,10 @@ namespace InBound.Business
         }
         public static void RefSortByTiaoyan(List<decimal> list)
         {
+          
             using (Entities entity = new Entities())
             {
-                for (int i = 0; i <= 4; i++)
+                for (int i = 1; i <= 4; i++)
                 {
                     if (list[i - 1] > 0)
                     {
@@ -825,12 +826,11 @@ namespace InBound.Business
                                         select item).ToList();//获取这个任务之后的所有任务
                         foreach (var item in DrpoList)
                         {
-                            taskList.Remove(item);
+                            entity.T_PRODUCE_POKESEQ.DeleteObject(item);
                         }
+                        entity.SaveChanges();
                     }
                 }
-                entity.SaveChanges();
-
             }
 
         }
