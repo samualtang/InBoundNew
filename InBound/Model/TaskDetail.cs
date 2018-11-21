@@ -61,5 +61,6 @@ namespace InBound.Model
        public decimal TASKQTY { get; set; }
        public string REGIONCODE { get; set; }
        public decimal GRIDNUM { get; set; }
+       public decimal countFlags { get; set; }
     }
 }

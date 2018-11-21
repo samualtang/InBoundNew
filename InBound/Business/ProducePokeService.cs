@@ -304,8 +304,8 @@ namespace InBound.Business
                                       meragenum= item.MERAGENUM??0,
                                       UnionTasknum=item.UNIONTASKNUM??0,
                                       SortTroughNum=item.TROUGHNUM,
-                                      SortNum=item.SORTNUM??0
-
+                                      SortNum=item.SORTNUM??0,
+                                      countFlags = item.SENDPOKENUM ?? 0 //(2018/11/20新增 每计算一波的标志)
                                   }
                              ).ToList();
 
@@ -330,7 +330,7 @@ namespace InBound.Business
         {
             WriteLog writeLog = WriteLog.GetLog();
 
-            object[] values = new object[50];
+            object[] values = new object[51];
             for (int i = 0; i < values.Length; i++)//初始化一个数组
             {
                 values[i] = 0;
@@ -356,7 +356,8 @@ namespace InBound.Business
                             values[1] = int.Parse(item.ExportNum);//虚拟出口号
                             values[2] = item.MainBelt;
                             values[3] = 0;
-                            values[49] = 1;//标志位  ||
+                            values[49] = 1;//标志位 
+                            values[50] = item.countFlags;  //(2018/11/20新增 每计算一波的标志)
                         }
                         using (Entities entity = new Entities())
                         {
@@ -443,6 +444,36 @@ namespace InBound.Business
                             break;
                         }
 
+                    }
+                    if (sortnum.Count == 1)//只有一个单的情况下
+                    {
+                        var oneSortnum = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.SORTNUM == sortnum.Min() select item).ToList();
+                        foreach (var item in oneSortnum)
+                        {
+                            item.SENDPOKENUM = 3;//一个单情况下
+                        }
+                    }
+                    else
+                    {
+                        //需要计算的最小任务号
+                        var mixSortnum = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.SORTNUM == sortnum.Min()select item ).ToList();
+                        //需要计算的最大任务号
+                        var maxSortnum = (from item in entity.T_PRODUCE_POKE where item.GROUPNO == groupno && item.SORTSTATE == 10 && item.SORTNUM == sortnum.Max() select item).ToList();
+                        if (mixSortnum != null && maxSortnum != null)
+                        {
+                            foreach (var item in mixSortnum)
+                            {
+                                item.SENDPOKENUM = 1;//头
+                            }
+                            foreach (var item in maxSortnum)
+                            {
+                                item.SENDPOKENUM = 2;//尾
+                            }
+                        }
+                        else
+                        {
+                            WriteLog.GetLog().Write("写入标志失败");
+                        }
                     }
                     //开始算合单 生成合单号
                     var query3 = (from item1 in entity.T_PRODUCE_POKE where item1.GROUPNO == groupno && item1.MAINBELT == mainbelt && sortnum.Contains(item1.SORTNUM ?? 0) select item1).ToList();

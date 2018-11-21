@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using SortingControlSys;
+using System.Diagnostics;
 
 namespace Union
 {
@@ -16,7 +17,16 @@ namespace Union
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new w_user());
+            Process[] localNmae = Process.GetProcessesByName("Union");
+            if (localNmae.Length > 1)
+            {
+                MessageBox.Show("合流程序已经打开,请关闭程序后再打开!");
+
+            }
+            else
+            {
+                Application.Run(new w_user());
+            }
         }
     }
 }

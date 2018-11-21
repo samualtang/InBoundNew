@@ -1154,7 +1154,7 @@ namespace SortingControlSys.SortingControl
                         {
                             if (values[i] != null && int.Parse(values[i].ToString()) != 0)//0是电控已经接收
                             {
-                                writeLog.Write(sortgroupno1 + "组: 读到标志位异常：" + values[i]);
+                                writeLog.Write(sortgroupno1 + "组: 读到标志位：" + values[i]);
                             }
                         }
 
@@ -1198,7 +1198,7 @@ namespace SortingControlSys.SortingControl
                         {
                             if (values[i] != null && int.Parse(values[i].ToString()) != 0)//0是电控已经接收
                             {
-                                writeLog.Write(sortgroupno2 + "组: 读到标志位异常：" + values[i]);
+                                writeLog.Write(sortgroupno2 + "组: 读到标志位：" + values[i]);
                             }
                         }
                     }
