@@ -895,8 +895,9 @@ namespace InBound.Business
                             }
                         }
                     }
+                    entity.SaveChanges();
                 }
-                entity.SaveChanges();
+               
             }
         }
         

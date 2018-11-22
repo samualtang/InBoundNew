@@ -676,7 +676,7 @@ namespace highSpeed.orderHandle
                                                         MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                         MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
                                                         MessageBoxDefaultButton.Button2);//定义对话框的按钮式样);
-                if (re == DialogResult.OK)
+                if (re == DialogResult.Yes)
                 {
                     button7.Enabled = false;
                     try
@@ -775,6 +775,7 @@ namespace highSpeed.orderHandle
                 btnSorntum.Enabled = false;
                 if (pf.IniReadValue("分拣换柜", "flag") == "1")//从本地文件获取任务号
                 {
+                   
                     for (int i = 0; i < 4; i++)
                     {
                         LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
@@ -784,6 +785,7 @@ namespace highSpeed.orderHandle
                     {
                         pf.IniWriteValue("分拣换柜", "flag", "0");//重置获取标志
                     }
+                 
                 }
                 else
                 {
@@ -814,9 +816,10 @@ namespace highSpeed.orderHandle
             }
         }
 
- 
+        
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            string throwString ="";
             try
             {
                 if (!string.IsNullOrWhiteSpace(txtSortnum1.Text) && !string.IsNullOrWhiteSpace(txtSortnum2.Text) && !string.IsNullOrWhiteSpace(txtSortnum3.Text) && !string.IsNullOrWhiteSpace(txtSortnum4.Text))
@@ -830,6 +833,12 @@ namespace highSpeed.orderHandle
                     {
                         decimal status = 0;
                         btnUpdate.Enabled = false;
+                        if (LsitMainSN.Sum() == 0)
+                        {
+                            MessageBox.Show("请自动获取任务号");
+                            btnUpdate.Enabled = true;
+                            return;
+                        }
                         if (rbNew.Checked)//新增
                         {
                             status = 10;
@@ -837,16 +846,19 @@ namespace highSpeed.orderHandle
                             {
                                 LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
                             }
-                            //新增是最后一步 ,将清掉数据
-                            pf.IniWriteValue("分拣换柜", "maxSortNum1", "0");//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
-                            pf.IniWriteValue("分拣换柜", "maxSortNum2", "0");
-                            pf.IniWriteValue("分拣换柜", "maxSortNum3", "0");
-                            pf.IniWriteValue("分拣换柜", "maxSortNum4", "0");
-                            pf.IniWriteValue("分拣换柜", "isTrue", "0");
-                            pf.IniWriteValue("分拣换柜", "flag", "0");
-                            btnReTiaoyan.Visible = true;
-                            WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
-
+                            if (pf.IniReadValue("分拣换柜", "isTrue") == "4")//当完成烟柜转移备用烟柜的时,才清除本地任务号,增添容错率
+                            {
+                                txtSortnum1.Clear(); txtSortnum2.Clear(); txtSortnum3.Clear(); txtSortnum4.Clear();
+                                //新增是最后一步 ,将清掉数据
+                                pf.IniWriteValue("分拣换柜", "maxSortNum1", "0");//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
+                                pf.IniWriteValue("分拣换柜", "maxSortNum2", "0");
+                                pf.IniWriteValue("分拣换柜", "maxSortNum3", "0");
+                                pf.IniWriteValue("分拣换柜", "maxSortNum4", "0");
+                                pf.IniWriteValue("分拣换柜", "isTrue", "0");
+                                pf.IniWriteValue("分拣换柜", "flag", "0");
+                                btnReTiaoyan.Visible = true;
+                                WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
+                            }
                         }
                         else if (rbEnd.Checked)//完成
                         {
@@ -871,18 +883,17 @@ namespace highSpeed.orderHandle
                                 }
                             }
                         }
-                        ProducePokeService.UpdateAfterBySortnum(LsitMainSN, status);
-                        MessageBox.Show("更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                        throwString = "更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
                                                     "\r\n2号主皮带任务号:" + txtSortnum2.Text +
                                                     "\r\n3号主皮带任务号:" + txtSortnum3.Text +
                                                     "\r\n4号主皮带任务号:" + txtSortnum4.Text +
-                                                    "\r\n状态更新为" + status);
-                        WriteLog.GetLog().Write("更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
-                                                    "\r\n2号主皮带任务号:" + txtSortnum2.Text +
-                                                    "\r\n3号主皮带任务号:" + txtSortnum3.Text +
-                                                    "\r\n4号主皮带任务号:" + txtSortnum4.Text +
-                                                    "\r\n状态更新为" + status);
-
+                                                    "\r\n状态更新为" + status;
+                        label25.Visible = true;
+                        myThread my = new myThread(LsitMainSN, status, throwString, label25, btnUpdate);
+                        Thread t = new Thread(new ThreadStart(my.ThreadToUpdate));
+                        t.Start();
+                        
+                        //ThreadToUpdate(LsitMainSN, status, throwString);
                     }
 
                 }
@@ -894,18 +905,13 @@ namespace highSpeed.orderHandle
             catch (Exception ex)
             {
                 MessageBox.Show("更新失败,未知异常,请查看日志");
-                WriteLog.GetLog().Write("更新任务\r\n1号主皮带任务号:" + txtSortnum1.Text +
-                                            "\r\n2号主皮带任务号:" + txtSortnum2.Text +
-                                            "\r\n3号主皮带任务号:" + txtSortnum3.Text +
-                                            "\r\n4号主皮带任务号:" + txtSortnum4.Text + "失败," +
+                WriteLog.GetLog().Write(throwString + "更新失败," +
                                             "\r\n异常:" + ex.Message);
             }
-            finally
-            {
-                btnUpdate.Enabled = true;
-            }
+          
 
         }
+
         ToolTip p = new ToolTip();
     
         private void btnTips_Click(object sender, EventArgs e)
@@ -917,6 +923,7 @@ namespace highSpeed.orderHandle
 
         private void comboBox_group_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cmbSoucreYG.Items.Clear();
             cmbBind(comboBox_group, cmbSoucreYG);
           
         }
@@ -925,34 +932,23 @@ namespace highSpeed.orderHandle
             switch (source.SelectedIndex)
             {
                 case 0:
-                    foreach (var item in ProducePokeService.GetYGtroughnum(1, 2))
-                    {
-                        tag.Items.Add(item);
-                    }
+                    ProducePokeService.GetYGtroughnum(1, 2).ForEach(f => tag.Items.Add(f));
                     break;
                 case 1:
-                    foreach (var item in ProducePokeService.GetYGtroughnum(3, 4))
-                    {
-                        tag.Items.Add(item);
-                    }
+                   ProducePokeService.GetYGtroughnum(3, 4).ForEach(f => tag.Items.Add( f) );
                     break;
                 case 2:
-                    foreach (var item in ProducePokeService.GetYGtroughnum(5, 6))
-                    {
-                        tag.Items.Add(item);
-                    }
+                    ProducePokeService.GetYGtroughnum(5, 6).ForEach(f => tag.Items.Add(f));
                     break;
                 case 3:
-                    foreach (var item in ProducePokeService.GetYGtroughnum(7, 8))
-                    {
-                        tag.Items.Add(item);
-                    }
+                    ProducePokeService.GetYGtroughnum(7, 8).ForEach(f => tag.Items.Add(f));
                     break;
 
             }
         }
         private void cmbTagGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cmbTagYG.Items.Clear();
             cmbBind(cmbTagGroup, cmbTagYG);
         }
 
@@ -979,7 +975,8 @@ namespace highSpeed.orderHandle
             }
             WriteLog.GetLog().Write("进行条烟顺序生成");
             btnReTiaoyan.Enabled = false;
-         
+            button7.Enabled = false;
+            btnUpdate.Enabled = false;
             panel3.Visible = true;
             HandleSortPokeseq task = ThreadSortPokeseq;
             task.BeginInvoke(null, null);
@@ -1006,6 +1003,8 @@ namespace highSpeed.orderHandle
             finally
             {
                 btnReTiaoyan.Enabled = true;
+                button7.Enabled = true;
+                btnUpdate.Enabled = true;
                 LsitMainSN.Clear();
                 WriteLog.GetLog().Write("条烟顺序生成结束");
             }
@@ -1013,5 +1012,47 @@ namespace highSpeed.orderHandle
 
         }
      
+    }
+
+    public class myThread //用于线程处理
+    {
+        public List<decimal> List;
+        public decimal Status;
+        public string Info;
+        public Label Lbl;
+        public Button Btn;
+        public myThread()
+        {
+
+        }
+        public myThread(List<decimal> list, decimal status, string info, Label lbl, Button btn)//构造函数传参
+        {
+            List = list;
+            Status = status;
+            Info = info;
+            Lbl = lbl;
+            Btn = btn;
+
+        }
+        public void ThreadToUpdate()//线程方法
+        {
+            try
+            {
+                ProducePokeService.UpdateAfterBySortnum(this.List, this.Status);
+                MessageBox.Show(this.Info);
+                WriteLog.GetLog().Write(Info);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Lbl.Visible = false;
+                Btn.Enabled = true;
+            }
+
+
+        }
     }
 }

@@ -87,6 +87,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
             this.btnReTiaoyan = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
             this.rbNew = new System.Windows.Forms.RadioButton();
             this.rbEnd = new System.Windows.Forms.RadioButton();
             this.lbStatus = new System.Windows.Forms.Label();
@@ -688,6 +689,7 @@
             // 
             this.gpSetTask.Controls.Add(this.panel3);
             this.gpSetTask.Controls.Add(this.btnReTiaoyan);
+            this.gpSetTask.Controls.Add(this.label25);
             this.gpSetTask.Controls.Add(this.rbNew);
             this.gpSetTask.Controls.Add(this.rbEnd);
             this.gpSetTask.Controls.Add(this.lbStatus);
@@ -714,9 +716,9 @@
             this.panel3.Controls.Add(this.label24);
             this.panel3.Controls.Add(this.pbLoading);
             this.panel3.Font = new System.Drawing.Font("宋体", 11F);
-            this.panel3.Location = new System.Drawing.Point(408, 8);
+            this.panel3.Location = new System.Drawing.Point(322, 17);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(359, 100);
+            this.panel3.Size = new System.Drawing.Size(446, 113);
             this.panel3.TabIndex = 9;
             this.panel3.Visible = false;
             // 
@@ -725,9 +727,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(3, 1);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(264, 15);
+            this.label24.Size = new System.Drawing.Size(234, 15);
             this.label24.TabIndex = 28;
-            this.label24.Text = "条烟顺序生成中,这会需要一些时间...";
+            this.label24.Text = "数据处理中,这会需要一些时间...";
             // 
             // pbLoading
             // 
@@ -735,7 +737,7 @@
             this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
             this.pbLoading.Location = new System.Drawing.Point(0, 0);
             this.pbLoading.Name = "pbLoading";
-            this.pbLoading.Size = new System.Drawing.Size(355, 96);
+            this.pbLoading.Size = new System.Drawing.Size(442, 109);
             this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLoading.TabIndex = 27;
             this.pbLoading.TabStop = false;
@@ -750,6 +752,17 @@
             this.btnReTiaoyan.Text = "条烟顺序";
             this.btnReTiaoyan.UseVisualStyleBackColor = true;
             this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("宋体", 11F);
+            this.label25.Location = new System.Drawing.Point(534, 115);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(234, 15);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "数据处理中,这会需要一些时间...";
+            this.label25.Visible = false;
             // 
             // rbNew
             // 
@@ -999,5 +1012,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.PictureBox pbLoading;
+        private System.Windows.Forms.Label label25;
     }
 }
