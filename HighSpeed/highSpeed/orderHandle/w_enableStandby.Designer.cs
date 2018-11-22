@@ -38,18 +38,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnEnableStandby = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupno = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox_new = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupnoBox = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox_old = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -83,8 +82,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.gpSetTask = new System.Windows.Forms.GroupBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.btnReTiaoyan = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
             this.rbNew = new System.Windows.Forms.RadioButton();
             this.rbEnd = new System.Windows.Forms.RadioButton();
@@ -99,6 +96,8 @@
             this.txtSortnum3 = new System.Windows.Forms.TextBox();
             this.txtSortnum2 = new System.Windows.Forms.TextBox();
             this.txtSortnum1 = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnReTiaoyan = new System.Windows.Forms.Button();
             this.btnTips = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -199,18 +198,17 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.groupno);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.comboBox3);
+            this.groupBox2.Controls.Add(this.comboBox_new);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.groupnoBox);
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.comboBox_old);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.button1);
@@ -220,17 +218,6 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "异型烟分拣过程中 烟仓换道";
-            // 
-            // button3
-            // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button3.Location = new System.Drawing.Point(578, 142);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(92, 23);
-            this.button3.TabIndex = 21;
-            this.button3.Text = "目标烟仓验证";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label13
             // 
@@ -277,7 +264,7 @@
             this.label9.Size = new System.Drawing.Size(587, 12);
             this.label9.TabIndex = 9;
             this.label9.Text = "_________________________________________________________________________________" +
-    "________________";
+                "________________";
             // 
             // label8
             // 
@@ -288,15 +275,15 @@
             this.label8.TabIndex = 8;
             this.label8.Text = "通道号：";
             // 
-            // comboBox3
+            // comboBox_new
             // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(94, 123);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(143, 20);
-            this.comboBox3.TabIndex = 7;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            this.comboBox_new.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_new.FormattingEnabled = true;
+            this.comboBox_new.Location = new System.Drawing.Point(94, 123);
+            this.comboBox_new.Name = "comboBox_new";
+            this.comboBox_new.Size = new System.Drawing.Size(143, 20);
+            this.comboBox_new.TabIndex = 7;
+            this.comboBox_new.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -329,15 +316,15 @@
             this.groupnoBox.TabIndex = 4;
             this.groupnoBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
-            // comboBox1
+            // comboBox_old
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(288, 61);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(143, 20);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox_old.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_old.FormattingEnabled = true;
+            this.comboBox_old.Location = new System.Drawing.Point(288, 61);
+            this.comboBox_old.Name = "comboBox_old";
+            this.comboBox_old.Size = new System.Drawing.Size(143, 20);
+            this.comboBox_old.TabIndex = 3;
+            this.comboBox_old.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -704,27 +691,6 @@
             this.gpSetTask.TabStop = false;
             this.gpSetTask.Text = "定位分拣任务";
             // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("宋体", 11F);
-            this.label24.Location = new System.Drawing.Point(438, 9);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(234, 15);
-            this.label24.TabIndex = 28;
-            this.label24.Text = "数据处理中,这会需要一些时间...";
-            // 
-            // btnReTiaoyan
-            // 
-            this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReTiaoyan.Location = new System.Drawing.Point(341, 5);
-            this.btnReTiaoyan.Name = "btnReTiaoyan";
-            this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
-            this.btnReTiaoyan.TabIndex = 8;
-            this.btnReTiaoyan.Text = "条烟顺序";
-            this.btnReTiaoyan.UseVisualStyleBackColor = true;
-            this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -863,6 +829,27 @@
             this.txtSortnum1.TabIndex = 0;
             this.txtSortnum1.TextChanged += new System.EventHandler(this.txtSortnum1_TextChanged);
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("宋体", 11F);
+            this.label24.Location = new System.Drawing.Point(438, 9);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(234, 15);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "数据处理中,这会需要一些时间...";
+            // 
+            // btnReTiaoyan
+            // 
+            this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReTiaoyan.Location = new System.Drawing.Point(341, 5);
+            this.btnReTiaoyan.Name = "btnReTiaoyan";
+            this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
+            this.btnReTiaoyan.TabIndex = 8;
+            this.btnReTiaoyan.Text = "条烟顺序";
+            this.btnReTiaoyan.UseVisualStyleBackColor = true;
+            this.btnReTiaoyan.Click += new System.EventHandler(this.btnReTiaoyan_Click);
+            // 
             // btnTips
             // 
             this.btnTips.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -922,14 +909,14 @@
         private System.Windows.Forms.ComboBox cmb_GroupList;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox groupnoBox;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_old;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label groupno;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox_new;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label11;
@@ -948,7 +935,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;

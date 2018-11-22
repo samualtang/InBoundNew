@@ -116,8 +116,8 @@ namespace highSpeed.orderHandle
         #region  换烟仓
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox1.Items.Clear();
-            comboBox3.Items.Clear();
+            comboBox_old.Items.Clear();
+            comboBox_new.Items.Clear();
             if (groupnoBox.SelectedIndex == 0)
             {
                 groupno.Text = "1";
@@ -133,17 +133,44 @@ namespace highSpeed.orderHandle
                 var lists = et.T_PRODUCE_SORTTROUGH.Where(x => x.GROUPNO == groupnum && x.CIGARETTETYPE == 30 && x.STATE == "10").Select(x => new { x.MACHINESEQ , x.CIGARETTENAME ,x.CIGARETTECODE}).OrderBy(x=>x.MACHINESEQ).ToList();
                 foreach (var item in lists)
                 {
-                    comboBox1.Items.Add(item.MACHINESEQ);
-                    comboBox3.Items.Add(item.MACHINESEQ); 
+                    comboBox_old.Items.Add(item.MACHINESEQ);
+                    comboBox_new.Items.Add(item.MACHINESEQ); 
                 }
             }
-            comboBox1.SelectedIndex = 0;
-            comboBox3.SelectedIndex = -1;
+            comboBox_old.SelectedIndex = 0;
+            comboBox_new.SelectedIndex = -1;
         
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox_new.Text == "")
+            {
+                MessageBox.Show("请选择目标烟仓！");
+                return;
+            }
+            try
+            {
+                int num;
+                decimal machine = Convert.ToDecimal(comboBox_new.Text);
+                using (Entities et = new Entities())
+                {
+                    num = et.T_UN_POKE.Where(x => x.MACHINESEQ == machine).Where(x => x.STATUS != 20).Count();
+                }
+                if (num > 0)
+                {
+                    MessageBox.Show("目标烟仓还有未完成分拣任务！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("目标烟仓无未完成任务，可以更换");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("验证失败！");
+            }
+
             decimal groupnum = Convert.ToDecimal(groupno.Text);
             //原通道 品牌 编码
             decimal MACHINESEQ_old = 0;
@@ -152,7 +179,7 @@ namespace highSpeed.orderHandle
             string CIGARETTECODE_old = "";
             try
             {
-                MACHINESEQ_old = Convert.ToDecimal(comboBox1.Text);
+                MACHINESEQ_old = Convert.ToDecimal(comboBox_old.Text);
             }
             catch (Exception)
             {
@@ -165,7 +192,7 @@ namespace highSpeed.orderHandle
                 var lists = et.T_PRODUCE_SORTTROUGH.Where(x => x.GROUPNO == groupnum && x.CIGARETTETYPE == 30 && x.STATE == "10").Select(x => new { x.MACHINESEQ, x.CIGARETTENAME,x.CIGARETTECODE,x.TROUGHNUM}).OrderBy(x => x.MACHINESEQ).ToList();
                 foreach (var item in lists)
                 {
-                    if (comboBox1.Text == item.MACHINESEQ.ToString())
+                    if (comboBox_old.Text == item.MACHINESEQ.ToString())
                     {
                         CIGARETTENAME_old = item.CIGARETTENAME;
                         CIGARETTECODE_old = item.CIGARETTECODE;
@@ -180,7 +207,7 @@ namespace highSpeed.orderHandle
             string TROUGHNUM_new = "";
             try
             {
-                MACHINESEQ_new = Convert.ToDecimal(comboBox3.Text);
+                MACHINESEQ_new = Convert.ToDecimal(comboBox_new.Text);
             }
             catch (Exception)
             {
@@ -192,7 +219,7 @@ namespace highSpeed.orderHandle
                 var lists = et.T_PRODUCE_SORTTROUGH.Where(x => x.GROUPNO == groupnum && x.CIGARETTETYPE == 30 && x.STATE == "10").Select(x => new { x.MACHINESEQ, x.CIGARETTENAME, x.CIGARETTECODE,x.TROUGHNUM }).OrderBy(x => x.MACHINESEQ).ToList();
                 foreach (var item in lists)
                 {
-                    if (comboBox3.Text == item.MACHINESEQ.ToString())
+                    if (comboBox_new.Text == item.MACHINESEQ.ToString())
                     {
                         CIGARETTENAME_new = item.CIGARETTENAME;
                         CIGARETTECODE_new = item.CIGARETTECODE;
@@ -258,7 +285,7 @@ namespace highSpeed.orderHandle
                 var lists = et.T_PRODUCE_SORTTROUGH.Where(x => x.GROUPNO == groupnum && x.CIGARETTETYPE == 30 && x.STATE == "10").Select(x => new { x.MACHINESEQ, x.CIGARETTENAME }).OrderBy(x => x.MACHINESEQ).ToList();
                 foreach (var item in lists)
                 {
-                    if (comboBox1.Text == item.MACHINESEQ.ToString())
+                    if (comboBox_old.Text == item.MACHINESEQ.ToString())
                     {
                         label10.Text = item.CIGARETTENAME;
                     }
@@ -274,7 +301,7 @@ namespace highSpeed.orderHandle
                 var lists = et.T_PRODUCE_SORTTROUGH.Where(x => x.GROUPNO == groupnum && x.CIGARETTETYPE == 30 && x.STATE == "10").Select(x => new { x.MACHINESEQ, x.CIGARETTENAME }).OrderBy(x => x.MACHINESEQ).ToList();
                 foreach (var item in lists)
                 {
-                    if (comboBox3.Text == item.MACHINESEQ.ToString())
+                    if (comboBox_new.Text == item.MACHINESEQ.ToString())
                     {
                         label11.Text = item.CIGARETTENAME;
                     }
@@ -516,32 +543,7 @@ namespace highSpeed.orderHandle
 
         private void button3_Click(object sender, EventArgs e)
         { 
-            if (comboBox3.Text == "")
-            {
-                MessageBox.Show("请选择目标烟仓！");
-                return;
-            }        
-            try
-            {
-                int num;
-                decimal machine = Convert.ToDecimal(comboBox3.Text); 
-                using (Entities et = new Entities())
-                {
-                    num = et.T_UN_POKE.Where(x => x.MACHINESEQ == machine).Where(x => x.STATUS != 20).Count(); 
-                }
-                if (num > 0)
-                {
-                    MessageBox.Show("目标烟仓还有未完成分拣任务！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
-                }
-                else
-                {
-                    MessageBox.Show("目标烟仓无未完成任务，可以更换");
-                } 
-            }
-            catch (Exception)
-            {  
-                    MessageBox.Show("验证失败！"); 
-            }
+            
         }
         DataBase Db = new DataBase();
         delegate void HandleSort(); 

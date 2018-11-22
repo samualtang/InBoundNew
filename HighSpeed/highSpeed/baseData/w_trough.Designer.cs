@@ -103,7 +103,6 @@
             this.button4.TabIndex = 18;
             this.button4.Text = "重新排序混合道";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // groupBox1
