@@ -755,7 +755,7 @@ namespace InBound.Business
                     source.ForEach(f =>
                         {
                             f.TROUGHNUM = tagTrougNum;//将源烟柜通道更换为目标烟柜通道
-                            f.MACHINESTATE = tag.MACHINESEQ;// 将源烟柜物理通道号更换为物理通道号
+                            f.MACHINESEQ = tag.MACHINESEQ;// 将源烟柜物理通道号更换为物理通道号
                             f.GROUPNO = tag.GROUPNO;//将源烟柜组更换为目标烟柜通组
                         });
                 }

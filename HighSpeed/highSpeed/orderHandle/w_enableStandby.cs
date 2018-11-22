@@ -977,7 +977,7 @@ namespace highSpeed.orderHandle
             btnReTiaoyan.Enabled = false;
             button7.Enabled = false;
             btnUpdate.Enabled = false;
-            panel3.Visible = true;
+            label24.Visible = true;
             HandleSortPokeseq task = ThreadSortPokeseq;
             task.BeginInvoke(null, null);
         }
@@ -987,7 +987,7 @@ namespace highSpeed.orderHandle
             {
                 ProducePokeService.RefSortByTiaoyan(LsitMainSN);
                 UnionTaskInfoService.InsertPokeseqInfo();
-                panel3.Visible = false;
+                label24.Visible = false;
                 MessageBox.Show("条烟顺序生成成功！");
             }
             catch (DataException date)

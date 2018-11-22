@@ -83,9 +83,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.gpSetTask = new System.Windows.Forms.GroupBox();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
-            this.pbLoading = new System.Windows.Forms.PictureBox();
             this.btnReTiaoyan = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
             this.rbNew = new System.Windows.Forms.RadioButton();
@@ -107,8 +105,6 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.gpSetTask.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -687,8 +683,6 @@
             // 
             // gpSetTask
             // 
-            this.gpSetTask.Controls.Add(this.panel3);
-            this.gpSetTask.Controls.Add(this.btnReTiaoyan);
             this.gpSetTask.Controls.Add(this.label25);
             this.gpSetTask.Controls.Add(this.rbNew);
             this.gpSetTask.Controls.Add(this.rbEnd);
@@ -710,42 +704,20 @@
             this.gpSetTask.TabStop = false;
             this.gpSetTask.Text = "定位分拣任务";
             // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.label24);
-            this.panel3.Controls.Add(this.pbLoading);
-            this.panel3.Font = new System.Drawing.Font("宋体", 11F);
-            this.panel3.Location = new System.Drawing.Point(322, 17);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(446, 113);
-            this.panel3.TabIndex = 9;
-            this.panel3.Visible = false;
-            // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(3, 1);
+            this.label24.Font = new System.Drawing.Font("宋体", 11F);
+            this.label24.Location = new System.Drawing.Point(438, 9);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(234, 15);
             this.label24.TabIndex = 28;
             this.label24.Text = "数据处理中,这会需要一些时间...";
             // 
-            // pbLoading
-            // 
-            this.pbLoading.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbLoading.Image = global::highSpeed.Properties.Resources.loading;
-            this.pbLoading.Location = new System.Drawing.Point(0, 0);
-            this.pbLoading.Name = "pbLoading";
-            this.pbLoading.Size = new System.Drawing.Size(442, 109);
-            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLoading.TabIndex = 27;
-            this.pbLoading.TabStop = false;
-            // 
             // btnReTiaoyan
             // 
             this.btnReTiaoyan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReTiaoyan.Location = new System.Drawing.Point(773, 46);
+            this.btnReTiaoyan.Location = new System.Drawing.Point(341, 5);
             this.btnReTiaoyan.Name = "btnReTiaoyan";
             this.btnReTiaoyan.Size = new System.Drawing.Size(75, 23);
             this.btnReTiaoyan.TabIndex = 8;
@@ -907,7 +879,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1248, 547);
+            this.Controls.Add(this.label24);
             this.Controls.Add(this.btnTips);
+            this.Controls.Add(this.btnReTiaoyan);
             this.Controls.Add(this.gpSetTask);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button6);
@@ -930,10 +904,8 @@
             this.groupBox4.PerformLayout();
             this.gpSetTask.ResumeLayout(false);
             this.gpSetTask.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1009,9 +981,7 @@
         private System.Windows.Forms.TextBox txtSortnum2;
         private System.Windows.Forms.Button btnTips;
         private System.Windows.Forms.Button btnReTiaoyan;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.PictureBox pbLoading;
         private System.Windows.Forms.Label label25;
     }
 }
