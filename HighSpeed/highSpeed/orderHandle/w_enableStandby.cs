@@ -684,7 +684,7 @@ namespace highSpeed.orderHandle
                     try
                     {
                         ProducePokeService.FetchPokeTroughByTroughNo(cmbSoucreYG.Text, cmbTagYG.Text);
-                        pf.IniWriteValue("分拣换柜", "isTrue", "4"); //写入4时,为换道成功
+                        ProducePokeService.WriteSortNumToDb(LsitMainSN, 4);//写入4时,为换道成功
                         WriteLog.GetLog().Write("写入4时,为换道成功,通道" + cmbSoucreYG.Text + "与" + cmbTagYG.Text + "交换");
                         MessageBox.Show("换道成功，请检查数据");
                     }
@@ -758,7 +758,7 @@ namespace highSpeed.orderHandle
             if (errcode == "1")
             {
                 MessageBox.Show("数据已同步");
-                pf.IniWriteValue("分拣换柜", "isTrue", "3");//写入3时,表示同步烟柜已经完成
+                ProducePokeService.WriteSortNumToDb(LsitMainSN, 3);//写入3时,表示同步烟柜已经完成
                 WriteLog.GetLog().Write("写入3,表示同步烟柜已经完成");
             }
             else
@@ -775,31 +775,18 @@ namespace highSpeed.orderHandle
             try
             {
                 btnSorntum.Enabled = false;
-                if (pf.IniReadValue("分拣换柜", "flag") == "1")//从本地文件获取任务号
+                decimal Step= -1;//步骤
+                ProducePokeService.ReadSortNumByDb(out LsitMainSN,out  Step);
+                if (Step == 0)//步骤为0时,是第一次自动获取
                 {
-                   
-                    for (int i = 0; i < 4; i++)
-                    {
-                        LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
-                    }
-                    WriteLog.GetLog().Write("从本地文件获取任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
-                    if (pf.IniReadValue("分拣换柜", "isTrue") == "0")//当更新换柜完成之后 重置本地存放任务号
-                    {
-                        pf.IniWriteValue("分拣换柜", "flag", "0");//重置获取标志
-                    }
-                 
+                    LsitMainSN = ProducePokeService.GetSortnumByNotCalcu();//获取最大的没有发送且已计算的任务号
+                    ProducePokeService.WriteSortNumToDb(LsitMainSN, 1);//写入1时,为第一次获取
+                    WriteLog.GetLog().Write("获取最大的没有发送且已计算的任务号\r\n1号主皮带任务号:" + LsitMainSN[0] + "\r\n2号主皮带任务号:" + LsitMainSN[1] + "\r\n3号主皮带任务号:" + LsitMainSN[2] + "\r\n4号主皮带任务号:" + LsitMainSN[3]);
+                    WriteLog.GetLog().Write("写入1 ,为第一次获取最大的没有发送且已计算的任务号");
                 }
                 else
                 {
-                    LsitMainSN = ProducePokeService.GetSortnumByNotCalcu();//获取最大的没有发送且已计算的任务号
-                    pf.IniWriteValue("分拣换柜", "maxSortNum1", LsitMainSN[0].ToString());
-                    pf.IniWriteValue("分拣换柜", "maxSortNum2", LsitMainSN[1].ToString());
-                    pf.IniWriteValue("分拣换柜", "maxSortNum3", LsitMainSN[2].ToString());
-                    pf.IniWriteValue("分拣换柜", "maxSortNum4", LsitMainSN[3].ToString());
-                    pf.IniWriteValue("分拣换柜", "isTrue", "1");//写入1时,为第一次获取
-                    pf.IniWriteValue("分拣换柜", "flag", "1");//写入1时,为第一次获取
-                    WriteLog.GetLog().Write("获取最大的没有发送且已计算的任务号\r\n1号主皮带任务号:" + txtSortnum1.Text + "\r\n2号主皮带任务号:" + txtSortnum2.Text + "\r\n3号主皮带任务号:" + txtSortnum3.Text + "\r\n4号主皮带任务号:" + txtSortnum4.Text);
-                    WriteLog.GetLog().Write("写入1 ,为第一次获取最大的没有发送且已计算的任务号");
+                    WriteLog.GetLog().Write("从数据库获取任务号\r\n1号主皮带任务号:" + +LsitMainSN[0] + "\r\n2号主皮带任务号:" + LsitMainSN[1] + "\r\n3号主皮带任务号:" + LsitMainSN[2] + "\r\n4号主皮带任务号:" + LsitMainSN[3]);
                 }
                 txtSortnum1.Text = LsitMainSN[0].ToString();//一号主皮带任务号
                 txtSortnum2.Text = LsitMainSN[1].ToString();//二号主皮带任务号
@@ -844,28 +831,20 @@ namespace highSpeed.orderHandle
                         if (rbNew.Checked)//新增
                         {
                             status = 10;
-                            for (int i = 0; i < 4; i++)
+                            decimal Step = -1;//步骤
+                            ProducePokeService.ReadSortNumByDb(out LsitMainSN, out  Step);
+                            if (Step == 4)//当完成烟柜转移备用烟柜的时,才清除数据库任务号,增添容错率
                             {
-                                LsitMainSN[i] = Convert.ToDecimal(pf.IniReadValue("分拣换柜", " maxSortNum" + (i + 1)));//保存的任务号
+                                ProducePokeService.WriteSortNumToDb(LsitMainSN, 0);//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
                             }
-                            if (pf.IniReadValue("分拣换柜", "isTrue") == "4")//当完成烟柜转移备用烟柜的时,才清除本地任务号,增添容错率
-                            {
-                                txtSortnum1.Clear(); txtSortnum2.Clear(); txtSortnum3.Clear(); txtSortnum4.Clear();
-                                //新增是最后一步 ,将清掉数据
-                                pf.IniWriteValue("分拣换柜", "maxSortNum1", "0");//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
-                                pf.IniWriteValue("分拣换柜", "maxSortNum2", "0");
-                                pf.IniWriteValue("分拣换柜", "maxSortNum3", "0");
-                                pf.IniWriteValue("分拣换柜", "maxSortNum4", "0");
-                                pf.IniWriteValue("分拣换柜", "isTrue", "0");
-                                pf.IniWriteValue("分拣换柜", "flag", "0");
-                                btnReTiaoyan.Visible = true;
-                                WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
-                            }
+                            txtSortnum1.Clear(); txtSortnum2.Clear(); txtSortnum3.Clear(); txtSortnum4.Clear();
+                            btnReTiaoyan.Visible = true;
+                            WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
                         }
                         else if (rbEnd.Checked)//完成
                         {
                             status = 20;
-                            pf.IniWriteValue("分拣换柜", "isTrue", "2"); //写入2时,为第一次更新最大任务号后面的为20 更新成功 
+                            ProducePokeService.WriteSortNumToDb(LsitMainSN, 2);// //写入2时,为第一次更新最大任务号后面的为20 更新成功 
                             WriteLog.GetLog().Write("写入2时,为第一次更新最大任务号后面的为20 更新成功");
                         }
                         else

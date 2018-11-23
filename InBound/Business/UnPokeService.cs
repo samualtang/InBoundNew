@@ -631,7 +631,7 @@ namespace InBound.Business
         /// <param name="outlist">接收完成任务集合</param>
         /// <param name="outStr">任务日记字符串</param>
         /// <returns></returns>
-        public static object[] getOneDateBaseTask(decimal status,string linenum, out List<T_UN_POKE> outlist, out string outStr)
+        public static object[] getOneDateBaseTask(decimal status,string linenum, out string outStr)
         {
             object[] values = new object[104];
             String needDatas = "";
@@ -645,7 +645,7 @@ namespace InBound.Business
                 var query = (from item in data.T_UN_POKE where item.STATUS == status && item.LINENUM == linenum orderby item.SORTNUM, item.SENDTASKNUM select item).FirstOrDefault();//取出可以发送的客户)
                 if (query == null)//如果没有则 无任务s
                 {
-                    outlist = new List<T_UN_POKE>();
+                    
                     outStr = null;
                     return values;
                 }
@@ -660,7 +660,7 @@ namespace InBound.Business
                              select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).ToList();
                
                 // var sendtasknum = GetSeq("select T_UN_POKE_SENDTASKNUM.Nextval from dual");
-                outlist = query1;
+               
                 values[0] = query.SORTNUM;
                 values[1] = query.SENDTASKNUM;//包号
                 values[2] = query.STORENUM;//出口号
@@ -1073,18 +1073,12 @@ namespace InBound.Business
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
                 if (linenum == "1")
                 {
-                    for (int i = 1; i <= 2; i++)//以主皮带获取发送的包装机
-                    {
-                        listpm.Add(GetPackMacByMainbelt(i)); 
-                    }
+                    listpm.Add(GetPackMacByMainbelt(1)); //以主皮带获取发送的包装机
                 }
                 else if (linenum == "2")
                 {
-                    for (int i = 3; i <= 4; i++)//以主皮带获取发送的包装机
-                    {
-                        listpm.Add(GetPackMacByMainbelt(i)); 
-                    }
-                } 
+                    listpm.Add(GetPackMacByMainbelt(2));//以主皮带获取发送的包装机
+                }
                 foreach (var i in listpm)
                 {
                     if (i != 0)//i是包装机号

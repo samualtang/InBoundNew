@@ -822,8 +822,66 @@ namespace InBound.Business
                     {
                         list.Add(0);
                     }
+                    
                 }
                 return list;
+            }
+        }
+        /// <summary>
+        /// 任务号写入数据库
+        /// </summary>
+        /// <param name="List">任务号集合</param>
+        /// <param name="Step">步骤</param>
+        public static void WriteSortNumToDb(List<decimal> List , decimal Step)
+        {
+            using (Entities entity = new Entities())
+            {
+                int mianbelt = 1;
+                foreach (var item in List)
+                {
+                    var troughTrans = (from item1 in entity.T_PRO_TROUGHTRANSFER where item1.MIANBELT == mianbelt select item1).FirstOrDefault();
+                    if (troughTrans != null)
+                    {
+                        if (Step == 0)//清空数据库任务号
+                        {
+                            troughTrans.SORTNUM = 0;//任务号
+                            troughTrans.STEP = 0;//步骤
+                        }
+                        else
+                        {
+                            troughTrans.SORTNUM = item;//任务号
+                            troughTrans.STEP = Step;//步骤
+                        }
+                    }
+                    mianbelt++;
+                    entity.SaveChanges();
+                }
+            }
+        }
+        /// <summary>
+        /// 从数据库读取写入的任务号
+        /// </summary>
+        /// <param name="Step">步骤</param>
+        public static void ReadSortNumByDb(out List<decimal> list,out decimal Step)
+        {
+            using (Entities entity = new Entities())
+            {
+                list = new List<decimal>();
+                Step = 0;
+                for (int i = 1; i <= 4; i++)
+                {
+                    var troughTrans = (from item1 in entity.T_PRO_TROUGHTRANSFER where item1.MIANBELT == i select item1).FirstOrDefault();
+                    if (troughTrans != null)
+                    {
+                        list.Add(troughTrans.SORTNUM ?? 0);
+                        Step = troughTrans.STEP ?? 0;
+                    }
+                    else
+                    {
+                        list.Add(0);
+                        Step = 0;
+                    }
+                }
             }
         }
         public static bool GetExistSortnum( decimal sortnum)

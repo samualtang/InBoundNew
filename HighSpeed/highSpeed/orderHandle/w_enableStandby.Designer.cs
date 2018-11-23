@@ -264,7 +264,7 @@
             this.label9.Size = new System.Drawing.Size(587, 12);
             this.label9.TabIndex = 9;
             this.label9.Text = "_________________________________________________________________________________" +
-                "________________";
+    "________________";
             // 
             // label8
             // 
@@ -838,6 +838,7 @@
             this.label24.Size = new System.Drawing.Size(234, 15);
             this.label24.TabIndex = 28;
             this.label24.Text = "数据处理中,这会需要一些时间...";
+            this.label24.Visible = false;
             // 
             // btnReTiaoyan
             // 

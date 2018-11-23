@@ -689,6 +689,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_UN_POKE> _T_UN_POKE;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRO_TROUGHTRANSFER> T_PRO_TROUGHTRANSFER
+        {
+            get
+            {
+                if ((_T_PRO_TROUGHTRANSFER == null))
+                {
+                    _T_PRO_TROUGHTRANSFER = base.CreateObjectSet<T_PRO_TROUGHTRANSFER>("T_PRO_TROUGHTRANSFER");
+                }
+                return _T_PRO_TROUGHTRANSFER;
+            }
+        }
+        private ObjectSet<T_PRO_TROUGHTRANSFER> _T_PRO_TROUGHTRANSFER;
 
         #endregion
 
@@ -1004,6 +1020,14 @@ namespace InBound
         public void AddToT_UN_POKE(T_UN_POKE t_UN_POKE)
         {
             base.AddObject("T_UN_POKE", t_UN_POKE);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRO_TROUGHTRANSFER EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRO_TROUGHTRANSFER(T_PRO_TROUGHTRANSFER t_PRO_TROUGHTRANSFER)
+        {
+            base.AddObject("T_PRO_TROUGHTRANSFER", t_PRO_TROUGHTRANSFER);
         }
 
         #endregion
@@ -2510,6 +2534,135 @@ namespace InBound
         private Nullable<global::System.Decimal> _ACTQTY;
         partial void OnACTQTYChanging(Nullable<global::System.Decimal> value);
         partial void OnACTQTYChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_PRO_TROUGHTRANSFER")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_PRO_TROUGHTRANSFER : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_PRO_TROUGHTRANSFER 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_PRO_TROUGHTRANSFER CreateT_PRO_TROUGHTRANSFER(global::System.Decimal id)
+        {
+            T_PRO_TROUGHTRANSFER t_PRO_TROUGHTRANSFER = new T_PRO_TROUGHTRANSFER();
+            t_PRO_TROUGHTRANSFER.ID = id;
+            return t_PRO_TROUGHTRANSFER;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MIANBELT
+        {
+            get
+            {
+                return _MIANBELT;
+            }
+            set
+            {
+                OnMIANBELTChanging(value);
+                ReportPropertyChanging("MIANBELT");
+                _MIANBELT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MIANBELT");
+                OnMIANBELTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MIANBELT;
+        partial void OnMIANBELTChanging(Nullable<global::System.Decimal> value);
+        partial void OnMIANBELTChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SORTNUM
+        {
+            get
+            {
+                return _SORTNUM;
+            }
+            set
+            {
+                OnSORTNUMChanging(value);
+                ReportPropertyChanging("SORTNUM");
+                _SORTNUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORTNUM");
+                OnSORTNUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SORTNUM;
+        partial void OnSORTNUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnSORTNUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> STEP
+        {
+            get
+            {
+                return _STEP;
+            }
+            set
+            {
+                OnSTEPChanging(value);
+                ReportPropertyChanging("STEP");
+                _STEP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("STEP");
+                OnSTEPChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _STEP;
+        partial void OnSTEPChanging(Nullable<global::System.Decimal> value);
+        partial void OnSTEPChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _ID;
+        partial void OnIDChanging(global::System.Decimal value);
+        partial void OnIDChanged();
 
         #endregion
 

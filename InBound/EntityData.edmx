@@ -11,6 +11,7 @@
           <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.Store.INF_EQUIPMENTSTATUS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.Store.INF_JOBDOWNLOAD" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRO_TROUGHTRANSFER" EntityType="Model.Store.T_PRO_TROUGHTRANSFER" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.Store.T_PRODUCE_CACHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.Store.T_PRODUCE_POKE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.Store.T_PRODUCE_POKESEQ" store:Type="Tables" Schema="ZOOMTEL" />
@@ -134,6 +135,15 @@
           <Property Name="ISDEAL" Type="varchar2" MaxLength="10" />
           <Property Name="PLANQTY" Type="number" />
           <Property Name="ACTQTY" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRO_TROUGHTRANSFER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MIANBELT" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="STEP" Type="number" />
+          <Property Name="ID" Type="number" Nullable="false" />
         </EntityType>
         <EntityType Name="T_PRODUCE_CACHE">
           <Key>
@@ -951,6 +961,7 @@
           <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.T_WMS_ABNORMALLIST" />
           <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
+          <EntitySet Name="T_PRO_TROUGHTRANSFER" EntityType="Model.T_PRO_TROUGHTRANSFER" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1763,6 +1774,15 @@
           <Property Type="Decimal" Name="GRIDNUM" Precision="38" Scale="0" />
           <Property Type="String" Name="INVFLAG" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="SENDSEQ" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_PRO_TROUGHTRANSFER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="MIANBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STEP" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2622,6 +2642,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRO_TROUGHTRANSFER">
+            <EntityTypeMapping TypeName="Model.T_PRO_TROUGHTRANSFER">
+              <MappingFragment StoreEntitySet="T_PRO_TROUGHTRANSFER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="STEP" ColumnName="STEP" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="MIANBELT" ColumnName="MIANBELT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2642,7 +2672,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="EntityData" ZoomLevel="55">
+      <Diagram Name="EntityData" ZoomLevel="124">
         <EntityTypeShape EntityType="Model.T_WMS_CONSIGNOR" Width="1.5" PointX="6.75" PointY="6.75" Height="1.9202278645833246" />
         <EntityTypeShape EntityType="Model.T_WMS_LANEWAY" Width="1.5" PointX="10.75" PointY="0.75" Height="1.5506396484375102" />
         <EntityTypeShape EntityType="Model.T_WMS_OUTBOUND_LINE" Width="1.5" PointX="10.75" PointY="7.75" Height="2.1050219726562602" />
@@ -2682,6 +2712,7 @@
         <EntityTypeShape EntityType="Model.T_WMS_ABNORMALLIST" Width="1.5" PointX="7.375" PointY="9.75" Height="1.9202278645833246" />
         <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="3.375" PointY="7.75" Height="9.4967862955729174" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.6921394856770746" />
+        <EntityTypeShape EntityType="Model.T_PRO_TROUGHTRANSFER" Width="1.5" PointX="5.375" PointY="23.75" Height="1.7354337565104174" />
       </Diagram>
     </Diagrams>
   </Designer>

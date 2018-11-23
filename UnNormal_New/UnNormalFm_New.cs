@@ -41,20 +41,69 @@ namespace UnNormal_New
         public WriteLog writeLog =  WriteLog.GetLog();
         public DeviceStateManager stateManager = new DeviceStateManager();
         static int Strat = 1,End = 4;//开始和
-
+        /// <summary>
+        /// 存放包装机 号  
+        /// </summary>
+        List<int> ListPackge = new List<int>();
+        /// <summary>
+        /// 存放任务线路
+        /// </summary>
+        List<string> ListLineNum = new List<string>();
         public UnNormalFm()
         {
             InitializeComponent();
             updateListBox("应用程序启动");
             writeLog.Write("应用程序启动");
-            t1.Tick += new EventHandler(t1_Tick);
+         
             try
             {
-                Control.CheckForIllegalCrossThreadCalls = false;
-               // UnPokeService.getTask(25, lineNum, out list);
-               initdata();
-               t1.Start();//定时刷新
-               
+                lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();//线路
+                ItemCollection.OPCserverStr = ConfigurationManager.AppSettings["OpcPresortServer"].ToString();
+                SendWay = Convert.ToInt32(ConfigurationManager.AppSettings["SendWay"]);//1为顺序 2为动态
+                if (SendWay != 1 && SendWay != 2 || lineNum != "1" && lineNum != "2")
+                {
+                    MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
+                    WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
+                    Application.Exit();
+                }
+                else
+                {
+                    if (SendWay == 1)
+                    {
+                        btnDynamic.Text = "顺序调度";
+                    }
+                    else if (SendWay == 2)
+                    {
+                        btnDynamic.Text = "动态调度";
+                    }
+
+                    if (lineNum == "1")//1 线为 (1,2,3,4)包装机, 任务数据对应 1线 对应 (1,2)线   
+                    {
+                        ListPackge.Add(1);
+                        ListPackge.Add(2);
+                        ListPackge.Add(3);
+                        ListPackge.Add(4);
+                        ListLineNum.Add("1");
+                        ListLineNum.Add("2");
+                    }
+                    else if (lineNum == "2")//2 线为(5,6,7,8)包装机 ,2线对应(3,4)线
+                    {
+                        ListPackge.Add(5);
+                        ListPackge.Add(6);
+                        ListPackge.Add(7);
+                        ListPackge.Add(8);
+                        ListLineNum.Add("3");
+                        ListLineNum.Add("4");
+                    } 
+                    t1.Tick += new EventHandler(t1_Tick);
+                    Control.CheckForIllegalCrossThreadCalls = false;
+                 
+                }
+            }
+            catch (NullReferenceException nullre)
+            {
+                MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
+                WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！" + "\r\n" + nullre.Message);
             }
             catch (Exception e)
             {
@@ -240,9 +289,7 @@ namespace UnNormal_New
         delegate void delSendTask();
       
       
-        List<T_UN_POKE> listOnly = new List<T_UN_POKE>();
-        List<T_UN_SpecialSmoke> listSS1B = new List<T_UN_SpecialSmoke>();
-        List<T_UN_SpecialSmoke> listSS2A = new List<T_UN_SpecialSmoke>(); 
+
         bool issendone = false; 
        
         /// <summary>
@@ -256,23 +303,23 @@ namespace UnNormal_New
                 List<decimal> sortNumList = new List<decimal>();//当前任务号集合
                 List<decimal> xyNumList = new List<decimal>();//当前吸烟数量集合 
                 int flag = SpyBiaozhiGroup.ReadD(0).CastTo<int>(-1);
-                writeLog.Write("一线烟仓发送数据前读标志位：" + flag);
+                writeLog.Write( ListLineNum[0]+"线烟仓发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
-                    while (!UnPokeService.CheckExistCanSendTask(12, "1") && UnPokeService.CheckExistCanSendTask(10, "1"))
+                    while (!UnPokeService.CheckExistCanSendTask(12, ListLineNum[0]) && UnPokeService.CheckExistCanSendTask(10, ListLineNum[0]))
                     {
                         sortNumList.Clear();
                         xyNumList.Clear(); 
                         decimal sortNum, xyNum;
                         decimal packagemachine = 0;
-                        for (int i =0; i < 4; i++)
+                        for (int i = ListPackge[0]; i <= ListPackge[1]; i++)
                         {
                             try
                             {
-                                if (UnPokeService.checkExist((i + 1), "1")) 
+                                if (UnPokeService.checkExist(i, ListLineNum[0])) 
                                 {
-                                    sortNum =  listPM[i].ReadD(2).CastTo<decimal>(-1);//包装机读取出来的任务号
-                                    xyNum =  listPM[i].ReadD(3).CastTo<decimal>(-1);//包装机读取出来的数量
+                                    sortNum =  listPM[i-1].ReadD(2).CastTo<decimal>(-1);//包装机读取出来的任务号
+                                    xyNum =  listPM[i-1].ReadD(3).CastTo<decimal>(-1);//包装机读取出来的数量
                                 }
                                 else
                                 {
@@ -285,13 +332,13 @@ namespace UnNormal_New
                                 sortNum = 0; //读取出错的情况下 默认为0
                                 xyNum = 0;
                             }
-                            writeLog.Write("一线plc地址:S7:[PackageMachine" + (i + 1) + "]DB1,D506" + " ，包装机:" + (i + 1) + "号， 包装机读取任务号:" + sortNum + " ，包装机读取抓取数量:" + xyNum);
-                            updateListBox("一线plc地址:S7:[PackageMachine" + (i + 1) + "]DB1,D506" + " ，包装机:" + (i + 1) + " 号，包装机读取任务号:" + sortNum + "， 包装机读取抓取数量:" + xyNum);
+                            writeLog.Write(ListLineNum[0] + "线plc地址:S7:[PackageMachine" + i + "]DB1,D506" + " ，包装机:" + i + "号， 包装机读取任务号:" + sortNum + " ，包装机读取抓取数量:" + xyNum);
+                            updateListBox(ListLineNum[0] + "线plc地址:S7:[PackageMachine" + i + "]DB1,D506" + " ，包装机:" + i + " 号，包装机读取任务号:" + sortNum + "， 包装机读取抓取数量:" + xyNum);
                             sortNumList.Add(sortNum);
                             xyNumList.Add(xyNum);
                         }
                         // decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, SendWay,"1"); 
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, SendWay, ListLineNum[0]); 
                         if (packagemachine > 0)
                         {
                             UnPokeService.UpdateTaskByPackMachine(packagemachine);
@@ -300,14 +347,14 @@ namespace UnNormal_New
 
                     }
                     string OutStr = "";
-                    object[] datas = UnPokeService.getOneDateBaseTask(12,"1",out listOnly, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.getOneDateBaseTask(12, ListLineNum[0], out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("一线烟仓烟柜分拣数据发送完毕");
+                        updateListBox(ListLineNum[0] + "线烟仓烟柜分拣数据发送完毕");
                         return;
                     }
-                    writeLog.Write("一线烟仓烟柜分拣线:" + OutStr);
-                    updateListBox("一线烟仓烟柜分拣线:" + OutStr); 
+                    writeLog.Write(ListLineNum[0] + "线烟仓烟柜分拣线:" + OutStr);
+                    updateListBox(ListLineNum[0] + "线烟仓烟柜分拣线:" + OutStr); 
                     OnlyTaskGorup1.SyncWrite(datas);  
                 }
             }
@@ -337,23 +384,23 @@ namespace UnNormal_New
                 List<decimal> sortNumList = new List<decimal>();//当前任务号集合
                 List<decimal> xyNumList = new List<decimal>();//当前吸烟数量集合 
                 int flag = SpyBiaozhiGroup.ReadD(1).CastTo<int>(-1);
-                writeLog.Write("二线烟仓发送数据前读标志位：" + flag);
+                writeLog.Write(ListLineNum[1] + "线烟仓发送数据前读标志位：" + flag);
                 if (flag == 0)
                 {
-                    while (!UnPokeService.CheckExistCanSendTask(12, "2") && UnPokeService.CheckExistCanSendTask(10, "2"))
+                    while (!UnPokeService.CheckExistCanSendTask(12, ListLineNum[1]) && UnPokeService.CheckExistCanSendTask(10, ListLineNum[1]))
                     {
                         sortNumList.Clear();
                         xyNumList.Clear();
                         decimal sortNum, xyNum;
                         decimal packagemachine = 0;
-                        for (int i = 4; i < 8; i++)
+                        for (int i = ListPackge[2]; i <= ListPackge[3]; i++)
                         {
                             try
                             {
-                                if (UnPokeService.checkExist((i + 1),"2")) 
+                                if (UnPokeService.checkExist(i, ListLineNum[1])) 
                                 {
-                                    sortNum = listPM[i].ReadD(2).CastTo<decimal>(-1);//包装机读取出来的任务号
-                                    xyNum = listPM[i].ReadD(3).CastTo<decimal>(-1);//包装机读取出来的数量
+                                    sortNum = listPM[i-1].ReadD(2).CastTo<decimal>(-1);//包装机读取出来的任务号
+                                    xyNum = listPM[i-1].ReadD(3).CastTo<decimal>(-1);//包装机读取出来的数量
                                 }
                                 else
                                 {
@@ -366,13 +413,13 @@ namespace UnNormal_New
                                 sortNum = 0; //读取出错的情况下 默认为0
                                 xyNum = 0;
                             }
-                            writeLog.Write("二线plc地址:S7:[PackageMachine" + (i + 1) + "]DB1,D506" + " ，包装机:" + (i + 1) + "号， 包装机读取任务号:" + sortNum + " ，包装机读取抓取数量:" + xyNum);
-                            updateListBox("二线plc地址:S7:[PackageMachine" + (i + 1) + "]DB1,D506" + " ，包装机:" + (i + 1) + " 号，包装机读取任务号:" + sortNum + "， 包装机读取抓取数量:" + xyNum);
+                            writeLog.Write(ListLineNum[1] + "二线plc地址:S7:[PackageMachine" + i + "]DB1,D506" + " ，包装机:" + i + "号， 包装机读取任务号:" + sortNum + " ，包装机读取抓取数量:" + xyNum);
+                            updateListBox(ListLineNum[1] + "二线plc地址:S7:[PackageMachine" + i + "]DB1,D506" + " ，包装机:" + i + " 号，包装机读取任务号:" + sortNum + "， 包装机读取抓取数量:" + xyNum);
                             sortNumList.Add(sortNum);
                             xyNumList.Add(xyNum);
                         }
                         // decimal DISPATCHESIZE = 0;
-                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList,SendWay,"2");
+                        packagemachine = UnPokeService.GetSendPackageMachine_New(sortNumList, xyNumList, SendWay, ListLineNum[1]);
                         if (packagemachine > 0)
                         {
                             UnPokeService.UpdateTaskByPackMachine(packagemachine);
@@ -381,14 +428,14 @@ namespace UnNormal_New
 
                     }
                     string OutStr = "";
-                    object[] datas = UnPokeService.getOneDateBaseTask(12,"2", out listOnly, out OutStr);//获取可发送任务
+                    object[] datas = UnPokeService.getOneDateBaseTask(12, ListLineNum[1], out OutStr);//获取可发送任务
                     if (int.Parse(datas[0].ToString()) == 0)
                     {
-                        updateListBox("二线烟仓烟柜分拣数据发送完毕");
+                        updateListBox(ListLineNum[1] + "线烟仓烟柜分拣数据发送完毕");
                         return;
                     }
-                    writeLog.Write("二线烟仓烟柜分拣线:" + OutStr);
-                    updateListBox("二线烟仓烟柜分拣线:" + OutStr);
+                    writeLog.Write(ListLineNum[1] + "线烟仓烟柜分拣线:" + OutStr);
+                    updateListBox(ListLineNum[1] + "线烟仓烟柜分拣线:" + OutStr);
                     OnlyTaskGorup2.SyncWrite(datas);
                 }
             }
@@ -524,13 +571,13 @@ namespace UnNormal_New
                          if (tempvalue >= 1)//分拣完成
                          {
 
-                             writeLog.Write("一线从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                             writeLog.Write(ListLineNum[0] + "线从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
                              UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
-                             writeLog.Write("一线烟仓任务号" + tempvalue + "数据库更新完成");
+                             writeLog.Write(ListLineNum[0] + "线烟仓任务号" + tempvalue + "数据库更新完成");
                              if (tempvalue != 0)
                              {
-                                 updateListBox(" 一线烟仓:" + tempvalue + "号任务已完成");
-                                 writeLog.Write(" 一线烟仓:" + tempvalue + "号任务已完成");
+                                 updateListBox(ListLineNum[0] + "线烟仓:" + tempvalue + "号任务已完成");
+                                 writeLog.Write(ListLineNum[0] + "线烟仓:" + tempvalue + "号任务已完成");
                              } 
                              FinishOnlyGoroup1.Write(0, clientId[i] - 1); 
                          }
@@ -538,11 +585,11 @@ namespace UnNormal_New
                      }
                      catch (NullReferenceException nullex)
                      {
-                         writeLog.Write("一线空引用异常：" + nullex.Message);
+                         writeLog.Write(ListLineNum[0] + "线空引用异常：" + nullex.Message);
                      }
                      catch (Exception ex)
                      {
-                         writeLog.Write("一线集成错误 ：" + ex.Message);
+                         writeLog.Write(ListLineNum[0] + "线集成错误 ：" + ex.Message);
                      }
                  }
 
@@ -557,13 +604,13 @@ namespace UnNormal_New
                         if (tempvalue >= 1)//分拣完成
                         {
 
-                            writeLog.Write("二线从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                            writeLog.Write(ListLineNum[1] + "线从电控读取出口号：" + clientId[i] + ";任务号:" + tempvalue);
                             UnPokeService.UpdateunTask(tempvalue, 20);//根据异形烟整包任务号更新poke表中状态 
                             writeLog.Write("二线烟仓任务号" + tempvalue + "数据库更新完成");
                             if (tempvalue != 0)
                             {
-                                updateListBox(" 二线烟仓:" + tempvalue + "号任务已完成");
-                                writeLog.Write(" 二线烟仓:" + tempvalue + "号任务已完成");
+                                updateListBox(ListLineNum[1] + "线烟仓:" + tempvalue + "号任务已完成");
+                                writeLog.Write(ListLineNum[1] + "线烟仓:" + tempvalue + "号任务已完成");
                             }
                             FinishOnlyGoroup2.Write(0, clientId[i] - 1); 
                         }
@@ -571,11 +618,11 @@ namespace UnNormal_New
                     }
                     catch (NullReferenceException nullex)
                     {
-                        writeLog.Write("二线空引用异常：" + nullex.Message);
+                        writeLog.Write(ListLineNum[1] + "线空引用异常：" + nullex.Message);
                     }
                     catch (Exception ex)
                     {
-                        writeLog.Write("二线集成错误 ：" + ex.Message);
+                        writeLog.Write(ListLineNum[1] + "线集成错误 ：" + ex.Message);
                     }
                 }
             }
@@ -596,8 +643,8 @@ namespace UnNormal_New
                                 int receivePackage = int.Parse(OnlyTaskGorup1.ReadD(1).ToString());
                                 if (receivePackage != 0)
                                 {
-                                    writeLog.Write("一线烟仓任务包号:" + receivePackage + "已接收");
-                                    updateListBox("一线烟仓任务包号:" + receivePackage + "已接收");
+                                    writeLog.Write(ListLineNum[0] + "线烟仓任务包号:" + receivePackage + "已接收");
+                                    updateListBox(ListLineNum[0] + "线烟仓任务包号:" + receivePackage + "已接收");
                                     UnPokeService.UpdateTask(receivePackage, 15);
                                 }
                                 //if (!issendone)
@@ -611,13 +658,13 @@ namespace UnNormal_New
                             {
                                 if (values[i] != null && int.Parse(values[i].ToString()) != 0)
                                 {
-                                    writeLog.Write("一线烟仓读到标志位:" + values[i]);
+                                    writeLog.Write(ListLineNum[0] + "线烟仓读到标志位:" + values[i]);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            WriteLog.GetLog().Write("一线烟仓异常信息" + ex.Message);
+                            WriteLog.GetLog().Write(ListLineNum[1] + "线烟仓异常信息" + ex.Message);
                         }
 
                     }
@@ -634,8 +681,8 @@ namespace UnNormal_New
                                 int receivePackage = int.Parse(OnlyTaskGorup2.ReadD(1).ToString());
                                 if (receivePackage != 0)
                                 {
-                                    writeLog.Write("二线烟仓任务包号:" + receivePackage + "已接收");
-                                    updateListBox("二线烟仓任务包号:" + receivePackage + "已接收");
+                                    writeLog.Write(ListLineNum[1] + "烟仓任务包号:" + receivePackage + "已接收");
+                                    updateListBox(ListLineNum[1] + "线烟仓任务包号:" + receivePackage + "已接收");
                                     UnPokeService.UpdateTask(receivePackage, 15);
                                 }
                                 //if (!issendone)
@@ -649,13 +696,13 @@ namespace UnNormal_New
                             {
                                 if (values[i] != null && int.Parse(values[i].ToString()) != 0)
                                 {
-                                    writeLog.Write("二线烟仓读到标志位:" + values[i]);
+                                    writeLog.Write(ListLineNum[1] + "线烟仓读到标志位:" + values[i]);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            WriteLog.GetLog().Write("二线烟仓异常信息" + ex.Message);
+                            WriteLog.GetLog().Write(ListLineNum[1] + "线烟仓异常信息" + ex.Message);
                         }
 
                     }
@@ -946,45 +993,11 @@ namespace UnNormal_New
       // delegate void HandleGetNewinfo();
        private void UnNormalFm_Load(object sender, EventArgs e)
        {
-           try
-           {
-               lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();//线路
-               ItemCollection.OPCserverStr = ConfigurationManager.AppSettings["OpcPresortServer"].ToString(); 
-               SendWay = Convert.ToInt32(ConfigurationManager.AppSettings["SendWay"]);//1为顺序 2为动态
-               if (SendWay != 1 && SendWay != 2 || lineNum != "1" && lineNum != "2")
-               {
-                   MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
-                   WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
-                   button10.Enabled = false;
-               }
-               else
-               {
-                   if (SendWay == 1)
-                   {
-
-                       btnDynamic.Text = "顺序调度";
-                   }
-                   else if (SendWay == 2)
-                   {
-                       btnDynamic.Text = "动态调度";
-                   }
-               }
-               AutoSizeColumn(task_data);
-              
-               TimeToClike.Start();  
-               this.task_data.DoubleBufferedDataGirdView(true);
-           }
-           catch (NullReferenceException nullre)
-           {
-               MessageBox.Show("配置文件出现错误！\r\n请关闭程序按正常配置再打开！");
-               WriteLog.GetLog().Write("配置文件出现错误！\r\n请关闭程序按正常配置再打开！" + "\r\n" + nullre.Message);
-           }
-           catch (Exception ex)
-           {
-               MessageBox.Show("错误提示:"+"\r\n"+ ex.Message);
-               WriteLog.GetLog().Write("错误提示:" + "\r\n" + ex.Message);
-           }
-          
+           AutoSizeColumn(task_data);
+           initdata();
+           t1.Start();//定时刷新
+           TimeToClike.Start();
+           this.task_data.DoubleBufferedDataGirdView(true);
        }
        void GetNewInfo()
        {
@@ -1058,10 +1071,6 @@ namespace UnNormal_New
            labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
            labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ?? 0);
            labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0);
-           if ((list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0) == 0)
-           {
-               TimeToClike.Stop();
-           }
        }
 
        private void btnDynamic_Click(object sender, EventArgs e)
