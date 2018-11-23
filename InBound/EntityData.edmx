@@ -11,120 +11,34 @@
           <EntitySet Name="INF_EQUIPMENTSTATUS" EntityType="Model.Store.INF_EQUIPMENTSTATUS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBDOWNLOAD" EntityType="Model.Store.INF_JOBDOWNLOAD" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="INF_JOBFEEDBACK" EntityType="Model.Store.INF_JOBFEEDBACK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_CACHE" EntityType="Model.Store.T_PRODUCE_CACHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKE" EntityType="Model.Store.T_PRODUCE_POKE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.Store.T_PRODUCE_POKESEQ" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.Store.T_PRODUCE_PRESORTINFO" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_PRODUCE_PRESORTINFO">
-            <DefiningQuery>SELECT 
-      "T_PRODUCE_PRESORTINFO"."SORTNUM" AS "SORTNUM", 
-      "T_PRODUCE_PRESORTINFO"."BILLCODE" AS "BILLCODE", 
-      "T_PRODUCE_PRESORTINFO"."GROUPNO" AS "GROUPNO", 
-      "T_PRODUCE_PRESORTINFO"."FINISHTIME" AS "FINISHTIME", 
-      "T_PRODUCE_PRESORTINFO"."CTYPE" AS "CTYPE", 
-      "T_PRODUCE_PRESORTINFO"."POKENUM" AS "POKENUM", 
-      "T_PRODUCE_PRESORTINFO"."ID" AS "ID"
-      FROM "ZOOMTEL"."T_PRODUCE_PRESORTINFO" "T_PRODUCE_PRESORTINFO"</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.Store.T_PRODUCE_PRESORTINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.Store.T_SYS_MENUROLERELATIVE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_SYS_USER">
+          <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_UN_CACHE" EntityType="Model.Store.T_UN_CACHE" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_UN_CACHE">
             <DefiningQuery>SELECT 
-      "T_SYS_USER"."ID" AS "ID", 
-      "T_SYS_USER"."USERCODE" AS "USERCODE", 
-      "T_SYS_USER"."USERNAME" AS "USERNAME", 
-      "T_SYS_USER"."ICCARDNO" AS "ICCARDNO", 
-      "T_SYS_USER"."DEPTID" AS "DEPTID", 
-      "T_SYS_USER"."SEX" AS "SEX", 
-      "T_SYS_USER"."ISMARRIED" AS "ISMARRIED", 
-      "T_SYS_USER"."BIRTHDATE" AS "BIRTHDATE", 
-      "T_SYS_USER"."NATIONALITY" AS "NATIONALITY", 
-      "T_SYS_USER"."POLITICALSTATUS" AS "POLITICALSTATUS", 
-      "T_SYS_USER"."IDNUM" AS "IDNUM", 
-      "T_SYS_USER"."IDREGISTER" AS "IDREGISTER", 
-      "T_SYS_USER"."NATIVEPLACE" AS "NATIVEPLACE", 
-      "T_SYS_USER"."SOCIALSECURITYID" AS "SOCIALSECURITYID", 
-      "T_SYS_USER"."ADDR" AS "ADDR", 
-      "T_SYS_USER"."TELNUM" AS "TELNUM", 
-      "T_SYS_USER"."PHONENUM" AS "PHONENUM", 
-      "T_SYS_USER"."OFFICENUM" AS "OFFICENUM", 
-      "T_SYS_USER"."QQNUM" AS "QQNUM", 
-      "T_SYS_USER"."EMAIL" AS "EMAIL", 
-      "T_SYS_USER"."SCHOOL" AS "SCHOOL", 
-      "T_SYS_USER"."MAJOR" AS "MAJOR", 
-      "T_SYS_USER"."EDUBACKGROUND" AS "EDUBACKGROUND", 
-      "T_SYS_USER"."BANKID" AS "BANKID", 
-      "T_SYS_USER"."BANKCARD" AS "BANKCARD", 
-      "T_SYS_USER"."POSTID" AS "POSTID", 
-      "T_SYS_USER"."POSE" AS "POSE", 
-      "T_SYS_USER"."TECHNICALTITLE" AS "TECHNICALTITLE", 
-      "T_SYS_USER"."FOREIGNLANGUAGE" AS "FOREIGNLANGUAGE", 
-      "T_SYS_USER"."FOREIGNLANGUAGELEVEL" AS "FOREIGNLANGUAGELEVEL", 
-      "T_SYS_USER"."COMPUTERLEVEL" AS "COMPUTERLEVEL", 
-      "T_SYS_USER"."SPECIALTY" AS "SPECIALTY", 
-      "T_SYS_USER"."JOINWORKDATE" AS "JOINWORKDATE", 
-      "T_SYS_USER"."JOINUNITDATE" AS "JOINUNITDATE", 
-      "T_SYS_USER"."BGBEGDATE" AS "BGBEGDATE", 
-      "T_SYS_USER"."BGENDDATE" AS "BGENDDATE", 
-      "T_SYS_USER"."DIMISSIONDATE" AS "DIMISSIONDATE", 
-      "T_SYS_USER"."PHOTONAME" AS "PHOTONAME", 
-      "T_SYS_USER"."CREATEID" AS "CREATEID", 
-      "T_SYS_USER"."CREATEDATE" AS "CREATEDATE", 
-      "T_SYS_USER"."SYSREMARKS" AS "SYSREMARKS", 
-      "T_SYS_USER"."GROUPREMARKS" AS "GROUPREMARKS", 
-      "T_SYS_USER"."USERTYPE" AS "USERTYPE", 
-      "T_SYS_USER"."COMPANYEMAIL" AS "COMPANYEMAIL", 
-      "T_SYS_USER"."USERPSW" AS "USERPSW", 
-      "T_SYS_USER"."USERPOSTID" AS "USERPOSTID", 
-      "T_SYS_USER"."MAJORNAME" AS "MAJORNAME", 
-      "T_SYS_USER"."WORKSTATUS" AS "WORKSTATUS", 
-      "T_SYS_USER"."SHORTTELNUM" AS "SHORTTELNUM", 
-      "T_SYS_USER"."NATION" AS "NATION", 
-      "T_SYS_USER"."EDUCATION" AS "EDUCATION", 
-      "T_SYS_USER"."TITLE" AS "TITLE", 
-      "T_SYS_USER"."SENIORITY" AS "SENIORITY", 
-      "T_SYS_USER"."LEAVEDATE" AS "LEAVEDATE", 
-      "T_SYS_USER"."SELFSENIORITY" AS "SELFSENIORITY", 
-      "T_SYS_USER"."SIGNATUREIMG" AS "SIGNATUREIMG", 
-      "T_SYS_USER"."DELSTATUS" AS "DELSTATUS", 
-      "T_SYS_USER"."WORKSOURCE" AS "WORKSOURCE", 
-      "T_SYS_USER"."ROLEID" AS "ROLEID", 
-      "T_SYS_USER"."WECHATUSERID" AS "WECHATUSERID", 
-      "T_SYS_USER"."DINGTALKUSERID" AS "DINGTALKUSERID"
-      FROM "ZOOMTEL"."T_SYS_USER" "T_SYS_USER"</DefiningQuery>
+      "T_UN_CACHE"."ID" AS "ID", 
+      "T_UN_CACHE"."CODE" AS "CODE", 
+      "T_UN_CACHE"."NAME" AS "NAME", 
+      "T_UN_CACHE"."CACHESIZE" AS "CACHESIZE", 
+      "T_UN_CACHE"."DBPOSITION" AS "DBPOSITION", 
+      "T_UN_CACHE"."DISPATCHESIZE" AS "DISPATCHESIZE", 
+      "T_UN_CACHE"."DISPATCHENUM" AS "DISPATCHENUM", 
+      "T_UN_CACHE"."STATE" AS "STATE", 
+      "T_UN_CACHE"."PACKAGEMACHINE" AS "PACKAGEMACHINE"
+      FROM "ZOOMTEL"."T_UN_CACHE" "T_UN_CACHE"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.Store.T_UN_POKE_HUNHE" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_UN_POKE_HUNHE">
-            <DefiningQuery>SELECT 
-      "T_UN_POKE_HUNHE"."POKEID" AS "POKEID", 
-      "T_UN_POKE_HUNHE"."TASKNUM" AS "TASKNUM", 
-      "T_UN_POKE_HUNHE"."SORTNUM" AS "SORTNUM", 
-      "T_UN_POKE_HUNHE"."CIGARETTECODE" AS "CIGARETTECODE", 
-      "T_UN_POKE_HUNHE"."MACHINESEQ" AS "MACHINESEQ", 
-      "T_UN_POKE_HUNHE"."PULLSTATUS" AS "PULLSTATUS", 
-      "T_UN_POKE_HUNHE"."SENDTASKNUM" AS "SENDTASKNUM", 
-      "T_UN_POKE_HUNHE"."PACKMACHINESEQ" AS "PACKMACHINESEQ", 
-      "T_UN_POKE_HUNHE"."TROUGHNUM" AS "TROUGHNUM"
-      FROM "ZOOMTEL"."T_UN_POKE_HUNHE" "T_UN_POKE_HUNHE"</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="T_UN_POKE_HUNHE" EntityType="Model.Store.T_UN_POKE_HUNHE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASK" EntityType="Model.Store.T_UN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_UN_TASKLINE" EntityType="Model.Store.T_UN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
-          <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.Store.T_WMS_ABNORMALLIST" store:Type="Tables" store:Schema="ZOOMTEL" store:Name="T_WMS_ABNORMALLIST">
-            <DefiningQuery>SELECT 
-      "T_WMS_ABNORMALLIST"."ID" AS "ID", 
-      "T_WMS_ABNORMALLIST"."DECICENO" AS "DECICENO", 
-      "T_WMS_ABNORMALLIST"."ERRORMSG" AS "ERRORMSG", 
-      "T_WMS_ABNORMALLIST"."AREANAME" AS "AREANAME", 
-      "T_WMS_ABNORMALLIST"."AREAPLC" AS "AREAPLC", 
-      "T_WMS_ABNORMALLIST"."PLCID" AS "PLCID", 
-      "T_WMS_ABNORMALLIST"."PLCINDEX" AS "PLCINDEX", 
-      "T_WMS_ABNORMALLIST"."ENDDECICENO" AS "ENDDECICENO", 
-      "T_WMS_ABNORMALLIST"."OFFSET" AS "OFFSET", 
-      "T_WMS_ABNORMALLIST"."MACHINESEQ" AS "MACHINESEQ", 
-      "T_WMS_ABNORMALLIST"."TYPE" AS "TYPE"
-      FROM "ZOOMTEL"."T_WMS_ABNORMALLIST" "T_WMS_ABNORMALLIST"</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="T_WMS_ABNORMALLIST" EntityType="Model.Store.T_WMS_ABNORMALLIST" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL" EntityType="Model.Store.T_WMS_ATSCELL" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_CJ_HIS" EntityType="Model.Store.T_WMS_ATSCELL_CJ_HIS" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_WMS_ATSCELL_IN" EntityType="Model.Store.T_WMS_ATSCELL_IN" store:Type="Tables" Schema="ZOOMTEL" />
@@ -198,7 +112,7 @@
           <Property Name="STATUS" Type="number" />
           <Property Name="EXTATTR1" Type="varchar2" MaxLength="30" />
           <Property Name="EXTATTR2" Type="varchar2" MaxLength="30" />
-          <Property Name="EXTATTR3" Type="varchar2" MaxLength="30" />
+          <Property Name="EXTATTR3" Type="varchar2" MaxLength="100" />
           <Property Name="INBOUNDNO" Type="number" />
           <Property Name="WEIGHT" Type="number" />
           <Property Name="INPUTTYPE" Type="number" />
@@ -220,6 +134,22 @@
           <Property Name="ISDEAL" Type="varchar2" MaxLength="10" />
           <Property Name="PLANQTY" Type="number" />
           <Property Name="ACTQTY" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_CACHE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CODE" Type="varchar2" MaxLength="20" />
+          <Property Name="NAME" Type="varchar2" MaxLength="30" />
+          <Property Name="CACHESIZE" Type="number" />
+          <Property Name="DBPOSITION" Type="varchar2" MaxLength="30" />
+          <Property Name="DISPATCHESIZE" Type="number" />
+          <Property Name="DISPATCHENUM" Type="number" />
+          <Property Name="MAILBELT" Type="number" />
+          <Property Name="STATE" Type="number" />
+          <Property Name="GROUPNO" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_POKE">
           <Key>
@@ -267,9 +197,6 @@
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="20" />
           <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="40" />
         </EntityType>
-        <!--生成过程中发现错误:
-      警告 6002: 表/视图“ZOOMTEL.T_PRODUCE_PRESORTINFO”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
-      -->
         <EntityType Name="T_PRODUCE_PRESORTINFO">
           <Key>
             <PropertyRef Name="ID" />
@@ -293,7 +220,7 @@
           <Property Name="ACTCOUNT" Type="number" />
           <Property Name="MACHINESEQ" Type="number" />
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
-          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="30" />
           <Property Name="STATE" Type="varchar2" MaxLength="10" />
           <Property Name="MANTISSA" Type="number" />
           <Property Name="CIGARETTETYPE" Type="number" />
@@ -389,9 +316,6 @@
           <Property Name="WAREHOUSE" Type="number" />
           <Property Name="CALCID" Type="number" Precision="12" />
         </EntityType>
-        <!--生成过程中发现错误:
-      警告 6002: 表/视图“ZOOMTEL.T_SYS_USER”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
-      -->
         <EntityType Name="T_SYS_USER">
           <Key>
             <PropertyRef Name="ID" />
@@ -458,6 +382,23 @@
           <Property Name="WECHATUSERID" Type="varchar2" MaxLength="50" />
           <Property Name="DINGTALKUSERID" Type="varchar2" MaxLength="50" />
         </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“ZOOMTEL.T_UN_CACHE”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="T_UN_CACHE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="CODE" Type="varchar2" MaxLength="20" />
+          <Property Name="NAME" Type="varchar2" MaxLength="30" />
+          <Property Name="CACHESIZE" Type="number" />
+          <Property Name="DBPOSITION" Type="varchar2" MaxLength="30" />
+          <Property Name="DISPATCHESIZE" Type="number" />
+          <Property Name="DISPATCHENUM" Type="number" />
+          <Property Name="STATE" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+        </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
             <PropertyRef Name="POKEID" />
@@ -483,9 +424,6 @@
           <Property Name="INVFLAG" Type="varchar2" MaxLength="10" />
           <Property Name="SENDSEQ" Type="number" />
         </EntityType>
-        <!--生成过程中发现错误:
-      警告 6002: 表/视图“ZOOMTEL.T_UN_POKE_HUNHE”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
-      -->
         <EntityType Name="T_UN_POKE_HUNHE">
           <Key>
             <PropertyRef Name="POKEID" />
@@ -548,9 +486,6 @@
           <Property Name="UNIT" Type="varchar2" MaxLength="5" />
           <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
         </EntityType>
-        <!--生成过程中发现错误:
-      警告 6002: 表/视图“ZOOMTEL.T_WMS_ABNORMALLIST”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
-      -->
         <EntityType Name="T_WMS_ABNORMALLIST">
           <Key>
             <PropertyRef Name="ID" />
@@ -558,13 +493,13 @@
           <Property Name="ID" Type="number" Nullable="false" />
           <Property Name="DECICENO" Type="varchar2" MaxLength="50" />
           <Property Name="ERRORMSG" Type="nvarchar2" MaxLength="100" />
-          <Property Name="AREANAME" Type="varchar2" MaxLength="50" />
+          <Property Name="AREANAME" Type="nvarchar2" MaxLength="100" />
           <Property Name="AREAPLC" Type="varchar2" MaxLength="50" />
-          <Property Name="PLCID" Type="varchar2" MaxLength="50" />
-          <Property Name="PLCINDEX" Type="varchar2" MaxLength="50" />
-          <Property Name="ENDDECICENO" Type="varchar2" MaxLength="50" />
+          <Property Name="PLCID" Type="number" />
+          <Property Name="PLCINDEX" Type="number" />
+          <Property Name="ENDDECICENO" Type="nvarchar2" MaxLength="50" />
           <Property Name="OFFSET" Type="varchar2" MaxLength="50" />
-          <Property Name="MACHINESEQ" Type="varchar2" MaxLength="20" />
+          <Property Name="MACHINESEQ" Type="varchar2" MaxLength="50" />
           <Property Name="TYPE" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="T_WMS_ATSCELL">
@@ -927,7 +862,7 @@
           <Property Name="INOUTTYPE" Type="number" />
           <Property Name="TASKNO" Type="varchar2" MaxLength="50" />
           <Property Name="CIGARETTECODE" Type="varchar2" MaxLength="10" />
-          <Property Name="CIGARETTENAME" Type="nvarchar2" MaxLength="50" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
           <Property Name="CREATETIME" Type="date" />
           <Property Name="FINISHTIME" Type="date" />
           <Property Name="STATUS" Type="number" />
@@ -955,44 +890,6 @@
           <Parameter Name="P_ERRCODE" Type="varchar2" Mode="Out" />
           <Parameter Name="P_ERRMSG" Type="varchar2" Mode="Out" />
         </Function>
-        <!--生成过程中发现错误:
-      警告 6013: 表/视图“ZOOMTEL.T_PRO_TROUGHTRANSFER”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
-      
-      <EntityType Name="T_PRO_TROUGHTRANSFER">
-        <Property Name="MIANBELT" Type="number" />
-        <Property Name="SORTNUM" Type="number" />
-        <Property Name="STEP" Type="number" />
-      </EntityType>
-      生成过程中发现错误:
-      警告 6013: 表/视图“ZOOMTEL.T_PRODUCE_CACHE”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
-      
-      <EntityType Name="T_PRODUCE_CACHE">
-        <Property Name="ID" Type="number" />
-        <Property Name="CODE" Type="varchar2" MaxLength="20" />
-        <Property Name="NAME" Type="varchar2" MaxLength="30" />
-        <Property Name="CACHESIZE" Type="number" />
-        <Property Name="DBPOSITION" Type="varchar2" MaxLength="30" />
-        <Property Name="DISPATCHESIZE" Type="number" />
-        <Property Name="DISPATCHENUM" Type="number" />
-        <Property Name="STATE" Type="number" />
-        <Property Name="PACKAGEMACHINE" Type="number" />
-        <Property Name="MAILBELT" Type="number" />
-        <Property Name="GROUPNO" Type="number" />
-      </EntityType>
-      生成过程中发现错误:
-      警告 6013: 表/视图“ZOOMTEL.T_UN_CACHE”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
-      
-      <EntityType Name="T_UN_CACHE">
-        <Property Name="ID" Type="number" />
-        <Property Name="CODE" Type="varchar2" MaxLength="20" />
-        <Property Name="NAME" Type="varchar2" MaxLength="30" />
-        <Property Name="CACHESIZE" Type="number" />
-        <Property Name="DBPOSITION" Type="varchar2" MaxLength="30" />
-        <Property Name="DISPATCHESIZE" Type="number" />
-        <Property Name="DISPATCHENUM" Type="number" />
-        <Property Name="STATE" Type="number" />
-        <Property Name="PACKAGEMACHINE" Type="number" />
-      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -2561,6 +2458,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_CACHE">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_CACHE">
+              <MappingFragment StoreEntitySet="T_PRODUCE_CACHE">
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="GROUPNO" ColumnName="GROUPNO" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="MAILBELT" ColumnName="MAILBELT" />
+                <ScalarProperty Name="DISPATCHENUM" ColumnName="DISPATCHENUM" />
+                <ScalarProperty Name="DISPATCHESIZE" ColumnName="DISPATCHESIZE" />
+                <ScalarProperty Name="DBPOSITION" ColumnName="DBPOSITION" />
+                <ScalarProperty Name="CACHESIZE" ColumnName="CACHESIZE" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="T_UN_POKE_HUNHE">
             <EntityTypeMapping TypeName="Model.T_UN_POKE_HUNHE">
               <MappingFragment StoreEntitySet="T_UN_POKE_HUNHE">
@@ -2593,6 +2507,21 @@
                 <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
                 <ScalarProperty Name="TROUGHNUM" ColumnName="TROUGHNUM" />
                 <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_CACHE">
+            <EntityTypeMapping TypeName="Model.T_UN_CACHE">
+              <MappingFragment StoreEntitySet="T_UN_CACHE">
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="DISPATCHENUM" ColumnName="DISPATCHENUM" />
+                <ScalarProperty Name="DISPATCHESIZE" ColumnName="DISPATCHESIZE" />
+                <ScalarProperty Name="DBPOSITION" ColumnName="DBPOSITION" />
+                <ScalarProperty Name="CACHESIZE" ColumnName="CACHESIZE" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
