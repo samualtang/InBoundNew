@@ -435,21 +435,21 @@ namespace SpecialShapeSmoke
                 positiong[0] = 0;
                 positiong[1] = 1;
             }
-           else if (troughno == "1061" && packmachine[0] == packmachine2[0] && packmachine[1] == packmachine2[1])
+           else if (troughno == "2061" && packmachine[0] == packmachine2[0] && packmachine[1] == packmachine2[1])
            {
                positiong[0] = 2;
                positiong[1] = 3;
            }
-           else if (troughno == "2061" && packmachine[0] == packmachine3[0] && packmachine[1] == packmachine3[1])
-           {
-               positiong[0] = 4;
-               positiong[1] = 5;
-           }
-           else if (troughno == "2061" && packmachine[0] == packmachine4[0] && packmachine[1] == packmachine4[1])
-           {
-               positiong[0] = 6;
-               positiong[1] = 7;
-           }
+           //else if (troughno == "2061" && packmachine[0] == packmachine3[0] && packmachine[1] == packmachine3[1])
+           //{
+           //    positiong[0] = 4;
+           //    positiong[1] = 5;
+           //}
+           //else if (troughno == "2061" && packmachine[0] == packmachine4[0] && packmachine[1] == packmachine4[1])
+           //{
+           //    positiong[0] = 6;
+           //    positiong[1] = 7;
+           //}
            
            
             return positiong;
