@@ -64,4 +64,16 @@ namespace InBound.Model
         public string tiaoma { get; set; }
 
     }
+
+
+    public class HUNHETROUGH2
+    {
+        public string troughnum { get; set; }
+        public decimal? machineseq { get; set; }
+        public string cigarettecode { get; set; }
+        public string cigarettename { get; set; }
+
+        public string status { get; set; }
+
+    }
 }
