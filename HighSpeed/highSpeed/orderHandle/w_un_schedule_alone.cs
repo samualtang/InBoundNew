@@ -24,20 +24,31 @@ namespace highSpeed.orderHandle
             InitializeComponent();
             orderdata.AllowUserToAddRows = false;
             seek();
+            cmb_Linelist();
         }
 
         private void seek()
         {
-            //string time = this.orderdate.Text;
-            //time=DateTime.Parse(time,"yyyy-MM-dd");
             this.txt_codestr.Text = "";
-            //String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from t_produce_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
             String str = "select regioncode,sum(e.quantity) as qty,count(distinct e.billcode)as cuscount from t_produce_orderline e join  t_produce_order r on r.billcode=e.billcode where r.unstate='新增' and e.cigarettecode in (select h.cigarettecode from t_produce_sorttrough h where h.cigarettetype in (30,40) and h.troughtype=10 and h.state=10)group by r.regioncode";
-            //String strsql = "SELECT regioncode,sum(t.orderquantity) as qty,COUNT(*)as cuscount from highspeed.t_un_order t WHERE state='新增'group BY t.regioncode order by t.regioncode";
-            //MessageBox.Show(strsql);
             Bind(str);
-
             this.txt_codestr.Text = "";
+        }
+        private void cmb_Linelist()
+        {
+            try
+            {
+                Entities et = new Entities();
+                var linelist = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.SEQ == 2).GroupBy(x => x.GROUPNO).Select(x => x.Key).ToList();
+                foreach (var item in linelist)
+                {
+                    cmb_Line.Items.Add(item);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("分拣线读取失败！");
+            }
         }
 
         #region 查询
@@ -162,22 +173,14 @@ namespace highSpeed.orderHandle
         private void btn_schedule_Click(object sender, EventArgs e)
         {
             int sortline;
-            if (!rbtn_Line1.Checked&&!rBtn_Line2.Checked)
+            if (cmb_Line.SelectedIndex < 0)
             {
                 MessageBox.Show("请选择排程线路！");
                 return;
             }
             else
             {
-                if (rbtn_Line1.Checked)
-                {
-                    sortline = 1;
-                }
-                else
-                {
-                    sortline = 2;
-                }
-               
+                sortline = Convert.ToInt32(cmb_Line.SelectedItem.ToString());       
             }
             String codestr = this.txt_codestr.Text.Trim();
             //DateTime time = DateTime.Parse(this.datePick.Value.ToString());

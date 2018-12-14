@@ -70,7 +70,7 @@ namespace InBound.Business
                                          join item2 in entity.T_PRODUCE_SORTTROUGH
                                              on item.TROUGHNUM equals item2.TROUGHNUM
                                          join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM > finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item3.PULLSTATUS == 1//
                                               && item.STATUS != 20
@@ -87,7 +87,7 @@ namespace InBound.Business
                                              SORTNUM = item.SORTNUM,
                                              SENDTASKNUM = item.SENDTASKNUM,
                                              PULLSTATUS = item3.PULLSTATUS
-                                         }).Skip(finishno2).Take(qty).ToList();
+                                         }).Take(qty).ToList();//.Skip(finishno2).Take(qty).ToList();
                             return updown_new(query, 0);
                             //没有经过排程处理的数据使用的方法 不需要过滤放烟
                             //return updown(query, cigarettesort,2);

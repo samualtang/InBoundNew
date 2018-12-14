@@ -64,6 +64,7 @@ namespace SpecialShapeSmoke
         decimal[] PackMachineSeq;
         string plcvalvestag;
         string cigarettesort;
+        int ClickNum;
 
          Button search;
          Button btnView;
@@ -91,13 +92,14 @@ namespace SpecialShapeSmoke
         public MainScreen1_new()
         {
             InitializeComponent();
-
+            writeLog.Write("程序打开");
 
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.Hide();
             this.Show();
             Panel p = new Panel();
+            bool isallrighttag = true;
             try
             {
                 // lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
@@ -117,10 +119,13 @@ namespace SpecialShapeSmoke
 
                 plcvalvestag = ConfigurationManager.AppSettings["plcvalves"].ToString();
                 cigarettesort = ConfigurationManager.AppSettings["cigarettesort"].ToString();
+                ClickNum = Convert.ToInt32(ConfigurationManager.AppSettings["ClickNum"].ToString());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 MessageBox.Show("配置文件读取出现异常，请检查配置文件格式是否正确！");
+                writeLog.Write("sp-01:配置文件读取出现异常" + e.Message);
+                isallrighttag = falge;
             }
         
 
@@ -486,7 +491,7 @@ namespace SpecialShapeSmoke
                 {
                     MessageBox.Show("PLC连接失败，请检查PLC连接，再重新打开程序!");
                 }
-                writeLog.Write("PLC连接失败" + e.Message);
+                writeLog.Write("sp-02:PLC连接失败" + e.Message);
             }
 
             //socket = new ClientSocket(ipaddress, PORT);
@@ -500,7 +505,7 @@ namespace SpecialShapeSmoke
             if (flag == -1)
             {
                 MessageBox.Show("连接PLC服务器失败,请检查网络");
-                writeLog.Write(" 连接PLC服务器失败,请检查网络.");
+                writeLog.Write("sp-02:PLC连接失败");
                 return false;
             }
             else
@@ -514,17 +519,19 @@ namespace SpecialShapeSmoke
                         int num = et.T_UN_POKE.Where(x => x.STATUS != 20).Count();
                         if (num <= 0)
                         {
-                            MessageBox.Show("没有已排程未分拣数据"); 
+                            MessageBox.Show("没有已排程未分拣数据");
+                            writeLog.Write("sp-00:没有已排程未分拣数据");
                         }
                        
                     }
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("数据读取失败，请检查数据库连接"); 
+                    MessageBox.Show("数据读取失败，请检查数据库连接");
+                    writeLog.Write("sp-03:数据库连接失败");
                 }
-                return true;
                 isInit = true;
+                return true;
             }
           
         }
@@ -665,6 +672,8 @@ namespace SpecialShapeSmoke
                                 MessageBox.Show("PLC连接中......", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                             }
                         }
+                        //finishNo[0] = 297283;//根据通道 读取DB块  Read  
+                        //finishNo[1] = 2;
                         countnum = 2;
                     }
                     else
@@ -679,7 +688,7 @@ namespace SpecialShapeSmoke
                 }
                 catch (Exception ex)
                 {
-                    writeLog.Write("Plc读取完成信号失败！" + ex.Message);
+                    writeLog.Write("sp-02:Plc读取完成信号失败！" + ex.Message);
                 }
                 //if (befoerFinishNo[0] != finishNo[0] || befoerFinishNo[1] != finishNo[1])
                 //{
@@ -787,12 +796,12 @@ namespace SpecialShapeSmoke
                   
                     Label lbl2 = (Label)Controls.Find("orBox" + 1, true)[0].Controls[0];
                     updateLabel("服务器断开连接,请重新连接!", lbl2);
-                    
+                    writeLog.Write("sp-02:Plc读取完成信号失败！   ");
                 }  
             }
             catch(Exception ex)   
-            { 
-                writeLog.Write("getData()数据获取失败！"+ex.Message);
+            {
+                writeLog.Write("getData()数据获取失败！   ");
                 if (ex.Message == "基础提供程序在 Open 上失败。")
                 {
                     lblpack.Text = "数据库连接失败！请检查网络，重新打开程序！";
@@ -833,7 +842,8 @@ namespace SpecialShapeSmoke
             }
             catch (Exception ex)
             {
-                 MessageBox.Show(ex.ToString() + "数据库连接失败！请检查网络"); 
+                 MessageBox.Show(ex.ToString() + "数据库连接失败！请检查网络");
+                 writeLog.Write("sp-03:数据库连接失败！   ");
             }
      
 
@@ -865,6 +875,7 @@ namespace SpecialShapeSmoke
             {
                 MessageBox.Show("数据库连接失败！请检查网络");
                 //throw;
+                writeLog.Write("sp-03:数据库连接失败！");
             }
         
         }
@@ -947,7 +958,7 @@ namespace SpecialShapeSmoke
                 catch (Exception e)
                 {
                     MessageBox.Show("放烟错误");
-                    writeLog.Write("initText();生成数据集合时发生异常：" + e.Message);
+                    writeLog.Write("创建已经放烟的数据列表时，initText生成数据集合发生异常：" + e.Message);
                 }
             }
         }
@@ -1028,8 +1039,8 @@ namespace SpecialShapeSmoke
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("放烟错误");
-                    writeLog.Write("initTextUpOrDn()绑定数据时发生异常:" + e.Message);
+                    MessageBox.Show("数据加载失败！");
+                    writeLog.Write("initTextUpOrDn绑定数据时发生异常:" + e.Message);
                 }
             }
         }
@@ -1039,7 +1050,7 @@ namespace SpecialShapeSmoke
         /// <returns></returns>
         bool CheckTrough()
         {
-            if (boxText[0] == "1061" || boxText[0] == "2061")
+            if (boxText[0] == "1061" || boxText[0] == "2061" || boxText[0] == "3061" || boxText[0] == "4061")
             {
                 return true;
             }
@@ -1096,7 +1107,7 @@ namespace SpecialShapeSmoke
         void addGroupBoxByNew(int panelCount)//2061 1061
         {
 
-            if (boxText[0] == "1061" || boxText[0] == "2061"||boxText[0] == "1062" || boxText[0] == "2062")
+            if (boxText[0] == "1061" || boxText[0] == "2061"||boxText[0] == "3061" || boxText[0] == "4061")
             {
                 int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * (2 + 1))) / 2;
                 for (var i = 0; i < (panelCount); i++)
@@ -1445,7 +1456,7 @@ namespace SpecialShapeSmoke
         private void TextboxFZ3(int id, string str)
         {
 
-             
+            writeLog.Write("扫描条码："+str);
             try
             {
                 if (this.txtbox2.InvokeRequired)
@@ -1537,6 +1548,10 @@ namespace SpecialShapeSmoke
                     }
                     HUNHEVIEW hunhe = HunHeService.GetNextCigarette(Convert.ToDecimal(pokeid[0]));
 
+                    if (pokeid.Length < ClickNum)//判断条数
+                    {
+                        return;
+                    }
                     DialogResult dia = MessageBox.Show("确认放烟：" + lbl.Text + " ？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                     if (dia == DialogResult.Cancel)
                     {
@@ -1559,7 +1574,7 @@ namespace SpecialShapeSmoke
                         pullcigarette_dianjiline(pokeid, "1", Convert.ToDecimal(boxText.First()));
                     }
 
-                
+                    writeLog.Write("手动放烟：" + lbl.Text);
                    
                 }
             }

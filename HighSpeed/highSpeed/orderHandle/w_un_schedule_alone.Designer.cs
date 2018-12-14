@@ -30,8 +30,6 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_all = new System.Windows.Forms.Button();
-            this.rBtn_Line2 = new System.Windows.Forms.RadioButton();
-            this.rbtn_Line1 = new System.Windows.Forms.RadioButton();
             this.txt_splitval = new System.Windows.Forms.TextBox();
             this.btn_search = new System.Windows.Forms.Button();
             this.txt_codestr = new System.Windows.Forms.TextBox();
@@ -45,6 +43,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.cmb_Line = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -52,9 +51,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmb_Line);
             this.panel1.Controls.Add(this.btn_all);
-            this.panel1.Controls.Add(this.rBtn_Line2);
-            this.panel1.Controls.Add(this.rbtn_Line1);
             this.panel1.Controls.Add(this.txt_splitval);
             this.panel1.Controls.Add(this.btn_search);
             this.panel1.Controls.Add(this.txt_codestr);
@@ -76,28 +74,6 @@
             this.btn_all.Text = "全选";
             this.btn_all.UseVisualStyleBackColor = true;
             this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
-            // 
-            // rBtn_Line2
-            // 
-            this.rBtn_Line2.AutoSize = true;
-            this.rBtn_Line2.Location = new System.Drawing.Point(800, 14);
-            this.rBtn_Line2.Name = "rBtn_Line2";
-            this.rBtn_Line2.Size = new System.Drawing.Size(53, 16);
-            this.rBtn_Line2.TabIndex = 13;
-            this.rBtn_Line2.TabStop = true;
-            this.rBtn_Line2.Text = "2号线";
-            this.rBtn_Line2.UseVisualStyleBackColor = true;
-            // 
-            // rbtn_Line1
-            // 
-            this.rbtn_Line1.AutoSize = true;
-            this.rbtn_Line1.Location = new System.Drawing.Point(741, 14);
-            this.rbtn_Line1.Name = "rbtn_Line1";
-            this.rbtn_Line1.Size = new System.Drawing.Size(53, 16);
-            this.rbtn_Line1.TabIndex = 12;
-            this.rbtn_Line1.TabStop = true;
-            this.rbtn_Line1.Text = "1号线";
-            this.rbtn_Line1.UseVisualStyleBackColor = true;
             // 
             // txt_splitval
             // 
@@ -222,6 +198,14 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
+            // cmb_Line
+            // 
+            this.cmb_Line.FormattingEnabled = true;
+            this.cmb_Line.Location = new System.Drawing.Point(738, 13);
+            this.cmb_Line.Name = "cmb_Line";
+            this.cmb_Line.Size = new System.Drawing.Size(121, 20);
+            this.cmb_Line.TabIndex = 16;
+            // 
             // w_un_schedule_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -258,8 +242,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.TextBox txt_splitval;
-        private System.Windows.Forms.RadioButton rBtn_Line2;
-        private System.Windows.Forms.RadioButton rbtn_Line1;
         private System.Windows.Forms.Button btn_all;
+        private System.Windows.Forms.ComboBox cmb_Line;
     }
 }
