@@ -226,6 +226,12 @@
     <Compile Include="baseData\w_package.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="baseData\w_trough_pecial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="baseData\w_trough_pecial.Designer.cs">
+      <DependentUpon>w_trough_pecial.cs</DependentUpon>
+    </Compile>
     <Compile Include="baseData\w_package.Designer.cs">
       <DependentUpon>w_package.cs</DependentUpon>
     </Compile>
@@ -403,6 +409,12 @@
     <Compile Include="orderHandle\w_schedule.Designer.cs">
       <DependentUpon>w_schedule.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_un_schedule_diy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_un_schedule_diy.Designer.cs">
+      <DependentUpon>w_un_schedule_diy.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_un_SortFm_alone.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -438,6 +450,12 @@
     </Compile>
     <Compile Include="orderHandle\ReHihgSpeedForm.Designer.cs">
       <DependentUpon>ReHihgSpeedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="orderHandle\w_export_DIY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_DIY.Designer.cs">
+      <DependentUpon>w_export_DIY.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="progressBar.cs">
@@ -481,12 +499,6 @@
     </Compile>
     <Compile Include="w_main.Designer.cs">
       <DependentUpon>w_main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="baseData\w_trough_pecial.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="baseData\w_trough_pecial.Designer.cs">
-      <DependentUpon>w_trough_pecial.cs</DependentUpon>
     </Compile>
     <Compile Include="w_user.cs">
       <SubType>Form</SubType>
@@ -656,6 +668,9 @@
     <EmbeddedResource Include="orderHandle\w_schedule.resx">
       <DependentUpon>w_schedule.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_un_schedule_diy.resx">
+      <DependentUpon>w_un_schedule_diy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_un_SortFm_alone.resx">
       <DependentUpon>w_un_SortFm_alone.cs</DependentUpon>
     </EmbeddedResource>
@@ -673,6 +688,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\ReHihgSpeedForm.resx">
       <DependentUpon>ReHihgSpeedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_DIY.resx">
+      <DependentUpon>w_export_DIY.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="progressBar.resx">
       <DependentUpon>progressBar.cs</DependentUpon>

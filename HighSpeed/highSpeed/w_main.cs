@@ -894,6 +894,34 @@ namespace highSpeed
             frm.Show();
               
         }
+
+        private void 异型烟手工线ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_un_schedule_diy frm = new w_un_schedule_diy();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void 任务导出异型烟手工线ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_export_DIY frm = new w_export_DIY();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
  
 
     
