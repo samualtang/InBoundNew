@@ -627,7 +627,7 @@ namespace InBound.Business
         /// <summary>
         /// 异形烟烟柜烟仓特异形烟数据
         /// </summary>
-        /// <param name="status">状态（10为普通 ，12为动态）</param>
+        /// <param name="status">状态</param>
         /// <param name="outlist">接收完成任务集合</param>
         /// <param name="outStr">任务日记字符串</param>
         /// <returns></returns>
@@ -674,25 +674,30 @@ namespace InBound.Business
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 1000;
-                            needDatas += "\r\n一线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
+                            needDatas += "\r\n" + linenum + "线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
                         }
                         else if (item.MACHINESEQ > 2000 && item.MACHINESEQ < 3000)//二线烟仓
                         {
                             machineseq = (item.MACHINESEQ ?? 0) - 2000;
-                            needDatas += "\r\n二线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
+                            needDatas += "\r\n" + linenum + "线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
                         }
-                        else if (item.MACHINESEQ > 3000)//烟柜
+                        else if (item.MACHINESEQ > 3000 && item.MACHINESEQ < 4000)//三线烟仓
                         {
-                            machineseq = ((item.MACHINESEQ ?? 0) - 3000) + 60;
-                            needDatas += "\r\n烟柜 " + ((int)(item.MACHINESEQ)) + " 号，出烟数量：" + item.QTY;
+                            machineseq = ((item.MACHINESEQ ?? 0) - 3000) ;
+                            needDatas += "\r\n" + linenum + "线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
+                        }
+                        else if (item.MACHINESEQ > 4000 && item.MACHINESEQ < 5000)//四线烟仓
+                        {
+                            machineseq = ((item.MACHINESEQ ?? 0) - 4000) ;
+                            needDatas += "\r\n" + linenum + "线 " + ((int)machineseq) + " 号烟仓，出烟数量：" + item.QTY;
                         }
                         values[((int)machineseq + 3)] = item.QTY;
                     }
                     //values[((int)machineseq + 3)] = query1.Where(a => a.MACHINESEQ == item.MACHINESEQ).GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).FirstOrDefault().QTY;
                 }
-                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 && a.MACHINESEQ != 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟仓出烟数量
-                values[71] = query1.Where(a => a.CTYPE == 2).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟柜出烟数量 
-                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//特异性烟出烟数量 
+                values[70] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ != 1061 && a.MACHINESEQ != 2061 && a.MACHINESEQ != 3061 && a.MACHINESEQ != 4061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//烟仓出烟数量
+                values[71] = 0;//烟柜出烟数量 (烟柜拆了,无用)
+                values[72] = query1.Where(a => a.CTYPE == 1 && (a.MACHINESEQ == 1061 || a.MACHINESEQ == 2061 || a.MACHINESEQ == 3061 || a.MACHINESEQ == 4061)).Sum(a => a.POKENUM).CastTo<decimal>(-1);//特异性烟出烟数量 
                 int index = 73;//索引  
                 foreach (var item in querySS)
                 {
@@ -1071,14 +1076,23 @@ namespace InBound.Business
                 int maxOrder = 100000;
                 decimal leftnum = 0;
                 List<decimal> listpm = new List<decimal>();//存放可以发送的包装机
-                if (linenum == "1")
-                {
-                    listpm.Add(GetPackMacByMainbelt(1)); //以主皮带获取发送的包装机
-                }
-                else if (linenum == "2")
-                {
-                    listpm.Add(GetPackMacByMainbelt(2));//以主皮带获取发送的包装机
-                }
+                listpm.Add(GetPackMacByMainbelt(Convert.ToInt32(linenum)));
+                //if (linenum == "1")
+                //{
+                //    listpm.Add(GetPackMacByMainbelt(1)); //以主皮带获取发送的包装机
+                //}
+                //else if (linenum == "2")
+                //{
+                //    listpm.Add(GetPackMacByMainbelt(2));//以主皮带获取发送的包装机
+                //}
+                //else if (linenum == "3")
+                //{
+                //    listpm.Add(GetPackMacByMainbelt(2));//以主皮带获取发送的包装机
+                //}
+                //else if (linenum == "4")
+                //{
+                //    listpm.Add(GetPackMacByMainbelt(2));//以主皮带获取发送的包装机
+                //}
                 foreach (var i in listpm)
                 {
                     if (i != 0)//i是包装机号
@@ -2229,7 +2243,41 @@ namespace InBound.Business
                 data.SaveChanges();
             }
         }
+        public static List<string>  GetCmbLinenNum()
+        {
+            List<string> list = new List<string>();
+            using (Entities data = new Entities())
+            {
+                var linenum =( from item in data.T_UN_POKE
+                              group item by item.LINENUM into g
+                              select g).ToList();
+                foreach (var item in linenum)
+                {
+                    list.Add(item.Key);
+                }
+            }
 
+            return list;
+
+        }
+        public static List<decimal > GetCmbPackageMachine(string linenum)
+        {
+            List<decimal> list = new List<decimal>();
+            using (Entities data = new Entities())
+            {
+                var packm = (from item in data.T_UN_POKE
+                             where item.LINENUM == linenum
+                               group item by item.PACKAGEMACHINE into g
+                               select g).ToList();
+                foreach (var item in packm)
+                {
+                    list.Add(item.Key ??0);
+                }
+            }
+
+            return list;
+
+        }
         public static List<TaskDetail> getData(decimal sortnum)
         {
             using (Entities dataentity = new Entities())

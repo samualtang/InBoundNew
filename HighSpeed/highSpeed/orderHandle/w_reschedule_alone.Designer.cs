@@ -215,7 +215,7 @@
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
             this.Name = "w_reschedule_alone";
-            this.Text = "常规烟任务预排程";
+            this.Text = "常规烟任务单独预排程";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).EndInit();

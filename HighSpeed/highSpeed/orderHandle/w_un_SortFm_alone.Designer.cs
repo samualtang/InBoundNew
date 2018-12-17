@@ -33,6 +33,7 @@
             this.btnPokeSeq = new System.Windows.Forms.Button();
             this.btnRef = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnVli = new System.Windows.Forms.Button();
             this.lblInFO = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -43,7 +44,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnVli = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -57,9 +57,9 @@
             this.dgvSortInfo.AllowUserToDeleteRows = false;
             this.dgvSortInfo.AllowUserToResizeColumns = false;
             this.dgvSortInfo.AllowUserToResizeRows = false;
-            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 54);
@@ -105,6 +105,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(982, 48);
             this.panel1.TabIndex = 11;
+            // 
+            // btnVli
+            // 
+            this.btnVli.Location = new System.Drawing.Point(869, 12);
+            this.btnVli.Name = "btnVli";
+            this.btnVli.Size = new System.Drawing.Size(75, 23);
+            this.btnVli.TabIndex = 13;
+            this.btnVli.Text = "校验长宽";
+            this.btnVli.UseVisualStyleBackColor = true;
+            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
             // 
             // lblInFO
             // 
@@ -203,16 +213,6 @@
             this.pictureBox1.TabIndex = 27;
             this.pictureBox1.TabStop = false;
             // 
-            // btnVli
-            // 
-            this.btnVli.Location = new System.Drawing.Point(869, 12);
-            this.btnVli.Name = "btnVli";
-            this.btnVli.Size = new System.Drawing.Size(75, 23);
-            this.btnVli.TabIndex = 13;
-            this.btnVli.Text = "校验长宽";
-            this.btnVli.UseVisualStyleBackColor = true;
-            this.btnVli.Click += new System.EventHandler(this.btnVli_Click);
-            // 
             // w_un_SortFm_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -223,7 +223,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvSortInfo);
             this.Name = "w_un_SortFm_alone";
-            this.Text = "异型烟排程";
+            this.Text = "异型烟单独排程";
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

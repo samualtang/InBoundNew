@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -171,6 +171,7 @@
             this.cmbLineNo.Name = "cmbLineNo";
             this.cmbLineNo.Size = new System.Drawing.Size(49, 20);
             this.cmbLineNo.TabIndex = 25;
+            this.cmbLineNo.SelectedIndexChanged += new System.EventHandler(this.cmbLineNo_SelectedIndexChanged);
             // 
             // lblLineNo
             // 
@@ -270,8 +271,8 @@
             // 
             this.task_data.AllowUserToAddRows = false;
             this.task_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            this.task_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.task_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.task_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column8,
@@ -397,6 +398,7 @@
             this.Name = "StatusManager";
             this.Text = "异形烟状态管理";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatusManager_FormClosing);
+            this.Load += new System.EventHandler(this.StatusManager_Load);
             this.SizeChanged += new System.EventHandler(this.StatusManager_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

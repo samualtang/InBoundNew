@@ -163,6 +163,7 @@ namespace SortingControlSys.SortingControl
         /// 监控标志位
         /// </summary>
         Group SendTaskStatesGroup;
+      
         public void Connect()
         {
             Type svrComponenttyp;
@@ -333,7 +334,7 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("连接服务器成功......");
                
                 isInit = true;
-               
+                AutoFinishTask();
             }
           
         }
@@ -911,6 +912,77 @@ namespace SortingControlSys.SortingControl
         {
             return errMachinesMsgList[len];
         }
+        void AutoFinishTask()
+        {
+            try
+            {
+
+
+                for (int i = 0; i < FinishStateGroup1.GetGroupItemLength(); i++)
+                {
+                    int tempvalue = (int)FinishStateGroup1.Read(i);
+                    if (tempvalue >= 1)//分拣完成
+                    {
+                        statusGroup1.Write(1, i);
+                        writeLog.Write("自动完成任务:从电控读取" + sortgroupno1 + "组出口号：" + i + "；任务号:" + tempvalue);
+                        if (tempvalue != 0)
+                        {
+                            try
+                            {
+                                TaskService.UpdateFJFinishStatus(sortgroupno1, tempvalue);//将第一组分拣任务改为完成完成
+                                PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+                            }
+                            catch (Exception ex)
+                            {
+                                writeLog.Write("连接服务器失败" + ex.Message);
+                                return;
+                            }
+                            updateListBox("自动完成任务" + sortgroupno1 + "组:" + tempvalue + "号任务已完成");
+                            writeLog.Write("自动完成任务" + sortgroupno1 + "组:" + tempvalue + "号任务已完成");
+                        }
+                        
+                    }
+                    else
+                    {
+                        statusGroup1.Write(0, i);
+                    }
+                }
+                for (int i = 0; i < FinishStateGroup2.GetGroupItemLength(); i++)
+                {
+                    int tempvalue = (int)FinishStateGroup2.Read(i);
+                    if (tempvalue >= 1)//分拣完成
+                    {
+                        taskgroup2.Write(1, i);
+                        writeLog.Write("自动完成任务:从电控读取" + sortgroupno2 + "组出口号：" + i + "；任务号:" + tempvalue);
+                        if (tempvalue != 0)
+                        {
+                            try
+                            {
+                                TaskService.UpdateFJFinishStatus(sortgroupno2, tempvalue);//将第一组分拣任务改为完成完成
+                                PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+                            }
+                            catch (Exception ex)
+                            {
+                                writeLog.Write("连接服务器失败" + ex.Message);
+                                return;
+                            }
+                            updateListBox("自动完成任务" + sortgroupno2 + "组:" + tempvalue + "号任务已完成");
+                            writeLog.Write("自动完成任务" + sortgroupno2 + "组:" + tempvalue + "号任务已完成");
+                        }
+                        
+                    }
+                    else
+                    {
+                        taskgroup2.Write(0, i);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("自动扫描更新任务失败"+ex.Message);
+                writeLog.Write("自动扫描更新更新任务失败" + ex.Message);
+            }
+        }
         public void OnDataChange(int group, int[] clientId, object[] values)//plc对应db块字节值发生变化
         {
             if (group == 1)//发送任务组 //被监控标志取代
@@ -950,26 +1022,29 @@ namespace SortingControlSys.SortingControl
                     int tempvalue = int.Parse((values[i].ToString()));
                     if (tempvalue >= 1)//分拣完成
                     {
-                        statusGroup1.Write(1, clientId[i] - 1);
-                        //if (getKey(tempList, clientId[i]) != -1)
-                        //{
-                            // int taskno = getKey(tempList, clientId[i]);
-                            writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
-                            //InBoundService.UpdateInOut(tempvalue, sortgroupno1);
-                            TaskService.UpdateFJFinishStatus(sortgroupno1,  tempvalue);//将第一组分拣任务改为完成完成
+                      
+                  
+                        
                             
                             if (tempvalue != 0)
                             {
                                 try
                                 {
+                                    writeLog.Write("从电控读取" + sortgroupno1 + "组出口号：" + clientId[i] + "；任务号:" + tempvalue);
+
+                                    TaskService.UpdateFJFinishStatus(sortgroupno1, tempvalue);//将第一组分拣任务改为完成完成
                                     PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
                                 }
                                 catch (Exception ex)
-                                { }
+                                {
+                                    updateListBox(sortgroupno1 + "组:" + tempvalue + " 号任务更新失败,未连接到服务器" + ex.Message);
+                                    writeLog.Write(sortgroupno1 + "组:" + tempvalue + " 号任务更新失败,未连接到服务器" + ex.Message);
+                                    return;
+                                }
                                 updateListBox(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno1 + "组:" + tempvalue + "号任务已完成");
                             }
-
+                            statusGroup1.Write(1, clientId[i] - 1);
                             removeKey(tempList, clientId[i]);
                            // this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度
 
@@ -1016,28 +1091,32 @@ namespace SortingControlSys.SortingControl
                 {
                     int tempvalue = int.Parse((values[i].ToString()));
                     if (tempvalue >= 1)//分拣完成
-                    {
-                        statusGroup4.Write(1, clientId[i] - 1);
+                    { 
                         //if (getKey(tempList1, clientId[i]) != -1)
                         //{
                             // int taskno = getKey(tempList1, clientId[i]);
-                            writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
-                            //InBoundService.UpdateInOut(tempvalue, sortgroupno2); 
-                            TaskService.UpdateFJFinishStatus(sortgroupno2, tempvalue);//将第一组分拣任务改为完成完成
+                        
 
 
                             if (tempvalue != 0)
                             {
                                 try
                                 {
+                                    writeLog.Write("从电控读取" + sortgroupno2 + "组出口号：" + clientId[i] + ";任务号:" + tempvalue);
+                                    //InBoundService.UpdateInOut(tempvalue, sortgroupno2); 
+                                    TaskService.UpdateFJFinishStatus(sortgroupno2, tempvalue);//将第一组分拣任务改为完成完成
                                     PreSortInfoService.Add((decimal)tempvalue, sortgroupno2);
                                 }
                                 catch (Exception ex)
-                                { }
+                                {
+                                    updateListBox(sortgroupno2 + "组:" + tempvalue + " 号任务更新失败,未连接到服务器" + ex.Message);
+                                    writeLog.Write(sortgroupno2 + "组:" + tempvalue + " 号任务更新失败,未连接到服务器" + ex.Message);
+                                    return;
+                                }
                                 updateListBox(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                                 writeLog.Write(sortgroupno2 + "组:" + tempvalue + "号任务已完成");
                             }
-
+                            statusGroup4.Write(1, clientId[i] - 1);
                             removeKey(tempList1, clientId[i]);
                             //this.task_data.BeginInvoke(new Action(() => { initdata(); }));//异步调用，刷新分拣页面的分拣进度 
                         //} 

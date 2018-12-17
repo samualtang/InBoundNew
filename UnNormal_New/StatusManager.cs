@@ -243,6 +243,47 @@ namespace UnNormal_New
         {
             AutoSizeColumn(task_data);
            
-        } 
+        }
+
+        private void StatusManager_Load(object sender, EventArgs e)
+        {
+            cmbLineNo.Items.Clear();
+            cmbPM.Items.Clear();
+            try
+            {
+                foreach (var item in UnPokeService.GetCmbLinenNum())
+                {
+                    cmbLineNo.Items.Add(item);
+                }
+                if (cmbPM.Items.Count > 0)
+                {
+                    cmbPM.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("数据库连接失败,请检查网络!");
+                Close();
+            }
+           
+        }
+
+        private void cmbLineNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                cmbPM.Items.Clear();
+                foreach (var item in UnPokeService.GetCmbPackageMachine(cmbLineNo.Items[cmbLineNo.SelectedIndex].ToString()))
+                {
+                    cmbPM.Items.Add(item);
+                }
+                cmbPM.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("数据库连接失败,请检查网络!");
+                Close();
+            }
+        }
     }
 }

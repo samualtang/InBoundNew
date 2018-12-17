@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmb_Line = new System.Windows.Forms.ComboBox();
             this.btn_all = new System.Windows.Forms.Button();
             this.txt_splitval = new System.Windows.Forms.TextBox();
             this.btn_search = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.cmb_Line = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -63,6 +63,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
+            // 
+            // cmb_Line
+            // 
+            this.cmb_Line.FormattingEnabled = true;
+            this.cmb_Line.Location = new System.Drawing.Point(738, 13);
+            this.cmb_Line.Name = "cmb_Line";
+            this.cmb_Line.Size = new System.Drawing.Size(121, 20);
+            this.cmb_Line.TabIndex = 16;
             // 
             // btn_all
             // 
@@ -198,14 +206,6 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
-            // cmb_Line
-            // 
-            this.cmb_Line.FormattingEnabled = true;
-            this.cmb_Line.Location = new System.Drawing.Point(738, 13);
-            this.cmb_Line.Name = "cmb_Line";
-            this.cmb_Line.Size = new System.Drawing.Size(121, 20);
-            this.cmb_Line.TabIndex = 16;
-            // 
             // w_un_schedule_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -215,7 +215,7 @@
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
             this.Name = "w_un_schedule_alone";
-            this.Text = "异型烟任务预排程";
+            this.Text = "异型烟任务单独预排程";
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

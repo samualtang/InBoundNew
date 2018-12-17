@@ -34,7 +34,7 @@ namespace highSpeed.orderHandle
             //string time = this.orderdate.Text;
             //time=DateTime.Parse(time,"yyyy-MM-dd");
 
-            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from T_UN_DIY_TASK t where t.state=10 group BY t.batchcode,t.synseq order by synseq ";
+            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from T_UN_DIY_TASK t where t.state=15 group BY t.batchcode,t.synseq order by synseq ";
             //MessageBox.Show(strsql);
             Bind(strsql);
         }
@@ -123,7 +123,7 @@ namespace highSpeed.orderHandle
                         " SELECT aa.tasknum,aa.customercode,aa.customername,5001 as machineseq   ,pp.cigarettecode,pp.cigarettename,pp.quantity as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname  " +
                         " FROM T_UN_DIY_TASK aa ,T_UN_DIY_TASKLINE pp , t_produce_sortlinename rr "+
                         " WHERE aa.tasknum=pp.tasknum    and aa.linenum = rr.groupno and rr.ctype = 2 "+
-                        " and aa.synseq=1    order by tasknum,sortname,machineseq ) ";
+                        " and aa.synseq=" + synseq + "    order by tasknum,sortname,machineseq ) ";
                         
 
             

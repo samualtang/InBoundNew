@@ -10,6 +10,10 @@ namespace UnNormal_New.Model
    {
     
        public static string OPCserverStr =  "S7:[UnnormalConnection1]";//线路
+       public static string PLCDBTaskposition = "DB30";//db块位置
+       public static string PLCDBSpecialposition = "DB101";//db块位置
+       public static string PLCDBFinshposition = "DB550";//db块位置
+
        /// <summary>
        /// 一线DB交互
        /// </summary>
@@ -18,46 +22,23 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add(OPCserverStr+"DB30,DINT0");
-           list.Add(OPCserverStr + "DB30,DINT4");
-           list.Add(OPCserverStr + "DB30,W8");
+           list.Add(OPCserverStr+PLCDBTaskposition+",DINT0");
+           list.Add(OPCserverStr + PLCDBTaskposition + ",DINT4");
+           list.Add(OPCserverStr + PLCDBTaskposition + ",W8");
            for (int i = 2; i < 142; i = i + 2)
            {
-               list.Add(OPCserverStr+"DB30,W" + (i + 8));
+               list.Add(OPCserverStr + PLCDBTaskposition + ",W" + (i + 8));
            }
            for (int i = 0; i < 10; i++)
            {
-               list.Add(OPCserverStr+"DB30,DINT" + (150 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr+"DB30,W" + (154 + (i * 8)));//长度
-               list.Add(OPCserverStr+"DB30,W" + (156 + (i * 8)));//宽度
+               list.Add(OPCserverStr + PLCDBTaskposition + ",DINT" + (150 + (i * 8)));//条烟编码
+               list.Add(OPCserverStr + PLCDBTaskposition + ",W" + (154 + (i * 8)));//长度
+               list.Add(OPCserverStr + PLCDBTaskposition + ",W" + (156 + (i * 8)));//宽度
            }
-           list.Add(OPCserverStr+"DB30,W230");
+           list.Add(OPCserverStr + PLCDBTaskposition + ",W230");
            return list;
        }
-       /// <summary>
-       /// 二线DB交互
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetOnlyDBItem2()
-       {
-           List<string> list = new List<string>();
-
-           list.Add(OPCserverStr+"DB105,DINT0");
-           list.Add(OPCserverStr + "DB105,DINT4");
-           list.Add(OPCserverStr + "DB105,W8");
-           for (int i = 2; i < 142; i = i + 2)
-           {
-               list.Add(OPCserverStr + "DB105,W" + (i + 8));
-           }
-           for (int i = 0; i < 10; i++)
-           {
-               list.Add(OPCserverStr + "DB105,DINT" + (150 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr + "DB105,W" + (154 + (i * 8)));//长度
-               list.Add(OPCserverStr + "DB105,W" + (156 + (i * 8)));//宽度
-           }
-           list.Add(OPCserverStr + "DB105,W230");
-           return list;
-       }
+ 
 
        /// <summary>
        /// 监控标志位
@@ -67,8 +48,7 @@ namespace UnNormal_New.Model
        {
            List<string> list = new List<string>();
 
-           list.Add(OPCserverStr+"DB30,W230");//一线异形烟交互标志 0
-           list.Add(OPCserverStr + "DB105,W230");//二线异形烟交互标志 1
+           list.Add(OPCserverStr + PLCDBTaskposition + ",W230");// 交互标志 0
            return list;
        }
 
@@ -81,26 +61,12 @@ namespace UnNormal_New.Model
            List<string> list = new List<string>();
            for (int i = 0; i < 20; i++)
            {
-               list.Add(OPCserverStr+"DB550,DINT" + (i * 4));
+               list.Add(OPCserverStr + PLCDBFinshposition + ",DINT" + (i * 4));
            }
 
            return list;
        }
-       /// <summary>
-       /// 二线DB任务结束回应
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetOnlyLineFinishTaskItem2()
-       {
-           List<string> list = new List<string>();
-           for (int i = 0; i < 20; i++)
-           {
-               list.Add(OPCserverStr+"DB551,DINT" + (i * 4));
-           }
-
-           return list;
-       }
-
+ 
       
 
        /// <summary>
@@ -110,45 +76,23 @@ namespace UnNormal_New.Model
        public static List<string> GetSpecialSmokeItem1()
        {
            List<string> list = new List<string>();
-           list.Add(OPCserverStr+"DB101,DINT0");//顺序号
-           list.Add(OPCserverStr+"DB101,DINT4");//任务号
-           list.Add(OPCserverStr+"DB101,W8");//烟仓号
-           list.Add(OPCserverStr+"DB101,W10");//订单数量
+           list.Add(OPCserverStr+PLCDBSpecialposition+",DINT0");//顺序号
+           list.Add(OPCserverStr + PLCDBSpecialposition + ",DINT4");//任务号
+           list.Add(OPCserverStr + PLCDBSpecialposition + ",W8");//烟仓号
+           list.Add(OPCserverStr + PLCDBSpecialposition + ",W10");//订单数量
            //for (int i = 0; i < 10; i++)
            for (int i = 0; i < 12; i++)
            {
-               list.Add(OPCserverStr+"DB101,DINT" + (12 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr+"DB101,W" + (16 + (i * 8)));//长度
-               list.Add(OPCserverStr+"DB101,W" + (18 + (i * 8)));//宽度
+               list.Add(OPCserverStr + PLCDBSpecialposition + ",DINT" + (12 + (i * 8)));//条烟编码
+               list.Add(OPCserverStr + PLCDBSpecialposition + ",W" + (16 + (i * 8)));//长度
+               list.Add(OPCserverStr + PLCDBSpecialposition + ",W" + (18 + (i * 8)));//宽度
            }
            //list.Add(OPCserverStr+"DB101,W92");//标志位 
-           list.Add(OPCserverStr+"DB101,W108");//标志位 
+           list.Add(OPCserverStr + PLCDBSpecialposition + ",W108");//标志位 
            return list;
        }
 
-
-       /// <summary>
-       /// 特异性烟交互区63，64道
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetSpecialSmokeItem2()
-       {
-           List<string> list = new List<string>();
-           list.Add(OPCserverStr+"DB103,DINT0");//顺序号
-           list.Add(OPCserverStr+"DB103,DINT4");//任务号
-           list.Add(OPCserverStr+"DB103,W8");//烟仓号
-           list.Add(OPCserverStr+"DB103,W10");//订单数量
-           //  for (int i = 0; i < 12; i++)
-           for (int i = 0; i < 12; i++)
-           {
-               list.Add(OPCserverStr+"DB103,DINT" + (12 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr+"DB103,W" + (16 + (i * 8)));//长度
-               list.Add(OPCserverStr+"DB103,W" + (18 + (i * 8)));//宽度
-           }
-           list.Add(OPCserverStr+"DB103,W108");//标志位 
-           //list.Add(OPCserverStr+"DB103,W92");//标志位 
-           return list;
-       }
+ 
        /// <summary>
        /// 包装机
        /// </summary>

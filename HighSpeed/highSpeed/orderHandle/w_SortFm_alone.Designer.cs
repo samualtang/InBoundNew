@@ -258,7 +258,7 @@
             this.Controls.Add(this.dgvSortInfo);
             this.Controls.Add(this.panel1);
             this.Name = "w_SortFm_alone";
-            this.Text = "常规烟分拣排程";
+            this.Text = "常规烟分拣单独排程";
             this.Load += new System.EventHandler(this.w_SortFm_Load);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
