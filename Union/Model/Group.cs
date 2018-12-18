@@ -48,6 +48,13 @@ namespace SortingControlSys.Model
                 out pobjGroup1);
         InitReqIOInterfaces();
         }
+        public int GetGroupItemLength()
+        {
+            if (ItemDeffArray != null)
+                return ItemDeffArray.Length;
+            else
+                return 0;
+        }
         public void addItem(List<String> itemNameList)
         {
             if (itemNameList != null)

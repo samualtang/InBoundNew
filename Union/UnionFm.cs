@@ -283,10 +283,12 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("连接服务器成功......数据初始化成功!"  );
                
                 updateControlEnable(false, button10);
+                AutoFinishTask();
             }
 
             
         }
+      
         Boolean CheckCanSend(int targetPort)
         {
             writeLog.Write("出口号：" + targetPort);
@@ -542,6 +544,49 @@ namespace SortingControlSys.SortingControl
         public string getErrMsg(int len)
         {
             return errMsgList[len];
+        }
+        void AutoFinishTask()
+        {
+            for (int i = 0; i < FinishstatusGroup.GetGroupItemLength(); i++)
+            {
+                int tempvalue = (int)FinishstatusGroup.Read(i);
+                if (tempvalue >= 1)
+                { 
+                    writeLog.Write("从电控出口号：" + ( i+1) + "获取到任务号:" + tempvalue + "完成信号 ");
+                    try
+                    {
+                        TaskService.UpdateUnionFinishedStatus(tempvalue);
+                    }
+                    catch (Exception ex)
+                    {
+                        writeLog.Write("数据库更新合流状态位失败: " + ex.Message);
+                        updateListBox("数据库更新合流状态位失败: " + ex.Message);
+                        return;
+                    } 
+                    if (tempvalue != 0)
+                    {
+                        updateListBox("任务:" + tempvalue + "数据库状态已置完成");
+                        writeLog.Write("合流任务号:" + tempvalue + "数据库状态已置完成");
+                    }
+                    FinishstatusGroup.Write(0, i);
+                    try
+                    {
+                        writeLock.AcquireWriterLock(10000); 
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex != null && ex.Message != null)
+                        {
+                            writeLog.Write("错误信息：" + ex.Message);
+                        }
+                    }
+                    finally
+                    {
+                        writeLock.ReleaseWriterLock();
+                    } 
+                }
+            }
+           
         }
         public void OnDataChange(int group,int[] clientId, object[] values)
         {
