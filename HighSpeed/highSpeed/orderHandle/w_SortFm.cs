@@ -416,7 +416,7 @@ namespace highSpeed.orderHandle
             {
                 writeLog.Write("进行数据验证");
                 Db.Open();
-                double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_task ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(orderquantity) from t_produce_task "));//上位总数量
+                double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_order where state ='排程'  ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(orderquantity) from t_produce_order where state ='排程'  "));//上位总数量
                 double usNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_produce_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_produce_poke "));//上位常规烟数量
                 double usUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_un_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_un_poke "));//上位异型烟数量
                 double dsDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo "));//下位总数量

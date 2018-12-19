@@ -305,7 +305,7 @@ namespace UnNormal_New
                 updateControlEnable(false, button10);
                 strat = true;
                 isInit = true;
-                AutoFinshTask();
+                AutoFinishTask();
             }
             else
             {
@@ -414,7 +414,7 @@ namespace UnNormal_New
             }
             issendone = false;
         }
-        void AutoFinshTask()
+        void AutoFinishTask()
         {
             try
             { 
@@ -879,10 +879,15 @@ namespace UnNormal_New
 
        private void TimeToClike_Tick(object sender, EventArgs e)
        {
-           List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
-           labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
-           labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ?? 0);
-           labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0);
+           try
+           {
+               List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
+               labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
+               labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS == 20).Sum(a => a.POKENUM) ?? 0);
+               labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS != 20).Sum(a => a.POKENUM) ?? 0);
+               Thread.Sleep(5000);
+           }
+           catch  {  } 
        }
 
        private void btnDynamic_Click(object sender, EventArgs e)

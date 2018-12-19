@@ -206,6 +206,14 @@ namespace highSpeed.baseData
                 {
                     groupno = "2";
                 }
+                if (machineseq.Substring(0, 1).Equals("3"))//第三组异形烟
+                {
+                    groupno = "3";
+                }
+                if (machineseq.Substring(0, 1).Equals("4"))//第四组异形烟
+                {
+                    groupno = "4";
+                }
             }
            // MessageBox.Show("设备编号：" + troughnum + ",通道描述：" + troughdesc + ",品牌号" + itemno + ",品牌名称：" + itemname + ",组号为：" + groupno + ",handle_sign为" + handle_sign, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
