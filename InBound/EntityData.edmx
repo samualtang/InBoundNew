@@ -17,6 +17,7 @@
           <EntitySet Name="T_PRODUCE_POKESEQ" EntityType="Model.Store.T_PRODUCE_POKESEQ" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_PRESORTINFO" EntityType="Model.Store.T_PRODUCE_PRESORTINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_SORTTROUGH" EntityType="Model.Store.T_PRODUCE_SORTTROUGH" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_PRODUCE_SYNSEQ" EntityType="Model.Store.T_PRODUCE_SYNSEQ" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.Store.T_SYS_MENUROLERELATIVE" store:Type="Tables" Schema="ZOOMTEL" />
@@ -245,6 +246,17 @@
           <Property Name="CLEARUP" Type="number" />
           <Property Name="CLEARTHRESHOLD" Type="number" />
           <Property Name="SEQ" Type="number" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_SYNSEQ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="SYNSEQ" Type="number" />
+          <Property Name="QUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="ORDERDATE" Type="date" />
+          <Property Name="PMSTATE" Type="varchar2" MaxLength="20" />
+          <Property Name="TBJSTATE" Type="varchar2" MaxLength="20" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -962,6 +974,7 @@
           <EntitySet Name="T_WMS_ITEM" EntityType="Model.T_WMS_ITEM" />
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_PRO_TROUGHTRANSFER" EntityType="Model.T_PRO_TROUGHTRANSFER" />
+          <EntitySet Name="T_PRODUCE_SYNSEQ" EntityType="Model.T_PRODUCE_SYNSEQ" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1783,6 +1796,17 @@
           <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="STEP" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_PRODUCE_SYNSEQ">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SYNSEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="QUANTITY" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="ORDERDATE" />
+          <Property Type="String" Name="PMSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TBJSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2652,6 +2676,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_PRODUCE_SYNSEQ">
+            <EntityTypeMapping TypeName="Model.T_PRODUCE_SYNSEQ">
+              <MappingFragment StoreEntitySet="T_PRODUCE_SYNSEQ">
+                <ScalarProperty Name="TBJSTATE" ColumnName="TBJSTATE" />
+                <ScalarProperty Name="PMSTATE" ColumnName="PMSTATE" />
+                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="SYNSEQ" ColumnName="SYNSEQ" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2713,6 +2749,7 @@
         <EntityTypeShape EntityType="Model.T_WMS_ITEM" Width="1.5" PointX="3.375" PointY="7.75" Height="9.4967862955729174" />
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.6921394856770746" />
         <EntityTypeShape EntityType="Model.T_PRO_TROUGHTRANSFER" Width="1.5" PointX="5.375" PointY="23.75" Height="1.7354337565104174" />
+        <EntityTypeShape EntityType="Model.T_PRODUCE_SYNSEQ" Width="1.5" PointX="11.375" PointY="23.75" Height="2.1050219726562318" />
       </Diagram>
     </Diagrams>
   </Designer>

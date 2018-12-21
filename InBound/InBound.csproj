@@ -99,6 +99,7 @@
     <Compile Include="Business\AtsCellInfoDetailService.cs" />
     <Compile Include="Business\TaskService.cs" />
     <Compile Include="Business\AtsCellOutService.cs" />
+    <Compile Include="Business\ScheduleService.cs" />
     <Compile Include="Model\TroughNumList.cs" />
     <Compile Include="Business\UnionCacheServer.cs" />
     <Compile Include="Business\UnionTaskInfoService.cs" />

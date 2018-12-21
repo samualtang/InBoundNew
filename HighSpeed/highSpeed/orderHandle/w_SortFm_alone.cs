@@ -438,7 +438,8 @@ namespace highSpeed.orderHandle
             panel4.Visible = false;
             if (errcode == "1")
             {
-                MessageBox.Show("常规烟排程数据正常");
+                MessageBox.Show("常规烟排程数据正常,点击确认后将开放数据给下游获取");
+                ScheduleService.InsertSynseqInfo_NormalAlone();
             }
             else
             {

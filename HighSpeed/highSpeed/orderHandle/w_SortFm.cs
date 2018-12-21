@@ -428,8 +428,10 @@ namespace highSpeed.orderHandle
                                                 "\n\n上位异型烟数量为:" + usUnNormalNum + ",下位异型烟条烟识别数量为:" + dsUnNormalNum + "\n相差:" + (usUnNormalNum - dsUnNormalNum);
                 if (usDataNum - dsDataNum == 0 && usNormalNum - dsNormalNum == 0 && usUnNormalNum - dsUnNormalNum ==0)
                 {
-                    MessageBox.Show("无差异,"+msg);
+                    MessageBox.Show("无差异,将开放数据给下接收"+msg);
+                    ScheduleService.InsertSynseqInfo("1");
                     writeLog.Write(msg);
+
                 }
                 else
                 {

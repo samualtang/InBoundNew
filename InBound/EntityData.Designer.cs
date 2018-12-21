@@ -32,7 +32,8 @@ namespace InBound
         /// <summary>
         /// 请使用应用程序配置文件的“Entities”部分中的连接字符串初始化新 Entities 对象。
         /// </summary>
-        public Entities() : base(Security.ConnectionString, "Entities")
+        public Entities()
+            : base(Security.ConnectionString, "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -705,6 +706,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_PRO_TROUGHTRANSFER> _T_PRO_TROUGHTRANSFER;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PRODUCE_SYNSEQ> T_PRODUCE_SYNSEQ
+        {
+            get
+            {
+                if ((_T_PRODUCE_SYNSEQ == null))
+                {
+                    _T_PRODUCE_SYNSEQ = base.CreateObjectSet<T_PRODUCE_SYNSEQ>("T_PRODUCE_SYNSEQ");
+                }
+                return _T_PRODUCE_SYNSEQ;
+            }
+        }
+        private ObjectSet<T_PRODUCE_SYNSEQ> _T_PRODUCE_SYNSEQ;
 
         #endregion
 
@@ -1028,6 +1045,14 @@ namespace InBound
         public void AddToT_PRO_TROUGHTRANSFER(T_PRO_TROUGHTRANSFER t_PRO_TROUGHTRANSFER)
         {
             base.AddObject("T_PRO_TROUGHTRANSFER", t_PRO_TROUGHTRANSFER);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PRODUCE_SYNSEQ EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PRODUCE_SYNSEQ(T_PRODUCE_SYNSEQ t_PRODUCE_SYNSEQ)
+        {
+            base.AddObject("T_PRODUCE_SYNSEQ", t_PRODUCE_SYNSEQ);
         }
 
         #endregion
@@ -4652,6 +4677,183 @@ namespace InBound
         private Nullable<global::System.Decimal> _SEQ;
         partial void OnSEQChanging(Nullable<global::System.Decimal> value);
         partial void OnSEQChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// 没有元数据文档可用。
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="T_PRODUCE_SYNSEQ")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class T_PRODUCE_SYNSEQ : EntityObject
+    {
+        #region 工厂方法
+    
+        /// <summary>
+        /// 创建新的 T_PRODUCE_SYNSEQ 对象。
+        /// </summary>
+        /// <param name="id">ID 属性的初始值。</param>
+        public static T_PRODUCE_SYNSEQ CreateT_PRODUCE_SYNSEQ(global::System.Decimal id)
+        {
+            T_PRODUCE_SYNSEQ t_PRODUCE_SYNSEQ = new T_PRODUCE_SYNSEQ();
+            t_PRODUCE_SYNSEQ.ID = id;
+            return t_PRODUCE_SYNSEQ;
+        }
+
+        #endregion
+
+        #region 基元属性
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _ID;
+        partial void OnIDChanging(global::System.Decimal value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SYNSEQ
+        {
+            get
+            {
+                return _SYNSEQ;
+            }
+            set
+            {
+                OnSYNSEQChanging(value);
+                ReportPropertyChanging("SYNSEQ");
+                _SYNSEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SYNSEQ");
+                OnSYNSEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SYNSEQ;
+        partial void OnSYNSEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnSYNSEQChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> QUANTITY
+        {
+            get
+            {
+                return _QUANTITY;
+            }
+            set
+            {
+                OnQUANTITYChanging(value);
+                ReportPropertyChanging("QUANTITY");
+                _QUANTITY = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUANTITY");
+                OnQUANTITYChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _QUANTITY;
+        partial void OnQUANTITYChanging(Nullable<global::System.Decimal> value);
+        partial void OnQUANTITYChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ORDERDATE
+        {
+            get
+            {
+                return _ORDERDATE;
+            }
+            set
+            {
+                OnORDERDATEChanging(value);
+                ReportPropertyChanging("ORDERDATE");
+                _ORDERDATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ORDERDATE");
+                OnORDERDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ORDERDATE;
+        partial void OnORDERDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnORDERDATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PMSTATE
+        {
+            get
+            {
+                return _PMSTATE;
+            }
+            set
+            {
+                OnPMSTATEChanging(value);
+                ReportPropertyChanging("PMSTATE");
+                _PMSTATE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PMSTATE");
+                OnPMSTATEChanged();
+            }
+        }
+        private global::System.String _PMSTATE;
+        partial void OnPMSTATEChanging(global::System.String value);
+        partial void OnPMSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TBJSTATE
+        {
+            get
+            {
+                return _TBJSTATE;
+            }
+            set
+            {
+                OnTBJSTATEChanging(value);
+                ReportPropertyChanging("TBJSTATE");
+                _TBJSTATE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TBJSTATE");
+                OnTBJSTATEChanged();
+            }
+        }
+        private global::System.String _TBJSTATE;
+        partial void OnTBJSTATEChanging(global::System.String value);
+        partial void OnTBJSTATEChanged();
 
         #endregion
 
