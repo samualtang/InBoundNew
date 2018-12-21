@@ -445,16 +445,16 @@ namespace SpecialShapeSmoke
                positiong[0] = 2;
                positiong[1] = 3;
            }
-           //else if (troughno == "2061" && packmachine[0] == packmachine3[0] && packmachine[1] == packmachine3[1])
-           //{
-           //    positiong[0] = 4;
-           //    positiong[1] = 5;
-           //}
-           //else if (troughno == "2061" && packmachine[0] == packmachine4[0] && packmachine[1] == packmachine4[1])
-           //{
-           //    positiong[0] = 6;
-           //    positiong[1] = 7;
-           //}
+           else if (troughno == "3061" && packmachine[0] == packmachine3[0] && packmachine[1] == packmachine3[1])
+           {
+               positiong[0] = 4;
+               positiong[1] = 5;
+           }
+           else if (troughno == "4061" && packmachine[0] == packmachine4[0] && packmachine[1] == packmachine4[1])
+           {
+               positiong[0] = 6;
+               positiong[1] = 7;
+           }
            
            
             return positiong;
@@ -528,6 +528,7 @@ namespace SpecialShapeSmoke
                 catch (Exception)
                 {
                     MessageBox.Show("数据读取失败，请检查数据库连接");
+                    databaselinkcheck();
                     writeLog.Write("sp-03:数据库连接失败");
                 }
                 isInit = true;
@@ -801,21 +802,26 @@ namespace SpecialShapeSmoke
             }
             catch(Exception ex)   
             {
-                writeLog.Write("getData()数据获取失败！   ");
+                writeLog.Write("sp-03:数据获取失败！   ");
                 if (ex.Message == "基础提供程序在 Open 上失败。")
                 {
-                    lblpack.Text = "数据库连接失败！请检查网络，重新打开程序！";
-                    lblpack.Location = new Point(0, 10);
-                    lblpack.Width = 750;
-                    lblpack.BackColor = Color.Red;
-                    search.Enabled = false;
-                    btnSearch.Enabled = false;
-                    btnView.Enabled = false;
-                    timer1.Stop(); 
+                    databaselinkcheck();
                 }
-                
             }
         }
+        //数据库连接失败，界面显示
+        public void databaselinkcheck()
+        {
+            lblpack.Text = "数据库连接失败！请检查网络，重新打开程序！";
+            lblpack.Location = new Point(0, 10);
+            lblpack.Width = 750;
+            lblpack.BackColor = Color.Red;
+            search.Enabled = false;
+            btnSearch.Enabled = false;
+            btnView.Enabled = false;
+            timer1.Stop();
+        }
+
         NowView_new fNowView;
         System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         //System.Windows.Forms.Timer t2 = new System.Windows.Forms.Timer(); 
@@ -842,8 +848,9 @@ namespace SpecialShapeSmoke
             }
             catch (Exception ex)
             {
-                 MessageBox.Show(ex.ToString() + "数据库连接失败！请检查网络");
+                 MessageBox.Show("数据库连接失败！请检查网络");
                  writeLog.Write("sp-03:数据库连接失败！   ");
+                 databaselinkcheck();
             }
      
 

@@ -15,7 +15,7 @@ namespace InBound.Business
         public static decimal[] getalllinenum()
         { 
             Entities et=new Entities();
-            var list =et.T_PRODUCE_SORTTROUGH.Where(x=>x.CIGARETTETYPE==30 && x.TROUGHTYPE==10 &&x.SEQ == 2).GroupBy(x=>x.GROUPNO).Select(x=>x.Key).ToList();
+            var list =et.T_PRODUCE_SORTTROUGH.Where(x=>x.CIGARETTETYPE==30 && x.TROUGHTYPE==10 &&x.SEQ == 2).GroupBy(x=>x.GROUPNO).OrderBy(x=>x.Key).Select(x=>x.Key).ToList();
             decimal[] items=new decimal[list.Count];
             for (int i = 0; i < list.Count; i++)
 			{
