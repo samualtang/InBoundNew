@@ -20,6 +20,8 @@
           <EntitySet Name="T_PRODUCE_SYNSEQ" EntityType="Model.Store.T_PRODUCE_SYNSEQ" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASK" EntityType="Model.Store.T_PRODUCE_TASK" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_PRODUCE_TASKLINE" EntityType="Model.Store.T_PRODUCE_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_RETURN_TASK" EntityType="Model.Store.T_RETURN_TASK" store:Type="Tables" Schema="ZOOMTEL" />
+          <EntitySet Name="T_RETURN_TASKLINE" EntityType="Model.Store.T_RETURN_TASKLINE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_MENUROLERELATIVE" EntityType="Model.Store.T_SYS_MENUROLERELATIVE" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_ROUTEINFO" EntityType="Model.Store.T_SYS_ROUTEINFO" store:Type="Tables" Schema="ZOOMTEL" />
           <EntitySet Name="T_SYS_USER" EntityType="Model.Store.T_SYS_USER" store:Type="Tables" Schema="ZOOMTEL" />
@@ -307,6 +309,54 @@
           <Property Name="UNIT" Type="varchar2" MaxLength="5" />
           <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
           <Property Name="SORTNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_RETURN_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="LINENUM" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
+          <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="REGIONDESC" Type="varchar2" MaxLength="30" />
+          <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
+          <Property Name="COMPANYCODE" Type="varchar2" MaxLength="10" />
+          <Property Name="COMPANYNAME" Type="varchar2" MaxLength="20" />
+          <Property Name="BATCHCODE" Type="varchar2" MaxLength="12" />
+          <Property Name="SYNSEQ" Type="number" />
+          <Property Name="CUSTOMERCODE" Type="varchar2" MaxLength="20" />
+          <Property Name="ORDERQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="CUSTOMERNAME" Type="varchar2" MaxLength="200" />
+          <Property Name="ORDERMONEY" Type="number" Precision="8" Scale="2" />
+          <Property Name="TASKQUANTITY" Type="number" Precision="10" Scale="2" />
+          <Property Name="PRIORITY" Type="number" Precision="8" />
+          <Property Name="TASKBOX" Type="varchar2" MaxLength="20" />
+          <Property Name="SORTSEQ" Type="number" />
+          <Property Name="LABLENUM" Type="varchar2" MaxLength="20" />
+          <Property Name="PLANTIME" Type="date" />
+          <Property Name="SORTTIME" Type="date" />
+          <Property Name="FINISHTIME" Type="date" />
+          <Property Name="STATE" Type="varchar2" MaxLength="20" />
+          <Property Name="LABELBATCH" Type="number" Precision="3" />
+          <Property Name="PALLETNUM" Type="number" />
+          <Property Name="EXISTRCD" Type="number" />
+          <Property Name="ORDERDATE" Type="date" />
+          <Property Name="MAINBELT" Type="number" />
+          <Property Name="PACKAGEMACHINE" Type="number" />
+          <Property Name="SORTNUM" Type="number" />
+          <Property Name="SECSORTNUM" Type="number" />
+        </EntityType>
+        <EntityType Name="T_RETURN_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Name="TASKNUM" Type="number" Nullable="false" />
+          <Property Name="CIGARETTECODE" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="CIGARETTENAME" Type="varchar2" MaxLength="30" />
+          <Property Name="QUANTITY" Type="number" Precision="10" Scale="1" />
+          <Property Name="UNIT" Type="varchar2" MaxLength="5" />
+          <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
         </EntityType>
         <EntityType Name="T_SYS_MENUROLERELATIVE">
           <Key>
@@ -975,6 +1025,8 @@
           <EntitySet Name="T_UN_POKE" EntityType="Model.T_UN_POKE" />
           <EntitySet Name="T_PRO_TROUGHTRANSFER" EntityType="Model.T_PRO_TROUGHTRANSFER" />
           <EntitySet Name="T_PRODUCE_SYNSEQ" EntityType="Model.T_PRODUCE_SYNSEQ" />
+          <EntitySet Name="T_RETURN_TASK" EntityType="Model.T_RETURN_TASK" />
+          <EntitySet Name="T_RETURN_TASKLINE" EntityType="Model.T_RETURN_TASKLINE" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1807,6 +1859,54 @@
           <Property Type="DateTime" Name="ORDERDATE" />
           <Property Type="String" Name="PMSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TBJSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_RETURN_TASK">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="LINENUM" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EXPORTNUM" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGIONDESC" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYCODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMPANYNAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BATCHCODE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SYNSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="CUSTOMERCODE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERQUANTITY" Precision="10" Scale="2" />
+          <Property Type="String" Name="CUSTOMERNAME" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDERMONEY" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="TASKQUANTITY" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="PRIORITY" />
+          <Property Type="String" Name="TASKBOX" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="SORTSEQ" Precision="38" Scale="0" />
+          <Property Type="String" Name="LABLENUM" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PLANTIME" />
+          <Property Type="DateTime" Name="SORTTIME" />
+          <Property Type="DateTime" Name="FINISHTIME" />
+          <Property Type="String" Name="STATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="LABELBATCH" />
+          <Property Type="Decimal" Name="PALLETNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="EXISTRCD" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="ORDERDATE" />
+          <Property Type="Decimal" Name="MAINBELT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_RETURN_TASKLINE">
+          <Key>
+            <PropertyRef Name="TASKNUM" />
+            <PropertyRef Name="CIGARETTECODE" />
+          </Key>
+          <Property Type="Decimal" Name="TASKNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="CIGARETTECODE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="QUANTITY" Precision="10" Scale="1" />
+          <Property Type="String" Name="UNIT" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ALLOWSORT" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2688,6 +2788,55 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="T_RETURN_TASK">
+            <EntityTypeMapping TypeName="Model.T_RETURN_TASK">
+              <MappingFragment StoreEntitySet="T_RETURN_TASK">
+                <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
+                <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
+                <ScalarProperty Name="MAINBELT" ColumnName="MAINBELT" />
+                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+                <ScalarProperty Name="EXISTRCD" ColumnName="EXISTRCD" />
+                <ScalarProperty Name="PALLETNUM" ColumnName="PALLETNUM" />
+                <ScalarProperty Name="LABELBATCH" ColumnName="LABELBATCH" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="FINISHTIME" ColumnName="FINISHTIME" />
+                <ScalarProperty Name="SORTTIME" ColumnName="SORTTIME" />
+                <ScalarProperty Name="PLANTIME" ColumnName="PLANTIME" />
+                <ScalarProperty Name="LABLENUM" ColumnName="LABLENUM" />
+                <ScalarProperty Name="SORTSEQ" ColumnName="SORTSEQ" />
+                <ScalarProperty Name="TASKBOX" ColumnName="TASKBOX" />
+                <ScalarProperty Name="PRIORITY" ColumnName="PRIORITY" />
+                <ScalarProperty Name="TASKQUANTITY" ColumnName="TASKQUANTITY" />
+                <ScalarProperty Name="ORDERMONEY" ColumnName="ORDERMONEY" />
+                <ScalarProperty Name="CUSTOMERNAME" ColumnName="CUSTOMERNAME" />
+                <ScalarProperty Name="ORDERQUANTITY" ColumnName="ORDERQUANTITY" />
+                <ScalarProperty Name="CUSTOMERCODE" ColumnName="CUSTOMERCODE" />
+                <ScalarProperty Name="SYNSEQ" ColumnName="SYNSEQ" />
+                <ScalarProperty Name="BATCHCODE" ColumnName="BATCHCODE" />
+                <ScalarProperty Name="COMPANYNAME" ColumnName="COMPANYNAME" />
+                <ScalarProperty Name="COMPANYCODE" ColumnName="COMPANYCODE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="REGIONDESC" ColumnName="REGIONDESC" />
+                <ScalarProperty Name="REGIONCODE" ColumnName="REGIONCODE" />
+                <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
+                <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_RETURN_TASKLINE">
+            <EntityTypeMapping TypeName="Model.T_RETURN_TASKLINE">
+              <MappingFragment StoreEntitySet="T_RETURN_TASKLINE">
+                <ScalarProperty Name="ALLOWSORT" ColumnName="ALLOWSORT" />
+                <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2750,6 +2899,8 @@
         <EntityTypeShape EntityType="Model.T_UN_POKE" Width="1.5" PointX="16.375" PointY="0.75" Height="4.6921394856770746" />
         <EntityTypeShape EntityType="Model.T_PRO_TROUGHTRANSFER" Width="1.5" PointX="5.375" PointY="23.75" Height="1.7354337565104174" />
         <EntityTypeShape EntityType="Model.T_PRODUCE_SYNSEQ" Width="1.5" PointX="11.375" PointY="23.75" Height="2.1050219726562318" />
+        <EntityTypeShape EntityType="Model.T_RETURN_TASK" Width="1.5" PointX="13.375" PointY="23.75" Height="6.7248746744791674" />
+        <EntityTypeShape EntityType="Model.T_RETURN_TASKLINE" Width="1.5" PointX="23.375" PointY="14.75" Height="2.1050219726562602" />
       </Diagram>
     </Diagrams>
   </Designer>

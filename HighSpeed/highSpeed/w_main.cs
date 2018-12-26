@@ -922,6 +922,21 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void 任务导出批量退货ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            w_export_deletelist frm = new w_export_deletelist();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
  
 
     

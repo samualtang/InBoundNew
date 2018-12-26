@@ -307,6 +307,12 @@
     <Compile Include="orderHandle\w_export_CGY.Designer.cs">
       <DependentUpon>w_export_CGY.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_export_deletelist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_export_deletelist.Designer.cs">
+      <DependentUpon>w_export_deletelist.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_export_YXY.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -616,6 +622,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_export_CGY.resx">
       <DependentUpon>w_export_CGY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_export_deletelist.resx">
+      <DependentUpon>w_export_deletelist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_export_YXY.resx">
       <DependentUpon>w_export_YXY.cs</DependentUpon>

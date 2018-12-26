@@ -66,6 +66,7 @@
             this.任务导出异型烟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.任务导出异型烟ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.任务导出异型烟手工线ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.任务导出批量退货ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -308,6 +309,7 @@
             this.文本导出ToolStripMenuItem.Name = "文本导出ToolStripMenuItem";
             this.文本导出ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.文本导出ToolStripMenuItem.Text = "文本导出";
+            this.文本导出ToolStripMenuItem.Visible = false;
             // 
             // 单独排程ToolStripMenuItem
             // 
@@ -316,6 +318,7 @@
             this.常规烟排程ToolStripMenuItem1,
             this.异型烟预排程ToolStripMenuItem1,
             this.异型烟排程ToolStripMenuItem1,
+            this.任务导出批量退货ToolStripMenuItem,
             this.异型烟手工线ToolStripMenuItem,
             this.任务导出异型烟ToolStripMenuItem,
             this.任务导出异型烟ToolStripMenuItem1,
@@ -379,6 +382,13 @@
             this.任务导出异型烟手工线ToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.任务导出异型烟手工线ToolStripMenuItem.Text = "任务导出(异型烟手工线)";
             this.任务导出异型烟手工线ToolStripMenuItem.Click += new System.EventHandler(this.任务导出异型烟手工线ToolStripMenuItem_Click);
+            // 
+            // 任务导出批量退货ToolStripMenuItem
+            // 
+            this.任务导出批量退货ToolStripMenuItem.Name = "任务导出批量退货ToolStripMenuItem";
+            this.任务导出批量退货ToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.任务导出批量退货ToolStripMenuItem.Text = "批量退货订单排程";
+            this.任务导出批量退货ToolStripMenuItem.Click += new System.EventHandler(this.任务导出批量退货ToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -491,5 +501,6 @@
         private System.Windows.Forms.ToolStripMenuItem 车组重排ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 异型烟手工线ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 任务导出异型烟手工线ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 任务导出批量退货ToolStripMenuItem;
     }
 }
