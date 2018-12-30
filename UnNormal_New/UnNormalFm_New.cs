@@ -504,6 +504,10 @@ namespace UnNormal_New
                                     updateListBox(ListLineNum[0] + "线烟仓任务包号:" + receivePackage + "已接收");
                                     UnPokeService.UpdateTask(receivePackage, 15);
                                 }
+                                if (issendone)//如果任务已经在发送中则返回
+                                {
+                                    return;
+                                }
                                 //if (!issendone)
                                 //{
                                     //sendOnlyTask();
