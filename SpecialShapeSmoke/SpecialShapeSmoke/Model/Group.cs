@@ -301,7 +301,7 @@ namespace SpecialShapeSmoke.Model
             try
             {
                 // Sync read from device
-                pIOPCSyncIO.Read(OPCDATASOURCE.OPC_DS_DEVICE, 4, new Int32[] { ItemSvrHandleArray[index] }, out pItemValues, out pErrors);
+                pIOPCSyncIO.Read(OPCDATASOURCE.OPC_DS_DEVICE, 8, new Int32[] { ItemSvrHandleArray[index] }, out pItemValues, out pErrors);
                 // Unmarshal the returned memory to get the item state out fom the ppItemValues
                 // after checking errors
                 int[] errors = new int[1];

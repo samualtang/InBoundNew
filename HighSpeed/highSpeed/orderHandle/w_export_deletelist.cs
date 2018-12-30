@@ -112,7 +112,7 @@ namespace highSpeed.orderHandle
             String tasknum = "", cuscode = "", cusname = "", itemno = "", itemname = "", quantity = "", regioncode = "", orderdate = "", cuscodetmp = "";
 
 
-            String sql = "select k.tasknum as sortnum,k.customercode,k.customername,e.cigarettecode,e.cigarettename,e.quantity,k.orderdate as ODATE,k.regioncode,k.packageid as sortname  from t_return_task k join t_return_taskline e on k.tasknum = e.tasknum";
+            String sql = "select k.tasknum as sortnum,k.customercode,k.customername,e.cigarettecode,e.cigarettename,e.quantity,k.orderdate as ODATE,k.regioncode,k.packageid as sortname  from t_return_task k join t_return_taskline e on k.tasknum = e.tasknum where synseq=" + synseq;
 
 
             //取批次号
