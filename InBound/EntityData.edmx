@@ -345,6 +345,7 @@
           <Property Name="PACKAGEMACHINE" Type="number" />
           <Property Name="SORTNUM" Type="number" />
           <Property Name="SECSORTNUM" Type="number" />
+          <Property Name="PACKAGEID" Type="varchar2" MaxLength="10" />
         </EntityType>
         <EntityType Name="T_RETURN_TASKLINE">
           <Key>
@@ -1895,6 +1896,7 @@
           <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+          <Property Type="String" Name="PACKAGEID" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="T_RETURN_TASKLINE">
           <Key>
@@ -2791,6 +2793,7 @@
           <EntitySetMapping Name="T_RETURN_TASK">
             <EntityTypeMapping TypeName="Model.T_RETURN_TASK">
               <MappingFragment StoreEntitySet="T_RETURN_TASK">
+                <ScalarProperty Name="PACKAGEID" ColumnName="PACKAGEID" />
                 <ScalarProperty Name="SECSORTNUM" ColumnName="SECSORTNUM" />
                 <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
                 <ScalarProperty Name="PACKAGEMACHINE" ColumnName="PACKAGEMACHINE" />
