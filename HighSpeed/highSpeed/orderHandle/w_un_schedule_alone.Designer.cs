@@ -66,6 +66,7 @@
             // 
             // cmb_Line
             // 
+            this.cmb_Line.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Line.FormattingEnabled = true;
             this.cmb_Line.Location = new System.Drawing.Point(738, 13);
             this.cmb_Line.Name = "cmb_Line";
