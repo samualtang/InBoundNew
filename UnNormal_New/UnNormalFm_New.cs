@@ -420,7 +420,7 @@ namespace UnNormal_New
             { 
                 for (int i = 0; i < FinishOnlyGoroup1.GetGroupItemLength(); i++)
                 {
-                    int tempvalue = (int)FinishOnlyGoroup1.Read(i);
+                    int tempvalue = int.Parse(FinishOnlyGoroup1.Read(i).ToString());
                     if (tempvalue >= 1)//分拣完成
                     {
 

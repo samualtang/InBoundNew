@@ -920,7 +920,7 @@ namespace SortingControlSys.SortingControl
 
                 for (int i = 0; i < FinishStateGroup1.GetGroupItemLength(); i++)
                 {
-                    int tempvalue = (int)FinishStateGroup1.Read(i);
+                    int tempvalue = int.Parse(FinishStateGroup1.Read(i).ToString());
                     if (tempvalue >= 1)//分拣完成
                     {
                         statusGroup1.Write(1, i);
@@ -949,7 +949,7 @@ namespace SortingControlSys.SortingControl
                 }
                 for (int i = 0; i < FinishStateGroup2.GetGroupItemLength(); i++)
                 {
-                    int tempvalue = (int)FinishStateGroup2.Read(i);
+                    int tempvalue =  int.Parse(FinishStateGroup2.Read(i).ToString());
                     if (tempvalue >= 1)//分拣完成
                     {
                         taskgroup2.Write(1, i);

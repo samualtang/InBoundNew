@@ -549,7 +549,7 @@ namespace SortingControlSys.SortingControl
         {
             for (int i = 0; i < FinishstatusGroup.GetGroupItemLength(); i++)
             {
-                int tempvalue = (int)FinishstatusGroup.Read(i);
+                int tempvalue =  int.Parse(FinishstatusGroup.Read(i).ToString());
                 if (tempvalue >= 1)
                 { 
                     writeLog.Write("从电控出口号：" + ( i+1) + "获取到任务号:" + tempvalue + "完成信号 ");
