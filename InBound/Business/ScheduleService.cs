@@ -57,8 +57,8 @@ namespace InBound.Business
             {
                 var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);
                 var tasksynseq = (from item in ent.T_PRODUCE_TASK select item);
-
-                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
+                var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期
+                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
                 foreach (var item in lastsynseq)
                 {
                     T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
@@ -90,8 +90,8 @@ namespace InBound.Business
             {
                 var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);
                 var tasksynseq = (from item in ent.T_UN_TASK select item);
-
-                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
+                var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期
+                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
                 foreach (var item in lastsynseq)
                 {
                     T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
@@ -113,5 +113,7 @@ namespace InBound.Business
                 }
             }
         }
+
+     
     }
 }
