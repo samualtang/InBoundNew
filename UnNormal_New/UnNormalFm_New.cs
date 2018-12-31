@@ -889,7 +889,7 @@ namespace UnNormal_New
                labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
                labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS == 20).Sum(a => a.POKENUM) ?? 0);
                labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS != 20).Sum(a => a.POKENUM) ?? 0);
-               Thread.Sleep(5000);
+              
            }
            catch  {  } 
        }
