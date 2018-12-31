@@ -619,7 +619,7 @@ namespace UnNormal_New
            task_data.Rows.Clear(); 
            try
            {
-               List<TaskInfo> list =  TaskService.GetUNCustomer();
+               List<TaskInfo> list =  TaskService.GetUNCustomer().Where(a=> a.LineNum == ListLineNum[0]).ToList();
                if (list != null)
                {
                    DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
