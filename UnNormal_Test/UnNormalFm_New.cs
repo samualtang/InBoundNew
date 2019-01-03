@@ -130,27 +130,28 @@ namespace UnNormal_Test
         private void timerSendTask_Tick(object sender, EventArgs e)
         { 
             updateListBox("触发定时器");
-            if (SpyBiaozhiGroup.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
-            {
-                SpyBiaozhiGroup.Write(2, 0);
-                SpyBiaozhiGroup.Write(0, 0);
-            }
-            if (SpyBiaozhiGroup.Read(1).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
-            {
-                SpyBiaozhiGroup.Write(2, 1);
-                SpyBiaozhiGroup.Write(0, 1);
-            }
-            if (SpyBiaozhiGroup.Read(2).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
-            {
-                SpyBiaozhiGroup.Write(2, 2);
-                SpyBiaozhiGroup.Write(0, 2);
-            }
-            timerSendTask.Stop();
+            //if (SpyBiaozhiGroup.Read(0).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            //{
+            //    SpyBiaozhiGroup.Write(2, 0);
+            //    SpyBiaozhiGroup.Write(0, 0);
+            //}
+            //if (SpyBiaozhiGroup.Read(1).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            //{
+            //    SpyBiaozhiGroup.Write(2, 1);
+            //    SpyBiaozhiGroup.Write(0, 1);
+            //}
+            //if (SpyBiaozhiGroup.Read(2).ToString() != "0" && !issendone)//监控标志位第一组 产生跳变
+            //{
+            //    SpyBiaozhiGroup.Write(2, 2);
+            //    SpyBiaozhiGroup.Write(0, 2);
+            //}
+            //timerSendTask.Stop();
         }
 
 
 
         Group OnlyTaskGorup, FinishOnlyGoroup, SpyBiaozhiGroup, SpecialSmokeGroup1, SpecialSmokeGroup2;
+        Group AutoUnion;
         Group PackageMachineGroup1, PackageMachineGroup2, PackageMachineGroup3, PackageMachineGroup4, PackageMachineGroup5, PackageMachineGroup6, PackageMachineGroup7, PackageMachineGroup8;
         public void Connect()
         {
@@ -162,54 +163,70 @@ namespace UnNormal_Test
                 // Connect to the local server.
                 pIOPCServer = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
 
-                OnlyTaskGorup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
-                FinishOnlyGoroup = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//完成信号
-                SpyBiaozhiGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//监控标志位
-                SpecialSmokeGroup1 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//特异形烟 61,62道
-                SpecialSmokeGroup2 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//特异形烟 63,64道
-
-                PackageMachineGroup1 = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//包装机
-                PackageMachineGroup2 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//包装机
-                PackageMachineGroup3 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//包装机
-                PackageMachineGroup4 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);//包装机
-                PackageMachineGroup5 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);//包装机
-                PackageMachineGroup6 = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);//包装机
-                PackageMachineGroup7 = new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//包装机
-                PackageMachineGroup8 = new Group(pIOPCServer, 13, "group13", 1, LOCALE_ID);//包装机
-                for (int i = 1; i <= 8; i++)
-                {
-                    if (i == 1) { PackageMachineGroup1.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 2) { PackageMachineGroup2.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 3) { PackageMachineGroup3.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 4) { PackageMachineGroup4.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 5) { PackageMachineGroup5.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 6) { PackageMachineGroup6.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 7) { PackageMachineGroup7.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                    if (i == 8) { PackageMachineGroup8.addItem(ItemCollection.GetPackageMachineItem(i)); }
-                }
-               
-                //任务交互区
-                OnlyTaskGorup.addItem(ItemCollection.GetOnlyLineItem());//一个交互区
-                SpyBiaozhiGroup.addItem(ItemCollection.GetSpyOnlyLineItem());//监控任务标识位
-                SpecialSmokeGroup1.addItem(ItemCollection.GetSpecialSmokeItem1());//特异形烟 61,62道
-                SpecialSmokeGroup2.addItem(ItemCollection.GetSpecialSmokeItem2());//特异形烟 63,64道
+                //OnlyTaskGorup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
+                //FinishOnlyGoroup = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);//完成信号
+                //SpyBiaozhiGroup = new Group(pIOPCServer, 3, "group3", 1, LOCALE_ID);//监控标志位
+                //SpecialSmokeGroup1 = new Group(pIOPCServer, 4, "group4", 1, LOCALE_ID);//特异形烟 61,62道
+                //SpecialSmokeGroup2 = new Group(pIOPCServer, 5, "group5", 1, LOCALE_ID);//特异形烟 63,64道
             
+                //PackageMachineGroup1 = new Group(pIOPCServer, 6, "group6", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup2 = new Group(pIOPCServer, 7, "group7", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup3 = new Group(pIOPCServer, 8, "group8", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup4 = new Group(pIOPCServer, 9, "group9", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup5 = new Group(pIOPCServer, 10, "group10", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup6 = new Group(pIOPCServer, 11, "group11", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup7 = new Group(pIOPCServer, 12, "group12", 1, LOCALE_ID);//包装机
+                //PackageMachineGroup8 = new Group(pIOPCServer, 13, "group13", 1, LOCALE_ID);//包装机
+                //for (int i = 1; i <= 8; i++)
+                //{
+                //    if (i == 1) { PackageMachineGroup1.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 2) { PackageMachineGroup2.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 3) { PackageMachineGroup3.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 4) { PackageMachineGroup4.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 5) { PackageMachineGroup5.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 6) { PackageMachineGroup6.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 7) { PackageMachineGroup7.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //    if (i == 8) { PackageMachineGroup8.addItem(ItemCollection.GetPackageMachineItem(i)); }
+                //}
+               
+                ////任务交互区
+                //OnlyTaskGorup.addItem(ItemCollection.GetOnlyLineItem());//一个交互区
+                //SpyBiaozhiGroup.addItem(ItemCollection.GetSpyOnlyLineItem());//监控任务标识位
+                //SpecialSmokeGroup1.addItem(ItemCollection.GetSpecialSmokeItem1());//特异形烟 61,62道
+                //SpecialSmokeGroup2.addItem(ItemCollection.GetSpecialSmokeItem2());//特异形烟 63,64道
 
+                AutoUnion = new Group(pIOPCServer, 14, "group14", 1, LOCALE_ID);
+                AutoUnion.addItem(ItemCollection.getUnionTaskItem());
                 //完成信号交互区 
-                FinishOnlyGoroup.addItem(ItemCollection.GetOnlyLineFinishTaskItem());//一个交互区完成信号
+                //FinishOnlyGoroup.addItem(ItemCollection.GetOnlyLineFinishTaskItem());//一个交互区完成信号
               
                 //回调 
 
-                SpyBiaozhiGroup.callback += OnDataChange;
-                FinishOnlyGoroup.callback += OnDataChange; 
-              
+                //SpyBiaozhiGroup.callback += OnDataChange;
+                //FinishOnlyGoroup.callback += OnDataChange;
 
-                checkConnection();
+                checkConnection1();
+                //checkConnection();
             
             }
             catch (Exception e)
             {
                 updateListBox("连接服务器失败:"+e.Message);
+            }
+        }
+        public void checkConnection1()
+        {
+            int flag = AutoUnion.ReadD(0).CastTo<int>(-1);
+            if (flag == -1)
+            {
+                updateListBox("连接服务器失败,请检查网络.");
+                writeLog.Write(" 连接服务器失败,请检查网络.");
+
+            }
+            else
+            {
+                updateListBox("连接服务器成功......");
+                writeLog.Write(" 连接服务器成功......");
             }
         }
         public void checkConnection()
@@ -1199,17 +1216,56 @@ namespace UnNormal_Test
 
        private void TimeToClike_Tick(object sender, EventArgs e)
        {
-           List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
-           labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
-           labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ?? 0);
-           labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0);
-           if ((list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0) == 0)
-           {
-               TimeToClike.Stop();
-           }
+           Auto();
+        
+           //List<T_UN_POKE> list2 = TaskService.GetUNTaskInfo();
+           //labelALLcount.Text = "任务总数：" + (list2.Sum(a => a.POKENUM) ?? 0);
+           //labelFIinshCOunt.Text = "完成数量：" + (list2.Where(a => a.STATUS != 10).Sum(a => a.POKENUM) ?? 0);
+           //labeleftCOunt.Text = "剩余数量：" + (list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0);
+           //if ((list2.Where(a => a.STATUS == 10).Sum(a => a.POKENUM) ?? 0) == 0)
+           //{
+           //    TimeToClike.Stop();
+           //}
        }
 
+       private void button8_Click(object sender, EventArgs e)
+       {
+           Connect();
+           writeLog.Write("连接ok,启动定时器时间(10秒触发一次)");
+           updateListBox("连接ok,启动定时器时间(10秒触发一次)");
+           TimeToClike.Interval = 1000 * 10;
+       }
 
+       void Auto()
+       {
+           try
+           {
+
+               List<decimal> list = null;// InBound.Business.FolloTaskService.GetMaxSortingSortnum();
+               int index = 0;
+               foreach (var item in list)
+               {
+                  
+                   AutoUnion.Write(list[index], (index) * 6);
+                   writeLog.Write("获取到任务号" + item + "索引值为:" + (index) * 6);
+                   updateListBox("获取到任务号" + item + "索引值为:" + (index) * 6);
+                   index++;
+               }
+           }
+           catch (Exception ex)
+           {
+               writeLog.Write(ex.Message);
+               updateListBox(ex.Message);
+               Thread.Sleep(10000);
+               if (ex.InnerException != null && ex.InnerException.Message != null)
+               {
+                   writeLog.Write(ex.InnerException.Message);
+                   updateListBox(ex.InnerException.Message);
+               }
+               Auto();//异常后重新发送
+
+           }
+       }
 
     
       
