@@ -45,6 +45,16 @@ namespace UnNormal_Test.Model
            return list;
        }
 
+       public static List<string> getUnionTaskItem()
+       {
+           List<string> list = new List<string>();
+           for (int i = 0; i < 32; i++)
+           {
+               list.Add("S7:[UnionConnection]DB30,DINT" + (i) * 6);//任务号
+               list.Add("S7:[UnionConnection]DB30,INT" + (4 + (i) * 6));//已抓烟数量
+           }
+           return list;
+       }
        /// <summary>
        /// 一个DB交互区
        /// </summary>
