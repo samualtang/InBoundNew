@@ -49,7 +49,7 @@ namespace highSpeed.baseData
             this.box_type.DataSource = conditiontable;
             this.box_type.DisplayMember = "txtvalue";
             this.box_type.ValueMember = "value";
-            this.box_type.SelectedIndex = 0;
+            this.box_type.SelectedIndex = 1;
 
             
             this.btn_submit.Enabled = false;

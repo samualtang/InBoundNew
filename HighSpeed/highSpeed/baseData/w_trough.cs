@@ -78,7 +78,7 @@ namespace highSpeed.baseData
             this.box_condition.DataSource = conditiontable;
             this.box_condition.DisplayMember = "txtvalue";
             this.box_condition.ValueMember = "value";
-            this.box_condition.SelectedIndex = 0;
+            this.box_condition.SelectedIndex = 1;
 
             //初始化启停按钮状态
             this.cbtype.SelectedIndex = 0;
