@@ -655,7 +655,7 @@ namespace InBound.Business
                 //特异形烟
                 var querySS = (from item in data.T_UN_POKE
                              join item2 in data.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                               where item.SENDTASKNUM == query.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061) //&& item.GRIDNUM == status
+                               where item.SENDTASKNUM == query.SENDTASKNUM && (item.MACHINESEQ == 1061 || item.MACHINESEQ == 2061 || item.MACHINESEQ == 3061 || item.MACHINESEQ == 4061) //&& item.GRIDNUM == status
                              orderby item.SORTNUM, item.SENDTASKNUM,item.MACHINESEQ,item.TROUGHNUM
                              select new T_UN_SpecialSmoke { POKEID = item.POKEID, CIGARETTENAME = item2.ITEMNAME, CIGARETTECODE = item.CIGARETTECODE, MACHINESEQ = item.MACHINESEQ ?? 0, SORTNUM = item.SORTNUM ?? 0, SENDTASKNUM = item.SENDTASKNUM ?? 0, PACKAGEMACHINE = item.PACKAGEMACHINE ?? 0, POKENUM = item.POKENUM ?? 0, LENGHT = item2.ILENGTH ?? 0, WIDTH = item2.IWIDTH ?? 0 }).ToList();
                
@@ -669,7 +669,7 @@ namespace InBound.Business
                 foreach (var item in query1.GroupBy(a => a.MACHINESEQ).Select(g => new { MACHINESEQ = g.Key, QTY = g.Sum(a => a.POKENUM) }).ToList())//1-60烟仓 + 6 烟柜
                 {
                     machineseq = (item.MACHINESEQ ?? 0);
-                    if (machineseq != 1061 && machineseq != 2061)//不包括特异形烟道
+                    if (machineseq != 1061 && machineseq != 2061 && machineseq != 3061 && machineseq != 4061)//不包括特异形烟道
                     {
                         if (item.MACHINESEQ > 1000 && item.MACHINESEQ < 2000)//一线烟仓
                         {
