@@ -396,7 +396,7 @@ namespace InBound.Business
                             if (sum == 10)
                             {
                                 Listmachineseq[i] = list[i].POKEID;
-                                for (int j = (i - 1); j >= 0; j--)
+                                for (int j =  i  ; j >= 0; j--)//等于10的情况,将全部都去掉
                                 {
                                     list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
                                 }
@@ -407,7 +407,7 @@ namespace InBound.Business
                             {
                                 endNum = list.Find(x => x.POKEID == list[i - 1].POKEID).POKENUM - (list[i - 1].POKENUM - (10 - lastNum)); //对相加大于10最后一个pokenum的值 所取的数量 相减
                                 list.Find(z => z.POKEID == list[i].POKEID).POKENUM -= endNum;
-                                for (int j = (i - 1); j >= 0; j--)
+                                for (int j = (i - 1); j >= 0; j--)//大于10的情况下, 保留最后相加的数量,品牌
                                 {
                                     list.RemoveAll(a => a.POKEID == Listmachineseq[j]);
                                 }
