@@ -56,7 +56,7 @@ namespace highSpeed.orderHandle
                 {
                     list = ScheduleService.GetUnnormalOrderInfo().Where(a => a.TASKQUANTITY >= 90).OrderBy(a => a.REGIONCODE).ToList();
                 }
-                if (list == null)
+                if (list.Count  == 0)
                 { 
                     MessageBox.Show("当前没有待拆分的批次!"  );
                     return;
