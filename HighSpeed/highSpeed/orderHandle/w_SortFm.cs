@@ -27,7 +27,7 @@ namespace highSpeed.orderHandle
         public delegate void HandleIsSorting(int flage,bool isOrnot);
         HandleIsSorting handlesort;
         int times = 1;//排程时间记录
-
+     
         bool isSort =false;//正在排程标识符
         public w_SortFm()
         {
@@ -40,6 +40,8 @@ namespace highSpeed.orderHandle
             rdbUnionDan.Checked = true;
             dgvSortInfo.AllowUserToAddRows = false;
             panel3.VisibleChanged += new EventHandler(panel3_VisibleChanged);
+
+     
             //this.pager1.GetChildAtPoint(7).Visible = false;
             seek();
            // pager1.Width = dgvSortInfo.Width;
@@ -448,6 +450,44 @@ namespace highSpeed.orderHandle
                 Db.Close();
                 writeLog.Write("数据验证结束");
             }
+        }
+        /// <summary>
+        /// 查找是否已经打开
+        /// </summary>
+        /// <param name="frm"></param>
+        /// <returns></returns>
+        private bool CheckExist(Form frm)
+        {
+            bool blResult = false;
+            for (int i = 0; i < MdiChildren.Length; i++)
+            {
+                if (MdiChildren[i].GetType().Name == frm.GetType().Name)
+                {
+                    Form tmpFrm = MdiChildren[i];
+                    if (tmpFrm.Text == frm.Text)
+                    {
+                        blResult = true;
+                        tmpFrm.Activate();
+                    }
+                    else if (frm.Text == "")
+                    {
+                        blResult = true;
+                        tmpFrm.Activate();
+                    }
+                    else if (frm.GetType().Name.ToLower() == "w_export_new")
+                    {
+                        blResult = true;
+                        tmpFrm.Activate();
+                    }
+                }
+            }
+            return blResult;
+        }
+  
+        private void btnTransfor_Click(object sender, EventArgs e)
+        {
+            w_order_Split wos = new w_order_Split();
+            wos.ShowDialog();
         }
 
 

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnVid = new System.Windows.Forms.Button();
             this.btnPokeSeq = new System.Windows.Forms.Button();
             this.btnRef = new System.Windows.Forms.Button();
             this.rdbUnUnionDan = new System.Windows.Forms.RadioButton();
@@ -45,7 +46,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
-            this.btnVid = new System.Windows.Forms.Button();
+            this.btnTransfor = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -55,6 +56,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnTransfor);
             this.panel1.Controls.Add(this.btnVid);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
@@ -67,6 +69,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1012, 48);
             this.panel1.TabIndex = 0;
+            // 
+            // btnVid
+            // 
+            this.btnVid.Location = new System.Drawing.Point(958, 12);
+            this.btnVid.Name = "btnVid";
+            this.btnVid.Size = new System.Drawing.Size(98, 23);
+            this.btnVid.TabIndex = 5;
+            this.btnVid.Text = "验证下游数据";
+            this.btnVid.UseVisualStyleBackColor = true;
+            this.btnVid.Click += new System.EventHandler(this.btnVid_Click);
             // 
             // btnPokeSeq
             // 
@@ -227,15 +239,15 @@
             this.pbLoading.TabIndex = 27;
             this.pbLoading.TabStop = false;
             // 
-            // btnVid
+            // btnTransfor
             // 
-            this.btnVid.Location = new System.Drawing.Point(850, 12);
-            this.btnVid.Name = "btnVid";
-            this.btnVid.Size = new System.Drawing.Size(98, 23);
-            this.btnVid.TabIndex = 5;
-            this.btnVid.Text = "验证下游数据";
-            this.btnVid.UseVisualStyleBackColor = true;
-            this.btnVid.Click += new System.EventHandler(this.btnVid_Click);
+            this.btnTransfor.Location = new System.Drawing.Point(853, 12);
+            this.btnTransfor.Name = "btnTransfor";
+            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
+            this.btnTransfor.TabIndex = 6;
+            this.btnTransfor.Text = "订单拆分";
+            this.btnTransfor.UseVisualStyleBackColor = true;
+            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
             // 
             // w_SortFm
             // 
@@ -282,5 +294,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbLoading;
         private System.Windows.Forms.Button btnVid;
+        private System.Windows.Forms.Button btnTransfor;
     }
 }

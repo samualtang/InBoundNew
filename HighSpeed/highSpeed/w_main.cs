@@ -937,6 +937,20 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void 订单拆分ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_order_Split frm = new w_order_Split();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
  
 
     
