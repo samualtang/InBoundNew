@@ -57,8 +57,8 @@ namespace highSpeed.orderHandle
                     list = ScheduleService.GetUnnormalOrderInfo().Where(a => a.TASKQUANTITY >= 90).OrderBy(a => a.REGIONCODE).ToList();
                 }
                 if (list.Count  == 0)
-                { 
-                    MessageBox.Show("当前没有待拆分的批次!"  );
+                {
+                    orderdata.Rows.Clear();
                     return;
                 }
 
@@ -115,7 +115,7 @@ namespace highSpeed.orderHandle
                         progressBar1.Visible = true; 
                         progressBar1.Value = 0;
                         Application.DoEvents();
-                        if (i == 0) label2.Text = "正在接收" + code[i] + "订单数据...";
+                        if (i == 0) label2.Text = "正在拆分" + code[i] + "订单数据...";
                         //MessageBox.Show(label2.Text);
                         sqlpara = new OracleParameter[3];
                         sqlpara[0] = new OracleParameter("p_billcode", code[i]); 
@@ -140,9 +140,9 @@ namespace highSpeed.orderHandle
 
                         if (errcode == "1")
                         {
-                            if (i + 1 < len) tmpstr = "正在接收" + code[i + 1] + "车组订单数据...";
+                            if (i + 1 < len) tmpstr = "正在拆分" + code[i + 1] + "订单数据...";
                             else tmpstr = "";
-                            label2.Text = code[i] + "车组订单数据接收完毕..." + tmpstr;
+                            label2.Text = code[i] + "订单数据接拆分完毕..." + tmpstr;
                             label2.Refresh();
                             indexstr = indexstr + "," + code[i];
                         }
@@ -153,9 +153,7 @@ namespace highSpeed.orderHandle
                             break;
                         }
                         //MessageBox.Show(label2.Text);
-                    }
-
-                    //string msg = "订单";
+                    } 
 
                     panel2.Visible = false;
                     label2.Visible = false;

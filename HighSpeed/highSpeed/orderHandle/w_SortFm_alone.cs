@@ -439,7 +439,7 @@ namespace highSpeed.orderHandle
             if (errcode == "1")
             {
                 MessageBox.Show("常规烟排程数据正常,点击确认后将开放数据给下游获取");
-                ScheduleService.InsertSynseqInfo_NormalAlone();
+                ScheduleService.InsertSynseqInfo("1");
             }
             else
             {

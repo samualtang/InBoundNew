@@ -259,6 +259,7 @@
           <Property Name="ORDERDATE" Type="date" />
           <Property Name="PMSTATE" Type="varchar2" MaxLength="20" />
           <Property Name="TBJSTATE" Type="varchar2" MaxLength="20" />
+          <Property Name="PACKAGENO" Type="number" />
         </EntityType>
         <EntityType Name="T_PRODUCE_TASK">
           <Key>
@@ -1860,6 +1861,7 @@
           <Property Type="DateTime" Name="ORDERDATE" />
           <Property Type="String" Name="PMSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TBJSTATE" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PACKAGENO" Precision="38" Scale="0" />
         </EntityType>
         <EntityType Name="T_RETURN_TASK">
           <Key>
@@ -2781,6 +2783,7 @@
           <EntitySetMapping Name="T_PRODUCE_SYNSEQ">
             <EntityTypeMapping TypeName="Model.T_PRODUCE_SYNSEQ">
               <MappingFragment StoreEntitySet="T_PRODUCE_SYNSEQ">
+                <ScalarProperty Name="PACKAGENO" ColumnName="PACKAGENO" />
                 <ScalarProperty Name="TBJSTATE" ColumnName="TBJSTATE" />
                 <ScalarProperty Name="PMSTATE" ColumnName="PMSTATE" />
                 <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />

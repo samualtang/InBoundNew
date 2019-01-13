@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using InBound.Model;
+using InBound.Model; 
+ 
 
 namespace InBound.Business
 {
     public class ScheduleService : BaseService
     {
+        
         /// <summary>
         /// 异标合一
         /// </summary>
@@ -24,7 +26,11 @@ namespace InBound.Business
                 if (date != null)
                 {
                     //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
-                    var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a=> a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
+                    var lastsynseq = tasksynseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGEMACHINE }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGEMACHINE }).ToList()
+                        .Except( synseq.GroupBy( a=> new {a.SYNSEQ,a.PACKAGENO}).Select(a=> new { synseq = a.Key.SYNSEQ , packagemachine = a.Key.PACKAGENO}).ToList());
+                         
+                    
+                    
                     foreach (var item in lastsynseq)
                     {
                         T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
@@ -32,8 +38,9 @@ namespace InBound.Business
                         T_synseq.SYNSEQ = item.synseq;
                         T_synseq.PMSTATE = pmState;
                         T_synseq.TBJSTATE = "0";
-                        T_synseq.QUANTITY = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Sum(a => a.ORDERQUANTITY);
-                        T_synseq.ORDERDATE = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Select(a => new { orderdata = a.ORDERDATE }).FirstOrDefault().orderdata;
+                        T_synseq.PACKAGENO = item.packagemachine;
+                        T_synseq.QUANTITY = GetSeq("select sum(quantity) from  kesheng.v_produce_packageinfo where export = "+  item.packagemachine + " and  synseq  = "+item.synseq);
+                        T_synseq.ORDERDATE = date.orderdate;
                         ent.AddToT_PRODUCE_SYNSEQ(T_synseq);
                     }
                 }
@@ -48,61 +55,35 @@ namespace InBound.Business
             }
         }
 
+ 
         /// <summary>
-        /// 单独常规
-        /// </summary>
-        /// <returns></returns>
-        public static bool InsertSynseqInfo_NormalAlone( )
-        {
-            using (Entities ent = new Entities())
-            {
-                var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);
-                var tasksynseq = (from item in ent.T_PRODUCE_TASK select item);
-                var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期
-                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
-                foreach (var item in lastsynseq)
-                {
-                    T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
-                    T_synseq.ID = GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
-                    T_synseq.SYNSEQ = item.synseq;
-                    T_synseq.PMSTATE = "1";
-                    T_synseq.TBJSTATE = "0";
-                    T_synseq.QUANTITY = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Sum(a => a.ORDERQUANTITY);
-                    T_synseq.ORDERDATE = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Select(a => new { orderdata = a.ORDERDATE }).FirstOrDefault().orderdata;
-                    ent.AddToT_PRODUCE_SYNSEQ(T_synseq);
-                }
-                if (ent.SaveChanges() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        /// <summary>
-        /// 单独异型
+        /// 异形烟单独异型
         /// </summary>
         /// <returns></returns>
         public static bool InsertSynseqInfo_UnNormalAlone()
         {
             using (Entities ent = new Entities())
             {
-                var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);
-                var tasksynseq = (from item in ent.T_UN_TASK select item);
+                var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);//获取批次表
+                var tasksynseq = (from item in ent.T_UN_TASK select item);//获取TASK表
                 var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期
-                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).ToList();
-                foreach (var item in lastsynseq)
+                if (date != null)
                 {
-                    T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
-                    T_synseq.ID = GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
-                    T_synseq.SYNSEQ = item.synseq;
-                    T_synseq.PMSTATE = "1";
-                    T_synseq.TBJSTATE = "0";
-                    T_synseq.QUANTITY = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Sum(a => a.ORDERQUANTITY);
-                    T_synseq.ORDERDATE = tasksynseq.Where(a => a.SYNSEQ == item.synseq).Select(a => new { orderdata = a.ORDERDATE }).FirstOrDefault().orderdata;
-                    ent.AddToT_PRODUCE_SYNSEQ(T_synseq);
+                    //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
+                    var lastsynseq = tasksynseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGEMACHINE }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGEMACHINE }).ToList()
+                        .Except(synseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGENO }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGENO }).ToList()); 
+                    foreach (var item in lastsynseq)
+                    {
+                        T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
+                        T_synseq.ID = GetSeq("select t_produce_pokeseq_pokeid.Nextval from dual");
+                        T_synseq.SYNSEQ = item.synseq;
+                        T_synseq.PMSTATE = "1";
+                        T_synseq.TBJSTATE = "0";
+                        T_synseq.PACKAGENO = item.packagemachine;
+                        T_synseq.QUANTITY = GetSeq("select sum(quantity) from  kesheng.v_produce_packageinfo where export = " + item.packagemachine + " and  synseq  = " + item.synseq);
+                        T_synseq.ORDERDATE = date.orderdate;
+                        ent.AddToT_PRODUCE_SYNSEQ(T_synseq);
+                    }
                 }
                 if (ent.SaveChanges() > 0)
                 {
@@ -111,7 +92,7 @@ namespace InBound.Business
                 else
                 {
                     return false;
-                }
+                } 
             }
         }
 
@@ -139,31 +120,35 @@ namespace InBound.Business
                  var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);//获取批次表
                 var tasksynseq = (from item in ent.T_UN_TASK select item);//获取TASK表
                 var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期 
-               //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
-                var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a=> a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).FirstOrDefault();
-                if (lastsynseq != null)
+                if (date != null)
                 {
-                    var alredyorder = (from item in ent.T_UN_POKE
-                                       group item by new { package = item.PACKAGEMACHINE, billcode = item.BILLCODE }
-                                           into g
-                                           select new { g.Key.billcode, g.Key.package }).ToList();//先给订单分组 group by 
-                    var count =( from item in alredyorder
-                                group item by new { item.package, item.billcode, count = alredyorder.Count(a => a.billcode == item.billcode) }
-                                    into c
-                                    where c.Key.count > 1
-                                     select new { c.Key.billcode }).Distinct().ToList();//取出一个订单在两个包装机的订单号 相当于 having    Count( distinct  packagemachine) > 1)
-
-                        
-                    var order = (from item in ent.T_UN_TASK where item.SYNSEQ == lastsynseq.synseq select item).ToList();
-                    foreach (var item in count)//移除已经拆单的订单号
+                    //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
+                    var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).FirstOrDefault();
+                    if (lastsynseq != null)
                     {
-                        order.RemoveAll(a => a.BILLCODE == item.billcode);
+                        var alredyorder = (from item in ent.T_UN_POKE
+                                           group item by new { package = item.PACKAGEMACHINE, billcode = item.BILLCODE }
+                                               into g
+                                               select new { g.Key.billcode, g.Key.package }).ToList();//先给订单分组 group by 
+                        var count = (from item in alredyorder
+                                     group item by new { item.package, item.billcode, count = alredyorder.Count(a => a.billcode == item.billcode) }
+                                         into c
+                                         where c.Key.count > 1
+                                         select new { c.Key.billcode }).Distinct().ToList();//取出一个订单在两个包装机的订单号 相当于 having    Count( distinct  packagemachine) > 1)
+
+
+                        var order = (from item in ent.T_UN_TASK where item.SYNSEQ == lastsynseq.synseq select item).ToList();
+                        foreach (var item in count)//移除已经拆单的订单号
+                        {
+                            order.RemoveAll(a => a.BILLCODE == item.billcode);
+                        }
+                        return order;
                     }
-                    return order;
+                    else
+                        return new List<T_UN_TASK>();
                 }
                 else
-                    return  new List<T_UN_TASK>();
-                
+                    return new List<T_UN_TASK>();
             }
         }
     }

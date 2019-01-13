@@ -15,7 +15,6 @@ using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using InBound.Pub;
 
 [assembly: EdmSchemaAttribute()]
 namespace InBound
@@ -32,7 +31,8 @@ namespace InBound
         /// <summary>
         /// 请使用应用程序配置文件的“Entities”部分中的连接字符串初始化新 Entities 对象。
         /// </summary>
-        public Entities() : base(Security.ConnectionString, "Entities")
+        public Entities()
+            : base(Security.ConnectionString, "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -4901,6 +4901,30 @@ namespace InBound
         private global::System.String _TBJSTATE;
         partial void OnTBJSTATEChanging(global::System.String value);
         partial void OnTBJSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PACKAGENO
+        {
+            get
+            {
+                return _PACKAGENO;
+            }
+            set
+            {
+                OnPACKAGENOChanging(value);
+                ReportPropertyChanging("PACKAGENO");
+                _PACKAGENO = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PACKAGENO");
+                OnPACKAGENOChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PACKAGENO;
+        partial void OnPACKAGENOChanging(Nullable<global::System.Decimal> value);
+        partial void OnPACKAGENOChanged();
 
         #endregion
 
