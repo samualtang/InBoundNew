@@ -15,6 +15,7 @@ using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using InBound.Pub;
 
 [assembly: EdmSchemaAttribute()]
 namespace InBound
