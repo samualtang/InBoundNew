@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblBcd = new System.Windows.Forms.Label();
+            this.btnSelectAll = new System.Windows.Forms.Button();
+            this.btnCheous = new System.Windows.Forms.Button();
             this.txtNum = new System.Windows.Forms.TextBox();
             this.txtCutName = new System.Windows.Forms.TextBox();
             this.lblNum = new System.Windows.Forms.Label();
@@ -36,9 +39,6 @@
             this.lblinfo = new System.Windows.Forms.Label();
             this.btn_search = new System.Windows.Forms.Button();
             this.orderdata = new System.Windows.Forms.DataGridView();
-            this.btnCheous = new System.Windows.Forms.Button();
-            this.btnSelectAll = new System.Windows.Forms.Button();
-            this.lblBcd = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -46,6 +46,8 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dpid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count_hs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.packagemachine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainbelt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.order_qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.billcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
@@ -70,6 +72,34 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(979, 61);
             this.panel1.TabIndex = 1;
+            // 
+            // lblBcd
+            // 
+            this.lblBcd.AutoSize = true;
+            this.lblBcd.Location = new System.Drawing.Point(566, 43);
+            this.lblBcd.Name = "lblBcd";
+            this.lblBcd.Size = new System.Drawing.Size(0, 12);
+            this.lblBcd.TabIndex = 10;
+            // 
+            // btnSelectAll
+            // 
+            this.btnSelectAll.Location = new System.Drawing.Point(568, 14);
+            this.btnSelectAll.Name = "btnSelectAll";
+            this.btnSelectAll.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectAll.TabIndex = 9;
+            this.btnSelectAll.Text = "全选";
+            this.btnSelectAll.UseVisualStyleBackColor = true;
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
+            // 
+            // btnCheous
+            // 
+            this.btnCheous.Location = new System.Drawing.Point(658, 15);
+            this.btnCheous.Name = "btnCheous";
+            this.btnCheous.Size = new System.Drawing.Size(75, 23);
+            this.btnCheous.TabIndex = 8;
+            this.btnCheous.Text = "异型烟拆分";
+            this.btnCheous.UseVisualStyleBackColor = true;
+            this.btnCheous.Click += new System.EventHandler(this.btnCheous_Click);
             // 
             // txtNum
             // 
@@ -133,6 +163,8 @@
             this.Column1,
             this.dpid,
             this.count_hs,
+            this.packagemachine,
+            this.mainbelt,
             this.order_qty,
             this.billcode});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -144,34 +176,6 @@
             this.orderdata.Size = new System.Drawing.Size(979, 443);
             this.orderdata.TabIndex = 2;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellEndEdit);
-            // 
-            // btnCheous
-            // 
-            this.btnCheous.Location = new System.Drawing.Point(658, 15);
-            this.btnCheous.Name = "btnCheous";
-            this.btnCheous.Size = new System.Drawing.Size(75, 23);
-            this.btnCheous.TabIndex = 8;
-            this.btnCheous.Text = "异型烟拆分";
-            this.btnCheous.UseVisualStyleBackColor = true;
-            this.btnCheous.Click += new System.EventHandler(this.btnCheous_Click);
-            // 
-            // btnSelectAll
-            // 
-            this.btnSelectAll.Location = new System.Drawing.Point(568, 14);
-            this.btnSelectAll.Name = "btnSelectAll";
-            this.btnSelectAll.Size = new System.Drawing.Size(75, 23);
-            this.btnSelectAll.TabIndex = 9;
-            this.btnSelectAll.Text = "全选";
-            this.btnSelectAll.UseVisualStyleBackColor = true;
-            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
-            // 
-            // lblBcd
-            // 
-            this.lblBcd.AutoSize = true;
-            this.lblBcd.Location = new System.Drawing.Point(566, 43);
-            this.lblBcd.Name = "lblBcd";
-            this.lblBcd.Size = new System.Drawing.Size(0, 12);
-            this.lblBcd.TabIndex = 10;
             // 
             // panel2
             // 
@@ -233,6 +237,16 @@
             this.count_hs.ReadOnly = true;
             this.count_hs.Width = 250;
             // 
+            // packagemachine
+            // 
+            this.packagemachine.HeaderText = "包装机";
+            this.packagemachine.Name = "packagemachine";
+            // 
+            // mainbelt
+            // 
+            this.mainbelt.HeaderText = "主皮带";
+            this.mainbelt.Name = "mainbelt";
+            // 
             // order_qty
             // 
             this.order_qty.DataPropertyName = "order_qty";
@@ -285,6 +299,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dpid;
         private System.Windows.Forms.DataGridViewTextBoxColumn count_hs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn packagemachine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mainbelt;
         private System.Windows.Forms.DataGridViewTextBoxColumn order_qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn billcode;
     }

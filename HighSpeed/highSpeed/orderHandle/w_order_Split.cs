@@ -72,8 +72,11 @@ namespace highSpeed.orderHandle
                     this.orderdata.Rows[index].Cells[2].Value = item.REGIONCODE;//车组信息 
                     this.orderdata.Rows[index].Cells[3].Value = item.CUSTOMERNAME;//客户名称
                     this.orderdata.Rows[index].Cells[4].Value = item.TASKQUANTITY;//异形烟量
-                    this.orderdata.Rows[index].Cells[5].Value = item.BILLCODE;//客户编号 
+                    this.orderdata.Rows[index].Cells[5].Value = item.PACKAGEMACHINE;//包装机
+                    this.orderdata.Rows[index].Cells[6].Value = item.MAINBELT;//主皮带
+                    this.orderdata.Rows[index].Cells[7].Value = item.BILLCODE;//订单编号
                 }
+
 
             }
             catch (Exception ex)
