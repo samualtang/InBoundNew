@@ -46,9 +46,9 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dpid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.count_hs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.order_qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.packagemachine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainbelt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.order_qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.billcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
@@ -163,9 +163,9 @@
             this.Column1,
             this.dpid,
             this.count_hs,
+            this.order_qty,
             this.packagemachine,
             this.mainbelt,
-            this.order_qty,
             this.billcode});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderdata.Location = new System.Drawing.Point(0, 61);
@@ -237,6 +237,13 @@
             this.count_hs.ReadOnly = true;
             this.count_hs.Width = 250;
             // 
+            // order_qty
+            // 
+            this.order_qty.DataPropertyName = "order_qty";
+            this.order_qty.HeaderText = "异形烟量";
+            this.order_qty.Name = "order_qty";
+            this.order_qty.ReadOnly = true;
+            // 
             // packagemachine
             // 
             this.packagemachine.HeaderText = "包装机";
@@ -246,13 +253,6 @@
             // 
             this.mainbelt.HeaderText = "主皮带";
             this.mainbelt.Name = "mainbelt";
-            // 
-            // order_qty
-            // 
-            this.order_qty.DataPropertyName = "order_qty";
-            this.order_qty.HeaderText = "异形烟量";
-            this.order_qty.Name = "order_qty";
-            this.order_qty.ReadOnly = true;
             // 
             // billcode
             // 
@@ -299,9 +299,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dpid;
         private System.Windows.Forms.DataGridViewTextBoxColumn count_hs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn order_qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn packagemachine;
         private System.Windows.Forms.DataGridViewTextBoxColumn mainbelt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn order_qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn billcode;
     }
 }

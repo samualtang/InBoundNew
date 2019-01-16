@@ -198,7 +198,7 @@ namespace highSpeed.orderHandle
             {
                 bool obj = (bool)this.orderdata.CurrentRow.Cells[0].EditedFormattedValue;
 
-                String czcode = this.orderdata.CurrentRow.Cells[5].Value + "";//modify by tjl
+                String czcode = this.orderdata.CurrentRow.Cells[7].Value + "";//modify by tjl
                 String czcodestr = this.lblBcd.Text;
                 if (obj)
                 {
@@ -221,7 +221,7 @@ namespace highSpeed.orderHandle
             for (int i = 0; i < this.orderdata.RowCount; i++)
             {
                 orderdata.Rows[i].Cells[0].Value = "true";
-                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[5].Value + "";
+                czcodestr = czcodestr + "," + orderdata.Rows[i].Cells[7].Value + "";
             }
             this.lblBcd.Text = czcodestr;
         }
