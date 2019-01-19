@@ -39,6 +39,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btn_refresh = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -46,18 +47,19 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_refresh);
             this.panel1.Controls.Add(this.btn_close);
             this.panel1.Controls.Add(this.btn_export);
             this.panel1.Controls.Add(this.lab_showinfo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(758, 52);
+            this.panel1.Size = new System.Drawing.Size(882, 52);
             this.panel1.TabIndex = 0;
             // 
             // btn_close
             // 
-            this.btn_close.Location = new System.Drawing.Point(620, 18);
+            this.btn_close.Location = new System.Drawing.Point(734, 18);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(75, 23);
             this.btn_close.TabIndex = 7;
@@ -67,7 +69,7 @@
             // 
             // btn_export
             // 
-            this.btn_export.Location = new System.Drawing.Point(539, 18);
+            this.btn_export.Location = new System.Drawing.Point(653, 18);
             this.btn_export.Name = "btn_export";
             this.btn_export.Size = new System.Drawing.Size(75, 23);
             this.btn_export.TabIndex = 6;
@@ -98,7 +100,7 @@
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(758, 210);
+            this.orderdata.Size = new System.Drawing.Size(882, 210);
             this.orderdata.TabIndex = 1;
             // 
             // batchcode
@@ -155,11 +157,21 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
+            // btn_refresh
+            // 
+            this.btn_refresh.Location = new System.Drawing.Point(503, 18);
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
+            this.btn_refresh.TabIndex = 8;
+            this.btn_refresh.Text = "刷新";
+            this.btn_refresh.UseVisualStyleBackColor = true;
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
+            // 
             // win_export
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 262);
+            this.ClientSize = new System.Drawing.Size(882, 262);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
@@ -188,5 +200,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button btn_refresh;
     }
 }

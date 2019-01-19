@@ -80,7 +80,7 @@ namespace highSpeed.baseData
             specialtroughlist = SpecialSmoke.spcialgetalltrough(1);
 
             //comboBox_template.DataSource = linenums.Select(x => x).ToList(); //以一线为模板同步其他线 模板线不允许选择
-            comboBox_template.SelectedIndex = 0;
+            //comboBox_template.SelectedIndex = 0;
             comboBox_target.DataSource = linenums.Select(x => x).ToList();
 
             comboBox_yc1.DataSource = troughlist.Select(x => x.troughnum).ToList();
@@ -294,6 +294,26 @@ namespace highSpeed.baseData
             else
             {
                 MessageBox.Show("请选择要参与互换的混合道品牌");
+            }
+        }
+
+        private void comboBox_target_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(comboBox_target.SelectedValue.ToString()=="1")
+            {
+                btn_template.Text = "2";
+            }
+            if (comboBox_target.SelectedValue.ToString() == "2")
+            {
+                btn_template.Text = "1";
+            }
+            if (comboBox_target.SelectedValue.ToString() == "3")
+            {
+                btn_template.Text = "4";
+            }
+            if (comboBox_target.SelectedValue.ToString() == "4")
+            {
+                btn_template.Text = "3";
             }
         }
 

@@ -214,7 +214,7 @@
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
             this.Name = "w_un_schedule_diy";
-            this.Text = "预排程";
+            this.Text = "异型烟手工线单独排程";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.win_schedule_FormClosing);
             this.Load += new System.EventHandler(this.win_schedule_Load);
             this.panel1.ResumeLayout(false);

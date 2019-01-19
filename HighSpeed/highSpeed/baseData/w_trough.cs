@@ -387,7 +387,7 @@ namespace highSpeed.baseData
                     this.btn_qy.Enabled = true;
                     this.btn_jy.Enabled = false;
                 }
-                if (type == "20" || type == "30" || type == "40" || (type == "10" && cigarettetype != "20" && groupno=="3"))
+                if (type == "20" || type == "30" || type == "40")//|| (type == "10" && cigarettetype != "20" && groupno == "3")  //移除三线烟仓（原异型烟烟柜）无法修改问题
                 {
                     this.btn_amend.Enabled = false;
                 }

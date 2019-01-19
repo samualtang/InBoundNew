@@ -951,6 +951,20 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void 六三六手工线任务排程ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_schedule_six frm = new w_schedule_six();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
  
 
     

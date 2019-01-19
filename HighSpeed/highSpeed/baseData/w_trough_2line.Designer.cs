@@ -56,6 +56,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
+            this.btn_template = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -82,6 +83,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_template);
             this.groupBox2.Controls.Add(this.comboBox_template);
             this.groupBox2.Controls.Add(this.comboBox_target);
             this.groupBox2.Controls.Add(this.label2);
@@ -97,12 +99,11 @@
             // 
             this.comboBox_template.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_template.FormattingEnabled = true;
-            this.comboBox_template.Items.AddRange(new object[] {
-            "1"});
-            this.comboBox_template.Location = new System.Drawing.Point(472, 26);
+            this.comboBox_template.Location = new System.Drawing.Point(575, 26);
             this.comboBox_template.Name = "comboBox_template";
             this.comboBox_template.Size = new System.Drawing.Size(91, 20);
             this.comboBox_template.TabIndex = 26;
+            this.comboBox_template.Visible = false;
             // 
             // comboBox_target
             // 
@@ -112,6 +113,7 @@
             this.comboBox_target.Name = "comboBox_target";
             this.comboBox_target.Size = new System.Drawing.Size(91, 20);
             this.comboBox_target.TabIndex = 23;
+            this.comboBox_target.SelectedValueChanged += new System.EventHandler(this.comboBox_target_SelectedValueChanged);
             // 
             // label2
             // 
@@ -300,7 +302,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(77, 12);
             this.label7.TabIndex = 26;
-            this.label7.Text = "混合到品牌：";
+            this.label7.Text = "混合道品牌：";
             // 
             // comboBox_yct
             // 
@@ -347,11 +349,19 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.Color.Red;
-            this.label12.Location = new System.Drawing.Point(547, 77);
+            this.label12.Location = new System.Drawing.Point(477, 77);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(449, 12);
+            this.label12.Size = new System.Drawing.Size(521, 12);
             this.label12.TabIndex = 32;
-            this.label12.Text = "烟仓互换、混合道与烟仓互换，均以异型烟分拣线一线为模板，其他线进行手动同步";
+            this.label12.Text = "烟仓互换、混合道与烟仓互换，以异型烟分拣线一线为模板，二线可同步，三、四线需要手动修改\r\n";
+            // 
+            // btn_template
+            // 
+            this.btn_template.Location = new System.Drawing.Point(463, 24);
+            this.btn_template.Name = "btn_template";
+            this.btn_template.Size = new System.Drawing.Size(63, 22);
+            this.btn_template.TabIndex = 34;
+            this.btn_template.UseVisualStyleBackColor = true;
             // 
             // w_trough_2line
             // 
@@ -408,5 +418,6 @@
         private System.Windows.Forms.Button btn_ycstate1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox_searchbox;
+        private System.Windows.Forms.Button btn_template;
     }
 }

@@ -7,130 +7,144 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using highSpeed.PubFunc;
-using System.Data.SqlClient;
 using System.IO;
 using System.IO.Compression;
 using ICSharpCode.SharpZipLib.Zip;
-using System.Net;
 using System.Net.Sockets;
-
+using System.Net;
 
 namespace highSpeed.orderHandle
 {
-    public partial class win_export : Form
+    public partial class w_schedule_six : Form
     {
-        DataSet ds = new DataSet();
-        PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
-        DataBase Db = new DataBase();
         Socket socketClient;
-        public win_export()
+        public w_schedule_six()
         {
-            InitializeComponent();
-            seek();
+            InitializeComponent(); 
         }
 
-        private void seek()
+        private void btn_refresh_sgx_Click(object sender, EventArgs e)
         {
-            //string time = this.orderdate.Text;
-            //time=DateTime.Parse(time,"yyyy-MM-dd");
+            databinding_sgx();
+            this.txt_codestr.Text = "";
+        }
+        DataBase Db = new DataBase();
+        DataSet ds1 = new DataSet();
+        DataSet ds2 = new DataSet();
+        public void databinding_sgx()
+        {
+            String sql = "select  REGIONCODE as 车组号 ,count(*) as 户数,Sum(TASKQUANTITY) as 数量 ,decode(STATE,0,'新增') as 状态,ORDERDATE  as 订单日期 from t_un_diy_task where state = 0  group by REGIONCODE,STATE,ORDERDATE  order by REGIONCODE";
 
-            String strsql = "SELECT batchcode,sum(t.taskquantity) as qty,COUNT(*)as cuscount,t.synseq,count(distinct regioncode) as regioncodecount from t_produce_task t where t.state=15 group BY t.batchcode,t.synseq order by synseq ";
-            //MessageBox.Show(strsql);
-            Bind(strsql);
+            Db.Open();
+            ds1.Clear();
+            ds1 = Db.QueryDs(sql);   
+            int rcounts = ds1.Tables[0].Rows.Count;
+            dgv_sgx.DataSource = null;//处理IndexOutOfRangeException异常
+
+            this.dgv_sgx.DataSource = ds1.Tables[0];  
+            Db.Close();
         }
 
-        #region 查询
-        /// <summary>
-        /// 绑定DataGridView1
-        /// </summary>
-        /// <param name="sql">要查询的sql</param>
-        private void Bind(string sql)
+        private void btn_schedule_Click(object sender, EventArgs e)
         {
-            try
+            if (txt_codestr.Text.Length>0)
             {
-                ds.Clear();
-                //da.SelectCommand = new OracleCommand(sql, cn);
-                //da.Fill(ds, "TB_Inpatient_info");
+                String[] codelist = this.txt_codestr.Text.Substring(1).Split(',');
 
-
-                ds = Db.QueryDs(sql);
-
-
-                this.orderdata.DataSource = ds.Tables[0];
-                this.orderdata.AutoGenerateColumns = false;
-
-                string columnwidths = pub.IniReadValue(this.Name, this.orderdata.Name);
-                if (columnwidths != "")
+                if (InBound.Business.SixSchedule.sixorderschedule(codelist))
                 {
-                    string[] columns = columnwidths.Split(',');
-                    int j = 0;
-                    for (int i = 0; i < columns.Length; i++)
+                    MessageBox.Show("六三六订单手工线，排程成功！");
+                    txt_codestr.Text = "";
+                    databinding_sgx();
+                }
+                else
+                {
+                    MessageBox.Show("六三六订单手失败，排程失败！");
+                }
+            }
+            
+        }
+
+        private void dgv_sgx_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                if (dgv_sgx.RowCount > 0)
+                {
+                    bool obj = (bool)this.dgv_sgx.CurrentRow.Cells[0].EditedFormattedValue;
+
+                    String czcode = this.dgv_sgx.CurrentRow.Cells[1].Value + ""; 
+                    String czcodestr = this.txt_codestr.Text;
+                    if (obj)
                     {
-                        if (orderdata.Columns[i].Visible == true)
+                        if (!czcodestr.Contains(czcode))
                         {
-                            orderdata.Columns[j].Width = Convert.ToInt32(columns[i]);
-                            j = j + 1;
+                            czcodestr = czcodestr + "," + czcode;
                         }
                     }
+                    else
+                    {
+                        czcodestr = czcodestr.Replace("," + czcode, "");
+                    }
+                    this.txt_codestr.Text = czcodestr;
                 }
-                orderdata.ClearSelection();
-
             }
-            catch (Exception ex)
+        }
+
+        public void databinding_yhgc()
+        {
+            string sql = "SELECT batchcode as 批次编码,sum(t.taskquantity) as 数量,COUNT(*) as 户数,t.synseq 批次号,count(distinct regioncode) as 车组数 from t_un_diy_task t  where t.state=15 group BY t.batchcode,t.synseq order by synseq ";
+            Db.Open();
+            ds2.Clear();
+            ds2 = Db.QueryDs(sql);
+            int rcounts = ds2.Tables[0].Rows.Count;
+            dgc_yhgc.DataSource = null;//处理IndexOutOfRangeException异常
+
+            this.dgc_yhgc.DataSource = ds2.Tables[0];
+            Db.Close();
+        }
+        private void btn_refresh_yhgc_Click(object sender, EventArgs e)
+        {
+            databinding_yhgc();
+        }
+
+        private void SendTask_yhgc_Click(object sender, EventArgs e)
+        {
+            int count = this.dgc_yhgc.SelectedRows.Count;
+            if (count > 0)
             {
-               // throw ex;
+                String synseq = this.dgc_yhgc.SelectedRows[0].Cells[3].Value + ""; 
+
+                export(synseq, "01", "1", "2");
+
+                // export(synseq,exportnum);
+            }
+            else
+            {
+                MessageBox.Show("请点击选择您要导出的数据!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        #endregion
 
-        private void win_export_Load(object sender, EventArgs e)
-        {
-            orderdata.ClearSelection();
-        }
         //多条打码机的数据可以写到一个文件上发送过去，不过每次发送的明细不能超过一万条
-        private void export(string synseq, string lineno,string groupno,string linetype)//lineno打码机编号
+        private void export(string synseq, string lineno, string groupno, string linetype)//lineno打码机编号
         {
-            this.btn_export.Enabled = false;
+            this.SendTask_yhgc.Enabled = false;
             panel2.Visible = true;
             label2.Visible = true;
             progressBar1.Visible = true;
             label2.Text = "数据查询中，准备进行数据导出...";
             label2.Refresh();
-            int taskseq = 0, seq = 1; 
+            int taskseq = 0, seq = 1;
             String tasknum = "", cuscode = "", cusname = "", itemno = "", itemname = "", quantity = "", regioncode = "", orderdate = "", cuscodetmp = "";
-            //task表中不知道大品牌拆到了哪几组，所以数据只能从poke表中获取
-            /*String sql = "SELECT a.tasknum,a.customercode,a.customername,b.cigarettecode,b.cigarettename,b.quantity,a.regioncode,to_char(c.enterdate,'yyyy-mm-dd') AS enterdate " +
-                         "FROM highspeed.t_produce_task a,highspeed.t_produce_taskline b,dbm.twms_excpo c WHERE a.tasknum=b.tasknum " +
-                         " and a.billcode=c.extnum and a.synseq='" + synseq + "' and a.exportnum='" + "" + "' ORDER BY a.tasknum";
-            */
-            //String sql = "select * from (" +//原来的SQL
-            //            " select p.sortnum ,t.customercode,t.customername,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
-            //            " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r " +
-            //            " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq=" + synseq +
-            //            " union all " +
-            //            " SELECT aa.sortnum,aa.customercode,aa.customername,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname " +
-            //            " FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr " +
-            //            " WHERE aa.tasknum=pp.tasknum  and rr.groupno=pp.linenum and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
-            //            " and aa.synseq=" + synseq + " and rr.ctype=2 )" +
-            //            " order by sortnum,sortname ";
-         
-            String sql =" select * from ( " +
-                        " select p.sortnum ,t.customercode,t.customername,p.machineseq,h.cigarettecode,h.cigarettename ,p.pokenum as quantity,to_char(t.orderdate,'yyyy-mm-dd') as odate,t.regioncode,r.sortname " +
-                        " from t_produce_task t,t_produce_poke p,t_produce_sorttrough h,t_produce_sortlinename r " +
-                        " where t.tasknum = p.tasknum and p.troughnum = h.troughnum and h.troughtype=10 and h.cigarettetype=20 and h.state=10 and r.groupno=p.packagemachine and r.ctype=1 and t.synseq= " + synseq +
-                        " union all " +
-                        " SELECT aa.sortnum,aa.customercode,aa.customername,pp.machineseq,hh.cigarettecode,hh.cigarettename,pp.pokenum as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname " +
-                        " FROM t_un_task aa,t_produce_sorttrough hh,t_un_poke pp, t_produce_sortlinename rr " +
-                        " WHERE aa.tasknum=pp.tasknum  and rr.groupno=aa.mainbelt and pp.troughnum=hh.troughnum and hh.troughtype=10 and hh.cigarettetype in (30,40) and hh.state='10' " +
-                        " and aa.synseq=" + synseq + " and rr.ctype=2 ) " +
-                        " order by sortnum,sortname,machineseq ";
-
-            
+            String sql = "select * from ( " +
+                        " SELECT aa.tasknum,aa.customercode,aa.customername,5001 as machineseq   ,pp.cigarettecode,pp.cigarettename,pp.quantity as quantity,to_char(aa.orderdate,'yyyy-mm-dd') as odate,aa.regioncode,rr.sortname  " +
+                        " FROM T_UN_DIY_TASK aa ,T_UN_DIY_TASKLINE pp , t_produce_sortlinename rr " +
+                        " WHERE aa.tasknum=pp.tasknum    and aa.linenum = rr.groupno and rr.ctype = 2 " +
+                        " and aa.synseq=" + synseq + "    order by tasknum,sortname,machineseq ) ";
+             
             //取批次号
             String batchcodesql = "select SEQ_ONEHAOGONGCHENG.Nextval from dual";
-
-            
-
+              
             Db.Open();
             DataTable dtseq = Db.Query(batchcodesql);
             String onesynseq = dtseq.Rows[0][0].ToString();//一号工程批次号
@@ -139,7 +153,7 @@ namespace highSpeed.orderHandle
             DataTable table = Db.Query(sql);
             int len = table.Rows.Count;
             //String[] infostr = new String[len];
-            
+
             if (len > 0)
             {
                 InitSocket();
@@ -150,8 +164,8 @@ namespace highSpeed.orderHandle
                 {
                     Directory.CreateDirectory("D:\\" + folder);
                 }
-                int count = 0,fileSeq=1,rowCcount=0,bz=0,succCount=0;
-                String fileNameStr = ""; String info = "",tmpInfo="",tempCode="",unSuccFile="";
+                int count = 0, fileSeq = 1, rowCcount = 0, bz = 0, succCount = 0;
+                String fileNameStr = ""; String info = "", tmpInfo = "", tempCode = "", unSuccFile = "";
                 for (int i = 0; i < len; i++)
                 {
                     progressBar1.Value = ((i + 1) * 100 / len);
@@ -159,14 +173,14 @@ namespace highSpeed.orderHandle
 
                     DataRow row = table.Rows[i];
 
-                    tasknum = row["SORTNUM"].ToString();
+                    tasknum = row["TASKNUM"].ToString();
                     cuscode = row["CUSTOMERCODE"].ToString();
                     cusname = row["CUSTOMERNAME"].ToString();
                     itemno = row["CIGARETTECODE"].ToString();
                     itemname = row["CIGARETTENAME"].ToString();
                     quantity = row["QUANTITY"].ToString();
                     regioncode = row["REGIONCODE"].ToString();
-                    orderdate = row["ODATE"].ToString();                    
+                    orderdate = row["ODATE"].ToString();
                     lineno = row["SORTNAME"].ToString();
                     taskseq++;
                     rowCcount = rowCcount + 1;
@@ -179,7 +193,8 @@ namespace highSpeed.orderHandle
                         cuscodetmp = table.Rows[i + 1]["CUSTOMERCODE"].ToString();
                         tempCode = table.Rows[i + 1]["REGIONCODE"].ToString();
                     }
-                    else {
+                    else
+                    {
                         cuscodetmp = "";
                         tempCode = "";
                     }
@@ -212,31 +227,34 @@ namespace highSpeed.orderHandle
                             //发送数据
                             label2.Text = "正在发送第" + fileSeq + "个文件";
                             label2.Refresh();
-                            bz=sendFile("D:\\HighSpeedExportData\\" + filename + ".zip");
+                            bz = sendFile("D:\\HighSpeedExportData\\" + filename + ".zip");
                             //记录发送成功数量和失败文件信息
                             if (bz == 0)
                             {
                                 succCount = succCount + 1;
                                 label2.Text = "第" + fileSeq + "个文件发送完毕!";
                             }
-                            else {
+                            else
+                            {
                                 unSuccFile = unSuccFile + "," + filename + ".zip";
                                 label2.Text = "第" + fileSeq + "个文件发送失败!";
-                            } 
-                            
+                            }
+
                             label2.Refresh();
                             //记录新车组的信息
                             fileSeq = fileSeq + 1;
                             count = rowCcount;
                             info = tmpInfo;
                         }
-                        else {
+                        else
+                        {
                             count = rowCcount + count;
                             info = info + tmpInfo;
                         }
 
                         //判断循环是否完成（是否为最后一条记录）,如果是最后一条，则将剩余记录导出
-                        if ("".Equals(tempCode)) {
+                        if ("".Equals(tempCode))
+                        {
                             //fileSeq = fileSeq + 1;
                             label2.Text = "正在压缩第" + fileSeq + "个文件";
                             label2.Refresh();
@@ -271,7 +289,7 @@ namespace highSpeed.orderHandle
                         tmpInfo = "";
                         rowCcount = 0;
                     }
-                    
+
                 }
                 //在弹窗前关闭控件
                 panel2.Visible = false;
@@ -287,80 +305,58 @@ namespace highSpeed.orderHandle
                     unSuccFile = unSuccFile.Substring(1);
                     msg = msg + "其中发送失败文件为(" + unSuccFile + ")！";
                 }
-                else {
+                else
+                {
                     msg = msg + "文件名为(" + fileNameStr + ")！";
-                } 
+                }
 
                 MessageBox.Show(msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 socketClient.Disconnect(false);
                 socketClient.Close();
             }
-            this.btn_export.Enabled = true;
+            this.SendTask_yhgc.Enabled = true;
         }
 
-        private void btn_export_Click(object sender, EventArgs e)
+        private void InitSocket()
         {
-            int count = this.orderdata.SelectedRows.Count;
-            if(count>0){
-                String synseq = this.orderdata.SelectedRows[0].Cells["synseq"].Value + "";
-               // String exportnum = this.orderdata.SelectedRows[0].Cells["exportnum"].Value + "";
-                //取页面参数
-
-                export(synseq, "01", "1", "2");
-
-               // export(synseq,exportnum);
-            }else{
-                MessageBox.Show("请点击选择您要导出的数据!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
+            IPAddress address = IPAddress.Parse("10.75.142.1");
+            IPEndPoint endpoint = new IPEndPoint(address, 9050);
+            //创建服务端负责监听的套接字，参数（使用IPV4协议，使用流式连接，使用Tcp协议传输数据）
+            socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socketClient.Connect(endpoint);
         }
 
-        public static void CompressFile(string path)
+        private int sendFile(String filePath)
         {
-
-            FileStream sourceFile = File.OpenRead(path);
-
-            //String newfile = path.Substring(0, path.Length - 6);
-            FileStream destinationFile = File.Create(path + ".zip");
-            
-
-
-            byte[] buffer = new byte[sourceFile.Length];
-
-            sourceFile.Read(buffer, 0, buffer.Length);
-
-
-
-            using (GZipStream output = new GZipStream(destinationFile,
-
-                CompressionMode.Compress))
+            int i = SocketClientConnector.SendFile(socketClient, filePath, 102400, 1);
+            //if (i == 0) MessageBox.Show("文件  " + filePath + "  发送失败!");
+            Byte[] bytes = new Byte[1024];
+            int len = socketClient.Receive(bytes);
+            //String result=System.Text.UTF8Encoding.UTF8.GetString(bytes);
+            String result = Encoding.Default.GetString(bytes, 0, len);
+            if (!"".Equals(result))
             {
-                
-                Console.WriteLine("Compressing {0} to {1}.", sourceFile.Name,
+                //result = result.Substring(8, result.Length-1);
+                String[] msg = System.Text.RegularExpressions.Regex.Split(result, "\\r\\n");
 
-                    destinationFile.Name, false);
-
-
-
-                output.Write(buffer, 0, buffer.Length);
-
+                if (msg.Length == 2)
+                {
+                    MessageBox.Show("文件解析成功！");
+                    i = 0;
+                }
+                else
+                {
+                    MessageBox.Show("文件解析失败！错误信息：" + msg[1]);
+                    i = -1;
+                }
             }
-
-
-
-            // Close the files.
-
-            sourceFile.Close();
-
-            destinationFile.Close();
-
-            String[]destination=path.Split('.');
-            //MessageBox.Show(destination[0] + ".zip");
-            File.Move(path + ".zip", destination[0] + ".zip");
-
+            //socketClient.Disconnect(false);
+            //socketClient.Close();
+            return i;
         }
-
-        private void GetFileToZip(string filepath, string zippath,String entryname)
+        private void GetFileToZip(string filepath, string zippath, String entryname)
         {
 
             FileStream fs = File.OpenRead(filepath);
@@ -378,60 +374,23 @@ namespace highSpeed.orderHandle
             ZipStream.Finish();
             ZipStream.Close();
         }
-        
 
-        private void btn_close_Click(object sender, EventArgs e)
+        private void w_schedule_six_Load(object sender, EventArgs e)
         {
-            this.Close();
-            Db.Close();
-            /*InitSocket();
-            int i = sendFile("D:\\HighSpeedExportData\\RetailerOrder-20180326111028259-1-2.zip");
-            if (i == 0) MessageBox.Show("文件发送成功!");
-            else MessageBox.Show("文件发送失败!");*/
+            databinding_sgx();
+            databinding_yhgc(); 
         }
 
-        private void InitSocket()
+        private void btn_all_Click(object sender, EventArgs e)
         {
-            //IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
-            IPAddress address = IPAddress.Parse("10.75.142.1");
-            IPEndPoint endpoint = new IPEndPoint(address, 9050);
-            //创建服务端负责监听的套接字，参数（使用IPV4协议，使用流式连接，使用Tcp协议传输数据）
-            socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socketClient.Connect(endpoint);
-        }
-
-        private int sendFile(String filePath) {
-            int i = SocketClientConnector.SendFile(socketClient, filePath, 102400, 1);
-            //if (i == 0) MessageBox.Show("文件  " + filePath + "  发送失败!");
-            Byte[] bytes = new Byte[1024];
-            int len=socketClient.Receive(bytes);
-            //String result=System.Text.UTF8Encoding.UTF8.GetString(bytes);
-            String result = Encoding.Default.GetString(bytes,0,len);
-            if(!"".Equals(result)){
-                //result = result.Substring(8, result.Length-1);
-                String[] msg = System.Text.RegularExpressions.Regex.Split(result,"\\r\\n");
-
-                if (msg.Length == 2)
-                {
-                    MessageBox.Show("文件解析成功！");
-                    i = 0;
-                }
-                else {
-                    MessageBox.Show("文件解析失败！错误信息："+msg[1]);
-                    i = -1;
-                }
+            String czcodestr = "";
+            for (int i = 0; i < this.dgv_sgx.RowCount; i++)
+            {
+                dgv_sgx.Rows[i].Cells[0].Value = "true";
+                czcodestr = czcodestr + "," + dgv_sgx.Rows[i].Cells[1].Value + "";
             }
-            //socketClient.Disconnect(false);
-            //socketClient.Close();
-            return i;
+            this.txt_codestr.Text = czcodestr;
         }
-
-        private void btn_refresh_Click(object sender, EventArgs e)
-        {
-            seek();
-            orderdata.ClearSelection();
-        }
-
-
+         
     }
 }

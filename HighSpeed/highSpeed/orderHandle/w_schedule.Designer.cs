@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_sixschedule = new System.Windows.Forms.Button();
             this.btn_all = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_search = new System.Windows.Forms.Button();
@@ -36,14 +37,16 @@
             this.btn_schedule = new System.Windows.Forms.Button();
             this.lab_showinfo = new System.Windows.Forms.Label();
             this.orderdata = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.sixordercount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sixorderqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -51,6 +54,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_sixschedule);
             this.panel1.Controls.Add(this.btn_all);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btn_search);
@@ -62,6 +66,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
+            // 
+            // btn_sixschedule
+            // 
+            this.btn_sixschedule.Location = new System.Drawing.Point(824, 11);
+            this.btn_sixschedule.Name = "btn_sixschedule";
+            this.btn_sixschedule.Size = new System.Drawing.Size(124, 23);
+            this.btn_sixschedule.TabIndex = 15;
+            this.btn_sixschedule.Text = "六三六拆分预排程";
+            this.btn_sixschedule.UseVisualStyleBackColor = true;
+            this.btn_sixschedule.Click += new System.EventHandler(this.btn_sixschedule_Click);
             // 
             // btn_all
             // 
@@ -76,7 +90,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(805, 11);
+            this.button1.Location = new System.Drawing.Point(1031, 11);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -131,7 +145,9 @@
             this.Column1,
             this.regioncode,
             this.cuscount,
-            this.qty});
+            this.qty,
+            this.sixordercount,
+            this.sixorderqty});
             this.orderdata.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderdata.Location = new System.Drawing.Point(0, 47);
             this.orderdata.MultiSelect = false;
@@ -140,6 +156,33 @@
             this.orderdata.Size = new System.Drawing.Size(1118, 215);
             this.orderdata.TabIndex = 1;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Location = new System.Drawing.Point(146, 87);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(826, 89);
+            this.panel2.TabIndex = 3;
+            this.panel2.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(31, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "正在读取数据...";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(33, 42);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(741, 23);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.Visible = false;
             // 
             // checkbox
             // 
@@ -178,32 +221,18 @@
             this.qty.Name = "qty";
             this.qty.ReadOnly = true;
             // 
-            // panel2
+            // sixordercount
             // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.progressBar1);
-            this.panel2.Location = new System.Drawing.Point(146, 87);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(826, 89);
-            this.panel2.TabIndex = 3;
-            this.panel2.Visible = false;
+            this.sixordercount.DataPropertyName = "sixordercount";
+            this.sixordercount.HeaderText = "六三六户数";
+            this.sixordercount.Name = "sixordercount";
             // 
-            // label2
+            // sixorderqty
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "正在读取数据...";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(33, 42);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(741, 23);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.Visible = false;
+            this.sixorderqty.DataPropertyName = "sixorderqty";
+            this.sixorderqty.HeaderText = "六三六总条数";
+            this.sixorderqty.Name = "sixorderqty";
+            this.sixorderqty.Width = 120;
             // 
             // win_schedule
             // 
@@ -238,11 +267,14 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_all;
+        private System.Windows.Forms.Button btn_sixschedule;
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkbox;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn regioncode;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuscount;
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
-        private System.Windows.Forms.Button btn_all;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sixordercount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sixorderqty;
     }
 }

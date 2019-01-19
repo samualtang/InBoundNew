@@ -421,7 +421,8 @@ namespace highSpeed.orderHandle
                 double usDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(orderquantity) from t_produce_order where state ='排程'  ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(orderquantity) from t_produce_order where state ='排程'  "));//上位总数量
                 double usNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_produce_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_produce_poke "));//上位常规烟数量
                 double usUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from t_un_poke ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from t_un_poke "));//上位异型烟数量
-                double dsDataNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from  kesheng.v_produce_packageinfo "));//下位总数量
+                string pakcageSql = "select sum(qty) from ( select sum(quantity)qty from kesheng.v_produce_packageinfo union select sum(quantity)qty from t_un_diy_taskline)";
+                double dsDataNum = Convert.ToDouble(Db.ExecuteScalar(pakcageSql) == DBNull.Value ? 0 : Db.ExecuteScalar(pakcageSql));//下位总数量
                 double dsNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq "));//下位常规烟数量
                 double dsUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq "));//下位异型烟数量
 
