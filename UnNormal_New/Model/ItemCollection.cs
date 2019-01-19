@@ -11,7 +11,6 @@ namespace UnNormal_New.Model
     
        public static string OPCserverStr =  "S7:[UnnormalConnection1]";//线路
        public static string PLCDBTaskposition = "DB30";//db块位置
-       public static string PLCDBSpecialposition = "DB101";//db块位置
        public static string PLCDBFinshposition = "DB550";//db块位置
 
        /// <summary>
@@ -69,28 +68,7 @@ namespace UnNormal_New.Model
  
       
 
-       /// <summary>
-       /// 特异性烟交互区61，62道
-       /// </summary>
-       /// <returns></returns>
-       public static List<string> GetSpecialSmokeItem1()
-       {
-           List<string> list = new List<string>();
-           list.Add(OPCserverStr+PLCDBSpecialposition+",DINT0");//顺序号
-           list.Add(OPCserverStr + PLCDBSpecialposition + ",DINT4");//任务号
-           list.Add(OPCserverStr + PLCDBSpecialposition + ",W8");//烟仓号
-           list.Add(OPCserverStr + PLCDBSpecialposition + ",W10");//订单数量
-           //for (int i = 0; i < 10; i++)
-           for (int i = 0; i < 12; i++)
-           {
-               list.Add(OPCserverStr + PLCDBSpecialposition + ",DINT" + (12 + (i * 8)));//条烟编码
-               list.Add(OPCserverStr + PLCDBSpecialposition + ",W" + (16 + (i * 8)));//长度
-               list.Add(OPCserverStr + PLCDBSpecialposition + ",W" + (18 + (i * 8)));//宽度
-           }
-           //list.Add(OPCserverStr+"DB101,W92");//标志位 
-           list.Add(OPCserverStr + PLCDBSpecialposition + ",W108");//标志位 
-           return list;
-       }
+
 
  
        /// <summary>

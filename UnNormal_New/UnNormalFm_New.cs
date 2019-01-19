@@ -60,7 +60,7 @@ namespace UnNormal_New
                 lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();//线路
                 ItemCollection.OPCserverStr = ConfigurationManager.AppSettings["OpcPresortServer"].ToString();
                 string[] arrStr = ConfigurationManager.AppSettings["PLCDBTaskPostion"].ToString().Replace(" ", "").Split(',');
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     if (string.IsNullOrWhiteSpace(arrStr[i].Replace(" ", "")))
                     {
@@ -71,8 +71,7 @@ namespace UnNormal_New
                     }
                 }
                 ItemCollection.PLCDBTaskposition = arrStr[0];//烟仓交互
-                ItemCollection.PLCDBSpecialposition = arrStr[1];//特异形烟交互
-                ItemCollection.PLCDBFinshposition = arrStr[2];//完成交互
+                ItemCollection.PLCDBFinshposition = arrStr[1];//完成交互
                 SendWay = Convert.ToInt32(ConfigurationManager.AppSettings["SendWay"]);//1为顺序 2为动态
                 if (SendWay != 1 && SendWay != 2 || lineNum != "1" && lineNum != "2" && lineNum != "3" && lineNum != "4")
                 {
@@ -389,7 +388,7 @@ namespace UnNormal_New
                     }
                     string OutStr = "";
                     object[] datas = UnPokeService.getOneDateBaseTask(12, ListLineNum[0], out OutStr);//获取可发送任务
-                    if ((int)datas[0]   == 0)
+                    if (int.Parse(datas[0].ToString())   == 0)
                     {
                         updateListBox(ListLineNum[0] + "线烟仓烟柜分拣数据发送完毕");
                         return;
@@ -619,7 +618,7 @@ namespace UnNormal_New
            task_data.Rows.Clear(); 
            try
            {
-               List<TaskInfo> list =  TaskService.GetUNCustomer();
+               List<TaskInfo> list =  TaskService.GetUNCustomer().Where(a=> a.LineNum == lineNum).ToList();
                if (list != null)
                {
                    DataGridViewCellStyle dgvStyle = new DataGridViewCellStyle();
