@@ -739,7 +739,7 @@ namespace InBound.Business
                                  join item4 in entity.T_UN_POKE_HUNHE on item.POKEID equals item4.POKEID
                                  where item.POKEID == pokeid
                                  && item4.PULLSTATUS == 0 
-                                 select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNO, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM, PACK_BAR = item2.PACK_BAR }).FirstOrDefault();
+                                 select new HUNHEVIEW1() { POKEID = item.POKEID, CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.ITEMNAME, MACHINESEQ = item.MACHINESEQ, QUANTITY = item.POKENUM, PACK_BAR = item2.PACK_BAR }).FirstOrDefault();
                     return query;
                 }
                 catch (Exception e)

@@ -700,7 +700,7 @@ namespace SpecialShapeSmoke
                         for (int i = 0; i < boxText.Length; i++)
                         {
                             Log += "通道 " + boxText[i] + ";包装机 "+PackMachineSeq[0].ToString()+"、"
-                                +PackMachineSeq[1].ToString()+": 接收DB块值:分拣任务号" + finishNo[i]+ ",已出烟"+finishNo[1]+ "条\r\n";
+                                +PackMachineSeq[1].ToString()+": 接收DB块值:任务包号" + finishNo[i]+ ",已出烟"+finishNo[1]+ "条\r\n";
                         }
                         writeLog.Write(Log);
 
