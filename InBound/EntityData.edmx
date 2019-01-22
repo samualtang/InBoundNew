@@ -47,7 +47,8 @@
       "T_UN_DIY_TASKLINE"."CIGARETTENAME" AS "CIGARETTENAME", 
       "T_UN_DIY_TASKLINE"."QUANTITY" AS "QUANTITY", 
       "T_UN_DIY_TASKLINE"."UNIT" AS "UNIT", 
-      "T_UN_DIY_TASKLINE"."ALLOWSORT" AS "ALLOWSORT"
+      "T_UN_DIY_TASKLINE"."ALLOWSORT" AS "ALLOWSORT", 
+      "T_UN_DIY_TASKLINE"."INVFLAGE" AS "INVFLAGE"
       FROM "ZOOMTEL"."T_UN_DIY_TASKLINE" "T_UN_DIY_TASKLINE"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="T_UN_POKE" EntityType="Model.Store.T_UN_POKE" store:Type="Tables" Schema="ZOOMTEL" />
@@ -487,7 +488,7 @@
         </EntityType>
         <EntityType Name="T_UN_DIY_DETAIL">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="POKEID" />
           </Key>
           <Property Name="SORTNUM" Type="number" Nullable="false" />
           <Property Name="BILLCODE" Type="varchar2" MaxLength="80" />
@@ -497,14 +498,16 @@
           <Property Name="PACKAGEQTY" Type="number" />
           <Property Name="STATE" Type="number" />
           <Property Name="POKENUM" Type="number" />
-          <Property Name="ID" Type="number" Nullable="false" />
+          <Property Name="POKEID" Type="number" Nullable="false" />
+          <Property Name="PACKAGENUM" Type="number" />
+          <Property Name="PACKAGESGXSEQ" Type="number" />
         </EntityType>
         <EntityType Name="T_UN_DIY_TASK">
           <Key>
             <PropertyRef Name="TASKNUM" />
           </Key>
           <Property Name="TASKNUM" Type="number" Nullable="false" />
-          <Property Name="LINENUM" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="LINENUM" Type="varchar2" MaxLength="10" />
           <Property Name="EXPORTNUM" Type="varchar2" MaxLength="10" />
           <Property Name="REGIONCODE" Type="varchar2" MaxLength="20" />
           <Property Name="REGIONDESC" Type="varchar2" MaxLength="30" />
@@ -554,6 +557,7 @@
           <Property Name="QUANTITY" Type="number" Precision="10" Scale="1" />
           <Property Name="UNIT" Type="varchar2" MaxLength="5" />
           <Property Name="ALLOWSORT" Type="varchar2" MaxLength="4" />
+          <Property Name="INVFLAGE" Type="nvarchar2" MaxLength="10" />
         </EntityType>
         <EntityType Name="T_UN_POKE">
           <Key>
@@ -1111,9 +1115,9 @@
           <EntitySet Name="T_PRODUCE_SYNSEQ" EntityType="Model.T_PRODUCE_SYNSEQ" />
           <EntitySet Name="T_RETURN_TASK" EntityType="Model.T_RETURN_TASK" />
           <EntitySet Name="T_RETURN_TASKLINE" EntityType="Model.T_RETURN_TASKLINE" />
-          <EntitySet Name="T_UN_DIY_DETAIL" EntityType="Model.T_UN_DIY_DETAIL" />
           <EntitySet Name="T_UN_DIY_TASKLINE" EntityType="Model.T_UN_DIY_TASKLINE" />
           <EntitySet Name="T_UN_DIY_TASK" EntityType="Model.T_UN_DIY_TASK" />
+          <EntitySet Name="T_UN_DIY_DETAIL" EntityType="Model.T_UN_DIY_DETAIL" />
         </EntityContainer>
         <EntityType Name="T_WMS_CONSIGNOR">
           <Key>
@@ -1997,20 +2001,6 @@
           <Property Type="String" Name="UNIT" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ALLOWSORT" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="T_UN_DIY_DETAIL">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="SORTNUM" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTECODE" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CIGARETTENAME" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="PACKAGESEQ" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="PACKAGEQTY" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="STATE" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-        </EntityType>
         <EntityType Name="T_UN_DIY_TASKLINE">
           <Key>
             <PropertyRef Name="TASKNUM" />
@@ -2022,6 +2012,7 @@
           <Property Type="Decimal" Name="QUANTITY" Precision="10" Scale="1" />
           <Property Type="String" Name="UNIT" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ALLOWSORT" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="INVFLAGE" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="T_UN_DIY_TASK">
           <Key>
@@ -2063,6 +2054,22 @@
           <Property Type="Decimal" Name="PACKAGEMACHINE" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SORTNUM" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="SECSORTNUM" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="T_UN_DIY_DETAIL">
+          <Key>
+            <PropertyRef Name="POKEID" />
+          </Key>
+          <Property Type="Decimal" Name="SORTNUM" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="BILLCODE" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTECODE" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CIGARETTENAME" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PACKAGESEQ" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGEQTY" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="STATE" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="POKEID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGENUM" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="PACKAGESGXSEQ" Precision="38" Scale="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2995,24 +3002,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="T_UN_DIY_DETAIL">
-            <EntityTypeMapping TypeName="Model.T_UN_DIY_DETAIL">
-              <MappingFragment StoreEntitySet="T_UN_DIY_DETAIL">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
-                <ScalarProperty Name="STATE" ColumnName="STATE" />
-                <ScalarProperty Name="PACKAGEQTY" ColumnName="PACKAGEQTY" />
-                <ScalarProperty Name="PACKAGESEQ" ColumnName="PACKAGESEQ" />
-                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
-                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
-                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
-                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="T_UN_DIY_TASKLINE">
             <EntityTypeMapping TypeName="Model.T_UN_DIY_TASKLINE">
               <MappingFragment StoreEntitySet="T_UN_DIY_TASKLINE">
+                <ScalarProperty Name="INVFLAGE" ColumnName="INVFLAGE" />
                 <ScalarProperty Name="ALLOWSORT" ColumnName="ALLOWSORT" />
                 <ScalarProperty Name="UNIT" ColumnName="UNIT" />
                 <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
@@ -3061,6 +3054,23 @@
                 <ScalarProperty Name="EXPORTNUM" ColumnName="EXPORTNUM" />
                 <ScalarProperty Name="LINENUM" ColumnName="LINENUM" />
                 <ScalarProperty Name="TASKNUM" ColumnName="TASKNUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_UN_DIY_DETAIL">
+            <EntityTypeMapping TypeName="Model.T_UN_DIY_DETAIL">
+              <MappingFragment StoreEntitySet="T_UN_DIY_DETAIL">
+                <ScalarProperty Name="PACKAGESGXSEQ" ColumnName="PACKAGESGXSEQ" />
+                <ScalarProperty Name="PACKAGENUM" ColumnName="PACKAGENUM" />
+                <ScalarProperty Name="POKEID" ColumnName="POKEID" />
+                <ScalarProperty Name="POKENUM" ColumnName="POKENUM" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="PACKAGEQTY" ColumnName="PACKAGEQTY" />
+                <ScalarProperty Name="PACKAGESEQ" ColumnName="PACKAGESEQ" />
+                <ScalarProperty Name="CIGARETTENAME" ColumnName="CIGARETTENAME" />
+                <ScalarProperty Name="CIGARETTECODE" ColumnName="CIGARETTECODE" />
+                <ScalarProperty Name="BILLCODE" ColumnName="BILLCODE" />
+                <ScalarProperty Name="SORTNUM" ColumnName="SORTNUM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3128,9 +3138,9 @@
         <EntityTypeShape EntityType="Model.T_PRODUCE_SYNSEQ" Width="1.5" PointX="11.375" PointY="23.75" Height="2.1050219726562318" />
         <EntityTypeShape EntityType="Model.T_RETURN_TASK" Width="1.5" PointX="13.375" PointY="23.75" Height="6.7248746744791674" />
         <EntityTypeShape EntityType="Model.T_RETURN_TASKLINE" Width="1.5" PointX="23.375" PointY="14.75" Height="2.1050219726562602" />
-        <EntityTypeShape EntityType="Model.T_UN_DIY_DETAIL" Width="1.5" PointX="15.375" PointY="23.75" Height="2.6594042968750102" />
         <EntityTypeShape EntityType="Model.T_UN_DIY_TASKLINE" Width="1.5" PointX="24.375" PointY="0.75" Height="2.1050219726562318" />
         <EntityTypeShape EntityType="Model.T_UN_DIY_TASK" Width="1.5" PointX="22.375" PointY="23.75" Height="7.6488452148437318" />
+        <EntityTypeShape EntityType="Model.T_UN_DIY_DETAIL" Width="1.5" PointX="15.375" PointY="23.75" Height="3.0289925130208246" />
       </Diagram>
     </Diagrams>
   </Designer>

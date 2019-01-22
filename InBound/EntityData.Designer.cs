@@ -758,22 +758,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_UN_DIY_DETAIL> T_UN_DIY_DETAIL
-        {
-            get
-            {
-                if ((_T_UN_DIY_DETAIL == null))
-                {
-                    _T_UN_DIY_DETAIL = base.CreateObjectSet<T_UN_DIY_DETAIL>("T_UN_DIY_DETAIL");
-                }
-                return _T_UN_DIY_DETAIL;
-            }
-        }
-        private ObjectSet<T_UN_DIY_DETAIL> _T_UN_DIY_DETAIL;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_UN_DIY_TASKLINE> T_UN_DIY_TASKLINE
         {
             get
@@ -802,6 +786,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_UN_DIY_TASK> _T_UN_DIY_TASK;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_UN_DIY_DETAIL> T_UN_DIY_DETAIL
+        {
+            get
+            {
+                if ((_T_UN_DIY_DETAIL == null))
+                {
+                    _T_UN_DIY_DETAIL = base.CreateObjectSet<T_UN_DIY_DETAIL>("T_UN_DIY_DETAIL");
+                }
+                return _T_UN_DIY_DETAIL;
+            }
+        }
+        private ObjectSet<T_UN_DIY_DETAIL> _T_UN_DIY_DETAIL;
 
         #endregion
 
@@ -1152,14 +1152,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_UN_DIY_DETAIL EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_UN_DIY_DETAIL(T_UN_DIY_DETAIL t_UN_DIY_DETAIL)
-        {
-            base.AddObject("T_UN_DIY_DETAIL", t_UN_DIY_DETAIL);
-        }
-    
-        /// <summary>
         /// 用于向 T_UN_DIY_TASKLINE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_UN_DIY_TASKLINE(T_UN_DIY_TASKLINE t_UN_DIY_TASKLINE)
@@ -1173,6 +1165,14 @@ namespace InBound
         public void AddToT_UN_DIY_TASK(T_UN_DIY_TASK t_UN_DIY_TASK)
         {
             base.AddObject("T_UN_DIY_TASK", t_UN_DIY_TASK);
+        }
+    
+        /// <summary>
+        /// 用于向 T_UN_DIY_DETAIL EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_UN_DIY_DETAIL(T_UN_DIY_DETAIL t_UN_DIY_DETAIL)
+        {
+            base.AddObject("T_UN_DIY_DETAIL", t_UN_DIY_DETAIL);
         }
 
         #endregion
@@ -9304,12 +9304,12 @@ namespace InBound
         /// 创建新的 T_UN_DIY_DETAIL 对象。
         /// </summary>
         /// <param name="sORTNUM">SORTNUM 属性的初始值。</param>
-        /// <param name="id">ID 属性的初始值。</param>
-        public static T_UN_DIY_DETAIL CreateT_UN_DIY_DETAIL(global::System.Decimal sORTNUM, global::System.Decimal id)
+        /// <param name="pOKEID">POKEID 属性的初始值。</param>
+        public static T_UN_DIY_DETAIL CreateT_UN_DIY_DETAIL(global::System.Decimal sORTNUM, global::System.Decimal pOKEID)
         {
             T_UN_DIY_DETAIL t_UN_DIY_DETAIL = new T_UN_DIY_DETAIL();
             t_UN_DIY_DETAIL.SORTNUM = sORTNUM;
-            t_UN_DIY_DETAIL.ID = id;
+            t_UN_DIY_DETAIL.POKEID = pOKEID;
             return t_UN_DIY_DETAIL;
         }
 
@@ -9514,27 +9514,75 @@ namespace InBound
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal ID
+        public global::System.Decimal POKEID
         {
             get
             {
-                return _ID;
+                return _POKEID;
             }
             set
             {
-                if (_ID != value)
+                if (_POKEID != value)
                 {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
+                    OnPOKEIDChanging(value);
+                    ReportPropertyChanging("POKEID");
+                    _POKEID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("POKEID");
+                    OnPOKEIDChanged();
                 }
             }
         }
-        private global::System.Decimal _ID;
-        partial void OnIDChanging(global::System.Decimal value);
-        partial void OnIDChanged();
+        private global::System.Decimal _POKEID;
+        partial void OnPOKEIDChanging(global::System.Decimal value);
+        partial void OnPOKEIDChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PACKAGENUM
+        {
+            get
+            {
+                return _PACKAGENUM;
+            }
+            set
+            {
+                OnPACKAGENUMChanging(value);
+                ReportPropertyChanging("PACKAGENUM");
+                _PACKAGENUM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PACKAGENUM");
+                OnPACKAGENUMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PACKAGENUM;
+        partial void OnPACKAGENUMChanging(Nullable<global::System.Decimal> value);
+        partial void OnPACKAGENUMChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PACKAGESGXSEQ
+        {
+            get
+            {
+                return _PACKAGESGXSEQ;
+            }
+            set
+            {
+                OnPACKAGESGXSEQChanging(value);
+                ReportPropertyChanging("PACKAGESGXSEQ");
+                _PACKAGESGXSEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PACKAGESGXSEQ");
+                OnPACKAGESGXSEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PACKAGESGXSEQ;
+        partial void OnPACKAGESGXSEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnPACKAGESGXSEQChanged();
 
         #endregion
 
@@ -10616,6 +10664,30 @@ namespace InBound
         private global::System.String _ALLOWSORT;
         partial void OnALLOWSORTChanging(global::System.String value);
         partial void OnALLOWSORTChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String INVFLAGE
+        {
+            get
+            {
+                return _INVFLAGE;
+            }
+            set
+            {
+                OnINVFLAGEChanging(value);
+                ReportPropertyChanging("INVFLAGE");
+                _INVFLAGE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("INVFLAGE");
+                OnINVFLAGEChanged();
+            }
+        }
+        private global::System.String _INVFLAGE;
+        partial void OnINVFLAGEChanging(global::System.String value);
+        partial void OnINVFLAGEChanged();
 
         #endregion
 

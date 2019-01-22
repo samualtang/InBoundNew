@@ -79,9 +79,9 @@ namespace SpecialShapeSmoke
         //通道集合
         List<HUNHEVIEW>[] throughList;
         /// <summary>
-        /// 通道对应DB块索引
+        /// ItemCollection_new内异型烟分拣线混合道PLC DB块地址索引
         /// </summary>
-        decimal[] dbIndex = new decimal[] { -1, -1, -1, -1 };//通道对应DB块索引
+        decimal[] dbIndex = new decimal[] { -1, -1 };//通道对应DB块索引
         // Dictionary<string, int>  rgDic = new Dictionary<string, int>();//存放通道对应值
 
         TextBox txtbox1;
@@ -100,6 +100,7 @@ namespace SpecialShapeSmoke
             this.Show();
             Panel p = new Panel();
             bool isallrighttag = true;
+            //检查配置
             try
             {
                 // lineNum = ConfigurationManager.AppSettings["LineNum"].ToString();
@@ -501,7 +502,7 @@ namespace SpecialShapeSmoke
         public bool checkConnection()
         {
         
-            int flag = ShapeGroup.ReadD(0).CastTo<int>(-1);
+            int flag = ShapeGroup.ReadD(Convert.ToInt32(dbIndex[0])).CastTo<int>(-1);
             if (flag == -1)
             {
                 MessageBox.Show("连接PLC服务器失败,请检查网络");
@@ -513,17 +514,12 @@ namespace SpecialShapeSmoke
                 writeLog.Write(" 连接服务器成功......");
 
                 try
-                {
-                    using (Entities et = new Entities())
+                { 
+                    if (HunHeService_new.linkstate() <= 0)
                     {
-                        int num = et.T_UN_POKE.Where(x => x.STATUS != 20).Count();
-                        if (num <= 0)
-                        {
-                            MessageBox.Show("没有已排程未分拣数据");
-                            writeLog.Write("sp-00:没有已排程未分拣数据");
-                        }
-                       
-                    }
+                        MessageBox.Show("没有已排程未分拣数据");
+                        writeLog.Write("sp-00:没有已排程未分拣数据");
+                    }    
                 }
                 catch (Exception)
                 {
@@ -682,8 +678,8 @@ namespace SpecialShapeSmoke
                         countnum = 4;
                         finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);
                         finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);//两个通道
-                        finishNo[2] = ShapeGroup.ReadD((int)dbIndex[2]).CastTo<int>(-1);
-                        finishNo[3] = ShapeGroup.ReadD((int)dbIndex[3]).CastTo<int>(-1);
+                        //finishNo[2] = ShapeGroup.ReadD((int)dbIndex[2]).CastTo<int>(-1);
+                        //finishNo[3] = ShapeGroup.ReadD((int)dbIndex[3]).CastTo<int>(-1);
                     } 
                     #endregion
                 }
@@ -695,10 +691,11 @@ namespace SpecialShapeSmoke
                 //{
                 //    finishchange = true;
                 //}
-                
+                //如果连通plc 或 点击刷新
                 if (finishNo[0] > -1 || finishNo[1] > -1 || Refresh)
                 {
-                    if (befoerFinishNo.Sum() != finishNo.Sum() || Refresh || finishchange)
+                    //如果完成信号与上次的不同 或 点击刷新
+                    if (befoerFinishNo.Sum() != finishNo.Sum() || Refresh )
                     {
                         for (int i = 0; i < boxText.Length; i++)
                         {
@@ -710,7 +707,7 @@ namespace SpecialShapeSmoke
 
                         if ((finishNo.Sum() > befoerFinishNo.Sum()) || Refresh)
                         {
-                            writeLog.Write("getData()开始获取数据");
+                            writeLog.Write("getData()开始获取数据\r-----------------------------------------------------------------------------");
 
                             clearAllText();
                             throughList = new List<HUNHEVIEW>[boxText.Length*2];
@@ -1026,7 +1023,7 @@ namespace SpecialShapeSmoke
                             Label lbl = (Label)box.Controls[index];
                             Label lab = (Label)box.Controls[index + 1];
                             //查询是否已经放烟，有则变色
-                            if (HunHeService.GetTag(pokes))
+                            if (HunHeService_new.GetTag(pokes))
                             {
                                 updateLabel(singleNo + ":" + item.CIGARETTENAME + " " + count + "条", lbl, true);
                             }
@@ -1286,7 +1283,7 @@ namespace SpecialShapeSmoke
                 pokeid = Convert.ToDecimal(lab.Text);
             }
             //将要放烟的信息
-            HUNHEVIEW1 hunhe = HunHeService.GetNextCigarette_bar(pokeid);
+            HUNHEVIEW1 hunhe = HunHeService_new.GetNextCigarette_bar(pokeid);
 
             Label lbl2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lbl14", true)[0];
             Label lab2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lab14", true)[0];
@@ -1300,12 +1297,14 @@ namespace SpecialShapeSmoke
             if (hunhe.PACK_BAR != ccode)
             {
                 lbl.BackColor = Color.Red;
+                writeLog.Write("放烟品牌错误：扫描到条码" + ccode);
                 //MessageBox.Show("放烟错误！");
             }
             else
             {
                 lbl.BackColor = Color.White;
-                HunHeService.PullTag(hunhe.POKEID, machineseq);
+                HunHeService_new.PullTag(hunhe.POKEID, machineseq);
+                writeLog.Write("");
                 getData(true);
                 //数据显示缓存上限
                 //if (lbl2.Text == "" || hunhe2 .PACK_BAR== hunhe.PACK_BAR)
@@ -1327,7 +1326,7 @@ namespace SpecialShapeSmoke
         {
             foreach (var item in pokes)
             {
-                HunHeService.PullTag(Convert.ToDecimal(item), machineseq);
+                HunHeService_new.PullTag(Convert.ToDecimal(item), machineseq);
             }
             getData(true); 
         }
@@ -1352,7 +1351,7 @@ namespace SpecialShapeSmoke
                 pokeid = Convert.ToDecimal(lab.Text);
             }
 
-            HUNHEVIEW hunhe = HunHeService.GetNextCigarette(pokeid);
+            HUNHEVIEW hunhe = HunHeService_new.GetNextCigarette(pokeid);
 
             Label lbl2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lbl14", true)[0];
             Label lab2 = (Label)Controls.Find("orBox" + (Convert.ToInt32(no) - 1), true)[0].Controls.Find("lab14", true)[0];
@@ -1360,7 +1359,7 @@ namespace SpecialShapeSmoke
             HUNHEVIEW hunhe2 = hunhe;
             if (lab2.Text.Length > 0)
             {
-                hunhe = HunHeService.GetHaveCigarette(Convert.ToDecimal(lab2.Text.Split('|').First()));
+                hunhe = HunHeService_new.GetHaveCigarette(Convert.ToDecimal(lab2.Text.Split('|').First()));
             }
 
             if (hunhe2.CIGARETTECODE != ccode)
@@ -1370,7 +1369,7 @@ namespace SpecialShapeSmoke
             }
             else
             {
-                HunHeService.PullTag(hunhe2.POKEID, machineseq);
+                HunHeService_new.PullTag(hunhe2.POKEID, machineseq);
                 getData(true);
                 //显示上限
                 //if (lbl2.Text == "" || hunhe2.CIGARETTECODE == hunhe.CIGARETTECODE)
@@ -1443,6 +1442,7 @@ namespace SpecialShapeSmoke
             }
 
         }
+        //处理扫描文本
         static string str;
         void sp_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -1553,7 +1553,7 @@ namespace SpecialShapeSmoke
                         pokeid=new string[1];
                         pokeid[0] = lab.Text ;
                     }
-                    HUNHEVIEW hunhe = HunHeService.GetNextCigarette(Convert.ToDecimal(pokeid[0]));
+                    HUNHEVIEW hunhe = HunHeService_new.GetNextCigarette(Convert.ToDecimal(pokeid[0]));
 
                     if (pokeid.Length < ClickNum)//判断条数
                     {
@@ -1581,7 +1581,7 @@ namespace SpecialShapeSmoke
                         pullcigarette_dianjiline(pokeid, "1", Convert.ToDecimal(boxText.First()));
                     }
 
-                    writeLog.Write("手动放烟：" + lbl.Text);
+                    writeLog.Write("手动放烟：" + lbl.Text+"流水号：" + lab.Text);
                    
                 }
             }
@@ -1713,10 +1713,10 @@ namespace SpecialShapeSmoke
           
                 //finishNo[0] = Convert.ToDecimal(txtbox4.Text);
                 //finishNo[1] = Convert.ToDecimal(txtbox3.Text);
-
-          
+ 
+            writeLog.Write("自动刷新");
             getData(true);
-           
+
             txtbox4.Text = finishNo[0].ToString();
             txtbox3.Text = finishNo[1].ToString();
 

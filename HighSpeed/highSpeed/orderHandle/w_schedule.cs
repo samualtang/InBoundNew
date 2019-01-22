@@ -217,6 +217,7 @@ namespace highSpeed.orderHandle
                         if (MsgBoxResult == DialogResult.Yes)
                         {
                             btn_schedule.Enabled = false;
+                            btn_sixschedule.Enabled = false;
                             Db.Open();
                             String[] code = codestr.Substring(1).Split(',');
                             int len = code.Length;
@@ -305,6 +306,7 @@ namespace highSpeed.orderHandle
                     MessageBox.Show("请添加一个新的批次,再进行预排程操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 btn_schedule.Enabled = true;
+                btn_sixschedule.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -465,8 +467,7 @@ namespace highSpeed.orderHandle
                     {
                         return;
                     }
-                }  
-
+                }
                 String codestr = this.txt_codestr.Text.Trim(); 
                 OracleParameter[] sqlpara = new OracleParameter[1];
                 string hasBatchcode = getBatchcode();
@@ -483,6 +484,7 @@ namespace highSpeed.orderHandle
                         if (MsgBoxResult == DialogResult.Yes)
                         {
                             btn_schedule.Enabled = false;
+                            btn_sixschedule.Enabled = false;
                             Db.Open();
                             String[] code = codestr.Substring(1).Split(',');
                             int len = code.Length;
@@ -563,7 +565,8 @@ namespace highSpeed.orderHandle
                 {
                     MessageBox.Show("请添加一个新的批次,再进行预排程操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                btn_schedule.Enabled = true;
+                btn_schedule.Enabled = true; 
+                btn_sixschedule.Enabled = true;
             }
             catch (Exception ex)
             {
