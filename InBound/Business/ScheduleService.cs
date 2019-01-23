@@ -71,7 +71,7 @@ namespace InBound.Business
                 {
                     //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
                     var lastsynseq = tasksynseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGEMACHINE }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGEMACHINE }).ToList()
-                        .Except(synseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGENO }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGENO }).ToList()); 
+                        .Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => new { a.SYNSEQ, a.PACKAGENO }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGENO }).ToList()); 
                     foreach (var item in lastsynseq)
                     {
                         T_PRODUCE_SYNSEQ T_synseq = new T_PRODUCE_SYNSEQ();
