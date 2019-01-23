@@ -44,6 +44,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnTransfor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -57,9 +58,9 @@
             this.dgvSortInfo.AllowUserToDeleteRows = false;
             this.dgvSortInfo.AllowUserToResizeColumns = false;
             this.dgvSortInfo.AllowUserToResizeRows = false;
-            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 54);
@@ -75,7 +76,7 @@
             // 
             // btnPokeSeq
             // 
-            this.btnPokeSeq.Location = new System.Drawing.Point(756, 12);
+            this.btnPokeSeq.Location = new System.Drawing.Point(863, 13);
             this.btnPokeSeq.Name = "btnPokeSeq";
             this.btnPokeSeq.Size = new System.Drawing.Size(75, 23);
             this.btnPokeSeq.TabIndex = 4;
@@ -85,7 +86,7 @@
             // 
             // btnRef
             // 
-            this.btnRef.Location = new System.Drawing.Point(561, 12);
+            this.btnRef.Location = new System.Drawing.Point(668, 13);
             this.btnRef.Name = "btnRef";
             this.btnRef.Size = new System.Drawing.Size(75, 23);
             this.btnRef.TabIndex = 3;
@@ -95,6 +96,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnTransfor);
             this.panel1.Controls.Add(this.btnVli);
             this.panel1.Controls.Add(this.btnPokeSeq);
             this.panel1.Controls.Add(this.btnRef);
@@ -108,7 +110,7 @@
             // 
             // btnVli
             // 
-            this.btnVli.Location = new System.Drawing.Point(869, 12);
+            this.btnVli.Location = new System.Drawing.Point(352, 13);
             this.btnVli.Name = "btnVli";
             this.btnVli.Size = new System.Drawing.Size(75, 23);
             this.btnVli.TabIndex = 13;
@@ -130,7 +132,7 @@
             // btnSort
             // 
             this.btnSort.Font = new System.Drawing.Font("宋体", 9F);
-            this.btnSort.Location = new System.Drawing.Point(661, 12);
+            this.btnSort.Location = new System.Drawing.Point(768, 13);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(75, 23);
             this.btnSort.TabIndex = 0;
@@ -213,6 +215,16 @@
             this.pictureBox1.TabIndex = 27;
             this.pictureBox1.TabStop = false;
             // 
+            // btnTransfor
+            // 
+            this.btnTransfor.Location = new System.Drawing.Point(454, 13);
+            this.btnTransfor.Name = "btnTransfor";
+            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
+            this.btnTransfor.TabIndex = 14;
+            this.btnTransfor.Text = "订单拆分";
+            this.btnTransfor.UseVisualStyleBackColor = true;
+            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
+            // 
             // w_un_SortFm_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -253,6 +265,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnVli;
+        private System.Windows.Forms.Button btnTransfor;
 
     }
 }

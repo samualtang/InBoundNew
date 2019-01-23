@@ -432,6 +432,12 @@ namespace highSpeed.orderHandle
             MessageBox.Show(Str); 
         }
 
+        private void btnTransfor_Click(object sender, EventArgs e)
+        {
+            w_order_Split wos = new w_order_Split();
+            wos.ShowDialog();
+        }
+
      
 
 
