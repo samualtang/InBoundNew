@@ -62,6 +62,30 @@ namespace WcfServiceLib
             }
             MainBeltInfoService.GetMainBeltInfo(ListmbInfo); //填充完成之后传进方法 计算 ，
             ListmbInfo = ListmbInfo.OrderBy(x => x.Place).ToList();
+            foreach (var item in ListmbInfo)
+            {
+                foreach (var item2 in item.taskInfo)
+                {
+                    if (item2.groupno == 4)
+                    {
+                        item2.groupno = 3;
+                    }
+                    else if (item2.groupno == 3)
+                    {
+                        item2.groupno =4;
+                    }
+                    if (item2.groupno == 7)
+                    {
+                        item2.groupno = 8;
+                    }
+                    else if (item2.groupno == 8)
+                    {
+                        item2.groupno = 7;
+                    }
+
+                }
+
+            }
             if (ListmbInfo.Count>0)
             {
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<MainBeltInfo>));

@@ -498,17 +498,19 @@ namespace highSpeed.orderHandle
                                 progressBar1.Value = 0;
                                 Application.DoEvents();
                                 if (i == 0) label2.Text = "正在对" + code[i] + "车组订单数据进行预排程..."; 
-                                sqlpara = new OracleParameter[4]; 
-                                sqlpara[0] = new OracleParameter("p_code", code[i]);
+                                sqlpara = new OracleParameter[6];
+                                sqlpara[0] = new OracleParameter("p_code", code[i]);//p_linenum
                                 sqlpara[1] = new OracleParameter("p_splitval", splitval);
-                                sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-                                sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
+                                sqlpara[2] = new OracleParameter("p_flag", 1);//1是异标合一
+                                sqlpara[3] = new OracleParameter("p_linenum", "0");//在异标合一里线路跟随常规烟,所以只需要带入0
+                                sqlpara[4] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                                sqlpara[5] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
 
-                                sqlpara[2].Direction = ParameterDirection.Output;
-                                sqlpara[3].Direction = ParameterDirection.Output;
-                                Db.ExecuteNonQueryWithProc("P_UN_DIY_SCHEDULE_SIX", sqlpara); 
-                                errcode = sqlpara[2].Value.ToString();
-                                errmsg = sqlpara[3].Value.ToString();
+                                sqlpara[4].Direction = ParameterDirection.Output;
+                                sqlpara[5].Direction = ParameterDirection.Output;
+                                Db.ExecuteNonQueryWithProc("P_UN_DIY_SCHEDULE_SIX", sqlpara);
+                                errcode = sqlpara[4].Value.ToString();
+                                errmsg = sqlpara[5].Value.ToString();
                                 //进度条显示 
                                 progressBar1.Value = ((i + 1) * 100 / len);
                                 progressBar1.Refresh();
@@ -571,12 +573,16 @@ namespace highSpeed.orderHandle
             catch (Exception ex)
             {
                 writeLog.Write("预排程异常：" + ex.Message);
+                MessageBox.Show("预排程异常：" + ex.Message);
 
             }
             finally
             {
                 handleschedule(2, false);
                 isScheduleing = false;
+                panel2.Visible = false;
+                label2.Visible = false;
+                progressBar1.Visible = false;
             }
         }
  

@@ -331,5 +331,161 @@ namespace highSpeed.orderHandle
             }
         }
 
+        private void btn_sixschedule_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //查询禁用的包装机和主皮带
+                int sortline;
+                if (cmb_Line.SelectedIndex < 0)
+                {
+                    MessageBox.Show("请选择排程线路！");
+                    return;
+                }
+                else
+                {
+                    sortline = Convert.ToInt32(cmb_Line.SelectedItem.ToString());
+                }
+                string mainbeltno = "";
+                string packmachineno = "";
+                Db.Open();
+                DataTable dt1 = Db.Query("select troughnum from t_produce_sorttrough h where h.troughtype = 30 and state = 0 order by troughnum");
+                if (dt1.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        mainbeltno = mainbeltno + " " + dt1.Rows[i][0].ToString();
+                    }
+                }
+                DataTable dt2 = Db.Query("select troughnum from t_produce_sorttrough h where h.troughtype = 40 and state = 0 order by troughnum");
+                if (dt2.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt2.Rows.Count; i++)
+                    {
+                        packmachineno = packmachineno + " " + dt2.Rows[i][0].ToString();
+                    }
+                }
+                if (dt1.Rows.Count > 0 || dt2.Rows.Count > 0)
+                {
+                    DialogResult re = MessageBox.Show("已被禁用主皮带：" + mainbeltno + "\r已被禁用包装机：" + packmachineno, "是否继续预排程？", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                    if (re == DialogResult.Cancel)
+                    {
+                        return;
+                    }
+                }
+                String codestr = this.txt_codestr.Text.Trim();
+                OracleParameter[] sqlpara = new OracleParameter[1];
+                string hasBatchcode = getBatchcode();
+                string errcode = "", errmsg = ""; string indexstr = "";
+                if (hasBatchcode != "0")
+                {
+                    if (codestr != "")
+                    {
+                        DialogResult MsgBoxResult = MessageBox.Show("车组排程顺序为【" + codestr.Substring(1) + "】，是否确定按照该顺序进行预排程？",//对话框的显示内容 
+                                                                    "提示",//对话框的标题 
+                                                                    MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                                    MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                                    MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                        if (MsgBoxResult == DialogResult.Yes)
+                        {
+                            btn_schedule.Enabled = false;
+                            btn_sixschedule.Enabled = false;
+                            Db.Open();
+                            String[] code = codestr.Substring(1).Split(',');
+                            int len = code.Length;
+                            string splitval = "1000";// this.txt_splitval.Text.Trim();
+                            for (int i = 0; i < len; i++)
+                            {
+                                panel2.Visible = true;
+                                label2.Visible = true;
+                                progressBar1.Visible = true;
+                                int rcounts = ds.Tables[0].Rows.Count;
+                                progressBar1.Value = 0;
+                                Application.DoEvents();
+                                if (i == 0) label2.Text = "正在对" + code[i] + "车组订单数据进行预排程...";
+                                sqlpara = new OracleParameter[6];
+                                sqlpara[0] = new OracleParameter("p_code", code[i]);//p_linenum
+                                sqlpara[1] = new OracleParameter("p_splitval", splitval);
+                                sqlpara[2] = new OracleParameter("p_flag", 2);//2是异标分离
+                                sqlpara[3] = new OracleParameter("p_linenum", sortline);//2是异标分离,由于和常规烟分离,需要线路来指定包装机
+                                sqlpara[4] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                                sqlpara[5] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 100);
+
+                                sqlpara[4].Direction = ParameterDirection.Output;
+                                sqlpara[5].Direction = ParameterDirection.Output;
+                                Db.ExecuteNonQueryWithProc("P_UN_DIY_SCHEDULE_SIX", sqlpara);
+                                errcode = sqlpara[4].Value.ToString();
+                                errmsg = sqlpara[5].Value.ToString();
+                                //进度条显示 
+                                progressBar1.Value = ((i + 1) * 100 / len);
+                                progressBar1.Refresh();
+                                String tmpstr = "";
+                                if (errcode == "1")
+                                {
+                                    if (i + 1 < len) tmpstr = "正在对" + code[i + 1] + "车组订单数据进行预排程...";
+                                    else tmpstr = "";
+                                    label2.Text = code[i] + "车组订单数据预排程结束..." + tmpstr;
+                                    label2.Refresh();
+                                    indexstr = indexstr + "," + code[i];
+                                }
+                                else
+                                {
+                                    label2.Text = errmsg;
+                                    label2.Refresh();
+                                    break;
+                                }
+                            }
+                            panel2.Visible = false;
+                            label2.Visible = false;
+                            progressBar1.Visible = false;
+                            this.lab_showinfo.Text = errmsg;
+                            MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.txt_codestr.Text = "";
+
+
+                            if (indexstr != "")
+                            {
+                                indexstr = indexstr.Substring(1);
+                                DataTable dt_new = ds.Tables[0];
+                                DataRowCollection drc = dt_new.Rows;
+                                String[] indexArr = indexstr.Split(',');
+                                for (int j = 0; j < indexArr.Length; j++)
+                                {
+                                    Console.WriteLine(indexArr[indexArr.Length - 1 - j]);
+
+                                    drc.RemoveAt(Convert.ToInt32(indexArr.Length - 1 - j));
+                                }
+
+                                this.orderdata.DataSource = dt_new;
+                                this.orderdata.AutoGenerateColumns = false;
+                            }
+                        }
+
+                        seek();
+                    }
+                    else
+                    {
+                        MessageBox.Show("请至少选择一个要预排程的车组!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("请添加一个新的批次,再进行预排程操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                btn_schedule.Enabled = true;
+                btn_sixschedule.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                writeLog.Write("预排程异常：" + ex.Message);
+
+            }
+            finally
+            {
+              
+            }
+        }
+
     }
 }

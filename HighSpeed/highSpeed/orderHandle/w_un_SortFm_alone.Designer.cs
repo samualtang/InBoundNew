@@ -33,6 +33,7 @@
             this.btnPokeSeq = new System.Windows.Forms.Button();
             this.btnRef = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnTransfor = new System.Windows.Forms.Button();
             this.btnVli = new System.Windows.Forms.Button();
             this.lblInFO = new System.Windows.Forms.Label();
             this.btnSort = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnTransfor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -58,9 +58,9 @@
             this.dgvSortInfo.AllowUserToDeleteRows = false;
             this.dgvSortInfo.AllowUserToResizeColumns = false;
             this.dgvSortInfo.AllowUserToResizeRows = false;
-            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSortInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSortInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSortInfo.Location = new System.Drawing.Point(0, 54);
@@ -107,6 +107,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(982, 48);
             this.panel1.TabIndex = 11;
+            // 
+            // btnTransfor
+            // 
+            this.btnTransfor.Location = new System.Drawing.Point(454, 13);
+            this.btnTransfor.Name = "btnTransfor";
+            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
+            this.btnTransfor.TabIndex = 14;
+            this.btnTransfor.Text = "订单拆分";
+            this.btnTransfor.UseVisualStyleBackColor = true;
+            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
             // 
             // btnVli
             // 
@@ -214,16 +224,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 27;
             this.pictureBox1.TabStop = false;
-            // 
-            // btnTransfor
-            // 
-            this.btnTransfor.Location = new System.Drawing.Point(454, 13);
-            this.btnTransfor.Name = "btnTransfor";
-            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
-            this.btnTransfor.TabIndex = 14;
-            this.btnTransfor.Text = "订单拆分";
-            this.btnTransfor.UseVisualStyleBackColor = true;
-            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
             // 
             // w_un_SortFm_alone
             // 

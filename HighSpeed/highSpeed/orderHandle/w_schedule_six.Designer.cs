@@ -37,13 +37,13 @@
             this.btn_refresh_yhgc = new System.Windows.Forms.Button();
             this.SendTask_yhgc = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btn_all = new System.Windows.Forms.Button();
             this.txt_codestr = new System.Windows.Forms.TextBox();
             this.dgv_sgx = new System.Windows.Forms.DataGridView();
             this.checkbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btn_refresh_sgx = new System.Windows.Forms.Button();
             this.btn_schedule = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.btn_all = new System.Windows.Forms.Button();
             this.tabPage3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgc_yhgc)).BeginInit();
@@ -107,9 +107,9 @@
             // dgc_yhgc
             // 
             this.dgc_yhgc.AllowUserToAddRows = false;
-            this.dgc_yhgc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgc_yhgc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgc_yhgc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgc_yhgc.Location = new System.Drawing.Point(0, 51);
             this.dgc_yhgc.MultiSelect = false;
@@ -157,6 +157,16 @@
             this.tabPage1.Text = "排程手工分拣线";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btn_all
+            // 
+            this.btn_all.Location = new System.Drawing.Point(98, 15);
+            this.btn_all.Name = "btn_all";
+            this.btn_all.Size = new System.Drawing.Size(75, 23);
+            this.btn_all.TabIndex = 11;
+            this.btn_all.Text = "全选";
+            this.btn_all.UseVisualStyleBackColor = true;
+            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
+            // 
             // txt_codestr
             // 
             this.txt_codestr.Location = new System.Drawing.Point(430, 15);
@@ -168,9 +178,9 @@
             // dgv_sgx
             // 
             this.dgv_sgx.AllowUserToAddRows = false;
-            this.dgv_sgx.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_sgx.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_sgx.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_sgx.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.checkbox});
@@ -213,9 +223,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -226,16 +236,6 @@
             this.tabControl1.Size = new System.Drawing.Size(766, 424);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
-            // 
-            // btn_all
-            // 
-            this.btn_all.Location = new System.Drawing.Point(98, 15);
-            this.btn_all.Name = "btn_all";
-            this.btn_all.Size = new System.Drawing.Size(75, 23);
-            this.btn_all.TabIndex = 11;
-            this.btn_all.Text = "全选";
-            this.btn_all.UseVisualStyleBackColor = true;
-            this.btn_all.Click += new System.EventHandler(this.btn_all_Click);
             // 
             // w_schedule_six
             // 

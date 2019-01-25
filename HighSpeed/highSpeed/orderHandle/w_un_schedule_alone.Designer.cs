@@ -44,6 +44,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btn_sixschedule = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_sixschedule);
             this.panel1.Controls.Add(this.cmb_Line);
             this.panel1.Controls.Add(this.btn_all);
             this.panel1.Controls.Add(this.txt_splitval);
@@ -207,6 +209,16 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
+            // btn_sixschedule
+            // 
+            this.btn_sixschedule.Location = new System.Drawing.Point(957, 11);
+            this.btn_sixschedule.Name = "btn_sixschedule";
+            this.btn_sixschedule.Size = new System.Drawing.Size(124, 23);
+            this.btn_sixschedule.TabIndex = 17;
+            this.btn_sixschedule.Text = "六三六拆分预排程";
+            this.btn_sixschedule.UseVisualStyleBackColor = true;
+            this.btn_sixschedule.Click += new System.EventHandler(this.btn_sixschedule_Click);
+            // 
             // w_un_schedule_alone
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -245,5 +257,6 @@
         private System.Windows.Forms.TextBox txt_splitval;
         private System.Windows.Forms.Button btn_all;
         private System.Windows.Forms.ComboBox cmb_Line;
+        private System.Windows.Forms.Button btn_sixschedule;
     }
 }
