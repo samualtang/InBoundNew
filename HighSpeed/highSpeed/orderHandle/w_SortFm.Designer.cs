@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnTransfor = new System.Windows.Forms.Button();
             this.btnVid = new System.Windows.Forms.Button();
             this.btnPokeSeq = new System.Windows.Forms.Button();
             this.btnRef = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
-            this.btnTransfor = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
@@ -69,6 +69,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1012, 48);
             this.panel1.TabIndex = 0;
+            // 
+            // btnTransfor
+            // 
+            this.btnTransfor.Location = new System.Drawing.Point(853, 12);
+            this.btnTransfor.Name = "btnTransfor";
+            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
+            this.btnTransfor.TabIndex = 6;
+            this.btnTransfor.Text = "订单拆分";
+            this.btnTransfor.UseVisualStyleBackColor = true;
+            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
             // 
             // btnVid
             // 
@@ -238,16 +248,6 @@
             this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLoading.TabIndex = 27;
             this.pbLoading.TabStop = false;
-            // 
-            // btnTransfor
-            // 
-            this.btnTransfor.Location = new System.Drawing.Point(853, 12);
-            this.btnTransfor.Name = "btnTransfor";
-            this.btnTransfor.Size = new System.Drawing.Size(75, 23);
-            this.btnTransfor.TabIndex = 6;
-            this.btnTransfor.Text = "订单拆分";
-            this.btnTransfor.UseVisualStyleBackColor = true;
-            this.btnTransfor.Click += new System.EventHandler(this.btnTransfor_Click);
             // 
             // w_SortFm
             // 

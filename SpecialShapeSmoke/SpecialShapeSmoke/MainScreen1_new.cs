@@ -227,7 +227,7 @@ namespace SpecialShapeSmoke
             search.Font = new Font("宋体", 25, FontStyle.Bold);
             search.Text = "刷新";
             search.Click += Refresh;
-            search.Location = new Point(p.Width - 4 * topHeight, 0);
+            search.Location = new Point(p.Width - 3 * topHeight, 0);
             p.Controls.Add(search);
             
 
@@ -238,7 +238,7 @@ namespace SpecialShapeSmoke
             btnView.Font = new Font("宋体", 25, FontStyle.Bold);
             btnView.Text = "放烟顺序";
             btnView.Click += GetNowView;
-            btnView.Location = new Point(p.Width - 7 * topHeight, 0);
+            btnView.Location = new Point(p.Width - 6 * topHeight, 0);
             p.Controls.Add(btnView);
 
             btnSearch = new Button();
@@ -248,7 +248,7 @@ namespace SpecialShapeSmoke
             btnSearch.Font = new Font("宋体", 25, FontStyle.Bold);
             btnSearch.Text = "条烟定位";
             btnSearch.Click += FScView;
-            btnSearch.Location = new Point(p.Width - 10 * topHeight, 0);
+            btnSearch.Location = new Point(p.Width - 9 * topHeight, 0);
             p.Controls.Add(btnSearch);
 
             Button SortSet = new Button();
@@ -302,28 +302,28 @@ namespace SpecialShapeSmoke
             lblpack.Width = 2 * topHeight;
             lblpack.Height = topHeight;
             lblpack.BackColor = Color.Transparent;
-            lblpack.Font = new Font("宋体", 25, FontStyle.Bold); 
+            lblpack.Font = new Font("宋体", 21, FontStyle.Bold); 
             
             lblpack.Name = "lblpack";
             lblpack.Text = PackMachineSeq[0].ToString() + "、" + PackMachineSeq[1].ToString() + "包装机补烟顺序";
             lblpack.Location = new Point(Convert.ToInt32(p.Width *(0.17)), 10);
-            lblpack.Size =new Size(350,40);
+            lblpack.Size =new Size(300,40);
             p.Controls.Add(lblpack);
             //lblpack.ForeColor = Color.Red;
 
             txtbox3 = new TextBox();
-            txtbox3.Width = 120;
+            txtbox3.Width = 50;
             txtbox3.Height = 20;
-            txtbox3.Location = new Point(Convert.ToInt32(p.Width *(0.46)), 28);
+            txtbox3.Location = new Point(Convert.ToInt32(p.Width *(0.41)), 28);
             p.Controls.Add(txtbox3);
             txtbox3.Text = "0";
            // txtbox3.Visible = false;
 
 
             txtbox4 = new TextBox();
-            txtbox4.Width = 120;
+            txtbox4.Width = 50;
             txtbox4.Height = 20;
-            txtbox4.Location = new Point(Convert.ToInt32(p.Width * (0.46)), 8);
+            txtbox4.Location = new Point(Convert.ToInt32(p.Width * (0.41)), 8);
             p.Controls.Add(txtbox4);
             txtbox4.Text = "0";
            // txtbox4.Visible = false;
@@ -338,6 +338,17 @@ namespace SpecialShapeSmoke
                 txtbox3.Visible = false;
             }
 
+            Button SortMainbelt = new Button();
+            SortMainbelt.Width = 3 * topHeight;
+            SortMainbelt.Height = topHeight;
+            SortMainbelt.BackColor = Color.Silver;
+            SortMainbelt.Font = new Font("宋体", 25, FontStyle.Bold);
+            SortMainbelt.Name = "SortMainbelt";
+            SortMainbelt.Text = "推烟皮带";
+            SortMainbelt.Click += SortMainbeltClick;
+            SortMainbelt.Location = new Point(p.Width - 12 * topHeight, 0);
+            SortMainbelt.Visible = true;
+            p.Controls.Add(SortMainbelt);
 
             //search.Enabled = false;
             //btnView.Enabled = false;
@@ -1519,6 +1530,7 @@ namespace SpecialShapeSmoke
         {
             pullcigarette(txtbox2.Text, "3", Convert.ToDecimal(boxText.Last()));
         }
+        #region
         void lbl_Click(object sender, EventArgs e)
         {
             //父控件的名称
@@ -1584,7 +1596,7 @@ namespace SpecialShapeSmoke
                     writeLog.Write("手动放烟：" + lbl.Text+"流水号：" + lab.Text);
                    
                 }
-            }
+            } 
             /*
             decimal machineseq;
             if (boxText.Count() == 1)
@@ -1620,6 +1632,7 @@ namespace SpecialShapeSmoke
              */
 
         }
+        #endregion
         private delegate void HandleDelegate1(string info, Label label, bool tag, int falg);
         /// <summary>
         /// 存放烟仓的label
@@ -1721,7 +1734,28 @@ namespace SpecialShapeSmoke
             txtbox3.Text = finishNo[1].ToString();
 
         }
-        
+        FmSortMainbelt1 FmSortbelt1;
+        FmSortMainbelt2 FmSortbelt2;
+        private void SortMainbeltClick(object sender, EventArgs e)
+        {
+            string linenum = boxText[0].Substring(0, 1).ToString();
+            if (linenum == "2" || linenum == "3")
+            {
+                FmSortbelt1 = new FmSortMainbelt1(plcstatetag, pIOPCServer, LOCALE_ID, SERVER_NAME, linenum);
+                FmSortbelt1.Show();
+                FmSortbelt1.Activate();
+                SearchWinForm(FmSortbelt1);
+            }
+            if (linenum == "1" || linenum == "4")
+            {
+                FmSortbelt2 = new FmSortMainbelt2(plcstatetag, pIOPCServer, LOCALE_ID, SERVER_NAME, linenum);
+                FmSortbelt2.Show();
+                FmSortbelt2.Activate();
+                SearchWinForm(FmSortbelt2);
+            }
 
+            
+        }
+        
     }
 }

@@ -43,7 +43,7 @@ namespace InBound.Business
                                          join item2 in entity.T_PRODUCE_SORTTROUGH
                                              on item.TROUGHNUM equals item2.TROUGHNUM
                                          join item3 in entity.T_UN_POKE_HUNHE on item.POKEID equals item3.POKEID
-                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM >= finishno1//finishno  
+                                         where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item.SENDTASKNUM > finishno1 //>= finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item3.PULLSTATUS == 1
                                              && item.STATUS != 20
@@ -60,7 +60,8 @@ namespace InBound.Business
                                              SORTNUM = item.SORTNUM,
                                              SENDTASKNUM = item.SENDTASKNUM,
                                              PULLSTATUS = item3.PULLSTATUS
-                                         }).Skip(finishno2).Take(qty).ToList();
+                                         })//.Skip(finishno2).Take(qty)
+                                         .ToList();
                                 return query; 
                         }
                         else
@@ -87,7 +88,8 @@ namespace InBound.Business
                                              SORTNUM = item.SORTNUM,
                                              SENDTASKNUM = item.SENDTASKNUM,
                                              PULLSTATUS = item3.PULLSTATUS
-                                         }).Take(qty).ToList();//.Skip(finishno2).Take(qty).ToList();
+                                         })//.Take(qty)
+                                         .ToList();//.Skip(finishno2).Take(qty).ToList();
                             return updown_new(query, 0);
                             //没有经过排程处理的数据使用的方法 不需要过滤放烟
                             //return updown(query, cigarettesort,2);
@@ -115,7 +117,9 @@ namespace InBound.Business
                                          QUANTITY = item.POKENUM,
                                          SENDTASKNUM=item.SENDTASKNUM,
                                           SORTNUM=item.SORTNUM
-                                     }).Skip(finishno2).Take(qty).ToList();
+                                     })
+                                     //.Skip(finishno2).Take(qty)
+                                     .ToList();
                         if (cigarettesort == "0")
                         {
                             return query;
@@ -951,5 +955,25 @@ namespace InBound.Business
         }
 
 
+        /// <summary>
+        /// 获取白皮带烟序
+        /// </summary>
+        public static List<SPSortBeltInfo> GetCigBeltSort(decimal sendtasknum)
+        {
+            List<SPSortBeltInfo> sp=new List<SPSortBeltInfo>();
+            using (Entities et=new Entities())
+            {
+                var result = (from item in et.T_UN_POKE
+                              join item2 in et.T_PRODUCE_SORTTROUGH
+                              on item.TROUGHNUM equals item2.TROUGHNUM
+                              join item3 in et.T_UN_TASK
+                              on item.BILLCODE equals item3.BILLCODE
+                              where item2.CIGARETTETYPE==40 && item2.STATE == "10" && item.SENDTASKNUM == sendtasknum
+                              orderby item.SENDTASKNUM,item.POKEID
+                              select new SPSortBeltInfo { CIGARETTECODE = item.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, CUSTOMERCODE = item3.CUSTOMERCODE, CUSTOMERNAME = item3.CUSTOMERNAME, PACKAGENO = item.PACKAGEMACHINE, SENDTASKNUM = item.SENDTASKNUM, SORTNUM = item.SORTNUM, SORTSEQ = item3.SORTSEQ }).ToList();
+                return result;
+            }
+           
+        }
     }
 }

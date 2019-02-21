@@ -51,4 +51,44 @@ namespace InBound.Model
 
        public decimal? SENDTASKNUM { get; set; }
    }
+
+   public class SPSortBeltInfo
+   {
+       //任务包号、分拣任务号、条烟名称、条烟编码、户名、专卖证号、户序、包装机
+    
+       /// <summary>
+       /// 条烟名称
+       /// </summary>
+       public string CIGARETTENAME { get; set; }
+       /// <summary>
+       /// 条烟编码
+       /// </summary>
+       public string CIGARETTECODE { get; set; }
+       /// <summary>
+       /// 任务包号
+       /// </summary>
+       public decimal? SENDTASKNUM { get; set; }
+       /// <summary>
+       /// 分拣任务号
+       /// </summary>
+       public decimal? SORTNUM { get; set; }
+       /// <summary>
+       /// 户名
+       /// </summary>
+       public string CUSTOMERNAME { get; set; }
+       /// <summary>
+       /// 专卖证号
+       /// </summary>
+       public string CUSTOMERCODE { get; set; } 
+       /// <summary>
+       /// 户序
+       /// </summary>
+       public decimal? SORTSEQ { get; set; }
+       /// <summary>
+       /// 包装机
+       /// </summary>
+       public decimal? PACKAGENO { get; set; }
+       
+   }
+
 }
