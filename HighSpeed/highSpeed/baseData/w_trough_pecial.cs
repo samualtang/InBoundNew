@@ -14,6 +14,7 @@ namespace highSpeed
     public partial class w_trough_pecial : Form
     {
         public string speacilname;
+        public string speacilcode;
         public string speaciltrough;
         public List<HUNHETROUGH2> list;
         public w_trough_pecial(string speacilname, string speaciltrough, List<HUNHETROUGH2> list)
@@ -35,6 +36,7 @@ namespace highSpeed
             {
                 textBox_name.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
                 label_troughnum.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                label_code.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
             }
         }
 

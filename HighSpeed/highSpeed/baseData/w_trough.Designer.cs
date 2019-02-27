@@ -109,16 +109,16 @@
             // 
             this.groupBox1.Controls.Add(this.btnsyncData);
             this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Location = new System.Drawing.Point(1107, 12);
+            this.groupBox1.Location = new System.Drawing.Point(1106, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(143, 59);
+            this.groupBox1.Size = new System.Drawing.Size(143, 65);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "同步";
+            this.groupBox1.Text = "同步与互换";
             // 
             // btnsyncData
             // 
-            this.btnsyncData.Location = new System.Drawing.Point(20, 18);
+            this.btnsyncData.Location = new System.Drawing.Point(15, 25);
             this.btnsyncData.Name = "btnsyncData";
             this.btnsyncData.Size = new System.Drawing.Size(48, 23);
             this.btnsyncData.TabIndex = 18;
@@ -128,7 +128,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(80, 18);
+            this.button3.Location = new System.Drawing.Point(86, 25);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(48, 23);
             this.button3.TabIndex = 19;

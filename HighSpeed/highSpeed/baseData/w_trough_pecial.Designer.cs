@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label_troughnum = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.label_code = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,11 +137,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label_code
+            // 
+            this.label_code.AutoSize = true;
+            this.label_code.Location = new System.Drawing.Point(657, 19);
+            this.label_code.Name = "label_code";
+            this.label_code.Size = new System.Drawing.Size(53, 12);
+            this.label_code.TabIndex = 5;
+            this.label_code.Text = "品牌编码";
+            this.label_code.Visible = false;
+            // 
             // w_trough_pecial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(749, 307);
+            this.Controls.Add(this.label_code);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label_troughnum);
             this.Controls.Add(this.label1);
@@ -167,5 +179,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettecode;
         private System.Windows.Forms.DataGridViewTextBoxColumn cigarettename;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.Label label_code;
     }
 }

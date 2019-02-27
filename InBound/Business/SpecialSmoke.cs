@@ -54,10 +54,10 @@ namespace InBound.Business
         /// <param name="obj1">烟仓1</param>
         /// <param name="obj2">烟仓2</param>
         /// <returns>互换结果</returns>
-        public static bool HuHuanYc(HUNHETROUGH2 obj1,HUNHETROUGH2 obj2)
+        public static bool HuHuanYc(HUNHETROUGH2 obj1, HUNHETROUGH2 obj2, decimal groupno)
         {
             Entities et = new Entities();
-            var list = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.TROUGHTYPE == 10 && x.GROUPNO == 1 ).Select(x=>x).ToList();
+            var list = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.TROUGHTYPE == 10 && x.GROUPNO == groupno).Select(x => x).ToList();
             foreach (var item in list)
             {
                 if(item.TROUGHNUM == obj2.troughnum)
@@ -86,10 +86,10 @@ namespace InBound.Business
         /// 修改状态
         /// </summary>
         /// <returns></returns>
-        public static string StatusChange(HUNHETROUGH2 obj)
+        public static string StatusChange(HUNHETROUGH2 obj, decimal groupno)
         {
             Entities et = new Entities();
-            var list = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.TROUGHTYPE == 10 && x.GROUPNO == 1 ).Select(x => x).ToList();
+            var list = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 30 && x.TROUGHTYPE == 10 && x.GROUPNO == groupno).Select(x => x).ToList();
             foreach (var item in list)
             {
                 if (item.TROUGHNUM == obj.troughnum && item.STATE != obj.status)
@@ -114,10 +114,10 @@ namespace InBound.Business
         /// <param name="obj1">混合道</param>
         /// <param name="obj2">烟仓</param>
         /// <returns>互换结果</returns>
-        public static bool HuHuanHunHeDao(HUNHETROUGH2 hunhe, HUNHETROUGH2 yc)
+        public static bool HuHuanHunHeDao(HUNHETROUGH2 hunhe, HUNHETROUGH2 yc,decimal groupno)
         {
             Entities et = new Entities();
-            var list = et.T_PRODUCE_SORTTROUGH.Where(x => ( x.CIGARETTETYPE == 30 || x.CIGARETTETYPE == 40 ) && x.TROUGHTYPE == 10 && x.GROUPNO == 1).Select(x => x).ToList();
+            var list = et.T_PRODUCE_SORTTROUGH.Where(x => (x.CIGARETTETYPE == 30 || x.CIGARETTETYPE == 40) && x.TROUGHTYPE == 10 && x.GROUPNO == groupno).Select(x => x).ToList();
             foreach (var item in list)
             {
                 if (item.TROUGHNUM == hunhe.troughnum)
