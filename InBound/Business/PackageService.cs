@@ -5,6 +5,7 @@ using System.Text;
 using InBound.Pub;
 using InBound.Model;
 using System.Reflection;
+using System.Globalization;
 
 namespace InBound.Business
 {
@@ -17,14 +18,25 @@ namespace InBound.Business
             int allCount=0;
             using (Entities entity = new Entities())
             {
-                var query = (from item in entity.T_UN_TASK_H where item.PACKAGEMACHINE == packageNo && item.SORTNUM == 468410 orderby item.SORTNUM select item).ToList();
+
+                DateTime TIEM = new DateTime();
+                DateTime TIEM2= new DateTime();
+                DateTimeFormatInfo format = new DateTimeFormatInfo();
+                format.ShortDatePattern = "yyyy-MM-dd";
+                TIEM = Convert.ToDateTime("2019-02-28", format);
+                TIEM2 = Convert.ToDateTime("2019-03-01", format);
+ 
+                var query = (from item in entity.T_UN_TASK_H
+                             where item.PACKAGEMACHINE == packageNo    && item.ORDERDATE >= TIEM &&  item.ORDERDATE <= TIEM2  
+                             orderby item.SORTNUM
+                             select item).ToList();
                 if (query != null)
                 {
                     foreach (var v in query)
                     {
                         int pcount=0;
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
-                        var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.SENDTASKNUM select item2).ToList();
+                        var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.POKEID select item2).ToList();
                         if (query2 != null)
                         {
                             foreach (var v2 in query2)
@@ -42,13 +54,15 @@ namespace InBound.Business
                                 temp.SORTNUM = v2.SORTNUM;
                                 temp.CIGNUM = allCount;
                                 temp.CIGSEQ = pcount;
-                                temp.PACKAGESEQ = 0;
+                                temp.PACKAGESEQ = packageNo;
                                 temp.ALLPACKAGESEQ = 0;
+                                temp.PACKAGENO = 1;
                                 temp.STATE = 0;//0 新增  10 确定
                                 temp.CIGZ = decimal.Parse(tempItem.DOUBLETAKE);
                                 task.Add(temp);
                             }
-                            GenPackageInfo(task,entity);
+                            allpackagenum++;
+                            GenPackageInfo(task,entity); 
                             foreach (var item in task)
                             {
                                 entity.T_PACKAGE_TASK.AddObject(item);
@@ -66,7 +80,7 @@ namespace InBound.Business
         int jx = 3;
 
         int taskCount = 6;//一次参与计算的条数
-        int allpackagenum = 1;
+        int allpackagenum = 0;
         public static T DeepCopyByReflect<T>(T obj)
         {
             //如果是字符串或值类型则直接返回
@@ -151,7 +165,9 @@ namespace InBound.Business
             {
                 if (item.CIGARETTECODE != tempCode)
                 {
-                    list = diclist.Pop();
+                    
+                        list = diclist.Pop();
+                  
                     tempCode = item.CIGARETTECODE;
                     doubleTake = item.DOUBLETAKE;
                 }
@@ -188,7 +204,7 @@ namespace InBound.Business
                         if (bigList != null && bigList.Count>0)
                         {
                             bigList = templist.Where(x => x.STATE == 10).OrderBy(x => x.CIGSEQ).ToList();
-                            templist.ForEach(x => { x.PACKAGENO = 0; x.STATE = 0; });
+                            templist.ForEach(x => { x.PACKAGESEQ = 0; x.STATE = 0; });
                             templist = templist.Where(x => x.CIGSEQ <= sciseq).ToList();
                             list.Clear();
                            
@@ -278,7 +294,7 @@ namespace InBound.Business
                         {
                             v.PACKAGESEQ = packageNO;
                             v.CIGWIDTHX = area.beginx + v.CIGWIDTH;//两条当做一条
-                            v.CIGHIGHY = area.height;
+                            v.CIGHIGHY = area.height + v.CIGHIGH;
                             v.STATE = 10;
                             v.DOUBLETAKE = "1";
                             v.ALLPACKAGESEQ = allpackagenum;
@@ -348,7 +364,7 @@ namespace InBound.Business
                             
                                 chooseItem.PACKAGESEQ = packageNO;
                                 chooseItem.CIGWIDTHX = area.beginx + chooseItem.CIGWIDTH / 2;
-                                chooseItem.CIGHIGHY = area.height;
+                                chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
                                 width += (chooseItem.CIGWIDTH ?? 0);
