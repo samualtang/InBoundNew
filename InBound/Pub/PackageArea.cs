@@ -21,5 +21,6 @@ namespace InBound.Pub
         public decimal width;
         public decimal fromx;
         public decimal tox;
+        public decimal index;
     }
 }
