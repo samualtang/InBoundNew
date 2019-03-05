@@ -73,6 +73,7 @@
     <Compile Include="Business\MainBeltInfoService.cs" />
     <Compile Include="Business\HunHeService_new.cs" />
     <Compile Include="Business\OrderCiTrough.cs" />
+    <Compile Include="Business\PackageService.cs" />
     <Compile Include="Business\SixSchedule.cs" />
     <Compile Include="Business\SpecialSmoke.cs" />
     <Compile Include="Business\UserService.cs" />
@@ -125,10 +126,12 @@
     <Compile Include="Model\UnTaskInfo.cs" />
     <Compile Include="Model\UseRate.cs" />
     <Compile Include="Model\MainBeltInfo.cs" />
+    <Compile Include="Model\ItemGroup.cs" />
     <Compile Include="OPC\PlcGroup.cs" />
     <Compile Include="OPC\PlcItemCollection.cs" />
     <Compile Include="Pub\AutoSizeFormClass.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />
+    <Compile Include="Pub\PackageArea.cs" />
     <Compile Include="Pub\Security.cs" />
     <Compile Include="Pub\WriteLog.cs" />
     <Compile Include="UnionBit.cs" />
