@@ -17,10 +17,10 @@ namespace SpecialShapeSmoke
     {
         int machineseq1;
         int machineseq2;
-        static int NowMachineseq;
+        int NowMachineseq;
         decimal[] nowpokeids;
         string cigarettesort;
-        System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
+        //System.Windows.Forms.Timer t1 = new System.Windows.Forms.Timer();
         decimal[] lastpokeids = new decimal[] { -1, -1 };
         decimal nowpokeid;
         decimal[] packmachineseq;
@@ -50,8 +50,8 @@ namespace SpecialShapeSmoke
             //}
             NowPoke(nowpokeids, true);
             NowMachineseq = machineseq1;
-            t1.Tick += new EventHandler(t1_Tick);
-            t1.Interval = 500;
+            //t1.Tick += new EventHandler(t1_Tick);
+            //t1.Interval = 500;
            // t1.Start();
 
 
@@ -82,12 +82,12 @@ namespace SpecialShapeSmoke
             labMachineSeq.Text = machineseq2 + "混合道";
             NowPoke(nowpokeids, true);
         }
-        private void t1_Tick(object sender, EventArgs e)
-        {
-            string pokeid = Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString();
-            NowPoke(nowpokeids, false);
+        //private void t1_Tick(object sender, EventArgs e)
+        //{
+        //    string pokeid = Convert.ToInt32(labMachineSeq.Text.Substring(0, 4)) == machineseq1 ? nowpokeids[0].ToString() : nowpokeids[1].ToString();
+        //    NowPoke(nowpokeids, false);
 
-        }
+        //}
         //定位当前
         private void btnNowPoke_Click(object sender, EventArgs e)
         {
@@ -179,7 +179,7 @@ namespace SpecialShapeSmoke
 
         private void NowView_Deactivate(object sender, EventArgs e)
         {
-            t1.Stop();
+            //t1.Stop();
             this.Dispose();
             this.Close();
 
