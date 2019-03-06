@@ -27,7 +27,7 @@ namespace InBound.Business
                 TIEM2 = Convert.ToDateTime("2019-03-01", format);
  
                 var query = (from item in entity.T_UN_TASK_H
-                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
+                             where item.PACKAGEMACHINE == packageNo   && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
                              orderby item.SORTNUM
                              select item).ToList();
                 if (query != null)
@@ -129,11 +129,11 @@ namespace InBound.Business
             PackageArea arear = new PackageArea();
 
             areal.left = area.left;
-            areal.right = arear;
+            areal.right = areaC;
             areal.beginx = area.beginx;
-            areal.width = area.beginx+unit.beginx;
+            areal.width = unit.beginx;
             areal.height = area.height;
-            List<Cigarette> temp = area.cigaretteList.Where(x => x.index < unit.beginx).ToList();
+            List<Cigarette> temp = area.cigaretteList.Where(x => x.index < unit.begin).ToList();
             areal.cigaretteList = new List<Cigarette>() ;
             areal.cigaretteList.AddRange(temp);
             //if (area.left != null)
@@ -166,7 +166,18 @@ namespace InBound.Business
             arear.width = area.width - width-unit.beginx;
             arear.height = area.height;
             arear.right = area.right;
-            arear.cigaretteList = area.cigaretteList.Where(x=>x.index>unit.end).ToList();
+            Cigarette tempC = area.cigaretteList.Where(x => x.index == unit.begin).FirstOrDefault();
+            if (tempC.width < width)
+            {
+
+                arear.cigaretteList = area.cigaretteList.Where(x => x.index > unit.begin).ToList();
+                arear.cigaretteList[0].width-= (width - tempC.width);
+            }
+            else
+            {
+                arear.cigaretteList = area.cigaretteList.Where(x => x.index >= unit.begin).ToList();
+                arear.cigaretteList[0].width -= width;
+            }
             //arear.cigaretteList[0].tox = arear.width;
             //arear.cigaretteList[0].width = arear.width;
             if (area.right != null)
