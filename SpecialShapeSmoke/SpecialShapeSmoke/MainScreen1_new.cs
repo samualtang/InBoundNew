@@ -503,7 +503,7 @@ namespace SpecialShapeSmoke
                 {
                     MessageBox.Show("PLC连接失败，请检查PLC连接，再重新打开程序!");
                 }
-                writeLog.Write("sp-02:PLC连接失败" + e.Message);
+                writeLog.Write("sp-02:PLC连接失败 " + e.Message);
             }
 
             //socket = new ClientSocket(ipaddress, PORT);
@@ -640,9 +640,9 @@ namespace SpecialShapeSmoke
         #endregion
         // bool flag = true;//初始化
 
-        static decimal[] finishNo = new decimal[2];//完成信号 (pokeid)
+        decimal[] finishNo = new decimal[2];//完成信号 (pokeid)
         
-        static decimal[] befoerFinishNo = new decimal[2] { -2, -2 };//上一次完成信号(pokeid)
+        decimal[] befoerFinishNo = new decimal[2] { -2, -2 };//上一次完成信号(pokeid)
 
 
         DialogResult result = DialogResult.Cancel;
@@ -652,6 +652,7 @@ namespace SpecialShapeSmoke
         /// 
         public void getData(bool Refresh = false)
         {
+            string st1 = System.DateTime.Now.ToString();
             bool finishchange = false;
             try
             { 
@@ -718,7 +719,7 @@ namespace SpecialShapeSmoke
 
                         if ((finishNo.Sum() > befoerFinishNo.Sum()) || Refresh)
                         {
-                            writeLog.Write("getData()开始获取数据\r-----------------------------------------------------------------------------");
+                            writeLog.Write("已读取电控信息，开始获取条烟数据");
 
                             clearAllText();
                             throughList = new List<HUNHEVIEW>[boxText.Length*2];
@@ -775,9 +776,9 @@ namespace SpecialShapeSmoke
                                             initTextUpOrDn(panelList[j], throughList[1], labelnum, true);
                                         }
                                     }
-                                }
-                                writeLog.Write("getData()数据获取成功！");
+                                } 
                             }
+                            writeLog.Write("数据获取成功！");
                             if (throughList[0].Count <= 0 && throughList[1].Count <= 0) //根据不同通道完成来显示完成任务 
                             {
                                 Label lbl2 = (Label)Controls.Find("orBox" + 0, true)[0].Controls[0];
@@ -816,6 +817,8 @@ namespace SpecialShapeSmoke
                     databaselinkcheck();
                 }
             }
+            string st2 = System.DateTime.Now.ToString();
+            writeLog.Write("整体耗时：开始于" + st1 + "  结束于" + st2);   
         }
         //数据库连接失败，界面显示
         public void databaselinkcheck()
@@ -1315,7 +1318,7 @@ namespace SpecialShapeSmoke
             {
                 lbl.BackColor = Color.White;
                 HunHeService_new.PullTag(hunhe.POKEID, machineseq);
-                writeLog.Write("");
+                writeLog.Write("<扫码放烟成功>");
                 getData(true);
                 //数据显示缓存上限
                 //if (lbl2.Text == "" || hunhe2 .PACK_BAR== hunhe.PACK_BAR)
