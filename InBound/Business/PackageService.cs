@@ -27,7 +27,7 @@ namespace InBound.Business
                 TIEM2 = Convert.ToDateTime("2019-03-01", format);
  
                 var query = (from item in entity.T_UN_TASK_H
-                             where item.PACKAGEMACHINE == packageNo && item.SORTNUM == 466650 && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
+                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
                              orderby item.SORTNUM
                              select item).ToList();
                 if (query != null)
@@ -199,11 +199,11 @@ namespace InBound.Business
                    
                    
                     areal.beginx = area.left.beginx;
-                    if (area.left.beginx == 0)
-                    {
-                        areal.left = null;
-                        area.left.cigaretteList.Clear();
-                    }
+                    //if (area.left.beginx == 0)
+                    //{
+                    //    areal.left = null;
+                    //    area.left.cigaretteList.Clear();
+                    //}
                     areal.cigaretteList = area.left.cigaretteList;
                     areal.cigaretteList.Add(new Cigarette() { CigaretteNo = cigseq, fromx = area.left.width, tox = area.left.width+width, width = width });
                     areal.width = area.left.width + areal.width;
@@ -211,6 +211,7 @@ namespace InBound.Business
                     {
                         areal.height = area.left.height;
                     }
+                    areal.left = area.left.left;
                     list.Remove(area.left);
                 }
             }
@@ -220,23 +221,24 @@ namespace InBound.Business
             arear.height = area.height;
             arear.right = area.right;
             arear.cigaretteList =CopyCigaretteList(area.cigaretteList);
-            if (arear.cigaretteList.Count > 1)
-            {
-                arear.cigaretteList.RemoveAt(0);
+            //if (arear.cigaretteList.Count > 1)
+            //{
+                
                 if (width > area.cigaretteList[0].width)
                 {
+                    arear.cigaretteList.RemoveAt(0);
                     arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width);
                 }
                 else
                 {
 
-                    arear.cigaretteList[0].width += (area.cigaretteList[0].width - width);
+                    arear.cigaretteList[0].width = (area.cigaretteList[0].width - width);
                 }
-            }
-            else
-            {
-                arear.cigaretteList[0].width = arear.cigaretteList[0].width - width;
-            }
+            //}
+            //else
+            //{
+            //    arear.cigaretteList[0].width = arear.cigaretteList[0].width - width;
+            //}
            
             list.Add(areal);
             list.Add(arear);
