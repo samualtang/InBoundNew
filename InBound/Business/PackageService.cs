@@ -27,7 +27,7 @@ namespace InBound.Business
                 TIEM2 = Convert.ToDateTime("2019-03-01", format);
  
                 var query = (from item in entity.T_UN_TASK_H
-                             where item.PACKAGEMACHINE == packageNo   && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
+                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
                              orderby item.SORTNUM
                              select item).ToList();
                 if (query != null)
@@ -202,7 +202,7 @@ namespace InBound.Business
             areal.height = height;
 
             areal.cigaretteList = new List<Cigarette> { new Cigarette(){ CigaretteNo=cigseq, fromx=0, tox=width, width=width}  };
-            if (area.left != null)
+            if (area.left != null && list.Contains(area.left))
             {
                 area.left.right = areal;
                if (Math.Abs(area.left.height - areal.height) <= deviation)
@@ -210,19 +210,22 @@ namespace InBound.Business
                    
                    
                     areal.beginx = area.left.beginx;
-                    //if (area.left.beginx == 0)
-                    //{
-                    //    areal.left = null;
-                    //    area.left.cigaretteList.Clear();
-                    //}
-                    areal.cigaretteList = area.left.cigaretteList;
+                    //if (areal.beginx == 0)
+                  //  {
+                  //      areal.left = null;
+                  //      area.left.cigaretteList.Clear();
+                 //   }
+                    areal.cigaretteList = CopyCigaretteList(area.left.cigaretteList);
                     areal.cigaretteList.Add(new Cigarette() { CigaretteNo = cigseq, fromx = area.left.width, tox = area.left.width+width, width = width });
                     areal.width = area.left.width + areal.width;
                     if (areal.height < area.left.height)
                     {
                         areal.height = area.left.height;
                     }
-                    areal.left = area.left.left;
+                    if (areal.beginx == 0)
+                    {
+                        areal.left = null;
+                    }
                     list.Remove(area.left);
                 }
             }
@@ -397,6 +400,7 @@ namespace InBound.Business
                       //  List<Cigarette> cigList = area.cigaretteList;
                         foreach (var v in groupList)
                         {
+                            unit.Clear();
                             T_PACKAGE_TASK temptask = templist.Find(x => x.CIGARETTECODE == v.CigaretteCode);
                             decimal cgiseq = templist.Where(x => x.CIGARETTECODE == v.CigaretteCode && x.STATE!=10).FirstOrDefault().CIGSEQ ?? 0;
                             if (temptask.CIGWIDTH * 2 <= area.width && area.height + temptask.CIGHIGH < packageHeight)//小于区域宽度,同时小于整包高度
@@ -526,7 +530,7 @@ namespace InBound.Business
                         {
                             T_PACKAGE_TASK temptask = templist.Find(x => x.CIGARETTECODE == v.CigaretteCode && x.STATE!=10);
                             int i = 0;
-
+                            unit.Clear();
                             decimal flag = 1;
                             decimal lastflag = 0;
                             decimal beginx = 0;
@@ -621,6 +625,10 @@ namespace InBound.Business
                             
                                 chooseItem.PACKAGESEQ = packageNO;
                                 chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2;
+                                if ((double)(chooseItem.CIGWIDTHX??0) == 347.5)
+                                {
+                                    chooseItem.STATE = 10;
+                                 }
                                 chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
