@@ -24,6 +24,7 @@ namespace SpecialShapeSmoke
         decimal[] lastpokeids = new decimal[] { -1, -1 };
         decimal nowpokeid;
         decimal[] packmachineseq;
+
         public NowView_new(int machineseq1, int machineseq2, decimal[] nowpokeids, decimal[] packmachineseq)
         {
             this.packmachineseq = packmachineseq;

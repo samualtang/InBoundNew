@@ -89,6 +89,12 @@
     <Compile Include="MainScreen1.Designer.cs">
       <DependentUpon>MainScreen1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainScreen1_test20190313.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainScreen1_test20190313.Designer.cs">
+      <DependentUpon>MainScreen1_test20190313.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainScreen2%28old 6-10%29.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen1.resx">
       <DependentUpon>MainScreen1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainScreen1_test20190313.resx">
+      <DependentUpon>MainScreen1_test20190313.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen2%28old 6-10%29.resx">
       <DependentUpon>MainScreen2%28old 6-10%29.cs</DependentUpon>

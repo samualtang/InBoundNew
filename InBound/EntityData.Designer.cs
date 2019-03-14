@@ -596,22 +596,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_UN_POKE_HUNHE> T_UN_POKE_HUNHE
-        {
-            get
-            {
-                if ((_T_UN_POKE_HUNHE == null))
-                {
-                    _T_UN_POKE_HUNHE = base.CreateObjectSet<T_UN_POKE_HUNHE>("T_UN_POKE_HUNHE");
-                }
-                return _T_UN_POKE_HUNHE;
-            }
-        }
-        private ObjectSet<T_UN_POKE_HUNHE> _T_UN_POKE_HUNHE;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_PRODUCE_POKESEQ> T_PRODUCE_POKESEQ
         {
             get
@@ -848,6 +832,22 @@ namespace InBound
             }
         }
         private ObjectSet<T_UN_TASK_H> _T_UN_TASK_H;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_UN_POKE_HUNHE> T_UN_POKE_HUNHE
+        {
+            get
+            {
+                if ((_T_UN_POKE_HUNHE == null))
+                {
+                    _T_UN_POKE_HUNHE = base.CreateObjectSet<T_UN_POKE_HUNHE>("T_UN_POKE_HUNHE");
+                }
+                return _T_UN_POKE_HUNHE;
+            }
+        }
+        private ObjectSet<T_UN_POKE_HUNHE> _T_UN_POKE_HUNHE;
 
         #endregion
 
@@ -1118,14 +1118,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_UN_POKE_HUNHE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_UN_POKE_HUNHE(T_UN_POKE_HUNHE t_UN_POKE_HUNHE)
-        {
-            base.AddObject("T_UN_POKE_HUNHE", t_UN_POKE_HUNHE);
-        }
-    
-        /// <summary>
         /// 用于向 T_PRODUCE_POKESEQ EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_PRODUCE_POKESEQ(T_PRODUCE_POKESEQ t_PRODUCE_POKESEQ)
@@ -1243,6 +1235,14 @@ namespace InBound
         public void AddToT_UN_TASK_H(T_UN_TASK_H t_UN_TASK_H)
         {
             base.AddObject("T_UN_TASK_H", t_UN_TASK_H);
+        }
+    
+        /// <summary>
+        /// 用于向 T_UN_POKE_HUNHE EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_UN_POKE_HUNHE(T_UN_POKE_HUNHE t_UN_POKE_HUNHE)
+        {
+            base.AddObject("T_UN_POKE_HUNHE", t_UN_POKE_HUNHE);
         }
 
         #endregion
@@ -3406,6 +3406,150 @@ namespace InBound
         private Nullable<global::System.Decimal> _STATE;
         partial void OnSTATEChanging(Nullable<global::System.Decimal> value);
         partial void OnSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ORDERDATE
+        {
+            get
+            {
+                return _ORDERDATE;
+            }
+            set
+            {
+                OnORDERDATEChanging(value);
+                ReportPropertyChanging("ORDERDATE");
+                _ORDERDATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ORDERDATE");
+                OnORDERDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ORDERDATE;
+        partial void OnORDERDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnORDERDATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PUSHSPACE
+        {
+            get
+            {
+                return _PUSHSPACE;
+            }
+            set
+            {
+                OnPUSHSPACEChanging(value);
+                ReportPropertyChanging("PUSHSPACE");
+                _PUSHSPACE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PUSHSPACE");
+                OnPUSHSPACEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PUSHSPACE;
+        partial void OnPUSHSPACEChanging(Nullable<global::System.Decimal> value);
+        partial void OnPUSHSPACEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UNIONPACKAGETAG
+        {
+            get
+            {
+                return _UNIONPACKAGETAG;
+            }
+            set
+            {
+                OnUNIONPACKAGETAGChanging(value);
+                ReportPropertyChanging("UNIONPACKAGETAG");
+                _UNIONPACKAGETAG = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UNIONPACKAGETAG");
+                OnUNIONPACKAGETAGChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UNIONPACKAGETAG;
+        partial void OnUNIONPACKAGETAGChanging(Nullable<global::System.Decimal> value);
+        partial void OnUNIONPACKAGETAGChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CIGSTATE
+        {
+            get
+            {
+                return _CIGSTATE;
+            }
+            set
+            {
+                OnCIGSTATEChanging(value);
+                ReportPropertyChanging("CIGSTATE");
+                _CIGSTATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CIGSTATE");
+                OnCIGSTATEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CIGSTATE;
+        partial void OnCIGSTATEChanging(Nullable<global::System.Decimal> value);
+        partial void OnCIGSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NORMAILSTATE
+        {
+            get
+            {
+                return _NORMAILSTATE;
+            }
+            set
+            {
+                OnNORMAILSTATEChanging(value);
+                ReportPropertyChanging("NORMAILSTATE");
+                _NORMAILSTATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NORMAILSTATE");
+                OnNORMAILSTATEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NORMAILSTATE;
+        partial void OnNORMAILSTATEChanging(Nullable<global::System.Decimal> value);
+        partial void OnNORMAILSTATEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NORMALQTY
+        {
+            get
+            {
+                return _NORMALQTY;
+            }
+            set
+            {
+                OnNORMALQTYChanging(value);
+                ReportPropertyChanging("NORMALQTY");
+                _NORMALQTY = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NORMALQTY");
+                OnNORMALQTYChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NORMALQTY;
+        partial void OnNORMALQTYChanging(Nullable<global::System.Decimal> value);
+        partial void OnNORMALQTYChanged();
 
         #endregion
 
@@ -12696,7 +12840,7 @@ namespace InBound
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> TROUGHNUM
+        public global::System.String TROUGHNUM
         {
             get
             {
@@ -12706,13 +12850,13 @@ namespace InBound
             {
                 OnTROUGHNUMChanging(value);
                 ReportPropertyChanging("TROUGHNUM");
-                _TROUGHNUM = StructuralObject.SetValidValue(value);
+                _TROUGHNUM = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("TROUGHNUM");
                 OnTROUGHNUMChanged();
             }
         }
-        private Nullable<global::System.Decimal> _TROUGHNUM;
-        partial void OnTROUGHNUMChanging(Nullable<global::System.Decimal> value);
+        private global::System.String _TROUGHNUM;
+        partial void OnTROUGHNUMChanging(global::System.String value);
         partial void OnTROUGHNUMChanged();
 
         #endregion
