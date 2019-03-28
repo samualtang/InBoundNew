@@ -23,30 +23,34 @@ namespace InBound.Business
                 DateTime TIEM2= new DateTime();
                 DateTimeFormatInfo format = new DateTimeFormatInfo();
                 format.ShortDatePattern = "yyyy-MM-dd";
-                TIEM = Convert.ToDateTime("2019-02-28", format);
-                TIEM2 = Convert.ToDateTime("2019-03-01", format);
+                TIEM = Convert.ToDateTime("2019-03-21", format);
+                TIEM2 = Convert.ToDateTime("2019-03-21", format);
  
                 var query = (from item in entity.T_UN_TASK_H
-                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2  
+                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2 && item.TASKNUM == 799261
                              orderby item.SORTNUM
                              select item).ToList();
                 if (query != null)
                 {
                     int i = 0;
+                    decimal maxSeq = GetSeq("select decode(max(ptid),null,0,max(ptid)) from t_package_task ");
+
                     foreach (var v in query)
                     {
                         i++;
+                       
                         int pcount=0;
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
-                        var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.POKEID select item2).ToList();
+                        var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.SENDTASKNUM,item2.MACHINESEQ,item2.TROUGHNUM select item2).ToList();
                         if (query2 != null)
                         {
                             foreach (var v2 in query2)
                             {
+                                maxSeq++;
                                 allCount = allCount + 1;
                                 pcount = pcount + 1;
                                 T_PACKAGE_TASK temp = new T_PACKAGE_TASK();
-                                temp.PTID = GetSeq("select s_package_task.nextval from dual");
+                                temp.PTID = maxSeq;
                                 temp.CIGARETTECODE = v2.CIGARETTECODE;
                                 T_WMS_ITEM tempItem = ItemService.GetItemByCode(v2.CIGARETTECODE);
                                 temp.CIGARETTENAME = tempItem.ITEMNAME;
@@ -85,7 +89,7 @@ namespace InBound.Business
         }
 
         int packageWidth = 540;//宽
-        int packageHeight = 460 + 20;//20浮动
+        int packageHeight = 200 ;//20浮动
         int jx = 3;
         decimal deviation = 3;//高度误差
 
@@ -123,7 +127,7 @@ namespace InBound.Business
         public void calcArea(List<PackageArea> list, PackageArea area, decimal width, decimal height, decimal cigseq,AreaUnit unit)
         {
             list.Remove(area);
-
+           // list.RemoveAll(x => x.beginx == area.beginx);
             PackageArea areal = new PackageArea();
             PackageArea areaC = new PackageArea();
             PackageArea arear = new PackageArea();
@@ -191,7 +195,7 @@ namespace InBound.Business
         public void calcArea(List<PackageArea> list, PackageArea area,decimal width,decimal height,decimal cigseq)
         {
             list.Remove(area);
-
+           // list.RemoveAll(x => x.beginx == area.beginx);
             PackageArea areal = new PackageArea();
             PackageArea arear = new PackageArea();
             
@@ -384,9 +388,21 @@ namespace InBound.Business
                           
                     }
                     PackageArea area = list.Find(x => x.height == minHeight && x.isscan == 0 && x.width > minWidth);
+                    area = list.FindAll(x => x.beginx == area.beginx && x.isscan == 0 && x.width > minWidth ).OrderByDescending(x=>x.height).FirstOrDefault();
                     //是否有相同品牌的烟
                     List<ItemGroup> allGroupList = templist.Where(x=>x.STATE!=10).GroupBy(x => x.CIGARETTECODE).Select(x => new ItemGroup() { CigaretteCode = x.Key, Total = x.Count() }).ToList();
+
                     List<ItemGroup> groupList = allGroupList.FindAll(x => x.Total > 1);
+
+                    foreach (var item in groupList)
+                    {
+                       var doubleList= templist.Where(x => x.STATE != 10 && x.CIGARETTECODE == item.CigaretteCode).Take(2).ToList();
+                       if (Math.Abs(doubleList[0].CIGSEQ ?? 0 - doubleList[1].CIGSEQ ?? 0) != 1)
+                       {
+                           item.Total = 100;
+                       }
+                    }
+                    groupList.RemoveAll(x => x.Total == 100);
                   //  List<ItemGroup> smallGroupList = allGroupList;
 
                    
@@ -625,10 +641,6 @@ namespace InBound.Business
                             
                                 chooseItem.PACKAGESEQ = packageNO;
                                 chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2;
-                                if ((double)(chooseItem.CIGWIDTHX??0) == 347.5)
-                                {
-                                    chooseItem.STATE = 10;
-                                 }
                                 chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
