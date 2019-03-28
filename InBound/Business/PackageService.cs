@@ -257,9 +257,19 @@ namespace InBound.Business
             //{
             //    arear.cigaretteList[0].width = arear.cigaretteList[0].width - width;
             //}
-           
-            list.Add(areal);
-            list.Add(arear);
+
+
+                if ( arear.beginx + arear.width == packageWidth && arear.width <= minWidth)
+                {
+                    areal.width += arear.width;
+                    areal.right = null;
+                    list.Add(areal);
+                }
+                else
+                {
+                    list.Add(areal);
+                    list.Add(arear);
+                }
         }
         public Stack<List<PackageArea>> diclist = new Stack< List<PackageArea>>();
         public List<PackageArea> RollBackList(List<PackageArea> list, List<T_PACKAGE_TASK> bigList)
@@ -397,7 +407,7 @@ namespace InBound.Business
                     foreach (var item in groupList)
                     {
                        var doubleList= templist.Where(x => x.STATE != 10 && x.CIGARETTECODE == item.CigaretteCode).Take(2).ToList();
-                       if (Math.Abs(doubleList[0].CIGSEQ ?? 0 - doubleList[1].CIGSEQ ?? 0) != 1)
+                       if (Math.Abs((doubleList[0].CIGSEQ ?? 0) - (doubleList[1].CIGSEQ ?? 0)) != 1)
                        {
                            item.Total = 100;
                        }
