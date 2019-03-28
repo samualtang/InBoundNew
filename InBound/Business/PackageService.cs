@@ -261,7 +261,7 @@ namespace InBound.Business
 
                 if ( arear.beginx + arear.width == packageWidth && arear.width <= minWidth)
                 {
-                    areal.width += arear.width;
+                    areal.width += (arear.width/2);
                     areal.right = null;
                     list.Add(areal);
                 }
