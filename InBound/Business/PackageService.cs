@@ -26,10 +26,19 @@ namespace InBound.Business
                 TIEM = Convert.ToDateTime("2019-03-21", format);
                 TIEM2 = Convert.ToDateTime("2019-03-21", format);
  
-                var query = (from item in entity.T_UN_TASK_H
-                             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2 && item.TASKNUM == 799261
-                             orderby item.SORTNUM
-                             select item).ToList();
+                //var query = (from item in entity.T_UN_TASK_H
+                //             where item.BILLCODE =="CS10429225" && item.PACKAGEMACHINE == packageNo //&& item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2 //&& item.TASKNUM == 799261
+                //             orderby item.TASKNUM 
+                //             select item).ToList();
+
+                var query = (from item in entity.V_PRODUCE_PACKAGEINFO
+                             where 
+                             //item.EXPORT == packageNo && 
+                             item.BILLCODE == "CS10427978"
+                             // && (item.TASKNUM == 664692 || item.TASKNUM == 663143)
+                             group item by new { item.BILLCODE, item.TASKNUM } into allcode
+                             select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList(); 
+
                 if (query != null)
                 {
                     int i = 0;
@@ -41,7 +50,7 @@ namespace InBound.Business
                        
                         int pcount=0;
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
-                        var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.SENDTASKNUM,item2.MACHINESEQ,item2.TROUGHNUM select item2).ToList();
+                        var query2 = (from item2 in entity.V_PRODUCE_PACKAGEINFO where item2.BILLCODE == v.BILLCODE && item2.ALLOWSORT == "非标" orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM select item2).ToList();
                         if (query2 != null)
                         {
                             foreach (var v2 in query2)
@@ -56,22 +65,33 @@ namespace InBound.Business
                                 temp.CIGARETTENAME = tempItem.ITEMNAME;
                                 temp.CIGHIGH = tempItem.IHEIGHT;
                                 temp.CIGWIDTH = tempItem.IWIDTH;
+                                temp.CIGWIDTH = tempItem.IWIDTH;
+                                temp.CIGLENGTH = tempItem.ILENGTH;
                                 temp.BILLCODE = v2.BILLCODE;
-                                temp.SORTNUM = v2.SORTNUM;
+                                temp.SORTNUM = v2.TASKNUM;
                                 temp.CIGNUM = allCount;
                                 temp.CIGSEQ = pcount;
-                                temp.PACKAGESEQ = packageNo;
+                                //temp.PACKAGESEQ = v2.EXPORT;
                                 temp.ALLPACKAGESEQ = 0;
-                                temp.PACKAGENO = 1;
-                                temp.CIGTYPE = "2";
+                                //temp.PACKAGENO = v2.PACKAGEMACHINE;
+                                temp.PACKAGENO = 1;//v2.EXPORT;
+                                //temp.CIGTYPE = "2";
+                                temp.CIGTYPE = v2.ALLOWSORT == "非标" ? "2" : "1";
                                 temp.STATE = 0;//0 新增  10 确定
-                                temp.CIGZ = decimal.Parse(tempItem.DOUBLETAKE);
+                                temp.NORMAILSTATE = 0;//0 新增  10 确定
+                                temp.NORMALQTY = 1;
+                                temp.UNIONPACKAGETAG = 0;
+                                temp.DOUBLETAKE = "0";
+                                ////temp.ORDERSEQ = v2.PRIORITY;
+                                ////temp.ORDERQTY = v2.ORDERQUANTITY;
+                                temp.CIGSTATE = 10;
                                 task.Add(temp);
                             }
                             allpackagenum++;
                             GenPackageInfo(task,entity); 
                             foreach (var item in task)
                             {
+                                item.PACKTASKNUM = item.ALLPACKAGESEQ;
                                 entity.T_PACKAGE_TASK.AddObject(item);
                             }
                             if (i == 5)
@@ -88,9 +108,9 @@ namespace InBound.Business
             }
         }
 
-        int packageWidth = 540;//宽
+        int packageWidth = 530;//宽
         int packageHeight = 200 ;//20浮动
-        int jx = 3;
+        int jx = 5;
         decimal deviation = 3;//高度误差
 
         int taskCount = 6;//一次参与计算的条数
@@ -241,8 +261,8 @@ namespace InBound.Business
             arear.cigaretteList =CopyCigaretteList(area.cigaretteList);
             //if (arear.cigaretteList.Count > 1)
             //{
-                
-                if (width > area.cigaretteList[0].width)
+
+            if (width > area.cigaretteList[0].width + jx * 2)
                 {
                     arear.cigaretteList.RemoveAt(0);
                     arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width);
@@ -525,12 +545,12 @@ namespace InBound.Business
                         foreach (var v in chooseItem)
                         {
                             v.PACKAGESEQ = packageNO;
-                            v.CIGWIDTHX = area.beginx+tempunit.beginx + v.CIGWIDTH;//两条当做一条
+                            v.CIGWIDTHX = area.beginx+tempunit.beginx + v.CIGWIDTH +jx;//两条当做一条
                             v.CIGHIGHY = area.height + v.CIGHIGH;
                             v.STATE = 10;
                             v.DOUBLETAKE = "1";
                             v.ALLPACKAGESEQ = allpackagenum;
-                            width += (v.CIGWIDTH ?? 0);
+                            width += (v.CIGWIDTH ?? 0)+jx;
                             height = (area.height + v.CIGHIGH ?? 0);
                             cigseq = v.CIGSEQ??0;
                         }
@@ -596,16 +616,16 @@ namespace InBound.Business
 
                                 i++;
                             }
-                            if (temptask.CIGWIDTH <= area.width && area.height + temptask.CIGHIGH < packageHeight)
+                            if (temptask.CIGWIDTH +jx*2 <= area.width && area.height + temptask.CIGHIGH < packageHeight)
                             {
                             foreach (var cell in unit)
                             {
-                                if (temptask.CIGWIDTH  <= cell.width) //后面的seq必须大于已放的才能放
+                                if (temptask.CIGWIDTH +jx*2 <= cell.width) //后面的seq必须大于已放的才能放
                                 {
                                     
-                                        if (tempWidth <= temptask.CIGWIDTH)
+                                        if (tempWidth <= temptask.CIGWIDTH+jx*2)
                                         {
-                                            if (tempWidth == temptask.CIGWIDTH)
+                                            if (tempWidth == temptask.CIGWIDTH+jx*2)
                                             {
 
                                                 if (area.left != null)
@@ -615,7 +635,7 @@ namespace InBound.Business
                                                     //看左边高度差 取相差小的
                                                     if (Math.Abs(area.height + temptask.CIGHIGH ?? 0 - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
-                                                        tempWidth = temptask.CIGWIDTH ?? 0;
+                                                        tempWidth = temptask.CIGWIDTH ?? 0+jx*2;
                                                         tempcode = v.CigaretteCode;
                                                         gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
                                                     }
@@ -623,7 +643,7 @@ namespace InBound.Business
                                             }
                                             else
                                             {
-                                                tempWidth = temptask.CIGWIDTH ?? 0;
+                                                tempWidth = temptask.CIGWIDTH ?? 0+jx*2;
                                                 tempcode = v.CigaretteCode;
                                                 if (area.left != null)
                                                 {
@@ -650,11 +670,11 @@ namespace InBound.Business
 
                             
                                 chooseItem.PACKAGESEQ = packageNO;
-                                chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2;
+                                chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2 +jx;
                                 chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
-                                width += (chooseItem.CIGWIDTH ?? 0);
+                                width += (chooseItem.CIGWIDTH ?? 0) +jx*2;
                                 height = (area.height + chooseItem.CIGHIGH ?? 0);
                                 cigseq = chooseItem.CIGSEQ ?? 0;
                                 //更新area
