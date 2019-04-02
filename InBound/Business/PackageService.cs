@@ -389,7 +389,7 @@ namespace InBound.Business
                         List<T_PACKAGE_TASK> bigList = templist.Where(x => x.STATE == 10 && x.CIGSEQ > sciseq ).OrderBy(x=>x.CIGSEQ).ToList();//有大于当前序号已排好的烟
                         if (bigList != null && bigList.Count>0)
                         {
-                            bigList = templist.Where(x => x.STATE == 10).OrderBy(x => x.CIGSEQ).ToList();
+                          //  bigList = templist.Where(x => x.STATE == 10).OrderBy(x => x.CIGSEQ).ToList();
                           
                             //list.Clear();
                            
