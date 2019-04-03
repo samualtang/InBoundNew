@@ -34,7 +34,8 @@ namespace InBound.Business
                 var query = (from item in entity.V_PRODUCE_PACKAGEINFO
                              where 
                              //item.EXPORT == packageNo && 
-                             item.BILLCODE == "CS10427978"
+                             item.BILLCODE == "CS10429091"
+                             && item.ALLOWSORT=="非标"
                              // && (item.TASKNUM == 664692 || item.TASKNUM == 663143)
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList(); 
@@ -449,7 +450,7 @@ namespace InBound.Business
                             unit.Clear();
                             T_PACKAGE_TASK temptask = templist.Find(x => x.CIGARETTECODE == v.CigaretteCode);
                             decimal cgiseq = templist.Where(x => x.CIGARETTECODE == v.CigaretteCode && x.STATE!=10).FirstOrDefault().CIGSEQ ?? 0;
-                            if (temptask.CIGWIDTH * 2 <= area.width && area.height + temptask.CIGHIGH < packageHeight)//小于区域宽度,同时小于整包高度
+                            if (temptask.CIGWIDTH * 2+jx <= area.width && area.height + temptask.CIGHIGH < packageHeight)//小于区域宽度,同时小于整包高度
                             {
                                
                              
@@ -497,7 +498,7 @@ namespace InBound.Business
                                 }
                                 foreach (var cell in unit)
                                 {
-                                    if (temptask.CIGWIDTH * 2 <=cell.width) //后面的seq必须大于已放的才能放
+                                    if (temptask.CIGWIDTH * 2+jx <=cell.width) //后面的seq必须大于已放的才能放
                                     {
                                         if (tempWidth <= temptask.CIGWIDTH)
                                         {
@@ -545,23 +546,23 @@ namespace InBound.Business
                         foreach (var v in chooseItem)
                         {
                             v.PACKAGESEQ = packageNO;
-                            v.CIGWIDTHX = area.beginx+tempunit.beginx + v.CIGWIDTH +jx;//两条当做一条
+                            v.CIGWIDTHX = area.beginx+tempunit.beginx + v.CIGWIDTH ;//两条当做一条
                             v.CIGHIGHY = area.height + v.CIGHIGH;
                             v.STATE = 10;
                             v.DOUBLETAKE = "1";
                             v.ALLPACKAGESEQ = allpackagenum;
-                            width += (v.CIGWIDTH ?? 0)+jx;
+                            width += (v.CIGWIDTH ?? 0);
                             height = (area.height + v.CIGHIGH ?? 0);
                             cigseq = v.CIGSEQ??0;
                         }
                         //更新area
                         if (tempunit.begin == 0)
                         {
-                            calcArea(list, area, width, height, cigseq);
+                            calcArea(list, area, width+jx, height, cigseq);
                         }
                         else
                         {
-                            calcArea(list, area, width, height, cigseq,tempunit);
+                            calcArea(list, area, width+jx, height, cigseq,tempunit);
                         }
 
                         diclist.Push(CopyList(list));
@@ -616,16 +617,16 @@ namespace InBound.Business
 
                                 i++;
                             }
-                            if (temptask.CIGWIDTH +jx*2 <= area.width && area.height + temptask.CIGHIGH < packageHeight)
+                            if (temptask.CIGWIDTH +jx <= area.width && area.height + temptask.CIGHIGH < packageHeight)
                             {
                             foreach (var cell in unit)
                             {
-                                if (temptask.CIGWIDTH +jx*2 <= cell.width) //后面的seq必须大于已放的才能放
+                                if (temptask.CIGWIDTH +jx <= cell.width) //后面的seq必须大于已放的才能放
                                 {
                                     
-                                        if (tempWidth <= temptask.CIGWIDTH+jx*2)
+                                        if (tempWidth <= temptask.CIGWIDTH+jx)
                                         {
-                                            if (tempWidth == temptask.CIGWIDTH+jx*2)
+                                            if (tempWidth == temptask.CIGWIDTH+jx)
                                             {
 
                                                 if (area.left != null)
@@ -635,7 +636,7 @@ namespace InBound.Business
                                                     //看左边高度差 取相差小的
                                                     if (Math.Abs(area.height + temptask.CIGHIGH ?? 0 - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
-                                                        tempWidth = temptask.CIGWIDTH ?? 0+jx*2;
+                                                        tempWidth = temptask.CIGWIDTH ?? 0;
                                                         tempcode = v.CigaretteCode;
                                                         gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
                                                     }
@@ -643,7 +644,7 @@ namespace InBound.Business
                                             }
                                             else
                                             {
-                                                tempWidth = temptask.CIGWIDTH ?? 0+jx*2;
+                                                tempWidth = temptask.CIGWIDTH ?? 0;
                                                 tempcode = v.CigaretteCode;
                                                 if (area.left != null)
                                                 {
@@ -670,7 +671,7 @@ namespace InBound.Business
 
                             
                                 chooseItem.PACKAGESEQ = packageNO;
-                                chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2 +jx;
+                                chooseItem.CIGWIDTHX = area.beginx+tempunit.beginx +chooseItem.CIGWIDTH / 2 ;
                                 chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
@@ -681,11 +682,11 @@ namespace InBound.Business
                                 //更新area
                                 if (tempunit.begin == 0)
                                 {
-                                    calcArea(list, area, width, height, cigseq);
+                                    calcArea(list, area, width+jx, height, cigseq);
                                 }
                                 else
                                 {
-                                    calcArea(list, area, width, height, cigseq, tempunit);
+                                    calcArea(list, area, width+jx, height, cigseq, tempunit);
                                 }
                                 diclist.Push(CopyList(list));
                             
