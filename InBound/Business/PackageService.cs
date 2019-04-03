@@ -34,7 +34,7 @@ namespace InBound.Business
                 var query = (from item in entity.V_PRODUCE_PACKAGEINFO
                              where 
                              //item.EXPORT == packageNo && 
-                             item.BILLCODE == "CS10429091"
+                             item.BILLCODE == "CS10429225"
                              && item.ALLOWSORT=="非标"
                              // && (item.TASKNUM == 664692 || item.TASKNUM == 663143)
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
@@ -510,11 +510,11 @@ namespace InBound.Business
 
 
                                                     //看左边高度差 取相差小的
-                                                    if (Math.Abs(area.height + temptask.CIGHIGH ?? 0 - area.left.height) - Math.Abs(gdc) < 0)
+                                                    if (Math.Abs(area.height + (temptask.CIGHIGH ?? 0) - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
                                                         tempWidth = temptask.CIGWIDTH ?? 0;
                                                         tempcode = v.CigaretteCode;
-                                                        gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
+                                                        gdc = area.height + (temptask.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
                                             }
@@ -524,7 +524,7 @@ namespace InBound.Business
                                                 tempcode = v.CigaretteCode;
                                                 if (area.left != null)
                                                 {
-                                                    gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
+                                                    gdc = area.height + (temptask.CIGHIGH ?? 0) - area.left.height;
                                                 }
                                             }
                                         }
@@ -552,7 +552,7 @@ namespace InBound.Business
                             v.DOUBLETAKE = "1";
                             v.ALLPACKAGESEQ = allpackagenum;
                             width += (v.CIGWIDTH ?? 0);
-                            height = (area.height + v.CIGHIGH ?? 0);
+                            height = area.height + (v.CIGHIGH ?? 0);
                             cigseq = v.CIGSEQ??0;
                         }
                         //更新area
@@ -634,11 +634,11 @@ namespace InBound.Business
 
 
                                                     //看左边高度差 取相差小的
-                                                    if (Math.Abs(area.height + temptask.CIGHIGH ?? 0 - area.left.height) - Math.Abs(gdc) < 0)
+                                                    if (Math.Abs(area.height + (temptask.CIGHIGH ?? 0) - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
                                                         tempWidth = temptask.CIGWIDTH ?? 0;
                                                         tempcode = v.CigaretteCode;
-                                                        gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
+                                                        gdc = area.height + (temptask.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
                                             }
@@ -648,7 +648,7 @@ namespace InBound.Business
                                                 tempcode = v.CigaretteCode;
                                                 if (area.left != null)
                                                 {
-                                                    gdc = area.height + temptask.CIGHIGH ?? 0 - area.left.height;
+                                                    gdc = area.height + (temptask.CIGHIGH ?? 0) - area.left.height;
                                                 }
                                             }
 
@@ -676,7 +676,7 @@ namespace InBound.Business
                                 chooseItem.STATE = 10;
                                 chooseItem.ALLPACKAGESEQ = allpackagenum;
                                 width += (chooseItem.CIGWIDTH ?? 0) +jx*2;
-                                height = (area.height + chooseItem.CIGHIGH ?? 0);
+                                height = area.height + (chooseItem.CIGHIGH ?? 0);
                                 cigseq = chooseItem.CIGSEQ ?? 0;
                                 //更新area
                                 //更新area
