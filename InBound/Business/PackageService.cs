@@ -584,8 +584,10 @@ namespace InBound.Business
                         if (unnormaltag)
                         {
                             decimal addcount = 1;
-                            //如果常规烟的所有条数等于这次的合包常规烟数 且异型烟是第一包
-                            if (normalnum == maxnum && datalist.Max(x => x.PACKAGESEQ == 1))
+                            decimal statetag = task.Where(x => x.CIGTYPE == "2").GroupBy(x => x.STATE).Select(x => x.Key).Count();
+                            decimal packagetag = task.Where(x => x.CIGTYPE == "2").GroupBy(x => x.ALLPACKAGESEQ).Select(x => x.Key).Count();
+                            //（如果常规烟的所有条数等于这次的合包常规烟数 且异型烟是第一包）或 共一包
+                            if ((normalnum == maxnum && datalist.Max(x => x.PACKAGESEQ == 1)) || (statetag == 1 && packagetag == 1))
                             {
                                 addcount = 0;
                             }
