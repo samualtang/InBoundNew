@@ -148,9 +148,13 @@ namespace InBound.Business
         /// </summary>
         decimal normalhight = 49;
         /// <summary>
-        /// 总限高
+        /// 合包常规烟高度 总限高
         /// </summary>
         decimal allhight = 300;
+        /// <summary>
+        /// 合包常规烟总层数
+        /// </summary>
+        decimal MaxnormalHight = 4;
         int taskCount = 6;//一次参与计算的条数
         int allpackagenum = 0;
         int NormalCount = 36;//常规烟整包条烟数
@@ -445,7 +449,7 @@ namespace InBound.Business
         }
         public void NormalCig(List<T_PACKAGE_TASK> task, List<T_PACKAGE_TASK> normaltask, int tag)
         {
-
+            bool normalfalg = false;
             bool falgtag = false;
         a1:
             //包内顺序
@@ -496,8 +500,11 @@ namespace InBound.Business
                 }
                 allpackagenum += 1;
                 falgtag = true;
+                normalfalg = true;
+                Remainder = 0;
                 log.Write(allpackagenum + "，  单独常规烟包计算完成");
             }
+            normalnum = normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) ?? 0;
             //如果常规烟小于36  且（没有余数 或 纯常规烟）
             if (normalnum < NormalCount && (Remainder != 0 || task.Where(x => x.CIGTYPE == "2").Count() == 0))
             {
@@ -540,12 +547,13 @@ namespace InBound.Business
             {
                 PackHight = Math.Floor((allhight - task.Where(x => x.ALLPACKAGESEQ == allpackagenum && x.CIGTYPE == "2" && x.STATE == 10).Max(x => x.CIGHIGHY) ?? 0) / normalhight);
             }
-
+            PackHight = PackHight > MaxnormalHight ? MaxnormalHight : PackHight;//限定匹配的常规烟层数  小于等于4
 
             decimal tempnum = 0;
             decimal maxnum = PackHight * 6;//可匹配常规烟 条数
             bool unnormaltag = true;
-            //如果异型烟可匹配的常规烟大于0 且(是异型烟包 或(常规烟除数为0且条数大于0)）
+            normalnum = normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) ?? 0;
+            //如果异型烟可匹配的常规烟大于0 且(是异型烟包 或(常规烟除数为0且未分配的条数大于0)）
             if (PackHight > 0 && (tag == 1 || (Remainder == 0 && normalnum > 0)))
             {
                 #region
@@ -585,11 +593,14 @@ namespace InBound.Business
                         {
                             decimal addcount = 1;
                             decimal statetag = task.Where(x => x.CIGTYPE == "2").GroupBy(x => x.STATE).Select(x => x.Key).Count();
-                            decimal packagetag = task.Where(x => x.CIGTYPE == "2").GroupBy(x => x.ALLPACKAGESEQ).Select(x => x.Key).Count();
+                            decimal packagetag = task.Where(x => x.CIGTYPE == "2").GroupBy(x => new { x.ALLPACKAGESEQ, x.UNIONPACKAGETAG }).Select(x => x).Count();
                             //（如果常规烟的所有条数等于这次的合包常规烟数 且异型烟是第一包）或 共一包
                             if ((normalnum == maxnum && datalist.Max(x => x.PACKAGESEQ == 1)) || (statetag == 1 && packagetag == 1))
                             {
-                                addcount = 0;
+                                if (!normalfalg)
+                                {
+                                    addcount = 0;
+                                }
                             }
                             foreach (var it in datalist)
                             {
