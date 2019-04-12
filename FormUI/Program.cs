@@ -17,9 +17,11 @@ namespace FormUI
         {
 
 
-            w_user users = new w_user();
-            users.ShowDialog();
-            if (users.DialogResult == DialogResult.OK)
+          //  w_user users = new w_user();
+            //users.ShowDialog();
+           // if (users.DialogResult == DialogResult.OK)
+            if
+                (1==1)
             {
                 MainUI.MainFrm dFm = new MainUI.MainFrm();
                 dFm.WindowState = FormWindowState.Maximized;
