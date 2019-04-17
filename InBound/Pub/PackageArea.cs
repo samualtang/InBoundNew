@@ -129,8 +129,14 @@ namespace InBound.Pub
         /// 条烟数
         /// </summary>
         public decimal Total { get; set; }
-
-        public int CigaretteNo { get; set; }
+        /// <summary>
+        /// 条烟序号
+        /// </summary>
+        public decimal CigaretteSeq { get; set; }
+        /// <summary>
+        /// 双抓标志
+        /// </summary>
+        public string DoubleTake { get; set; }
     }
     /// <summary>
     /// 双抓卷烟组
@@ -144,7 +150,19 @@ namespace InBound.Pub
         /// <summary>
         /// 卷烟组
         /// </summary>
-        public List<ItemGroup1> Cigarette { get; set; } 
+        public List<ItemGroup1> Cigarette { get; set; }
+    }
+
+    public class ItemGroups2
+    {
+        /// <summary>
+        /// 同高度卷烟序号（标记连续可双抓的烟，品牌可不同）
+        /// </summary>
+        public int CigaretteNo { get; set; }
+        /// <summary>
+        /// 卷烟组
+        /// </summary>
+        public List<ItemGroup1> Cigarette { get; set; }
     }
 }
 

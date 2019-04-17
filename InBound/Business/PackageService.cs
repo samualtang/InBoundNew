@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using InBound;
 using InBound.Model; 
 using InBound.Pub;
+using System.Data.SqlClient;
+using System.Data.Common;
 
 
 namespace InBound.Business
@@ -16,8 +18,7 @@ namespace InBound.Business
 
     public class PackageService
     {
-
-        WriteLog log = WriteLog.GetLog();
+        //WriteLog log = WriteLog.GetLog();
         /// <summary>
         /// 获取数据 计算
         /// </summary>
@@ -28,15 +29,17 @@ namespace InBound.Business
             int allCount = 0;
             using (Entities entity = new Entities())
             {
-                log.Write("entity获取订单开始");
-                ////var Packtasknum = entity.Database.SqlQuery( );
+                //log.Write("entity获取订单开始");
+                ////var Packtasknum = entity.Database.SqlQuery( ); CS10448409  CS10453696
+                var data = entity.V_PRODUCE_PACKAGEINFO
+                    .Where(x => x.EXPORT == packageNo)
+                    //.Where(x => x.BILLCODE == "CS10486947")
+                    .ToList();
                 //所有订单明细
-                var query = (from item in entity.V_PRODUCE_PACKAGEINFO
-                             where item.EXPORT == 1
-                             //&& item.BILLCODE == "CS10450444"
+                var query = (from item in data
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
-                log.Write("entity获取订单结束");
+                //log.Write("entity获取订单结束");
                 //DateTime TIEM = new DateTime();
                 //DateTime TIEM2 = new DateTime();
                 //DateTimeFormatInfo format = new DateTimeFormatInfo();
@@ -92,7 +95,7 @@ namespace InBound.Business
                                 temp.PACKAGESEQ = 0;
                                 temp.ALLPACKAGESEQ = 0;
                                 //temp.PACKAGENO = v2.PACKAGEMACHINE;
-                                temp.PACKAGENO = 1;//v2.EXPORT;;
+                                temp.PACKAGENO = v2.EXPORT; ;
                                 //temp.CIGTYPE = "2";
                                 temp.CIGTYPE = v2.ALLOWSORT == "非标" ? "2" : "1";
                                 temp.STATE = 0;//0 新增  10 确定
@@ -109,12 +112,15 @@ namespace InBound.Business
 
                             }
                             allpackagenum++;
-                            log.Write("开始计算");
+                            //log.Write("开始计算");
                             GenPackageInfo(task, entity, query1);
-                            log.Write("计算完成");
+                            //log.Write("计算完成");
                             decimal orderpackageqty = task.GroupBy(x => x.PACKAGESEQ ?? 0).Count();
                             foreach (var item in task)
                             {
+                                item.PACKTASKNUM = item.ALLPACKAGESEQ;
+                                item.STATE = 10;
+                                item.NORMAILSTATE = 10;
                                 item.ORDERPACKAGEQTY = orderpackageqty;
                                 item.PACKAGEQTY = task.Where(x => x.ALLPACKAGESEQ == item.ALLPACKAGESEQ).Sum(X => X.NORMALQTY);
                                 entity.T_PACKAGE_TASK.AddObject(item);
@@ -128,7 +134,7 @@ namespace InBound.Business
                                 i = 0;
                                 //log.Write("entity.SaveChanges 结束");
                             }
-                            log.Write("数据库存储完成");
+                            //log.Write("数据库存储完成");
                         }
 
                     }
@@ -136,17 +142,20 @@ namespace InBound.Business
                 }
             }
         }
-        List<T_PACKAGE_TASK> TaskToDatabase = new List<T_PACKAGE_TASK>();
 
         decimal ptid;
-        int packageWidth = 530;//宽
-        int packageHeight = 196 + 4;//20浮动
+        int packageWidth = 540;//宽
+        int packageHeight = 200;//高
         int jx = 5;//间隙
         decimal deviation = 3;//高度误差
         /// <summary>
         /// 常规烟高
         /// </summary>
         decimal normalhight = 49;
+        /// <summary>
+        /// 常规烟宽
+        /// </summary>
+        decimal normalwidth = 90;
         /// <summary>
         /// 合包常规烟高度 总限高
         /// </summary>
@@ -158,19 +167,7 @@ namespace InBound.Business
         int taskCount = 6;//一次参与计算的条数
         int allpackagenum = 0;
         int NormalCount = 36;//常规烟整包条烟数
-        public static T DeepCopyByReflect<T>(T obj)
-        {
-            //如果是字符串或值类型则直接返回
-            if (obj is string || obj.GetType().IsValueType) return obj;
-            object retval = Activator.CreateInstance(obj.GetType());
-            FieldInfo[] fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-            foreach (FieldInfo field in fields)
-            {
-                try { field.SetValue(retval, DeepCopyByReflect(field.GetValue(obj))); }
-                catch { }
-            }
-            return (T)retval;
-        }
+
 
         /// <summary>
         /// 计算包装机数据
@@ -193,7 +190,7 @@ namespace InBound.Business
 
             List<PackageArea> list1 = new List<PackageArea>(list);
             diclist.Push(list1);//插入初始平面到临时平面集合
-            log.Write("开始计算平面");
+            //log.Write("开始计算平面");
             CalcPackage(task, list, query1);
 
 
@@ -372,22 +369,27 @@ namespace InBound.Business
             var doubleTake = "0";
             foreach (var item in bigList)
             {
-                if (item.CIGARETTECODE != tempCode)
+                //if (item.CIGARETTECODE != tempCode)
+                //{
+
+                //    list = diclist.Pop();
+
+                //    tempCode = item.CIGARETTECODE;
+                //    doubleTake = item.DOUBLETAKE;
+                //}
+                if (item.DOUBLETAKE != "1")
                 {
-
                     list = diclist.Pop();
-
-                    tempCode = item.CIGARETTECODE;
-                    doubleTake = item.DOUBLETAKE;
+                    doubleTake = "0";
                 }
-                else if (item.DOUBLETAKE != "1" || (item.DOUBLETAKE == "1" && doubleTake != "1"))
+                else if (item.DOUBLETAKE == "1" && doubleTake == "0")
                 {
                     list = diclist.Pop();
-                    doubleTake = item.DOUBLETAKE;
+                    doubleTake = "1";//一次双抓后重新计算
                 }
                 else
                 {
-                    tempCode = "";//一次双抓后重新计算
+                    doubleTake = "0";
                 }
 
             }
@@ -447,8 +449,15 @@ namespace InBound.Business
             }
             return list1;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="normaltask"></param>
+        /// <param name="tag">1正常换包，0最后一包异型烟或纯异型烟，2纯常规烟或只剩常规烟</param>
         public void NormalCig(List<T_PACKAGE_TASK> task, List<T_PACKAGE_TASK> normaltask, int tag)
         {
+            bool reflag = false;//只有常规烟的未分配
             bool normalfalg = false;
             bool falgtag = false;
         a1:
@@ -461,10 +470,20 @@ namespace InBound.Business
             //未计算的总常规烟 条烟数
             decimal normalnum = normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) ?? 0;
             decimal Remainder = normalnum % 6;//余数
-            //如果常规烟大于36 且除6有余数
-            if (normalnum > 30 + Remainder && Remainder != 0)
+            //如果常规烟大于36 且除6有余数   或 纯常规烟订单大于36条-没有余数？
+            if ((normalnum > 30 + Remainder && Remainder != 0) || tag == 2 || reflag)
             {
-                log.Write("单独常规烟包开始计算");
+            a2:
+                decimal packageseq = task.Select(x => x.PACKAGESEQ).Max() == 0 ? 0 : (task.Select(x => x.PACKAGESEQ).Max() ?? 0);
+                if (tag == 2 || reflag)
+                {
+                    Remainder = 6;
+                }
+                if (reflag)
+                {
+                    packageseq = (task.Select(x => x.PACKAGESEQ).Max() ?? 0) + 1;
+                }
+                //log.Write("单独常规烟包开始计算");
                 decimal count = 0;
                 foreach (var item in normaltask.Where(x => x.NORMAILSTATE != 10).ToList())
                 {
@@ -488,9 +507,16 @@ namespace InBound.Business
                         ptid++;
                     }
                     item.ALLPACKAGESEQ = allpackagenum;
-                    item.PUSHSPACE = 1;
+                    item.PUSHSPACE = 0;
                     item.NORMAILSTATE = 10;
-                    item.PACKAGESEQ = datalist.Select(x => x.PACKAGESEQ).LastOrDefault();
+                    if (tag == 2)
+                    {
+                        item.PACKAGESEQ = packageseq + 1;
+                    }
+                    else
+                    {
+                        item.PACKAGESEQ = packageseq;
+                    }
                     if (count >= 30 + Remainder)
                     {
                         cigseq = 1;
@@ -498,25 +524,55 @@ namespace InBound.Business
                     }
                     cigseq++;
                 }
-                allpackagenum += 1;
+
+                ////常规烟有缺时合上异型烟
+                //T_PACKAGE_TASK pack = task.Where(x => x.CIGTYPE == "2" && x.PACKAGESEQ == packageseq).OrderByDescending(x => x.CIGWIDTHX).FirstOrDefault();
+                //if ((packageWidth - Remainder * normalwidth) > (pack.CIGWIDTHX + pack.CIGWIDTH / 2 + jx))//计算常规烟余下宽度：限宽 减去 余数*常规烟宽度后的宽度  如果大于当前异型烟包(平面最大的X轴坐标+最大条烟的一半+间隙)，放置
+                //{
+
+                //}
+
+                if (task.Where(x => x.CIGTYPE == "2").Count() != 0 && normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) != 0)
+                {
+                    allpackagenum += 1;
+                }
                 falgtag = true;
                 normalfalg = true;
                 Remainder = 0;
-                log.Write(allpackagenum + "，  单独常规烟包计算完成");
+                //log.Write(allpackagenum + "，  单独常规烟包计算完成");
+                if (tag == 2 && normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) > 0)
+                {
+                    allpackagenum += 1;
+                    goto a2;
+                }
             }
             normalnum = normaltask.Where(x => x.NORMAILSTATE != 10).Sum(x => x.NORMALQTY) ?? 0;
             //如果常规烟小于36  且（没有余数 或 纯常规烟）
-            if (normalnum < NormalCount && (Remainder != 0 || task.Where(x => x.CIGTYPE == "2").Count() == 0))
+            if (normalnum < NormalCount && (Remainder != 0 || task.Where(x => x.CIGTYPE == "2").Count() == 0) && normalnum != 0)
             {
 
                 foreach (var item in normaltask.Where(x => x.NORMAILSTATE != 10).ToList())
                 {
                     item.ALLPACKAGESEQ = allpackagenum;
-                    item.PUSHSPACE = 1;
+                    item.PUSHSPACE = 0;
                     item.NORMAILSTATE = 10;
                     item.PACKAGESEQ = (datalist.Select(x => x.PACKAGESEQ).LastOrDefault() ?? 0) == 0 ? 1 : datalist.Select(x => x.PACKAGESEQ).LastOrDefault() ?? 0;
                 }
-                log.Write(allpackagenum + "，  该订单常规烟单一包");
+                if (tag == 0)
+                {
+                    allpackagenum++;
+                    foreach (var it in datalist)
+                    {
+                        it.PUSHSPACE = 1;// + 1;
+                        it.ALLPACKAGESEQ = allpackagenum;
+                        it.PACKAGESEQ += 1;
+                        it.UNIONPACKAGETAG = 1;
+                        it.CIGSEQ = cigseq;
+                        cigseq++;
+                    }
+                    cigseq = 1;
+                }
+                //log.Write(allpackagenum + "，  该订单常规烟单一包");
             }
 
             //获取上一个包 最高坐标  可匹配常规烟层数  
@@ -529,13 +585,15 @@ namespace InBound.Business
             {
                 decimal packageseq = (task.Max(x => x.PACKAGESEQ) ?? 0) == 0 ? 1 : (datalist.Select(x => x.PACKAGESEQ).LastOrDefault() ?? 0) + 1;
                 allpackagenum++;
-                foreach (var item in normaltask.Where(x => x.NORMAILSTATE != 10).ToList())
-                {
-                    item.ALLPACKAGESEQ = allpackagenum;
-                    item.PUSHSPACE = 1;
-                    item.NORMAILSTATE = 10;
-                    item.PACKAGESEQ = packageseq;
-                }
+                //foreach (var item in normaltask.Where(x => x.NORMAILSTATE != 10).ToList())
+                //{
+                //    item.ALLPACKAGESEQ = allpackagenum;
+                //    item.PUSHSPACE = 0;
+                //    item.NORMAILSTATE = 10;
+                //    item.PACKAGESEQ = packageseq;
+                //}
+                reflag = true;
+                goto a1;
             }
             //如果第一包是纯常规烟包
             if (falgtag)
@@ -604,7 +662,7 @@ namespace InBound.Business
                             }
                             foreach (var it in datalist)
                             {
-                                it.PUSHSPACE = PackHight;// + 1;
+                                it.PUSHSPACE = PackHight + 1;// + 1;
                                 it.ALLPACKAGESEQ = allpackagenum;
                                 it.PACKAGESEQ += addcount;
                                 it.UNIONPACKAGETAG = 1;
@@ -638,7 +696,7 @@ namespace InBound.Business
                         }
                         item.CIGSEQ = cigseq;
                         item.ALLPACKAGESEQ = allpackagenum;
-                        item.PUSHSPACE = PackHight;// + 1;
+                        item.PUSHSPACE = PackHight + 1;// + 1;
                         item.NORMAILSTATE = 10;
                         item.UNIONPACKAGETAG = 1;
                         item.PACKAGESEQ = datalist.Select(x => x.PACKAGESEQ).LastOrDefault();
@@ -650,7 +708,7 @@ namespace InBound.Business
                         break;
                     }
                 }
-                log.Write(allpackagenum + "，  常规烟合包");
+                //log.Write(allpackagenum + "，  常规烟合包");
 
             }
             if (tag == 0)//异型烟只有一包 或没有异型烟？
@@ -665,9 +723,11 @@ namespace InBound.Business
                     }
                     goto a1;
                 }
-                if (tag == 0 && (normaltask.Where(x => x.STATE == 0).Count() > 0 && task.Where(x => x.CIGTYPE == "2" && x.STATE == 0).Count() > 0))
+                if (tag == 0 && normaltask.Where(x => x.NORMAILSTATE == 0).Count() > 0)
+                //&& task.Where(x => x.CIGTYPE == "2" && x.STATE == 0).Count() > 0
+                //是最后一包异型烟包 且 存在常规烟未分配完成 
                 {
-                    if (normaltask.Sum(x => x.NORMALQTY) <= 36)//如果有常规烟 且小于36条
+                    if (normaltask.Where(x => x.NORMAILSTATE == 0).Sum(x => x.NORMALQTY) <= 36)//如果有常规烟 且小于36条
                     {
                         allpackagenum++;
                     }
@@ -718,10 +778,12 @@ namespace InBound.Business
                     {
 
                         decimal sciseq = templist.Where(x => x.STATE != 10).Min(x => x.CIGSEQ) ?? 0;
+
                         List<T_PACKAGE_TASK> bigList = templist.Where(x => x.STATE == 10 && x.CIGSEQ > sciseq).OrderBy(x => x.CIGSEQ).ToList();//有大于当前序号已排好的烟
                         if (bigList != null && bigList.Count > 0)
                         {
-                            bigList = templist.Where(x => x.STATE == 10 && x.PACKAGESEQ == packageNO).OrderBy(x => x.CIGSEQ).ToList();
+                            decimal maxallpackageseq = templist.Max(x => x.ALLPACKAGESEQ).Value;
+                            bigList = templist.Where(x => x.STATE == 10 && x.ALLPACKAGESEQ == maxallpackageseq).OrderBy(x => x.CIGSEQ).ToList();
 
                             list = RollBackList(list, bigList);
 
@@ -741,9 +803,9 @@ namespace InBound.Business
 
                             if (normaltask.Where(x => x.NORMAILSTATE == 0).Count() > 0)
                             {
-                                log.Write("计算常规烟开始");
+                                //log.Write("计算常规烟开始");
                                 NormalCig(task, normaltask, 1);
-                                log.Write("计算常规烟完成");
+                                //log.Write("计算常规烟完成");
                             }
                             else
                             {
@@ -773,7 +835,7 @@ namespace InBound.Business
                             areainit.cigaretteList = new List<Cigarette>() { new Cigarette() { CigaretteNo = 0, fromx = 0, tox = packageWidth, width = packageWidth } };
                             list.Add(areainit);
                             diclist.Push(CopyList(list));
-                            log.Write("一包计算完成，开始下一包");
+                            //log.Write("一包计算完成，开始下一包");
                         }
 
                     }
@@ -783,42 +845,68 @@ namespace InBound.Business
                     //是否有连续的相同品牌的烟存入集合（即获取双抓数据） 原*   --没有判断不同品牌？
                     List<ItemGroup> allGroupList = templist.Where(x => x.STATE != 10).GroupBy(x => x.CIGARETTECODE).Select(x => new ItemGroup() { CigaretteCode = x.Key, Total = x.Count() }).ToList();
 
-                    #region  从数据库获取烟的双抓信息  正在做
-
-                    //从数据库获取烟的双抓信息
-                    List<ItemGroup1> allGroupList1 = (from item in templist
-                                                      join item2 in query1 on item.CIGARETTECODE equals item2.ITEMNO
-                                                      where item.STATE != 10 && item2.DOUBLETAKE == "1"
-                                                      select new ItemGroup1 { Cigindex = item.PACKAGESEQ ?? 0, CigaretteCode = item.CIGARETTECODE, Total = item.NORMALQTY ?? 0, Length = item2.ILENGTH ?? 0, Width = item2.IWIDTH ?? 0, Hight = item2.IHEIGHT ?? 0 }).ToList();
+                    #region  双抓 单抓判断
+                    List<ItemGroup1> allGroupList1 = null;
+                    //从数据库获取烟的信息
+                    allGroupList1 = (from item in templist
+                                     join item2 in query1 on item.CIGARETTECODE equals item2.ITEMNO
+                                     where item.STATE != 10
+                                     select new ItemGroup1 { Cigindex = item.PACKAGESEQ ?? 0, CigaretteCode = item.CIGARETTECODE, Total = item.NORMALQTY ?? 0, Length = item2.ILENGTH ?? 0, Width = item2.IWIDTH ?? 0, Hight = item2.IHEIGHT ?? 0, CigaretteSeq = item.CIGSEQ ?? 0, DoubleTake = item2.DOUBLETAKE }).ToList();
                     //2:遍历集合，连续同高度、且数据库内标记双抓的烟 加入集合 
                     int Indexfag = 1;//双抓组序号
                     int cigindex = 0;//条烟顺序（6条中）
                     decimal LastHight = 0;
-                    List<ItemGroups> allGroupLists = new List<ItemGroups>();
+                    decimal LastWidth = 0;
+                    string LastDoubletask = "0";
+                    decimal LastSeq = 0;
+                    List<ItemGroups> allGroupLists = null;
+                    allGroupLists = new List<ItemGroups>();
                     List<ItemGroup1> itemGroups = new List<ItemGroup1>();//条烟集合
                     List<ItemGroup1> itemGroupSave = new List<ItemGroup1>();
                     foreach (var item in allGroupList1)//遍历组合双抓
                     {
-                        if (Math.Abs(item.Hight - LastHight) <= deviation || LastHight == 0)//如果当前条烟与上条烟 高度相差在偏差范围内且能双抓   或是第一条烟
+                        if ((Math.Abs(item.Hight - LastHight) == 0 || LastHight == 0) && LastDoubletask == "1" && Math.Abs(LastWidth - item.Width) <= 3 && Math.Abs(LastSeq - item.CigaretteSeq) == 1)//如果当前条烟与上条烟 高度相差在偏差范围内且能双抓   或是第一条烟  暂时宽度要求相等
                         {
                             cigindex += 1;
                             item.Cigindex = cigindex;
                             itemGroups.Add(item);
                             LastHight = item.Hight;
+                            LastWidth = item.Width;
+                            LastSeq = item.CigaretteSeq;
+                            LastDoubletask = item.DoubleTake;
                         }
                         else
                         {
-                            ItemGroups itemGroup = new ItemGroups();
-                            itemGroupSave = itemGroups;
-                            itemGroup.CigaretteNo = Indexfag;
-                            itemGroup.Cigarette = itemGroupSave;
-                            allGroupLists.Add(itemGroup);
-                            itemGroups = new List<ItemGroup1>();
-                            itemGroupSave = null;
+                            if (LastHight == 0 && LastWidth == 0)
+                            {
+                                cigindex += 1;
+                                item.Cigindex = cigindex;
 
-                            Indexfag++;
-                            itemGroups.Add(item);
-                            LastHight = item.Hight;
+
+                                Indexfag++;
+                                itemGroups.Add(item);
+                                LastHight = item.Hight;
+                                LastWidth = item.Width;
+                                LastSeq = item.CigaretteSeq;
+                                LastDoubletask = item.DoubleTake;
+                            }
+                            else
+                            {
+                                ItemGroups itemGroup = new ItemGroups();
+                                itemGroupSave = itemGroups;
+                                itemGroup.CigaretteNo = Indexfag;
+                                itemGroup.Cigarette = itemGroupSave;
+                                allGroupLists.Add(itemGroup);
+                                itemGroups = new List<ItemGroup1>();
+                                itemGroupSave = null;
+
+                                Indexfag++;
+                                itemGroups.Add(item);
+                                LastHight = item.Hight;
+                                LastWidth = item.Width;
+                                LastSeq = item.CigaretteSeq;
+                                LastDoubletask = item.DoubleTake;
+                            }
                         }
                         if (item == allGroupList1.LastOrDefault())//若是最后一条
                         {
@@ -831,47 +919,32 @@ namespace InBound.Business
 
                     }
 
-                    #endregion 
+                    #endregion
 
                     //存入6条烟中 数量大于1的条烟品牌和数量记录 原*
                     List<ItemGroup> groupList = allGroupList.FindAll(x => x.Total > 1);
 
                     //读取能双抓的条烟数据
-                    var groupsList = allGroupLists.FindAll(x => x.Cigarette.Count > 1).Select(x => x.Cigarette).ToList();
+                    var groupsList1 = allGroupLists.FindAll(x => x.Cigarette.Count > 1).Select(x => x.Cigarette).ToList();
+                    //读取能单抓的条烟数据
+                    var groupsList2 = allGroupLists.FindAll(x => x.Cigarette.Count == 1).Select(x => x.Cigarette).ToList();
 
-
-
-
-
-                    foreach (var item in groupList)//循环连续品牌条烟列表
-                    {
-                        //取两条
-                        var doubleList = templist.Where(x => x.STATE != 10 && x.CIGARETTECODE == item.CigaretteCode).Take(2).ToList();
-                        decimal a = doubleList[0].CIGSEQ ?? 0;
-                        decimal b = doubleList[1].CIGSEQ ?? 0;
-                        if (Math.Abs(a - b) != 1)//如果不是连续的两条烟
-                        {
-                            item.Total = 100;//标记删除
-                        }
-                    }
-                    groupList.RemoveAll(x => x.Total == 100);//删除标记的品牌和数量
-
-
-                    String tempcode = "";
+                    decimal[] tempcode = new decimal[2];
                     decimal tempWidth = 0;
                     decimal gdc = 0;//高度差
                     List<AreaUnit> unit = new List<AreaUnit>();//双抓平面
                     AreaUnit tempunit = null;
-                    if (groupList != null && groupList.Count > 0)//优先双抓 而且是宽度大的先抓
+                    if (groupsList1 != null && groupsList1.Count > 0)//优先双抓 而且是宽度大的先抓
                     {
-                        //  List<Cigarette> cigList = area.cigaretteList;
-                        foreach (var v in groupList)
+                        foreach (var v in groupsList1)
                         {
                             unit.Clear();
-                            T_PACKAGE_TASK tempunnormaltask = templist.Find(x => x.CIGARETTECODE == v.CigaretteCode);//
-                            decimal cgiseq = templist.Where(x => x.CIGARETTECODE == v.CigaretteCode && x.STATE != 10).FirstOrDefault().CIGSEQ ?? 0;//获取条烟序号   *个人觉得会有第1条为a与3、4为a有问题
+                            T_PACKAGE_TASK tempunnormaltask1 = templist.Find(x => x.CIGARETTECODE == v[0].CigaretteCode);//在 所取得的6条烟中，找到第一条烟
+                            T_PACKAGE_TASK tempunnormaltask2 = templist.Find(x => x.CIGARETTECODE == v[1].CigaretteCode);
+                            decimal cgiseq1 = templist.Where(x => x.CIGARETTECODE == v[0].CigaretteCode && x.STATE != 10).FirstOrDefault().CIGSEQ ?? 0;//获取条烟序号 该品牌的第一条烟
+                            decimal cgiseq2 = templist.Where(x => x.CIGARETTECODE == v[1].CigaretteCode && x.STATE != 10).FirstOrDefault().CIGSEQ ?? 0;//获取条烟序号 该品牌的第一条烟
 
-                            if ((tempunnormaltask.CIGWIDTH + jx) * 2 <= area.width && area.height + tempunnormaltask.CIGHIGH < packageHeight)//双抓小于最低平面宽度,同时小于整包高度  +2个间隙
+                            if ((tempunnormaltask1.CIGWIDTH + tempunnormaltask2.CIGWIDTH + jx * 2) <= area.width && area.height + tempunnormaltask1.CIGHIGH < packageHeight)//双抓小于最低平面宽度,同时小于整包高度  +2个间隙
                             {
                                 int i = 0;
 
@@ -881,7 +954,7 @@ namespace InBound.Business
                                 foreach (var item in area.cigaretteList)//遍历平面得卷烟集合，条烟不能放在序号比当前大得条烟上
                                 {
                                     item.index = i;
-                                    if (cgiseq < item.CigaretteNo)
+                                    if (cgiseq1 < item.CigaretteNo || cgiseq2 < item.CigaretteNo)
                                     {
                                         flag = 0;//如果大，标记不可放
                                     }
@@ -916,11 +989,11 @@ namespace InBound.Business
                                 }
                                 foreach (var cell in unit)
                                 {
-                                    if ((tempunnormaltask.CIGWIDTH + jx) * 2 <= cell.width)
+                                    if ((tempunnormaltask1.CIGWIDTH + tempunnormaltask2.CIGWIDTH + jx * 2) <= cell.width)
                                     {
-                                        if (tempWidth <= tempunnormaltask.CIGWIDTH)//
+                                        if (tempWidth <= tempunnormaltask1.CIGWIDTH)//
                                         {
-                                            if (tempWidth == tempunnormaltask.CIGWIDTH)//
+                                            if (tempWidth == tempunnormaltask1.CIGWIDTH)//
                                             {
 
                                                 if (area.left != null)
@@ -928,21 +1001,23 @@ namespace InBound.Business
 
 
                                                     //看左边高度差 取相差小的
-                                                    if (Math.Abs(area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height) - Math.Abs(gdc) < 0)
+                                                    if (Math.Abs(area.height + (tempunnormaltask1.CIGHIGH ?? 0) - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
-                                                        tempWidth = tempunnormaltask.CIGWIDTH ?? 0;
-                                                        tempcode = v.CigaretteCode;
-                                                        gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
+                                                        tempWidth = tempunnormaltask1.CIGWIDTH ?? 0;
+                                                        tempcode[0] = v[0].CigaretteSeq;
+                                                        tempcode[1] = v[1].CigaretteSeq;
+                                                        gdc = area.height + (tempunnormaltask1.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                tempWidth = tempunnormaltask.CIGWIDTH ?? 0;
-                                                tempcode = v.CigaretteCode;
+                                                tempWidth = tempunnormaltask1.CIGWIDTH ?? 0;
+                                                tempcode[0] = v[0].CigaretteSeq;
+                                                tempcode[1] = v[1].CigaretteSeq;
                                                 if (area.left != null)
                                                 {
-                                                    gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
+                                                    gdc = area.height + (tempunnormaltask1.CIGHIGH ?? 0) - area.left.height;
                                                 }
                                             }
                                         }
@@ -954,14 +1029,15 @@ namespace InBound.Business
                             }
                         }
                     }
-                    if (tempcode != "" && tempunit != null)
+                    if (tempcode[0] + tempcode[1] > 0 && tempunit != null)
                     {
-                        var chooseItem = templist.FindAll(x => x.CIGARETTECODE == tempcode && x.STATE != 10).OrderBy(x => x.CIGSEQ).Take(2).ToList();
+                        var chooseItem1 = templist.FindAll(x => x.CIGSEQ == tempcode[0] || x.CIGSEQ == tempcode[1]).ToList();//找到标记双抓的两条烟序号
+
                         decimal width = 0;
                         decimal height = 0;
                         decimal cigseq = 0;
 
-                        foreach (var v in chooseItem)
+                        foreach (var v in chooseItem1)
                         {
                             v.PACKAGESEQ = packageNO;
                             v.CIGWIDTHX = area.beginx + tempunit.beginx + v.CIGWIDTH + jx;//两条当做一条 +jx
@@ -991,9 +1067,9 @@ namespace InBound.Business
                         tempWidth = 0;
                         gdc = 0;//高度差
                         unit.Clear();
-                        foreach (var v in allGroupList)
+                        foreach (var v in groupsList2)//循环6条烟
                         {
-                            T_PACKAGE_TASK tempunnormaltask = templist.Find(x => x.CIGARETTECODE == v.CigaretteCode && x.STATE != 10);
+                            T_PACKAGE_TASK tempunnormaltask = templist.Find(x => x.CIGSEQ == v[0].CigaretteSeq && x.STATE != 10);
                             int i = 0;
                             unit.Clear();
                             decimal flag = 1;
@@ -1002,7 +1078,7 @@ namespace InBound.Business
                             foreach (var item in area.cigaretteList)//平面上的每个子平面
                             {
                                 item.index = i;
-                                if (tempunnormaltask.CIGSEQ < item.CigaretteNo)//如果当前条烟的序号小于平面的条烟序号
+                                if (tempunnormaltask.CIGSEQ < item.CigaretteNo)//如果当前条烟的序号小于平面的条烟序号 不可放
                                 {
                                     flag = 0;
                                 }
@@ -1055,7 +1131,8 @@ namespace InBound.Business
                                                     if (Math.Abs(area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height) - Math.Abs(gdc) < 0)
                                                     {
                                                         tempWidth = (tempunnormaltask.CIGWIDTH ?? 0) + jx * 2;
-                                                        tempcode = v.CigaretteCode;
+
+                                                        tempcode[0] = v[0].CigaretteSeq;
                                                         gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
@@ -1063,7 +1140,8 @@ namespace InBound.Business
                                             else
                                             {
                                                 tempWidth = (tempunnormaltask.CIGWIDTH ?? 0) + jx * 2;
-                                                tempcode = v.CigaretteCode;
+
+                                                tempcode[0] = v[0].CigaretteSeq;
                                                 if (area.left != null)
                                                 {
                                                     gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
@@ -1080,9 +1158,9 @@ namespace InBound.Business
 
 
                         }
-                        if (tempcode != "" && tempunit != null)//切换平面后新增平面
+                        if (tempcode[0] > 0 && tempunit != null)//切换平面后新增平面
                         {
-                            var chooseItem = templist.FindAll(x => x.CIGARETTECODE == tempcode && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+                            var chooseItem = templist.FindAll(x => x.CIGSEQ == tempcode[0] && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
                             decimal width = 0;
                             decimal height = 0;
                             decimal cigseq = 0;
@@ -1128,41 +1206,31 @@ namespace InBound.Business
 
 
                 }
-                //if (startpackagenum == allpackagenum)
-                //{
-                //    NormalCig(task, normaltask, 1);
-                //}
+
             }
 
 
-            //if (normaltask.Where(x => x.NORMAILSTATE == 0).Count() > 0)
-            //{
-            //    NormalCig(task, normaltask, 0);
-            //    if (unnormaltask.Count > 0)
-            //    {
-            //        var data = task.Where(x => x.ALLPACKAGESEQ == allpackagenum && x.CIGTYPE == "2" && x.STATE == 10).ToList();
 
-            //        foreach (var it in data)
-            //        {
-            //            it.PUSHSPACE = 0;
-            //            it.ALLPACKAGESEQ = allpackagenum + 1;
-            //            it.PACKAGESEQ += 1;
-            //        }
-            //    }
-            //}
 
             if (normaltask.Where(x => x.NORMAILSTATE == 0).Count() > 0)
             {
-                log.Write("计算常规烟开始");
+                //log.Write("计算常规烟开始");
                 if (unnormaltask.Count > 0)//存在异型烟
                 {
                     NormalCig(task, normaltask, 0);
                 }
                 else
                 {
-                    NormalCig(task, normaltask, 1);
+                    if (task.Where(x => x.CIGTYPE == "2").Count() == 0)//纯常规烟
+                    {
+                        NormalCig(task, normaltask, 2);
+                    }
+                    else
+                    {
+                        NormalCig(task, normaltask, 1);
+                    }
                 }
-                log.Write("计算常规烟完成");
+                //log.Write("计算常规烟完成");
             }
             else
             {
@@ -1186,13 +1254,5 @@ namespace InBound.Business
                 }
             }
         }
-
-
-
-
-
-
-
-
     }
 }
