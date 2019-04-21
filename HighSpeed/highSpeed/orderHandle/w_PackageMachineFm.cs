@@ -114,9 +114,9 @@ namespace highSpeed.orderHandle
         private void button_TBJ_Click(object sender, EventArgs e)
         {
             var date1 = System.DateTime.Now;
-            for (int i = 1; i < 9; i++)
+            foreach (var item in ts.foreachdata())
             {
-                ts.CallBackTBJ(i);
+                ts.CallBackTBJ(item);
             }
             var date2 = System.DateTime.Now;
 

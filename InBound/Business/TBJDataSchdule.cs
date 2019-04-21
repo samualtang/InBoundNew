@@ -216,5 +216,19 @@ namespace InBound.Business
             }
 
         }
+        public List<int> foreachdata()
+        {
+            List<int> index = new List<int>();
+            using (Entities et=new Entities())
+            {
+               foreach (var item in et.T_PACKAGE_TASK.GroupBy(x=>x.PACKAGENO).Select(x=>x.Key).ToList())
+               {
+                   index.Add(int.Parse(item.Value.ToString()));
+               }
+            }
+            return index;
+        }
+
+
     }
 }

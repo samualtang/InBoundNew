@@ -102,7 +102,7 @@ namespace InBound.Business
                                 temp.CIGSEQ = pcount;
                                 temp.PACKAGESEQ = 0;
                                 temp.ALLPACKAGESEQ = 0;
-                                temp.PACKAGENO = 1; ;////////////
+                                temp.PACKAGENO = v2.EXPORT;
                                 temp.CIGTYPE = v2.ALLOWSORT == "非标" ? "2" : "1";
                                 temp.STATE = 0;//0 新增  10 确定
                                 temp.NORMAILSTATE = 0;//0 新增  10 确定
@@ -819,6 +819,10 @@ namespace InBound.Business
                                     addcount = 0;
                                 }
                             }
+                            if (datalist.Max(x => x.PACKAGESEQ != 1))//如果异型烟不是第一包
+                                {
+                                    addcount = 1;
+                                }
                             foreach (var it in datalist)
                             {
                                 it.PUSHSPACE = PackHight + 1;// + 1;
@@ -1406,9 +1410,13 @@ namespace InBound.Business
                 var datalist = task.Where(x => x.ALLPACKAGESEQ == allpackagenum && x.STATE == 10).ToList();
                 if (datalist.Count > 0)
                 {
-                    //已经没有常规烟 且 不是第一包烟
-                    var packageseq = (normaltask.Where(x => x.NORMAILSTATE == 0).Count() == 0 && datalist.Select(x => x.PACKAGESEQ).FirstOrDefault() != 1) || normaltask.Count() <= 0 ?
-                        datalist.Max(x => x.PACKAGESEQ) : datalist.Max(x => x.PACKAGESEQ) + 1;
+                    //有常规烟 已经没有未分配常规烟 且 不是第一包烟
+                    var packageseq = (normaltask.Count() > 0 && normaltask.Where(x => x.NORMAILSTATE == 0).Count() == 0 && datalist.Select(x => x.PACKAGESEQ).FirstOrDefault() != 1) ?
+                        datalist.Max(x => x.PACKAGESEQ) + 1 : datalist.Max(x => x.PACKAGESEQ);
+                    if (normaltask.Count() <= 0)
+                    {
+                        packageseq = datalist.Max(x => x.PACKAGESEQ);
+                    }
                     foreach (var item in datalist)
                     {
                         item.CIGSEQ = cigseq;
