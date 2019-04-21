@@ -772,22 +772,6 @@ namespace InBound
         /// <summary>
         /// 没有元数据文档可用。
         /// </summary>
-        public ObjectSet<T_PACKAGE_TASK> T_PACKAGE_TASK
-        {
-            get
-            {
-                if ((_T_PACKAGE_TASK == null))
-                {
-                    _T_PACKAGE_TASK = base.CreateObjectSet<T_PACKAGE_TASK>("T_PACKAGE_TASK");
-                }
-                return _T_PACKAGE_TASK;
-            }
-        }
-        private ObjectSet<T_PACKAGE_TASK> _T_PACKAGE_TASK;
-    
-        /// <summary>
-        /// 没有元数据文档可用。
-        /// </summary>
         public ObjectSet<T_WMS_ITEM> T_WMS_ITEM
         {
             get
@@ -864,6 +848,22 @@ namespace InBound
             }
         }
         private ObjectSet<V_PRODUCE_PACKAGEINFO> _V_PRODUCE_PACKAGEINFO;
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        public ObjectSet<T_PACKAGE_TASK> T_PACKAGE_TASK
+        {
+            get
+            {
+                if ((_T_PACKAGE_TASK == null))
+                {
+                    _T_PACKAGE_TASK = base.CreateObjectSet<T_PACKAGE_TASK>("T_PACKAGE_TASK");
+                }
+                return _T_PACKAGE_TASK;
+            }
+        }
+        private ObjectSet<T_PACKAGE_TASK> _T_PACKAGE_TASK;
 
         #endregion
 
@@ -1222,14 +1222,6 @@ namespace InBound
         }
     
         /// <summary>
-        /// 用于向 T_PACKAGE_TASK EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
-        /// </summary>
-        public void AddToT_PACKAGE_TASK(T_PACKAGE_TASK t_PACKAGE_TASK)
-        {
-            base.AddObject("T_PACKAGE_TASK", t_PACKAGE_TASK);
-        }
-    
-        /// <summary>
         /// 用于向 T_WMS_ITEM EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
         /// </summary>
         public void AddToT_WMS_ITEM(T_WMS_ITEM t_WMS_ITEM)
@@ -1267,6 +1259,14 @@ namespace InBound
         public void AddToV_PRODUCE_PACKAGEINFO(V_PRODUCE_PACKAGEINFO v_PRODUCE_PACKAGEINFO)
         {
             base.AddObject("V_PRODUCE_PACKAGEINFO", v_PRODUCE_PACKAGEINFO);
+        }
+    
+        /// <summary>
+        /// 用于向 T_PACKAGE_TASK EntitySet 添加新对象的方法，已弃用。请考虑改用关联的 ObjectSet&lt;T&gt; 属性的 .Add 方法。
+        /// </summary>
+        public void AddToT_PACKAGE_TASK(T_PACKAGE_TASK t_PACKAGE_TASK)
+        {
+            base.AddObject("T_PACKAGE_TASK", t_PACKAGE_TASK);
         }
 
         #endregion
@@ -3574,6 +3574,78 @@ namespace InBound
         private Nullable<global::System.Decimal> _NORMALQTY;
         partial void OnNORMALQTYChanging(Nullable<global::System.Decimal> value);
         partial void OnNORMALQTYChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String REGIONCODE
+        {
+            get
+            {
+                return _REGIONCODE;
+            }
+            set
+            {
+                OnREGIONCODEChanging(value);
+                ReportPropertyChanging("REGIONCODE");
+                _REGIONCODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("REGIONCODE");
+                OnREGIONCODEChanged();
+            }
+        }
+        private global::System.String _REGIONCODE;
+        partial void OnREGIONCODEChanging(global::System.String value);
+        partial void OnREGIONCODEChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SYNSEQ
+        {
+            get
+            {
+                return _SYNSEQ;
+            }
+            set
+            {
+                OnSYNSEQChanging(value);
+                ReportPropertyChanging("SYNSEQ");
+                _SYNSEQ = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SYNSEQ");
+                OnSYNSEQChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SYNSEQ;
+        partial void OnSYNSEQChanging(Nullable<global::System.Decimal> value);
+        partial void OnSYNSEQChanged();
+    
+        /// <summary>
+        /// 没有元数据文档可用。
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MIANBELT
+        {
+            get
+            {
+                return _MIANBELT;
+            }
+            set
+            {
+                OnMIANBELTChanging(value);
+                ReportPropertyChanging("MIANBELT");
+                _MIANBELT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MIANBELT");
+                OnMIANBELTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MIANBELT;
+        partial void OnMIANBELTChanging(Nullable<global::System.Decimal> value);
+        partial void OnMIANBELTChanged();
 
         #endregion
 
