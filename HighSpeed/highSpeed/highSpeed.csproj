@@ -325,6 +325,12 @@
     <Compile Include="orderHandle\w_order_Split.Designer.cs">
       <DependentUpon>w_order_Split.cs</DependentUpon>
     </Compile>
+    <Compile Include="orderHandle\w_PackageMachineFm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="orderHandle\w_PackageMachineFm.Designer.cs">
+      <DependentUpon>w_PackageMachineFm.cs</DependentUpon>
+    </Compile>
     <Compile Include="orderHandle\w_reprint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -643,6 +649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_order_Split.resx">
       <DependentUpon>w_order_Split.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="orderHandle\w_PackageMachineFm.resx">
+      <DependentUpon>w_PackageMachineFm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_reprint.resx">
       <DependentUpon>w_reprint.cs</DependentUpon>

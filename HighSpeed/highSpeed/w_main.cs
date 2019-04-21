@@ -965,6 +965,20 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void 包装机数据生成ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            w_PackageMachineFm frm = new w_PackageMachineFm();
+            if (CheckExist(frm) == true)
+            {
+                frm.Dispose();
+                frm = null;
+                return;
+            }
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
  
 
     

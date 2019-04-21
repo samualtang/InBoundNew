@@ -73,6 +73,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.包装机数据生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -175,7 +176,8 @@
             this.tsmi_enablestandby,
             this.车组重排ToolStripMenuItem,
             this.合流任务查询ToolStripMenuItem,
-            this.订单拆分ToolStripMenuItem});
+            this.订单拆分ToolStripMenuItem,
+            this.包装机数据生成ToolStripMenuItem});
             this.订单处理ToolStripMenuItem.Name = "订单处理ToolStripMenuItem";
             this.订单处理ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.订单处理ToolStripMenuItem.Text = "订单处理";
@@ -391,14 +393,14 @@
             // 数据库设置ToolStripMenuItem
             // 
             this.数据库设置ToolStripMenuItem.Name = "数据库设置ToolStripMenuItem";
-            this.数据库设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.数据库设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.数据库设置ToolStripMenuItem.Text = "数据库设置";
             this.数据库设置ToolStripMenuItem.Click += new System.EventHandler(this.数据库设置ToolStripMenuItem_Click);
             // 
             // 任务状态修改ToolStripMenuItem
             // 
             this.任务状态修改ToolStripMenuItem.Name = "任务状态修改ToolStripMenuItem";
-            this.任务状态修改ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.任务状态修改ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.任务状态修改ToolStripMenuItem.Text = "任务状态修改";
             this.任务状态修改ToolStripMenuItem.Click += new System.EventHandler(this.任务状态修改ToolStripMenuItem_Click);
             // 
@@ -445,6 +447,13 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(231, 17);
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // 包装机数据生成ToolStripMenuItem
+            // 
+            this.包装机数据生成ToolStripMenuItem.Name = "包装机数据生成ToolStripMenuItem";
+            this.包装机数据生成ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.包装机数据生成ToolStripMenuItem.Text = "包装机数据生成";
+            this.包装机数据生成ToolStripMenuItem.Click += new System.EventHandler(this.包装机数据生成ToolStripMenuItem_Click);
             // 
             // w_main
             // 
@@ -515,5 +524,6 @@
         private System.Windows.Forms.ToolStripMenuItem 任务导出批量退货ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 订单拆分ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 六三六手工线任务排程ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 包装机数据生成ToolStripMenuItem;
     }
 }
