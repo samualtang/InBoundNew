@@ -18,12 +18,18 @@ namespace highSpeed.orderHandle
             InitializeComponent();
 
             comboBox_querylist.SelectedIndex = 0;
+            dataget();
         }
         DataBase db = new DataBase();
         DataSet ds = new DataSet();
         string sql;
         List<string[]> list = new List<string[]>();
         private void button_query_Click(object sender, EventArgs e)
+        {
+            dataget();
+        }
+
+        public void dataget()
         {
             try
             {
@@ -64,13 +70,26 @@ namespace highSpeed.orderHandle
                     bool obj = (bool)this.orderdata.CurrentRow.Cells[0].EditedFormattedValue;
                     txt[0] = this.orderdata.CurrentRow.Cells[1].Value.ToString();
                     txt[1] = this.orderdata.CurrentRow.Cells[2].Value.ToString();
-                    if (list.Contains(txt))
+                    if (list.Count == 0)
                     {
-                        list.Remove(txt);
+                        list.Add(txt);                        
                     }
                     else
                     {
-                        list.Add(txt);
+                        for (int i = 0; i <= list.Count; i++)
+                        {
+                            if ( i == list.Count)
+                            {
+                                list.Add(txt);
+                                break;
+                            }
+                            if (list[i][0] == txt[0] && list[i][1] == txt[1])
+                            {
+                                //list.Remove(txt);
+                                list.RemoveAt(i);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -78,6 +97,7 @@ namespace highSpeed.orderHandle
 
         private void button_all_Click(object sender, EventArgs e)
         {
+            list.Clear();
             for (int i = 0; i < this.orderdata.RowCount; i++)
             {
                 string[] txt = new string[2];
@@ -109,6 +129,7 @@ namespace highSpeed.orderHandle
             var date2 = System.DateTime.Now;
 
             MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            dataget();
         }
 
         private void button_TBJ_Click(object sender, EventArgs e)

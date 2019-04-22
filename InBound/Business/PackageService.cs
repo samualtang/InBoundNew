@@ -159,7 +159,7 @@ namespace InBound.Business
                 var date =data.Max(x=>x.ORDERDATE);
                 var seqtemp = entity.T_PRODUCE_SYNSEQ.Where(x => x.SYNSEQ == synseq && x.PACKAGENO == packageNo && x.ORDERDATE == date).FirstOrDefault();
                 seqtemp.PMSTATE = "2";
-                seqtemp.TBJSTATE = "1";
+                seqtemp.TBJSTATE = "2";
                 entity.SaveChanges();
                 data = null; ;
                 query = null;
