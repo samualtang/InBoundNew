@@ -59,7 +59,7 @@ namespace InBound.Business
                         tb = new T_PACKAGE_CALLBACK();
                         if (!item.BILLCODE.Equals(billcode))//存入新的订单号 ,一个订单插入一次数据
                         {
-                            en.SaveChanges();
+                            //en.SaveChanges();
                             billcode = item.BILLCODE;
                             routCPagNum = pagTask.Where(a => a.REGIONCODE == item.REGIONCODE).Max(a => a.ALLPACKAGESEQ) ?? 0;//车组总包数
                             orderPagNum = pagTask.Where(a => a.BILLCODE == item.BILLCODE).Max(a => a.PACKAGESEQ) ?? 0; //订单总包数
@@ -147,6 +147,10 @@ namespace InBound.Business
                             tb.SYNSEQ = item.SYNSEQ;//批次号   
                             en.T_PACKAGE_CALLBACK.AddObject(tb);
 
+                        }
+                        if (!item.BILLCODE.Equals(billcode))//存入新的订单号 ,一个订单插入一次数据
+                        {
+                            en.SaveChanges();
                         }
                     }
                 }
