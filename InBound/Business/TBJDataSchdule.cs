@@ -76,6 +76,11 @@ namespace InBound.Business
                             cigseq = 1;
                         }
                         var firstTask = needInfo.Where(a => a.BILLCODE == item.BILLCODE).FirstOrDefault();//订单信息 
+                        if (firstTask == null)
+                        {
+                            throw new Exception("未找到订单"+item.BILLCODE);
+                            
+                        }
                         if (item.NORMALQTY > 1)//如果条烟数量大于1 则需要拆分成一条一条的记录
                         {
                             for (int i = 1; i <= item.NORMALQTY; i++)//
@@ -86,7 +91,7 @@ namespace InBound.Business
                                 tb.ROUTEPACKAGENUM = routCPagNum;//车组总包数
                                 tb.ORDERPACKAGENUM = orderPagNum;//订单总包数
                                 tb.PACKAGESEQ = item.PACKAGESEQ;//订单内包序
-                                tb.CIGARETTEQTY = item.NORMALQTY;//品牌条烟数
+                                tb.CIGARETTEQTY = 1;//品牌条烟数
                                 tb.SHAPEDNUM = shaednum;//订单异型烟数量
                                 tb.CIGARETTECODE = item.CIGARETTECODE;//卷烟编码
                                 tb.CIGARETTENAME = item.CIGARETTENAME;//卷烟名称
@@ -123,7 +128,7 @@ namespace InBound.Business
                             tb.ROUTEPACKAGENUM = routCPagNum;//车组总包数
                             tb.ORDERPACKAGENUM = orderPagNum;//订单总包数
                             tb.PACKAGESEQ = item.PACKAGESEQ;//订单内包序
-                            tb.CIGARETTEQTY = item.NORMALQTY;//品牌条烟数
+                            tb.CIGARETTEQTY = 1;//品牌条烟数
                             tb.SHAPEDNUM = shaednum;//订单异型烟数量
                             tb.CIGARETTECODE = item.CIGARETTECODE;//卷烟编码
                             tb.CIGARETTENAME = item.CIGARETTENAME;//卷烟名称
