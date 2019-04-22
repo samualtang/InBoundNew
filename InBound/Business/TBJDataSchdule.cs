@@ -52,6 +52,8 @@ namespace InBound.Business
                 var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO where item.EXPORT == packageno orderby item.TASKNUM select item).ToList();
                 T_PACKAGE_CALLBACK tb;
                 string billcode = "";//存放订单 
+                decimal packtasknum = 0;
+                decimal cigseq =1  ;
                 try
                 {
                     foreach (var item in pagTask)
@@ -59,8 +61,7 @@ namespace InBound.Business
                         tb = new T_PACKAGE_CALLBACK();
                         if (!item.BILLCODE.Equals(billcode))//存入新的订单号 ,一个订单插入一次数据
                         {
-                            //en.SaveChanges();
-                            billcode = item.BILLCODE;
+                            //en.SaveChanges(); 
                             routCPagNum = pagTask.Where(a => a.REGIONCODE == item.REGIONCODE).Max(a => a.ALLPACKAGESEQ) ?? 0;//车组总包数
                             orderPagNum = pagTask.Where(a => a.BILLCODE == item.BILLCODE).Max(a => a.PACKAGESEQ) ?? 0; //订单总包数
                             shaednum = pagTask.Where(a => a.BILLCODE == item.BILLCODE && a.CIGTYPE == "2").Sum(a => a.NORMALQTY) ?? 0;//订单异型烟数量
@@ -68,6 +69,11 @@ namespace InBound.Business
                             UNIONTASKPACKAGENUM = GetBillPackNum(en, item.BILLCODE, 0);//合包总包数  
                             NORMALPACKAGENUM = GetBillPackNum(en, item.BILLCODE, 1);//常规烟总包数
                             UNNORMALPACKAGENUM = GetBillPackNum(en, item.BILLCODE, 2);//异型烟总包数  
+                        }
+                        if (!item.PACKTASKNUM.Equals(packtasknum))
+                        {
+                            packtasknum = item.PACKTASKNUM ?? 0;
+                            cigseq = 1;
                         }
                         var firstTask = needInfo.Where(a => a.BILLCODE == item.BILLCODE).FirstOrDefault();//订单信息 
                         if (item.NORMALQTY > 1)//如果条烟数量大于1 则需要拆分成一条一条的记录
@@ -91,7 +97,7 @@ namespace InBound.Business
                                 tb.LINECODE = item.MIANBELT.ToString();//线路编号
                                 tb.ORDERCOUNT = ordercount;  //车组内订单数
                                 tb.ORDERSEQ = firstTask.SORTSEQ;//订单户序 firstTask.SORTSEQ 
-                                tb.CIGSEQ = item.CIGSEQ;//条烟顺序
+                                tb.CIGSEQ = cigseq++;//条烟顺序
                                 tb.EXPORT = item.PACKAGENO ?? 0;//出口号（包装机号）
                                 tb.PACKAGENUM = item.PACKAGENO;// 包装机号    
                                 tb.ORDERQUANTITY = item.ORDERQTY;//订单总数
@@ -128,7 +134,7 @@ namespace InBound.Business
                             tb.LINECODE = item.MIANBELT.ToString();//线路编号
                             tb.ORDERCOUNT = ordercount;  //车组内订单数
                             tb.ORDERSEQ = firstTask.SORTSEQ;//订单户序 firstTask.SORTSEQ 
-                            tb.CIGSEQ = item.CIGSEQ;//条烟顺序
+                            tb.CIGSEQ = cigseq++;//条烟顺序
                             tb.EXPORT = item.PACKAGENO ?? 0;//出口号（包装机号）
                             tb.PACKAGENUM = item.PACKAGENO;// 包装机号    
                             tb.ORDERQUANTITY = item.ORDERQTY;//订单总数
@@ -148,10 +154,10 @@ namespace InBound.Business
                             en.T_PACKAGE_CALLBACK.AddObject(tb);
 
                         }
-                        if (!item.BILLCODE.Equals(billcode))//存入新的订单号 ,一个订单插入一次数据
-                        {
-                            en.SaveChanges();
-                        }
+                      
+                        en.SaveChanges();
+                        billcode = item.BILLCODE;
+                        
                     }
                 }
                 catch (Exception ex)
