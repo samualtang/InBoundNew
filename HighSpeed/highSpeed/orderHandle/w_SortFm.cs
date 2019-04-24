@@ -406,10 +406,12 @@ namespace highSpeed.orderHandle
 
 
         }
-
+       
         private void dgvSortInfo_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             dgvSortInfo.Visible = false;
+            Random rd = new Random();
+            rd.Next(1);
         }
 
         private void btnVid_Click(object sender, EventArgs e)
@@ -425,15 +427,25 @@ namespace highSpeed.orderHandle
                 double dsDataNum = Convert.ToDouble(Db.ExecuteScalar(pakcageSql) == DBNull.Value ? 0 : Db.ExecuteScalar(pakcageSql));//下位总数量
                 double dsNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(pokenum) from  kesheng.v_produce_pokeseq "));//下位常规烟数量
                 double dsUnNormalNum = Convert.ToDouble(Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq ") == DBNull.Value ? 0 : Db.ExecuteScalar("select sum(quantity) from kesheng.v_un_pokeseq "));//下位异型烟数量
-
+                double synseq = Convert.ToDouble(Db.ExecuteScalar("select max(maxsynseq) from (select max(synseq) maxsynseq from t_produce_task union select max(synseq) maxsynseq from t_un_task) ") == DBNull.Value ? 0 : Db.ExecuteScalar("select max(maxsynseq) from (select max(synseq) maxsynseq from t_produce_task union select max(synseq) maxsynseq from t_un_task) "));
                 string msg = "\n上位任务总数量为:" + usDataNum + ",下位包装机总数量数据为:" + dsDataNum + "\n相差:" + (usDataNum - dsDataNum) +
                                                 "\n\n上位常规烟数量为:" + usNormalNum + ",下位常规烟条烟识别数量为:" + dsNormalNum + "\n相差:" + (usNormalNum - dsNormalNum) +
                                                 "\n\n上位异型烟数量为:" + usUnNormalNum + ",下位异型烟条烟识别数量为:" + dsUnNormalNum + "\n相差:" + (usUnNormalNum - dsUnNormalNum);
                 if (usDataNum - dsDataNum == 0 && usNormalNum - dsNormalNum == 0 && usUnNormalNum - dsUnNormalNum ==0)
                 {
-                    MessageBox.Show("无差异,将开放数据给下接收"+msg);
-                    ScheduleService.InsertSynseqInfo("1");
-                    writeLog.Write(msg);
+                    DialogResult MsgBoxResult = MessageBox.Show("数据无差异,是否开放批次:" + synseq + " 的数据给下位接收" + msg,//对话框的显示内容 
+                                                                    "提示",//对话框的标题 
+                                                                    MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
+                                                                    MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
+                                                                    MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+                    if (MsgBoxResult == DialogResult.Yes)
+                    {
+                        ScheduleService.InsertSynseqInfo("1");
+                        writeLog.Write(msg);
+                    }
+                    else {
+                        MessageBox.Show("未开放批次:" + synseq + " 的数据数据给下游接收");
+                    }
 
                 }
                 else
