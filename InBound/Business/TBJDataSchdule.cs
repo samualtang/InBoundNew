@@ -21,7 +21,7 @@ namespace InBound.Business
                 //en.Configuration.AutoDetectChangesEnabled = false;
                 //en.Configuration.ValidateOnSaveEnabled = false;
                 //获取当前包装机最大条烟流水号
-                var cALLBACKs = (from item in en.T_PACKAGE_CALLBACK where item.PACKAGENUM == packageno select item).ToList();
+                var cALLBACKs = (from item in en.T_PACKAGE_CALLBACK where item.EXPORT == packageno select item).ToList();
                 decimal maxCigNum = 1;
                 decimal maxSortnum = 0;
                 if (cALLBACKs.Any())
