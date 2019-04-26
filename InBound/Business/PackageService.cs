@@ -41,7 +41,9 @@ namespace InBound.Business
                 ////var Packtasknum = entity.Database.SqlQuery( ); CS10448409  CS10453696
                 var data = entity.V_PRODUCE_PACKAGEINFO
                     //.Where(x => x.REGIONCODE == "0297")
-                    .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq) 
+                    //.Where(x => x.EXPORT == 5 ) 
+                    //.Where(x => x.BILLCODE == "CS10529833")
+                    .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
@@ -101,7 +103,7 @@ namespace InBound.Business
                                 temp.CIGSEQ = pcount;
                                 temp.PACKAGESEQ = 0;
                                 temp.ALLPACKAGESEQ = 0;
-                                temp.PACKAGENO = 1; ;////////////
+                                temp.PACKAGENO = v2.EXPORT; ;////////////
                                 temp.CIGTYPE = v2.ALLOWSORT == "非标" ? "2" : "1";
                                 temp.STATE = 0;//0 新增  10 确定
                                 temp.NORMAILSTATE = 0;//0 新增  10 确定
@@ -166,7 +168,7 @@ namespace InBound.Business
                 var date = data.Max(x => x.ORDERDATE);
                 var seqtemp = entity.T_PRODUCE_SYNSEQ.Where(x => x.SYNSEQ == synseq && x.PACKAGENO == packageNo && x.ORDERDATE == date).FirstOrDefault();
                 seqtemp.PMSTATE = "2";
-                seqtemp.TBJSTATE = "1";
+                seqtemp.TBJSTATE = "2";
                 entity.SaveChanges();
                 data = null; ;
                 query = null;
@@ -174,10 +176,10 @@ namespace InBound.Business
         }
 
         decimal ptid;
-        int packageWidth = 540;//宽
+        int packageWidth = 550;//宽
         int packageLenghth = 366; //长
-        int packageHeight = 180;//高
-        int jx = 3;//间隙
+        int packageHeight = 150;//高
+        int jx = 4;//间隙
         int lc = 90;//长度差
         decimal deviation = 3;//高度误差
         /// <summary>
@@ -249,6 +251,7 @@ namespace InBound.Business
             areal.right = areaC;
             areal.beginx = area.beginx;
             areal.width = unit.beginx;
+            areal.length = area.length;
             areal.height = area.height;
             List<Cigarette> temp = area.cigaretteList.Where(x => x.index < unit.begin).ToList();
             areal.cigaretteList = new List<Cigarette>();
@@ -741,6 +744,7 @@ namespace InBound.Business
                     task.Add(_PACKAGE_TASK);
                     Normaldata.RemoveAll(x => x.NORMAILSTATE == 10);
                 }
+                unpackageseq++;
                 if (tag == 0)
                 {
                     allpackagenum++;
