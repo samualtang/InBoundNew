@@ -6,9 +6,6 @@ using System.Text;
 namespace InBound.Pub
 {
 
-    /// <summary>
-    /// 卷烟平面
-    /// </summary>
     public class PackageArea
     {
         /// <summary>
@@ -19,6 +16,10 @@ namespace InBound.Pub
         /// 平面高度
         /// </summary>
         public decimal height = 0;
+        /// <summary>
+        /// 平面长度
+        /// </summary>
+        public decimal length = 0;
         /// <summary>
         /// 平面开始起点X坐标
         /// </summary>
