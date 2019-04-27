@@ -176,11 +176,11 @@ namespace InBound.Business
         }
 
         decimal ptid;
-        int packageWidth = 550;//宽
+        int packageWidth = 540;//宽
         int packageLenghth = 366; //长
         int packageHeight = 150;//高
         int jx = 4;//间隙
-        int lc = 90;//长度差
+        int lc = 60;//长度差
         decimal deviation = 3;//高度误差
         /// <summary>
         /// 常规烟高
@@ -1521,7 +1521,7 @@ namespace InBound.Business
             {
                 if (item.DOUBLETAKE == "0")
                 {
-                    item.CIGWIDTHX = packageWidth - item.CIGWIDTHX;
+                    item.CIGWIDTHX = packageWidth - item.CIGWIDTHX -jx;
                     LastX = 0;
                     LastWidth = 0;
                     LastCigseq = 0;
@@ -1532,15 +1532,15 @@ namespace InBound.Business
                     {
                         if (LastWidth == item.CIGWIDTH)
                         {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX;
+                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX -jx;
                         }
                         else if (LastWidth > item.CIGWIDTH)
                         {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX + (LastWidth - item.CIGWIDTH);
+                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX + (LastWidth - item.CIGWIDTH) -jx;
                         }
                         else if (LastWidth < item.CIGWIDTH)
                         {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - (item.CIGWIDTH - LastWidth);
+                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - (item.CIGWIDTH - LastWidth) - jx;
                         }
                         datalist.Where(x => x.CIGSEQ == LastCigseq).FirstOrDefault().CIGWIDTHX = item.CIGWIDTHX;
                     }
