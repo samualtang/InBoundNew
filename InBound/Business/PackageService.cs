@@ -41,9 +41,9 @@ namespace InBound.Business
                 ////var Packtasknum = entity.Database.SqlQuery( ); CS10448409  CS10453696
                 var data = entity.V_PRODUCE_PACKAGEINFO
                     //.Where(x => x.REGIONCODE == "0255")
-                    .Where(x => x.EXPORT == 5 ) 
+                    //.Where(x => x.EXPORT == 5 ) 
                     //.Where(x => x.BILLCODE == "CS10529833")
-                    //.Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
+                    .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
@@ -66,7 +66,7 @@ namespace InBound.Business
                 query1 = entity.T_WMS_ITEM.Select(x => x).ToList();
                 //查询ptid值
                 ptid = entity.T_PACKAGE_TASK.Count() > 0 ? entity.T_PACKAGE_TASK.Max(x => x.PTID) + 1 : 1;
-                allpackagenum = entity.T_PACKAGE_TASK.Count() > 0 ? (int)entity.T_PACKAGE_TASK.Max(x => x.ALLPACKAGESEQ).Value : 0;
+                allpackagenum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.ALLPACKAGESEQ).Value : 0;
                 if (query != null)
                 {
                     int i = 0;
@@ -178,7 +178,7 @@ namespace InBound.Business
         decimal ptid;
         int packageWidth = 540;//宽
         int packageLenghth = 366; //长
-        int packageHeight = 150;//高
+        int packageHeight = 130;//高
         int jx = 4;//间隙
         int lc = 60;//长度差
         decimal deviation = 3;//高度误差
@@ -1654,7 +1654,7 @@ namespace InBound.Business
                     {
                         if (AllNormalLevel > 0)//存在常规烟
                         {
-                            if (AllNormalLevel <= 4)
+                            if (AllNormalLevel <= 4)//小于4层 全部合包
                             {
                                 var tmp = unnormallist.Where(x => x[0] == item.allpackageq).ToList();
                                 tmp[0][1] = AllNormalLevel;
@@ -1693,8 +1693,12 @@ namespace InBound.Business
                                 tmp[0][1] = 2;
                                 AllNormalLevel -= 2;
                             }
-                            else if (AllNormalLevel / AllUnnormalCount >= 1)//如果异型烟平均可以匹配的常规烟层数大于1
+                            else
                             {
+                                if (AllNormalLevel == 0)
+                                {
+                                    break;
+                                }
                                 var tmp = unnormallist.Where(x => x[0] == item.allpackageq).ToList();
                                 tmp[0][1] = 1;
                                 AllNormalLevel -= 1;

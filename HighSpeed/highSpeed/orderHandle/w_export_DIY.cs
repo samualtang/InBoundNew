@@ -185,7 +185,7 @@ namespace highSpeed.orderHandle
                         tempCode = "";
                     }
                     //infostr[i] = tasknum + taskseq + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + ",2," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + ",S1001,1";
-                    tmpInfo = tmpInfo + tasknum + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + onesynseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + "," + lineno + ",1;\r\n";
+                    tmpInfo = tmpInfo + tasknum + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + onesynseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + DateTime.Now.Date.ToString("yyyy-MM-dd") + "," + lineno + ",1;\r\n";
 
                     if (cuscode != cuscodetmp)
                     {
