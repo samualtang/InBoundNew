@@ -41,8 +41,9 @@ namespace InBound.Business
                 ////var Packtasknum = entity.Database.SqlQuery( ); CS10448409  CS10453696
                 var data = entity.V_PRODUCE_PACKAGEINFO
                     //.Where(x => x.REGIONCODE == "0255")
-                    //.Where(x => x.EXPORT == 5 ) 
-                    //.Where(x => x.BILLCODE == "CS10529833")
+                    //.Where(x => x.EXPORT == 6) 
+                    //.Where(x => x.BILLCODE == "CS10576766")//CS10556329
+                    //.Where(x=>x.TASKNUM == 1259210)
                     .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
                     .ToList();
                 //所有订单明细
@@ -347,7 +348,7 @@ namespace InBound.Business
             if (area.left != null && list.Contains(area.left))
             {
                 area.left.right = areal;
-                if (Math.Abs(area.left.height - areal.height) <= deviation)
+                if (Math.Abs(area.left.height - areal.height) <= deviation && Math.Abs(area.left.length - areal.length)<=lc)
                 {
 
 
@@ -1280,6 +1281,7 @@ namespace InBound.Business
                                                         tempWidth = tempunnormaltask1.CIGWIDTH ?? 0;
                                                         tempcode[0] = v[0].CigaretteSeq;
                                                         tempcode[1] = v[1].CigaretteSeq;
+                                                        tempunit = cell;
                                                         gdc = area.height + (tempunnormaltask1.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
@@ -1289,13 +1291,14 @@ namespace InBound.Business
                                                 tempWidth = tempunnormaltask1.CIGWIDTH ?? 0;
                                                 tempcode[0] = v[0].CigaretteSeq;
                                                 tempcode[1] = v[1].CigaretteSeq;
+                                                tempunit = cell;
                                                 if (area.left != null)
                                                 {
                                                     gdc = area.height + (tempunnormaltask1.CIGHIGH ?? 0) - area.left.height;
                                                 }
                                             }
                                         }
-                                        tempunit = cell;
+                                       
                                         break;
                                     }
                                 }
@@ -1318,18 +1321,20 @@ namespace InBound.Business
                         decimal height = 0;
                         decimal length = 0;
                         decimal cigseq = 0;
+                        decimal tmphight = 0;
 
                         foreach (var v in chooseItem1)
                         {
+                            tmphight = (v.CIGHIGH ?? 0) > tmphight ? (v.CIGHIGH ?? 0) : tmphight;//双抓取两条烟最高的
                             v.PACKAGESEQ = packageNO;
                             v.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem1[0].CIGWIDTH + jx;//两条当做一条 +jx
-                            v.CIGHIGHY = area.height + v.CIGHIGH;
+                            v.CIGHIGHY = area.height + tmphight;
                             v.STATE = 10;
                             v.DOUBLETAKE = "1";
                             v.ALLPACKAGESEQ = allpackagenum;
                             width += (v.CIGWIDTH ?? 0) + jx;//+jx
                             length = v.CIGLENGTH ?? 0;
-                            height = area.height + (v.CIGHIGH ?? 0);
+                            height = area.height + tmphight;
                             cigseq = v.CIGSEQ ?? 0;
                         }
                         //更新area
@@ -1398,7 +1403,7 @@ namespace InBound.Business
                             {
                                 foreach (var cell in unit)
                                 {
-                                    if (tempunnormaltask.CIGWIDTH + jx * 2 <= cell.width) //后面的seq必须大于已放的才能放
+                                    if (tempunnormaltask.CIGWIDTH + jx * 2 <= cell.width) 
                                     {
 
                                         if (tempWidth <= tempunnormaltask.CIGWIDTH + jx * 2)
@@ -1416,6 +1421,7 @@ namespace InBound.Business
                                                         tempWidth = (tempunnormaltask.CIGWIDTH ?? 0) + jx * 2;
 
                                                         tempcode[0] = v[0].CigaretteSeq;
+                                                        tempunit = cell;
                                                         gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
                                                     }
                                                 }
@@ -1425,6 +1431,7 @@ namespace InBound.Business
                                                 tempWidth = (tempunnormaltask.CIGWIDTH ?? 0) + jx * 2;
 
                                                 tempcode[0] = v[0].CigaretteSeq;
+                                                tempunit = cell;
                                                 if (area.left != null)
                                                 {
                                                     gdc = area.height + (tempunnormaltask.CIGHIGH ?? 0) - area.left.height;
@@ -1432,7 +1439,8 @@ namespace InBound.Business
                                             }
 
                                         }
-                                        tempunit = cell;
+                                        
+                                       
                                         break;
                                     }
                                 }
@@ -1525,10 +1533,11 @@ namespace InBound.Business
                 {
                     //有常规烟 已经没有未分配常规烟 且 不是第一包烟
                     //var packageseq = ( Normaldata.Count() > 0 && Normaldata.Where(x => x.NORMAILSTATE == 0).Count() == 0 && datalist.Select(x => x.PACKAGESEQ).FirstOrDefault() != 1) ? datalist.Max(x => x.PACKAGESEQ) +1: datalist.Max(x => x.PACKAGESEQ);
-                    if (Normaldata.Count() <= 0)
-                    {
-                        packageseq = (datalist.Max(x => x.PACKAGESEQ) ?? 0) + 1;
-                    }
+                    //if (Normaldata.Count() <= 0)
+                    //{
+                    //    packageseq = (datalist.Max(x => x.PACKAGESEQ) ?? 0) + 1;
+                    //}
+                    packageseq = (datalist.Max(x => x.PACKAGESEQ) ?? 0) ;
                     foreach (var item in datalist)
                     {
                         item.CIGSEQ = cigseq;
@@ -1967,14 +1976,28 @@ namespace InBound.Business
                 }
                 else//纯异型烟
                 {
+                    decimal packageseq = 1;
+                    decimal tempallpackageseq = 1;
+                    decimal cigseq = 1;
                     var datalist = task.Where(x => x.STATE == 10).ToList();
                     if (datalist.Count > 0)
                     {
                         foreach (var it in datalist)
                         {
+                            if (tempallpackageseq != it.ALLPACKAGESEQ)
+                            {
+                                tempallpackageseq = (it.ALLPACKAGESEQ ?? 0);
+                                packageseq++;
+                                cigseq = 1;
+                            }
+                            it.CIGSEQ = cigseq;
+                            it.PACKAGESEQ = packageseq;
                             it.PUSHSPACE = 1;
                             it.UNIONPACKAGETAG = 0;
+                            cigseq++;
                         }
+                        packageseq = 1;
+                        tempallpackageseq = 1;
                     }
                 }
             }
