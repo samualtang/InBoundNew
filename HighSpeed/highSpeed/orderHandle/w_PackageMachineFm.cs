@@ -54,7 +54,6 @@ namespace highSpeed.orderHandle
                 return;
             }
 
-
             ds = db.QueryDs(sql);
             orderdata.DataSource = ds.Tables[0];
             list.Clear();
@@ -107,10 +106,41 @@ namespace highSpeed.orderHandle
                 list.Add(txt);
             }
         }
+        void PackageSort()
+        {
+            var date1 = System.DateTime.Now;
+            foreach (var item in list)
+            {
+                ps.GetAllOrder(Convert.ToDecimal(item[1]), Convert.ToDecimal(item[0]));
+            }
+            var date2 = System.DateTime.Now;
+
+            MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            updateControl(orderdata, true, true);
+        }
+        void PackageCallback()
+        {
+            var date1 = System.DateTime.Now;
+            foreach (var item in ts.foreachdata())
+            {
+                ts.CallBackTBJ(item);
+            }
+            var date2 = System.DateTime.Now;
+
+            MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            updateControl(button_TBJ, true);
+        } 
         PackageService ps = new PackageService();
         TBJDataSchdule ts = new TBJDataSchdule();
+        delegate void HandlePackageSort();
+        delegate void HandleCallbackSort();
         private void button_datacomplte_Click(object sender, EventArgs e)
         {
+            if (list.Count <= 0)
+            {
+                MessageBox.Show("请选择需要排程的数据！");
+                return;
+            }
             string str = "";
             foreach (var item in list)
             {
@@ -121,27 +151,56 @@ namespace highSpeed.orderHandle
             {
                 return;
             }
-            var date1 = System.DateTime.Now;
-            foreach (var item in list)
-            {
-                ps.GetAllOrder(Convert.ToDecimal(item[1]), Convert.ToDecimal(item[0]));
-            }
-            var date2 = System.DateTime.Now;
-
-            MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
-            dataget();
+            button_query.Enabled = false;
+            button_all.Enabled = false;
+            orderdata.Enabled = false;
+            panel3.Visible = true;
+            label1.Text = "包装机数据生成中......";
+            HandlePackageSort task = PackageSort; //新的
+            task.BeginInvoke(null, null); 
         }
+        private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
+        private delegate void HandleDelegate2(Control control, bool isenable);
 
+        public void updateControl(Control control, bool isvisible, bool isenable)
+        {
+
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new HandleDelegate1(updateControl), new Object[] { control, isvisible, isenable });
+            }
+            else
+            {
+
+                label1.Text = "数据生成完成\r\n重新加载批次数据中...";
+                dataget();
+                button_query.Enabled = true;
+                button_all.Enabled = true;
+                panel3.Visible = false;
+                control.Visible = isvisible;
+                control.Enabled = isenable;
+            }
+        }
+        public void updateControl(Control control, bool isenable)
+        {
+
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new HandleDelegate2(updateControl), new Object[] { control, isenable });
+            }
+            else
+            {
+                panel3.Visible = false;
+                control.Enabled = isenable;
+            }
+        }
         private void button_TBJ_Click(object sender, EventArgs e)
         {
-            var date1 = System.DateTime.Now;
-            foreach (var item in ts.foreachdata())
-            {
-                ts.CallBackTBJ(item);
-            }
-            var date2 = System.DateTime.Now;
-
-            MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            button_TBJ.Enabled = false;
+            panel3.Visible = true;
+            label1.Text = "贴标机数据生成中......";
+            HandleCallbackSort task = PackageCallback;
+            task.BeginInvoke(null, null); 
         }
     }
 }
