@@ -116,6 +116,7 @@ namespace highSpeed.orderHandle
             var date2 = System.DateTime.Now;
 
             MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            InBound.WriteLog.GetLog().Write("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
             updateControl(orderdata, true, true);
         }
         void PackageCallback()
@@ -128,6 +129,7 @@ namespace highSpeed.orderHandle
             var date2 = System.DateTime.Now;
 
             MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+            InBound.WriteLog.GetLog().Write("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
             updateControl(button_TBJ, true);
         } 
         PackageService ps = new PackageService();
@@ -151,6 +153,7 @@ namespace highSpeed.orderHandle
             {
                 return;
             }
+            InBound.WriteLog.GetLog().Write("按\r\n" + str + "\r\n顺序生成包装机数据");
             button_query.Enabled = false;
             button_all.Enabled = false;
             orderdata.Enabled = false;

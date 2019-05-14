@@ -1098,7 +1098,7 @@ namespace InBound.Business
                     List<ItemGroup1> itemGroupSave = new List<ItemGroup1>();
                     foreach (var item in allGroupList1)//遍历组合双抓
                     {
-                        if ((Math.Abs(item.Hight - LastHight) < deviation || LastHight == 0) && LastDoubletask == "1" && Math.Abs(LastWidth - item.Width) <= Widthdeviation && Math.Abs(LastSeq - item.CigaretteSeq) == 1)//如果当前条烟与上条烟 高度相差在偏差范围内且能双抓   或是第一条烟  暂时宽度要求相等
+                        if ((Math.Abs(item.Hight - LastHight) < deviation || LastHight == 0) && LastDoubletask == "1" && item.DoubleTake =="1" && Math.Abs(LastWidth - item.Width) <= Widthdeviation && Math.Abs(LastSeq - item.CigaretteSeq) == 1)//如果当前条烟与上条烟 高度相差在偏差范围内且能双抓   或是第一条烟  暂时宽度要求相等
                         {
                             cigindex += 1;
                             item.Cigindex = cigindex;

@@ -540,5 +540,37 @@ namespace highSpeed.baseData
             }
             
         }
+
+        private void btn_shiper_Click(object sender, EventArgs e)
+        {
+            DialogResult di = MessageBox.Show("是否进行尺寸信息同步？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (di == DialogResult.Cancel)
+            {
+                return;
+            }
+            Db.Open();
+            OracleParameter[] sqlpara;
+            sqlpara = new OracleParameter[2];
+
+            sqlpara[0] = new OracleParameter("p_ErrCode", OracleType.VarChar, 1000);
+            sqlpara[1] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 2000);
+
+            sqlpara[0].Direction = ParameterDirection.Output;
+            sqlpara[1].Direction = ParameterDirection.Output;
+
+            Db.ExecuteNonQueryWithProc("p_produce_wms_cigarette", sqlpara);
+
+            string errcode = sqlpara[0].Value == null ? "" : sqlpara[0].Value.ToString();
+            string errmsg = sqlpara[1].Value == null ? "" : sqlpara[1].Value.ToString();
+            Db.Close();
+            if (errcode == "1")
+            {
+                MessageBox.Show("数据已同步");
+            }
+            else
+            {
+                MessageBox.Show(errmsg);
+            }
+        }
     }
 }

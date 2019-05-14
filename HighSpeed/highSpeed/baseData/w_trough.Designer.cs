@@ -65,6 +65,7 @@
             this.groupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.pager1 = new WHC.Pager.WinControl.Pager();
+            this.btn_shiper = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).BeginInit();
@@ -72,6 +73,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_shiper);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.cbctype);
@@ -162,7 +164,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(822, 20);
+            this.button2.Location = new System.Drawing.Point(821, 17);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(51, 23);
@@ -197,7 +199,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1052, 20);
+            this.button1.Location = new System.Drawing.Point(1051, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(49, 23);
             this.button1.TabIndex = 12;
@@ -207,7 +209,7 @@
             // 
             // btn_toexcel
             // 
-            this.btn_toexcel.Location = new System.Drawing.Point(998, 20);
+            this.btn_toexcel.Location = new System.Drawing.Point(997, 17);
             this.btn_toexcel.Name = "btn_toexcel";
             this.btn_toexcel.Size = new System.Drawing.Size(44, 23);
             this.btn_toexcel.TabIndex = 11;
@@ -217,7 +219,7 @@
             // 
             // btn_print
             // 
-            this.btn_print.Location = new System.Drawing.Point(940, 20);
+            this.btn_print.Location = new System.Drawing.Point(939, 17);
             this.btn_print.Name = "btn_print";
             this.btn_print.Size = new System.Drawing.Size(51, 23);
             this.btn_print.TabIndex = 10;
@@ -227,7 +229,7 @@
             // 
             // btn_amend
             // 
-            this.btn_amend.Location = new System.Drawing.Point(880, 20);
+            this.btn_amend.Location = new System.Drawing.Point(879, 17);
             this.btn_amend.Name = "btn_amend";
             this.btn_amend.Size = new System.Drawing.Size(54, 23);
             this.btn_amend.TabIndex = 8;
@@ -237,7 +239,7 @@
             // 
             // btn_qy
             // 
-            this.btn_qy.Location = new System.Drawing.Point(695, 20);
+            this.btn_qy.Location = new System.Drawing.Point(694, 17);
             this.btn_qy.Name = "btn_qy";
             this.btn_qy.Size = new System.Drawing.Size(56, 23);
             this.btn_qy.TabIndex = 7;
@@ -247,7 +249,7 @@
             // 
             // btn_jy
             // 
-            this.btn_jy.Location = new System.Drawing.Point(758, 20);
+            this.btn_jy.Location = new System.Drawing.Point(757, 17);
             this.btn_jy.Name = "btn_jy";
             this.btn_jy.Size = new System.Drawing.Size(56, 23);
             this.btn_jy.TabIndex = 6;
@@ -257,7 +259,7 @@
             // 
             // btn_search
             // 
-            this.btn_search.Location = new System.Drawing.Point(639, 20);
+            this.btn_search.Location = new System.Drawing.Point(638, 17);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(51, 23);
             this.btn_search.TabIndex = 5;
@@ -559,6 +561,16 @@
             this.pager1.Size = new System.Drawing.Size(1099, 45);
             this.pager1.TabIndex = 1;
             // 
+            // btn_shiper
+            // 
+            this.btn_shiper.Location = new System.Drawing.Point(880, 55);
+            this.btn_shiper.Name = "btn_shiper";
+            this.btn_shiper.Size = new System.Drawing.Size(95, 23);
+            this.btn_shiper.TabIndex = 19;
+            this.btn_shiper.Text = "同步品牌尺寸";
+            this.btn_shiper.UseVisualStyleBackColor = true;
+            this.btn_shiper.Click += new System.EventHandler(this.btn_shiper_Click);
+            // 
             // win_trough
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -616,5 +628,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btn_shiper;
     }
 }
