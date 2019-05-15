@@ -205,5 +205,10 @@ namespace highSpeed.orderHandle
             HandleCallbackSort task = PackageCallback;
             task.BeginInvoke(null, null); 
         }
+
+        private void button_CheckData_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(ts.CheckData());
+        }
     }
 }

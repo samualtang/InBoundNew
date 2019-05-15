@@ -44,6 +44,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.button_CheckData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
@@ -51,7 +52,7 @@
             // 
             // button_datacomplte
             // 
-            this.button_datacomplte.Location = new System.Drawing.Point(721, 16);
+            this.button_datacomplte.Location = new System.Drawing.Point(704, 16);
             this.button_datacomplte.Name = "button_datacomplte";
             this.button_datacomplte.Size = new System.Drawing.Size(122, 32);
             this.button_datacomplte.TabIndex = 1;
@@ -79,7 +80,7 @@
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(983, 361);
+            this.orderdata.Size = new System.Drawing.Size(1191, 361);
             this.orderdata.TabIndex = 3;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
             // 
@@ -163,7 +164,7 @@
             // 
             // button_TBJ
             // 
-            this.button_TBJ.Location = new System.Drawing.Point(873, 16);
+            this.button_TBJ.Location = new System.Drawing.Point(849, 16);
             this.button_TBJ.Name = "button_TBJ";
             this.button_TBJ.Size = new System.Drawing.Size(122, 32);
             this.button_TBJ.TabIndex = 8;
@@ -202,11 +203,22 @@
             this.pbLoading.TabIndex = 27;
             this.pbLoading.TabStop = false;
             // 
+            // button_CheckData
+            // 
+            this.button_CheckData.Location = new System.Drawing.Point(1030, 16);
+            this.button_CheckData.Name = "button_CheckData";
+            this.button_CheckData.Size = new System.Drawing.Size(130, 32);
+            this.button_CheckData.TabIndex = 12;
+            this.button_CheckData.Text = "已生成车组数据验证";
+            this.button_CheckData.UseVisualStyleBackColor = true;
+            this.button_CheckData.Click += new System.EventHandler(this.button_CheckData_Click);
+            // 
             // w_PackageMachineFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1007, 432);
+            this.ClientSize = new System.Drawing.Size(1215, 432);
+            this.Controls.Add(this.button_CheckData);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.button_TBJ);
             this.Controls.Add(this.button_all);
@@ -244,5 +256,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbLoading;
+        private System.Windows.Forms.Button button_CheckData;
     }
 }

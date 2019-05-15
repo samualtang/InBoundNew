@@ -279,6 +279,31 @@ namespace InBound.Business
             return index;
         }
 
-
+        public string CheckData()
+        {
+            string str = "";
+            using (Entities et = new Entities())
+            {
+                //总数量 V_PRODUCE_PACKAGEINFO
+                decimal allqty = 0;
+                var AllRegicode = et.T_PACKAGE_TASK.GroupBy(x=> new {x.REGIONCODE,x.PACKAGENO}).Select(x=>x.Key).ToList();
+                foreach (var item in AllRegicode)
+                {
+                    allqty += (et.V_PRODUCE_PACKAGEINFO.Where(x => x.REGIONCODE == item.REGIONCODE && x.EXPORT == item.PACKAGENO).Sum(x => x.QUANTITY) ?? 0);
+                }     
+                decimal PackageQty = et.T_PACKAGE_TASK.Sum(x => x.NORMALQTY) ?? 0;
+                decimal CallBackQty = et.T_PACKAGE_CALLBACK.Sum(x => x.CIGARETTEQTY) ?? 0;
+                str += "分拣视图总条烟数：" + allqty + ";\r\n包装机数据总条烟数：" + PackageQty + ";\r\n贴标机数据总条烟数：" + CallBackQty + ";\r\n";
+                if (allqty != PackageQty)
+                {
+                    str += "分拣视图与包装机数据相差：" + (allqty - PackageQty) + "\r\n";
+                }
+                if (PackageQty != CallBackQty)
+                {
+                    str += "包装机与贴标机数据相差：" + (PackageQty - CallBackQty) + "\r\n";
+                }
+            }
+            return str;
+        }
     }
 }
