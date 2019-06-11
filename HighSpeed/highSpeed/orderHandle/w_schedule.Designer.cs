@@ -37,9 +37,6 @@
             this.btn_schedule = new System.Windows.Forms.Button();
             this.lab_showinfo = new System.Windows.Forms.Label();
             this.orderdata = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.regioncode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +44,10 @@
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sixordercount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sixorderqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btn_Reschedule = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -54,6 +55,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_Reschedule);
             this.panel1.Controls.Add(this.btn_sixschedule);
             this.panel1.Controls.Add(this.btn_all);
             this.panel1.Controls.Add(this.button1);
@@ -69,7 +71,7 @@
             // 
             // btn_sixschedule
             // 
-            this.btn_sixschedule.Location = new System.Drawing.Point(824, 11);
+            this.btn_sixschedule.Location = new System.Drawing.Point(969, 11);
             this.btn_sixschedule.Name = "btn_sixschedule";
             this.btn_sixschedule.Size = new System.Drawing.Size(124, 23);
             this.btn_sixschedule.TabIndex = 15;
@@ -90,7 +92,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1031, 11);
+            this.button1.Location = new System.Drawing.Point(1099, 13);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -157,33 +159,6 @@
             this.orderdata.TabIndex = 1;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.progressBar1);
-            this.panel2.Location = new System.Drawing.Point(146, 87);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(826, 89);
-            this.panel2.TabIndex = 3;
-            this.panel2.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "正在读取数据...";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(33, 42);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(741, 23);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.Visible = false;
-            // 
             // checkbox
             // 
             this.checkbox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -191,7 +166,7 @@
             this.checkbox.HeaderText = "选择";
             this.checkbox.Name = "checkbox";
             this.checkbox.TrueValue = "true";
-            this.checkbox.Width = 35;
+            this.checkbox.Width = 32;
             // 
             // Column1
             // 
@@ -233,6 +208,43 @@
             this.sixorderqty.HeaderText = "六三六总条数";
             this.sixorderqty.Name = "sixorderqty";
             this.sixorderqty.Width = 120;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Location = new System.Drawing.Point(146, 87);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(826, 89);
+            this.panel2.TabIndex = 3;
+            this.panel2.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(31, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "正在读取数据...";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(33, 42);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(741, 23);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.Visible = false;
+            // 
+            // btn_Reschedule
+            // 
+            this.btn_Reschedule.Location = new System.Drawing.Point(827, 11);
+            this.btn_Reschedule.Name = "btn_Reschedule";
+            this.btn_Reschedule.Size = new System.Drawing.Size(124, 23);
+            this.btn_Reschedule.TabIndex = 16;
+            this.btn_Reschedule.Text = "按预计划排程";
+            this.btn_Reschedule.UseVisualStyleBackColor = true;
+            this.btn_Reschedule.Click += new System.EventHandler(this.btn_Reschedule_Click);
             // 
             // win_schedule
             // 
@@ -276,5 +288,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn sixordercount;
         private System.Windows.Forms.DataGridViewTextBoxColumn sixorderqty;
+        private System.Windows.Forms.Button btn_Reschedule;
     }
 }

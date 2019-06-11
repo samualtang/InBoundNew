@@ -9,7 +9,8 @@ namespace InBound.Business
 {
     public class ScheduleService : BaseService
     {
-        
+        //排程批次表加入数据
+
         /// <summary>
         /// 异标合一
         /// </summary>
@@ -151,5 +152,27 @@ namespace InBound.Business
                     return new List<T_UN_TASK>();
             }
         }
+
+
+        /// <summary>
+        /// 第一个排程批次，读取预计划排程车组列表
+        /// </summary>
+        /// <returns></returns>
+        //public static string GetScheduleCodeList()
+        //{
+        //    string result ="";
+        //    using (Entities et=new Entities())
+        //    {
+        //        var data = et.T_PRODUCE_PRELIMINARYSCHEDULE.OrderBy(x => x.SERIAL).ThenBy(x => x.MAINBELT).Select(x => x.ROUTECODE).ToList();
+        //        foreach (var item in data)
+        //        {
+        //            result += "," + item;
+        //        }
+        //        return result;
+        //    }
+
+        //}
+
+
     }
 }

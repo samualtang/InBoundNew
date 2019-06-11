@@ -46,7 +46,7 @@ namespace InBound.Business
                 if (cALLBACKs.Any())
                 {
                     maxCigNum = cALLBACKs.Max(a => a.CIGNUM);
-
+                    maxCigNum += 1;
                 }
                 //获取包装机视图
                 var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO     orderby item.TASKNUM select item).ToList();

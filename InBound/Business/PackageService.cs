@@ -181,7 +181,7 @@ namespace InBound.Business
         int packageLenghth = 366; //长
         int packageHeight = 130;//高
         int jx = 4;//间隙
-        int lc = 60;//长度差
+        int lc = 10;//长度差  不允许短烟上放置长烟
         decimal deviation = 3;//高度误差
         decimal Widthdeviation = 3;//宽度误差
 
@@ -1652,9 +1652,12 @@ namespace InBound.Business
                 //找出只有一层的异型烟包(6条常规烟宽度*0.8)
                 var oneleveldata = sortdata.Where(x => x.ww <= (normalwidth * NorCount));//* (decimal)0.8));
                 //如果常规烟有余数，总层数减 
-                if (Remainder > 0 && AllNormalLevel > 2)
+                if (Remainder > 0 && AllNormalLevel > 2 )
                 {
-                    AllNormalLevel -= 2;
+                    if (!(oneleveldata.Count() == 1 && AllNormalLevel<=4))//如果不满一层的异型烟只有1包，且常规烟总层数小于等于4
+                    {
+                        AllNormalLevel -= 2;
+                    }                    
                 }
                 if (AllNormalQty > 0)//存在常规烟
                 {
