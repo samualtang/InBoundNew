@@ -30,44 +30,32 @@ namespace InBound.Business
             int allCount = 0;
             using (Entities entity = new Entities())
             {
-                System.Data.EntityClient.EntityConnection entityConnection = (System.Data.EntityClient.EntityConnection)entity.Connection;
-                entityConnection.Open();
-                System.Data.Common.DbConnection storeConnection = entityConnection.StoreConnection;
-                System.Data.Common.DbCommand cmd = storeConnection.CreateCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "select ZOOMTEL.S_PACKAGE_TASK.NEXTVAL from dual";
+                //System.Data.EntityClient.EntityConnection entityConnection = (System.Data.EntityClient.EntityConnection)entity.Connection;
+                //entityConnection.Open();
+                //System.Data.Common.DbConnection storeConnection = entityConnection.StoreConnection;
+                //System.Data.Common.DbCommand cmd = storeConnection.CreateCommand();
+                //cmd.CommandType = System.Data.CommandType.Text;
+                //cmd.CommandText = "select ZOOMTEL.S_PACKAGE_TASK.NEXTVAL from dual";
 
-                //log.Write("entity获取订单开始");
-                ////var Packtasknum = entity.Database.SqlQuery( ); CS10448409  CS10453696
                 var data = entity.V_PRODUCE_PACKAGEINFO
-                    //.Where(x => x.REGIONCODE == "0255")
-                    //.Where(x => x.EXPORT == 6) 
-                    //.Where(x => x.BILLCODE == "CS10576766")//CS10556329
-                    //.Where(x=>x.TASKNUM == 1259210)
                     .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
-                //log.Write("entity获取订单结束");
-                //DateTime TIEM = new DateTime();
-                //DateTime TIEM2 = new DateTime();
-                //DateTimeFormatInfo format = new DateTimeFormatInfo();
-                //format.ShortDatePattern = "yyyy-MM-dd";
-                //TIEM = Convert.ToDateTime("2019-03-21", format);
-                //TIEM2 = Convert.ToDateTime("2019-03-22", format);
-
-                //var query = (from item in entity.T_UN_TASK_H
-                //             where item.PACKAGEMACHINE == packageNo && item.ORDERDATE >= TIEM && item.ORDERDATE <= TIEM2 && item.BILLCODE == "CS10384689"
-                //             orderby item.SORTNUM
-                //             select item).ToList();
-
+              
 
                 query1 = entity.T_WMS_ITEM.Select(x => x).ToList();
                 //查询ptid值
                 ptid = entity.T_PACKAGE_TASK.Count() > 0 ? entity.T_PACKAGE_TASK.Max(x => x.PTID) + 1 : 1;
+                //最大包数
                 allpackagenum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.ALLPACKAGESEQ).Value : 0;
+                //任务号
+                temptask = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.PACKTASKNUM).Value : 0;
+
+                List<T_WMS_ITEM> templist = ItemService.GetItemByCode();
+                T_WMS_ITEM tempItem = new T_WMS_ITEM();
                 if (query != null)
                 {
                     int i = 0;
@@ -77,8 +65,6 @@ namespace InBound.Business
                         int pcount = 0;
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
                         //当期订单明细
-                        //var query2 = (from item2 in entity.T_UN_POKE_H where item2.BILLCODE == v.BILLCODE orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM select item2).ToList();
-
                         var query2 = (from item2 in entity.V_PRODUCE_PACKAGEINFO
                                       where item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
                                       orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM, item2.SEQ
@@ -92,12 +78,20 @@ namespace InBound.Business
                                 pcount = pcount + 1;
                                 T_PACKAGE_TASK temp = new T_PACKAGE_TASK();
                                 temp.CIGARETTECODE = v2.CIGARETTECODE;
-                                T_WMS_ITEM tempItem = ItemService.GetItemByCode(v2.CIGARETTECODE);
+                                tempItem = templist.Where(x => x.ITEMNO == v2.CIGARETTECODE).FirstOrDefault();
                                 temp.CIGARETTENAME = tempItem.ITEMNAME;
                                 temp.CIGHIGH = tempItem.IHEIGHT;
-                                temp.CIGWIDTH = tempItem.IWIDTH;
-                                temp.CIGWIDTH = tempItem.IWIDTH;
-                                temp.CIGLENGTH = tempItem.ILENGTH;
+                                if (tempItem.CDTYPE ==1)//标记为转向的品牌 长宽对换
+                                {
+                                    temp.CIGWIDTH = tempItem.ILENGTH;
+                                    temp.CIGLENGTH = tempItem.IWIDTH;
+                                }
+                                else
+                                {
+                                    temp.CIGWIDTH = tempItem.IWIDTH;
+                                    temp.CIGLENGTH = tempItem.ILENGTH;
+                                }
+                                
                                 temp.BILLCODE = v2.BILLCODE;
                                 temp.SORTNUM = v2.TASKNUM;
                                 temp.CIGNUM = allCount;
@@ -127,25 +121,32 @@ namespace InBound.Business
                             //task.AddRange(task);
                             //log.Write("计算完成");
                             decimal orderpackageqty = task.GroupBy(x => x.PACKAGESEQ ?? 0).Count();
-                            decimal tempseq = 0;//上一个包号
-                            decimal temptask = 0;//任务号
+                            decimal tempseq = 0;//上一个包号 
+                             
                             foreach (var item in task.OrderBy(x => x.ALLPACKAGESEQ).ThenBy(x => x.CIGTYPE).ThenBy(x => x.CIGSEQ).ToList())
                             {
                                 T_PACKAGE_TASK ts = new T_PACKAGE_TASK();
                                 DataCopy.CopyToT(item, ts);
                                 ts.PTID = ptid;
-                                if (tempseq != ts.ALLPACKAGESEQ)
+                                if (tempseq != ts.ALLPACKAGESEQ)//包号与上一个不等时  任务号+1
                                 {
-                                    temptask = Convert.ToDecimal(cmd.ExecuteScalar().ToString());
+                                    temptask = temptask + 1;
+                                }
+                                tempItem = templist.Where(x => x.ITEMNO == item.CIGARETTECODE).FirstOrDefault();
+                                if (tempItem.CDTYPE == 1)//标记为转向的品牌 长宽重新赋值
+                                {
+                                    ts.CIGWIDTH = tempItem.IWIDTH;
+                                    ts.CIGLENGTH = tempItem.ILENGTH;
                                 }
                                 ts.PACKTASKNUM = temptask;
                                 ts.STATE = 10;
                                 ts.NORMAILSTATE = 10;
                                 ts.ORDERPACKAGEQTY = orderpackageqty;
                                 ts.PACKAGEQTY = task.Where(x => x.ALLPACKAGESEQ == ts.ALLPACKAGESEQ).Sum(X => X.NORMALQTY);
-                                tempseq = ts.ALLPACKAGESEQ ?? 0;
+                                
                                 entity.T_PACKAGE_TASK.AddObject(ts);
 
+                                tempseq = ts.ALLPACKAGESEQ ?? 0;
                                 ptid++;
                                 //log.Write("entity.Add");
                             }
@@ -165,7 +166,7 @@ namespace InBound.Business
                     }
                     entity.SaveChanges();
                 }
-                entityConnection.Close();
+                //entityConnection.Close();
                 var date = data.Max(x => x.ORDERDATE);
                 var seqtemp = entity.T_PRODUCE_SYNSEQ.Where(x => x.SYNSEQ == synseq && x.PACKAGENO == packageNo && x.ORDERDATE == date).FirstOrDefault();
                 seqtemp.PMSTATE = "2";
@@ -175,13 +176,14 @@ namespace InBound.Business
                 query = null;
             }
         }
+        decimal temptask;
         List<T_WMS_ITEM> query1;
         decimal ptid;
         int packageWidth = 540;//宽
         int packageLenghth = 366; //长
         int packageHeight = 130;//高
         int jx = 4;//间隙
-        int lc = 10;//长度差  不允许短烟上放置长烟
+        int lc = 20;//长度差  不允许短烟上放置长烟
         decimal deviation = 3;//高度误差
         decimal Widthdeviation = 3;//宽度误差
 
@@ -506,7 +508,7 @@ namespace InBound.Business
         decimal packageseq = 0;
         decimal unpackageseq = 0;
         /// <summary>
-        /// 
+        /// 常规烟与异型烟同时分配
         /// </summary>
         /// <param name="task"></param>
         /// <param name="Normaldata"></param>
@@ -1568,41 +1570,45 @@ namespace InBound.Business
             //第一种情况 - 两条宽度相同，工位的限宽 - 第一条烟的坐标位置
             //第二种情况 - 第一条烟宽度长，将第一条烟的宽度减去两条烟宽度的一半，得出双抓的中心点偏移量，移到右边后，加上偏移量
             //第三种情况 - 第二条烟宽度长，将第二条烟的宽度减去两条烟宽度的一半，得出双抓的中心点偏移量，移到右边后，减去偏移量
-            decimal LastX = 0;
-            decimal LastCigseq = 0;
-            decimal LastWidth = 0;
-            foreach (var item in datalist)
+            //--若是3 4 7 8包装机，不做反转坐标
+            if (datalist.Where(x => x.PACKAGENO == 1 || x.PACKAGENO == 2 || x.PACKAGENO == 5 || x.PACKAGENO == 6).Count() > 0)
             {
-                if (item.DOUBLETAKE == "0")
+                decimal LastX = 0;
+                decimal LastCigseq = 0;
+                decimal LastWidth = 0;
+                foreach (var item in datalist)
                 {
-                    item.CIGWIDTHX = packageWidth - item.CIGWIDTHX -jx;
-                    LastX = 0;
-                    LastWidth = 0;
-                    LastCigseq = 0;
-                }
-                else
-                {
-                    if (LastX == item.CIGWIDTHX)
+                    if (item.DOUBLETAKE == "0")
                     {
-                        if (LastWidth == item.CIGWIDTH)
-                        {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX -jx;
-                        }
-                        else if (LastWidth > item.CIGWIDTH)
-                        {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX + (LastWidth - item.CIGWIDTH) -jx;
-                        }
-                        else if (LastWidth < item.CIGWIDTH)
-                        {
-                            item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - (item.CIGWIDTH - LastWidth) - jx;
-                        }
-                        datalist.Where(x => x.CIGSEQ == LastCigseq).FirstOrDefault().CIGWIDTHX = item.CIGWIDTHX;
+                        item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - jx;
+                        LastX = 0;
+                        LastWidth = 0;
+                        LastCigseq = 0;
                     }
                     else
                     {
-                        LastCigseq = item.CIGSEQ ?? 0;
-                        LastWidth = item.CIGWIDTH ?? 0;
-                        LastX = item.CIGWIDTHX ?? 0;
+                        if (LastX == item.CIGWIDTHX)
+                        {
+                            if (LastWidth == item.CIGWIDTH)
+                            {
+                                item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - jx;
+                            }
+                            else if (LastWidth > item.CIGWIDTH)
+                            {
+                                item.CIGWIDTHX = packageWidth - item.CIGWIDTHX + (LastWidth - item.CIGWIDTH) - jx;
+                            }
+                            else if (LastWidth < item.CIGWIDTH)
+                            {
+                                item.CIGWIDTHX = packageWidth - item.CIGWIDTHX - (item.CIGWIDTH - LastWidth) - jx;
+                            }
+                            datalist.Where(x => x.CIGSEQ == LastCigseq).FirstOrDefault().CIGWIDTHX = item.CIGWIDTHX;
+                        }
+                        else
+                        {
+                            LastCigseq = item.CIGSEQ ?? 0;
+                            LastWidth = item.CIGWIDTH ?? 0;
+                            LastX = item.CIGWIDTHX ?? 0;
+                        }
                     }
                 }
             }
@@ -1628,7 +1634,7 @@ namespace InBound.Business
                 _TASKS.Add(_task);
                 _task = null;
             }
-            //异型烟现有的整体包序
+            //异型烟现有的整体包序  定义每个包序号的初始常规烟数0
             foreach (var item in task.GroupBy(x => x.ALLPACKAGESEQ).Select(x => x.Key ?? 0).ToList())
             {
                 decimal[] de = new decimal[2];
@@ -1647,8 +1653,8 @@ namespace InBound.Business
             decimal AllUnnormalCount = task.GroupBy(x => x.ALLPACKAGESEQ).Count();
             if (AllUnnormalCount != 0)//存在异型烟
             {
-                //排序异型烟包
-                var sortdata = task.GroupBy(x => new { x.ALLPACKAGESEQ, x.PACKAGESEQ }).Select(x => new { allpackageq = x.Key.ALLPACKAGESEQ, packageq = x.Key.PACKAGESEQ, yy = x.Max(t => t.CIGHIGHY), ww = x.Sum(t => t.CIGWIDTH), qty = x.Sum(t => t.NORMALQTY) }).OrderBy(x => x.qty).ThenBy(x => x.yy).ThenBy(x => x.yy).ThenBy(x => x.ww);
+                //排序异型烟包：按包的总高度排序数量、单包高度、总条烟数升序排序
+                var sortdata = task.GroupBy(x => new { x.ALLPACKAGESEQ, x.PACKAGESEQ }).Select(x => new { allpackageq = x.Key.ALLPACKAGESEQ, packageq = x.Key.PACKAGESEQ, yy = x.Max(t => t.CIGHIGHY), ww = x.Sum(t => t.CIGWIDTH), qty = x.Sum(t => t.NORMALQTY) }).OrderBy(x => x.qty).ThenBy(x => x.yy).ThenBy(x => x.ww);
                 //找出只有一层的异型烟包(6条常规烟宽度*0.8)
                 var oneleveldata = sortdata.Where(x => x.ww <= (normalwidth * NorCount));//* (decimal)0.8));
                 //如果常规烟有余数，总层数减 

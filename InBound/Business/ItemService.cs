@@ -16,6 +16,14 @@ namespace InBound.Business
           }
       }
 
+      public static List<T_WMS_ITEM> GetItemByCode()
+      {
+          using (Entities entity = new Entities())
+          {
+              var query = (from item in entity.T_WMS_ITEM where item.ITEMNO.Length == 7 select item).ToList();
+              return query;
+          }
+      }
       public static T_WMS_ITEM GetItemByCode(String code)
       {
           using (Entities entity = new Entities())

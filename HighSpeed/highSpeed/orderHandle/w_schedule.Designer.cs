@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_Reschedule = new System.Windows.Forms.Button();
             this.btn_sixschedule = new System.Windows.Forms.Button();
             this.btn_all = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -47,7 +48,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.btn_Reschedule = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -68,6 +68,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1118, 47);
             this.panel1.TabIndex = 0;
+            // 
+            // btn_Reschedule
+            // 
+            this.btn_Reschedule.Location = new System.Drawing.Point(827, 11);
+            this.btn_Reschedule.Name = "btn_Reschedule";
+            this.btn_Reschedule.Size = new System.Drawing.Size(124, 23);
+            this.btn_Reschedule.TabIndex = 16;
+            this.btn_Reschedule.Text = "按预计划排程";
+            this.btn_Reschedule.UseVisualStyleBackColor = true;
+            this.btn_Reschedule.Visible = false;
+            this.btn_Reschedule.Click += new System.EventHandler(this.btn_Reschedule_Click);
             // 
             // btn_sixschedule
             // 
@@ -235,16 +246,6 @@
             this.progressBar1.Size = new System.Drawing.Size(741, 23);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
-            // 
-            // btn_Reschedule
-            // 
-            this.btn_Reschedule.Location = new System.Drawing.Point(827, 11);
-            this.btn_Reschedule.Name = "btn_Reschedule";
-            this.btn_Reschedule.Size = new System.Drawing.Size(124, 23);
-            this.btn_Reschedule.TabIndex = 16;
-            this.btn_Reschedule.Text = "按预计划排程";
-            this.btn_Reschedule.UseVisualStyleBackColor = true;
-            this.btn_Reschedule.Click += new System.EventHandler(this.btn_Reschedule_Click);
             // 
             // win_schedule
             // 
