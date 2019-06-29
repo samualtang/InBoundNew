@@ -122,10 +122,10 @@ namespace highSpeed.orderHandle
         void PackageCallback()
         {
             var date1 = System.DateTime.Now;
-            foreach (var item in ts.foreachdata())
+           foreach (var item in ts.foreachdata())
             {
-                ts.CallBackTBJ(item);
-            }
+                ts.CallBackTBJ2(item);
+            } 
             var date2 = System.DateTime.Now;
 
             MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");

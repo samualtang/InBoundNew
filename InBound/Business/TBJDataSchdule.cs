@@ -52,7 +52,7 @@ namespace InBound.Business
               //System.Data.Common.DbCommand cmd = storeConnection.CreateCommand();
               //cmd.CommandType = System.Data.CommandType.StoredProcedure;
               //cmd.CommandText = 
-           String sql=@"select t.billcode,
+           /*String sql=@"select t.billcode,
            t.regioncode,
            PACKTASKNUM,
            normalqty,
@@ -111,12 +111,87 @@ select distinct regioncode,PACKAGENO,billcode,  PACKTASKNUM from t_package_task
           on t.regioncode=d.regioncode and t.packageno=d.PACKAGENO and t.billcode=d.billcode
        where t.packageNo = "+packageno+@"
      and sortnum > "+maxSortnum+@"
+     order by sortnum, packtasknum, cigtype, cigseq, SYNSEQ";*/
+
+                String sql = @"select t.billcode,
+           t.regioncode,
+           PACKTASKNUM,
+           normalqty,
+           t.PACKAGESEQ,
+           CIGARETTECODE,
+           CIGARETTENAME,
+           CIGTYPE,
+           PACKAGEQTY,
+           ORDERDATE,
+           MIANBELT,
+           ORDERQTY,
+           ALLPACKAGESEQ,
+           SORTNUM,
+           synseq,var_orderPagNum,var_shaednum,var_ordercount,var_NormalTPagNum,
+      var_UnnormalTPagNum,pCount,var_UnionTPagNum
+      from t_package_task t 
+      
+      left join
+      (select  a.regioncode,a.PACKAGENO,a.billcode,var_orderPagNum,decode(var_shaednum,null,0,var_shaednum)var_shaednum,var_ordercount,
+      decode(var_NormalTPagNum,null,0,var_NormalTPagNum)var_NormalTPagNum,
+      decode(var_UnnormalTPagNum,null,0,var_UnnormalTPagNum)var_UnnormalTPagNum,pCount,decode(var_UnionTPagNum,null,0,var_UnionTPagNum)var_UnionTPagNum 
+      from (select regioncode,PACKAGENO,billcode, max(PACKAGESEQ)var_orderPagNum 
+      from t_package_task group by regioncode,PACKAGENO,billcode) a 
+      
+      left join 
+      (select regioncode,PACKAGENO,billcode, sum(normalqty)var_shaednum from t_package_task
+          where CIGTYPE = '2' group by regioncode,PACKAGENO,billcode)b
+         on a.regioncode=b.regioncode and a.PACKAGENO=b.PACKAGENO and a.billcode=b.billcode
+         
+        left join 
+        ( select regioncode,count(distinct billcode)var_ordercount from t_package_task
+          group by regioncode)c 
+          on c.regioncode=a.regioncode   
+           left join (select regioncode,PACKAGENO,billcode, (select count(distinct packtasknum) 
+           from t_package_task where regioncode=aa.regioncode 
+           and packageno = " + packageno + @"
+           ) pCount from t_package_task aa     
+           group by regioncode,PACKAGENO,billcode)g
+          on a.regioncode=g.regioncode and a.PACKAGENO=g.PACKAGENO and a.billcode=g.billcode 
+           left join 
+          (select billcode,max(var_UnionTPagNum) var_UnionTPagNum,max(var_NORMALPACKAGENUM) var_NormalTPagNum
+,max(var_UNNORMALPACKAGENUM) var_UnnormalTPagNum from (
+(select billcode,count(*) as var_UnionTPagNum,0 as var_NORMALPACKAGENUM, 0 as var_UNNORMALPACKAGENUM from (
+select packtasknum,billcode,count(cigtype) countype from (
+select packtasknum,cigtype,billcode
+from t_package_task group by packtasknum,billcode,cigtype
+) group by packtasknum,billcode
+) where countype = 2   group by billcode) 
+union 
+(select billcode, 0 as var_UnionTPagNum ,count(*) as var_NORMALPACKAGENUM,0 as var_UNNORMALPACKAGENUM from (
+select packtasknum,billcode,cigtype
+from t_package_task where cigtype = '1' 
+and packtasknum not in (select packtasknum
+from t_package_task where cigtype = '2'  group by packtasknum,cigtype)
+group by packtasknum ,cigtype,billcode) group by billcode)
+union 
+(select billcode,0 as var_UnionTPagNum,0 as var_NORMALPACKAGENUM,count(*) as var_UNNORMALPACKAGENUM from (
+select packtasknum,billcode,cigtype
+from t_package_task where cigtype = '2' 
+and packtasknum not in (select packtasknum
+from t_package_task where cigtype = '1'  group by packtasknum,cigtype)
+group by packtasknum ,cigtype,billcode)  group by billcode)) 
+group by billcode) y
+          on a.billcode = y.billcode)d 
+          
+           on t.regioncode=d.regioncode and t.packageno=d.PACKAGENO and t.billcode=d.billcode
+       where t.packageNo = " + packageno + @"
+     and sortnum >  " + maxSortnum + @"
      order by sortnum, packtasknum, cigtype, cigseq, SYNSEQ";
          List<TBJModel> list=  en.ExecuteStoreQuery<TBJModel>(sql, null).ToList();
         var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO     orderby item.TASKNUM select item).ToList();
         int mCopunt = 0, cigseq = 0;
                 decimal temppackagenum = 0;
         V_PRODUCE_PACKAGEINFO firstTask = null;
+
+
+
+
         String tempbillcode = "";
 
 //        var sql_text = @"  insert into T_PACKAGE_CALLBACK(BILLCODE, ROUTEPACKAGENUM, ORDERPACKAGENUM, PACKAGESEQ, CIGARETTEQTY, SHAPEDNUM, CIGARETTECODE,
@@ -194,13 +269,21 @@ select distinct regioncode,PACKAGENO,billcode,  PACKTASKNUM from t_package_task
                 //firstTask.CONTACTADDRESS+"','" +firstTask.CUSTOMERNAME+"','"+ firstTask.CUSTOMERCODE+"','" +firstTask.URL+"',"+ firstTask.TOTALAMOUNT+",'"+  firstTask.CUSTTYPE+"'," +item.ALLPACKAGESEQ+"," +item.var_NormalTPagNum+"," 
                 //+item.var_UnnormalTPagNum+","+ item.var_UnionTPagNum+","+
                 // item.SORTNUM+","+ (maxCigNum++)+","+ item.synseq +" from dual union";
-                 sql_text = sql_text.Append(" select '").Append(item.billcode).Append("',").Append(item.pCount).Append(",").Append(item.var_orderPagNum).Append(",").Append(item.PACKAGESEQ).Append(",").Append(
-               1).Append(",").Append(item.var_shaednum).Append(",'").Append(item.CIGARETTECODE).Append("','").Append(item.CIGARETTENAME).Append("','").Append(item.CIGTYPE).Append("','").Append(item.regioncode).Append("',").Append(
-                item.PACKAGEQTY).Append(",to_date('").Append(item.ORDERDATE.ToString("yyyy-MM-dd")).Append("','yyyy-mm-dd'),'").Append(item.MIANBELT.ToString()).Append("',").Append(item.var_ordercount).Append(",").Append(firstTask.SORTSEQ).Append(",").Append(1).Append(",").Append(packageno).Append(","
-               ).Append(packageno).Append(",").Append(item.ORDERQTY).Append(",'").Append(
-              firstTask.CONTACTADDRESS).Append("','").Append(firstTask.CUSTOMERNAME).Append("','").Append(firstTask.CUSTOMERCODE).Append("','").Append(firstTask.URL).Append("',").Append(firstTask.TOTALAMOUNT).Append(",'").Append(firstTask.CUSTTYPE).Append("',").Append(item.ALLPACKAGESEQ).Append(",").Append(item.var_NormalTPagNum).Append(","
-              ).Append(item.var_UnnormalTPagNum).Append(",").Append(item.var_UnionTPagNum).Append(",").Append(
-               item.SORTNUM).Append(",").Append(maxCigNum++).Append(",").Append(item.synseq).Append(" from dual union");
+                 sql_text = sql_text.Append(" select '").Append(item.billcode).Append("',").Append(item.pCount)
+                     .Append(",").Append(item.var_orderPagNum).Append(",").Append(item.PACKAGESEQ).Append(",")
+                     .Append(1).Append(",").Append(item.var_shaednum).Append(",'").Append(item.CIGARETTECODE).Append("','")
+                     .Append(item.CIGARETTENAME).Append("','").Append(item.CIGTYPE).Append("','").Append(item.regioncode)
+                     .Append("',").Append(item.PACKAGEQTY).Append(",to_date('").Append(item.ORDERDATE.ToString("yyyy-MM-dd"))
+                     .Append("','yyyy-mm-dd'),'").Append(item.MIANBELT.ToString()).Append("',").Append(item.var_ordercount)
+                     .Append(",").Append(firstTask.SORTSEQ).Append(",")
+                     .Append(cigseq)
+                     .Append(",").Append(packageno).Append(",").Append(packageno).Append(",").Append(item.ORDERQTY).Append(",'")
+                     .Append(firstTask.CONTACTADDRESS).Append("','").Append(firstTask.CUSTOMERNAME).Append("','")
+                     .Append(firstTask.CUSTOMERCODE).Append("','").Append(firstTask.URL).Append("',").Append(firstTask.TOTALAMOUNT)
+                     .Append(",'").Append(firstTask.CUSTTYPE).Append("',").Append(item.ALLPACKAGESEQ).Append(",")
+                     .Append(item.var_NormalTPagNum).Append(",").Append(item.var_UnnormalTPagNum).Append(",")
+                     .Append(item.var_UnionTPagNum).Append(",").Append(item.SORTNUM).Append(",").Append(maxCigNum++)
+                     .Append(",").Append(item.synseq).Append(" from dual union");
                  if (mCopunt >= 200)
                  {
 

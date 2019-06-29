@@ -796,6 +796,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\Oracle.ManagedDataAccess.dll" />
     <Content Include="Resources\查找.jpg" />
     <None Include="Resources\btnCancel.bmp" />
     <None Include="Resources\bg1.JPG" />

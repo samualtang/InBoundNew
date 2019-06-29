@@ -49,6 +49,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>lib\opcrcw.da.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -105,6 +109,7 @@
     <Compile Include="Business\TaskService.cs" />
     <Compile Include="Business\AtsCellOutService.cs" />
     <Compile Include="Business\ScheduleService.cs" />
+    <Compile Include="Model\TBJModel.cs" />
     <Compile Include="Model\TroughNumList.cs" />
     <Compile Include="Business\UnionCacheServer.cs" />
     <Compile Include="Business\UnionTaskInfoService.cs" />
@@ -172,6 +177,7 @@
     <Content Include="lib\Encrypt.dll" />
     <Content Include="lib\opcrcw.comn.dll" />
     <Content Include="lib\opcrcw.da.dll" />
+    <Content Include="lib\Oracle.ManagedDataAccess.dll" />
     <Content Include="lib\System.Data.OracleClient.dll" />
   </ItemGroup>
   <ItemGroup>

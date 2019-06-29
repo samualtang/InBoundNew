@@ -52,7 +52,7 @@ namespace InBound.Business
                 //最大包数
                 allpackagenum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.ALLPACKAGESEQ).Value : 0;
                 //任务号
-                temptask = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.PACKTASKNUM).Value : 0;
+                temptask = entity.T_PACKAGE_TASK.Count() > 0 ? (int)entity.T_PACKAGE_TASK.Max(x => x.PACKTASKNUM).Value : 0;//( DateTime.Now.Ticks - 621355968000000000 )/10000; 
 
                 List<T_WMS_ITEM> templist = ItemService.GetItemByCode();
                 T_WMS_ITEM tempItem = new T_WMS_ITEM();
@@ -83,7 +83,7 @@ namespace InBound.Business
                                 temp.CIGHIGH = tempItem.IHEIGHT;
                                 if (tempItem.CDTYPE ==1)//标记为转向的品牌 长宽对换
                                 {
-                                    temp.CIGWIDTH = tempItem.ILENGTH;
+                                    temp.CIGWIDTH = tempItem.ILENGTH + HFWidth;
                                     temp.CIGLENGTH = tempItem.IWIDTH;
                                 }
                                 else
@@ -135,8 +135,8 @@ namespace InBound.Business
                                 tempItem = templist.Where(x => x.ITEMNO == item.CIGARETTECODE).FirstOrDefault();
                                 if (tempItem.CDTYPE == 1)//标记为转向的品牌 长宽重新赋值
                                 {
-                                    ts.CIGWIDTH = tempItem.IWIDTH;
-                                    ts.CIGLENGTH = tempItem.ILENGTH;
+                                    ts.CIGWIDTH = tempItem.ILENGTH;
+                                    ts.CIGLENGTH = tempItem.IWIDTH;
                                 }
                                 ts.PACKTASKNUM = temptask;
                                 ts.STATE = 10;
@@ -186,7 +186,7 @@ namespace InBound.Business
         int lc = 20;//长度差  不允许短烟上放置长烟
         decimal deviation = 3;//高度误差
         decimal Widthdeviation = 3;//宽度误差
-
+        decimal HFWidth = 60;//共60  两边30
         /// <summary>
         /// 常规烟高
         /// </summary>
@@ -1985,7 +1985,7 @@ namespace InBound.Business
                 }
                 else//纯异型烟
                 {
-                    decimal packageseq = 1;
+                    decimal packageseq = 0;
                     decimal tempallpackageseq = 1;
                     decimal cigseq = 1;
                     var datalist = task.Where(x => x.STATE == 10).ToList();
