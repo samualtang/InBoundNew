@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using highSpeed.PubFunc;
 using InBound.Business;
+using System.Threading;
 
 namespace highSpeed.orderHandle
 {
@@ -119,19 +120,96 @@ namespace highSpeed.orderHandle
             InBound.WriteLog.GetLog().Write("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
             updateControl(orderdata, true, true);
         }
+        DateTime date1 = System.DateTime.Now;
         void PackageCallback()
         {
-            var date1 = System.DateTime.Now;
-           foreach (var item in ts.foreachdata())
+            paclist.Clear();
+             date1 = System.DateTime.Now;
+           //foreach (var item in ts.foreachdata())
+           // {
+           //    Thread  thread=new Thread(()=>
+           //     ts.CallBackTBJ2(item));
+           //    thread.Start();
+           // } 
+            Thread thread = new Thread(() =>
             {
-                ts.CallBackTBJ2(item);
-            } 
-            var date2 = System.DateTime.Now;
+                TBJDataSchdule ts = new TBJDataSchdule();
+                ts.CallBackTBJ2(1);
+                finished(1);
+            });
+            thread.Start();
+            Thread thread2 = new Thread(() =>
+            {
+                TBJDataSchdule ts1 = new TBJDataSchdule();
+                ts1.CallBackTBJ2(2);
+                finished(2);
+            });
+            thread2.Start();
+            Thread thread3 = new Thread(() =>
+            {
+                TBJDataSchdule ts2 = new TBJDataSchdule();
+                ts2.CallBackTBJ2(3);
+                finished(3);
+            });
+            thread3.Start();
+            Thread thread4 = new Thread(() =>
+            {
+                TBJDataSchdule ts4 = new TBJDataSchdule();
+                ts4.CallBackTBJ2(4);
+                finished(4);
+            });
+            thread4.Start();
+            Thread thread5 = new Thread(() =>
+            {
+                TBJDataSchdule ts5 = new TBJDataSchdule();
+                ts5.CallBackTBJ2(5);
+                finished(5);
+            });
+            thread5.Start();
+            Thread thread6 = new Thread(() =>
+              {
+                  TBJDataSchdule ts6 = new TBJDataSchdule();
+                  ts6.CallBackTBJ2(6);
+                  finished(6);
+              });
+            thread6.Start();
+            Thread thread7 = new Thread(() =>
+              {
+                  TBJDataSchdule ts7 = new TBJDataSchdule();
+                  ts7.CallBackTBJ2(7);
+                 finished(7);});
+            thread7.Start();
+            Thread thread8 = new Thread(() =>
+              {
+                  TBJDataSchdule ts8 = new TBJDataSchdule();
+                  ts8.CallBackTBJ2(8);
+                  finished(8);
+              });
+            thread8.Start();
+           // var date2 = System.DateTime.Now;
 
-            MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
-            InBound.WriteLog.GetLog().Write("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
-            updateControl(button_TBJ, true);
-        } 
+           
+        }
+
+        List<int> paclist = new List<int>();
+        public void finished(int pac)
+        {
+            paclist.Add(pac);
+
+            if (paclist.Count==8)
+            {
+                var date2 = System.DateTime.Now;
+                MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+                InBound.WriteLog.GetLog().Write("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+                updateControl(button_TBJ, true);
+            }
+            else
+            {
+       
+            }
+        }
+
+
         PackageService ps = new PackageService();
         TBJDataSchdule ts = new TBJDataSchdule();
         delegate void HandlePackageSort();

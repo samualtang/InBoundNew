@@ -7,11 +7,12 @@ using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using System.Data.Common;
 using InBound.Model;
+using Oracle.DataAccess.Client;
 namespace InBound.Business
 {
     public class TBJDataSchdule
     {
-        public void CallBackTBJ2(decimal packageno)
+        public void CallBackTBJ(decimal packageno)
         {
             
             using (Entities en = new Entities())
@@ -112,7 +113,7 @@ select distinct regioncode,PACKAGENO,billcode,  PACKTASKNUM from t_package_task
        where t.packageNo = "+packageno+@"
      and sortnum > "+maxSortnum+@"
      order by sortnum, packtasknum, cigtype, cigseq, SYNSEQ";*/
-
+           
                 String sql = @"select t.billcode,
            t.regioncode,
            PACKTASKNUM,
@@ -184,7 +185,7 @@ group by billcode) y
      and sortnum >  " + maxSortnum + @"
      order by sortnum, packtasknum, cigtype, cigseq, SYNSEQ";
          List<TBJModel> list=  en.ExecuteStoreQuery<TBJModel>(sql, null).ToList();
-        var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO     orderby item.TASKNUM select item).ToList();
+        var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO  where item.EXPORT==packageno   orderby item.TASKNUM select item).ToList();
         int mCopunt = 0, cigseq = 0;
                 decimal temppackagenum = 0;
         V_PRODUCE_PACKAGEINFO firstTask = null;
@@ -205,62 +206,146 @@ group by billcode) y
         System.Data.EntityClient.EntityConnection entityConnection = null;
         System.Data.Common.DbConnection storeConnection = null;
         System.Data.Common.DbCommand cmd = null;
-         foreach (var item in list)
-         {
-             //if (tempbillcode == "")
-             //{
-             //    tempbillcode = item.billcode;
-             //}
-             //else if (tempbillcode != item.billcode)
-             //{
-             //    needInfo = needInfo.Where(x => x.BILLCODE != tempbillcode).ToList();
-             //    tempbillcode = item.billcode;
-             //}
-              firstTask = needInfo.Where(a => a.BILLCODE == item.billcode).FirstOrDefault();
-            
-             for (int i = 1; i <= item.normalqty; i++)//
-             {
-                 if (temppackagenum == 0 || temppackagenum != item.PACKTASKNUM)
-                 { temppackagenum = item.PACKTASKNUM; cigseq = 0; }
-                 
-                 cigseq++;
-                 mCopunt++;
 
 
-                 //T_PACKAGE_CALLBACK tb = new T_PACKAGE_CALLBACK();
-                 //tb.BILLCODE = item.billcode;//订单
-                 //tb.ROUTEPACKAGENUM = item.pCount;//车组总包数
-                 //tb.ORDERPACKAGENUM = item.var_orderPagNum;//订单总包数
-                 //tb.PACKAGESEQ = item.PACKAGESEQ;//订单内包序
-                 //tb.CIGARETTEQTY = 1;//品牌条烟数
-                 //tb.SHAPEDNUM = item.var_shaednum;//订单异型烟数量
-                 //tb.CIGARETTECODE = item.CIGARETTECODE;//卷烟编码
-                 //tb.CIGARETTENAME = item.CIGARETTENAME;//卷烟名称
-                 //tb.CIGARETTETYPE = item.CIGTYPE;//卷烟类型
-                 //tb.ROUTECODE = item.regioncode;//车组编号
-                 //tb.PACKAGEQTY = item.PACKAGEQTY;//包内条烟数量
-                 //tb.ORDERDATE = item.ORDERDATE;//订单日期
-                 //tb.LINECODE = item.MIANBELT.ToString();//线路编号
-                 //tb.ORDERCOUNT = item.var_ordercount;  //车组内订单数
-                 //tb.ORDERSEQ = firstTask.SORTSEQ;//订单户序 firstTask.SORTSEQ 
-                 ////tb.CIGSEQ = cigseq++;//条烟顺序
-                 //tb.EXPORT = packageno;//出口号（包装机号）
-                 //tb.PACKAGENUM = packageno;// 包装机号    
-                 //tb.ORDERQUANTITY = item.ORDERQTY;//订单总数
-                 //tb.ADDRESS = firstTask.CONTACTADDRESS;//订单地址
-                 //tb.CUSTOMERNAME = firstTask.CUSTOMERNAME;//客户名称
-                 //tb.CUSTOMERNO = firstTask.CUSTOMERCODE;//客户编码                          
-                 //tb.ORDERURL = firstTask.URL;//客户URL   
-                 //tb.ORDERAMOUNT = firstTask.TOTALAMOUNT;//订单总金额；
-                 //tb.PAYFLAG = firstTask.CUSTTYPE;//结算状态  
-                 //tb.SEQ = item.ALLPACKAGESEQ;//整齐包序
-                 //tb.UNIONTASKPACKAGENUM = item.var_UnionTPagNum;//合包总包数  
-                 //tb.NORMALPACKAGENUM = item.var_NormalTPagNum;//常规烟总包数
-                 //tb.UNNORMALPACKAGENUM = item.var_UnnormalTPagNum;//异型烟总包数  
-                 //tb.SORTNUM = item.SORTNUM;//流水号
-                 //tb.CIGNUM = maxCigNum++;// 每台包装机从1 增长 
-                 //tb.SYNSEQ = item.synseq;//批次号   
-                 //en.T_PACKAGE_CALLBACK.AddObject(tb);
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("BILLCODE", typeof(string));
+        //dt.Columns.Add("ROUTEPACKAGENUM", typeof(int));
+        //dt.Columns.Add("ORDERPACKAGENUM",typeof(int));
+        //dt.Columns.Add("PACKAGESEQ", typeof(int));
+        //dt.Columns.Add("CIGARETTEQTY", typeof(int));
+        //dt.Columns.Add("SHAPEDNUM", typeof(int));
+        //dt.Columns.Add("CIGARETTECODE", typeof(string));
+        //dt.Columns.Add("CIGARETTENAME", typeof(string));
+        //dt.Columns.Add("CIGARETTETYPE", typeof(string));
+        //dt.Columns.Add("ROUTECODE", typeof(string));
+        //dt.Columns.Add("PACKAGEQTY", typeof(int));
+        //dt.Columns.Add("ORDERDATE",typeof(DateTime));
+        //dt.Columns.Add("LINECODE", typeof(string));
+        //dt.Columns.Add("ORDERCOUNT", typeof(int));
+        //dt.Columns.Add("ORDERSEQ", typeof(int));
+        //dt.Columns.Add("CIGSEQ", typeof(int));
+        //dt.Columns.Add("EXPORT", typeof(int));
+        //dt.Columns.Add("PACKAGENUM", typeof(int));
+        //dt.Columns.Add("ORDERQUANTITY", typeof(int));
+        //dt.Columns.Add("ADDRESS", typeof(string));
+        //dt.Columns.Add("CUSTOMERNAME", typeof(string));
+        //dt.Columns.Add("CUSTOMERNO",typeof(string));
+        //dt.Columns.Add("ORDERURL", typeof(string));
+        //dt.Columns.Add("ORDERAMOUNT",typeof(decimal));
+        //dt.Columns.Add("PAYFLAG", typeof(string));
+        //dt.Columns.Add("SEQ", typeof(int));
+        //dt.Columns.Add("NORMALPACKAGENUM", typeof(int));
+        //dt.Columns.Add("UNNORMALPACKAGENUM", typeof(int));
+        //dt.Columns.Add("UNIONTASKPACKAGENUM", typeof(int));
+        //dt.Columns.Add("SORTNUM", typeof(int));
+        //dt.Columns.Add("CIGNUM", typeof(int));
+        //dt.Columns.Add("SYNSEQ", typeof(int));
+        //OracleBulkCopy copy = new OracleBulkCopy("DATA SOURCE=czt-test;PASSWORD=hnzt123;PERSIST SECURITY INFO=True;USER ID=zoomtel", OracleBulkCopyOptions.Default);
+        //copy.BatchSize = 10000;
+        //copy.BulkCopyTimeout = 2000;
+        //copy.DestinationTableName = "t_package_callback";
+        TBJModel items = null;
+        for (var j = 0; j < list.Count;j++ )
+        {
+            items = list[j];
+            if (tempbillcode == "")
+            {
+                tempbillcode = items.billcode;
+            }
+            else if (tempbillcode != items.billcode)
+            {
+                needInfo = needInfo.Where(x => x.BILLCODE != tempbillcode).ToList();
+                tempbillcode = items.billcode;
+            }
+            firstTask = needInfo.Where(a => a.BILLCODE == items.billcode).FirstOrDefault();
+
+            for (int i = 1; i <= items.normalqty; i++)//
+            {
+                if (temppackagenum == 0 || temppackagenum != items.PACKTASKNUM)
+                { temppackagenum = items.PACKTASKNUM; cigseq = 0; }
+
+                cigseq++;
+                mCopunt++;
+
+                //DataRow dr = dt.NewRow();
+                //dr[0] = items.billcode;
+                //dr[1] = items.pCount;
+                //dr[2] = items.var_orderPagNum;
+                //dr[3] = items.PACKAGESEQ;
+                //dr[4] = 1;
+                //dr[5] = items.var_shaednum;
+                //dr[6] = items.CIGARETTECODE;
+                //dr[7] = items.CIGARETTENAME;
+                //dr[8] = items.CIGTYPE;
+                //dr[9] = items.regioncode;
+                //dr[10] = items.PACKAGEQTY;
+                //dr[11] = items.ORDERDATE;
+                //dr[12] = items.MIANBELT.ToString();
+                //dr[13] = items.var_ordercount;
+                //dr[14] = firstTask.SORTSEQ;
+                //dr[15] = cigseq;
+                //dr[16] = packageno;
+                //dr[17] = packageno;
+                //dr[18] = items.ORDERQTY;
+                //dr[19] = firstTask.CONTACTADDRESS;
+                //dr[20] = firstTask.CUSTOMERNAME;
+                //dr[21] = firstTask.CUSTOMERCODE;
+                //dr[22] = firstTask.URL;
+                //dr[23] = firstTask.TOTALAMOUNT;
+                //dr[24] = firstTask.CUSTTYPE;
+                //dr[25] = items.ALLPACKAGESEQ;
+                //dr[26] = items.var_UnionTPagNum;
+                //dr[27] = items.var_NormalTPagNum;
+                //dr[28] = items.var_UnnormalTPagNum;
+                //dr[29] = items.SORTNUM;
+                //dr[30] = maxCigNum++;
+                //dr[31] = items.synseq;
+                //dt.Rows.Add(dr);
+                //if (dt.Rows.Count >= 10000)
+                //{
+                //    // entityConnection = (System.Data.EntityClient.EntityConnection)en.Connection;
+                //    //entityConnection.Open();
+                //    copy.WriteToServer(dt);
+                //    //  entityConnection.Close();
+                //    dt.Rows.Clear();
+
+                //    GC.Collect();
+                //}
+                //T_PACKAGE_CALLBACK tb = new T_PACKAGE_CALLBACK();
+                //tb.BILLCODE = item.billcode;//订单
+                //tb.ROUTEPACKAGENUM = item.pCount;//车组总包数
+                //tb.ORDERPACKAGENUM = item.var_orderPagNum;//订单总包数
+                //tb.PACKAGESEQ = item.PACKAGESEQ;//订单内包序
+                //tb.CIGARETTEQTY = 1;//品牌条烟数
+                //tb.SHAPEDNUM = item.var_shaednum;//订单异型烟数量
+                //tb.CIGARETTECODE = item.CIGARETTECODE;//卷烟编码
+                //tb.CIGARETTENAME = item.CIGARETTENAME;//卷烟名称
+                //tb.CIGARETTETYPE = item.CIGTYPE;//卷烟类型
+                //tb.ROUTECODE = item.regioncode;//车组编号
+                //tb.PACKAGEQTY = item.PACKAGEQTY;//包内条烟数量
+                //tb.ORDERDATE = item.ORDERDATE;//订单日期
+                //tb.LINECODE = item.MIANBELT.ToString();//线路编号
+                //tb.ORDERCOUNT = item.var_ordercount;  //车组内订单数
+                //tb.ORDERSEQ = firstTask.SORTSEQ;//订单户序 firstTask.SORTSEQ 
+                ////tb.CIGSEQ = cigseq++;//条烟顺序
+                //tb.EXPORT = packageno;//出口号（包装机号）
+                //tb.PACKAGENUM = packageno;// 包装机号    
+                //tb.ORDERQUANTITY = item.ORDERQTY;//订单总数
+                //tb.ADDRESS = firstTask.CONTACTADDRESS;//订单地址
+                //tb.CUSTOMERNAME = firstTask.CUSTOMERNAME;//客户名称
+                //tb.CUSTOMERNO = firstTask.CUSTOMERCODE;//客户编码                          
+                //tb.ORDERURL = firstTask.URL;//客户URL   
+                //tb.ORDERAMOUNT = firstTask.TOTALAMOUNT;//订单总金额；
+                //tb.PAYFLAG = firstTask.CUSTTYPE;//结算状态  
+                //tb.SEQ = item.ALLPACKAGESEQ;//整齐包序
+                //tb.UNIONTASKPACKAGENUM = item.var_UnionTPagNum;//合包总包数  
+                //tb.NORMALPACKAGENUM = item.var_NormalTPagNum;//常规烟总包数
+                //tb.UNNORMALPACKAGENUM = item.var_UnnormalTPagNum;//异型烟总包数  
+                //tb.SORTNUM = item.SORTNUM;//流水号
+                //tb.CIGNUM = maxCigNum++;// 每台包装机从1 增长 
+                //tb.SYNSEQ = item.synseq;//批次号   
+                //en.T_PACKAGE_CALLBACK.AddObject(tb);
 
                 // sql_text=sql_text +" select '" + item.billcode +"',"+ item.pCount+","+ item.var_orderPagNum+"," +item.PACKAGESEQ+ ","+
                 // 1+"," + item.var_shaednum+",'" + item.CIGARETTECODE+"','"+ item.CIGARETTENAME+"','"+ item.CIGTYPE+"','"+ item.regioncode+"',"+
@@ -269,52 +354,52 @@ group by billcode) y
                 //firstTask.CONTACTADDRESS+"','" +firstTask.CUSTOMERNAME+"','"+ firstTask.CUSTOMERCODE+"','" +firstTask.URL+"',"+ firstTask.TOTALAMOUNT+",'"+  firstTask.CUSTTYPE+"'," +item.ALLPACKAGESEQ+"," +item.var_NormalTPagNum+"," 
                 //+item.var_UnnormalTPagNum+","+ item.var_UnionTPagNum+","+
                 // item.SORTNUM+","+ (maxCigNum++)+","+ item.synseq +" from dual union";
-                 sql_text = sql_text.Append(" select '").Append(item.billcode).Append("',").Append(item.pCount)
-                     .Append(",").Append(item.var_orderPagNum).Append(",").Append(item.PACKAGESEQ).Append(",")
-                     .Append(1).Append(",").Append(item.var_shaednum).Append(",'").Append(item.CIGARETTECODE).Append("','")
-                     .Append(item.CIGARETTENAME).Append("','").Append(item.CIGTYPE).Append("','").Append(item.regioncode)
-                     .Append("',").Append(item.PACKAGEQTY).Append(",to_date('").Append(item.ORDERDATE.ToString("yyyy-MM-dd"))
-                     .Append("','yyyy-mm-dd'),'").Append(item.MIANBELT.ToString()).Append("',").Append(item.var_ordercount)
-                     .Append(",").Append(firstTask.SORTSEQ).Append(",")
-                     .Append(cigseq)
-                     .Append(",").Append(packageno).Append(",").Append(packageno).Append(",").Append(item.ORDERQTY).Append(",'")
-                     .Append(firstTask.CONTACTADDRESS).Append("','").Append(firstTask.CUSTOMERNAME).Append("','")
-                     .Append(firstTask.CUSTOMERCODE).Append("','").Append(firstTask.URL).Append("',").Append(firstTask.TOTALAMOUNT)
-                     .Append(",'").Append(firstTask.CUSTTYPE).Append("',").Append(item.ALLPACKAGESEQ).Append(",")
-                     .Append(item.var_NormalTPagNum).Append(",").Append(item.var_UnnormalTPagNum).Append(",")
-                     .Append(item.var_UnionTPagNum).Append(",").Append(item.SORTNUM).Append(",").Append(maxCigNum++)
-                     .Append(",").Append(item.synseq).Append(" from dual union");
-                 if (mCopunt >= 200)
-                 {
+                sql_text = sql_text.Append(" select '").Append(items.billcode).Append("',").Append(items.pCount)
+                      .Append(",").Append(items.var_orderPagNum).Append(",").Append(items.PACKAGESEQ).Append(",")
+                      .Append(1).Append(",").Append(items.var_shaednum).Append(",'").Append(items.CIGARETTECODE).Append("','")
+                      .Append(items.CIGARETTENAME).Append("','").Append(items.CIGTYPE).Append("','").Append(items.regioncode)
+                      .Append("',").Append(items.PACKAGEQTY).Append(",to_date('").Append(items.ORDERDATE.ToString("yyyy-MM-dd"))
+                      .Append("','yyyy-mm-dd'),'").Append(items.MIANBELT.ToString()).Append("',").Append(items.var_ordercount)
+                      .Append(",").Append(firstTask.SORTSEQ).Append(",")
+                      .Append(cigseq)
+                      .Append(",").Append(packageno).Append(",").Append(packageno).Append(",").Append(items.ORDERQTY).Append(",'")
+                      .Append(firstTask.CONTACTADDRESS).Append("','").Append(firstTask.CUSTOMERNAME).Append("','")
+                      .Append(firstTask.CUSTOMERCODE).Append("','").Append(firstTask.URL).Append("',").Append(firstTask.TOTALAMOUNT)
+                      .Append(",'").Append(firstTask.CUSTTYPE).Append("',").Append(items.ALLPACKAGESEQ).Append(",")
+                      .Append(items.var_NormalTPagNum).Append(",").Append(items.var_UnnormalTPagNum).Append(",")
+                      .Append(items.var_UnionTPagNum).Append(",").Append(items.SORTNUM).Append(",").Append(maxCigNum++)
+                      .Append(",").Append(items.synseq).Append(" from dual union");
+                  if (mCopunt >= 200)
+                  {
 
-                     entityConnection = (System.Data.EntityClient.EntityConnection)en.Connection;
-                     entityConnection.Open();
-                     storeConnection = entityConnection.StoreConnection;
-                     cmd = storeConnection.CreateCommand();
-                     cmd.CommandType = System.Data.CommandType.Text;
-                     cmd.CommandText = sql_text.ToString().Substring(0, sql_text.Length - 5);
-                     cmd.ExecuteNonQuery();
-                     cmd.Dispose();
-                     cmd = null;
+                      entityConnection = (System.Data.EntityClient.EntityConnection)en.Connection;
+                      entityConnection.Open();
+                      storeConnection = entityConnection.StoreConnection;
+                      cmd = storeConnection.CreateCommand();
+                      cmd.CommandType = System.Data.CommandType.Text;
+                      cmd.CommandText = sql_text.ToString().Substring(0, sql_text.Length - 5);
+                      cmd.ExecuteNonQuery();
+                      cmd.Dispose();
+                      cmd = null;
 
-                     entityConnection.Close();
-                     entityConnection = null;
-                     storeConnection = null;
-                     sql_text.Clear();
-                     GC.Collect();
-                     mCopunt = 0;
-                     sql_text.Append(@"  insert into T_PACKAGE_CALLBACK(BILLCODE, ROUTEPACKAGENUM, ORDERPACKAGENUM, PACKAGESEQ, CIGARETTEQTY, SHAPEDNUM, CIGARETTECODE,
-                CIGARETTENAME, CIGARETTETYPE, ROUTECODE, PACKAGEQTY, ORDERDATE, LINECODE, ORDERCOUNT, ORDERSEQ, CIGSEQ, EXPORT, PACKAGENUM,
-                ORDERQUANTITY, ADDRESS, CUSTOMERNAME, CUSTOMERNO, ORDERURL, ORDERAMOUNT, PAYFLAG, SEQ, NORMALPACKAGENUM, UNNORMALPACKAGENUM,
-                UNIONTASKPACKAGENUM, SORTNUM, CIGNUM, SYNSEQ)");
-                     //en.SaveChanges();
-                 }
-                 
-             }
-             firstTask = null;
-         }
+                      entityConnection.Close();
+                      entityConnection = null;
+                      storeConnection = null;
+                      sql_text.Clear();
+                      GC.Collect();
+                      mCopunt = 0;
+                      sql_text.Append(@"  insert into T_PACKAGE_CALLBACK(BILLCODE, ROUTEPACKAGENUM, ORDERPACKAGENUM, PACKAGESEQ, CIGARETTEQTY, SHAPEDNUM, CIGARETTECODE,
+                 CIGARETTENAME, CIGARETTETYPE, ROUTECODE, PACKAGEQTY, ORDERDATE, LINECODE, ORDERCOUNT, ORDERSEQ, CIGSEQ, EXPORT, PACKAGENUM,
+                 ORDERQUANTITY, ADDRESS, CUSTOMERNAME, CUSTOMERNO, ORDERURL, ORDERAMOUNT, PAYFLAG, SEQ, NORMALPACKAGENUM, UNNORMALPACKAGENUM,
+                 UNIONTASKPACKAGENUM, SORTNUM, CIGNUM, SYNSEQ)");
+                    
+                  }
 
-         if (sql_text.ToString().Contains("union"))
+            }
+            firstTask = null;
+        }
+
+        if (sql_text.ToString().Contains("union"))
          {
              entityConnection = (System.Data.EntityClient.EntityConnection)en.Connection;
              entityConnection.Open();
@@ -330,26 +415,9 @@ group by billcode) y
              storeConnection = null;
          }
          sql_text.Clear();
-         //en.SaveChanges();
-             //  DbParameter inpara= cmd.CreateParameter();
-             //  inpara.Direction = ParameterDirection.Input;
-             //  inpara.ParameterName = "p_packageNo";
-             //  inpara.Value = packageno;
-             ////  inpara.DbType = DbType.VarNumeric;
-             //  DbParameter outpara1 = cmd.CreateParameter();
-             //  outpara1.Direction = ParameterDirection.Input;
-             //  outpara1.ParameterName = "p_ErrCode";
-             //  outpara1.DbType = DbType.String;
-             //  DbParameter outpara2 = cmd.CreateParameter();
-             //  outpara2.Direction = ParameterDirection.Output;
-             //  outpara2.ParameterName = "p_ErrMsg";
-             //  outpara2.DbType = DbType.String;
-             //  cmd.Parameters.Add(inpara);
-             //  cmd.Parameters.Add(outpara1);
-             //  cmd.Parameters.Add(outpara2);
-             //  cmd.ExecuteNonQuery();
-             //  cmd.Dispose();
-             }
+      
+         
+             }  
             
         }
 
@@ -358,7 +426,7 @@ group by billcode) y
         /// 根据包装机号 生成 贴标机数据
         /// </summary>
         /// <param name="packageno"></param>
-        public void CallBackTBJ(decimal packageno)
+        public void CallBackTBJ2(decimal packageno)
         {
             using (Entities en = new Entities())
             {
@@ -394,8 +462,31 @@ group by billcode) y
                     maxCigNum = cALLBACKs.Max(a => a.CIGNUM);
                     maxCigNum += 1;
                 }
+
+                decimal export1 = 0, export2 = 0;
+                if (packageno == 1 || packageno == 2)
+                {
+                    export1 = 1;
+                    export2 = 2;
+                }
+                if (packageno == 3 || packageno == 4)
+                {
+                    export1 = 3;
+                    export2 = 4;
+                }
+                if (packageno == 5 || packageno == 6)
+                {
+                    export1 = 5;
+                    export2 = 6;
+                }
+                if (packageno == 7 || packageno == 8)
+                {
+                    export1 = 7;
+                    export2 = 8;
+                }
+
                 //获取包装机视图
-                var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO     orderby item.TASKNUM select item).ToList();
+                var needInfo = (from item in en.V_PRODUCE_PACKAGEINFO where item.EXPORT == export1 || item.EXPORT == export2 orderby item.TASKNUM select item).ToList();
             
                 T_PACKAGE_CALLBACK tb;
                 string billcode = "";//存放订单 
@@ -403,6 +494,7 @@ group by billcode) y
                 decimal cigseq =1  ;
                 try
                 {
+
                     var regioncode  =pagTask.Select(a=> new { regioncode =  a.REGIONCODE}).Distinct().ToList();//获取所有未生成的车组
                     foreach (var region in regioncode)//单个车组循环
                     {
@@ -416,8 +508,8 @@ group by billcode) y
                             tb = new T_PACKAGE_CALLBACK();
                             if (!item.BILLCODE.Equals(billcode))//存入新的订单号 ,一个订单插入一次数据
                             {
-                                //en.SaveChanges(); 
-                                routCPagNum = pagTask.Where(a => a.REGIONCODE == item.REGIONCODE).Max(a => a.ALLPACKAGESEQ) ?? 0;//车组总包数
+                                //routCPagNum = (pagTask.Where(a => a.REGIONCODE == item.REGIONCODE).Max(a => a.ALLPACKAGESEQ) ?? 0) - (pagTask.Where(a => a.REGIONCODE == item.REGIONCODE).Min(a => a.ALLPACKAGESEQ) ?? 0);//车组总包数  车组内最大包序减去最小包序
+                                routCPagNum = (from items in en.T_PACKAGE_TASK where (items.PACKAGENO == export1 || items.PACKAGENO == export2) && items.REGIONCODE == item.REGIONCODE select items.PACKTASKNUM).Distinct().Count();
                                 orderPagNum = pagTask.Where(a => a.BILLCODE == item.BILLCODE).Max(a => a.PACKAGESEQ) ?? 0; //订单总包数
                                 shaednum = pagTask.Where(a => a.BILLCODE == item.BILLCODE && a.CIGTYPE == "2").Sum(a => a.NORMALQTY) ?? 0;//订单异型烟数量
                                 ordercount = needInfo.Where(a => a.REGIONCODE == item.REGIONCODE).Select(a => new { billcode = a.BILLCODE }).Distinct().Count();//车组内订单数
@@ -429,7 +521,7 @@ group by billcode) y
                             {
                                 packtasknum = item.PACKTASKNUM ?? 0;
                                 cigseq = 1;
-                            }
+                            } 
                             var firstTask = needInfo.Where(a => a.BILLCODE == item.BILLCODE).FirstOrDefault();//订单信息 
                             if (firstTask == null)
                             {
