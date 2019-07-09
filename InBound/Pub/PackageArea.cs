@@ -135,6 +135,11 @@ namespace InBound.Pub
         /// </summary>
         public decimal CigaretteSeq { get; set; }
         /// <summary>
+        /// 摆放方向
+        /// </summary>
+        public decimal CDTYPE { get; set; }
+        
+        /// <summary>
         /// 双抓标志
         /// </summary>
         public string DoubleTake { get; set; }

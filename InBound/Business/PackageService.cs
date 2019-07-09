@@ -1016,7 +1016,7 @@ namespace InBound.Business
                             bigList = templist.Where(x => x.STATE == 10 && x.ALLPACKAGESEQ == maxallpackageseq).OrderBy(x => x.CIGSEQ).ToList();
 
                             list = RollBackList(list, bigList);
-
+                            list = CopyList(list);
                             list.ForEach(x => x.isscan = 0);
 
                             templist = templist.Where(x => x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0).ToList();
@@ -1086,7 +1086,7 @@ namespace InBound.Business
                     allGroupList1 = (from item in templist
                                      join item2 in query1 on item.CIGARETTECODE equals item2.ITEMNO
                                      where item.STATE != 10
-                                     select new ItemGroup1 { Cigindex = item.PACKAGESEQ ?? 0, CigaretteCode = item.CIGARETTECODE, Total = item.NORMALQTY ?? 0, Length = item2.ILENGTH ?? 0, Width = item2.IWIDTH ?? 0, Hight = item2.IHEIGHT ?? 0, CigaretteSeq = item.CIGSEQ ?? 0, DoubleTake = item2.DOUBLETAKE }).ToList();
+                                     select new ItemGroup1 { Cigindex = item.PACKAGESEQ ?? 0, CigaretteCode = item.CIGARETTECODE, Total = item.NORMALQTY ?? 0, Length = item2.ILENGTH ?? 0, Width = item2.IWIDTH ?? 0, Hight = item2.IHEIGHT ?? 0, CDTYPE = item2.CDTYPE ?? 0, CigaretteSeq = item.CIGSEQ ?? 0, DoubleTake = item2.DOUBLETAKE }).ToList();
                     //2:遍历集合，连续同高度、且数据库内标记双抓的烟 加入集合 
                     int Indexfag = 1;//双抓组序号
                     int cigindex = 0;//条烟顺序（6条中）
@@ -1100,6 +1100,16 @@ namespace InBound.Business
                     List<ItemGroup1> itemGroupSave = new List<ItemGroup1>();
                     foreach (var item in allGroupList1)//遍历组合双抓
                     {
+                        if (item.CDTYPE == 1)//标记为转向的品牌 长宽对换
+                        {
+                            item.Width = item.Length + HFWidth;
+                            item.Length = item.Width;
+                        }
+                        else
+                        {
+                            item.Width = item.Width;
+                            item.Length = item.Length;
+                        }
                         if ((Math.Abs(item.Hight - LastHight) < deviation || LastHight == 0) && LastDoubletask == "1" && item.DoubleTake =="1" && Math.Abs(LastWidth - item.Width) <= Widthdeviation && Math.Abs(LastSeq - item.CigaretteSeq) == 1)//如果当前条烟与上条烟 高度相差在偏差范围内且能双抓   或是第一条烟  暂时宽度要求相等
                         {
                             cigindex += 1;
@@ -1986,7 +1996,7 @@ namespace InBound.Business
                 else//纯异型烟
                 {
                     decimal packageseq = 0;
-                    decimal tempallpackageseq = 1;
+                    decimal tempallpackageseq = 0;
                     decimal cigseq = 1;
                     var datalist = task.Where(x => x.STATE == 10).ToList();
                     if (datalist.Count > 0)
@@ -2005,8 +2015,8 @@ namespace InBound.Business
                             it.UNIONPACKAGETAG = 0;
                             cigseq++;
                         }
-                        packageseq = 1;
-                        tempallpackageseq = 1;
+                        packageseq = 0;
+                        tempallpackageseq = 0;
                     }
                 }
             }
