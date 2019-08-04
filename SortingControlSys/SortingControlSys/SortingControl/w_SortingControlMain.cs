@@ -419,7 +419,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                if (flag == 0)//0：已取走， 1：已写入
+                if (flag == 2)//0：已取走， 1：已写入
                 {
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno2, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno2, 10))
                     {
@@ -605,7 +605,7 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("与PLC连接异常,请检查网络");
                     updateListBox("与PLC连接异常,请检查网络");
                 }
-                if (flag == 0)//0：已取走， 1：已写入
+                if (flag == 2)//0：已取走， 1：已写入
                 {
 
                     while (!ProducePokeService.CheckExistPreSendTask(sortgroupno1, 12) && ProducePokeService.CheckExistPreSendTask(sortgroupno1, 10))
@@ -916,15 +916,17 @@ namespace SortingControlSys.SortingControl
         {
             try
             {
-
+                writeLog.Write("开始自动接收完成任务.");
 
                 for (int i = 0; i < FinishStateGroup1.GetGroupItemLength(); i++)
                 {
-                    int tempvalue = int.Parse(FinishStateGroup1.Read(i).ToString());
+                    int tempvalue = int.Parse(FinishStateGroup1.ReadD(i).ToString());
+                    writeLog.Write("读取到完成任务号:" + tempvalue);
                     if (tempvalue >= 1)//分拣完成
                     {
                         statusGroup1.Write(1, i);
                         writeLog.Write("自动完成任务:从电控读取" + sortgroupno1 + "组出口号：" + i + "；任务号:" + tempvalue);
+                       
                         if (tempvalue != 0)
                         {
                             try
@@ -942,14 +944,14 @@ namespace SortingControlSys.SortingControl
                         }
                         
                     }
-                    else
-                    {
-                        statusGroup1.Write(0, i);
-                    }
+                    //else
+                    //{
+                    //    statusGroup1.Write(0, i);
+                    //}
                 }
                 for (int i = 0; i < FinishStateGroup2.GetGroupItemLength(); i++)
                 {
-                    int tempvalue =  int.Parse(FinishStateGroup2.Read(i).ToString());
+                    int tempvalue =  int.Parse(FinishStateGroup2.ReadD(i).ToString());
                     if (tempvalue >= 1)//分拣完成
                     {
                         taskgroup2.Write(1, i);
@@ -971,10 +973,10 @@ namespace SortingControlSys.SortingControl
                         }
                         
                     }
-                    else
-                    {
-                        taskgroup2.Write(0, i);
-                    }
+                    //else
+                    //{
+                    //    taskgroup2.Write(0, i);
+                    //}
                 }
             }
             catch (Exception ex)
@@ -1198,7 +1200,7 @@ namespace SortingControlSys.SortingControl
                 {
                     if (clientId[i] == 1)//第一组 监控标志位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
                             while (!isInit)
                             {
@@ -1240,7 +1242,7 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 2)//第二组 监控标志位
                     {
-                        if (values[i] != null && int.Parse(values[i].ToString()) == 0)//0是电控已经接收
+                        if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
                             while (!isInit)
                             {
@@ -1771,8 +1773,9 @@ namespace SortingControlSys.SortingControl
                     updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                     writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                 }
-                SendTaskStatesGroup.Write(2, 0);
+               
                 SendTaskStatesGroup.Write(0, 0);
+                SendTaskStatesGroup.Write(2, 0);
             }
             if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendB)//监控标志位第二组 
             {
@@ -1788,8 +1791,9 @@ namespace SortingControlSys.SortingControl
                     updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                     writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                 }
-                SendTaskStatesGroup.Write(2, 1);
+               
                 SendTaskStatesGroup.Write(0, 1);
+                SendTaskStatesGroup.Write(2, 1);
             }
             timerSendData.Stop();
         }

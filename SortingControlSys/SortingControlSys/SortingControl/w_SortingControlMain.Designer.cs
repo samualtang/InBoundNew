@@ -127,6 +127,7 @@
             this.btnSelect.Size = new System.Drawing.Size(101, 43);
             this.btnSelect.TabIndex = 13;
             this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Visible = false;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // btnClearB
