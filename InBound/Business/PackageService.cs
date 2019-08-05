@@ -105,6 +105,7 @@ namespace InBound.Business
                                 temp.NORMALQTY = v2.QUANTITY;
                                 temp.UNIONPACKAGETAG = 0;
                                 temp.DOUBLETAKE = "0";
+                                temp.CIGZ = 183;
                                 temp.ORDERSEQ = v2.SORTSEQ;
                                 temp.ORDERQTY = v2.ORDERQUANTITY;
                                 temp.CIGSTATE = 10;
@@ -199,6 +200,10 @@ namespace InBound.Business
         /// 合包常规烟高度 总限高
         /// </summary>
         decimal allhight = 300;
+        /// <summary>
+        /// Z轴最大值
+        /// </summary>
+        decimal maxLength = 300;
         /// <summary>
         /// 合包常规烟总层数
         /// </summary>
@@ -1473,7 +1478,7 @@ namespace InBound.Business
                             chooseItem.PACKAGESEQ = packageNO;
                             chooseItem.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
 
-
+                            
                             chooseItem.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                             chooseItem.STATE = 10;
                             chooseItem.ALLPACKAGESEQ = allpackagenum;
@@ -1481,6 +1486,53 @@ namespace InBound.Business
                             height = area.height + (chooseItem.CIGHIGH ?? 0);
                             cigseq = chooseItem.CIGSEQ ?? 0;
                             length = chooseItem.CIGLENGTH ?? 0;
+
+                            T_WMS_ITEM item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+                            if (item.CDTYPE == 1)
+                            {
+                                decimal cigseqN = chooseItem.CIGSEQ??0 + 1;
+                                decimal cigseqT = chooseItem.CIGSEQ ?? 0 + 2;
+                                var chooseItem2 = templist.FindAll(x => x.CIGSEQ == cigseqN && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+                                var chooseItem3 = templist.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+
+                                if (chooseItem2 != null)
+                                {
+                                    item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+                                    if (item.CDTYPE == 1)
+                                    {
+                                        chooseItem.CIGZ = jx + chooseItem.CIGLENGTH / 2;
+                                        chooseItem2.PACKAGESEQ = packageNO;
+                                        chooseItem2.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
+
+
+                                        chooseItem2.CIGHIGHY = area.height + chooseItem.CIGHIGH;
+                                        chooseItem2.STATE = 10;
+                                        chooseItem2.ALLPACKAGESEQ = allpackagenum;
+                                        chooseItem2.CIGZ = chooseItem.CIGZ + jx + chooseItem2.CIGLENGTH / 2;
+
+                                        if (chooseItem3 != null)
+                                        {
+                                            item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+                                            if (item.CDTYPE == 1)
+                                            {
+                                                if (maxLength - chooseItem.CIGLENGTH - chooseItem2.CIGLENGTH - 2 * jx >= chooseItem3.CIGLENGTH)
+                                                {
+                                                    chooseItem3.PACKAGESEQ = packageNO;
+                                                    chooseItem3.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
+
+
+                                                    chooseItem3.CIGHIGHY = area.height + chooseItem.CIGHIGH;
+                                                    chooseItem3.STATE = 10;
+                                                    chooseItem3.ALLPACKAGESEQ = allpackagenum;
+                                                    chooseItem3.CIGZ = chooseItem.CIGZ + jx + chooseItem2.CIGLENGTH + jx + chooseItem3.CIGLENGTH / 2;
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+ 
+                            }
                             //更新area
                             //更新area
                             if (tempunit.begin == 0)
