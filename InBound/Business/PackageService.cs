@@ -1486,8 +1486,10 @@ namespace InBound.Business
                             height = area.height + (chooseItem.CIGHIGH ?? 0);
                             cigseq = chooseItem.CIGSEQ ?? 0;
                             length = chooseItem.CIGLENGTH ?? 0;
-
+                           
                             T_WMS_ITEM item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+
+                            
                             if (item.CDTYPE == 1)
                             {
                                 decimal cigseqN = chooseItem.CIGSEQ??0 + 1;
@@ -1513,7 +1515,15 @@ namespace InBound.Business
                                         if (chooseItem3 != null)
                                         {
                                             item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
-                                            if (item.CDTYPE == 1)
+                                            decimal maxL = 0;
+                                            if (area.cigaretteList != null && area.cigaretteList.Count > 0)
+                                            {
+                                                maxL = (from t in unnormaltask
+                                                        join d in area.cigaretteList on t.CIGSEQ equals d.CigaretteNo
+                                                        where t.CIGLENGTH>=280
+                                                        select t).ToList().Count();
+                                            }
+                                            if (item.CDTYPE == 1 && (maxL>=2 ||maxL==0))
                                             {
                                                 if (maxLength - chooseItem.CIGLENGTH - chooseItem2.CIGLENGTH - 2 * jx >= chooseItem3.CIGLENGTH)
                                                 {
