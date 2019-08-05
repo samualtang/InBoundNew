@@ -427,8 +427,17 @@ namespace InBound.Business
         {
             var tempCode = "";
             var doubleTake = "0";
+            decimal beginx = 0;
             foreach (var item in bigList)
             {
+                if (beginx == item.CIGWIDTHX)
+                {
+                    continue;
+                }
+                else
+                {
+                    beginx = item.CIGWIDTHX??0;
+                }
                 //if (item.CIGARETTECODE != tempCode)
                 //{
 
@@ -1492,8 +1501,8 @@ namespace InBound.Business
                             
                             if (item.CDTYPE == 1)
                             {
-                                decimal cigseqN = chooseItem.CIGSEQ??0 + 1;
-                                decimal cigseqT = chooseItem.CIGSEQ ?? 0 + 2;
+                                decimal cigseqN = (chooseItem.CIGSEQ??0) + 1;
+                                decimal cigseqT =( chooseItem.CIGSEQ??0) + 2;
                                 var chooseItem2 = templist.FindAll(x => x.CIGSEQ == cigseqN && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
                                 var chooseItem3 = templist.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
 
@@ -1510,7 +1519,7 @@ namespace InBound.Business
                                         chooseItem2.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                         chooseItem2.STATE = 10;
                                         chooseItem2.ALLPACKAGESEQ = allpackagenum;
-                                        chooseItem2.CIGZ = chooseItem.CIGZ + jx + chooseItem2.CIGLENGTH / 2;
+                                        chooseItem2.CIGZ = chooseItem.CIGLENGTH + jx + chooseItem2.CIGLENGTH / 2;
 
                                         if (chooseItem3 != null)
                                         {
@@ -1534,7 +1543,7 @@ namespace InBound.Business
                                                     chooseItem3.CIGHIGHY = area.height + chooseItem.CIGHIGH;
                                                     chooseItem3.STATE = 10;
                                                     chooseItem3.ALLPACKAGESEQ = allpackagenum;
-                                                    chooseItem3.CIGZ = chooseItem.CIGZ + jx + chooseItem2.CIGLENGTH + jx + chooseItem3.CIGLENGTH / 2;
+                                                    chooseItem3.CIGZ = chooseItem.CIGLENGTH + jx + chooseItem2.CIGLENGTH + jx + chooseItem3.CIGLENGTH / 2;
 
                                                 }
                                             }
