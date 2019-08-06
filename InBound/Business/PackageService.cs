@@ -212,7 +212,7 @@ namespace InBound.Business
         int allpackagenum = 0;
         int NormalCount = 36;//常规烟整包条烟数
         int NorCount = 6;//一层常规烟的条数
-
+        decimal beginy = 0;
         /// <summary>
         /// 计算包装机数据
         /// </summary>
@@ -430,13 +430,14 @@ namespace InBound.Business
             decimal beginx = 0;
             foreach (var item in bigList)
             {
-                if (beginx == item.CIGWIDTHX)
+                if (beginx == item.CIGWIDTHX && beginy==item.CIGHIGHY)
                 {
                     continue;
                 }
                 else
                 {
                     beginx = item.CIGWIDTHX??0;
+                    beginy = item.CIGHIGHY??0;
                 }
                 //if (item.CIGARETTECODE != tempCode)
                 //{
