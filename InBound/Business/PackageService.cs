@@ -2181,5 +2181,153 @@ namespace InBound.Business
             unnormallist.Clear();
             normallist.Clear();
         }
+
+        decimal NormalTemp = 0.8m;
+
+        public void NormalCig1(List<T_PACKAGE_TASK> task, List<T_PACKAGE_TASK> Normaldata)
+        {
+            decimal norpackage = 1;
+            foreach (var item in task)
+            {
+                T_PACKAGE_TASK _task = new T_PACKAGE_TASK();
+                DataCopy.CopyToT(item, _task);
+                _TASKS.Add(_task);
+                _task = null;
+            }
+            //异型烟现有的整体包序  定义每个包序号的初始常规烟数0
+            foreach (var item in task.GroupBy(x => x.ALLPACKAGESEQ).Select(x => x.Key ?? 0).ToList())
+            {
+                decimal[] de = new decimal[2];
+                de[0] = item;
+                de[1] = 0;
+                unnormallist.Add(de);
+            }
+            //常规烟数量
+            decimal AllNormalQty = Normaldata.Sum(x => x.NORMALQTY) ?? 0;
+            //获取常规烟总层数
+            decimal AllNormalLevel = Math.Ceiling(AllNormalQty / NorCount);
+            //获取常规烟余数
+            decimal Remainder = AllNormalQty % NorCount;
+
+            //异型烟包数
+            decimal AllUnnormalCount = task.GroupBy(x => x.ALLPACKAGESEQ).Count();
+            if (AllUnnormalCount != 0)//存在异型烟
+            {
+                //排序异型烟包：按包的总高度排序数量、单包高度、总条烟数升序排序
+                var sortdata = task.GroupBy(x => new { x.ALLPACKAGESEQ, x.PACKAGESEQ }).Select(x => new { allpackageq = x.Key.ALLPACKAGESEQ, packageq = x.Key.PACKAGESEQ, yy = x.Max(t => t.CIGHIGHY), ww = x.Sum(t => t.CIGWIDTH), qty = x.Sum(t => t.NORMALQTY) }).OrderBy(x => x.qty).ThenBy(x => x.yy).ThenBy(x => x.ww);
+                //找出只有一层的异型烟包(6条常规烟宽度*0.8)
+                var oneleveldata = sortdata.Where(x => x.ww <= (normalwidth * NorCount) * NormalTemp);
+                //如果常规烟有余数，并且不存在一层的异型烟包  即不能强制合包
+                if (Remainder > 0 && AllNormalLevel > 2 && oneleveldata.Count() > 0)
+                {
+                    AllNormalLevel -= 2;
+                }
+                if (AllNormalQty > 0)//存在常规烟
+                {
+
+                }
+                else//纯异型烟
+                {
+                    decimal packageseq = 0;
+                    decimal tempallpackageseq = 0;
+                    decimal cigseq = 1;
+                    var datalist = task.Where(x => x.STATE == 10).ToList();
+                    if (datalist.Count > 0)
+                    {
+                        foreach (var it in datalist)
+                        {
+                            if (tempallpackageseq != it.ALLPACKAGESEQ)
+                            {
+                                tempallpackageseq = (it.ALLPACKAGESEQ ?? 0);
+                                packageseq++;
+                                cigseq = 1;
+                            }
+                            it.CIGSEQ = cigseq;
+                            it.PACKAGESEQ = packageseq;
+                            it.PUSHSPACE = 1;
+                            it.UNIONPACKAGETAG = 0;
+                            cigseq++;
+                        }
+                        packageseq = 0;
+                        tempallpackageseq = 0;
+                    }
+                }
+            }
+            else//纯常规烟订单
+            {
+                while (Normaldata.Count != 0)
+                {
+
+                    decimal allnornum = Normaldata.Sum(x => x.NORMALQTY) ?? 0;
+                    decimal nornum = allnornum;
+                    decimal nownum = 0;
+                    decimal cigseq = 1;
+                    decimal packageseq = (task.Max(x => x.PACKAGESEQ) ?? 0) + 1;
+                    if (Remainder != 0 && nornum > 36)
+                    {
+                        nornum = 30 + Remainder;
+                        Remainder = 0;
+                    }
+                    else if (Remainder == 0 && nornum > 36)
+                    {
+                        nornum = 36;
+                    }
+                    //计算接下来还有多少没有分配，如果等于7层，接下来5+2分配
+                    if (Math.Ceiling(allnornum / 6) == 7)
+                    {
+                        nornum = 30;
+                    }
+
+                    foreach (var it in Normaldata)
+                    {
+                        nownum += it.NORMALQTY ?? 0;
+                        it.CIGSEQ = cigseq;
+                        it.ALLPACKAGESEQ = allpackagenum;
+                        it.PUSHSPACE = 0;
+                        it.NORMAILSTATE = 10;
+
+                        it.PACKAGESEQ = packageseq;
+                        //恰好一条记录 需要分割为两条记录
+                        if (nownum > nornum)
+                        {
+                            decimal itemnum = it.NORMALQTY ?? 0;
+                            decimal surpnum = Math.Abs(nownum - (nornum));//一垛多出的条数
+                            decimal addpnum = itemnum - surpnum;//分配的数量
+                            T_PACKAGE_TASK _PACKAGE_TASK = new T_PACKAGE_TASK();
+
+                            DataCopy.CopyToT(it, _PACKAGE_TASK);
+                            _PACKAGE_TASK.NORMALQTY = addpnum;
+                            it.NORMALQTY = surpnum;
+                            _PACKAGE_TASK.NORMAILSTATE = 10;
+                            it.NORMAILSTATE = 0;
+                            task.Add(_PACKAGE_TASK);
+                        }
+                        else
+                        {
+                            task.Add(it);
+                        }
+                        cigseq++;
+                        if (nownum >= nornum)
+                        {
+                            cigseq = 1;
+                            break;
+                        }
+                    }
+                    Normaldata.RemoveAll(x => x.NORMAILSTATE == 10);
+                    if (Normaldata.Count > 0)
+                    {
+                        allpackagenum++;
+                    }
+                }
+                var ddddd = Normaldata;
+                var ddd1 = unnormallist.Sum(x => x[1]);
+                var ddd2 = unnormallist.Sum(x => x[1]);
+
+                decimal ddd = 1;
+
+            }
+            unnormallist.Clear();
+            normallist.Clear();
+        }
     }
 }
