@@ -42,6 +42,7 @@ namespace InBound.Business
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
+                             //where item.TASKNUM == 1797952
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
               
@@ -427,17 +428,18 @@ namespace InBound.Business
         {
             var tempCode = "";
             var doubleTake = "0";
-            decimal beginx = 0;
+            decimal cdtype = 0;
             foreach (var item in bigList)
             {
-                if (beginx == item.CIGWIDTHX && beginy==item.CIGHIGHY)
+                var t = query1.Where(x => x.ITEMNO == item.CIGARETTECODE).FirstOrDefault().CDTYPE??0;
+                if (t == 1 && cdtype == 1
+                    )
                 {
                     continue;
                 }
                 else
                 {
-                    beginx = item.CIGWIDTHX??0;
-                    beginy = item.CIGHIGHY??0;
+                    cdtype = t;
                 }
                 //if (item.CIGARETTECODE != tempCode)
                 //{
@@ -1504,27 +1506,34 @@ namespace InBound.Business
                             {
                                 decimal cigseqN = (chooseItem.CIGSEQ??0) + 1;
                                 decimal cigseqT =( chooseItem.CIGSEQ??0) + 2;
-                                var chooseItem2 = templist.FindAll(x => x.CIGSEQ == cigseqN && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
-                                var chooseItem3 = templist.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+                                var chooseItem2 = unnormaltask.FindAll(x => x.CIGSEQ == cigseqN && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+                                var chooseItem3 = unnormaltask.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
 
                                 if (chooseItem2 != null)
                                 {
-                                    item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+                                    
+                                    item = query1.Where(x => x.ITEMNO == chooseItem2.CIGARETTECODE).FirstOrDefault();
                                     if (item.CDTYPE == 1)
                                     {
+                                        if (!templist.Contains(chooseItem2))
+                                        {
+                                            templist.Add(chooseItem2);
+                                        }
                                         chooseItem.CIGZ = jx + chooseItem.CIGLENGTH / 2;
                                         chooseItem2.PACKAGESEQ = packageNO;
                                         chooseItem2.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
 
 
-                                        chooseItem2.CIGHIGHY = area.height + chooseItem.CIGHIGH;
+                                        chooseItem2.CIGHIGHY = area.height + chooseItem2.CIGHIGH;
                                         chooseItem2.STATE = 10;
                                         chooseItem2.ALLPACKAGESEQ = allpackagenum;
                                         chooseItem2.CIGZ = chooseItem.CIGLENGTH + jx + chooseItem2.CIGLENGTH / 2;
 
                                         if (chooseItem3 != null)
                                         {
-                                            item = query1.Where(x => x.ITEMNO == chooseItem.CIGARETTECODE).FirstOrDefault();
+
+                                            
+                                            item = query1.Where(x => x.ITEMNO == chooseItem3.CIGARETTECODE).FirstOrDefault();
                                             decimal maxL = 0;
                                             if (area.cigaretteList != null && area.cigaretteList.Count > 0)
                                             {
@@ -1537,11 +1546,15 @@ namespace InBound.Business
                                             {
                                                 if (maxLength - chooseItem.CIGLENGTH - chooseItem2.CIGLENGTH - 2 * jx >= chooseItem3.CIGLENGTH)
                                                 {
+                                                    if (!templist.Contains(chooseItem3))
+                                                    {
+                                                        templist.Add(chooseItem3);
+                                                    }
                                                     chooseItem3.PACKAGESEQ = packageNO;
                                                     chooseItem3.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
 
 
-                                                    chooseItem3.CIGHIGHY = area.height + chooseItem.CIGHIGH;
+                                                    chooseItem3.CIGHIGHY = area.height + chooseItem3.CIGHIGH;
                                                     chooseItem3.STATE = 10;
                                                     chooseItem3.ALLPACKAGESEQ = allpackagenum;
                                                     chooseItem3.CIGZ = chooseItem.CIGLENGTH + jx + chooseItem2.CIGLENGTH + jx + chooseItem3.CIGLENGTH / 2;
