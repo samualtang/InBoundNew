@@ -81,13 +81,14 @@
     <Compile Include="Business\MainBeltInfoService.cs" />
     <Compile Include="Business\HunHeService_new.cs" />
     <Compile Include="Business\OrderCiTrough.cs" />
-    <Compile Include="Business\PackageService - 副本.cs" />
+    <Compile Include="Business\PackageService - old.cs" />
     <Compile Include="Business\PackageService.cs" />
     <Compile Include="Business\PackageServiceback.cs" />
     <Compile Include="Business\SixSchedule.cs" />
     <Compile Include="Business\SpecialSmoke.cs" />
     <Compile Include="Business\TBJDataSchdule.cs" />
     <Compile Include="Business\UserService.cs" />
+    <Compile Include="Business\PackageService2.cs" />
     <Compile Include="Model\HUNHENOWVIEW.cs" />
     <Compile Include="Business\HunHeService.cs" />
     <Compile Include="Business\InfEquipmentRequestService.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="OPC\PlcItemCollection.cs" />
     <Compile Include="Pub\AutoSizeFormClass.cs" />
     <Compile Include="Pub\DataCopy.cs" />
+    <Compile Include="Pub\DateTimeService.cs" />
     <Compile Include="Pub\ObjectExtensions.cs" />
     <Compile Include="Pub\PackageArea.cs" />
     <Compile Include="Pub\Security.cs" />

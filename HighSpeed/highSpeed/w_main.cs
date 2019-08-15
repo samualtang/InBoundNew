@@ -11,6 +11,7 @@ using highSpeed.orderHandle;
 using highSpeed.PubFunc;
 using highSpeed.statement;
 using InBound.Business;
+using System.Configuration;
 
 
 namespace highSpeed
@@ -23,7 +24,7 @@ namespace highSpeed
             toolStripStatusLabel1.Text = "长株潭烟草物流";
             toolStripStatusLabel2.Text = "当前用户：" + PublicFun.PubStruserempname;
             toolStripStatusLabel3.Text = "登录时间："+System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            toolStripStatusLabel4.Text = "";
+            toolStripStatusLabel4.Text = "版本日期：" + ConfigurationManager.AppSettings["Version"].ToString();
         }
 
         private void 数据库设置ToolStripMenuItem_Click(object sender, EventArgs e)

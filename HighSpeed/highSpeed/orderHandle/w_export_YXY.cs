@@ -26,9 +26,10 @@ namespace highSpeed.orderHandle
         public w_export_YXY()
         {
             InitializeComponent();
+            DateGet = InBound.Pub.DateTimeService.GetNextDate(dateTimePicker1, "yyyy-MM-dd");
             seek();
         }
-
+        string DateGet = "";
         private void seek()
         {
             //string time = this.orderdate.Text;
@@ -180,7 +181,7 @@ namespace highSpeed.orderHandle
                         tempCode = "";
                     }
                     //infostr[i] = tasknum + taskseq + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + ",2," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + orderdate + ",S1001,1";
-                    tmpInfo = tmpInfo + tasknum + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + onesynseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + DateTime.Now.Date.ToString("yyyy-MM-dd") + "," + lineno + ",1;\r\n";
+                    tmpInfo = tmpInfo + tasknum + "," + tasknum + "," + cuscode + "," + cusname + "," + itemno + "," + itemname + "," + quantity + "," + onesynseq + "," + seq + "," + regioncode + "," + regioncode + "," + orderdate + "," + DateGet + "," + lineno + ",1;\r\n";
 
                     if (cuscode != cuscodetmp)
                     {

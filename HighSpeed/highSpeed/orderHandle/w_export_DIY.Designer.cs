@@ -40,6 +40,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel2.SuspendLayout();
@@ -47,6 +48,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.dateTimePicker1);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btn_close);
             this.panel1.Controls.Add(this.btn_export);
@@ -54,12 +56,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(919, 52);
+            this.panel1.Size = new System.Drawing.Size(1127, 52);
             this.panel1.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(832, 18);
+            this.button1.Location = new System.Drawing.Point(1040, 18);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -69,7 +71,7 @@
             // 
             // btn_close
             // 
-            this.btn_close.Location = new System.Drawing.Point(668, 18);
+            this.btn_close.Location = new System.Drawing.Point(876, 18);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(75, 23);
             this.btn_close.TabIndex = 7;
@@ -79,7 +81,7 @@
             // 
             // btn_export
             // 
-            this.btn_export.Location = new System.Drawing.Point(587, 18);
+            this.btn_export.Location = new System.Drawing.Point(795, 18);
             this.btn_export.Name = "btn_export";
             this.btn_export.Size = new System.Drawing.Size(75, 23);
             this.btn_export.TabIndex = 6;
@@ -110,7 +112,7 @@
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(919, 210);
+            this.orderdata.Size = new System.Drawing.Size(1127, 210);
             this.orderdata.TabIndex = 1;
             // 
             // batchcode
@@ -167,11 +169,20 @@
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Visible = false;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.CustomFormat = "";
+            this.dateTimePicker1.Location = new System.Drawing.Point(646, 20);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(121, 21);
+            this.dateTimePicker1.TabIndex = 11;
+            this.dateTimePicker1.Value = new System.DateTime(2019, 8, 8, 21, 8, 16, 0);
+            // 
             // w_export_DIY
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(919, 262);
+            this.ClientSize = new System.Drawing.Size(1127, 262);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.orderdata);
             this.Controls.Add(this.panel1);
@@ -201,5 +212,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
