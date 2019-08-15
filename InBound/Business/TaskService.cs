@@ -1662,6 +1662,8 @@ namespace InBound.Business
             //    }
             //}
         }
+
+       
         /// <summary>
         /// 合流任务接收
         /// </summary>
@@ -1669,21 +1671,42 @@ namespace InBound.Business
         /// <param name="sortnum"></param>
         public static void UpdateUnionState(decimal stage, int sortnum)//更新合流状态
         {
+           
+                using (Entities entity = new Entities())
+                {
+                    var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).ToList();
+                    if (query != null && query.Count > 0)
+                    {
+                        foreach (var item in query)
+                        {
+                            if (item.UNIONSTATE == 10)//未发送的情况下才会接收
+                            {
+                                item.UNIONSTATE = stage;
+                            }
+                        }
+                        entity.SaveChanges();
+                    }
+                }
+           
+
+        }
+
+        public static Decimal? GetUnionState(int sortnum)//更新合流状态
+        {
+
             using (Entities entity = new Entities())
             {
                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTNUM == sortnum select item).ToList();
                 if (query != null && query.Count > 0)
                 {
-                    foreach (var item in query)
-                    {
-                        if (item.UNIONSTATE == 10)//未发送的情况下才会接收
-                        {
-                            item.UNIONSTATE = stage;
-                        }
-                    }
-                    entity.SaveChanges();
+                    return query[0].UNIONSTATE;
+                }
+                else
+                {
+                    return 0;
                 }
             }
+
 
         }
         public static void UpdateUnionStatus(decimal stage, int sortnum)//更新合流状态
@@ -1838,6 +1861,25 @@ namespace InBound.Business
             }
             
         }
+
+         public static decimal? GetTaskStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
+         {
+
+
+             using (Entities entity = new Entities())
+             {
+                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == 12 && item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+                 if (query != null && query.Count > 0)
+                 {
+                     return query[0].SORTSTATE;
+                 }
+                 else
+                 {
+                     return 0;
+                 }
+             }
+
+         }
         public static void UpdateStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
         {
 

@@ -549,7 +549,7 @@ namespace SortingControlSys.SortingControl
         {
             for (int i = 0; i < FinishstatusGroup.GetGroupItemLength(); i++)
             {
-                int tempvalue =  int.Parse(FinishstatusGroup.Read(i).ToString());
+                int tempvalue =  int.Parse(FinishstatusGroup.ReadD(i).ToString());
                 if (tempvalue >= 1)
                 { 
                     writeLog.Write("从电控出口号：" + ( i+1) + "获取到任务号:" + tempvalue + "完成信号 ");
@@ -588,31 +588,11 @@ namespace SortingControlSys.SortingControl
             }
            
         }
+        Object ondataFlag = new Object();
         public void OnDataChange(int group,int[] clientId, object[] values)
         {
-            //if (group == 1)//暂时没用
-            //{
-            //    for (int i = 0; i < clientId.Length; i++)
-            //    {
-            //        if (clientId[i] == 13)
-            //        {
-            //            if (values[i] != null && int.Parse(values[i].ToString()) == 0)
-            //            {
-                            
-            //                if (tempList.Count > 0)
-            //                {                                                               
-            //                    TaskService.UpdateUnionStatus( 15, tempList.ElementAt(tempList.Count - 1).Value);
-            //                    updateListBox("任务:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-            //                    writeLog.Write("任务号:" + tempList.ElementAt(tempList.Count - 1).Value + "已接收");
-            //                }
-                            
-            //                sendTask();
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
-            //else 
+            lock (ondataFlag)
+            {
             if (group == 2)
             { 
 
@@ -715,17 +695,49 @@ namespace SortingControlSys.SortingControl
             }
             else if (group == 7)//监控标志位
             {
+                writeLog.Write("跳变信号产生" );
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     if (clientId[i] == 1)//一号主皮带
                     {
+                        writeLog.Write("一号主皮带任务跳变:"+int.Parse(values[i].ToString()));
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
                             int sortnum = int.Parse(taskgroup1.ReadD(0).ToString());
+                            writeLog.Write("一号读取到任务号:" + sortnum);
                             //if (UnionList[0].Count > 0)
                             //{
                                 //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionState(15, sortnum);
+                            try
+                            {
+                                
+                                TaskService.UpdateUnionState(15, sortnum);
+                                if ((TaskService.GetUnionState(sortnum) ?? 0 )!= 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("一号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("一号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                try
+                                {
+                                    writeLog.Write("一号主皮带更新任务:" + sortnum + "失败");
+                                    Thread.Sleep(100);
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                catch (Exception ex2)
+                                {
+                                    writeLog.Write("一号主皮带更新任务:" + sortnum + "失败");
+                                }
+                            }
                                 updateListBox("一号主皮带任务:" + sortnum + "已接收");
                                 writeLog.Write("一号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -734,13 +746,44 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 2)//二号主皮带
                     {
+                        writeLog.Write("二号主皮带任务跳变:" + int.Parse(values[i].ToString()));
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
                             int sortnum = int.Parse(taskgroup2.ReadD(0).ToString());
+                            writeLog.Write("二号读取到任务号:" + sortnum);
                             //if (UnionList[1].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionState(15, sortnum);
+                            try
+                            {
+
+                                TaskService.UpdateUnionState(15, sortnum);
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("二号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("二号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                try
+                                {
+                                    writeLog.Write("二号主皮带更新任务:" + sortnum + "失败");
+                                    Thread.Sleep(100);
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                catch (Exception ex2)
+                                {
+                                    writeLog.Write("二号主皮带更新任务:" + sortnum + "失败");
+                                }
+                            }
                             updateListBox("二号主皮带任务:" + sortnum + "已接收");
                             writeLog.Write("二号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -749,14 +792,45 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 3)//三号主皮带
                     {
+                        writeLog.Write("三号主皮带任务跳变:" + int.Parse(values[i].ToString()));
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
 
                             int sortnum = int.Parse(taskgroup3.ReadD(0).ToString());
+                            writeLog.Write("三号读取到任务号:" + sortnum);
                             //if (UnionList[2].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionState(15, sortnum);
+                            try
+                            {
+
+                                TaskService.UpdateUnionState(15, sortnum);
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("三号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("三号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                try
+                                {
+                                    writeLog.Write("三号主皮带更新任务:" + sortnum + "失败");
+                                    Thread.Sleep(100);
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                catch (Exception ex2)
+                                {
+                                    writeLog.Write("三号主皮带更新任务:" + sortnum + "失败");
+                                }
+                            }
                             updateListBox("三号主皮带任务:" + sortnum + "已接收");
                             writeLog.Write("三号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -765,13 +839,44 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 4)//四号主皮带
                     {
+                        writeLog.Write("四号主皮带任务跳变:" + int.Parse(values[i].ToString()));
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//接收
                         {
                             int sortnum = int.Parse(taskgroup4.ReadD(0).ToString());
+                            writeLog.Write("四号读取到任务号:" + sortnum);
                             //if (UnionList[3].Count > 0)
                             //{
                             //TaskService.UpdateUnionStatus(15, UnionList[0].ElementAt(UnionList[0].Count - 1).Value);
-                            TaskService.UpdateUnionState(15, sortnum);
+                            try
+                            {
+
+                                TaskService.UpdateUnionState(15, sortnum);
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("四号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                if ((TaskService.GetUnionState(sortnum) ?? 0) != 15)
+                                {
+                                    Thread.Sleep(100);
+                                    writeLog.Write("四号主皮带重新更新任务:" + sortnum + "");
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                try
+                                {
+                                    writeLog.Write("四号主皮带更新任务:" + sortnum + "失败");
+                                    Thread.Sleep(100);
+                                    TaskService.UpdateUnionState(15, sortnum);
+                                }
+                                catch (Exception ex2)
+                                {
+                                    writeLog.Write("四号主皮带更新任务:" + sortnum + "失败");
+                                }
+                            }
                             updateListBox("四号主皮带任务:" + sortnum + "已接收");
                             writeLog.Write("四号主皮带任务:" + sortnum + "已接收");
                             //} 
@@ -781,6 +886,8 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
+        }
+        
         }
      
         public void Disconnect()

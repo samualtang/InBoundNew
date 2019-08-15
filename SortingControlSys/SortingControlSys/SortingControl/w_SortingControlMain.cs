@@ -334,6 +334,8 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("连接服务器成功......");
                
                 isInit = true;
+                timerAutoFinish.Interval = 1000 * 10;
+                timerAutoFinish.Start();
                 AutoFinishTask();
             }
           
@@ -985,8 +987,11 @@ namespace SortingControlSys.SortingControl
                 writeLog.Write("自动扫描更新更新任务失败" + ex.Message);
             }
         }
+        Object ondataFlag = new Object();
         public void OnDataChange(int group, int[] clientId, object[] values)//plc对应db块字节值发生变化
         {
+            lock (ondataFlag)
+            {
             if (group == 1)//发送任务组 //被监控标志取代
             {
                 for (int i = 0; i < clientId.Length; i++)
@@ -1196,10 +1201,12 @@ namespace SortingControlSys.SortingControl
 
             else if (group == 12)//监控标志位 第一组 和第二组
             {
+                writeLog.Write("跳变信号产生");
                 for (int i = 0; i < clientId.Length; i++)
                 {
                     if (clientId[i] == 1)//第一组 监控标志位
                     {
+                        writeLog.Write("组" + sortgroupno1+"跳变:" + int.Parse(values[i].ToString()));
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
                             while (!isInit)
@@ -1207,13 +1214,48 @@ namespace SortingControlSys.SortingControl
                                 Thread.Sleep(100);
                             }
                             decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
-
+                            writeLog.Write("组" + sortgroupno1 + "读取到任务号:" + tasknum);
                             //if (tempList.Count > 0)
                             //{
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                             if (tasknum != 0)
                             {
-                                TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                try
+                                {
+                                    
+
+                                    TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                    if (TaskService.GetTaskStatus(sortgroupno1, 15, tasknum) != 15)
+                                    {
+                                        writeLog.Write("组" + sortgroupno1 + "---任务:" + tasknum + "重新更新:");
+                                        TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                    }
+                                    if (TaskService.GetTaskStatus(sortgroupno1, 15, tasknum) != 15)
+                                    {
+                                        writeLog.Write("组" + sortgroupno1 + "---任务:" + tasknum + "重新更新:");
+                                        TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                    }
+                                }
+                                catch (Exception ex)
+
+                                {
+                                    updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "更新失败:");
+                                    writeLog.Write("组" + sortgroupno1 + "---任务:" + tasknum + "更新失败:");
+                                    if (ex != null)
+                                    {
+                                        writeLog.Write("更新失败:" + ex.ToString());
+                                    }
+                                    
+                                    try
+                                    {
+                                        Thread.Sleep(100);
+                                        TaskService.UpdateTaskStatus(sortgroupno1, 15, tasknum);//状态改为已发送
+                                    }
+                                    catch (Exception ex1)
+                                    {
+                                        writeLog.Write("更新失败:" + ex1.ToString());
+                                    }
+                                }
                                 updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
                                 writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
                             }
@@ -1242,6 +1284,8 @@ namespace SortingControlSys.SortingControl
                     }
                     if (clientId[i] == 2)//第二组 监控标志位
                     {
+
+                        writeLog.Write("组" + sortgroupno2 + "跳变:" + int.Parse(values[i].ToString())); 
                         if (values[i] != null && int.Parse(values[i].ToString()) == 2)//0是电控已经接收
                         {
                             while (!isInit)
@@ -1252,12 +1296,43 @@ namespace SortingControlSys.SortingControl
                             //{
                                 //TaskService.UpdateStatus(sortgroupno2, 15, tempList1.ElementAt(tempList1.Count - 1).Value);//状态改为已发送
                             decimal tasknum = decimal.Parse(taskgroup2.ReadD(0).ToString());
+                            writeLog.Write("组" + sortgroupno2 + "读取到任务号:" + tasknum);
                             //if (tempList.Count > 0)
                             //{
                             // TaskService.UpdateFJSendStatus(sortgroupno1,  tempList.ElementAt(tempList.Count - 1).Value);//状态改为已发送
                             if (tasknum != 0)
                             {
-                                TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+                                try
+                                {
+
+                                    TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+                                    if (TaskService.GetTaskStatus(sortgroupno2, 15, tasknum) != 15)
+                                    {
+                                        writeLog.Write("组" + sortgroupno2 + "---任务:" + tasknum + "重新更新:");
+                                        TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+                                    }
+                                    if (TaskService.GetTaskStatus(sortgroupno2, 15, tasknum) != 15)
+                                    {
+                                        writeLog.Write("组" + sortgroupno2 + "---任务:" + tasknum + "重新更新:");
+                                        TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    if (ex != null)
+                                    {
+                                        writeLog.Write("更新失败:" + ex.ToString());
+                                    }
+                                    try
+                                    {
+                                        Thread.Sleep(100);
+                                        TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
+                                    }
+                                    catch (Exception ex1)
+                                    {
+                                        writeLog.Write("更新失败:" + ex1.ToString());
+                                    }
+                                }
                                 updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
                                 writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                             }
@@ -1303,6 +1378,7 @@ namespace SortingControlSys.SortingControl
                     }
                 }
             }
+        }
         }
         public void Disconnect()
         { 
@@ -1544,7 +1620,7 @@ namespace SortingControlSys.SortingControl
            {
                Disconnect();
 
-               
+               timerAutoFinish.Stop();
                writeLog.Write("退出程序。。。。。。");
                System.Environment.Exit(System.Environment.ExitCode);
                
@@ -1796,6 +1872,11 @@ namespace SortingControlSys.SortingControl
                 SendTaskStatesGroup.Write(2, 1);
             }
             timerSendData.Stop();
+        }
+
+        private void timerAutoFinish_Tick(object sender, EventArgs e)
+        {
+            AutoFinishTask();
         }
 
 

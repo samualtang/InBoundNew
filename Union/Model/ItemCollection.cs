@@ -316,7 +316,7 @@ namespace SortingControlSys.Model
            //list.Add(OpcUnionServer+"DB30,W356");
            //list.Add(OpcUnionServer+"DB30,W358");
 
-           for (int i = 200; i < 836; i = i + 4)
+           for (int i = 200; i <= 836; i = i + 4)
            {
                list.Add(OpcUnionServer + "DB30,DWORD" + i );
            }

@@ -68,6 +68,7 @@
             this.Timerinitdata = new System.Windows.Forms.Timer(this.components);
             this.groupBoxErr = new System.Windows.Forms.GroupBox();
             this.timerSendData = new System.Windows.Forms.Timer(this.components);
+            this.timerAutoFinish = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.task_data)).BeginInit();
@@ -425,6 +426,10 @@
             // 
             this.timerSendData.Tick += new System.EventHandler(this.timerSendData_Tick);
             // 
+            // timerAutoFinish
+            // 
+            this.timerAutoFinish.Tick += new System.EventHandler(this.timerAutoFinish_Tick);
+            // 
             // w_SortingControlMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -489,5 +494,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn percent;
         private System.Windows.Forms.Button btn_Mainbelt;
         private System.Windows.Forms.Timer timerSendData;
+        private System.Windows.Forms.Timer timerAutoFinish;
     }
 }
