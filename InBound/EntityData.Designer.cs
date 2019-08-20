@@ -33,7 +33,7 @@ namespace InBound
         /// 请使用应用程序配置文件的“Entities”部分中的连接字符串初始化新 Entities 对象。
         /// </summary>
         public Entities()
-            : base(Security.ConnectionString, "Entities")//"name=Entities"Security.ConnectionString
+            : base("name=Entities", "Entities")//"name=Entities"Security.ConnectionString
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();

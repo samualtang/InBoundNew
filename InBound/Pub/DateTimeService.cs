@@ -14,7 +14,7 @@ namespace InBound.Pub
         /// <param name="DateContrl">时间控件</param>
         /// <param name="DateFort">时间格式</param>
         /// <returns></returns>
-        public static string GetNextDate(System.Windows.Forms.DateTimePicker DateContrl, string DateFort)
+        public string GetNextDate(System.Windows.Forms.DateTimePicker DateContrl, string DateFort)
         {
             int Dayofweek;
             switch (DateTime.Now.AddDays(1).DayOfWeek)
