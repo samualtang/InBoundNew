@@ -1046,7 +1046,9 @@ namespace InBound.Business
                             templist = templist.Where(x => x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0).ToList();
                             templist.ForEach(x => { x.STATE = 0; x.DOUBLETAKE = "0"; });
                             templist.Where(x => x.CIGSEQ > sciseq).ToList().ForEach(x => x.PACKAGESEQ = 0);
-                            templist = templist.Where(x => x.CIGSEQ <= sciseq && (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
+                            templist = templist.Where(x => (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
+                            templist = templist.Take(templist.Count - 1).ToList();
+                            //templist = templist.Where(x => x.CIGSEQ <= sciseq && (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
                             templist.ForEach(x => { x.PACKAGESEQ = 0; });
                             minHeight = list.Where(x => x.isscan == 0 && x.width > minWidth).Min(x => x.height);
                             //List<PackageArea> list1 = new List<PackageArea>(list);
