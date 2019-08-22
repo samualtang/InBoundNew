@@ -23,10 +23,11 @@ namespace highSpeed.orderHandle
         PublicFun pub = new PublicFun(System.IO.Directory.GetCurrentDirectory().ToString() + "\\interface.ini");
         DataBase Db = new DataBase();
         Socket socketClient;
+        InBound.Pub.DateTimeService datetimeservice = new InBound.Pub.DateTimeService();
         public win_export()
         {
             InitializeComponent();
-            DateGet = InBound.Pub.DateTimeService.GetNextDate(dateTimePicker1, "yyyy-MM-dd");
+            DateGet = datetimeservice.GetNextDate(dateTimePicker1, "yyyy-MM-dd");
             seek();
         }
         string DateGet = "";
