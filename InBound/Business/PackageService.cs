@@ -43,7 +43,7 @@ namespace InBound.Business
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
-                             //where item.TASKNUM == 654442
+                             //where item.TASKNUM == 659660
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
               
@@ -391,10 +391,24 @@ namespace InBound.Business
             //if (arear.cigaretteList.Count > 1)
             //{
 
-            if (width > area.cigaretteList[0].width + jx * 2)
+            if (width > area.cigaretteList[0].width+jx*2 )
             {
                 arear.cigaretteList.RemoveAt(0);
-                arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width);
+               // arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width);
+
+                if ((width - area.cigaretteList[0].width) > arear.cigaretteList[0].width)
+                {
+                    arear.cigaretteList.RemoveAt(0);
+                    arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width - area.cigaretteList[1].width);
+                }
+                else
+                {
+                    arear.cigaretteList[0].width -= (width - area.cigaretteList[0].width);
+                    if (arear.cigaretteList[0].width < 0)
+                    {
+                        arear.cigaretteList[0].width = 0;
+                    }
+                }
             }
             else
             {
@@ -408,7 +422,16 @@ namespace InBound.Business
             //}
             if (packageWidth - (areal.beginx + areal.width) <= minWidth)
             {
-                areal.width += (packageWidth - (areal.beginx + areal.width)) / 2;
+
+                decimal tempwidth = (packageWidth - (areal.beginx + areal.width))-4;
+                if (tempwidth > 20)
+                {
+                    tempwidth = 20;
+                }
+
+                areal.cigaretteList[areal.cigaretteList.Count - 1].width += tempwidth;
+                areal.cigaretteList[areal.cigaretteList.Count - 1].tox += tempwidth;
+                areal.width += (packageWidth - (areal.beginx + areal.width));
                 areal.right = null;
                 list.Add(areal);
             }
@@ -1049,9 +1072,8 @@ namespace InBound.Business
                             templist = templist.Where(x => x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0).ToList();
                             templist.ForEach(x => { x.STATE = 0; x.DOUBLETAKE = "0"; });
                             templist.Where(x => x.CIGSEQ > sciseq).ToList().ForEach(x => x.PACKAGESEQ = 0);
-                            templist = templist.Where(x => (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
-                            templist = templist.Take(templist.Count - 1).ToList();
-                            //templist = templist.Where(x => x.CIGSEQ <= sciseq && (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
+                           
+                            templist = templist.Where(x => x.CIGSEQ <= sciseq && (x.PACKAGESEQ == packageNO || x.PACKAGESEQ == 0)).ToList();
                             templist.ForEach(x => { x.PACKAGESEQ = 0; });
                             minHeight = list.Where(x => x.isscan == 0 && x.width > minWidth ).Min(x => x.height);
                             //List<PackageArea> list1 = new List<PackageArea>(list);
@@ -1405,42 +1427,44 @@ namespace InBound.Business
                             decimal flag = 1;
                             decimal lastflag = 0;
                             decimal beginx = 0;
-                            foreach (var item in area.cigaretteList)//平面上的每个子平面
-                            {
-                                item.index = i;
-                                if (tempunnormaltask.CIGSEQ < item.CigaretteNo)//如果当前条烟的序号小于平面的条烟序号 不可放
+                           
+                                foreach (var item in area.cigaretteList)//平面上的每个子平面
                                 {
-                                    flag = 0;
+                                    item.index = i;
+                                    if (tempunnormaltask.CIGSEQ < item.CigaretteNo)//如果当前条烟的序号小于平面的条烟序号 不可放
+                                    {
+                                        flag = 0;
+                                    }
+                                    else
+                                    {
+                                        flag = 1;
+                                    }
+                                    if (lastflag == 1 && flag == 1)//上一条烟的序号和当前条烟的序号 都大于当前条烟序号
+                                    {
+
+                                        AreaUnit u = unit.ElementAt(unit.Count - 1);
+                                        u.width += item.width;
+                                        u.end = i;
+
+
+                                    }
+                                    else if (lastflag == 0 && flag == 1)//如果上条烟序号小于当前平面条烟序号  新增初始平面
+                                    {
+                                        AreaUnit cell = new AreaUnit();
+                                        cell.width = item.width;
+                                        cell.begin = i;
+                                        cell.end = i;
+                                        cell.beginx = beginx;
+                                        unit.Add(cell);
+                                    }
+
+                                    lastflag = flag;
+
+                                    beginx += item.width;
+
+                                    i++;
                                 }
-                                else
-                                {
-                                    flag = 1;
-                                }
-                                if (lastflag == 1 && flag == 1)//上一条烟的序号和当前条烟的序号 都大于当前条烟序号
-                                {
-
-                                    AreaUnit u = unit.ElementAt(unit.Count - 1);
-                                    u.width += item.width;
-                                    u.end = i;
-
-
-                                }
-                                else if (lastflag == 0 && flag == 1)//如果上条烟序号小于当前平面条烟序号  新增初始平面
-                                {
-                                    AreaUnit cell = new AreaUnit();
-                                    cell.width = item.width;
-                                    cell.begin = i;
-                                    cell.end = i;
-                                    cell.beginx = beginx;
-                                    unit.Add(cell);
-                                }
-
-                                lastflag = flag;
-
-                                beginx += item.width;
-
-                                i++;
-                            }
+                            
                             if (tempunnormaltask.CIGWIDTH + jx * 2 <= area.width && area.height + tempunnormaltask.CIGHIGH < packageHeight && (tempunnormaltask.CIGLENGTH < area.length || tempunnormaltask.CIGLENGTH - area.length < lc))
                             {
                                 foreach (var cell in unit)
