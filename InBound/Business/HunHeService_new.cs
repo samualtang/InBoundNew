@@ -431,10 +431,10 @@ namespace InBound.Business
                         var query = (from item2 in entity.T_PRODUCE_SORTTROUGH
                                      join item4 in entity.T_UN_POKE_HUNHE on item2.TROUGHNUM equals item4.TROUGHNUM
                                      where item2.CIGARETTETYPE == 40 && item2.MACHINESEQ == seq && (item4.PACKMACHINESEQ == packmachine1 || item4.PACKMACHINESEQ == packmachine2)
-                                     && item4.SENDTASKNUM >= finishno1
+                                         //&& item4.SENDTASKNUM >= finishno1
                                      && item4.PULLSTATUS == 0
                                      orderby item4.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM, item4.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList();
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList().Where(x => x.SENDTASKNUM >= finishno1).ToList();
                    
                         return query;
                     }
@@ -443,10 +443,10 @@ namespace InBound.Business
                         var query = (from item2 in entity.T_PRODUCE_SORTTROUGH
                                      join item4 in entity.T_UN_POKE_HUNHE  on item2.TROUGHNUM equals item4.TROUGHNUM
                                      where item2.CIGARETTETYPE == 40 && item2.MACHINESEQ == seq && (item4.PACKMACHINESEQ == packmachine1 || item4.PACKMACHINESEQ == packmachine2)
-                                     && item4.SENDTASKNUM >= finishno1
-                                     && item4.PULLSTATUS == 0//
+                                     //&& item4.SENDTASKNUM >= finishno1
+                                     && item4.PULLSTATUS == 0
                                      orderby item4.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM, item4.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList();
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList().Where(x => x.SENDTASKNUM >= finishno1).ToList(); 
 
                         return updown_new(query, 0);
                         //没有经过排程处理的数据使用的方法  不需要过滤放烟
