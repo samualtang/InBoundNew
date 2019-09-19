@@ -144,7 +144,7 @@ namespace FormUI
         {
 
             PackageService service = new PackageService();
-            service.GetAllOrder(1);
+            //service.GetAllOrder(1);
             //List<T_PRODUCE_POKE> list = TaskService.getList(1, 1);
             //String list = AtsCellInService.getCellNoCode("1111111");
             List<MainBeltInfo> list = new List<MainBeltInfo>();

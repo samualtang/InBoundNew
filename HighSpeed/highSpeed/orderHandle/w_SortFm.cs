@@ -232,6 +232,7 @@ namespace highSpeed.orderHandle
                     TimerByTime.Stop();// 计时结束;
                     btnSort.Enabled = true;
                     MessageBox.Show(errmsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    writeLog.Write(errmsg);
                     updateControl(btnSort, true, true);
                 }
                 updateControl(btnSort, true, true);

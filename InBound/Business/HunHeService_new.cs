@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using InBound.Model;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace InBound.Business
 {
@@ -42,7 +43,7 @@ namespace InBound.Business
                             var query = (from item1 in entity.T_PRODUCE_SORTTROUGH
                                          join item2 in entity.T_UN_POKE_HUNHE 
                                          on item1.TROUGHNUM equals item2.TROUGHNUM
-                                         where item1.TROUGHTYPE == 10 && item1.CIGARETTETYPE == 40 && item2.SENDTASKNUM > finishno1 //>= finishno1//finishno  
+                                         where item1.TROUGHTYPE == 10 && item1.CIGARETTETYPE == 40 //&& item2.SENDTASKNUM > finishno1 //>= finishno1//finishno  
                                              && item1.MACHINESEQ == seq
                                              && item2.PULLSTATUS == 1 
                                              && (item2.PACKMACHINESEQ == packmachine1
@@ -58,7 +59,7 @@ namespace InBound.Business
                                              SORTNUM = item2.SORTNUM,
                                              SENDTASKNUM = item2.SENDTASKNUM,
                                              PULLSTATUS = item2.PULLSTATUS
-                                         })//.Skip(finishno2)
+                                         }).ToList().Where(x => x.SENDTASKNUM > finishno1)
                                          .Take(qty)
                                          .ToList();
                                 return query; 
@@ -68,7 +69,7 @@ namespace InBound.Business
                             //处理前的数据表
                             var query = (from item1 in entity.T_PRODUCE_SORTTROUGH
                                          join item2 in entity.T_UN_POKE_HUNHE on item1.TROUGHNUM equals item2.TROUGHNUM
-                                         where item1.TROUGHTYPE == 10 && item1.CIGARETTETYPE == 40 && item2.SENDTASKNUM > finishno1//finishno  
+                                         where item1.TROUGHTYPE == 10 && item1.CIGARETTETYPE == 40 //&& item2.SENDTASKNUM > finishno1//finishno  
                                              && item2.MACHINESEQ == seq
                                              && item2.PULLSTATUS == 1// 
                                              && (item2.PACKMACHINESEQ == packmachine1
@@ -84,9 +85,9 @@ namespace InBound.Business
                                              SORTNUM = item2.SORTNUM,
                                              SENDTASKNUM = item2.SENDTASKNUM,
                                              PULLSTATUS = item2.PULLSTATUS
-                                         })//
+                                         }).ToList().Where(x => x.SENDTASKNUM > finishno1)
                                          .Take(qty)
-                                         .ToList();//.Skip(finishno2).Take(qty).ToList();
+                                         .ToList();
                             return updown_new(query, 0);
                             //没有经过排程处理的数据使用的方法 不需要过滤放烟
                             //return updown(query, cigarettesort,2);
@@ -98,7 +99,7 @@ namespace InBound.Business
                         var query = (from item2 in entity.T_PRODUCE_SORTTROUGH
                                      join item3 in entity.T_UN_POKE_HUNHE
                                          on item2.TROUGHNUM equals item3.TROUGHNUM
-                                     where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 && item3.SENDTASKNUM >= finishno1//finishno  
+                                     where item2.TROUGHTYPE == 10 && item2.CIGARETTETYPE == 40 //&& item3.SENDTASKNUM >= finishno1//finishno  
                                      && (item3.PACKMACHINESEQ == packmachine1
                                          || item3.PACKMACHINESEQ == packmachine2)
                                         && item3.PULLSTATUS == 1 
@@ -112,8 +113,7 @@ namespace InBound.Business
                                          QUANTITY = 1,
                                          SENDTASKNUM=item3.SENDTASKNUM,
                                           SORTNUM=item3.SORTNUM
-                                     })
-                                     //.Skip(finishno2)
+                                     }).ToList().Where(x => x.SENDTASKNUM > finishno1)
                                      .Take(qty)
                                      .ToList();
                         if (cigarettesort == "0")
@@ -431,10 +431,10 @@ namespace InBound.Business
                         var query = (from item2 in entity.T_PRODUCE_SORTTROUGH
                                      join item4 in entity.T_UN_POKE_HUNHE on item2.TROUGHNUM equals item4.TROUGHNUM
                                      where item2.CIGARETTETYPE == 40 && item2.MACHINESEQ == seq && (item4.PACKMACHINESEQ == packmachine1 || item4.PACKMACHINESEQ == packmachine2)
-                                     && item4.SENDTASKNUM >= finishno1
+                                         //&& item4.SENDTASKNUM >= finishno1
                                      && item4.PULLSTATUS == 0
                                      orderby item4.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM, item4.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList();
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).ToList().Where(x => x.SENDTASKNUM >= finishno1).Take(qty).ToList();
                    
                         return query;
                     }
@@ -443,15 +443,16 @@ namespace InBound.Business
                         var query = (from item2 in entity.T_PRODUCE_SORTTROUGH
                                      join item4 in entity.T_UN_POKE_HUNHE  on item2.TROUGHNUM equals item4.TROUGHNUM
                                      where item2.CIGARETTETYPE == 40 && item2.MACHINESEQ == seq && (item4.PACKMACHINESEQ == packmachine1 || item4.PACKMACHINESEQ == packmachine2)
-                                     && item4.SENDTASKNUM >= finishno1
-                                     && item4.PULLSTATUS == 0//
+                                     //&& item4.SENDTASKNUM >= finishno1
+                                     && item4.PULLSTATUS == 0
                                      orderby item4.SORTNUM, item2.MACHINESEQ, item2.TROUGHNUM, item4.POKEID
-                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).Take(qty).ToList();
-
+                                     select new HUNHEVIEW() { PULLSTATUS = item4.PULLSTATUS, POKEID = item4.POKEID, CIGARETTECODE = item4.CIGARETTECODE, CIGARETTENAME = item2.CIGARETTENAME, MACHINESEQ = item2.MACHINESEQ, QUANTITY = 1, SENDTASKNUM = item4.SENDTASKNUM }).ToList().Where(x => x.SENDTASKNUM >= finishno1).Take(qty).ToList();
+                          
                         return updown_new(query, 0);
                         //没有经过排程处理的数据使用的方法  不需要过滤放烟
                         //return updown(query, cigarettesort,1);
-                    }      
+                    }
+                    
                 }
                 catch (Exception e)
                 {

@@ -17,6 +17,7 @@ using OpcRcw.Comn;
 using SpecialShapeSmoke.Model;
 using System.Runtime.InteropServices;
 using System.IO.Ports;
+using System.Diagnostics;
 
 namespace SpecialShapeSmoke
 {
@@ -628,6 +629,7 @@ namespace SpecialShapeSmoke
         
 
         DialogResult result = DialogResult.Cancel;
+        Stopwatch watch = new Stopwatch();
         /// <summary>
         /// 获取数据
         /// </summary>  
@@ -636,6 +638,7 @@ namespace SpecialShapeSmoke
         {
             writeLog.Write("getdata start");
             string message = "获取数据开始" + System.DateTime.Now.ToString();
+            watch.Start();
             string st1 = System.DateTime.Now.ToString();
             try
             { 
@@ -728,6 +731,7 @@ namespace SpecialShapeSmoke
                                         message += "\r\n待放绑定结束" + System.DateTime.Now.ToString();
                                     }
                                 }
+                                
                             }
                             message += "\r\n数据获取成功" + System.DateTime.Now.ToString();
                             if (throughList[0].Count <= 0 && throughList[1].Count <= 0) //根据不同通道完成来显示完成任务 
@@ -763,7 +767,9 @@ namespace SpecialShapeSmoke
                 }
             }
             string st2 = System.DateTime.Now.ToString();
-            writeLog.Write(message+"\r\n整体耗时：开始于" + st1 + "  结束于" + st2);   
+            watch.Stop();
+            writeLog.Write(message + "\r\n整体耗时：" + watch.ElapsedMilliseconds.ToString() + "ms," + "开始于" + st1 + "  结束于" + st2);
+            watch.Reset();
         }
         //数据库连接失败，界面显示
         public void databaselinkcheck()
