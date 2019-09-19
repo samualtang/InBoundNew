@@ -185,7 +185,7 @@ namespace InBound.Business
         int packageWidth = 540;//宽
         int packageLenghth = 366; //长
         int packageTHeight = 140;//高
-        int packageCtHeight = 70;//高
+        int packageCtHeight = 50;//高
         int packageHeight = 140;//高
 
 
@@ -1552,10 +1552,10 @@ namespace InBound.Business
                             {
                                 packageHeight = packageCtHeight;
                                 decimal cigseqN = (chooseItem.CIGSEQ??0) + 1;
-                                decimal cigseqT =( chooseItem.CIGSEQ??0) + 2;
+                               // decimal cigseqT =( chooseItem.CIGSEQ??0) + 2;
                                 var chooseItem2 = unnormaltask.FindAll(x => x.CIGSEQ == cigseqN && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
-                                var chooseItem3 = unnormaltask.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
-
+                               // var chooseItem3 = unnormaltask.FindAll(x => x.CIGSEQ == cigseqT && x.STATE != 10).OrderBy(x => x.CIGSEQ).FirstOrDefault();
+                              
                                 if (chooseItem2 != null)
                                 {
                                     
@@ -1566,49 +1566,53 @@ namespace InBound.Business
                                         {
                                             templist.Add(chooseItem2);
                                         }
-                                        chooseItem.CIGZ = jx + chooseItem.CIGLENGTH / 2;
+                                        chooseItem.CIGZ = 10+jx + chooseItem.CIGLENGTH / 2;
                                         chooseItem2.PACKAGESEQ = packageNO;
                                         chooseItem2.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx;
-
+                                        length = chooseItem2.CIGLENGTH ?? 0;
 
                                         chooseItem2.CIGHIGHY = area.height + chooseItem2.CIGHIGH;
                                         chooseItem2.STATE = 10;
                                         chooseItem2.ALLPACKAGESEQ = allpackagenum;
                                         chooseItem2.CIGZ = chooseItem.CIGLENGTH + jx * 2 + chooseItem2.CIGLENGTH / 2 + jx;
 
-                                        if (chooseItem3 != null)
-                                        {
+
+
+                                        #region modify by tjl  取消放三条
+                                        //if (chooseItem3 != null)
+                                        //{
 
                                             
-                                            item = query1.Where(x => x.ITEMNO == chooseItem3.CIGARETTECODE).FirstOrDefault();
-                                            decimal maxL = 0;
-                                            if (area.cigaretteList != null && area.cigaretteList.Count > 0)
-                                            {
-                                                maxL = (from t in unnormaltask
-                                                        join d in area.cigaretteList on t.CIGSEQ equals d.CigaretteNo
-                                                        where t.CIGLENGTH>=280
-                                                        select t).ToList().Count();
-                                            }
-                                            if (item.CDTYPE == 1 && (maxL>=2 ||maxL==0))
-                                            {
-                                                if (maxLength - chooseItem.CIGLENGTH - chooseItem2.CIGLENGTH - jx * 2 >= chooseItem3.CIGLENGTH)
-                                                {
-                                                    if (!templist.Contains(chooseItem3))
-                                                    {
-                                                        templist.Add(chooseItem3);
-                                                    }
-                                                    chooseItem3.PACKAGESEQ = packageNO;
-                                                    chooseItem3.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx * 2;
+                                        //    item = query1.Where(x => x.ITEMNO == chooseItem3.CIGARETTECODE).FirstOrDefault();
+                                        //    decimal maxL = 0;
+                                        //    if (area.cigaretteList != null && area.cigaretteList.Count > 0)
+                                        //    {
+                                        //        maxL = (from t in unnormaltask
+                                        //                join d in area.cigaretteList on t.CIGSEQ equals d.CigaretteNo
+                                        //                where t.CIGLENGTH>=280
+                                        //                select t).ToList().Count();
+                                        //    }
+                                        //    if (item.CDTYPE == 1 && (maxL>=2 ||maxL==0))
+                                        //    {
+                                        //        if (maxLength - chooseItem.CIGLENGTH - chooseItem2.CIGLENGTH - jx * 2 >= chooseItem3.CIGLENGTH)
+                                        //        {
+                                        //            if (!templist.Contains(chooseItem3))
+                                        //            {
+                                        //                templist.Add(chooseItem3);
+                                        //            }
+                                        //            chooseItem3.PACKAGESEQ = packageNO;
+                                        //            chooseItem3.CIGWIDTHX = area.beginx + tempunit.beginx + chooseItem.CIGWIDTH / 2 + jx * 2;
 
 
-                                                    chooseItem3.CIGHIGHY = area.height + chooseItem3.CIGHIGH;
-                                                    chooseItem3.STATE = 10;
-                                                    chooseItem3.ALLPACKAGESEQ = allpackagenum;
-                                                    chooseItem3.CIGZ = chooseItem.CIGLENGTH + jx * 2 + chooseItem2.CIGLENGTH + jx * 2 + chooseItem3.CIGLENGTH / 2 + jx;
+                                        //            chooseItem3.CIGHIGHY = area.height + chooseItem3.CIGHIGH;
+                                        //            chooseItem3.STATE = 10;
+                                        //            chooseItem3.ALLPACKAGESEQ = allpackagenum;
+                                        //            chooseItem3.CIGZ = chooseItem.CIGLENGTH + jx * 2 + chooseItem2.CIGLENGTH + jx * 2 + chooseItem3.CIGLENGTH / 2 + jx;
 
-                                                }
-                                            }
-                                        }
+                                        //        }
+                                        //    }
+                                        //}
+                     #endregion
                                     }
                                 }
  
