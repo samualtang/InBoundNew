@@ -30,8 +30,8 @@ namespace highSpeed.orderHandle
 
         private void btn_search_Click(object sender, EventArgs e)
         {
+            this.lblBcd.Text = "";
             Bind();
-
         }
         void Bind()
         {

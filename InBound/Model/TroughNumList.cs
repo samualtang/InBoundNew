@@ -20,6 +20,7 @@ namespace InBound.Model
         public decimal iheight { get; set; }
         public decimal ilength { get; set; }
         public decimal iwidth { get; set; }
+        public decimal cdtype { get; set; }
 
     }
 }

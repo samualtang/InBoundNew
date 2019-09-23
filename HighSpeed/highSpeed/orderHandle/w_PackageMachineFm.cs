@@ -115,6 +115,8 @@ namespace highSpeed.orderHandle
                 ps.GetAllOrder(Convert.ToDecimal(item[1]), Convert.ToDecimal(item[0]));
             }
             var date2 = System.DateTime.Now;
+            //将分配到两个包装机的任务，重置包装机包数，订单内包序等信息
+            
 
             MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
             InBound.WriteLog.GetLog().Write("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
@@ -199,7 +201,10 @@ namespace highSpeed.orderHandle
             if (paclist.Count==8)
             {
                 var date2 = System.DateTime.Now;
-                MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
+                var date3 = System.DateTime.Now;
+                UpPackageData.UpPackageSeq();
+                var date4 = System.DateTime.Now;
+                MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒\r\n订单拆分整理耗时" + Math.Ceiling((date4 - date3).TotalSeconds) + "秒");
                 InBound.WriteLog.GetLog().Write("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
                 updateControl(button_TBJ, true);
             }

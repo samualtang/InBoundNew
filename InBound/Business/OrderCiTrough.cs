@@ -22,7 +22,7 @@ namespace InBound.Business
         }
 
         /// <summary>
-        /// 更新通道
+        /// 更新特异型烟道
         /// </summary>
         /// <returns>结果</returns>
         public int UpdateCiTrough()
@@ -37,9 +37,9 @@ namespace InBound.Business
                     List<CigaretteSortList> ListCigarette = new List<CigaretteSortList>();//排序后的品牌列表（分拣线）
                     ListCigarette = (from item in et.T_PRODUCE_SORTTROUGH
                                      join item2 in et.T_WMS_ITEM on item.CIGARETTECODE equals item2.ITEMNO
-                                     where item.CIGARETTETYPE == 40 && item.TROUGHTYPE == 10 && item.STATE == "10" && item.GROUPNO == i
-                                     select new CigaretteSortList() { troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME, iheight = item2.IHEIGHT ?? 0, ilength = item2.ILENGTH ?? 0, iwidth = item2.IWIDTH ?? 0 })
-                                    .OrderByDescending(x => x.iheight).ThenByDescending(x => x.ilength).ThenByDescending(x => x.iwidth).ToList();
+                                     where item.CIGARETTETYPE == 40 && item.TROUGHTYPE == 10 && item.STATE == "10" && item.GROUPNO == i && (item.MACHINESEQ == 1061 ||item.MACHINESEQ == 2061 ||item.MACHINESEQ == 3061 ||item.MACHINESEQ == 4061)
+                                     select new CigaretteSortList() { troughnun = item.TROUGHNUM, Cid = item2.ITEMNO, cname = item2.ITEMNAME, iheight = item2.IHEIGHT ?? 0, ilength = item2.ILENGTH ?? 0, iwidth = item2.IWIDTH ?? 0 , cdtype = item2.CDTYPE??0})
+                                    .OrderBy(x=>x.cdtype).ThenBy(x => x.iheight).ThenByDescending(x => x.ilength).ThenByDescending(x => x.iwidth).ToList();//低到高(长到短，宽到窄)，中支烟最后（cdtype=1的）
 
                     //完成重新排序后的数据√ (分拣线)
                     var result = et.T_PRODUCE_SORTTROUGH.Where(x => x.CIGARETTETYPE == 40 && x.TROUGHTYPE == 10 && x.STATE == "10" && x.GROUPNO == i).Select(x => x).OrderBy(x => x.TROUGHNUM).ToList();

@@ -43,7 +43,7 @@ namespace InBound.Business
                     .ToList();
                 //所有订单明细
                 var query = (from item in data
-                             //where item.TASKNUM == 659660
+                             //where item.TASKNUM == 694104
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
               
@@ -68,7 +68,7 @@ namespace InBound.Business
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
                         //当期订单明细
                         var query2 = (from item2 in entity.V_PRODUCE_PACKAGEINFO
-                                      where item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
+                                      where item2.EXPORT == packageNo && item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
                                       orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM, item2.SEQ
                                       select item2).ToList();
                         if (query2 != null)
@@ -214,7 +214,7 @@ namespace InBound.Business
         /// <summary>
         /// 合包常规烟总层数
         /// </summary>
-        decimal MaxnormalHight = 4;
+        decimal MaxnormalHight = 5;
         int taskCount = 6;//一次参与计算的条数
         int allpackagenum = 0;
         int NormalCount = 36;//常规烟整包条烟数
@@ -1574,7 +1574,7 @@ namespace InBound.Business
                                         chooseItem2.CIGHIGHY = area.height + chooseItem2.CIGHIGH;
                                         chooseItem2.STATE = 10;
                                         chooseItem2.ALLPACKAGESEQ = allpackagenum;
-                                        chooseItem2.CIGZ = chooseItem.CIGLENGTH + jx * 2 + chooseItem2.CIGLENGTH / 2 + jx;
+                                        chooseItem2.CIGZ = chooseItem.CIGLENGTH + jx * 2 + chooseItem2.CIGLENGTH / 2 + jx+10;
 
 
 
@@ -2271,18 +2271,39 @@ namespace InBound.Business
             if (AllUnnormalCount != 0)//存在异型烟
             {
                 //排序异型烟包：按包的总高度排序数量、单包高度、总条烟数升序排序
-                var sortdata = task.GroupBy(x => new { x.ALLPACKAGESEQ, x.PACKAGESEQ }).Select(x => new { allpackageq = x.Key.ALLPACKAGESEQ, packageq = x.Key.PACKAGESEQ, yy = x.Max(t => t.CIGHIGHY), ww = x.Sum(t => t.CIGWIDTH), qty = x.Sum(t => t.NORMALQTY) }).OrderBy(x => x.qty).ThenBy(x => x.yy).ThenBy(x => x.ww);
+                var sortdata = task.GroupBy(x => new { x.ALLPACKAGESEQ, x.PACKAGESEQ }).Select(x => new { allpackageq = x.Key.ALLPACKAGESEQ, packageq = x.Key.PACKAGESEQ, yy = x.Max(t => t.CIGHIGHY), ww = x.Sum(t => t.CIGWIDTH), qty = x.Sum(t => t.NORMALQTY),qh = 0 }).OrderBy(x => x.qty).ThenBy(x => x.yy).ThenBy(x => x.ww);
                 //找出只有一层的异型烟包(6条常规烟宽度*0.8)
                 //var oneleveldata = sortdata.Where(x => x.ww <= (normalwidth * NorCount) * NormalTemp).ToList();
+                //获取品牌特性:1中支横放烟
+                List<T_WMS_ITEM> itemlist = new List<T_WMS_ITEM>();
+                using (Entities et =new Entities())
+                {
+                    itemlist = et.T_WMS_ITEM.Where(x=>x.CDTYPE == 1).ToList();
+                }
                 //找出只有3条及一下的异型烟包(用于强制合包)
                 var oneleveldata = sortdata.Where(x => x.qty <= qzhbqty).ToList();
-
+                List<decimal> _ALLPACKAGESEQ = new List<decimal>();
+                if (itemlist.Count > 0)
+                {
+                    foreach (var item in itemlist)
+                    {
+                        _ALLPACKAGESEQ.AddRange(task.Where(x => x.CIGARETTECODE.Contains(item.ITEMNO)).Select(x => x.ALLPACKAGESEQ ?? 0).Distinct().ToList());
+                    }
+                    if (_ALLPACKAGESEQ.Count > 0)
+                    {
+                        foreach (var item in _ALLPACKAGESEQ)
+                        {
+                            oneleveldata = oneleveldata.Where(x => x.allpackageq != item).ToList();
+                        }
+                    }
+                }
+                
                 if (AllNormalQty > 0)//存在常规烟
                 {
                     //异型烟可匹配的最大层数
                     decimal allFloor = unnormallist.Sum(x => x[2]);
                     //异型烟可匹配数量多
-                    if (allFloor > AllNormalLevel)
+                    if (allFloor >= AllNormalLevel)
                     {
                         //如果有余数  量最少的来强制合成一包
                         if (Remainder != 0)
@@ -2293,6 +2314,16 @@ namespace InBound.Business
                                 var tmpdatas = unnormallist.Where(x => x[0] == oneleveldata.FirstOrDefault().allpackageq).Select(x => x).FirstOrDefault();
                                 tmpdatas[3] = 1;//强制合包
                                 tmpdatas[1] = tmpdatas[2];
+                                if (AllNormalLevel < tmpdatas[2])
+                                {
+                                    tmpdatas[1] = AllNormalLevel;
+                                    AllNormalLevel = 0;
+                                }
+                                else
+                                {
+                                    tmpdatas[1] = tmpdatas[2];
+                                    AllNormalLevel -= tmpdatas[1];
+                                }
                             }
                             else
                             {
@@ -2304,6 +2335,10 @@ namespace InBound.Business
                         foreach (var item in sortdata)
                         {
                             var tmpdatas = unnormallist.Where(x => x[0] == item.allpackageq).Select(x => x).FirstOrDefault();
+                            if (tmpdatas[1] > 0)
+                            {
+                                continue;
+                            }
                             if (AllNormalLevel < tmpdatas[2])
                             {
                                 tmpdatas[1] = AllNormalLevel;
@@ -2341,6 +2376,7 @@ namespace InBound.Business
                         decimal cenum = datatmpcenum[1];
                         //该包异型烟需要的常规烟条数
                         decimal nornum = cenum * NorCount;
+                     
                         if (datatmpcenum[3] == 1)//强制合包
                         {
                             nornum = ((cenum - 1) * NorCount) + Remainder;

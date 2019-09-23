@@ -124,10 +124,11 @@ namespace InBound.Business
                 if (date != null)
                 {
                     //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
-                    var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList()).FirstOrDefault();
+                    var lastsynseq = tasksynseq.GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList().Except(synseq.Where(a => a.ORDERDATE == date.orderdate).GroupBy(a => a.SYNSEQ).Select(a => new { synseq = a.Key }).ToList());
                     if (lastsynseq != null)
                     {
                         var alredyorder = (from item in ent.T_UN_POKE
+                                           where item.STATUS == 10
                                            group item by new { package = item.PACKAGEMACHINE, billcode = item.BILLCODE }
                                                into g
                                                select new { g.Key.billcode, g.Key.package }).ToList();//先给订单分组 group by 
@@ -137,8 +138,9 @@ namespace InBound.Business
                                          where c.Key.count > 1
                                          select new { c.Key.billcode }).Distinct().ToList();//取出一个订单在两个包装机的订单号 相当于 having    Count( distinct  packagemachine) > 1)
 
-
-                        var order = (from item in ent.T_UN_TASK where item.SYNSEQ == lastsynseq.synseq select item).ToList();
+                        var order = (from item2 in alredyorder
+                                     join item in ent.T_UN_TASK
+                                     on item2.billcode equals item.BILLCODE select item).ToList();
                         foreach (var item in count)//移除已经拆单的订单号
                         {
                             order.RemoveAll(a => a.BILLCODE == item.billcode);

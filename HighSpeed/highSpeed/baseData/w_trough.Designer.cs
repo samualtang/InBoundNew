@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_shiper = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnsyncData = new System.Windows.Forms.Button();
@@ -65,7 +66,6 @@
             this.groupno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgVprint1 = new VBprinter.DGVprint(this.components);
             this.pager1 = new WHC.Pager.WinControl.Pager();
-            this.btn_shiper = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.troughdata)).BeginInit();
@@ -97,13 +97,23 @@
             this.panel1.Size = new System.Drawing.Size(1252, 88);
             this.panel1.TabIndex = 0;
             // 
+            // btn_shiper
+            // 
+            this.btn_shiper.Location = new System.Drawing.Point(838, 55);
+            this.btn_shiper.Name = "btn_shiper";
+            this.btn_shiper.Size = new System.Drawing.Size(106, 23);
+            this.btn_shiper.TabIndex = 19;
+            this.btn_shiper.Text = "同步品牌尺寸";
+            this.btn_shiper.UseVisualStyleBackColor = true;
+            this.btn_shiper.Click += new System.EventHandler(this.btn_shiper_Click);
+            // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(998, 55);
+            this.button4.Location = new System.Drawing.Point(957, 55);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(102, 23);
+            this.button4.Size = new System.Drawing.Size(143, 23);
             this.button4.TabIndex = 18;
-            this.button4.Text = "重新排序混合道";
+            this.button4.Text = "重新排序特异型烟道";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -560,16 +570,6 @@
             this.pager1.RecordCount = 0;
             this.pager1.Size = new System.Drawing.Size(1099, 45);
             this.pager1.TabIndex = 1;
-            // 
-            // btn_shiper
-            // 
-            this.btn_shiper.Location = new System.Drawing.Point(880, 55);
-            this.btn_shiper.Name = "btn_shiper";
-            this.btn_shiper.Size = new System.Drawing.Size(95, 23);
-            this.btn_shiper.TabIndex = 19;
-            this.btn_shiper.Text = "同步品牌尺寸";
-            this.btn_shiper.UseVisualStyleBackColor = true;
-            this.btn_shiper.Click += new System.EventHandler(this.btn_shiper_Click);
             // 
             // win_trough
             // 

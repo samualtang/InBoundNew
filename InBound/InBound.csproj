@@ -87,6 +87,7 @@
     <Compile Include="Business\SixSchedule.cs" />
     <Compile Include="Business\SpecialSmoke.cs" />
     <Compile Include="Business\TBJDataSchdule.cs" />
+    <Compile Include="Business\UpPackageData.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Business\PackageService2.cs" />
     <Compile Include="Model\HUNHENOWVIEW.cs" />
