@@ -43,7 +43,7 @@ namespace SpecialShapeSmoke
         /// <summary>
         /// 混合烟道
         /// </summary>
-        Group ShapeGroup;
+        Group ShapeGroup,ShapeGroupYC;
 
         int topHeight = 57;
         int padding = 10;
@@ -136,7 +136,14 @@ namespace SpecialShapeSmoke
 
             if (boxText.Length == 1)//根据通道编号查找DB对应值
             {
-                dbIndex = DicBind(boxText[0],PackMachineSeq);
+                if (boxText[0] == "1061" ||boxText[0] == "2061" ||boxText[0] == "3061" ||boxText[0] == "4061")
+                {
+                    dbIndex = DicBind(boxText[0],PackMachineSeq);
+                }
+                else
+                {
+                    dbIndex = DicBindYC(boxText[0], PackMachineSeq);
+                }    
             }
             if (CheckTrough())
             {
@@ -330,9 +337,12 @@ namespace SpecialShapeSmoke
             SortMainbelt.Text = "推烟皮带";
             SortMainbelt.Click += SortMainbeltClick;
             SortMainbelt.Location = new Point(p.Width - 12 * topHeight, 0);
-            SortMainbelt.Visible = true;
+            SortMainbelt.Visible = false;
             p.Controls.Add(SortMainbelt);
-
+            if (boxText[0] == "1061" ||boxText[0] == "2061"||boxText[0] == "3061"||boxText[0] == "4061")
+            {
+                SortMainbelt.Visible = true;
+            }
             //search.Enabled = false;
             //btnView.Enabled = false;
             //btnSearch.Enabled = false;
@@ -424,7 +434,7 @@ namespace SpecialShapeSmoke
             }
         }
         /// <summary>
-        /// 绑定通道号对应值
+        /// 绑定通道号对应值 61道
         /// </summary>
         decimal[] DicBind(string troughno,decimal[] packmachine)
         {
@@ -458,6 +468,57 @@ namespace SpecialShapeSmoke
            
             return positiong;
         }
+        decimal[] DicBindYC(string troughno, decimal[] packmachine)
+        {
+            decimal[] YCpositiong = { 0, 0 };
+            decimal[] YCpackmachine1 = { 1, 2 };
+            decimal[] YCpackmachine2 = { 3, 4 };
+            decimal[] YCpackmachine3 = { 5, 6 };
+            decimal[] YCpackmachine4 = { 7, 8 };
+
+            if (troughno == "1001" && packmachine[0] == YCpackmachine1[0] && packmachine[1] == YCpackmachine1[1])
+            {
+                YCpositiong[0] = 0;
+                YCpositiong[1] = 1;
+            } 
+            else if (troughno == "1060" && packmachine[0] == YCpackmachine1[0] && packmachine[1] == YCpackmachine1[1])
+            {
+                YCpositiong[0] = 2;
+                YCpositiong[1] = 3;
+            }
+            else if (troughno == "2001" && packmachine[0] == YCpackmachine2[0] && packmachine[1] == YCpackmachine2[1])
+            {
+                YCpositiong[0] = 4;
+                YCpositiong[1] = 5;
+            }
+            else if (troughno == "2060" && packmachine[0] == YCpackmachine2[0] && packmachine[1] == YCpackmachine2[1])
+            {
+                YCpositiong[0] = 6;
+                YCpositiong[1] = 7;
+            }
+            else if (troughno == "3001" && packmachine[0] == YCpackmachine3[0] && packmachine[1] == YCpackmachine3[1])
+            {
+                YCpositiong[0] = 8;
+                YCpositiong[1] = 9;
+            }
+            else if (troughno == "3060" && packmachine[0] == YCpackmachine3[0] && packmachine[1] == YCpackmachine3[1])
+            {
+                YCpositiong[0] = 10;
+                YCpositiong[1] = 11;
+            }
+            else if (troughno == "4001" && packmachine[0] == YCpackmachine4[0] && packmachine[1] == YCpackmachine4[1])
+            {
+                YCpositiong[0] = 12;
+                YCpositiong[1] = 13;
+            }
+            else if (troughno == "4060" && packmachine[0] == YCpackmachine4[0] && packmachine[1] == YCpackmachine4[1])
+            {
+                YCpositiong[0] = 14;
+                YCpositiong[1] = 15;
+            }
+
+            return YCpositiong;
+        }
         static int RefreshTime;
         bool plcstatetag = false;
         void ConnectServer()
@@ -471,6 +532,8 @@ namespace SpecialShapeSmoke
 
                 ShapeGroup = new Group(pIOPCServer, 1, "group1", 1, LOCALE_ID);
                 ShapeGroup.addItem(ItemCollection_new.GetTaskStatusByShapeItem());
+                ShapeGroupYC = new Group(pIOPCServer, 2, "group2", 1, LOCALE_ID);
+                ShapeGroupYC.addItem(ItemCollection_new.GetYCTaskStatusByShapeItem());
                 //ShapeGroup.callback += OnDataChange;
 
                 if (checkConnection()) //连接服务器成功 
@@ -495,8 +558,15 @@ namespace SpecialShapeSmoke
         }
         public bool checkConnection()
         {
-
-            int flag = ShapeGroup.ReadD(Convert.ToInt32(dbIndex[0])).CastTo<int>(-1);
+            int flag;
+            if (boxText[0] == "1001" || boxText[0] == "1060" || boxText[0] == "2001" || boxText[0] == "2060" || boxText[0] == "3001" || boxText[0] == "3060" || boxText[0] == "4001" || boxText[0] == "4060")
+            {
+                flag = ShapeGroupYC.ReadD(Convert.ToInt32(dbIndex[0])).CastTo<int>(-1);
+            }
+            else
+            {
+                flag = ShapeGroup.ReadD(Convert.ToInt32(dbIndex[0])).CastTo<int>(-1);
+            }
             if (flag == -1)
             {
                 MessageBox.Show("连接PLC服务器失败,请检查网络");
@@ -655,8 +725,16 @@ namespace SpecialShapeSmoke
                         message += "\r\n开始读取plc" + System.DateTime.Now.ToString();
                         if (plcstatetag)
                         {
-                            finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
-                            finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);
+                            if (boxText[0] =="1001" ||boxText[0] =="1060" ||boxText[0] =="2001" ||boxText[0] =="2060" ||boxText[0] =="3001" ||boxText[0] =="3060" ||boxText[0] =="4001" ||boxText[0] =="4060" )
+                            {
+                                finishNo[0] = ShapeGroupYC.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                                finishNo[1] = ShapeGroupYC.ReadD((int)dbIndex[1]).CastTo<int>(-1);
+                            }
+                            else
+                            {
+                                finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
+                                finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);
+                            }
                         }
                         else
                         {
@@ -1072,8 +1150,8 @@ namespace SpecialShapeSmoke
         void addGroupBoxByNew(int panelCount)//2061 1061
         {
 
-            if (boxText[0] == "1061" || boxText[0] == "2061"||boxText[0] == "3061" || boxText[0] == "4061")
-            {
+            //if (boxText[0] == "1061" || boxText[0] == "2061"||boxText[0] == "3061" || boxText[0] == "4061")
+            //{
                 int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * (2 + 1))) / 2;
                 for (var i = 0; i < (panelCount); i++)
                 {
@@ -1104,49 +1182,49 @@ namespace SpecialShapeSmoke
                         addLabel(UnPullLabelNum, i, true);
                     }
                 }
-            }
-            else
-            {
-                int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * (2 + 1))) / 4;
-                for (var i = 0; i < (panelCount * 2); i++)
-                {
-                    GroupBox box = new GroupBox();
-                    //box.Paint += groupBox_Paint;
-                    box.Width = panelWidth;
-                    box.BackColor = Color.Transparent;
-                    box.Name = "orBox" + i;
-                    box.Font = new Font("宋体", 25, FontStyle.Bold);
-                    box.ForeColor = Color.Red;
-                    box.Height = Screen.PrimaryScreen.Bounds.Height - topHeight - bottom + 80;
-                    //PaintPanelBorder(p, Color.Red, 5, ButtonBorderStyle.Solid);
-                    box.Location = new Point(panelWidth * i + (padding * (i + 1)), topHeight + padding);
-                    if (i == 0)
-                    {
-                        box.Text = "通道" + boxText[0];
-                        box.Name = "orBox" + i;
-                        this.Controls.Add(box);
-                        panelList.Add(box);
-                        addLabel(HavePullLabelNum, i);
+            //}
+            //else//4个块显示两个道
+            //{
+            //    int panelWidth = (Screen.PrimaryScreen.Bounds.Width - (padding * (2 + 1))) / 4;
+            //    for (var i = 0; i < (panelCount * 2); i++)
+            //    {
+            //        GroupBox box = new GroupBox();
+            //        //box.Paint += groupBox_Paint;
+            //        box.Width = panelWidth;
+            //        box.BackColor = Color.Transparent;
+            //        box.Name = "orBox" + i;
+            //        box.Font = new Font("宋体", 25, FontStyle.Bold);
+            //        box.ForeColor = Color.Red;
+            //        box.Height = Screen.PrimaryScreen.Bounds.Height - topHeight - bottom + 80;
+            //        //PaintPanelBorder(p, Color.Red, 5, ButtonBorderStyle.Solid);
+            //        box.Location = new Point(panelWidth * i + (padding * (i + 1)), topHeight + padding);
+            //        if (i == 0)
+            //        {
+            //            box.Text = "通道" + boxText[0];
+            //            box.Name = "orBox" + i;
+            //            this.Controls.Add(box);
+            //            panelList.Add(box);
+            //            addLabel(HavePullLabelNum, i);
 
-                    }
-                    else if (i == 2)
-                    {
-                        box.Text = "通道" + boxText[1];
-                        box.Name = "orBox" + i;
-                        this.Controls.Add(box);
-                        panelList.Add(box);
-                        addLabel(HavePullLabelNum, i);
-                    }
-                    else
-                    {
-                        box.Text = "待放";
-                        box.Name = "orBox" + i;
-                        this.Controls.Add(box);
-                        panelList.Add(box);
-                        addLabel(UnPullLabelNum, i, true);
-                    }
-                }
-            }
+            //        }
+            //        else if (i == 2)
+            //        {
+            //            box.Text = "通道" + boxText[0];
+            //            box.Name = "orBox" + i;
+            //            this.Controls.Add(box);
+            //            panelList.Add(box);
+            //            addLabel(HavePullLabelNum, i);
+            //        }
+            //        else
+            //        {
+            //            box.Text = "待放";
+            //            box.Name = "orBox" + i;
+            //            this.Controls.Add(box);
+            //            panelList.Add(box);
+            //            addLabel(UnPullLabelNum, i, true);
+            //        }
+            //    }
+            //}
         }
 
         //添加界面数据控件
