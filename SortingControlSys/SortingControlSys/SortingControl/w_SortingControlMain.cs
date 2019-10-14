@@ -648,7 +648,7 @@ namespace SortingControlSys.SortingControl
                                 taskno = 0;
                                 zqqty = 0;
                             }
-                            writeLog.Write("plc地址:" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + i + " 合流任务号:" + taskno + "；抓取数量地址：" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup) - 1)] + " 抓取数量:" + zqqty);
+                            writeLog.Write("plc地址:" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + i + " 合流任务号:" + taskno + "；抓取数量地址：" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup - 1))] + " 抓取数量:" + zqqty);
                             updateListBox("plc地址:" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup - 1))] + "读取组:" + sortgroupno1 + " 主皮带:" + i + " 合流任务号:" + taskno + "；抓取数量地址：" + plclist[(int)((i - 1) * 16 + 2 * (sortgroup) - 1)] + " 抓取数量:" + zqqty);
                             if (!ProducePokeService.CheckExistTaskNo(taskno))
                             {
