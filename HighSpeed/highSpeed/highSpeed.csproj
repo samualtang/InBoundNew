@@ -367,12 +367,6 @@
     <Compile Include="orderHandle\w_SortFm_alone.Designer.cs">
       <DependentUpon>w_SortFm_alone.cs</DependentUpon>
     </Compile>
-    <Compile Include="orderHandle\w_SortReport.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="orderHandle\w_SortReport.Designer.cs">
-      <DependentUpon>w_SortReport.cs</DependentUpon>
-    </Compile>
     <Compile Include="orderHandle\w_un_schedule_alone.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -676,9 +670,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_SortFm_alone.resx">
       <DependentUpon>w_SortFm_alone.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="orderHandle\w_SortReport.resx">
-      <DependentUpon>w_SortReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="orderHandle\w_un_schedule_alone.resx">
       <DependentUpon>w_un_schedule_alone.cs</DependentUpon>

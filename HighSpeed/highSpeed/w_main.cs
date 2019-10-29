@@ -980,20 +980,6 @@ namespace highSpeed
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
-
-        private void 今日分拣品牌报表ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            w_SortReport frm = new w_SortReport();
-            if (CheckExist(frm) == true)
-            {
-                frm.Dispose();
-                frm = null;
-                return;
-            }
-            frm.MdiParent = this;
-            frm.WindowState = FormWindowState.Maximized;
-            frm.Show();
-        }
  
 
     
