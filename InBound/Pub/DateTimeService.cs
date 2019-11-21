@@ -54,5 +54,15 @@ namespace InBound.Pub
             }
             return DateContrl.Value.ToString(DateFort);
         }
+        /// <summary>
+        /// 获取当前日期
+        /// </summary>
+        /// <param name="DateContrl"></param>
+        /// <param name="DateFort"></param>
+        /// <returns></returns>
+        public string GetDate(System.Windows.Forms.DateTimePicker DateContrl, string DateFort)
+        {
+            return DateContrl.Value.ToString(DateContrl.Value.ToString());
+        }
     }
 }

@@ -99,6 +99,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.btnReTiaoyan = new System.Windows.Forms.Button();
             this.btnTips = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -116,7 +117,7 @@
             this.groupBox1.Controls.Add(this.cbsource);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnEnableStandby);
-            this.groupBox1.Location = new System.Drawing.Point(918, 30);
+            this.groupBox1.Location = new System.Drawing.Point(1208, 272);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(855, 138);
             this.groupBox1.TabIndex = 3;
@@ -264,7 +265,7 @@
             this.label9.Size = new System.Drawing.Size(587, 12);
             this.label9.TabIndex = 9;
             this.label9.Text = "_________________________________________________________________________________" +
-    "________________";
+                "________________";
             // 
             // label8
             // 
@@ -369,7 +370,7 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.comboBox_yc1);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Location = new System.Drawing.Point(918, 189);
+            this.groupBox3.Location = new System.Drawing.Point(1208, 431);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(855, 166);
             this.groupBox3.TabIndex = 5;
@@ -695,7 +696,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 11F);
-            this.label25.Location = new System.Drawing.Point(534, 115);
+            this.label25.Location = new System.Drawing.Point(534, 114);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(234, 15);
             this.label25.TabIndex = 10;
@@ -862,11 +863,23 @@
             this.btnTips.UseVisualStyleBackColor = true;
             this.btnTips.Click += new System.EventHandler(this.btnTips_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(872, 5);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(163, 86);
+            this.textBox1.TabIndex = 29;
+            this.textBox1.Text = "操作步骤（1-5）\r\n1：自动获取POKE表任务号\r\n2：更新任务号之后为完成\r\n3：同步烟柜\r\n4：更换POKE表烟柜通道信息\r\n5：更新任务号之后为新增";
+            this.textBox1.Visible = false;
+            // 
             // w_enableStandby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1248, 547);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.btnTips);
             this.Controls.Add(this.btnReTiaoyan);
@@ -970,5 +983,6 @@
         private System.Windows.Forms.Button btnReTiaoyan;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

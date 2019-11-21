@@ -712,7 +712,7 @@ namespace SpecialShapeSmoke
             string st1 = System.DateTime.Now.ToString();
             try
             { 
-                int countnum = 0;
+                int countnum = 2;
               
                 string Log = "";
 
@@ -723,8 +723,8 @@ namespace SpecialShapeSmoke
                     if (dbIndex.Count() == 2)//  
                     {
                         message += "\r\n开始读取plc" + System.DateTime.Now.ToString();
-                        if (plcstatetag)
-                        {
+                        //if (plcstatetag)
+                        //{
                             if (boxText[0] =="1001" ||boxText[0] =="1060" ||boxText[0] =="2001" ||boxText[0] =="2060" ||boxText[0] =="3001" ||boxText[0] =="3060" ||boxText[0] =="4001" ||boxText[0] =="4060" )
                             {
                                 finishNo[0] = ShapeGroupYC.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
@@ -735,17 +735,17 @@ namespace SpecialShapeSmoke
                                 finishNo[0] = ShapeGroup.ReadD((int)dbIndex[0]).CastTo<int>(-1);//根据通道 读取DB块  Read  
                                 finishNo[1] = ShapeGroup.ReadD((int)dbIndex[1]).CastTo<int>(-1);
                             }
-                        }
-                        else
-                        {
-                            finishNo[0] = -2;
-                            finishNo[1] = -2;
-                            if (Refresh && result == DialogResult.Cancel)
-                            {
-                                result = DialogResult.OK;
-                                MessageBox.Show("PLC连接中......", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                            }
-                        }
+                        //}
+                        //else
+                        //{
+                        //    finishNo[0] = -2;
+                        //    finishNo[1] = -2;
+                        //    if (Refresh && result == DialogResult.Cancel)
+                        //    {
+                        //        result = DialogResult.OK;
+                        //        MessageBox.Show("PLC连接中......", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        //    }
+                        //}
                         message += "\r\n plc数据读取完成" + System.DateTime.Now.ToString();
                         countnum = 2;
                     }
