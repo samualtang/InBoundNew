@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>382963cb-b5b7-468c-a7e6-ffbdd1591719</ProjectGuid>
+    <ProjectGuid>{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Document</RootNamespace>
@@ -46,12 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -72,6 +66,43 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="长株潭开发设计文档\CZT信息系统招标技术方案优化书-v1.2.doc" />
+    <None Include="长株潭开发设计文档\CZT信息系统招标技术方案优化书-v1.3.doc" />
+    <None Include="长株潭开发设计文档\czt信息系统项目需求规格说明书%28V1.0%29.doc" />
+    <None Include="长株潭开发设计文档\czt信息系统项目需求规格说明书%28V1.1%29.doc" />
+    <None Include="长株潭开发设计文档\技术方案\长株潭烟草物流信息系统技术方案.doc" />
+    <None Include="长株潭开发设计文档\操作手册\订单接收排程操作手册.doc" />
+    <None Include="长株潭开发设计文档\操作手册\长株潭信息系统项目服务手册.doc" />
+    <None Include="长株潭开发设计文档\操作手册\长株潭烟草物流项目操作手册.doc" />
+    <None Include="长株潭开发设计文档\测试文档\WEB端\长株潭信息系统项目功能测试报告 .doc" />
+    <None Include="长株潭开发设计文档\测试文档\WEB端\长株潭信息系统项目测试计划报告 .doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\入库系统通讯测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\出入库对策测试报告.docx" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\分拣子系统与第一组预分拣、烟柜机械手数据交互测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\分拣子系统与第三组预分拣、烟柜机械手数据交互测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\分拣子系统与第二组预分拣、烟柜机械手数据交互测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\分拣子系统与第四组预分拣、烟柜机械手数据交互测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\合流通讯及任务测试报告.docx" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\堆垛机测试报告.doc" />
+    <None Include="长株潭开发设计文档\测试文档\测试报告\营销接口测试报告.docx" />
+    <None Include="长株潭开发设计文档\测试文档\长株潭软件测试记录%28WMS%2912-10.xlsx" />
+    <None Include="长株潭开发设计文档\设计文档\czt信息系统项目需求规格说明书%28V0.9%29.doc" />
+    <None Include="长株潭开发设计文档\设计文档\WCS软件设计说明书.doc" />
+    <None Include="长株潭开发设计文档\设计文档\WCS软件需求规格说明书.doc" />
+    <None Include="长株潭开发设计文档\设计文档\分拣详细设计说明书.doc" />
+    <None Include="长株潭开发设计文档\设计文档\合流详细设计说明书.doc" />
+    <None Include="长株潭开发设计文档\设计文档\备用通道切换方案.docx" />
+    <None Include="长株潭开发设计文档\设计文档\排程流程分析-游工.docx" />
+    <None Include="长株潭开发设计文档\设计文档\排程流程分析第二版-游工.docx" />
+    <None Include="长株潭开发设计文档\设计文档\机械手详细设计说明书.doc" />
+    <None Include="长株潭开发设计文档\设计文档\订单排程-1.docx" />
+    <None Include="长株潭开发设计文档\设计文档\订单排程设计说明书.docx" />
+    <None Include="长株潭开发设计文档\设计文档\设备异常处理.docx" />
+    <None Include="长株潭开发设计文档\设计文档\长株潭信息系统项目数据字典说明书-20171214.docx" />
+    <None Include="长株潭开发设计文档\设计文档\长株潭生产系统功能设计说明.doc" />
+    <None Include="长株潭开发设计文档\设计文档\长株潭项目系统结构设计说明-概要设计 .doc" />
+    <None Include="长株潭开发设计文档\设计文档\预分拣系统功能设计说明书.docx" />
+    <None Include="长株潭开发设计文档\长株潭生产系统功能设计说明.doc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

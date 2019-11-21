@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnNormal_Test", "UnNormal_T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "Tool\Tool.csproj", "{D87AE1EF-4758-4FCF-BEF4-35FBB3AA992E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Document", "Document\Document.csproj", "{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -218,6 +220,16 @@ Global
 		{D87AE1EF-4758-4FCF-BEF4-35FBB3AA992E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D87AE1EF-4758-4FCF-BEF4-35FBB3AA992E}.Release|x86.ActiveCfg = Release|x86
 		{D87AE1EF-4758-4FCF-BEF4-35FBB3AA992E}.Release|x86.Build.0 = Release|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Debug|x86.ActiveCfg = Debug|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Debug|x86.Build.0 = Debug|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Release|Any CPU.ActiveCfg = Release|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Release|x86.ActiveCfg = Release|x86
+		{E5B0F9C8-29AA-4FAB-90D8-28DEBA68424F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
