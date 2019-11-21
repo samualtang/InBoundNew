@@ -672,6 +672,11 @@ namespace highSpeed.orderHandle
 
         private void button7_Click(object sender, EventArgs e)
         {
+            if (InBound.Business.ProducePokeService.GetStepNum() != 3)
+            {
+                MessageBox.Show("请先同步仓储烟柜信息！");
+                return;
+            }
             if (comboBox_group.SelectedIndex > -1 && cmbSoucreYG.SelectedIndex > -1 && cmbTagGroup.SelectedIndex > -1 && cmbTagYG.SelectedIndex > -1)
             {
                 DialogResult re = MessageBox.Show("请确认：分拣组" + comboBox_group.Text + "\r" + cmbSoucreYG.Text + "" + label18.Text + "\r与\r" + cmbTagYG.Text + "\r" + label22.Text + "\r换道？", "提示",  
@@ -739,7 +744,11 @@ namespace highSpeed.orderHandle
 
         private void button6_Click(object sender, EventArgs e)
         {
-
+            if (InBound.Business.ProducePokeService.GetStepNum() != 2)
+            {
+                MessageBox.Show("请先处理任务更新已完成！");
+                return;
+            }
             Db.Open();
             OracleParameter[] sqlpara;
             sqlpara = new OracleParameter[2];
@@ -818,10 +827,21 @@ namespace highSpeed.orderHandle
                                                             MessageBoxButtons.YesNo,//定义对话框的按钮，这里定义了YSE和NO两个按钮 
                                                             MessageBoxIcon.Question,//定义对话框内的图表式样，这里是一个黄色三角型内加一个感叹号 
                                                             MessageBoxDefaultButton.Button2);//定义对话框的按钮式样
+
                     if (MsgBoxResult == DialogResult.Yes)
                     {
+                        if (InBound.Business.ProducePokeService.GetStepNum() != 1)
+                        {
+                            MessageBox.Show("请先获取本次定位的任务！");
+                            return;
+                        }
                         decimal status = 0;
                         btnUpdate.Enabled = false;
+                        throwString = "更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                    "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                    "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                    "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                    "\r\n状态更新为" + status + "完成";
                         if (LsitMainSN.Sum() == 0)
                         {
                             MessageBox.Show("请自动获取任务号");
@@ -830,6 +850,11 @@ namespace highSpeed.orderHandle
                         }
                         if (rbNew.Checked)//新增
                         {
+                            if (InBound.Business.ProducePokeService.GetStepNum() != 4)
+                            {
+                                MessageBox.Show("请先更换poke表烟柜通道数据！");
+                                return;
+                            }
                             status = 10;
                             decimal Step = -1;//步骤
                             ProducePokeService.ReadSortNumByDb(out LsitMainSN, out  Step);
@@ -837,13 +862,30 @@ namespace highSpeed.orderHandle
                             {
                                 ProducePokeService.WriteSortNumToDb(LsitMainSN, 0);//写入0时,为第二次更新最大任务号后面的为10 更新成功 最后一步
                             }
+
+                            throwString = "更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                        "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                        "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                        "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                        "\r\n状态更新为" + status + "新增";
                             txtSortnum1.Clear(); txtSortnum2.Clear(); txtSortnum3.Clear(); txtSortnum4.Clear();
                             btnReTiaoyan.Visible = true;
                             WriteLog.GetLog().Write("写入0,为第二次更新最大任务号后面的为10 更新成功,条烟顺序重新生成");
                         }
                         else if (rbEnd.Checked)//完成
                         {
+                            if (ProducePokeService.GetStepNum() != 1)
+                            {
+                                MessageBox.Show("请先获取每根主皮带任务号! ");
+                                return;
+                            }
                             status = 20;
+
+                            throwString = "更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
+                                                        "\r\n2号主皮带任务号:" + txtSortnum2.Text +
+                                                        "\r\n3号主皮带任务号:" + txtSortnum3.Text +
+                                                        "\r\n4号主皮带任务号:" + txtSortnum4.Text +
+                                                        "\r\n状态更新为" + status + "完成";
                             ProducePokeService.WriteSortNumToDb(LsitMainSN, 2);// //写入2时,为第一次更新最大任务号后面的为20 更新成功 
                             WriteLog.GetLog().Write("写入2时,为第一次更新最大任务号后面的为20 更新成功");
                         }
@@ -864,13 +906,8 @@ namespace highSpeed.orderHandle
                                 }
                             }
                         }
-                        throwString = "更新完成\r\n1号主皮带任务号:" + txtSortnum1.Text +
-                                                    "\r\n2号主皮带任务号:" + txtSortnum2.Text +
-                                                    "\r\n3号主皮带任务号:" + txtSortnum3.Text +
-                                                    "\r\n4号主皮带任务号:" + txtSortnum4.Text +
-                                                    "\r\n状态更新为" + status;
                         label25.Visible = true;
-                        myThread my = new myThread(LsitMainSN, status, throwString, label25, btnUpdate);
+                        myThread my = new myThread(LsitMainSN, status, throwString, label25, btnUpdate,btnUpdate);
                         Thread t = new Thread(new ThreadStart(my.ThreadToUpdate));
                         t.Start();
                         
@@ -897,9 +934,15 @@ namespace highSpeed.orderHandle
     
         private void btnTips_Click(object sender, EventArgs e)
         {
-             
            p.SetToolTip(btnTips, "帮助");
-         
+           if (textBox1.Visible == true)
+           {
+               textBox1.Visible = false;
+           }
+           else
+           {
+               textBox1.Visible = true;
+           }
         }
 
         private void comboBox_group_SelectedIndexChanged(object sender, EventArgs e)
@@ -1001,18 +1044,20 @@ namespace highSpeed.orderHandle
         public decimal Status;
         public string Info;
         public Label Lbl;
-        public Button Btn;
+        public Button Btn1;
+        public Button Btn2;
         public myThread()
         {
 
         }
-        public myThread(List<decimal> list, decimal status, string info, Label lbl, Button btn)//构造函数传参
+        public myThread(List<decimal> list, decimal status, string info, Label lbl, Button btn1,Button btn2)//构造函数传参
         {
             List = list;
             Status = status;
             Info = info;
             Lbl = lbl;
-            Btn = btn;
+            Btn1 = btn1;
+            Btn2 = btn2;
 
         }
         public void ThreadToUpdate()//线程方法
@@ -1025,12 +1070,13 @@ namespace highSpeed.orderHandle
             }
             catch (Exception ex)
             {
+                WriteLog.GetLog().Write(ex.InnerException.Message.ToString());
                 throw ex;
             }
             finally
             {
                 Lbl.Visible = false;
-                Btn.Enabled = true;
+                Btn1.Enabled = true;
             }
 
 

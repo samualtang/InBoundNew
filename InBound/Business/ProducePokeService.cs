@@ -853,6 +853,22 @@ namespace InBound.Business
                             troughTrans.STEP = Step;//步骤
                         }
                     }
+                    else
+                    {
+                        T_PRO_TROUGHTRANSFER t_pro_troughransfer = new InBound.T_PRO_TROUGHTRANSFER();
+                        if (entity.T_PRO_TROUGHTRANSFER.Count() > 0)
+                        {
+                            t_pro_troughransfer.ID = entity.T_PRO_TROUGHTRANSFER.Max(z => z.ID) + 1;
+                        }
+                        else
+                        {
+                            t_pro_troughransfer.ID = 1;
+                        }
+                        t_pro_troughransfer.MIANBELT = mianbelt;
+                        t_pro_troughransfer.SORTNUM = item;
+                        t_pro_troughransfer.STEP = Step;
+                        entity.T_PRO_TROUGHTRANSFER.AddObject(t_pro_troughransfer);
+                    }
                     mianbelt++;
                     entity.SaveChanges();
                 }
@@ -977,6 +993,13 @@ namespace InBound.Business
             }
         }
 
-
+        public static decimal GetStepNum()
+        {
+            using (Entities en = new Entities())
+            {
+                decimal stepnum = en.T_PRO_TROUGHTRANSFER.Select(x => x.STEP).FirstOrDefault() ?? -1;
+                return stepnum;
+            }
+        }
     }
 }

@@ -434,6 +434,11 @@ namespace highSpeed.orderHandle
             orderdata.ClearSelection();
         }
 
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            DateGet = datetimeservice.GetDate(dateTimePicker1, dateTimePicker1.Value.ToString());
+        }
+
 
     }
 }
