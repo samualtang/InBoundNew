@@ -23,12 +23,12 @@ namespace InBound.Business
                
                 var synseq = (from item in ent.T_PRODUCE_SYNSEQ select item);//获取批次表
                 var tasksynseq = (from item in ent.T_PRODUCE_TASK select item);//获取TASK表
-                var date = tasksynseq.GroupBy(a => a.ORDERDATE).Select(a => new { orderdate = a.Key }).FirstOrDefault();//获取排程日期
+                var date = tasksynseq.Select(a => a.ORDERDATE).Max();//获取排程日期
                 if (date != null)
                 {
                     //获取 TASK表和批次表的差集 批次表中没有的批次取TASK表中的批次插入
-                    var lastsynseq = tasksynseq.GroupBy(a => new { a.SYNSEQ, a.PACKAGEMACHINE }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGEMACHINE }).ToList()
-                        .Except( synseq.Where(a=> a.ORDERDATE == date.orderdate).GroupBy( a=> new {a.SYNSEQ,a.PACKAGENO}).Select(a=> new { synseq = a.Key.SYNSEQ , packagemachine = a.Key.PACKAGENO}).ToList());
+                    var lastsynseq = tasksynseq.Where(x => x.ORDERDATE == date).GroupBy(a => new { a.SYNSEQ, a.PACKAGEMACHINE }).Select(a => new { synseq = a.Key.SYNSEQ, packagemachine = a.Key.PACKAGEMACHINE }).ToList()
+                        .Except( synseq.Where(a=> a.ORDERDATE == date).GroupBy( a=> new {a.SYNSEQ,a.PACKAGENO}).Select(a=> new { synseq = a.Key.SYNSEQ , packagemachine = a.Key.PACKAGENO}).ToList());
                          
                     
                     
@@ -41,7 +41,7 @@ namespace InBound.Business
                         T_synseq.TBJSTATE = "0";
                         T_synseq.PACKAGENO = item.packagemachine;
                         T_synseq.QUANTITY = GetSeq("select sum(quantity) from  kesheng.v_produce_packageinfo where export = "+  item.packagemachine + " and  synseq  = "+item.synseq);
-                        T_synseq.ORDERDATE = date.orderdate;
+                        T_synseq.ORDERDATE = date;
                         ent.AddToT_PRODUCE_SYNSEQ(T_synseq);
                     }
                 }

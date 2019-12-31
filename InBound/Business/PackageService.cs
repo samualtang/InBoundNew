@@ -23,10 +23,10 @@ namespace InBound.Business
         /// 获取数据 计算
         /// </summary>
         /// <param name="packageNo"></param>
-        public void GetAllOrder(decimal packageNo,decimal synseq)
+        public void GetAllOrder(decimal packageNo, decimal synseq)
         {
 
-            
+
             int allCount = 0;
             using (Entities entity = new Entities())
             {
@@ -37,24 +37,22 @@ namespace InBound.Business
                 //cmd.CommandType = System.Data.CommandType.Text;
                 //cmd.CommandText = "select ZOOMTEL.S_PACKAGE_TASK.NEXTVAL from dual";
 
-             
-                var data = entity.V_PRODUCE_PACKAGEINFO
-                    .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
-                    .ToList();
+                //var data = entity.V_PRODUCE_PACKAGEINFO
+                //    .Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq)
+                //    .ToList();
+                var data = GetPackageInfoView(entity, packageNo, synseq);
                 //所有订单明细
                 var query = (from item in data
-                             //where item.TASKNUM == 694104
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
-              
+
 
                 query1 = entity.T_WMS_ITEM.Select(x => x).ToList();
-                //查询ptid值
-                ptid = entity.T_PACKAGE_TASK.Count() > 0 ? entity.T_PACKAGE_TASK.Max(x => x.PTID) + 1 : 1;
+
                 //最大包数
                 allpackagenum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.ALLPACKAGESEQ).Value : 0;
                 //任务号
-                temptask = entity.T_PACKAGE_TASK.Count() > 0 ? (int)entity.T_PACKAGE_TASK.Max(x => x.PACKTASKNUM).Value : 0;//( DateTime.Now.Ticks - 621355968000000000 )/10000; 
+                temptask = GetPackageNum(entity, packageNo);
 
                 List<T_WMS_ITEM> templist = ItemService.GetItemByCode();
                 T_WMS_ITEM tempItem = new T_WMS_ITEM();
@@ -68,7 +66,7 @@ namespace InBound.Business
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
                         //当期订单明细
                         var query2 = (from item2 in entity.V_PRODUCE_PACKAGEINFO
-                                      where item2.EXPORT == packageNo && item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
+                                      where item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
                                       orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM, item2.SEQ
                                       select item2).ToList();
                         if (query2 != null)
@@ -83,7 +81,7 @@ namespace InBound.Business
                                 tempItem = templist.Where(x => x.ITEMNO == v2.CIGARETTECODE).FirstOrDefault();
                                 temp.CIGARETTENAME = tempItem.ITEMNAME;
                                 temp.CIGHIGH = tempItem.IHEIGHT;
-                                if (tempItem.CDTYPE ==1)//标记为转向的品牌 长宽对换
+                                if (tempItem.CDTYPE == 1)//标记为转向的品牌 长宽对换
                                 {
                                     temp.CIGWIDTH = tempItem.ILENGTH + HFWidth;
                                     temp.CIGLENGTH = tempItem.IWIDTH;
@@ -93,7 +91,7 @@ namespace InBound.Business
                                     temp.CIGWIDTH = tempItem.IWIDTH;
                                     temp.CIGLENGTH = tempItem.ILENGTH;
                                 }
-                                
+
                                 temp.BILLCODE = v2.BILLCODE;
                                 temp.SORTNUM = v2.TASKNUM;
                                 temp.CIGNUM = allCount;
@@ -107,7 +105,6 @@ namespace InBound.Business
                                 temp.NORMALQTY = v2.QUANTITY;
                                 temp.UNIONPACKAGETAG = 0;
                                 temp.DOUBLETAKE = "0";
-                                temp.CIGZ = 183;
                                 temp.ORDERSEQ = v2.SORTSEQ;
                                 temp.ORDERQTY = v2.ORDERQUANTITY;
                                 temp.CIGSTATE = 10;
@@ -125,12 +122,12 @@ namespace InBound.Business
                             //log.Write("计算完成");
                             decimal orderpackageqty = task.GroupBy(x => x.PACKAGESEQ ?? 0).Count();
                             decimal tempseq = 0;//上一个包号 
-                             
+
                             foreach (var item in task.OrderBy(x => x.ALLPACKAGESEQ).ThenBy(x => x.CIGTYPE).ThenBy(x => x.CIGSEQ).ToList())
                             {
                                 T_PACKAGE_TASK ts = new T_PACKAGE_TASK();
                                 DataCopy.CopyToT(item, ts);
-                                ts.PTID = ptid;
+                                ts.PTID = PackageHelper.GetPackageID(entity); ;
                                 if (tempseq != ts.ALLPACKAGESEQ)//包号与上一个不等时  任务号+1
                                 {
                                     temptask = temptask + 1;
@@ -146,14 +143,13 @@ namespace InBound.Business
                                 ts.NORMAILSTATE = 10;
                                 ts.ORDERPACKAGEQTY = orderpackageqty;
                                 ts.PACKAGEQTY = task.Where(x => x.ALLPACKAGESEQ == ts.ALLPACKAGESEQ).Sum(X => X.NORMALQTY);
-                                
+
                                 entity.T_PACKAGE_TASK.AddObject(ts);
 
                                 tempseq = ts.ALLPACKAGESEQ ?? 0;
-                                ptid++;
                                 //log.Write("entity.Add");
                             }
-                            
+
                             if (i == 1)
                             {
                                 //log.Write("entity.SaveChanges 开始");
@@ -2610,6 +2606,58 @@ namespace InBound.Business
             }
             unnormallist.Clear();
             normallist.Clear();
+        }
+        /// <summary>
+        /// 获取包装机未生成的订单
+        /// </summary>
+        /// <param name="et"></param>
+        /// <returns></returns>
+        public List<V_PRODUCE_PACKAGEINFO> GetPackageInfoView(Entities entity, decimal packageNo, decimal synseq)
+        {
+            //获取当前包装机 已经生成的最大分拣任务号
+            decimal sortnum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo && x.SYNSEQ == synseq).ToList().Count > 0 ? entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo && x.SYNSEQ == synseq).ToList().Max(x => x.SORTNUM).Value : 0;
+            //只查询大于最大分拣任务号的订单
+            var PackageInfoView = entity.V_PRODUCE_PACKAGEINFO.Where(x => x.EXPORT == packageNo && x.SYNSEQ == synseq && x.TASKNUM > sortnum).ToList();
+            return PackageInfoView;
+        }
+        /// <summary>
+        /// 获取当前包装机的 当前包装机任务号
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="packageNo"></param>
+        /// <returns></returns>
+        public decimal GetPackageNum(Entities entity, decimal packageNo)
+        {
+            decimal StartNum = 0;
+            switch ((int)packageNo)
+            {
+                case 1:
+                    StartNum = 0;
+                    break;
+                case 2:
+                    StartNum = 100000;
+                    break;
+                case 3:
+                    StartNum = 200000;
+                    break;
+                case 4:
+                    StartNum = 300000;
+                    break;
+                case 5:
+                    StartNum = 400000;
+                    break;
+                case 6:
+                    StartNum = 500000;
+                    break;
+                case 7:
+                    StartNum = 600000;
+                    break;
+                case 8:
+                    StartNum = 700000;
+                    break;
+            }
+            decimal maxpackagenum = entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Count() > 0 ? (int)entity.T_PACKAGE_TASK.Where(x => x.PACKAGENO == packageNo).Max(x => x.PACKTASKNUM).Value : StartNum;
+            return maxpackagenum;
         }
     }
 }

@@ -320,9 +320,9 @@ namespace InBound.Business
                         var exitLoop = false;
                         while (!exitLoop)
                         {
-                            for (int i = 1; i <= 8; i++)
+                            for (int i = 8; i >= 1; i--)
                             {
-                                if (i == 1)
+                                if (i == 8)
                                 {
                                     exitLoop = true;
                                 }
@@ -457,9 +457,9 @@ namespace InBound.Business
                     var exitLoop = false;
                     while (!exitLoop)
                     {
-                        for (int i = 1; i <= 8; i++)
+                        for (int i = 8; i >= 1; i--)
                         {
-                            if (i == 1)
+                            if (i == 8)
                             {
                                 exitLoop = true;
                             }

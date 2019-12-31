@@ -36,17 +36,9 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.txt_codestr1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btn_produce = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.txt_codestr2 = new System.Windows.Forms.TextBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btn_un = new System.Windows.Forms.Button();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +46,10 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,6 +57,10 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btn_un = new System.Windows.Forms.Button();
+            this.txt_codestr2 = new System.Windows.Forms.TextBox();
+            this.txt_codestr1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -147,14 +147,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txt_codestr1
-            // 
-            this.txt_codestr1.Location = new System.Drawing.Point(761, 383);
-            this.txt_codestr1.Name = "txt_codestr1";
-            this.txt_codestr1.ReadOnly = true;
-            this.txt_codestr1.Size = new System.Drawing.Size(118, 21);
-            this.txt_codestr1.TabIndex = 6;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -196,91 +188,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(752, 401);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.button4);
-            this.tabPage3.Controls.Add(this.button2);
-            this.tabPage3.Controls.Add(this.txt_codestr2);
-            this.tabPage3.Controls.Add(this.dataGridView2);
-            this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Controls.Add(this.btn_un);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(885, 407);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "       异型烟重排       ";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(768, 90);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(111, 35);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "全  选";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(768, 20);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 35);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "刷  新";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // txt_codestr2
-            // 
-            this.txt_codestr2.Location = new System.Drawing.Point(761, 383);
-            this.txt_codestr2.Name = "txt_codestr2";
-            this.txt_codestr2.ReadOnly = true;
-            this.txt_codestr2.Size = new System.Drawing.Size(118, 21);
-            this.txt_codestr2.TabIndex = 8;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewCheckBoxColumn2,
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6});
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(752, 401);
-            this.dataGridView2.TabIndex = 5;
-            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(833, 3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "异型烟";
-            // 
-            // btn_un
-            // 
-            this.btn_un.Location = new System.Drawing.Point(768, 280);
-            this.btn_un.Name = "btn_un";
-            this.btn_un.Size = new System.Drawing.Size(111, 35);
-            this.btn_un.TabIndex = 3;
-            this.btn_un.Text = "确  认";
-            this.btn_un.UseVisualStyleBackColor = true;
-            this.btn_un.Click += new System.EventHandler(this.btn_un_Click);
             // 
             // dataGridViewCheckBoxColumn1
             // 
@@ -330,6 +237,63 @@
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.button4);
+            this.tabPage3.Controls.Add(this.button2);
+            this.tabPage3.Controls.Add(this.txt_codestr2);
+            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.btn_un);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(885, 407);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "       异型烟重排       ";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(768, 90);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(111, 35);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "全  选";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(768, 20);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(111, 35);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "刷  新";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn2,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(752, 401);
+            this.dataGridView2.TabIndex = 5;
+            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
+            // 
             // dataGridViewCheckBoxColumn2
             // 
             this.dataGridViewCheckBoxColumn2.HeaderText = "选择";
@@ -378,6 +342,42 @@
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(833, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 14);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "异型烟";
+            // 
+            // btn_un
+            // 
+            this.btn_un.Location = new System.Drawing.Point(768, 280);
+            this.btn_un.Name = "btn_un";
+            this.btn_un.Size = new System.Drawing.Size(111, 35);
+            this.btn_un.TabIndex = 3;
+            this.btn_un.Text = "确  认";
+            this.btn_un.UseVisualStyleBackColor = true;
+            this.btn_un.Click += new System.EventHandler(this.btn_un_Click);
+            // 
+            // txt_codestr2
+            // 
+            this.txt_codestr2.Location = new System.Drawing.Point(761, 383);
+            this.txt_codestr2.Name = "txt_codestr2";
+            this.txt_codestr2.ReadOnly = true;
+            this.txt_codestr2.Size = new System.Drawing.Size(118, 21);
+            this.txt_codestr2.TabIndex = 8;
+            // 
+            // txt_codestr1
+            // 
+            this.txt_codestr1.Location = new System.Drawing.Point(761, 383);
+            this.txt_codestr1.Name = "txt_codestr1";
+            this.txt_codestr1.ReadOnly = true;
+            this.txt_codestr1.Size = new System.Drawing.Size(118, 21);
+            this.txt_codestr1.TabIndex = 6;
+            // 
             // ReHihgSpeedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -413,10 +413,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_un;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.TextBox txt_codestr1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox txt_codestr2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
@@ -433,6 +431,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.TextBox txt_codestr1;
+        private System.Windows.Forms.TextBox txt_codestr2;
 
     }
 }

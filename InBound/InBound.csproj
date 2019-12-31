@@ -81,6 +81,7 @@
     <Compile Include="Business\MainBeltInfoService.cs" />
     <Compile Include="Business\HunHeService_new.cs" />
     <Compile Include="Business\OrderCiTrough.cs" />
+    <Compile Include="Business\PackageHelper.cs" />
     <Compile Include="Business\PackageService - old.cs" />
     <Compile Include="Business\PackageService.cs" />
     <Compile Include="Business\PackageServiceback.cs" />
