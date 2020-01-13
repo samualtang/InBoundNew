@@ -1868,7 +1868,7 @@ namespace InBound.Business
 
              using (Entities entity = new Entities())
              {
-                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == 12 && item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
+                 var query = (from item in entity.T_PRODUCE_POKE where item.SORTSTATE == stage && item.GROUPNO == groupno && item.SORTNUM == sortnum select item).ToList();
                  if (query != null && query.Count > 0)
                  {
                      return query[0].SORTSTATE;
