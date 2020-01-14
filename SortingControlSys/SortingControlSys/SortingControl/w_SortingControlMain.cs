@@ -1855,7 +1855,7 @@ namespace SortingControlSys.SortingControl
             }
             if (SendTaskStatesGroup.Read(1).ToString() != "1" && !issendB)//监控标志位第二组 
             {
-                decimal tasknum = decimal.Parse(taskgroup1.ReadD(0).ToString());
+                decimal tasknum = decimal.Parse(taskgroup2.ReadD(0).ToString());
 
                 //if (tempList.Count > 0)
                 //{
@@ -1864,8 +1864,8 @@ namespace SortingControlSys.SortingControl
                 {
                     TaskService.UpdateTaskStatus(sortgroupno2, 15, tasknum);//状态改为已发送
 
-                    updateListBox("组" + sortgroupno1 + "---任务:" + tasknum + "已接收");
-                    writeLog.Write(sortgroupno1 + "组:" + tasknum + "号任务已接收");
+                    updateListBox("组" + sortgroupno2 + "---任务:" + tasknum + "已接收");
+                    writeLog.Write(sortgroupno2 + "组:" + tasknum + "号任务已接收");
                 }
                
                 SendTaskStatesGroup.Write(0, 1);
