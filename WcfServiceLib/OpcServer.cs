@@ -15,9 +15,10 @@ namespace WebService
        public static Group UnionTaskGroup1,MachineGroup, UnionTaskGroup2, UnionTaskGroup3, UnionTaskGroup4, UnionMachineTaskGroup, UnionMachineNowTaskGroup;
        public static Group SortGroupA, SortGroupB;
        public static Group SortGroupMachineA, SortGroupMachineB;
+       public static Group YFJGroup;
        internal const int LOCALE_ID = 0x409;  
           public static  List<Group> listUnionTaskGroup = new List<Group>();
-          
+          public static IOPCServer pIOPCServer1;  //定义opcServer对象
         public static void Connect(int type = 1,string groupConnectionGroup ="S7:[FJConnectionGroup1]")
         {
             if (pIOPCServer == null)
@@ -44,6 +45,30 @@ namespace WebService
                     AddMachineGroup(groupConnectionGroup);
                 }
             } 
+        }
+
+
+
+        public static void Connect1(int type = 1, string groupConnectionGroup = "S7:[FJConnectionGroup1]")
+        {
+            if (pIOPCServer1 == null)
+            {
+                Type svrComponenttyp;
+                Guid iidRequiredInterface = typeof(IOPCItemMgt).GUID;
+                svrComponenttyp = Type.GetTypeFromProgID(SERVER_NAME);
+                pIOPCServer1 = (IOPCServer)Activator.CreateInstance(svrComponenttyp);
+                YFJGroup = new Group(pIOPCServer1, 1, "group1", 1, LOCALE_ID);
+                AddYFJGroup(groupConnectionGroup);
+            }
+            else
+            {
+                YFJGroup.RemovedItem();
+                AddYFJGroup(groupConnectionGroup);
+            }
+        }
+        public static void AddYFJGroup(string groupConnectionGroup)
+        {
+            YFJGroup.addItem(ItemCollection.GetFinishTaskList(groupConnectionGroup));
         }
      
         public static void AddSortGroup(string groupConnectionGroup)
