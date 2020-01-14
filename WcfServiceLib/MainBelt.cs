@@ -188,13 +188,54 @@ namespace WcfServiceLib
             {
                 return "远程连接失败,请检查网络";
             }
+
+
+            string conncetionGroupStr = "S7:[FJConnectionGroup1]";//默认为第一组
+            int GroupNo = GetGroupNo(MachineNo);
+            int mainbelt = GetMainBeltNo(MachineNo);
+
+            if (GroupNo == 1 || GroupNo == 2)
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup1]";
+            }
+            else if (GroupNo == 3 || GroupNo == 4)
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup2]";
+            }
+            else if (GroupNo == 5 || GroupNo == 6)
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup3]";
+            }
+            else if (GroupNo == 7 || GroupNo == 8)
+            {
+                conncetionGroupStr = "S7:[FJConnectionGroup4]";
+            }
+            try
+            {
+                OpcServer.Connect1(1, conncetionGroupStr);
+            }
+            catch (Exception ex)
+            {
+                return "远程连接失败,请检查网络";
+            }
             decimal[] sortnumAndXYnum = new decimal[2];
             sortnumAndXYnum[0] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 2)).CastTo<int>(-1);//当前任务号
             sortnumAndXYnum[1] = OpcServer.listUnionTaskGroup[4].ReadD(((MachineNo * 2) - 1)).CastTo<int>(-1);//当前吸烟数量 
             writeLog.Write("\r查询合流缓存，任务号：" + sortnumAndXYnum[0] + "\r当前抓烟数量：" + sortnumAndXYnum[1]);
+            int taskIndex = 0;
+            decimal gpceil = Math.Floor((decimal)(GroupNo % 2));
+            if (gpceil == 1)
+            {
+                taskIndex = mainbelt - 1;
+            }
+            else
+            {
+                taskIndex = 4 + mainbelt - 1;
+            }
+            decimal yfjTaskNum = OpcServer.YFJGroup.ReadD(taskIndex).CastTo<int>(-1);//预分拣最后一个完成任务号
             if (sortnumAndXYnum.Sum()>=0)
             {
-                List<FollowTaskDeail> date = FolloTaskService.getUnionCache(GetGroupNo(MachineNo), GetMainBeltNo(MachineNo), sortnumAndXYnum[0], sortnumAndXYnum[1]);
+                List<FollowTaskDeail> date = FolloTaskService.getUnionCache(GroupNo, mainbelt, sortnumAndXYnum[0], sortnumAndXYnum[1], yfjTaskNum);
                 if (date != null && date.Count > 0)
                 {
                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<FollowTaskDeail>));

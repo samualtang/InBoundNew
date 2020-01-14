@@ -136,6 +136,19 @@ namespace WebService.Modle
           
             return list;
         }
+
+        public static List<string> GetFinishTaskList(string opcSortingServer)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < 8; i++)
+            {
+                list.Add(opcSortingServer + "DB42,DINT" + (0 + (i * i)));
+                
+            }
+
+
+            return list;
+        }
         /// <summary>
         ///  A组机械手DB
         /// </summary>

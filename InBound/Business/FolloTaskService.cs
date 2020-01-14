@@ -310,7 +310,7 @@ namespace InBound.Business
         ///  <param name="machineTaskExcuting">合流机械手当前执行任务号</param>
         ///   <param name="machinePokeNum">合流机械手当前执行抓数 </param>
         /// <returns></returns>
-        public static List<FollowTaskDeail> getUnionCache(decimal groupno, decimal mainbelt, decimal machineTaskExcuting, decimal machinePokeNum)
+        public static List<FollowTaskDeail> getUnionCache(decimal groupno, decimal mainbelt, decimal machineTaskExcuting, decimal machinePokeNum,decimal yfjTasknum=0)
         {
             try
             {
@@ -323,7 +323,7 @@ namespace InBound.Business
                     var query = (from p in dataentity.T_PRODUCE_POKE
                                  join t in dataentity.T_PRODUCE_SORTTROUGH
                                  on p.TROUGHNUM equals t.TROUGHNUM
-                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting && p.SORTSTATE == 20
+                                 where t.GROUPNO == groupno && p.MAINBELT == mainbelt && t.CIGARETTETYPE == 20 && t.TROUGHTYPE == 10 && p.SORTNUM >= machineTaskExcuting && p.SORTNUM <= yfjTasknum
                                  orderby p.SORTNUM,p.MACHINESEQ
                                  select new FollowTaskDeail() { CIGARETTDECODE = t.CIGARETTECODE, CIGARETTDENAME = t.CIGARETTENAME, POKENUM = p.POKENUM ?? 0, Machineseq = p.MACHINESEQ ?? 0, POKEID = p.POKEID, MainBelt = p.MAINBELT ?? 0, SortNum = p.SORTNUM ?? 0, GroupNO = t.GROUPNO ?? 0 }).ToList();
                     if (query != null)
