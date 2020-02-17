@@ -1818,9 +1818,10 @@ namespace InBound.Business
             }
         }
 
-        public static void UpdateFJFinishStatus(decimal groupno, decimal sortnum)//更新预分拣任务状态
+        public static int UpdateFJFinishStatus(decimal groupno, decimal sortnum)//更新预分拣任务状态
         {
 
+            int result = 0;
 
             using (Entities entity = new Entities())
             {
@@ -1834,12 +1835,14 @@ namespace InBound.Business
                     {
                         if (item.SORTSTATE == 15)//必须等于15才能更新已完成
                         {
+                            result = 1;
                             item.SORTSTATE = 20;
                         }
                     }
                     entity.SaveChanges();
                 }
             }
+            return result;
         }
 
          public static void UpdateTaskStatus(decimal groupno, int stage, decimal sortnum)//更新预分拣任务状态
