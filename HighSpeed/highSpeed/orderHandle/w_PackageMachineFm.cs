@@ -24,7 +24,7 @@ namespace highSpeed.orderHandle
         DataBase db = new DataBase();
         DataSet ds = new DataSet();
         string sql;
-        List<string[]> list = new List<string[]>();
+        List<PackageSeq> list = new List<PackageSeq>(); 
         private void button_query_Click(object sender, EventArgs e)
         {
             dataget();
@@ -62,14 +62,14 @@ namespace highSpeed.orderHandle
 
         private void orderdata_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string[] txt = new string[2];
+            PackageSeq txt = new PackageSeq();
             if (e.ColumnIndex == 0)
             {
                 if (orderdata.RowCount > 0)
                 {
                     bool obj = (bool)this.orderdata.CurrentRow.Cells[0].EditedFormattedValue;
-                    txt[0] = this.orderdata.CurrentRow.Cells[1].Value.ToString();
-                    txt[1] = this.orderdata.CurrentRow.Cells[2].Value.ToString();
+                    txt.synseqNO = Convert.ToInt32(this.orderdata.CurrentRow.Cells[1].Value.ToString());
+                    txt.packageNO = Convert.ToInt32(this.orderdata.CurrentRow.Cells[2].Value.ToString());
                     if (list.Count == 0)
                     {
                         list.Add(txt);                        
@@ -83,7 +83,7 @@ namespace highSpeed.orderHandle
                                 list.Add(txt);
                                 break;
                             }
-                            if (list[i][0] == txt[0] && list[i][1] == txt[1])
+                            if (list[i].packageNO == txt.packageNO && list[i].synseqNO == txt.synseqNO)
                             {
                                 //list.Remove(txt);
                                 list.RemoveAt(i);
@@ -100,27 +100,98 @@ namespace highSpeed.orderHandle
             list.Clear();
             for (int i = 0; i < this.orderdata.RowCount; i++)
             {
-                string[] txt = new string[2];
+                PackageSeq txt = new PackageSeq();
                 orderdata.Rows[i].Cells[0].Value = "true";
-                txt[0] = orderdata.Rows[i].Cells[1].Value.ToString();
-                txt[1] = orderdata.Rows[i].Cells[2].Value.ToString();
+
+                txt.synseqNO = Convert.ToInt32(orderdata.Rows[i].Cells[1].Value.ToString());
+                txt.packageNO = Convert.ToInt32(orderdata.Rows[i].Cells[2].Value.ToString());
                 list.Add(txt);
             }
         }
         void PackageSort()
         {
-            var date1 = System.DateTime.Now;
-            foreach (var item in list)
-            {
-                ps.GetAllOrder(Convert.ToDecimal(item[1]), Convert.ToDecimal(item[0]));
-            }
-            var date2 = System.DateTime.Now;
-            //将分配到两个包装机的任务，重置包装机包数，订单内包序等信息
-            
+            packagelist.Clear();
+            dateps = System.DateTime.Now;
+            var packageNo = list.Select(x => x.packageNO).Distinct().ToList();
+            List<int> dd = packageNo;
 
-            MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
-            InBound.WriteLog.GetLog().Write("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
-            updateControl(orderdata, true, true);
+            Thread thread1 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(1, 1);
+            }));
+            thread1.Start();
+            Thread thread2 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(2, 2);
+            }));
+            thread2.Start();
+            Thread thread3 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(3, 3);
+            }));
+            thread3.Start();
+            Thread thread4 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(4, 4);
+            }));
+            thread4.Start();
+            Thread thread5 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(5, 5);
+            }));
+            thread5.Start();
+            Thread thread6 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(6, 6);
+            }));
+            thread6.Start();
+            Thread thread7 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(7, 7);
+            }));
+            thread7.Start();
+            Thread thread8 = new Thread(new ThreadStart(delegate()
+            {
+                GetPackageResult(8, 8);
+            }));
+            thread8.Start();
+
+        }
+        public int TopHight, PushLocation_1, PushLocation_2, PushLocation_3, PushLocation_4;
+        /// <summary>
+        /// 包装机数据生成
+        /// </summary>
+        /// <param name="tmpno">包装机号</param>
+        /// <param name="threadno">线程号</param>
+        private void GetPackageResult(int tmpno, int threadno)
+        {
+            var tmplist = list.Where(x => x.packageNO == tmpno).OrderBy(x => x.synseqNO).ToList();
+            string text = "线程" + threadno + "包装机号" + tmpno + "\r\n";
+            foreach (var item in tmplist)
+            {
+                PackageService p = new PackageService();
+                p.packageTHeight = TopHight;
+                if (tmpno == 1 || tmpno == 2)
+                {
+                    p.MaxnormalHight = PushLocation_1;
+                }
+                else if (tmpno == 3 || tmpno == 4)
+                {
+                    p.MaxnormalHight = PushLocation_2;
+                }
+                else if (tmpno == 5 || tmpno == 6)
+                {
+                    p.MaxnormalHight = PushLocation_3;
+                }
+                else if (tmpno == 7 || tmpno == 8)
+                {
+                    p.MaxnormalHight = PushLocation_4;
+                }
+                string tmptext = text + "批次：" + item.synseqNO + "包装机" + item.packageNO + "\r\n";
+                p.GetAllOrder(Convert.ToDecimal(item.packageNO), Convert.ToDecimal(item.synseqNO));
+                finishPackage(Convert.ToDecimal(item.packageNO));
+                writeLog.Write(tmptext);
+            }
         }
         DateTime date1 = System.DateTime.Now;
         void PackageCallback()
@@ -194,6 +265,8 @@ namespace highSpeed.orderHandle
         }
 
         List<int> paclist = new List<int>();
+        List<decimal> packagelist = new List<decimal>();
+
         public void finished(int pac)
         {
             paclist.Add(pac);
