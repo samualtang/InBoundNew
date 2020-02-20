@@ -500,6 +500,7 @@
     <Compile Include="PubFunc\DeepCope.cs" />
     <Compile Include="PubFunc\List.cs" />
     <Compile Include="PubFunc\LoadDataHandler.cs" />
+    <Compile Include="PubFunc\PackageSeq.cs" />
     <Compile Include="PubFunc\PrintDataGridView.cs" />
     <Compile Include="PubFunc\PublicFun.cs" />
     <Compile Include="PubFunc\SocketClientConnector.cs" />

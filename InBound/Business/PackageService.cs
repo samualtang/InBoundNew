@@ -138,6 +138,10 @@ namespace InBound.Business
                                     ts.CIGWIDTH = tempItem.ILENGTH;
                                     ts.CIGLENGTH = tempItem.IWIDTH;
                                 }
+                                else if (tempItem.CDTYPE != 1 && ts.CIGTYPE == "2")
+                                {
+                                    ts.CIGZ = 183;
+                                }
                                 ts.PACKTASKNUM = temptask;
                                 ts.STATE = 10;
                                 ts.NORMAILSTATE = 10;
@@ -175,12 +179,16 @@ namespace InBound.Business
                 query = null;
             }
         }
+        /// <summary>
+        /// 高度定值
+        /// </summary>
+        public int packageTHeight { get; set; }
+
         decimal temptask;
         List<T_WMS_ITEM> query1;
         decimal ptid;
         int packageWidth = 540;//宽
         int packageLenghth = 366; //长
-        int packageTHeight = 140;//高
         int packageCtHeight = 50;//高
         int packageHeight = 140;//高
 
