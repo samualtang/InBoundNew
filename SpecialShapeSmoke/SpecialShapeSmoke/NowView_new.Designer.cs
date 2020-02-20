@@ -43,12 +43,19 @@
             this.PULLSTATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.packagemachine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbox_waitting = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnNowPoke = new System.Windows.Forms.Button();
             this.btnMachineSeq1 = new System.Windows.Forms.Button();
             this.btnMachineSeq2 = new System.Windows.Forms.Button();
             this.labMachineSeq = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.gbox_waitting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // DgvNowView
@@ -189,12 +196,44 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.gbox_waitting);
             this.groupBox1.Controls.Add(this.DgvNowView);
             this.groupBox1.Location = new System.Drawing.Point(4, 63);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1305, 519);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // gbox_waitting
+            // 
+            this.gbox_waitting.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.gbox_waitting.Controls.Add(this.pictureBox2);
+            this.gbox_waitting.Controls.Add(this.pictureBox1);
+            this.gbox_waitting.Location = new System.Drawing.Point(471, 120);
+            this.gbox_waitting.Name = "gbox_waitting";
+            this.gbox_waitting.Size = new System.Drawing.Size(512, 131);
+            this.gbox_waitting.TabIndex = 6;
+            this.gbox_waitting.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::SpecialShapeSmoke.Properties.Resources.等待;
+            this.pictureBox2.Location = new System.Drawing.Point(126, 33);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(380, 61);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 2;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SpecialShapeSmoke.Properties.Resources.Write;
+            this.pictureBox1.Location = new System.Drawing.Point(5, 11);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(115, 115);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // btnNowPoke
             // 
@@ -244,6 +283,10 @@
             this.labMachineSeq.TabIndex = 5;
             this.labMachineSeq.Text = "通道1";
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // NowView_new
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -262,6 +305,9 @@
             this.Load += new System.EventHandler(this.NowView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvNowView)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.gbox_waitting.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,5 +334,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pokeid;
         private System.Windows.Forms.DataGridViewTextBoxColumn PULLSTATUS;
         private System.Windows.Forms.DataGridViewTextBoxColumn packagemachine;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.GroupBox gbox_waitting;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

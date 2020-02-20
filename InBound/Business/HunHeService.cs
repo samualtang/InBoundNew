@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using InBound.Model;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace InBound.Business
 {
@@ -23,6 +24,7 @@ namespace InBound.Business
             {
                 try
                 {
+                 
                     if (tag)
                     {
                         var query = (from item in entity.T_UN_POKE
@@ -62,6 +64,8 @@ namespace InBound.Business
                                      }).Take(qty).ToList();
                         return query;
                     }
+                 
+
                 }
                 catch (Exception e)
                 {

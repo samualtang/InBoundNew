@@ -199,6 +199,8 @@
     <Content Include="Image\icon_exit.png" />
     <Content Include="Image\mainbj.png" />
     <Content Include="Image\topfj.png" />
+    <None Include="Image\Write.gif" />
+    <None Include="Image\等待.bmp" />
     <Content Include="Properties\lib\DevComponents.DotNetBar2.dll" />
     <Content Include="Properties\lib\WHC.Pager.WinControlEx.dll" />
   </ItemGroup>
