@@ -218,7 +218,7 @@ namespace InBound.Business
         /// <summary>
         /// 合包常规烟总层数
         /// </summary>
-        decimal MaxnormalHight = 5;
+        public decimal MaxnormalHight;
         int taskCount = 6;//一次参与计算的条数
         int allpackagenum = 0;
         int NormalCount = 36;//常规烟整包条烟数
