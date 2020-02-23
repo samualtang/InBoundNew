@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using highSpeed.PubFunc;
 using InBound.Business;
 using System.Threading;
+using InBound;
 
 namespace highSpeed.orderHandle
 {
@@ -24,7 +25,9 @@ namespace highSpeed.orderHandle
         DataBase db = new DataBase();
         DataSet ds = new DataSet();
         string sql;
-        List<PackageSeq> list = new List<PackageSeq>(); 
+        List<PackageSeq> list = new List<PackageSeq>();
+
+        WriteLog writeLog = WriteLog.GetLog();
         private void button_query_Click(object sender, EventArgs e)
         {
             dataget();
@@ -111,7 +114,7 @@ namespace highSpeed.orderHandle
         void PackageSort()
         {
             packagelist.Clear();
-            dateps = System.DateTime.Now;
+            DateTime dateps = System.DateTime.Now;
             var packageNo = list.Select(x => x.packageNO).Distinct().ToList();
             List<int> dd = packageNo;
 
@@ -302,7 +305,7 @@ namespace highSpeed.orderHandle
             string str = "";
             foreach (var item in list)
             {
-                str += "批次:" + item[0] + "、" + "包装机:" + item[1] + ";  ";
+                str += "批次:" + item.synseqNO + "、" + "包装机:" + item.packageNO + ";  ";
             }
             DialogResult re = MessageBox.Show("是否按\r\n" + str + "\r\n顺序生成包装机数据", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (re == DialogResult.Cancel)
