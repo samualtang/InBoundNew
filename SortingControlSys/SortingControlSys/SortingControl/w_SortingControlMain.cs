@@ -926,15 +926,27 @@ namespace SortingControlSys.SortingControl
                     writeLog.Write("读取到完成任务号:" + tempvalue);
                     if (tempvalue >= 1)//分拣完成
                     {
-                        statusGroup1.Write(1, i);
+                       // statusGroup1.Write(1, i);
                         writeLog.Write("自动完成任务:从电控读取" + sortgroupno1 + "组出口号：" + i + "；任务号:" + tempvalue);
                        
                         if (tempvalue != 0)
                         {
                             try
                             {
-                                TaskService.UpdateFJFinishStatus(sortgroupno1, tempvalue);//将第一组分拣任务改为完成完成
-                                PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+                                //TaskService.UpdateFJFinishStatus(sortgroupno1, tempvalue);//将第一组分拣任务改为完成完成
+                                //PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+
+                                int result = TaskService.UpdateFJFinishStatus(sortgroupno1, tempvalue);//将第一组分拣任务改为完成完成
+                                if (result == 1)
+                                {
+                                    PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
+                                    statusGroup1.Write(1, i);
+                                }
+                                else
+                                {
+                                    writeLog.Write("暂未更新" + sortgroupno1 + "组，出口号：" + i + "；任务号:" + tempvalue);
+                                    return;
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -965,8 +977,8 @@ namespace SortingControlSys.SortingControl
                                 int result = TaskService.UpdateFJFinishStatus(sortgroupno2, tempvalue);//将第一组分拣任务改为完成完成
                                 if (result == 1)
                                 {
-                                    PreSortInfoService.Add((decimal)tempvalue, sortgroupno1);
-                                    taskgroup2.Write(1, i);
+                                    PreSortInfoService.Add((decimal)tempvalue, sortgroupno2);
+                                    statusGroup4.Write(1, i);
                                 }
                                 else
                                 {
