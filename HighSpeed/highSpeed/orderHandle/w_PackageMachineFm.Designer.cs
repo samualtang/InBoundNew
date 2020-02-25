@@ -45,6 +45,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
             this.button_CheckData = new System.Windows.Forms.Button();
+            this.btn_RecallBackdata = new System.Windows.Forms.Button();
+            this.btn_fmy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.orderdata)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
@@ -52,7 +54,7 @@
             // 
             // button_datacomplte
             // 
-            this.button_datacomplte.Location = new System.Drawing.Point(704, 16);
+            this.button_datacomplte.Location = new System.Drawing.Point(433, 15);
             this.button_datacomplte.Name = "button_datacomplte";
             this.button_datacomplte.Size = new System.Drawing.Size(122, 32);
             this.button_datacomplte.TabIndex = 1;
@@ -80,7 +82,7 @@
             this.orderdata.Name = "orderdata";
             this.orderdata.RowTemplate.Height = 23;
             this.orderdata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.orderdata.Size = new System.Drawing.Size(1191, 361);
+            this.orderdata.Size = new System.Drawing.Size(1163, 361);
             this.orderdata.TabIndex = 3;
             this.orderdata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderdata_CellContentClick);
             // 
@@ -125,7 +127,7 @@
             // 
             // button_query
             // 
-            this.button_query.Location = new System.Drawing.Point(427, 19);
+            this.button_query.Location = new System.Drawing.Point(252, 19);
             this.button_query.Name = "button_query";
             this.button_query.Size = new System.Drawing.Size(75, 27);
             this.button_query.TabIndex = 4;
@@ -135,9 +137,9 @@
             // 
             // textBox_querytext
             // 
-            this.textBox_querytext.Location = new System.Drawing.Point(150, 23);
+            this.textBox_querytext.Location = new System.Drawing.Point(110, 22);
             this.textBox_querytext.Name = "textBox_querytext";
-            this.textBox_querytext.Size = new System.Drawing.Size(256, 21);
+            this.textBox_querytext.Size = new System.Drawing.Size(116, 21);
             this.textBox_querytext.TabIndex = 5;
             // 
             // comboBox_querylist
@@ -149,12 +151,12 @@
             "包装机号"});
             this.comboBox_querylist.Location = new System.Drawing.Point(29, 23);
             this.comboBox_querylist.Name = "comboBox_querylist";
-            this.comboBox_querylist.Size = new System.Drawing.Size(115, 20);
+            this.comboBox_querylist.Size = new System.Drawing.Size(75, 20);
             this.comboBox_querylist.TabIndex = 6;
             // 
             // button_all
             // 
-            this.button_all.Location = new System.Drawing.Point(529, 19);
+            this.button_all.Location = new System.Drawing.Point(333, 19);
             this.button_all.Name = "button_all";
             this.button_all.Size = new System.Drawing.Size(75, 27);
             this.button_all.TabIndex = 7;
@@ -164,7 +166,7 @@
             // 
             // button_TBJ
             // 
-            this.button_TBJ.Location = new System.Drawing.Point(849, 16);
+            this.button_TBJ.Location = new System.Drawing.Point(587, 15);
             this.button_TBJ.Name = "button_TBJ";
             this.button_TBJ.Size = new System.Drawing.Size(122, 32);
             this.button_TBJ.TabIndex = 8;
@@ -205,7 +207,7 @@
             // 
             // button_CheckData
             // 
-            this.button_CheckData.Location = new System.Drawing.Point(1030, 16);
+            this.button_CheckData.Location = new System.Drawing.Point(894, 14);
             this.button_CheckData.Name = "button_CheckData";
             this.button_CheckData.Size = new System.Drawing.Size(130, 32);
             this.button_CheckData.TabIndex = 12;
@@ -213,11 +215,34 @@
             this.button_CheckData.UseVisualStyleBackColor = true;
             this.button_CheckData.Click += new System.EventHandler(this.button_CheckData_Click);
             // 
+            // btn_RecallBackdata
+            // 
+            this.btn_RecallBackdata.Location = new System.Drawing.Point(743, 15);
+            this.btn_RecallBackdata.Name = "btn_RecallBackdata";
+            this.btn_RecallBackdata.Size = new System.Drawing.Size(110, 32);
+            this.btn_RecallBackdata.TabIndex = 15;
+            this.btn_RecallBackdata.Text = "拆单数据更新";
+            this.btn_RecallBackdata.UseVisualStyleBackColor = true;
+            this.btn_RecallBackdata.Click += new System.EventHandler(this.btn_RecallBackdata_Click);
+            // 
+            // btn_fmy
+            // 
+            this.btn_fmy.Location = new System.Drawing.Point(1062, 15);
+            this.btn_fmy.Name = "btn_fmy";
+            this.btn_fmy.Size = new System.Drawing.Size(113, 32);
+            this.btn_fmy.TabIndex = 16;
+            this.btn_fmy.Text = "罚没烟数据处理";
+            this.btn_fmy.UseVisualStyleBackColor = true;
+            this.btn_fmy.Visible = false;
+            this.btn_fmy.Click += new System.EventHandler(this.btn_fmy_Click);
+            // 
             // w_PackageMachineFm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1215, 432);
+            this.ClientSize = new System.Drawing.Size(1187, 432);
+            this.Controls.Add(this.btn_fmy);
+            this.Controls.Add(this.btn_RecallBackdata);
             this.Controls.Add(this.button_CheckData);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.button_TBJ);
@@ -257,5 +282,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbLoading;
         private System.Windows.Forms.Button button_CheckData;
+        private System.Windows.Forms.Button btn_RecallBackdata;
+        private System.Windows.Forms.Button btn_fmy;
     }
 }

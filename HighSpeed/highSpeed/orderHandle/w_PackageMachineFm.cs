@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using highSpeed.PubFunc;
 using InBound.Business;
 using System.Threading;
+using System.Configuration;
+using InBound;
 
 namespace highSpeed.orderHandle
 {
@@ -20,11 +22,25 @@ namespace highSpeed.orderHandle
 
             comboBox_querylist.SelectedIndex = 0;
             dataget();
+            try
+            {
+                PushLocation_1 = Convert.ToInt32(ConfigurationManager.AppSettings["PushLocation_1"].ToString());
+                PushLocation_2 = Convert.ToInt32(ConfigurationManager.AppSettings["PushLocation_2"].ToString());
+                PushLocation_3 = Convert.ToInt32(ConfigurationManager.AppSettings["PushLocation_3"].ToString());
+                PushLocation_4 = Convert.ToInt32(ConfigurationManager.AppSettings["PushLocation_4"].ToString());
+                TopHight = Convert.ToInt32(ConfigurationManager.AppSettings["TopHight"].ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("配置文件读取异常，请检查节点：\r\n TopHight, PushLocation_1, PushLocation_2, PushLocation_3, PushLocation_4值是否正确！");
+                writeLog.Write("包装机数据生成相关配置节点异常！\r\n" + ex.InnerException.Message);
+            }
         }
+        public WriteLog writeLog = WriteLog.GetLog();
         DataBase db = new DataBase();
         DataSet ds = new DataSet();
         string sql;
-        List<PackageSeq> list = new List<PackageSeq>(); 
+        List<PackageSeq> list = new List<PackageSeq>();
         private void button_query_Click(object sender, EventArgs e)
         {
             dataget();
@@ -72,13 +88,13 @@ namespace highSpeed.orderHandle
                     txt.packageNO = Convert.ToInt32(this.orderdata.CurrentRow.Cells[2].Value.ToString());
                     if (list.Count == 0)
                     {
-                        list.Add(txt);                        
+                        list.Add(txt);
                     }
                     else
                     {
                         for (int i = 0; i <= list.Count; i++)
                         {
-                            if ( i == list.Count)
+                            if (i == list.Count)
                             {
                                 list.Add(txt);
                                 break;
@@ -108,6 +124,7 @@ namespace highSpeed.orderHandle
                 list.Add(txt);
             }
         }
+        DateTime dateps = new DateTime();
         void PackageSort()
         {
             packagelist.Clear();
@@ -193,17 +210,18 @@ namespace highSpeed.orderHandle
                 writeLog.Write(tmptext);
             }
         }
+
         DateTime date1 = System.DateTime.Now;
         void PackageCallback()
         {
             paclist.Clear();
-             date1 = System.DateTime.Now;
-           //foreach (var item in ts.foreachdata())
-           // {
-           //    Thread  thread=new Thread(()=>
-           //     ts.CallBackTBJ2(item));
-           //    thread.Start();
-           // } 
+            date1 = System.DateTime.Now;
+            //foreach (var item in ts.foreachdata())
+            // {
+            //    Thread  thread=new Thread(()=>
+            //     ts.CallBackTBJ2(item));
+            //    thread.Start();
+            // } 
             Thread thread = new Thread(() =>
             {
                 TBJDataSchdule ts = new TBJDataSchdule();
@@ -240,50 +258,66 @@ namespace highSpeed.orderHandle
             });
             thread5.Start();
             Thread thread6 = new Thread(() =>
-              {
-                  TBJDataSchdule ts6 = new TBJDataSchdule();
-                  ts6.CallBackTBJ2(6);
-                  finished(6);
-              });
+            {
+                TBJDataSchdule ts6 = new TBJDataSchdule();
+                ts6.CallBackTBJ2(6);
+                finished(6);
+            });
             thread6.Start();
             Thread thread7 = new Thread(() =>
-              {
-                  TBJDataSchdule ts7 = new TBJDataSchdule();
-                  ts7.CallBackTBJ2(7);
-                 finished(7);});
+            {
+                TBJDataSchdule ts7 = new TBJDataSchdule();
+                ts7.CallBackTBJ2(7);
+                finished(7);
+            });
             thread7.Start();
             Thread thread8 = new Thread(() =>
-              {
-                  TBJDataSchdule ts8 = new TBJDataSchdule();
-                  ts8.CallBackTBJ2(8);
-                  finished(8);
-              });
+            {
+                TBJDataSchdule ts8 = new TBJDataSchdule();
+                ts8.CallBackTBJ2(8);
+                finished(8);
+            });
             thread8.Start();
-           // var date2 = System.DateTime.Now;
+            // var date2 = System.DateTime.Now;
 
-           
+
         }
 
         List<int> paclist = new List<int>();
         List<decimal> packagelist = new List<decimal>();
 
+
+        public void finishPackage(decimal pac)
+        {
+            packagelist.Add(pac);
+
+            if (packagelist.Count == list.Count)
+            {
+                var date2 = System.DateTime.Now;
+                MessageBox.Show("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - dateps).TotalSeconds) + " 秒");
+                InBound.WriteLog.GetLog().Write("包装机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - dateps).TotalSeconds) + " 秒");
+                updateControl(orderdata, true, true);
+                list.Clear();
+            }
+            else
+            {
+
+            }
+        }
         public void finished(int pac)
         {
             paclist.Add(pac);
 
-            if (paclist.Count==8)
+            if (paclist.Count == 8)
             {
                 var date2 = System.DateTime.Now;
-                var date3 = System.DateTime.Now;
-                UpPackageData.UpPackageSeq();
-                var date4 = System.DateTime.Now;
-                MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒\r\n订单拆分整理耗时" + Math.Ceiling((date4 - date3).TotalSeconds) + "秒");
+                MessageBox.Show("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
                 InBound.WriteLog.GetLog().Write("贴标机数据生成成功!\r\n耗时：" + Math.Ceiling((date2 - date1).TotalSeconds) + " 秒");
                 updateControl(button_TBJ, true);
             }
             else
             {
-       
+
             }
         }
 
@@ -302,7 +336,7 @@ namespace highSpeed.orderHandle
             string str = "";
             foreach (var item in list)
             {
-                str += "批次:" + item[0] + "、" + "包装机:" + item[1] + ";  ";
+                str += "批次:" + item.synseqNO + "、" + "包装机:" + item.packageNO + ";  ";
             }
             DialogResult re = MessageBox.Show("是否按\r\n" + str + "\r\n顺序生成包装机数据", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (re == DialogResult.Cancel)
@@ -316,7 +350,7 @@ namespace highSpeed.orderHandle
             panel3.Visible = true;
             label1.Text = "包装机数据生成中......";
             HandlePackageSort task = PackageSort; //新的
-            task.BeginInvoke(null, null); 
+            task.BeginInvoke(null, null);
         }
         private delegate void HandleDelegate1(Control control, bool isvisible, bool isenable);
         private delegate void HandleDelegate2(Control control, bool isenable);
@@ -359,12 +393,40 @@ namespace highSpeed.orderHandle
             panel3.Visible = true;
             label1.Text = "贴标机数据生成中......";
             HandleCallbackSort task = PackageCallback;
-            task.BeginInvoke(null, null); 
+            task.BeginInvoke(null, null);
         }
 
         private void button_CheckData_Click(object sender, EventArgs e)
         {
             MessageBox.Show(ts.CheckData());
+        }
+
+        private void btn_fmy_Click(object sender, EventArgs e)
+        {
+            var date1 = System.DateTime.Now;
+            //获取罚没烟编码
+            TBJDataSchdule.GetFmCig();
+            var date2 = System.DateTime.Now;
+
+            MessageBox.Show("耗时：" + (date2 - date1).Seconds.ToString() + "秒");
+        }
+        delegate void HandleReCallbackSort();
+
+        private void btn_RecallBackdata_Click(object sender, EventArgs e)
+        {
+            btn_RecallBackdata.Enabled = false;
+            panel3.Visible = true;
+            HandleReCallbackSort ReCallback = RecallBackdata;
+            label1.Text = "贴标机拆单数据更新中......";
+            ReCallback.BeginInvoke(null, null);
+        }
+        void RecallBackdata()
+        {
+            var date1 = System.DateTime.Now;
+            TBJDataSchdule.UpdateTBJMsg();
+            updateControl(btn_RecallBackdata, true);
+            var date2 = System.DateTime.Now;
+            MessageBox.Show("耗时：" + (date2 - date1).Seconds.ToString() + "秒");
         }
     }
 }
