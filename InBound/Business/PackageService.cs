@@ -43,6 +43,7 @@ namespace InBound.Business
                 var data = GetPackageInfoView(entity, packageNo, synseq);
                 //所有订单明细
                 var query = (from item in data
+                             
                              group item by new { item.BILLCODE, item.TASKNUM } into allcode
                              select new { allcode.Key.BILLCODE, allcode.Key.TASKNUM }).OrderBy(x => x.TASKNUM).ToList();
 
@@ -66,7 +67,7 @@ namespace InBound.Business
                         List<T_PACKAGE_TASK> task = new List<T_PACKAGE_TASK>();
                         //当期订单明细
                         var query2 = (from item2 in entity.V_PRODUCE_PACKAGEINFO
-                                      where item2.BILLCODE == v.BILLCODE //&& item2.ALLOWSORT == "非标"
+                                      where item2.BILLCODE == v.BILLCODE && item2.EXPORT==packageNo //&& item2.ALLOWSORT == "非标"
                                       orderby item2.SENDTASKNUM, item2.MACHINESEQ, item2.TROUGHNUM, item2.SEQ
                                       select item2).ToList();
                         if (query2 != null)
