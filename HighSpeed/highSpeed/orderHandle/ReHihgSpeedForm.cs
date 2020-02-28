@@ -67,16 +67,16 @@ namespace highSpeed.orderHandle
                     {
                         sqlpara = new OracleParameter[3];
                         sqlpara[0] = new OracleParameter("p_code", item.RegionCode);
-                        sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
-                        sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-                        sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+                        //sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
+                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
+                        sqlpara[1].Direction = ParameterDirection.Output;
                         sqlpara[2].Direction = ParameterDirection.Output;
-                        sqlpara[3].Direction = ParameterDirection.Output;
                         Db.ExecuteNonQueryWithProc("P_REPACE_PRODUCE_REGIONCODE", sqlpara);
 
-                        errcode = sqlpara[2].Value.ToString();
-                        errmsg = sqlpara[3].Value.ToString();
+                        errcode = sqlpara[1].Value.ToString();
+                        errmsg = sqlpara[2].Value.ToString();
                         index++;
                     }
                     //输出已重置的车组
@@ -204,18 +204,18 @@ namespace highSpeed.orderHandle
 
                     foreach (var item in ReUnScheduleList)
                     {
-                        sqlpara = new OracleParameter[4];
+                        sqlpara = new OracleParameter[3];
                         sqlpara[0] = new OracleParameter("p_code", item.RegionCode);
-                        sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
-                        sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-                        sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+                        //sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
+                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
+                        sqlpara[1].Direction = ParameterDirection.Output;
                         sqlpara[2].Direction = ParameterDirection.Output;
-                        sqlpara[3].Direction = ParameterDirection.Output;
                         Db.ExecuteNonQueryWithProc("P_REPACE_UN_REGIONCODE", sqlpara);
 
-                        errcode = sqlpara[2].Value.ToString();
-                        errmsg = sqlpara[3].Value.ToString();
+                        errcode = sqlpara[1].Value.ToString();
+                        errmsg = sqlpara[2].Value.ToString();
                         index++;
                     }
                     //输出已重置的车组
