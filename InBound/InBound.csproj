@@ -100,6 +100,7 @@
     <Compile Include="Business\MachineService.cs" />
     <Compile Include="Business\ProducePokeService.cs" />
     <Compile Include="Business\ProduceTaskService.cs" />
+    <Compile Include="Model\ReSchedule.cs" />
     <Compile Include="Model\RestockingData.cs" />
     <Compile Include="Business\SortTroughService.cs" />
     <Compile Include="Business\StroageInOutService.cs" />

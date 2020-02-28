@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using InBound;
 using highSpeed.PubFunc;
 using System.Data.OracleClient;
+using InBound.Model;
 
 
 namespace highSpeed.orderHandle
@@ -20,11 +21,15 @@ namespace highSpeed.orderHandle
             InitializeComponent();
         }
         DataBase Db;
+        List<ReSchedule> ReScheduleList = new List<ReSchedule>();
+        List<ReSchedule> ReUnScheduleList = new List<ReSchedule>();
+        string querystr = "select t.orderdate,t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_produce_task t group by t.orderdate,t.regioncode,t.state order by orderdate";
+        string unquerystr = "select t.orderdate,t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_un_task t group by t.orderdate,t.regioncode,t.state order by orderdate";
         private void ReHihgSpeedForm_Load(object sender, EventArgs e)
         {
             Db = new DataBase();
-            var producedata = Db.Query("select t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_produce_task t group by t.regioncode,t.state");
-            var undata = Db.Query("select t.regioncode,sum(t.taskquantity) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_un_task t group by t.regioncode,t.state");
+            var producedata = Db.Query(querystr);
+            var undata = Db.Query(unquerystr);
 
             dataGridView1.DataSource = producedata;
             dataGridView2.DataSource = undata;
@@ -33,65 +38,55 @@ namespace highSpeed.orderHandle
 
         private void btn_produce_Click(object sender, EventArgs e)
         {
-            if (txt_codestr1.Text.Length <= 0)
+            if (ReScheduleList.Count <= 0)
             {
                 MessageBox.Show("请选择车组！");
                 return;
             }
-            DialogResult result = MessageBox.Show("确认重置常规烟车组：" + txt_codestr1.Text + "？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (result==DialogResult.Cancel)
+            string txt = "";
+            foreach (var item in ReScheduleList)
+            {
+                txt = txt + "\r\n订单日期：" + item.OrderDate + "   车组：" + item.RegionCode;
+            }
+
+            DialogResult result = MessageBox.Show("确认重置常规烟" + txt + "？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Cancel)
             {
                 return;
             }
+            int index = 0;
             try
             {
-                if (txt_codestr1.Text != "")
+                if (ReScheduleList.Count > 0)
                 {
                     Db.Open();
-                    String[] code = txt_codestr1.Text.Substring(1).Split(',');
-                    int len = code.Length;
-                    string codes = "";
-                    foreach (var item in code)
-                    {
-                        codes = codes + item + ",";
-                    }
                     string errcode = "", errmsg = "";
                     OracleParameter[] sqlpara;
-                    List<string> havecode = new List<string>();
-                    for (int i = 0; i < code.Length; i++)
+
+                    foreach (var item in ReScheduleList)
                     {
                         sqlpara = new OracleParameter[3];
-                        sqlpara[0] = new OracleParameter("p_code", code[i]);
-                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+                        sqlpara[0] = new OracleParameter("p_code", item.RegionCode);
+                        sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
+                        sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
-                        sqlpara[1].Direction = ParameterDirection.Output;
                         sqlpara[2].Direction = ParameterDirection.Output;
+                        sqlpara[3].Direction = ParameterDirection.Output;
                         Db.ExecuteNonQueryWithProc("P_REPACE_PRODUCE_REGIONCODE", sqlpara);
 
-                        errcode = sqlpara[1].Value.ToString();
-                        errmsg = sqlpara[2].Value.ToString();
-
-                        havecode.Add(code[i]);
-                        if (errcode == "0")
-                        {
-                            havecode.Remove(code[i]);
-                            break;
-                        }
+                        errcode = sqlpara[2].Value.ToString();
+                        errmsg = sqlpara[3].Value.ToString();
+                        index++;
                     }
                     //输出已重置的车组
-                    if (havecode.Count > 0)
+                    if (index == ReScheduleList.Count)
                     {
-                        string txt = "";
-                        foreach (var item in havecode)
-                        {
-                            txt = txt + item + ",";
-                        }
                         MessageBox.Show(txt + "车组已完成重置，可以重新进行预排程！");
                     }
 
                 }
-                txt_codestr1.Clear();
+                ReScheduleList.Clear();
             }
             catch (Exception)
             {
@@ -106,57 +101,56 @@ namespace highSpeed.orderHandle
             {
                 bool obj = (bool)this.dataGridView1.CurrentRow.Cells[0].EditedFormattedValue;
 
-                String czcode = this.dataGridView1.CurrentRow.Cells[1].Value + "";//modify by tjl
-                String czcodestr = this.txt_codestr1.Text;
+                String czdate = ((DateTime)this.dataGridView1.CurrentRow.Cells[1].Value).ToString("yyyy-MM-dd");
+                String czcode = this.dataGridView1.CurrentRow.Cells[2].Value + "";
                 if (obj)
                 {
-                    if (!czcodestr.Contains(czcode))
+                    if (ReScheduleList.Where(x => x.RegionCode == czcode && x.OrderDate == czdate).Count() == 0)
                     {
-                        czcodestr = czcodestr + "," + czcode;
+                        ReScheduleList.Add(new ReSchedule() { OrderDate = czdate, RegionCode = czcode });
                     }
                 }
                 else
                 {
-                    czcodestr = czcodestr.Replace("," + czcode, "");
+                    ReScheduleList.Remove(ReScheduleList.Where(x => x.RegionCode == czcode && x.OrderDate == czdate).FirstOrDefault());
                 }
-                this.txt_codestr1.Text = czcodestr;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.txt_codestr1.Text = "";
+            ReScheduleList.Clear();
             update1();
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            String czcodestr = "";
+            ReScheduleList.Clear();
             for (int i = 0; i < this.dataGridView1.RowCount; i++)
             {
-                  dataGridView1.Rows[i].Cells[0].Value = "true";
-                  czcodestr = czcodestr + "," + dataGridView1.Rows[i].Cells[1].Value + "";
+                dataGridView1.Rows[i].Cells[0].Value = "true";
+                ReScheduleList.Add(new ReSchedule() { OrderDate = ((DateTime)(dataGridView1.Rows[i].Cells[1].Value)).ToString("yyyy-MM-dd"), RegionCode = dataGridView1.Rows[i].Cells[2].Value.ToString() });
             }
-            this.txt_codestr1.Text = czcodestr;
         }
 
 
         private void update1()
         {
             Db = new DataBase();
-            var producedata = Db.Query("select t.regioncode,(select sum(taskquantity) from t_produce_task where regioncode = t.regioncode) allqty,decode(t.state, 0, '新增', 15, '已排程', 30, '分拣完成', t.state) status,decode(t.state, 0, sum(t.taskquantity)) untask,decode(t.state, 15, sum(t.taskquantity)) unpoke,decode(t.state, 30, sum(t.taskquantity)) havepoke from t_produce_task t group by t.regioncode, t.state");
-            dataGridView1.DataSource = producedata; 
+            var producedata = Db.Query(querystr);
+            dataGridView1.DataSource = producedata;
+            dataGridView1.DataSource = producedata;
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            this.txt_codestr2.Text = "";
+            ReUnScheduleList.Clear();
             update2();
         }
         private void update2()
         {
             Db = new DataBase();
-            var producedata = Db.Query("select t.regioncode,(select sum(taskquantity) from t_un_task where regioncode = t.regioncode) allqty,decode(t.state,0,'新增',15,'已排程',30,'分拣完成',t.state) status,decode(t.state,0,sum(t.taskquantity)) untask,decode(t.state,15,sum(t.taskquantity)) unpoke ,decode(t.state,30,sum(t.taskquantity)) havepoke from t_un_task t group by t.regioncode,t.state");
+            var producedata = Db.Query(unquerystr);
 
-            dataGridView2.DataSource = producedata; 
+            dataGridView2.DataSource = producedata;
         }
 
         private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -165,84 +159,73 @@ namespace highSpeed.orderHandle
             {
                 bool obj = (bool)this.dataGridView2.CurrentRow.Cells[0].EditedFormattedValue;
 
-                String czcode = this.dataGridView2.CurrentRow.Cells[1].Value + "";//modify by tjl
-                String czcodestr = this.txt_codestr2.Text;
+                String czdate = ((DateTime)this.dataGridView2.CurrentRow.Cells[1].Value).ToString("yyyy-MM-dd");
+                String czcode = this.dataGridView2.CurrentRow.Cells[2].Value + "";
                 if (obj)
                 {
-                    if (!czcodestr.Contains(czcode))
+                    if (ReUnScheduleList.Where(x => x.RegionCode == czcode && x.OrderDate == czdate).Count() == 0)
                     {
-                        czcodestr = czcodestr + "," + czcode;
+                        ReUnScheduleList.Add(new ReSchedule() { OrderDate = czdate, RegionCode = czcode });
                     }
                 }
                 else
                 {
-                    czcodestr = czcodestr.Replace("," + czcode, "");
+                    ReUnScheduleList.Remove(ReUnScheduleList.Where(x => x.RegionCode == czcode && x.OrderDate == czdate).FirstOrDefault());
                 }
-                this.txt_codestr2.Text = czcodestr;
             }
         }
 
         private void btn_un_Click(object sender, EventArgs e)
         {
-            if (txt_codestr2.Text.Length<=0)
+            if (ReUnScheduleList.Count <= 0)
             {
                 MessageBox.Show("请选择车组！");
                 return;
             }
-            DialogResult result = MessageBox.Show("确认重置异型烟车组：" + txt_codestr2.Text + "？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            string txt = "";
+            foreach (var item in ReUnScheduleList)
+            {
+                txt = txt + "\r\n订单日期：" + item.OrderDate + "   车组：" + item.RegionCode;
+            }
+
+            DialogResult result = MessageBox.Show("确认重置异型烟" + txt + "？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Cancel)
             {
                 return;
             }
+            int index = 0;
             try
             {
-                if (txt_codestr2.Text != "")
+                if (ReUnScheduleList.Count > 0)
                 {
                     Db.Open();
-                    String[] code = txt_codestr2.Text.Substring(1).Split(',');
-                    int len = code.Length;
-                    string codes = "";
-                    foreach (var item in code)
-                    {
-                        codes = codes + item + ",";
-                    }
                     string errcode = "", errmsg = "";
                     OracleParameter[] sqlpara;
-                    List<string> havecode = new List<string>();
-                    for (int i = 0; i < code.Length; i++)
-                    {
-                        sqlpara = new OracleParameter[3];
-                        sqlpara[0] = new OracleParameter("p_code", code[i]);
-                        sqlpara[1] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
-                        sqlpara[2] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
 
-                        sqlpara[1].Direction = ParameterDirection.Output;
+                    foreach (var item in ReUnScheduleList)
+                    {
+                        sqlpara = new OracleParameter[4];
+                        sqlpara[0] = new OracleParameter("p_code", item.RegionCode);
+                        sqlpara[1] = new OracleParameter("p_orderdate", item.OrderDate);
+                        sqlpara[2] = new OracleParameter("p_ErrCode", OracleType.VarChar, 30);
+                        sqlpara[3] = new OracleParameter("p_ErrMsg", OracleType.VarChar, 1000);
+
                         sqlpara[2].Direction = ParameterDirection.Output;
+                        sqlpara[3].Direction = ParameterDirection.Output;
                         Db.ExecuteNonQueryWithProc("P_REPACE_UN_REGIONCODE", sqlpara);
 
-                        errcode = sqlpara[1].Value.ToString();
-                        errmsg = sqlpara[2].Value.ToString();
-
-                        havecode.Add(code[i]);
-                        if (errcode == "0")
-                        {
-                            havecode.Remove(code[i]);
-                            break;
-                        }
+                        errcode = sqlpara[2].Value.ToString();
+                        errmsg = sqlpara[3].Value.ToString();
+                        index++;
                     }
                     //输出已重置的车组
-                    if (havecode.Count > 0)
+                    if (index == ReUnScheduleList.Count)
                     {
-                        string txt = "";
-                        foreach (var item in havecode)
-                        {
-                            txt = txt + item + ",";
-                        }
                         MessageBox.Show(txt + "车组已完成重置，可以重新进行预排程！");
                     }
 
                 }
-                txt_codestr2.Clear();
+                ReUnScheduleList.Clear();
             }
             catch (Exception)
             {
@@ -253,21 +236,13 @@ namespace highSpeed.orderHandle
 
         private void button4_Click(object sender, EventArgs e)
         {
-
-            String czcodestr = "";
+            ReUnScheduleList.Clear();
             for (int i = 0; i < this.dataGridView2.RowCount; i++)
             {
                 dataGridView2.Rows[i].Cells[0].Value = "true";
-                czcodestr = czcodestr + "," + dataGridView2.Rows[i].Cells[1].Value + "";
+                ReUnScheduleList.Add(new ReSchedule() { OrderDate = ((DateTime)(dataGridView2.Rows[i].Cells[1].Value)).ToString("yyyy-MM-dd"), RegionCode = dataGridView2.Rows[i].Cells[2].Value.ToString() });
             }
-            this.txt_codestr2.Text = czcodestr;
-        }
+        } 
 
-      
- 
-
-      
-
-       
     }
 }
