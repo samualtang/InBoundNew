@@ -582,7 +582,7 @@ group by billcode) y
 
                                 orderPagNum = pagTask.Where(a => a.BILLCODE == item.BILLCODE).Max(a => a.PACKAGESEQ) ?? 0; //订单总包数
                                 shaednum = pagTask.Where(a => a.BILLCODE == item.BILLCODE && a.CIGTYPE == "2").Sum(a => a.NORMALQTY) ?? 0;//订单异型烟数量
-                                ordercount = needInfo.Where(a => a.REGIONCODE == item.REGIONCODE).Select(a => new { billcode = a.BILLCODE }).Distinct().Count();//车组内订单数
+                                ordercount = en.V_PRODUCE_PACKAGEINFO.Where(a => a.REGIONCODE == item.REGIONCODE).Select(a => new { billcode = a.CUSTOMERCODE }).Distinct().Count();//车组内订单数
                                 var bill = (from billitem in pagTask where billitem.BILLCODE == item.BILLCODE orderby billitem.PACKAGESEQ, billitem.CIGSEQ select billitem).ToList();
                                 UNIONTASKPACKAGENUM = GetBillPackNum(bill, 0);//合包总包数  
                                 NORMALPACKAGENUM = GetBillPackNum(bill, 1);//常规烟总包数
